@@ -167,3 +167,43 @@ panel, spacing and control vocabulary. They must pass actual browser QC.
 
 Green/cream state roles remain; small semantic text uses cream/dim when the
 state/decisive text color would miss4.5:1. No additional gold role is introduced.
+
+## 12. Guided highlight and inspect tile info (v7)
+
+Approved 2026-11-16 (renderings `guided-inspect-v1`, QC-passed): the
+guided hint, the coach's hand-tile highlight, the explanation sheet,
+and the inspect readout.
+
+- The guided hint overlay keeps its §8 placement (floating, anchored
+  above the hand, auto-hidden while a call prompt or Focus Frame is
+  open) and becomes a flex row: the recommended discard's tile face
+  (22×31) beside the headline, bubble width 300px. Only the bubble
+  itself is tappable (role=button, "Why this move?"); the layer
+  around it never intercepts touches.
+- The recommended discard in the hand carries a flat state-green
+  ring — `box-shadow: 0 0 0 2px var(--bg), 0 0 0 5px var(--state)`,
+  border-radius 5px — with a gentle pulse (spread 5→7.5px, 1.6s
+  ease-in-out). Under reduced motion the pulse is removed and the
+  ring is static. The ring marks the exact tile instance the coach
+  recommends, is deliberately distinct from the player's own
+  selection treatment (the 1.5× magnification), and clears when the
+  decision moves on. State green only — never gold.
+- Tapping the overlay opens the explanation sheet ("Guided hint"),
+  a Focus Frame in the shipped sheet grammar: The goal / The move
+  (tile face 28×39 beside the plain name) / Why this tile / What
+  you're waiting for (one row per wait, face 24×34). Content is
+  template-rendered from the coach's structured facts — plain
+  beginner language, no new evaluator. No term is used before it is
+  defined at first use in the same breath (a finished hand and
+  "ready", dora, riichi, the indicator, the wall — per the final
+  approved Rendering C copy). The sheet pauses nothing and the
+  pending decision waits untouched behind it.
+- The inspect readout (hand focus sheet) leads with the plain tile
+  name (17px/700 cream) — never tile notation — followed by factual
+  lines only when true (13px sage): red-five/dora status, strongest
+  set membership (completed set over pair over loose), copies
+  visible on the table (ponds and melds; never the player's hand,
+  never the dora indicators), and a waits line (13px/600 cream) for
+  the hand's tenpai form. All facts come from the player's own view;
+  legacy (v1) replays keep the plain label rather than attributing
+  current facts to historical rules.
