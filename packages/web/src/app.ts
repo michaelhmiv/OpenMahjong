@@ -18,17 +18,46 @@ import {
   type Tile,
   type TurnAction,
 } from "@openmahjong/engine";
+import {
+  GOOGLE_START_URL,
+  deleteAccount,
+  fetchGames,
+  fetchServerSettings,
+  fetchStats,
+  initAuth,
+  postGame,
+  postImport,
+  putSettings,
+  signOut,
+  type ApiUser,
+  type GameRecord,
+  type StatsSums,
+} from "./api.js";
 import { AiDriver } from "./drivers.js";
 import { TableModel, foldEvents, tileById, type WinInfo } from "./model.js";
+import {
+  ZERO_HAND_STATS,
+  buildGameRecord,
+  formatRecordStrip,
+  formatStatsView,
+  historyDateLabel,
+  placementLabel,
+  shouldOfferImport,
+  sumRecords,
+} from "./records.js";
 import { GameRunner } from "./runner.js";
 import {
   appendHistory,
+  appendRecord,
   clearGame,
   focusFrameTaught,
+  importHandled,
   loadGame,
   loadHistory,
+  loadRecords,
   loadSettings,
   markFocusFrameTaught,
+  markImportHandled,
   osPrefersReducedMotion,
   saveGame,
   saveSettings,
@@ -166,7 +195,28 @@ const ICON_EXPAND = `<svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M9 20H4v
 // App
 // ---------------------------------------------------------------------------
 
-type ScreenName = "home" | "table" | "rules" | "settings" | "about" | "results";
+type ScreenName =
+  | "home"
+  | "table"
+  | "rules"
+  | "settings"
+  | "about"
+  | "results"
+  | "history"
+  | "stats";
+
+/** Google's standard four-color "G" (the approved landing button). */
+const GOOGLE_G_SVG = `<svg viewBox="0 0 48 48"><path fill="#FBBC05" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#EA4335" d="M6.3 14.7l6.6-4.8C14.7 7.1 19 4 24 4c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#34A853" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#4285F4" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.2 5.7l6.2 5.2C36.9 39.2 48 32 48 24c0-1.3-.1-2.6-.4-3.9z"/></svg>`;
+
+/** Pick the known settings keys out of a server payload, typed. */
+function mergeServerSettings(local: Settings, srv: Partial<Settings>): Settings {
+  return {
+    sound: typeof srv.sound === "boolean" ? srv.sound : local.sound,
+    motion: srv.motion === "reduced" || srv.motion === "standard" ? srv.motion : local.motion,
+    largeTiles: typeof srv.largeTiles === "boolean" ? srv.largeTiles : local.largeTiles,
+    lastLength: srv.lastLength === "east" || srv.lastLength === "south" ? srv.lastLength : local.lastLength,
+  };
+}
 type FrameState =
   | { kind: "player"; seat: Seat }
   | { kind: "center" }
@@ -208,6 +258,13 @@ export class App {
   private historyRecorded = false;
   private hintShownThisGame = false;
   private scale = 1;
+  /** Account state (slice 2): null user = signed out or API unreachable;
+   *  play never depends on it. */
+  private user: ApiUser | null = null;
+  private csrfToken: string | null = null;
+  private statsSums: StatsSums | null = null;
+  private serverGameCount: number | null = null;
+  private importOfferCount = 0;
 
   constructor(private readonly root: HTMLElement) {
     this.sound.enabled = this.settings.sound;
@@ -217,6 +274,9 @@ export class App {
     this.applyTheme();
     this.renderHome();
     this.showScreen("home");
+    // Account probe runs after first paint and never blocks play:
+    // signed-out (or unreachable API) is the default landing state.
+    void this.bootAuth();
   }
 
   private get humanSeat(): Seat {
@@ -240,7 +300,7 @@ export class App {
     this.root.append(sprite);
     this.stage = h("div", { id: "stage" });
     this.root.append(this.stage);
-    for (const name of ["home", "table", "rules", "settings", "about", "results"] as ScreenName[]) {
+    for (const name of ["home", "table", "rules", "settings", "about", "results", "history", "stats"] as ScreenName[]) {
       const s = h("section", { class: "screen", id: `screen-${name}` });
       this.screens.set(name, s);
       this.stage.append(s);
@@ -259,6 +319,8 @@ export class App {
     for (const [n, el] of this.screens) el.classList.toggle("active", n === name);
     if (name === "home") this.renderHome();
     if (name === "settings") this.renderSettings();
+    if (name === "history") void this.renderHistory();
+    if (name === "stats") void this.renderStats();
   }
 
   private applyTheme(): void {
@@ -269,23 +331,55 @@ export class App {
 
   // -- home ------------------------------------------------------------------
 
+  /**
+   * The landing (slice 2, renderings 01/02): replaces the slice-1 home.
+   * Wordmark + one informational line, length seg, one-tap Play. Signed
+   * in adds the identity chip, the record strip, and History/Stats
+   * entries; signed out shows the Google button instead. Guests get no
+   * record strip and no History/Stats entries — their local history
+   * still lives behind the same screens, reached from Settings.
+   */
   private renderHome(): void {
     const el = this.screens.get("home")!;
     el.innerHTML = "";
     const saved = loadGame();
-    const history = loadHistory().slice(-3).reverse();
 
     el.append(h("div", { class: "spacer" }));
+
+    if (this.user) {
+      const chip = h("div", { class: "idchip" });
+      chip.append(this.avatarEl(this.user), document.createTextNode(this.user.name));
+      el.append(chip);
+    }
+
     const wm = h("div", { class: "wordmark" }, "OPEN MAHJONG");
     wm.append(h("span", { class: "sub" }, "Free forever. Open source mahjong."));
     el.append(wm);
+
+    if (this.user && this.statsSums) {
+      const strip = formatRecordStrip(this.statsSums);
+      const part = (label: string, value: string): HTMLElement => {
+        const s = h("span", {}, `${label} `);
+        s.append(h("b", {}, value));
+        return s;
+      };
+      const rs = h("div", { class: "recstrip" });
+      rs.append(
+        part("Games", String(strip.games)),
+        h("span", { class: "sep" }, "·"),
+        part("Won", String(strip.wins)),
+        h("span", { class: "sep" }, "·"),
+        part("Avg place", strip.avgPlace),
+      );
+      el.append(rs);
+    }
 
     const seg = h("div", { class: "seg" });
     const mkSeg = (label: string, len: GameLength) => {
       const b = h("button", { class: this.settings.lastLength === len ? "on" : "" }, label);
       b.addEventListener("click", () => {
         this.settings = { ...this.settings, lastLength: len };
-        saveSettings(this.settings);
+        this.persistSettings();
         this.renderHome();
       });
       return b;
@@ -309,20 +403,40 @@ export class App {
       el.append(resume);
     }
 
-    if (history.length > 0) {
-      const box = h("div", { class: "history" });
-      box.append(h("h3", {}, "RECENT GAMES"));
-      for (const line of history) {
-        const d = new Date(line.date);
-        box.append(
-          h(
-            "div",
-            { class: "row" },
-            h("span", {}, `${d.toLocaleDateString()} · ${line.length === "east" ? "East" : "East+South"}`),
-            h("span", {}, `Placed `, h("b", {}, `#${line.humanRank}`), ` · ${fmt(line.scores[0] ?? 0)}`),
-          ),
-        );
-      }
+    if (this.user) {
+      const sec = h("div", { class: "secrow" });
+      const hist = h("button", { class: "pillbtn" }, "History");
+      hist.addEventListener("click", () => this.showScreen("history"));
+      const stats = h("button", { class: "pillbtn" }, "Stats");
+      stats.addEventListener("click", () => this.showScreen("stats"));
+      sec.append(hist, stats);
+      el.append(sec);
+    } else {
+      const g = h("button", { class: "gbtn" });
+      g.innerHTML = GOOGLE_G_SVG;
+      g.append(document.createTextNode("Sign in with Google"));
+      g.addEventListener("click", () => {
+        window.location.href = GOOGLE_START_URL;
+      });
+      el.append(g);
+    }
+
+    if (this.importOfferCount > 0) {
+      const box = h("div", { class: "importbox" });
+      box.append(
+        h("div", { class: "txt" }, `Import ${this.importOfferCount} games from this device`),
+      );
+      const rowEl = h("div", { class: "row" });
+      const imp = h("button", { class: "pillbtn primary" }, "Import");
+      imp.addEventListener("click", () => void this.doImport());
+      const dis = h("button", { class: "pillbtn ghost" }, "Dismiss");
+      dis.addEventListener("click", () => {
+        markImportHandled();
+        this.importOfferCount = 0;
+        this.renderHome();
+      });
+      rowEl.append(imp, dis);
+      box.append(rowEl);
       el.append(box);
     }
 
@@ -333,7 +447,141 @@ export class App {
       b.addEventListener("click", () => this.showScreen(screen));
       quiet.append(b);
     }
+    if (this.user) {
+      const out = h("button", { class: "linkbtn" }, "Sign out");
+      out.addEventListener("click", () => void this.signOutFlow());
+      quiet.append(out);
+    }
     el.append(quiet);
+    el.append(
+      h("div", { class: "footer" }, "Open source under AGPLv3 · github.com/michaelhmiv/OpenMahjong"),
+    );
+  }
+
+  private avatarEl(user: ApiUser, lg = false): HTMLElement {
+    const a = h("span", { class: lg ? "avatar lg" : "avatar" });
+    if (user.avatarUrl) {
+      a.append(h("img", { src: user.avatarUrl, alt: "" }));
+    } else {
+      a.append(document.createTextNode((user.name.trim()[0] ?? "?").toUpperCase()));
+    }
+    return a;
+  }
+
+  // -- account (slice 2) -----------------------------------------------------
+
+  private async bootAuth(): Promise<void> {
+    const me = await initAuth();
+    if (!me.user) return; // signed out or API down: guest landing stands
+    this.user = me.user;
+    this.csrfToken = me.csrfToken;
+    // Settings sync (brief A4): on sign-in the server's saved settings
+    // win over this device's — one account, one set of preferences.
+    // After this first sync, every local change is pushed back up
+    // (persistSettings), so the two never silently diverge again.
+    const [serverSettings, stats, games] = await Promise.all([
+      fetchServerSettings(),
+      fetchStats(),
+      fetchGames(),
+    ]);
+    if (serverSettings) {
+      this.settings = mergeServerSettings(this.settings, serverSettings);
+      saveSettings(this.settings);
+      this.sound.enabled = this.settings.sound;
+      this.applyTheme();
+    }
+    this.statsSums = stats;
+    this.serverGameCount = games ? games.length : null;
+    this.refreshImportOffer();
+    this.renderHome();
+  }
+
+  /** Save settings locally; when signed in, also sync them (brief A4). */
+  private persistSettings(): void {
+    saveSettings(this.settings);
+    if (this.user) void putSettings(this.settings, this.csrfToken);
+  }
+
+  /**
+   * Every finished game this device knows about, oldest first: full
+   * local records, plus legacy slice-1 history lines converted with
+   * zeroed hand stats and no log (they predate both).
+   */
+  private localGameRecords(): GameRecord[] {
+    const legacy: GameRecord[] = loadHistory().map((line, i) => ({
+      id: `legacy-${i}-${line.date}`,
+      length: line.length,
+      placement: line.humanRank,
+      score: line.scores[0] ?? 0,
+      finishedAt: line.date,
+      log: null,
+      stats: { ...ZERO_HAND_STATS },
+    }));
+    return [...legacy, ...loadRecords()].sort((a, b) =>
+      a.finishedAt < b.finishedAt ? -1 : a.finishedAt > b.finishedAt ? 1 : 0,
+    );
+  }
+
+  private refreshImportOffer(): void {
+    const local = this.localGameRecords();
+    this.importOfferCount = shouldOfferImport({
+      signedIn: !!this.user,
+      localCount: local.length,
+      serverGames: this.serverGameCount,
+      handled: importHandled(),
+    })
+      ? local.length
+      : 0;
+  }
+
+  private async doImport(): Promise<void> {
+    const records = this.localGameRecords();
+    // Mark first: the offer is one-time per device even if the POST
+    // fails — the games stay local and nothing is lost.
+    markImportHandled();
+    this.importOfferCount = 0;
+    this.renderHome();
+    if (await postImport(records, this.csrfToken)) {
+      this.serverGameCount = records.length;
+      const stats = await fetchStats();
+      if (stats) this.statsSums = stats;
+      this.renderHome();
+    }
+  }
+
+  /** POST a finished game; one retry, then give up silently — the
+   *  results screen and the local record never depend on it. */
+  private async postRecord(record: GameRecord): Promise<void> {
+    if (await postGame(record, this.csrfToken)) {
+      if (this.serverGameCount !== null) this.serverGameCount++;
+      const stats = await fetchStats();
+      if (stats) this.statsSums = stats;
+      return;
+    }
+    await sleep(1500);
+    await postGame(record, this.csrfToken);
+  }
+
+  private clearAccountState(): void {
+    this.user = null;
+    this.csrfToken = null;
+    this.statsSums = null;
+    this.serverGameCount = null;
+    this.importOfferCount = 0;
+  }
+
+  private async signOutFlow(): Promise<void> {
+    await signOut(this.csrfToken);
+    this.clearAccountState();
+    this.renderHome();
+    if (this.screens.get("settings")!.classList.contains("active")) this.renderSettings();
+  }
+
+  private async deleteAccountFlow(): Promise<void> {
+    if (!(await deleteAccount(this.csrfToken))) return;
+    this.clearAccountState();
+    this.renderHome();
+    if (this.screens.get("settings")!.classList.contains("active")) this.renderSettings();
   }
 
   // -- text screens ----------------------------------------------------------
@@ -433,23 +681,189 @@ export class App {
         return sw;
       };
 
+      // Account section (slice 2, rendering 08).
+      page.append(h("div", { class: "sec-label" }, "ACCOUNT"));
+      if (this.user) {
+        const idRow = h("div", { class: "setrow" });
+        const acct = h("div", { class: "acctid" });
+        acct.append(this.avatarEl(this.user, true));
+        const who = h("div", {});
+        who.append(
+          h("div", { class: "lab" }, this.user.name),
+          h("div", { class: "note" }, "Signed in with Google"),
+        );
+        acct.append(who);
+        const outBtn = h("button", { class: "pillbtn ghost" }, "Sign out");
+        outBtn.addEventListener("click", () => void this.signOutFlow());
+        idRow.append(acct, outBtn);
+        page.append(idRow);
+
+        const delRow = h("div", { class: "setrow" });
+        const delLab = h("div", {});
+        delLab.append(
+          h("div", { class: "lab" }, "Delete account"),
+          h("div", { class: "note" }, "Removes your profile, game history, and stats. This cannot be undone."),
+        );
+        const delBtn = h("button", { class: "pillbtn ghost" }, "Delete");
+        delBtn.addEventListener("click", () => {
+          // Two-step confirm in place: the first tap arms the button.
+          if (delBtn.dataset["confirm"] === "1") {
+            void this.deleteAccountFlow();
+            return;
+          }
+          delBtn.dataset["confirm"] = "1";
+          delBtn.textContent = "Confirm delete";
+        });
+        delRow.append(delLab, delBtn);
+        page.append(delRow);
+      } else {
+        const signInBtn = h("button", { class: "pillbtn ghost" }, "Sign in with Google");
+        signInBtn.addEventListener("click", () => {
+          window.location.href = GOOGLE_START_URL;
+        });
+        page.append(row("Account", "Not signed in.", signInBtn));
+        // The guest landing carries no History/Stats entries
+        // (rendering 01), so the local ones live here.
+        const histBtn = h("button", { class: "pillbtn ghost" }, "Open");
+        histBtn.addEventListener("click", () => this.showScreen("history"));
+        page.append(row("History", "Games recorded on this device.", histBtn));
+        const statsBtn = h("button", { class: "pillbtn ghost" }, "Open");
+        statsBtn.addEventListener("click", () => this.showScreen("stats"));
+        page.append(row("Stats", "Your numbers from games on this device.", statsBtn));
+      }
+
       page.append(
         row("Sound", "Quiet tile clicks only. No music, no voices.", toggle(this.settings.sound, false, (v) => {
           this.settings = { ...this.settings, sound: v };
           this.sound.enabled = v;
-          saveSettings(this.settings);
+          this.persistSettings();
         })),
         row("Reduced motion", "Collapses animation to near-instant. Your operating system's reduced-motion setting is always respected too.", toggle(this.settings.motion === "reduced", false, (v) => {
           this.settings = { ...this.settings, motion: v ? "reduced" : "standard" };
-          saveSettings(this.settings);
+          this.persistSettings();
         })),
         row("Large tiles", "Hand tiles step up to 28px in two rows of seven; ponds step down to 22px; the panel type grows. The approved large layout (table-large-v1).", toggle(this.settings.largeTiles, false, (v) => {
           this.settings = { ...this.settings, largeTiles: v };
-          saveSettings(this.settings);
+          this.persistSettings();
           this.applyTheme();
           if (this.runner) this.renderTable();
         })),
       );
+    });
+  }
+
+  // -- history & stats (slice 2, renderings 03/04) ---------------------------
+
+  private async renderHistory(): Promise<void> {
+    let rows: GameRecord[];
+    if (this.user) {
+      rows = (await fetchGames()) ?? [];
+      this.serverGameCount = rows.length;
+    } else {
+      rows = this.localGameRecords();
+    }
+    rows = [...rows].sort((a, b) => (a.finishedAt < b.finishedAt ? 1 : -1));
+    if (!this.screens.get("history")!.classList.contains("active")) return;
+    this.textScreen("history", "History", (page) => {
+      page.append(
+        h("p", { class: "count" }, `${rows.length} recorded game${rows.length === 1 ? "" : "s"}`),
+      );
+      if (rows.length === 0) {
+        page.append(h("p", { class: "dim" }, "No games recorded yet."));
+      }
+      for (const r of rows) page.append(this.historyRowEl(r));
+    });
+  }
+
+  private historyRowEl(r: GameRecord): HTMLElement {
+    const row = h("button", { class: "hrow" });
+    row.append(
+      h("span", { class: "when" }, historyDateLabel(r.finishedAt)),
+      h("span", { class: "lenbadge" }, r.length === "east" ? "EAST" : "EAST + SOUTH"),
+    );
+    const res = h("span", { class: "res" });
+    res.append(h("b", {}, placementLabel(r.placement)), document.createTextNode(" "));
+    res.append(h("span", { class: "sc" }, `· ${fmt(r.score)}`));
+    row.append(res);
+    row.insertAdjacentHTML(
+      "beforeend",
+      `<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
+    );
+    if (r.log) {
+      row.addEventListener("click", () => this.openRecord(r));
+    } else {
+      // Legacy slice-1 lines carry no decision log, so there is
+      // nothing to replay; the row stays listed but inert.
+      row.disabled = true;
+    }
+    return row;
+  }
+
+  /** Replay a finished record to its final standings (rendering 03's
+   *  row tap): the runner replays deterministically to the result, and
+   *  the existing game-end results screen shows it. The step-through
+   *  review is a later slice. */
+  private openRecord(record: GameRecord): void {
+    if (!record.log) return;
+    this.generation++;
+    this.playing = false;
+    this.frame = null;
+    this.runner = GameRunner.restore(record.log, new AiDriver());
+    if (!this.runner.result) return;
+    this.resetDisplay();
+    this.historyRecorded = true; // a replay is not a new game
+    this.model = foldEvents(this.runner.events, this.humanSeat, this.runner.chiHints);
+    this.cursor = this.runner.events.length;
+    this.renderResults();
+    this.showScreen("results");
+  }
+
+  private async renderStats(): Promise<void> {
+    let sums: StatsSums;
+    let handStats: boolean;
+    if (this.user) {
+      const fresh = await fetchStats();
+      if (fresh) this.statsSums = fresh;
+      sums = this.statsSums ?? {
+        games: 0, wins: 0, placementSum: 0,
+        hands: 0, riichi: 0, dealIns: 0, handsWon: 0, winPoints: 0, since: null,
+      };
+      handStats = true;
+    } else {
+      // Guest: game-level sums over every local record; hand-level
+      // sums only over records that actually carry them — rates are
+      // never invented from records that lack the data (brief T3).
+      const base = sumRecords(this.localGameRecords());
+      const hand = sumRecords(loadRecords());
+      sums = {
+        ...base,
+        hands: hand.hands,
+        riichi: hand.riichi,
+        dealIns: hand.dealIns,
+        handsWon: hand.handsWon,
+        winPoints: hand.winPoints,
+      };
+      handStats = loadRecords().length > 0;
+    }
+    if (!this.screens.get("stats")!.classList.contains("active")) return;
+    this.textScreen("stats", "Stats", (page) => {
+      page.append(
+        h(
+          "p",
+          { class: "count" },
+          sums.games > 0
+            ? `From your ${sums.games} recorded game${sums.games === 1 ? "" : "s"}`
+            : "No recorded games yet",
+        ),
+      );
+      const grid = h("div", { class: "statgrid" });
+      for (const b of formatStatsView(sums, { handStats })) {
+        const st = h("div", { class: "stat" });
+        st.append(h("div", { class: "v" }, b.value), h("div", { class: "l" }, b.label));
+        if (b.sample) st.append(h("div", { class: "s" }, b.sample));
+        grid.append(st);
+      }
+      page.append(grid);
     });
   }
 
@@ -509,6 +923,22 @@ export class App {
           scores: this.runner.result.scores,
           humanRank: mine?.rank ?? 0,
         });
+        // Slice 2 (brief T1): the full record — decision log + hand
+        // stats — is stored locally for everyone and posted when
+        // signed in. Posting is fire-and-forget; the results screen
+        // never waits on it.
+        const record = buildGameRecord({
+          id: this.runner.id,
+          length: this.runner.length,
+          placement: mine?.rank ?? 0,
+          score: mine?.score ?? this.runner.result.scores[this.humanSeat] ?? 0,
+          finishedAt: new Date().toISOString(),
+          log: this.runner.serialize(),
+          events: this.runner.events,
+          humanSeat: this.humanSeat,
+        });
+        appendRecord(record);
+        if (this.user) void this.postRecord(record);
       }
     } else {
       saveGame(this.runner.serialize());
@@ -774,7 +1204,7 @@ export class App {
     soundBtn.addEventListener("click", () => {
       this.settings = { ...this.settings, sound: !this.settings.sound };
       this.sound.enabled = this.settings.sound;
-      saveSettings(this.settings);
+      this.persistSettings();
       this.renderTable();
     });
     header.append(menuBtn, h("span", { class: "word" }, "OPEN MAHJONG"), soundBtn);
@@ -1319,7 +1749,7 @@ export class App {
       mk(this.settings.sound ? "Sound: on" : "Sound: off", "ghost", () => {
         this.settings = { ...this.settings, sound: !this.settings.sound };
         this.sound.enabled = this.settings.sound;
-        saveSettings(this.settings);
+        this.persistSettings();
         overlay.remove();
         this.renderTable();
       }),

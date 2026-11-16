@@ -1,0 +1,253 @@
+/**
+ * Finished-game records and stats math (slice-2 brief §4 T1/T3).
+ *
+ * Pure functions over the engine event log and record shapes — no DOM,
+ * no storage, no network — so the numbers the Stats screen shows are
+ * unit-testable against hand-checked fixtures. The server stores the
+ * same sums the client computes here; it never re-derives them.
+ */
+
+import type { GameEvent, GameLength, Seat } from "@openmahjong/engine";
+import type { GameRecord, HandStats, StatsSums } from "./api.js";
+import type { SavedGame } from "./runner.js";
+
+export const ZERO_HAND_STATS: HandStats = {
+  hands: 0,
+  riichi: 0,
+  dealIns: 0,
+  handsWon: 0,
+  winPoints: 0,
+};
+
+export function newGameId(): string {
+  const c = globalThis.crypto as Crypto | undefined;
+  if (c && typeof c.randomUUID === "function") return c.randomUUID();
+  // Fallback for older runtimes: timestamp + random hex is unique enough
+  // for a per-device game id.
+  const rand = Math.floor(Math.random() * 0xffffffff).toString(16).padStart(8, "0");
+  return `om-${Date.now().toString(36)}-${rand}`;
+}
+
+/**
+ * Hand statistics for one finished game, folded from its event log:
+ * - hands: hands dealt (hand-start events, abortive restarts included —
+ *   the hand was played);
+ * - riichi: the player's riichi declarations;
+ * - dealIns: hands the player lost by ron — a win event whose fromSeat
+ *   is the player;
+ * - handsWon / winPoints: hands the player won, and the points those
+ *   wins paid (hand payments plus riichi sticks, the breakdown's
+ *   "gained" figure).
+ */
+export function computeHandStats(
+  events: readonly GameEvent[],
+  humanSeat: Seat,
+): HandStats {
+  let hands = 0;
+  let riichi = 0;
+  let dealIns = 0;
+  let handsWon = 0;
+  let winPoints = 0;
+  for (const ev of events) {
+    if (ev.type === "hand-start") {
+      hands++;
+    } else if (ev.type === "riichi") {
+      if (Number(ev["seat"]) === humanSeat) riichi++;
+    } else if (ev.type === "win") {
+      const winner = Number(ev["seat"]);
+      if (ev["winType"] === "ron" && Number(ev["fromSeat"]) === humanSeat) {
+        dealIns++;
+      }
+      if (winner === humanSeat) {
+        handsWon++;
+        const payments = (ev["payments"] as readonly { amount: number }[]) ?? [];
+        winPoints +=
+          payments.reduce((s, p) => s + p.amount, 0) +
+          Number(ev["stickPoints"] ?? 0);
+      }
+    }
+  }
+  return { hands, riichi, dealIns, handsWon, winPoints };
+}
+
+export function buildGameRecord(args: {
+  id: string;
+  length: GameLength;
+  placement: number;
+  score: number;
+  finishedAt: string;
+  log: SavedGame | null;
+  events: readonly GameEvent[];
+  humanSeat: Seat;
+}): GameRecord {
+  return {
+    id: args.id,
+    length: args.length,
+    placement: args.placement,
+    score: args.score,
+    finishedAt: args.finishedAt,
+    log: args.log,
+    stats: args.events.length > 0
+      ? computeHandStats(args.events, args.humanSeat)
+      : { ...ZERO_HAND_STATS },
+  };
+}
+
+/** Sum game records into Stats-screen sums (guest view / local math). */
+export function sumRecords(
+  records: readonly { placement: number; finishedAt: string; stats: HandStats }[],
+): StatsSums {
+  let wins = 0;
+  let placementSum = 0;
+  let hands = 0;
+  let riichi = 0;
+  let dealIns = 0;
+  let handsWon = 0;
+  let winPoints = 0;
+  let since: string | null = null;
+  for (const r of records) {
+    if (r.placement === 1) wins++;
+    placementSum += r.placement;
+    hands += r.stats.hands;
+    riichi += r.stats.riichi;
+    dealIns += r.stats.dealIns;
+    handsWon += r.stats.handsWon;
+    winPoints += r.stats.winPoints;
+    if (!since || r.finishedAt < since) since = r.finishedAt;
+  }
+  return {
+    games: records.length,
+    wins,
+    placementSum,
+    hands,
+    riichi,
+    dealIns,
+    handsWon,
+    winPoints,
+    since,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Formatting (rendering 04: every rate carries its sample)
+// ---------------------------------------------------------------------------
+
+export interface StatBlock {
+  readonly value: string;
+  readonly label: string;
+  readonly sample?: string;
+}
+
+function fmt(n: number): string {
+  return n.toLocaleString("en-US");
+}
+
+function pct(part: number, whole: number): string {
+  if (whole <= 0) return "—";
+  return `${Math.round((part / whole) * 100)}%`;
+}
+
+/** "Nov 11" from an ISO date, for the "Since …" sample line. */
+export function sinceLabel(iso: string | null | undefined): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
+/**
+ * The six Stats blocks, in rendering order. When `handStats` is false
+ * (guest records that predate hand-stat capture), only the three
+ * game-level blocks are produced — rates are never invented.
+ */
+export function formatStatsView(
+  sums: StatsSums,
+  opts: { handStats: boolean },
+): StatBlock[] {
+  const blocks: StatBlock[] = [];
+  const since = sinceLabel(sums.since);
+  blocks.push({
+    value: fmt(sums.games),
+    label: "Games played",
+    ...(since ? { sample: `Since ${since}` } : {}),
+  });
+  blocks.push({
+    value: pct(sums.wins, sums.games),
+    label: "Win rate",
+    sample: `${sums.wins} of ${sums.games} games`,
+  });
+  blocks.push({
+    value: sums.games > 0 ? (sums.placementSum / sums.games).toFixed(1) : "—",
+    label: "Avg placement",
+    sample: `${sums.games} games`,
+  });
+  if (opts.handStats) {
+    blocks.push({
+      value: pct(sums.riichi, sums.hands),
+      label: "Riichi rate",
+      sample: `${sums.riichi} of ${sums.hands} hands`,
+    });
+    blocks.push({
+      value: pct(sums.dealIns, sums.hands),
+      label: "Deal-in rate",
+      sample: `${sums.dealIns} of ${sums.hands} hands`,
+    });
+    blocks.push({
+      value: sums.handsWon > 0 ? fmt(Math.round(sums.winPoints / sums.handsWon)) : "—",
+      label: "Avg winning hand",
+      sample: `${sums.handsWon} hands won`,
+    });
+  }
+  return blocks;
+}
+
+/** The landing record strip: "Games 12 · Won 3 · Avg place 2.4". */
+export function formatRecordStrip(sums: StatsSums): {
+  games: number;
+  wins: number;
+  avgPlace: string;
+} {
+  return {
+    games: sums.games,
+    wins: sums.wins,
+    avgPlace: sums.games > 0 ? (sums.placementSum / sums.games).toFixed(1) : "—",
+  };
+}
+
+export function placementLabel(rank: number): string {
+  return { 1: "1st", 2: "2nd", 3: "3rd", 4: "4th" }[rank] ?? `#${rank}`;
+}
+
+/** "Mon, Nov 16" — the History row date format (rendering 03). */
+export function historyDateLabel(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+// ---------------------------------------------------------------------------
+// First-sign-in import (brief T4)
+// ---------------------------------------------------------------------------
+
+/**
+ * Offer the import exactly when: signed in, this device holds local
+ * games, the account holds none yet, and the offer has not already been
+ * imported or dismissed on this device.
+ */
+export function shouldOfferImport(args: {
+  signedIn: boolean;
+  localCount: number;
+  serverGames: number | null;
+  handled: boolean;
+}): boolean {
+  return (
+    args.signedIn &&
+    !args.handled &&
+    args.localCount > 0 &&
+    args.serverGames === 0
+  );
+}

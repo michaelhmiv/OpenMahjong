@@ -5,8 +5,9 @@
   },
   "description": "Open Mahjong web client (brief sections 7-10): land-and-play home, flat table, Focus Frames, PWA offline play vs AI.",
   "devDependencies": {
-    "vite": "^7.0.0",
-    "@types/node": "^22.0.0"
+    "@types/node": "^22.0.0",
+    "jsdom": "^31.0.1",
+    "vite": "^7.0.0"
   },
   "license": "AGPL-3.0-only",
   "name": "@openmahjong/web",
