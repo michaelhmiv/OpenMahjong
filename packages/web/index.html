@@ -5,12 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#152620" />
 <meta name="description" content="Open Mahjong — the lichess of mahjong. Free, open source." />
+<link rel="canonical" href="https://openmahjong.app/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Open Mahjong" />
+<meta property="og:title" content="Open Mahjong" />
+<meta property="og:description" content="Open Mahjong — the lichess of mahjong. Free, open source." />
+<meta property="og:url" content="https://openmahjong.app/" />
+<meta property="og:image" content="https://openmahjong.app/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Open Mahjong" />
+<meta name="twitter:description" content="Open Mahjong — the lichess of mahjong. Free, open source." />
+<meta name="twitter:image" content="https://openmahjong.app/og-image.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Open Mahjong",
+  "url": "https://openmahjong.app/",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Web browser",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "license": "https://www.gnu.org/licenses/agpl-3.0.html"
+}
+</script>
 <title>Open Mahjong</title>
 <link rel="manifest" href="./manifest.webmanifest" />
 <link rel="icon" type="image/svg+xml" href="./icon.svg" />
 </head>
 <body>
 <div id="app"></div>
+<noscript>
+<h1>Open Mahjong</h1>
+<p>Free forever. Open source mahjong.</p>
+<p>Open Mahjong is a web app for playing riichi mahjong against the CPU. Games are East-only or East + South, with real scoring. No account is needed to play.</p>
+<p>The app includes 11 interactive tutorial lessons played on the real table, and a guided mode that offers hints with explanations during CPU games.</p>
+<p>Signing in with Google is optional. Signed-in players can save their game history and settings to their account.</p>
+<p>Open Mahjong is free and open source under the AGPLv3 license. The source code is on <a href="https://github.com/michaelhmiv/OpenMahjong">GitHub</a>. See the <a href="/privacy">privacy policy</a>.</p>
+</noscript>
 <script type="module" src="/src/main.ts"></script>
 </body>
 </html>
