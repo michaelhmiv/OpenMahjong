@@ -18,7 +18,7 @@ import {
   type Tile,
   type TurnAction,
 } from "@openmahjong/engine";
-import { TempAiDriver } from "./drivers.js";
+import { AiDriver } from "./drivers.js";
 import { TableModel, foldEvents, tileById, type WinInfo } from "./model.js";
 import { GameRunner } from "./runner.js";
 import {
@@ -462,7 +462,7 @@ export class App {
   private startGame(length: GameLength): void {
     this.generation++;
     const seed = `om-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}`;
-    this.runner = new GameRunner({ seed, length, humanSeat: 0, aiDriver: new TempAiDriver() });
+    this.runner = new GameRunner({ seed, length, humanSeat: 0, aiDriver: new AiDriver() });
     this.resetDisplay();
     this.historyRecorded = false;
     this.hintShownThisGame = false;
@@ -476,7 +476,7 @@ export class App {
     const saved = loadGame();
     if (!saved) return;
     this.generation++;
-    this.runner = GameRunner.restore(saved, new TempAiDriver());
+    this.runner = GameRunner.restore(saved, new AiDriver());
     this.resetDisplay();
     this.historyRecorded = this.runner.result !== null;
     // Resume lands on the settled current state (A8: same game, same

@@ -16,9 +16,8 @@ definition.
 - `src/model.ts` — TableModel: the rendered table as a pure fold of the
   engine's event log (brief §9).
 - `src/drivers.ts` — the seat-driver seam. `HumanDriver` defers every
-  decision to the UI; `TempAiDriver` is the TEMPORARY AI-seat driver
-  (efficiency-greedy on the engine's shanten/ukeire). `packages/ai`
-  replaces it behind the same interface.
+  decision to the UI; `AiDriver` adapts the real opponent from
+  `@openmahjong/ai` (brief §6) to the same interface.
 - `src/runner.ts` — GameRunner: drives the synchronous engine from the
   event-driven UI via deterministic replay (brief A5). Every decision is
   logged; replaying seed + log reproduces the identical event prefix and

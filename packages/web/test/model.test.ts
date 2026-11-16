@@ -1,7 +1,7 @@
 /**
  * View-model mapping tests (brief §9/§13): the table model is a pure fold
  * of the engine event log. Games are produced by the real engine with the
- * temporary AI driver on every seat, then folded and checked for tile
+ * real AI driver (@openmahjong/ai) on every seat, then folded and checked for tile
  * accounting, score fidelity, win reconstruction, chi disambiguation, and
  * the uradora reconstruction used by the hand-end breakdown.
  */
@@ -14,11 +14,11 @@ import { describe, expect, it } from "vitest";
 // passes (see packages/ai/test/soak.test.ts).
 const tick = () => new Promise<void>((r) => setTimeout(r, 0));
 import { Game, type GameEvent, type Policy } from "@openmahjong/engine";
-import { PENDING, TempAiDriver } from "../src/drivers.js";
+import { PENDING, AiDriver } from "../src/drivers.js";
 import { foldEvents, TableModel } from "../src/model.js";
 import { GameRunner } from "../src/runner.js";
 
-function asPolicy(driver: TempAiDriver): Policy {
+function asPolicy(driver: AiDriver): Policy {
   return {
     turn: (view, ctx) => {
       const a = driver.turn(view, ctx);
@@ -37,7 +37,7 @@ function playGame(seed: string): { events: readonly GameEvent[]; scores: readonl
   const result = new Game({
     seed,
     length: "east",
-    policies: asPolicy(new TempAiDriver()),
+    policies: asPolicy(new AiDriver()),
   }).run();
   return { events: result.events, scores: result.scores };
 }
@@ -103,7 +103,7 @@ describe("TableModel fold", () => {
     // contains a chi call, then check the meld is a true sequence.
     let checked = false;
     for (const seed of ["model-chi-1", "model-chi-2", "model-chi-3", "model-chi-4", "model-chi-5"]) {
-      const ai = new TempAiDriver();
+      const ai = new AiDriver();
       const runner = new GameRunner({ seed, length: "east", humanSeat: 0, aiDriver: ai });
       runner.advance();
       let guard = 0;
