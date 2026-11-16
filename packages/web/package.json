@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "@openmahjong/ai": "*",
-    "@openmahjong/engine": "*"
+    "@openmahjong/engine": "*",
+    "@openmahjong/coach": "*"
   },
   "description": "Open Mahjong web client (brief sections 7-10): land-and-play home, flat table, Focus Frames, PWA offline play vs AI.",
   "devDependencies": {

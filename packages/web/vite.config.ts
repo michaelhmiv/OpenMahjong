@@ -12,6 +12,9 @@ export default defineConfig({
       "@openmahjong/ai": fileURLToPath(
         new URL("../ai/src/index.ts", import.meta.url),
       ),
+      "@openmahjong/coach": fileURLToPath(
+        new URL("../coach/src/index.ts", import.meta.url),
+      ),
       "@openmahjong/engine": fileURLToPath(
         new URL("../engine/src/index.ts", import.meta.url),
       ),

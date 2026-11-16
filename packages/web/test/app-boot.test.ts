@@ -48,7 +48,13 @@ describe("App boot", () => {
     );
     expect(root.querySelector("#screen-home .idchip")).toBeNull();
     expect(root.querySelector("#screen-home .recstrip")).toBeNull();
-    expect(root.querySelector("#screen-home .secrow")).toBeNull();
+    // The tutorial's Learn entry is on the landing for guests too
+    // (brief §9: no account required) — it is the only secondary-row
+    // pill a guest gets.
+    const guestSec = [...root.querySelectorAll("#screen-home .secrow .pillbtn")].map(
+      (b) => b.textContent,
+    );
+    expect(guestSec).toEqual(["Learn"]);
     expect(root.querySelector("#screen-home .wordmark .sub")?.textContent).toBe(
       "Free forever. Open source mahjong.",
     );
@@ -82,7 +88,7 @@ describe("App boot", () => {
     const secButtons = [...root.querySelectorAll("#screen-home .secrow .pillbtn")].map(
       (b) => b.textContent,
     );
-    expect(secButtons).toEqual(["History", "Stats"]);
+    expect(secButtons).toEqual(["History", "Stats", "Learn"]);
   });
 
   it("offers the one-time import when the account is empty and local games exist", async () => {

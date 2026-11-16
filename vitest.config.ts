@@ -14,6 +14,11 @@ export default defineConfig({
       "@openmahjong/ai": fileURLToPath(
         new URL("./packages/ai/src/index.ts", import.meta.url),
       ),
+      // And the coach package (tutorial/coaching tests run it from
+      // source the same way).
+      "@openmahjong/coach": fileURLToPath(
+        new URL("./packages/coach/src/index.ts", import.meta.url),
+      ),
     },
   },
   test: {

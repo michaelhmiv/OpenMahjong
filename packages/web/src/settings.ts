@@ -18,6 +18,10 @@ export interface Settings {
   motion: MotionName;
   largeTiles: boolean;
   lastLength: GameLength;
+  /** Guided mode (slice-2 brief §9 ruling): hints and explanations
+   *  during CPU games. A pre-game choice on the landing, the same
+   *  switch in Settings and in the in-game menu — one setting. */
+  guided: boolean;
 }
 
 const SETTINGS_KEY = "openmahjong.settings.v1";
@@ -32,6 +36,7 @@ export const DEFAULT_SETTINGS: Settings = {
   motion: "standard",
   largeTiles: false,
   lastLength: "south",
+  guided: false,
 };
 
 function readJson<T>(key: string): T | null {
