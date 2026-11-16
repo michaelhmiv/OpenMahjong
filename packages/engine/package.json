@@ -1,0 +1,20 @@
+{
+  "name": "@openmahjong/engine",
+  "version": "0.1.0",
+  "license": "AGPL-3.0-only",
+  "description": "Open Mahjong rules engine: tiles, wall, hand analysis, scoring. Pure TypeScript, deterministic, no runtime dependencies.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc -p tsconfig.json"
+  },
+  "files": ["dist", "src"]
+}
