@@ -696,6 +696,13 @@ and `learning-loop-first/` runs are preserved separately. Selected
 captures can be retained with the PR; the runner regenerates the full
 artifact set for CI inspection.
 
+A focused follow-up using that actual completed-game fixture also
+captured the expanded saved-decision collection after reload and used
+its Return-to-decision control to restore position **1 / 88**.
+`saved-decision-bridge.png`, `saved-decision-restored.png`, and
+`saved-decision-proof.json` record that supplemental check; it is
+separate from the 42-check suite count.
+
 The delivered loop still has clear limits: real account synchronization
 was not browser-tested; full-information replay, full animated table
 replay at every decision, advanced calling/EV grading, generated
