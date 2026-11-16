@@ -21,6 +21,7 @@ import {
 import {
   GOOGLE_START_URL,
   deleteAccount,
+  fetchGame,
   fetchGames,
   fetchServerSettings,
   fetchStats,
@@ -31,6 +32,7 @@ import {
   signOut,
   type ApiUser,
   type GameRecord,
+  type GameSummary,
   type StatsSums,
 } from "./api.js";
 import { AiDriver } from "./drivers.js";
@@ -41,6 +43,7 @@ import {
   formatRecordStrip,
   formatStatsView,
   historyDateLabel,
+  mergeLocalGameRecords,
   placementLabel,
   relativeDateLabel,
   shouldOfferImport,
@@ -48,7 +51,6 @@ import {
 } from "./records.js";
 import { GameRunner } from "./runner.js";
 import {
-  appendHistory,
   appendRecord,
   clearGame,
   focusFrameTaught,
@@ -114,6 +116,9 @@ const YAKU: Record<string, readonly [string, number]> = {
   toitoi: ["Toitoi", 2],
   honchan: ["Honchantai", 2],
   shousuushi: ["Shousuushi", 13],
+  shousangen: ["Shousangen", 2],
+  daisangen: ["Daisangen", 13],
+  chinroutou: ["Chinroutou", 13],
   honitsu: ["Honitsu", 3],
   junchan: ["Junchan", 3],
   honroutou: ["Honroutou", 2],
@@ -197,12 +202,67 @@ function h<K extends keyof HTMLElementTagNameMap>(
 /** A tile element: FLIP wrapper (never transformed by layout classes)
  *  around the visual tile (which may rotate/lift). */
 function tileEl(tile: Tile, cls: string, opts: { flip?: boolean } = {}): HTMLSpanElement {
-  const inner = h("span", { class: `tile ${cls}` });
+  const inner = h("span", { class: `tile ${cls}`, role: "img", "aria-label": tileLabel(tile) });
   inner.innerHTML = `<svg viewBox="0 0 40 56"><use href="#${tileSymbol(tile)}"/></svg>`;
   const wrap = h("span", { class: "twrap" });
   wrap.append(inner);
   if (opts.flip !== false) wrap.dataset["flip"] = `tile-${tile.id}`;
   return wrap;
+}
+
+/** Preserve the approved tile geometry while exposing the same action
+ * to keyboard and assistive-technology users. Repainting must not lose
+ * focus between selecting a tile and discarding it. */
+function tileControl(el: HTMLElement, key: string, label: string, action: () => void, selected = false): void {
+  el.setAttribute("role", "button");
+  el.tabIndex = 0;
+  el.setAttribute("aria-label", label);
+  el.setAttribute("aria-pressed", String(selected));
+  el.dataset["controlKey"] = key;
+  el.querySelectorAll("[role=img]").forEach((img) => img.setAttribute("aria-hidden", "true"));
+  const activate = () => {
+    const focused = document.activeElement === el;
+    action();
+    if (focused && !el.isConnected) {
+      const next = [...document.querySelectorAll<HTMLElement>("[data-control-key]")]
+        .find((candidate) => candidate.dataset["controlKey"] === key);
+      next?.focus();
+    }
+  };
+  el.addEventListener("click", activate);
+  el.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    if (!event.repeat) activate();
+  });
+}
+
+function focusByKey(key: string | undefined): void {
+  if (!key) return;
+  [...document.querySelectorAll<HTMLElement>("[data-control-key]")]
+    .find((el) => el.dataset["controlKey"] === key)?.focus();
+}
+
+function accessibleDialog(dialog: HTMLElement, label: string, close: () => void): void {
+  dialog.setAttribute("role", "dialog");
+  dialog.setAttribute("aria-modal", "true");
+  dialog.setAttribute("aria-label", label);
+  dialog.tabIndex = -1;
+  const controls = () => [...dialog.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), [tabindex="0"]')];
+  dialog.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") { event.preventDefault(); close(); return; }
+    if (event.key !== "Tab") return;
+    const items = controls();
+    if (!items.length) { event.preventDefault(); dialog.focus(); return; }
+    const first = items[0]!;
+    const last = items[items.length - 1]!;
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === dialog)) {
+      event.preventDefault(); last.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || document.activeElement === dialog)) {
+      event.preventDefault(); first.focus();
+    }
+  });
+  (controls()[0] ?? dialog).focus();
 }
 
 function backEl(cls: string, flipKey?: string): HTMLSpanElement {
@@ -285,6 +345,8 @@ export class App {
   private riichiArmed = false;
   private riichiDismissed = false;
   private frame: FrameState = null;
+  private frameReturnFocus: string | undefined;
+  private currentScreen: ScreenName = "home";
   private frameChangedTiles = new Set<number>();
   private continueWaiter: (() => void) | null = null;
   private historyRecorded = false;
@@ -298,7 +360,7 @@ export class App {
   private serverGameCount: number | null = null;
   /** The account's game summaries, kept for the home Last game card;
    *  null until bootAuth has fetched them. */
-  private serverGames: GameRecord[] | null = null;
+  private serverGames: GameSummary[] | null = null;
   private importOfferCount = 0;
   /** Tutorial state (slice-2 brief §9): progress persists locally and
    *  rides the account settings blob under a namespaced key. */
@@ -317,7 +379,20 @@ export class App {
     window.visualViewport?.addEventListener("resize", () => this.fit());
     this.applyTheme();
     this.renderHome();
+    // Browser history survives reload; the in-memory runner does not.
+    // Reconcile this entry with the actual landing before navigation.
+    window.history.replaceState({ openmahjongScreen: "home" }, "");
     this.showScreen("home");
+    window.addEventListener("popstate", () => {
+      const name = (window.history.state as { openmahjongScreen?: unknown } | null)?.openmahjongScreen;
+      if (typeof name === "string" && this.screens.has(name as ScreenName)) {
+        // A browser-back gesture leaves the current position saved;
+        // returning to the table shows the same in-memory game.
+        const target = name === "table" && !this.runner && !this.lesson ? "home" : name as ScreenName;
+        if (target !== name) window.history.replaceState({ openmahjongScreen: target }, "");
+        this.showScreen(target, false);
+      }
+    });
     // Account probe runs after first paint and never blocks play:
     // signed-out (or unreachable API) is the default landing state.
     void this.bootAuth();
@@ -379,19 +454,28 @@ export class App {
     this.stage.style.transform = `scale(${s})`;
   }
 
-  private showScreen(name: ScreenName): void {
+  private showScreen(name: ScreenName, pushHistory = true): void {
+    const previous = this.currentScreen;
+    this.currentScreen = name;
+    if (pushHistory) {
+      const state = { openmahjongScreen: name };
+      if (window.history.state?.openmahjongScreen === undefined) window.history.replaceState(state, "");
+      else if (previous !== name) window.history.pushState(state, "");
+    }
     for (const [n, el] of this.screens) el.classList.toggle("active", n === name);
     if (name === "home") this.renderHome();
     if (name === "settings") this.renderSettings();
     if (name === "history") void this.renderHistory();
     if (name === "stats") void this.renderStats();
     if (name === "learn") this.renderLearn();
+    if (previous !== name) this.screens.get(name)?.querySelector<HTMLElement>("button, input, [tabindex='0']")?.focus();
   }
 
   private applyTheme(): void {
     // Dark theme only (Michael, 2026-11-16).
     document.documentElement.dataset["theme"] = "dark";
     document.documentElement.classList.toggle("large", this.settings.largeTiles);
+    document.documentElement.classList.toggle("reduced-motion", this.settings.motion === "reduced");
   }
 
   // -- home ------------------------------------------------------------------
@@ -468,7 +552,7 @@ export class App {
       h("div", { class: "note" }, "Hints and explanations during CPU games."),
     );
     const gsw = h("label", { class: "switch" });
-    const ginput = h("input", { type: "checkbox" });
+    const ginput = h("input", { type: "checkbox", "aria-label": "Guided mode" });
     ginput.checked = this.settings.guided;
     ginput.addEventListener("change", () => {
       this.settings = { ...this.settings, guided: ginput.checked };
@@ -499,7 +583,7 @@ export class App {
       // the newest account record, Learn progress from the tutorial
       // progress. Each card hides when its data doesn't exist — a
       // brand-new signed-in user sees neither card.
-      const newest = (this.serverGames ?? []).reduce<GameRecord | null>(
+      const newest = (this.serverGames ?? []).reduce<GameSummary | null>(
         (best, g) => (best === null || g.finishedAt > best.finishedAt ? g : best),
         null,
       );
@@ -689,6 +773,7 @@ export class App {
    *  namespaced key, so a settings save never wipes it server-side. */
   private persistSettings(): void {
     saveSettings(this.settings);
+    this.applyTheme();
     if (this.user) {
       void putSettings(
         { ...this.settings, [TUTORIAL_SETTINGS_KEY]: this.tutorial } as Settings,
@@ -715,18 +800,7 @@ export class App {
    * zeroed hand stats and no log (they predate both).
    */
   private localGameRecords(): GameRecord[] {
-    const legacy: GameRecord[] = loadHistory().map((line, i) => ({
-      id: `legacy-${i}-${line.date}`,
-      length: line.length,
-      placement: line.humanRank,
-      score: line.scores[0] ?? 0,
-      finishedAt: line.date,
-      log: null,
-      stats: { ...ZERO_HAND_STATS },
-    }));
-    return [...legacy, ...loadRecords()].sort((a, b) =>
-      a.finishedAt < b.finishedAt ? -1 : a.finishedAt > b.finishedAt ? 1 : 0,
-    );
+    return mergeLocalGameRecords(loadRecords(), loadHistory());
   }
 
   private refreshImportOffer(): void {
@@ -743,16 +817,19 @@ export class App {
 
   private async doImport(): Promise<void> {
     const records = this.localGameRecords();
-    // Mark first: the offer is one-time per device even if the POST
-    // fails — the games stay local and nothing is lost.
-    markImportHandled();
+    // Hide while in flight; mark only after success so an offline
+    // attempt can be retried when the account service returns.
     this.importOfferCount = 0;
     this.renderHome();
     if (await postImport(records, this.csrfToken)) {
+      markImportHandled();
       this.serverGameCount = records.length;
       this.serverGames = records;
       const stats = await fetchStats();
       if (stats) this.statsSums = stats;
+      this.renderHome();
+    } else {
+      this.refreshImportOffer();
       this.renderHome();
     }
   }
@@ -784,7 +861,7 @@ export class App {
   }
 
   private async signOutFlow(): Promise<void> {
-    await signOut(this.csrfToken);
+    if (!(await signOut(this.csrfToken))) return;
     this.clearAccountState();
     this.renderHome();
     if (this.screens.get("settings")!.classList.contains("active")) this.renderSettings();
@@ -800,7 +877,7 @@ export class App {
   // -- text screens ----------------------------------------------------------
 
   private buildPage(title: string): HTMLElement {
-    const page = h("div", { class: "page" });
+    const page = h("div", { class: "page", tabindex: "0", role: "region", "aria-label": title });
     page.append(h("h2", {}, title));
     return page;
   }
@@ -904,6 +981,7 @@ export class App {
         const lab = h("div", {});
         lab.append(h("div", { class: "lab" }, label), h("div", { class: "note" }, note));
         wrap.append(lab, control);
+        control.querySelector("input")?.setAttribute("aria-label", label);
         return wrap;
       };
       const toggle = (on: boolean, disabled: boolean, onChange: (v: boolean) => void) => {
@@ -995,7 +1073,7 @@ export class App {
   // -- history & stats (slice 2, renderings 03/04) ---------------------------
 
   private async renderHistory(): Promise<void> {
-    let rows: GameRecord[];
+    let rows: (GameSummary | GameRecord)[];
     if (this.user) {
       rows = (await fetchGames()) ?? [];
       this.serverGameCount = rows.length;
@@ -1015,7 +1093,7 @@ export class App {
     });
   }
 
-  private historyRowEl(r: GameRecord): HTMLElement {
+  private historyRowEl(r: GameSummary | GameRecord): HTMLElement {
     const row = h("button", { class: "hrow" });
     row.append(
       h("span", { class: "when" }, historyDateLabel(r.finishedAt)),
@@ -1029,7 +1107,15 @@ export class App {
       "beforeend",
       `<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
     );
-    if (r.log) {
+    if (!("log" in r)) {
+      row.addEventListener("click", async () => {
+        row.disabled = true;
+        const generation = this.generation;
+        const record = await fetchGame(r.id);
+        row.disabled = false;
+        if (record && generation === this.generation && this.currentScreen === "history") this.openRecord(record);
+      });
+    } else if (r.log) {
       row.addEventListener("click", () => this.openRecord(r));
     } else {
       // Legacy slice-1 lines carry no decision log, so there is
@@ -1045,11 +1131,19 @@ export class App {
    *  review is a later slice. */
   private openRecord(record: GameRecord): void {
     if (!record.log) return;
+    let replay: GameRunner;
+    try {
+      replay = GameRunner.restore(record.log, new AiDriver());
+      if (!replay.result) return;
+    } catch {
+      // Keep the stored summary and the current game intact when a
+      // record is incompatible or corrupt. Never silently repair it.
+      return;
+    }
     this.generation++;
     this.playing = false;
     this.frame = null;
-    this.runner = GameRunner.restore(record.log, new AiDriver());
-    if (!this.runner.result) return;
+    this.runner = replay;
     this.resetDisplay();
     this.historyRecorded = true; // a replay is not a new game
     this.model = foldEvents(this.runner.events, this.humanSeat, this.runner.chiHints);
@@ -1125,8 +1219,11 @@ export class App {
   private resumeGame(): void {
     const saved = loadGame();
     if (!saved) return;
+    let restored: GameRunner;
+    try { restored = GameRunner.restore(saved, new AiDriver()); }
+    catch { return; }
     this.generation++;
-    this.runner = GameRunner.restore(saved, new AiDriver());
+    this.runner = restored;
     this.resetDisplay();
     this.historyRecorded = this.runner.result !== null;
     // Resume lands on the settled current state (A8: same game, same
@@ -1166,12 +1263,6 @@ export class App {
       if (!this.historyRecorded) {
         this.historyRecorded = true;
         const mine = this.runner.result.settlement.find((s) => s.seat === this.humanSeat);
-        appendHistory({
-          date: new Date().toISOString(),
-          length: this.runner.length,
-          scores: this.runner.result.scores,
-          humanRank: mine?.rank ?? 0,
-        });
         // Slice 2 (brief T1): the full record — decision log + hand
         // stats — is stored locally for everyone and posted when
         // signed in. Posting is fire-and-forget; the results screen
@@ -1447,7 +1538,7 @@ export class App {
 
     // Header
     const header = h("header", { class: "bar" });
-    const menuBtn = h("button", { class: "iconbtn", "aria-label": "Menu" });
+    const menuBtn = h("button", { class: "iconbtn", "aria-label": "Menu", "data-control-key": "menu" });
     menuBtn.innerHTML = ICON_MENU;
     menuBtn.addEventListener("click", () => {
       if (this.lesson) this.showLessonMenu();
@@ -1521,7 +1612,7 @@ export class App {
     zonePlayer.append(this.promptRowEl());
     zonePlayer.append(this.handRowEl());
     const handctl = h("div", { class: "handctl" });
-    const expandBtn = h("button", {}, "Inspect hand");
+    const expandBtn = h("button", { "data-control-key": "inspect-open" }, "Inspect hand");
     expandBtn.innerHTML = `${ICON_EXPAND}<span>Inspect hand</span>`;
     expandBtn.addEventListener("click", () => this.openFrame({ kind: "hand", mode: "inspect" }));
     handctl.append(expandBtn);
@@ -1533,7 +1624,13 @@ export class App {
       const scrim = h("button", { class: "scrim", "aria-label": "Close" });
       scrim.addEventListener("click", () => this.closeFrame());
       t.append(scrim);
-      t.append(this.frameEl());
+      const dialog = this.frameEl();
+      t.append(dialog);
+      // Underlying table controls stay out of the modal tab sequence.
+      for (const child of [...t.children]) {
+        if (child !== dialog && child !== scrim && child instanceof HTMLElement) child.inert = true;
+      }
+      accessibleDialog(dialog, this.frame.kind === "hand" ? "Your hand" : this.frame.kind === "center" ? "Round details" : "Player details", () => this.closeFrame());
     }
 
     // Guided hint overlay (HINT PLACEMENT ruling): a floating layer
@@ -1550,6 +1647,9 @@ export class App {
    * the coach's — the CPU policy's own evaluation, opened up.
    */
   private guideHintEl(): HTMLElement | null {
+    // Current strategic analysis must not be attributed to historical
+    // rules. Legacy saves retain their original simulation revision.
+    if (this.runner?.replayVersion === 1) return null;
     if (this.lesson || this.frame || this.playing || !this.runner) return null;
     if (!this.tu11Active && !this.settings.guided) return null;
     const pending = this.runner.pending;
@@ -1560,7 +1660,7 @@ export class App {
 
   private centerEl(): HTMLElement {
     const m = this.model;
-    const center = h("button", { class: "center", "aria-label": "Round details" });
+    const center = h("button", { class: "center", "data-control-key": "round-details" });
     const round = h("div", { class: "round" });
     const wind = h("span", { class: "wind kj" }, WIND_KANJI[m.roundWind]!);
     const rname = h("span", { class: "rname" }, `${WIND_NAMES[m.roundWind]} ${m.kyoku}`);
@@ -1642,7 +1742,9 @@ export class App {
           inner.classList.add("riichi-ok");
         }
       }
-      wrap.addEventListener("click", () => this.onHandTileTap(tile));
+      if (myTurn || this.lesson?.view().acceptsTiles) {
+        tileControl(wrap, `hand-${tile.id}`, `${tileLabel(tile)}${this.selectedTileId === tile.id ? ", selected; activate to discard" : "; activate to select"}`, () => this.onHandTileTap(tile), this.selectedTileId === tile.id);
+      }
       row.append(wrap);
     });
     for (const meld of me.melds) row.append(this.meldEl(meld, "t-meld", me.seat));
@@ -1768,6 +1870,7 @@ export class App {
   // -- focus frames ---------------------------------------------------------------
 
   private openFrame(frame: NonNullable<FrameState>): void {
+    this.frameReturnFocus = (document.activeElement as HTMLElement | null)?.dataset["controlKey"];
     this.frame = frame;
     this.frameChangedTiles.clear();
     markFocusFrameTaught();
@@ -1780,6 +1883,7 @@ export class App {
     this.frame = null;
     this.frameChangedTiles = new Set();
     this.renderTable();
+    focusByKey(this.frameReturnFocus);
     // Tiles that changed while zoomed pulse briefly on the table (§8).
     for (const id of changed) {
       const el = this.tableEl.querySelector(`[data-flip="tile-${id}"] .tile`);
@@ -1938,11 +2042,11 @@ export class App {
       if (drawnId === tile.id && idx === tiles.length - 1) cell.classList.add("drawn");
       if (this.selectedTileId === tile.id) cell.classList.add("sel");
       cell.append(tileEl(tile, "", { flip: false }));
-      cell.addEventListener("click", () => {
+      tileControl(cell, `inspect-${tile.id}`, tileLabel(tile), () => {
         this.sound.unlock();
         this.selectedTileId = tile.id;
         if (this.frame?.kind === "hand") this.renderTable();
-      });
+      }, this.selectedTileId === tile.id);
       grid.append(cell);
     });
     sheet.append(grid);
@@ -2159,19 +2263,19 @@ export class App {
     );
     const col = h("div", { class: "col" });
     const resume = h("button", { class: "pillbtn primary" }, "Resume");
-    resume.addEventListener("click", () => overlay.remove());
+    resume.addEventListener("click", () => this.dismissOverlay(overlay));
     const leave = h("button", { class: "pillbtn" }, "Leave lesson");
     leave.addEventListener("click", () => {
-      overlay.remove();
+      this.dismissOverlay(overlay);
       this.exitLesson();
     });
     col.append(resume, leave);
     card.append(col);
     overlay.append(card);
     overlay.addEventListener("click", (e) => {
-      if (e.target === overlay) overlay.remove();
+      if (e.target === overlay) this.dismissOverlay(overlay);
     });
-    this.tableEl.append(overlay);
+    this.mountOverlay(overlay);
   }
 
   private lessonStripEl(types: readonly number[]): HTMLElement {
@@ -2245,7 +2349,7 @@ export class App {
           class: `cell${view.drill!.found.includes(i) ? " sel" : ""}`,
         });
         cell.append(tileEl(tileById(type * 4 + 1), "", { flip: false }));
-        cell.addEventListener("click", () => this.lessonAct({ kind: "drill", index: i }));
+        tileControl(cell, `drill-${i}`, tileTypeName(type), () => this.lessonAct({ kind: "drill", index: i }), view.drill!.found.includes(i));
         grid.append(cell);
       });
       drill.append(grid);
@@ -2303,6 +2407,23 @@ export class App {
 
   // -- pause + breakdown + results -------------------------------------------------
 
+  private mountOverlay(overlay: HTMLElement, onClose?: () => void): void {
+    overlay.dataset["returnFocus"] = (document.activeElement as HTMLElement | null)?.dataset["controlKey"] ?? "menu";
+    for (const child of [...this.tableEl.children]) {
+      if (child instanceof HTMLElement) child.inert = true;
+    }
+    this.tableEl.append(overlay);
+    accessibleDialog(overlay, overlay.querySelector("h2")?.textContent ?? "Game information", onClose ?? (() => this.dismissOverlay(overlay)));
+  }
+
+  private dismissOverlay(overlay: HTMLElement): void {
+    overlay.remove();
+    for (const child of [...this.tableEl.children]) {
+      if (child instanceof HTMLElement) child.inert = false;
+    }
+    focusByKey(overlay.dataset["returnFocus"]);
+  }
+
   private showPause(): void {
     const overlay = h("div", { class: "overlay show" });
     const card = h("div", { class: "card" });
@@ -2314,35 +2435,35 @@ export class App {
       return b;
     };
     col.append(
-      mk("Resume", "primary", () => overlay.remove()),
+      mk("Resume", "primary", () => this.dismissOverlay(overlay)),
       mk(this.settings.guided ? "Guided: on" : "Guided: off", "ghost", () => {
         this.settings = { ...this.settings, guided: !this.settings.guided };
         this.persistSettings();
-        overlay.remove();
+        this.dismissOverlay(overlay);
         this.renderTable();
       }),
       mk(this.settings.sound ? "Sound: on" : "Sound: off", "ghost", () => {
         this.settings = { ...this.settings, sound: !this.settings.sound };
         this.sound.enabled = this.settings.sound;
         this.persistSettings();
-        overlay.remove();
+        this.dismissOverlay(overlay);
         this.renderTable();
       }),
       mk("Restart game", "", () => {
-        overlay.remove();
+        this.dismissOverlay(overlay);
         this.restartGame();
       }),
       mk("Quit to home", "", () => {
-        overlay.remove();
+        this.dismissOverlay(overlay);
         this.quitToHome();
       }),
     );
     card.append(col);
     overlay.append(card);
     overlay.addEventListener("click", (e) => {
-      if (e.target === overlay) overlay.remove();
+      if (e.target === overlay) this.dismissOverlay(overlay);
     });
-    this.tableEl.append(overlay);
+    this.mountOverlay(overlay);
   }
 
   private showBreakdown(): Promise<void> {
@@ -2362,12 +2483,12 @@ export class App {
       cont.style.width = "100%";
       cont.style.marginTop = "16px";
       cont.addEventListener("click", () => {
-        overlay.remove();
+        this.dismissOverlay(overlay);
         resolve();
       });
       card.append(cont);
       overlay.append(card);
-      this.tableEl.append(overlay);
+      this.mountOverlay(overlay, () => { this.dismissOverlay(overlay); resolve(); });
     });
   }
 
@@ -2389,15 +2510,18 @@ export class App {
 
     const yakuBox = h("div", { class: "bk-yaku" });
     let yakuHan = 0;
+    const open = win.winnerMelds.some((meld) => meld.kind !== "ankan");
     for (const id of win.yaku) {
-      const [name, han] = YAKU[id] ?? [id, 0];
+      const [name, closedHan] = YAKU[id] ?? [id, 0];
+      const han = win.yakuDetails?.find((yaku) => yaku.id === id)?.han ??
+        (open && ["ittsu", "sanshoku-doujun", "honchan", "junchan", "honitsu", "chinitsu"].includes(id) ? closedHan - 1 : closedHan);
       yakuHan += han;
       const row = h("div", { class: "row" });
       row.append(h("span", {}, name), h("span", { class: "han" }, win.yakumanMultiple > 0 ? "Yakuman" : `${han} han`));
       yakuBox.append(row);
     }
     if (win.yakumanMultiple === 0) {
-      const dora = Math.max(0, win.han - yakuHan);
+      const dora = win.dora ?? Math.max(0, win.han - yakuHan);
       if (dora > 0) {
         const row = h("div", { class: "row" });
         row.append(h("span", {}, "Dora"), h("span", { class: "han" }, `${dora} han`));
@@ -2414,7 +2538,7 @@ export class App {
       const total = h("div", { class: "row total" });
       const gained = win.payments.reduce((s, p) => s + p.amount, 0) + win.stickPoints;
       total.append(
-        h("span", {}, win.yakumanMultiple > 1 ? `Double Yakuman ×${win.yakumanMultiple}` : "Yakuman"),
+        h("span", {}, win.yakumanMultiple > 1 ? `Yakuman ×${win.yakumanMultiple}` : "Yakuman"),
         h("span", {}, `${fmt(gained)}`),
       );
       yakuBox.append(total);
@@ -2497,7 +2621,7 @@ export class App {
       table.append(row);
     }
     page.append(table);
-    page.append(h("p", { class: "dim" }, "Points include uma (+15/+5/−5/−15) and the 20-point oka to first place."));
+    page.append(h("p", { class: "dim" }, `${this.runner?.replayVersion === 1 ? "Historical rules v1; saved results preserved. " : ""}Points include uma (+15/+5/−5/−15) and the 20-point oka to first place.`));
     const col = h("div", { class: "col" });
     col.style.display = "flex";
     col.style.flexDirection = "column";

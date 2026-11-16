@@ -10,6 +10,7 @@
 import type { GameEvent, GameLength, Seat } from "@openmahjong/engine";
 import type { GameRecord, HandStats, StatsSums } from "./api.js";
 import type { SavedGame } from "./runner.js";
+import type { HistoryLine } from "./settings.js";
 
 export const ZERO_HAND_STATS: HandStats = {
   hands: 0,
@@ -22,10 +23,87 @@ export const ZERO_HAND_STATS: HandStats = {
 export function newGameId(): string {
   const c = globalThis.crypto as Crypto | undefined;
   if (c && typeof c.randomUUID === "function") return c.randomUUID();
-  // Fallback for older runtimes: timestamp + random hex is unique enough
-  // for a per-device game id.
-  const rand = Math.floor(Math.random() * 0xffffffff).toString(16).padStart(8, "0");
-  return `om-${Date.now().toString(36)}-${rand}`;
+  const bytes = new Uint8Array(16);
+  if (c && typeof c.getRandomValues === "function") c.getRandomValues(bytes);
+  else for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+  // These IDs are deduplication keys, never authentication tokens. Even
+  // old runtimes must produce the UUID shape required by the database.
+  bytes[6] = (bytes[6]! & 0x0f) | 0x40;
+  bytes[8] = (bytes[8]! & 0x3f) | 0x80;
+  return uuidFromBytes(bytes);
+}
+
+function uuidFromBytes(bytes: Uint8Array): string {
+  const hex = [...bytes].map((value) => value.toString(16).padStart(2, "0")).join("");
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+}
+
+/** Deterministic UUIDv8 for imported legacy rows, with an application-specific
+ * noncryptographic 128-bit hash. This is an identity key, not a security hash.
+ * The occurrence distinguishes genuinely separate identical stored lines. */
+function legacyGameId(identity: string, occurrence: number): string {
+  const text = `openmahjong.legacy-history.v1:${identity}:${occurrence}`;
+  const words = [0x811c9dc5, 0x9e3779b9, 0x243f6a88, 0xb7e15162];
+  for (let i = 0; i < text.length; i++) {
+    const code = text.charCodeAt(i);
+    for (let lane = 0; lane < words.length; lane++) {
+      words[lane] = Math.imul(words[lane]! ^ code, 0x01000193 + lane * 2);
+    }
+  }
+  const bytes = new Uint8Array(16);
+  words.forEach((word, lane) => {
+    // Avalanche each lane so nearby timestamps do not share visible prefixes.
+    word = Math.imul(word ^ (word >>> 16), 0x85ebca6b);
+    word = Math.imul(word ^ (word >>> 13), 0xc2b2ae35);
+    word ^= word >>> 16;
+    for (let offset = 0; offset < 4; offset++) bytes[lane * 4 + offset] = word >>> (offset * 8);
+  });
+  bytes[6] = (bytes[6]! & 0x0f) | 0x80;
+  bytes[8] = (bytes[8]! & 0x3f) | 0x80;
+  return uuidFromBytes(bytes);
+}
+
+/** Reconcile the old dual-written browser stores without deleting either.
+ * A full record's replay identifies its human seat; legacy-only summaries
+ * have no seat field and use the App's normal human seat 0. A full
+ * record wins over at most one matching legacy line, and only within the
+ * observed write order and a one-second completion window. Wider matches
+ * would risk hiding a separate game with coincidentally equal results. */
+export function mergeLocalGameRecords(
+  records: readonly GameRecord[],
+  legacy: readonly HistoryLine[],
+): GameRecord[] {
+  const matched = new Set<number>();
+  const occurrences = new Map<string, number>();
+  const remaining: GameRecord[] = [];
+  for (const line of legacy) {
+    const identity = JSON.stringify([line.date, line.length, line.humanRank, line.scores]);
+    const occurrence = occurrences.get(identity) ?? 0;
+    occurrences.set(identity, occurrence + 1);
+    const time = Date.parse(line.date);
+    let nearest = -1;
+    let nearestDelay = Infinity;
+    records.forEach((record, index) => {
+      if (matched.has(index) || record.length !== line.length ||
+        record.placement !== line.humanRank || record.score !== line.scores[record.log?.humanSeat ?? 0]) return;
+      const delay = Date.parse(record.finishedAt) - time;
+      if (delay >= 0 && delay <= 1000 && delay < nearestDelay) {
+        nearest = index;
+        nearestDelay = delay;
+      }
+    });
+    if (nearest >= 0) {
+      matched.add(nearest);
+      continue;
+    }
+    remaining.push({
+      id: legacyGameId(identity, occurrence), length: line.length,
+      placement: line.humanRank, score: line.scores[0] ?? 0,
+      finishedAt: line.date, log: null, stats: { ...ZERO_HAND_STATS },
+    });
+  }
+  return [...remaining, ...records].sort((a, b) =>
+    Date.parse(a.finishedAt) - Date.parse(b.finishedAt));
 }
 
 /**

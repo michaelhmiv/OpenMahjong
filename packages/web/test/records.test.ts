@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { GameEvent } from "@openmahjong/engine";
 import {
   buildGameRecord,
@@ -6,10 +6,91 @@ import {
   formatRecordStrip,
   formatStatsView,
   relativeDateLabel,
+  mergeLocalGameRecords,
+  newGameId,
   shouldOfferImport,
   sumRecords,
 } from "../src/records.js";
-import type { StatsSums } from "../src/api.js";
+import type { GameRecord, StatsSums } from "../src/api.js";
+import type { HistoryLine } from "../src/settings.js";
+
+describe("browser history reconciliation", () => {
+  const line: HistoryLine = { date: "2026-11-16T15:04:00.000Z", length: "east",
+    scores: [28400, 35000, 25000, 11600], humanRank: 2 };
+  const full: GameRecord = { id: "39f388b7-18e6-4ae7-9fa5-06d59b5af62c", length: "east",
+    placement: 2, score: 28400, finishedAt: "2026-11-16T15:04:00.500Z",
+    log: { v: 1, seed: "history", length: "east", humanSeat: 0, decisions: [] },
+    stats: { hands: 4, riichi: 1, dealIns: 1, handsWon: 2, winPoints: 12700 } };
+  const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+
+  it("keeps legacy-only games visible with stable importable UUIDs", () => {
+    const result = mergeLocalGameRecords([], [line]);
+    expect(result).toHaveLength(1);
+    expect(result[0]).toMatchObject({ length: "east", placement: 2, score: 28400,
+      finishedAt: line.date, log: null, stats: { hands: 0, winPoints: 0 } });
+    expect(result[0]!.id).toMatch(uuid);
+    expect(result[0]!.id[14]).toBe("8");
+    expect(result[0]!.id[19]).toMatch(/[89ab]/);
+    expect(mergeLocalGameRecords([], [line])).toEqual(result);
+    // An unrelated preceding row must not change an existing import key.
+    const earlier = { ...line, date: "2026-11-15T15:04:00.000Z" };
+    expect(mergeLocalGameRecords([], [earlier, line])[1]!.id).toBe(result[0]!.id);
+  });
+
+  it("counts a near-time mirror once and retains the full log and hand statistics", () => {
+    const records = [full];
+    const legacy = [line];
+    const result = mergeLocalGameRecords(records, legacy);
+    expect(result).toEqual([full]);
+    expect(result[0]).toBe(full);
+    expect(sumRecords(result)).toMatchObject({ games: 1, hands: 4, handsWon: 2, winPoints: 12700 });
+    expect(records).toEqual([full]);
+    expect(legacy).toEqual([line]);
+  });
+
+  it("preserves separate games outside the write window and mismatched outcomes", () => {
+    const distinct: HistoryLine[] = [
+      { ...line, date: "2026-11-16T15:03:59.499Z" }, // 1001 ms before the full record
+      { ...line, date: "2026-11-16T15:04:00.501Z" }, // recorded after the full row
+      { ...line, length: "south" },
+      { ...line, humanRank: 1 },
+      { ...line, scores: [28500, 34900, 25000, 11600] },
+    ];
+    const result = mergeLocalGameRecords([full], distinct);
+    expect(result).toHaveLength(distinct.length + 1);
+    expect(new Set(result.map((record) => record.id)).size).toBe(result.length);
+  });
+
+  it("suppresses at most one legacy line per full record", () => {
+    const result = mergeLocalGameRecords([full], [line, { ...line }]);
+    expect(result).toHaveLength(2);
+    expect(result.filter((record) => record.log !== null)).toEqual([full]);
+    const legacyOnly = mergeLocalGameRecords([], [line, { ...line }]);
+    expect(legacyOnly).toHaveLength(2);
+    expect(legacyOnly[0]!.id).not.toBe(legacyOnly[1]!.id);
+    expect(result.find((record) => record.log === null)!.id).toBe(legacyOnly[1]!.id);
+  });
+
+  it("matches the human score from a replay with a nonzero human seat", () => {
+    const otherSeat = { ...full, score: 35000, log: { ...full.log!, humanSeat: 1 } };
+    expect(mergeLocalGameRecords([otherSeat], [line])).toEqual([otherSeat]);
+  });
+});
+
+describe("game IDs in older browsers", () => {
+  afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
+  const uuid4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+  it("uses getRandomValues when randomUUID is unavailable", () => {
+    const getRandomValues = vi.fn((bytes: Uint8Array) => bytes.fill(255));
+    vi.stubGlobal("crypto", { getRandomValues });
+    expect(newGameId()).toMatch(uuid4);
+    expect(getRandomValues).toHaveBeenCalledOnce();
+  });
+  it("retains UUID shape even when the runtime has no crypto object", () => {
+    vi.stubGlobal("crypto", undefined);
+    expect(newGameId()).toMatch(uuid4);
+  });
+});
 
 const ev = (o: Record<string, unknown>): GameEvent => o as unknown as GameEvent;
 

@@ -419,6 +419,50 @@ serious/critical axe violations on About, in-progress Learn, or results.
 
 **Proposed PR:** Accessibility and navigation reliability.
 
+### UX-011 — The legacy history bridge counts completed games twice
+
+**Area:** Guest History, Stats, account import. **Severity:** P1.
+**Impact:** A single completed match appears as two games in local history
+and aggregate statistics; legacy records also cannot satisfy the server's
+UUID requirement when imported. **Complexity:** Medium.
+
+**Expected:** A match contributes once to History/Stats. Historical
+summary-only records remain accessible, mirrored old/new records merge
+without loss, and legacy imports use stable valid identifiers.
+
+**Code evidence:** On the immutable baseline, completion writes the same
+match to `appendHistory()` and `appendRecord()`. `localGameRecords()` then
+concatenates the converted legacy summaries and full records without
+deduplication. Converted IDs use `legacy-INDEX-DATE`, while server upload
+validation requires UUIDs. The initial browser smoke required only a
+nonempty History list and therefore did not detect this data invariant;
+the follow-up full-match assertion explicitly checks the count.
+
+**Evidence:** `packages/web/src/app.ts:717`–`728` (legacy conversion and
+concatenation), `1169`–`1189` (dual writes), and
+`packages/server/src/validate.ts` (UUID validation).
+
+**Reproduce:** On the baseline with empty guest storage, finish one match
+and open Settings → History/Stats. Trace both completion writes and the
+unfiltered merged collection. For import, submit a converted legacy ID
+to the validated upload boundary; it does not match the UUID format.
+
+**Root cause:** A compatibility store continued receiving new writes
+after full records were introduced, and the read/import bridge treated
+both representations as independent authoritative games.
+
+**Correction:** Write new completions only to full records. Merge old
+mirrors conservatively by their completion context while retaining
+unmatched legacy-only records; give the latter deterministic UUIDs for
+idempotent import. Preserve old browser data rather than deleting it.
+
+**Acceptance:** One newly completed match produces exactly one History
+row and Games-played value of one. Reopening its record preserves the
+result. Tests cover historical mirror matching, nearby distinct matches,
+legacy-only retention, stable import IDs, and repeated reads/imports.
+
+**Proposed PR:** Browser persistence, account contract, and reliability.
+
 ## Important capability gaps, not regressions
 
 The History row currently reconstructs a completed game directly to final
@@ -485,13 +529,13 @@ counts after the fixes are implemented.
 ## Patched-build verification
 
 The corrected built client was served locally at `http://127.0.0.1:4175`
-and verified on November 16, 2026. The run began at 3:47 p.m.
-America/New_York (`2026-11-16T20:47:41.350Z`). The exact command, run from
+and verified on November 16, 2026. The final run began at 3:54 p.m.
+America/New_York (`2026-11-16T20:54:39.413Z`). The exact command, run from
 the repository root, was:
 
 ```sh
 BROWSER_FULL_GAME=1 BROWSER_NO_SANDBOX=1 node scripts/browser-smoke.mjs \
-  http://127.0.0.1:4175 /workspace/work/evidence/patched-verified
+  http://127.0.0.1:4175 /workspace/work/evidence/final
 ```
 
 **Result: 27 of 27 checks passed; process exit 0.** Chromium
@@ -518,14 +562,15 @@ The normal phone walkthroughs separately used OS reduced motion.
 
 The complete East-match check asserted that its initial saved envelope
 was **v2, engine revision 2, AI revision 2, `openmahjong-riichi@1`** before
-resuming the deterministic `browser-smoke-east-v2` seed. It completed 93
+resuming the deterministic `browser-smoke-east-v2` seed. It completed 91
 UI actions, including 14 passes, four Next-hand transitions, and Final
-results. Guest History then reopened the record with identical standings.
+results. Guest History contained exactly **one** row, reopened the record
+with identical standings, and guest Stats showed **one game played**.
 The first captured hand-end was a real Ron showing Haku 1 han + Dora 2
 han, 3 han / 30 fu, and a 3,900-point payment. This verifies a real
 breakdown path; it does not independently establish every scoring case.
 
-The offline check installed cache `openmahjong-cdacccc41b092a4b`, whose
+The offline check installed cache `openmahjong-5adceb8803c33d25`, whose
 nine URLs covered the matching shell, JavaScript/CSS, both fonts,
 manifest, icon, and static privacy document. After clearing Chromium's
 HTTP cache while retaining CacheStorage and forcing offline mode, Home
@@ -534,12 +579,16 @@ the static policy. Zero uncaught browser exceptions or online console
 errors were recorded. One resource-failure console message occurred
 during the intentionally offline phase; this is retained in the report.
 
-Raw evidence is in `patched-verified/report.json`, nine `axe-*.json`
-files, and PNG captures under the audit's temporary evidence directory.
+Raw evidence is in `final/report.json`, nine `axe-*.json` files, and 44 PNG
+captures under the audit's temporary evidence directory.
 The first patched pass is preserved separately in `patched-final/`: it
 passed 21/24 checks and exposed the stale history state plus the Learn
 and standings contrast defects. Those findings were corrected before
-this final rerun. A warm-cache-only offline check was not substituted.
+the corrected reruns. An intermediate `patched-verified/` pass also
+passed 27/27; after the legacy-history bridge was repaired, this final
+run added explicit one-match History/Stats assertions and reverified the
+whole suite against the rebuilt client. A warm-cache-only offline check
+was not substituted.
 
 | Finding | Verified correction and remaining limit |
 | --- | --- |
@@ -553,6 +602,7 @@ this final rerun. A warm-cache-only offline check was not substituted.
 | UX-008 | In-app-only hand-sheet motion is suppressed; OS-reduced walkthroughs pass. Physical-device motion/performance testing remains open. |
 | UX-009 | Both long content regions accept focus and scroll by PageDown. |
 | UX-010 | About, in-progress Learn, and final signed points pass axe after using existing approved text colors. |
+| UX-011 | A completed fresh match contributes exactly one History row and one Stats game; reopening preserves standings. Historical merge/import cases require the separate persistence unit tests; real account import remains unverified here. |
 
 These checks protect the repaired existing experience. They do not claim
 that the master brief's future decision-review, dedicated Practice,

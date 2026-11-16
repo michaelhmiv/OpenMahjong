@@ -1,0 +1,2650 @@
+{
+  "base": "http://127.0.0.1:4175/",
+  "observedAt": "2026-11-16T20:54:39.413Z",
+  "scope": {
+    "guestApiFixture": true,
+    "tlsBypass": false,
+    "fullGame": true,
+    "browser": "Chromium headless",
+    "browserVersion": "156.0.8078.79"
+  },
+  "checks": [
+    {
+      "name": "viewport 360x800",
+      "status": "passed",
+      "evidence": {
+        "homeControls": 10,
+        "drillControls": 15,
+        "tableControls": 18
+      }
+    },
+    {
+      "name": "viewport 390x844",
+      "status": "passed",
+      "evidence": {
+        "homeControls": 10,
+        "drillControls": 15,
+        "tableControls": 18
+      }
+    },
+    {
+      "name": "viewport 412x915",
+      "status": "passed",
+      "evidence": {
+        "homeControls": 10,
+        "drillControls": 15,
+        "tableControls": 18
+      }
+    },
+    {
+      "name": "viewport 768x1024",
+      "status": "passed",
+      "evidence": {
+        "homeControls": 10,
+        "drillControls": 15,
+        "tableControls": 18
+      }
+    },
+    {
+      "name": "viewport 1024x768",
+      "status": "passed",
+      "evidence": {
+        "homeControls": 10,
+        "drillControls": 15,
+        "tableControls": 18
+      }
+    },
+    {
+      "name": "viewport 1440x900",
+      "status": "passed",
+      "evidence": {
+        "homeControls": 10,
+        "drillControls": 15,
+        "tableControls": 18
+      }
+    },
+    {
+      "name": "home accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 1
+      }
+    },
+    {
+      "name": "Rules accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "Rules content scrolls by keyboard",
+      "status": "passed",
+      "evidence": {
+        "height": 800,
+        "contentHeight": 1365,
+        "scrollTop": 87
+      }
+    },
+    {
+      "name": "About accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "Privacy accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "Privacy content scrolls by keyboard",
+      "status": "passed",
+      "evidence": {
+        "height": 800,
+        "contentHeight": 922,
+        "scrollTop": 28
+      }
+    },
+    {
+      "name": "in-progress Learn accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "wrong-answer feedback and lesson resume",
+      "status": "passed",
+      "evidence": {
+        "wrongAnswerStayedAtStep": 3,
+        "restoredStep": 4
+      }
+    },
+    {
+      "name": "tile drill works by keyboard",
+      "status": "passed",
+      "evidence": {
+        "tag": "SPAN",
+        "role": "button",
+        "tabIndex": 0,
+        "name": "2p"
+      }
+    },
+    {
+      "name": "settings accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "table accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "hand selection and discard work by keyboard",
+      "status": "passed",
+      "evidence": {
+        "selectedTile": "hand-16",
+        "recordedLegalAction": true
+      }
+    },
+    {
+      "name": "hand focus and pause keep keyboard focus inside",
+      "status": "passed",
+      "evidence": null
+    },
+    {
+      "name": "game resume survives reload",
+      "status": "passed",
+      "evidence": {
+        "restoredTiles": 14
+      }
+    },
+    {
+      "name": "browser back returns from Learn to home",
+      "status": "passed",
+      "evidence": null
+    },
+    {
+      "name": "in-app reduced motion suppresses hand-sheet animation without OS reduction",
+      "status": "passed",
+      "evidence": {
+        "animationName": "none",
+        "animationDuration": "0s",
+        "rootClass": "reduced-motion"
+      }
+    },
+    {
+      "name": "first-visit offline reload with cold HTTP cache",
+      "status": "passed",
+      "evidence": [
+        {
+          "key": "openmahjong-5adceb8803c33d25",
+          "urls": [
+            "http://127.0.0.1:4175/",
+            "http://127.0.0.1:4175/assets/index-DLthvd8Q.js",
+            "http://127.0.0.1:4175/assets/index-WRCheSF9.css",
+            "http://127.0.0.1:4175/fonts/figtree-var.woff2",
+            "http://127.0.0.1:4175/fonts/fraunces-var.woff2",
+            "http://127.0.0.1:4175/icon.svg",
+            "http://127.0.0.1:4175/index.html",
+            "http://127.0.0.1:4175/manifest.webmanifest",
+            "http://127.0.0.1:4175/privacy/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "hand-end breakdown accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "completed results accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "complete guest East game and reopen history",
+      "status": "passed",
+      "evidence": {
+        "actions": 91,
+        "prompts": {
+          "Pass": 14,
+          "Next hand": 4,
+          "Final results": 1
+        },
+        "seed": "browser-smoke-east-v2",
+        "replayEnvelope": {
+          "v": 2,
+          "engineVersion": 2,
+          "aiVersion": 2,
+          "ruleset": {
+            "id": "openmahjong-riichi",
+            "version": 1
+          }
+        },
+        "historyRecords": 1,
+        "statisticsGames": 1,
+        "result": "completed match, reopened identical standings, and counted one game in History/Stats"
+      }
+    },
+    {
+      "name": "no uncaught browser exceptions",
+      "status": "passed",
+      "evidence": null
+    }
+  ],
+  "diagnostics": [
+    {
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED",
+      "network": "offline"
+    }
+  ],
+  "viewports": [
+    {
+      "width": 360,
+      "height": 800,
+      "home": [
+        {
+          "text": "East only",
+          "x": 74.03365325927734,
+          "y": 280,
+          "width": 96.00000762939453,
+          "height": 36.923065185546875,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "East + South",
+          "x": 173.72596740722656,
+          "y": 280,
+          "width": 112.22596740722656,
+          "height": 36.923065185546875,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Guided mode",
+          "x": 270.4615478515625,
+          "y": 346.9230651855469,
+          "width": 48,
+          "height": 29.5384521484375,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Play",
+          "x": 78.46154022216797,
+          "y": 376.9230651855469,
+          "width": 203.076904296875,
+          "height": 51.692291259765625,
+          "fontSize": 17,
+          "outside": false
+        },
+        {
+          "text": "LearnStart ›11 lessons. Start with the tiles.",
+          "x": 25.846153259277344,
+          "y": 439.6922912597656,
+          "width": 308.30767822265625,
+          "height": 60,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sign in with Google",
+          "x": 78.46154022216797,
+          "y": 510.76922607421875,
+          "width": 203.076904296875,
+          "height": 44.30767822265625,
+          "fontSize": 15,
+          "outside": false
+        },
+        {
+          "text": "Rules",
+          "x": 65.42308044433594,
+          "y": 700.3028564453125,
+          "width": 44.63941955566406,
+          "height": 40.6153564453125,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Settings",
+          "x": 115.60095977783203,
+          "y": 700.3028564453125,
+          "width": 62.33654022216797,
+          "height": 40.6153564453125,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "About",
+          "x": 183.47596740722656,
+          "y": 700.3028564453125,
+          "width": 49.485565185546875,
+          "height": 40.6153564453125,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Privacy",
+          "x": 238.5,
+          "y": 700.3028564453125,
+          "width": 56.0625,
+          "height": 40.6153564453125,
+          "fontSize": 14,
+          "outside": false
+        }
+      ],
+      "drill": [
+        {
+          "text": "Menu",
+          "x": 11.076923370361328,
+          "y": 0.004791259765625,
+          "width": 40.61538314819336,
+          "height": 40.61538314819336,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sound",
+          "x": 308.3077087402344,
+          "y": 0.004791259765625,
+          "width": 40.6153564453125,
+          "height": 40.61538314819336,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "3m",
+          "x": 41.07692337036133,
+          "y": 155.0817108154297,
+          "width": 42.4615364074707,
+          "height": 59.076934814453125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "7p",
+          "x": 88.15384674072266,
+          "y": 155.0817108154297,
+          "width": 42.46154022216797,
+          "height": 59.076934814453125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "2s",
+          "x": 135.23077392578125,
+          "y": 155.0817108154297,
+          "width": 42.46153259277344,
+          "height": 59.076934814453125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "9m",
+          "x": 182.3076934814453,
+          "y": 155.0817108154297,
+          "width": 42.46153259277344,
+          "height": 59.076934814453125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5s",
+          "x": 229.38461303710938,
+          "y": 155.0817108154297,
+          "width": 42.4615478515625,
+          "height": 59.076934814453125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "E",
+          "x": 276.4615478515625,
+          "y": 155.0817108154297,
+          "width": 42.461517333984375,
+          "height": 59.076934814453125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4s",
+          "x": 41.07692337036133,
+          "y": 223.389404296875,
+          "width": 42.4615364074707,
+          "height": 59.076934814453125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1p",
+          "x": 88.15384674072266,
+          "y": 223.389404296875,
+          "width": 42.46154022216797,
+          "height": 59.076934814453125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "8s",
+          "x": 135.23077392578125,
+          "y": 223.389404296875,
+          "width": 42.46153259277344,
+          "height": 59.076934814453125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "3s",
+          "x": 182.3076934814453,
+          "y": 223.389404296875,
+          "width": 42.46153259277344,
+          "height": 59.076934814453125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Wh",
+          "x": 229.38461303710938,
+          "y": 223.389404296875,
+          "width": 42.4615478515625,
+          "height": 59.076934814453125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6m",
+          "x": 276.4615478515625,
+          "y": 223.389404296875,
+          "width": 42.461517333984375,
+          "height": 59.076934814453125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Leave",
+          "x": 9.230769157409668,
+          "y": 740.918212890625,
+          "width": 269.3653869628906,
+          "height": 44.3077392578125,
+          "fontSize": 15,
+          "outside": false
+        }
+      ],
+      "table": [
+        {
+          "text": "Menu",
+          "x": 11.076923370361328,
+          "y": 0.004791259765625,
+          "width": 40.61538314819336,
+          "height": 40.61538314819336,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sound",
+          "x": 308.3077087402344,
+          "y": 0.004791259765625,
+          "width": 40.6153564453125,
+          "height": 40.61538314819336,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "東East 10 honba · Wall 69Dora",
+          "x": 102.46154022216797,
+          "y": 314.6153564453125,
+          "width": 155.076904296875,
+          "height": 169.84616088867188,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "5 of characters (red five); activate to select",
+          "x": 6.92307710647583,
+          "y": 717.84130859375,
+          "width": 24,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "8 of characters; activate to select",
+          "x": 30.923076629638672,
+          "y": 717.84130859375,
+          "width": 24,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1 of circles; activate to select",
+          "x": 54.92307662963867,
+          "y": 717.84130859375,
+          "width": 24.000003814697266,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1 of circles; activate to select",
+          "x": 78.92308044433594,
+          "y": 717.84130859375,
+          "width": 24,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4 of circles; activate to select",
+          "x": 102.92308044433594,
+          "y": 717.84130859375,
+          "width": 24,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5 of bamboo; activate to select",
+          "x": 126.92308044433594,
+          "y": 717.84130859375,
+          "width": 24,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5 of bamboo; activate to select",
+          "x": 150.92308044433594,
+          "y": 717.84130859375,
+          "width": 24,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6 of bamboo; activate to select",
+          "x": 174.92308044433594,
+          "y": 717.84130859375,
+          "width": 24,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "West wind; activate to select",
+          "x": 198.92308044433594,
+          "y": 717.84130859375,
+          "width": 24,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "West wind; activate to select",
+          "x": 222.92308044433594,
+          "y": 717.84130859375,
+          "width": 24,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "White dragon; activate to select",
+          "x": 246.92308044433594,
+          "y": 717.84130859375,
+          "width": 23.999984741210938,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Green dragon; activate to select",
+          "x": 270.9230651855469,
+          "y": 717.84130859375,
+          "width": 24,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Red dragon; activate to select",
+          "x": 294.9230651855469,
+          "y": 717.84130859375,
+          "width": 24,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4 of characters; activate to select",
+          "x": 318.9230651855469,
+          "y": 717.84130859375,
+          "width": 34.15386962890625,
+          "height": 32.3077392578125,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Inspect hand",
+          "x": 128.95672607421875,
+          "y": 755.6875,
+          "width": 102.0865478515625,
+          "height": 29.5384521484375,
+          "fontSize": 12,
+          "outside": false
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "home": [
+        {
+          "text": "East only",
+          "x": 80.203125,
+          "y": 292,
+          "width": 104,
+          "height": 40,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "East + South",
+          "x": 188.203125,
+          "y": 292,
+          "width": 121.578125,
+          "height": 40,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Guided mode",
+          "x": 293,
+          "y": 364.5,
+          "width": 52,
+          "height": 32,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Play",
+          "x": 85,
+          "y": 397,
+          "width": 220,
+          "height": 56,
+          "fontSize": 17,
+          "outside": false
+        },
+        {
+          "text": "LearnStart ›11 lessons. Start with the tiles.",
+          "x": 28,
+          "y": 465,
+          "width": 334,
+          "height": 65,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sign in with Google",
+          "x": 85,
+          "y": 542,
+          "width": 220,
+          "height": 48,
+          "fontSize": 15,
+          "outside": false
+        },
+        {
+          "text": "Rules",
+          "x": 70.875,
+          "y": 736,
+          "width": 48.359375,
+          "height": 44,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Settings",
+          "x": 125.234375,
+          "y": 736,
+          "width": 67.53125,
+          "height": 44,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "About",
+          "x": 198.765625,
+          "y": 736,
+          "width": 53.609375,
+          "height": 44,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Privacy",
+          "x": 258.375,
+          "y": 736,
+          "width": 60.734375,
+          "height": 44,
+          "fontSize": 14,
+          "outside": false
+        }
+      ],
+      "drill": [
+        {
+          "text": "Menu",
+          "x": 12,
+          "y": 0,
+          "width": 44,
+          "height": 44,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sound",
+          "x": 334,
+          "y": 0,
+          "width": 44,
+          "height": 44,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "3m",
+          "x": 44.5,
+          "y": 168,
+          "width": 46,
+          "height": 64,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "7p",
+          "x": 95.5,
+          "y": 168,
+          "width": 46,
+          "height": 64,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "2s",
+          "x": 146.5,
+          "y": 168,
+          "width": 46,
+          "height": 64,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "9m",
+          "x": 197.5,
+          "y": 168,
+          "width": 46,
+          "height": 64,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5s",
+          "x": 248.5,
+          "y": 168,
+          "width": 46,
+          "height": 64,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "E",
+          "x": 299.5,
+          "y": 168,
+          "width": 46,
+          "height": 64,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4s",
+          "x": 44.5,
+          "y": 242,
+          "width": 46,
+          "height": 64,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1p",
+          "x": 95.5,
+          "y": 242,
+          "width": 46,
+          "height": 64,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "8s",
+          "x": 146.5,
+          "y": 242,
+          "width": 46,
+          "height": 64,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "3s",
+          "x": 197.5,
+          "y": 242,
+          "width": 46,
+          "height": 64,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Wh",
+          "x": 248.5,
+          "y": 242,
+          "width": 46,
+          "height": 64,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6m",
+          "x": 299.5,
+          "y": 242,
+          "width": 46,
+          "height": 64,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Leave",
+          "x": 10,
+          "y": 780,
+          "width": 291.8125,
+          "height": 48,
+          "fontSize": 15,
+          "outside": false
+        }
+      ],
+      "table": [
+        {
+          "text": "Menu",
+          "x": 12,
+          "y": 0,
+          "width": 44,
+          "height": 44,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sound",
+          "x": 334,
+          "y": 0,
+          "width": 44,
+          "height": 44,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "東East 10 honba · Wall 69Dora",
+          "x": 111,
+          "y": 329.5,
+          "width": 168,
+          "height": 184,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "1 of characters; activate to select",
+          "x": 7.5,
+          "y": 755,
+          "width": 26,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "8 of characters; activate to select",
+          "x": 33.5,
+          "y": 755,
+          "width": 26,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "9 of characters; activate to select",
+          "x": 59.5,
+          "y": 755,
+          "width": 26,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1 of circles; activate to select",
+          "x": 85.5,
+          "y": 755,
+          "width": 26,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4 of circles; activate to select",
+          "x": 111.5,
+          "y": 755,
+          "width": 26,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "8 of circles; activate to select",
+          "x": 137.5,
+          "y": 755,
+          "width": 26,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1 of bamboo; activate to select",
+          "x": 163.5,
+          "y": 755,
+          "width": 26,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4 of bamboo; activate to select",
+          "x": 189.5,
+          "y": 755,
+          "width": 26,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5 of bamboo; activate to select",
+          "x": 215.5,
+          "y": 755,
+          "width": 26,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6 of bamboo; activate to select",
+          "x": 241.5,
+          "y": 755,
+          "width": 26,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "7 of bamboo; activate to select",
+          "x": 267.5,
+          "y": 755,
+          "width": 26,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "7 of bamboo; activate to select",
+          "x": 293.5,
+          "y": 755,
+          "width": 26,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "8 of bamboo; activate to select",
+          "x": 319.5,
+          "y": 755,
+          "width": 26,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "7 of circles; activate to select",
+          "x": 345.5,
+          "y": 755,
+          "width": 37,
+          "height": 35,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Inspect hand",
+          "x": 139.703125,
+          "y": 796,
+          "width": 110.59375,
+          "height": 32,
+          "fontSize": 12,
+          "outside": false
+        }
+      ]
+    },
+    {
+      "width": 412,
+      "height": 915,
+      "home": [
+        {
+          "text": "East only",
+          "x": 84.7273941040039,
+          "y": 320.1506042480469,
+          "width": 109.8666763305664,
+          "height": 42.25640869140625,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "East + South",
+          "x": 198.8197021484375,
+          "y": 320.1506042480469,
+          "width": 128.4364013671875,
+          "height": 42.25640869140625,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Guided mode",
+          "x": 309.5281982421875,
+          "y": 396.7403564453125,
+          "width": 54.933349609375,
+          "height": 33.80511474609375,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Play",
+          "x": 89.79486083984375,
+          "y": 431.07366943359375,
+          "width": 232.4102783203125,
+          "height": 59.15899658203125,
+          "fontSize": 17,
+          "outside": false
+        },
+        {
+          "text": "LearnStart ›11 lessons. Start with the tiles.",
+          "x": 29.5794734954834,
+          "y": 502.9095764160156,
+          "width": 352.841064453125,
+          "height": 68.66665649414062,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sign in with Google",
+          "x": 89.79486083984375,
+          "y": 584.253173828125,
+          "width": 232.4102783203125,
+          "height": 50.70770263671875,
+          "fontSize": 15,
+          "outside": false
+        },
+        {
+          "text": "Rules",
+          "x": 74.87306213378906,
+          "y": 800.8998413085938,
+          "width": 51.08734893798828,
+          "height": 46.4820556640625,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Settings",
+          "x": 132.2988739013672,
+          "y": 800.8998413085938,
+          "width": 71.3406982421875,
+          "height": 46.4820556640625,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "About",
+          "x": 209.97804260253906,
+          "y": 800.8998413085938,
+          "width": 56.63346862792969,
+          "height": 46.4820556640625,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Privacy",
+          "x": 272.95001220703125,
+          "y": 800.8998413085938,
+          "width": 64.160400390625,
+          "height": 46.4820556640625,
+          "fontSize": 14,
+          "outside": false
+        }
+      ],
+      "drill": [
+        {
+          "text": "Menu",
+          "x": 12.676908493041992,
+          "y": -0.00775146484375,
+          "width": 46.4820556640625,
+          "height": 46.4820556640625,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sound",
+          "x": 352.84100341796875,
+          "y": -0.00775146484375,
+          "width": 46.4820556640625,
+          "height": 46.4820556640625,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "3m",
+          "x": 47.0102424621582,
+          "y": 177.46917724609375,
+          "width": 48.59487533569336,
+          "height": 67.61026000976562,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "7p",
+          "x": 100.88716888427734,
+          "y": 177.46917724609375,
+          "width": 48.594871520996094,
+          "height": 67.61026000976562,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "2s",
+          "x": 154.76409912109375,
+          "y": 177.46917724609375,
+          "width": 48.59486389160156,
+          "height": 67.61026000976562,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "9m",
+          "x": 208.64102172851562,
+          "y": 177.46917724609375,
+          "width": 48.594879150390625,
+          "height": 67.61026000976562,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5s",
+          "x": 262.5179443359375,
+          "y": 177.46917724609375,
+          "width": 48.5948486328125,
+          "height": 67.61026000976562,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "E",
+          "x": 316.3948974609375,
+          "y": 177.46917724609375,
+          "width": 48.5948486328125,
+          "height": 67.61026000976562,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4s",
+          "x": 47.0102424621582,
+          "y": 255.64353942871094,
+          "width": 48.59487533569336,
+          "height": 67.61027526855469,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1p",
+          "x": 100.88716888427734,
+          "y": 255.64353942871094,
+          "width": 48.594871520996094,
+          "height": 67.61027526855469,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "8s",
+          "x": 154.76409912109375,
+          "y": 255.64353942871094,
+          "width": 48.59486389160156,
+          "height": 67.61027526855469,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "3s",
+          "x": 208.64102172851562,
+          "y": 255.64353942871094,
+          "width": 48.594879150390625,
+          "height": 67.61027526855469,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Wh",
+          "x": 262.5179443359375,
+          "y": 255.64353942871094,
+          "width": 48.5948486328125,
+          "height": 67.61027526855469,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6m",
+          "x": 316.3948974609375,
+          "y": 255.64353942871094,
+          "width": 48.5948486328125,
+          "height": 67.61027526855469,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Leave",
+          "x": 10.564087867736816,
+          "y": 847.3818969726562,
+          "width": 308.27374267578125,
+          "height": 50.70770263671875,
+          "fontSize": 15,
+          "outside": false
+        }
+      ],
+      "table": [
+        {
+          "text": "Menu",
+          "x": 12.676908493041992,
+          "y": -0.00775146484375,
+          "width": 46.4820556640625,
+          "height": 46.4820556640625,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sound",
+          "x": 352.84100341796875,
+          "y": -0.00775146484375,
+          "width": 46.4820556640625,
+          "height": 46.4820556640625,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "東East 10 honba · Wall 69Dora",
+          "x": 117.26152801513672,
+          "y": 359.7825012207031,
+          "width": 177.4769287109375,
+          "height": 194.37948608398438,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "3 of characters; activate to select",
+          "x": 7.923062324523926,
+          "y": 820.9716186523438,
+          "width": 27.46666717529297,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5 of characters; activate to select",
+          "x": 35.38972854614258,
+          "y": 820.9716186523438,
+          "width": 27.466670989990234,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "7 of characters; activate to select",
+          "x": 62.85639953613281,
+          "y": 820.9716186523438,
+          "width": 27.46666717529297,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1 of circles; activate to select",
+          "x": 90.32306671142578,
+          "y": 820.9716186523438,
+          "width": 27.46666717529297,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5 of circles (red five); activate to select",
+          "x": 117.78973388671875,
+          "y": 820.9716186523438,
+          "width": 27.4666748046875,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1 of bamboo; activate to select",
+          "x": 145.25640869140625,
+          "y": 820.9716186523438,
+          "width": 27.466659545898438,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1 of bamboo; activate to select",
+          "x": 172.7230682373047,
+          "y": 820.9716186523438,
+          "width": 27.4666748046875,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "3 of bamboo; activate to select",
+          "x": 200.1897430419922,
+          "y": 820.9716186523438,
+          "width": 27.466659545898438,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6 of bamboo; activate to select",
+          "x": 227.65640258789062,
+          "y": 820.9716186523438,
+          "width": 27.4666748046875,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "9 of bamboo; activate to select",
+          "x": 255.12307739257812,
+          "y": 820.9716186523438,
+          "width": 27.466644287109375,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "South wind; activate to select",
+          "x": 282.5897216796875,
+          "y": 820.9716186523438,
+          "width": 27.4666748046875,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Green dragon; activate to select",
+          "x": 310.056396484375,
+          "y": 820.9716186523438,
+          "width": 27.4666748046875,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Red dragon; activate to select",
+          "x": 337.5230712890625,
+          "y": 820.9716186523438,
+          "width": 27.4666748046875,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "2 of circles; activate to select",
+          "x": 364.98974609375,
+          "y": 820.9716186523438,
+          "width": 39.087158203125,
+          "height": 36.974365234375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Inspect hand",
+          "x": 147.58380126953125,
+          "y": 864.284423828125,
+          "width": 116.8323974609375,
+          "height": 33.80517578125,
+          "fontSize": 12,
+          "outside": false
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "home": [
+        {
+          "text": "East only",
+          "x": 244.72036743164062,
+          "y": 354.27490234375,
+          "width": 126.18008422851562,
+          "height": 48.530792236328125,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "East + South",
+          "x": 375.7535400390625,
+          "y": 354.27490234375,
+          "width": 147.50714111328125,
+          "height": 48.530792236328125,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Guided mode",
+          "x": 502.90045166015625,
+          "y": 442.2369689941406,
+          "width": 63.090087890625,
+          "height": 38.82464599609375,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Play",
+          "x": 250.540283203125,
+          "y": 481.66827392578125,
+          "width": 266.91943359375,
+          "height": 67.943115234375,
+          "fontSize": 17,
+          "outside": false
+        },
+        {
+          "text": "LearnStart ›11 lessons. Start with the tiles.",
+          "x": 181.38388061523438,
+          "y": 564.170654296875,
+          "width": 405.2322082519531,
+          "height": 78.862548828125,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sign in with Google",
+          "x": 250.540283203125,
+          "y": 657.5924682617188,
+          "width": 266.91943359375,
+          "height": 58.2369384765625,
+          "fontSize": 15,
+          "outside": false
+        },
+        {
+          "text": "Rules",
+          "x": 233.40283203125,
+          "y": 892.9668579101562,
+          "width": 58.6729736328125,
+          "height": 53.3839111328125,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Settings",
+          "x": 299.3554382324219,
+          "y": 892.9668579101562,
+          "width": 81.93365478515625,
+          "height": 53.3839111328125,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "About",
+          "x": 388.5687255859375,
+          "y": 892.9668579101562,
+          "width": 65.04266357421875,
+          "height": 53.3839111328125,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Privacy",
+          "x": 460.8909912109375,
+          "y": 892.9668579101562,
+          "width": 73.68719482421875,
+          "height": 53.3839111328125,
+          "fontSize": 14,
+          "outside": false
+        }
+      ],
+      "drill": [
+        {
+          "text": "Menu",
+          "x": 161.9715576171875,
+          "y": 0,
+          "width": 53.383880615234375,
+          "height": 53.383888244628906,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sound",
+          "x": 552.64453125,
+          "y": 0,
+          "width": 53.3839111328125,
+          "height": 53.383888244628906,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "3m",
+          "x": 201.40283203125,
+          "y": 203.8293914794922,
+          "width": 55.8104248046875,
+          "height": 77.64930725097656,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "7p",
+          "x": 263.27960205078125,
+          "y": 203.8293914794922,
+          "width": 55.8104248046875,
+          "height": 77.64930725097656,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "2s",
+          "x": 325.1563720703125,
+          "y": 203.8293914794922,
+          "width": 55.8104248046875,
+          "height": 77.64930725097656,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "9m",
+          "x": 387.0331726074219,
+          "y": 203.8293914794922,
+          "width": 55.810455322265625,
+          "height": 77.64930725097656,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5s",
+          "x": 448.90997314453125,
+          "y": 203.8293914794922,
+          "width": 55.8104248046875,
+          "height": 77.64930725097656,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "E",
+          "x": 510.7867431640625,
+          "y": 203.8293914794922,
+          "width": 55.8104248046875,
+          "height": 77.64930725097656,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4s",
+          "x": 201.40283203125,
+          "y": 293.61138916015625,
+          "width": 55.8104248046875,
+          "height": 77.6492919921875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1p",
+          "x": 263.27960205078125,
+          "y": 293.61138916015625,
+          "width": 55.8104248046875,
+          "height": 77.6492919921875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "8s",
+          "x": 325.1563720703125,
+          "y": 293.61138916015625,
+          "width": 55.8104248046875,
+          "height": 77.6492919921875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "3s",
+          "x": 387.0331726074219,
+          "y": 293.61138916015625,
+          "width": 55.810455322265625,
+          "height": 77.6492919921875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Wh",
+          "x": 448.90997314453125,
+          "y": 293.61138916015625,
+          "width": 55.8104248046875,
+          "height": 77.6492919921875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6m",
+          "x": 510.7867431640625,
+          "y": 293.61138916015625,
+          "width": 55.8104248046875,
+          "height": 77.6492919921875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Leave",
+          "x": 159.54501342773438,
+          "y": 946.3507690429688,
+          "width": 354.0473937988281,
+          "height": 58.2369384765625,
+          "fontSize": 15,
+          "outside": false
+        }
+      ],
+      "table": [
+        {
+          "text": "Menu",
+          "x": 161.9715576171875,
+          "y": 0,
+          "width": 53.383880615234375,
+          "height": 53.383888244628906,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sound",
+          "x": 552.64453125,
+          "y": 0,
+          "width": 53.3839111328125,
+          "height": 53.383888244628906,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "東East 10 honba · Wall 69Dora",
+          "x": 282.0852966308594,
+          "y": 399.77252197265625,
+          "width": 203.82937622070312,
+          "height": 223.24169921875,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "3 of characters; activate to select",
+          "x": 156.5118408203125,
+          "y": 916.0189819335938,
+          "width": 31.545013427734375,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6 of characters; activate to select",
+          "x": 188.05685424804688,
+          "y": 916.0189819335938,
+          "width": 31.545028686523438,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "9 of characters; activate to select",
+          "x": 219.6018829345703,
+          "y": 916.0189819335938,
+          "width": 31.545028686523438,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "2 of circles; activate to select",
+          "x": 251.14691162109375,
+          "y": 916.0189819335938,
+          "width": 31.5450439453125,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "2 of bamboo; activate to select",
+          "x": 282.69195556640625,
+          "y": 916.0189819335938,
+          "width": 31.54498291015625,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "3 of bamboo; activate to select",
+          "x": 314.2369384765625,
+          "y": 916.0189819335938,
+          "width": 31.5450439453125,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4 of bamboo; activate to select",
+          "x": 345.781982421875,
+          "y": 916.0189819335938,
+          "width": 31.5450439453125,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5 of bamboo; activate to select",
+          "x": 377.3270263671875,
+          "y": 916.0189819335938,
+          "width": 31.54498291015625,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6 of bamboo; activate to select",
+          "x": 408.87200927734375,
+          "y": 916.0189819335938,
+          "width": 31.5450439453125,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "East wind; activate to select",
+          "x": 440.41705322265625,
+          "y": 916.0189819335938,
+          "width": 31.5450439453125,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "East wind; activate to select",
+          "x": 471.96209716796875,
+          "y": 916.0189819335938,
+          "width": 31.54498291015625,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "South wind; activate to select",
+          "x": 503.507080078125,
+          "y": 916.0189819335938,
+          "width": 31.5450439453125,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Green dragon; activate to select",
+          "x": 535.0521240234375,
+          "y": 916.0189819335938,
+          "width": 31.5450439453125,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "North wind; activate to select",
+          "x": 566.59716796875,
+          "y": 916.0189819335938,
+          "width": 44.8909912109375,
+          "height": 42.4644775390625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Inspect hand",
+          "x": 316.9099426269531,
+          "y": 965.7630615234375,
+          "width": 134.18008422851562,
+          "height": 38.82464599609375,
+          "fontSize": 12,
+          "outside": false
+        }
+      ]
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "home": [
+        {
+          "text": "East only",
+          "x": 407.5403137207031,
+          "y": 265.7061462402344,
+          "width": 94.63504028320312,
+          "height": 36.398101806640625,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "East + South",
+          "x": 505.815185546875,
+          "y": 265.7061462402344,
+          "width": 110.63037109375,
+          "height": 36.398101806640625,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Guided mode",
+          "x": 601.1754150390625,
+          "y": 331.6777038574219,
+          "width": 47.3175048828125,
+          "height": 29.118499755859375,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Play",
+          "x": 411.9052429199219,
+          "y": 361.25115966796875,
+          "width": 200.18954467773438,
+          "height": 50.957366943359375,
+          "fontSize": 17,
+          "outside": false
+        },
+        {
+          "text": "LearnStart ›11 lessons. Start with the tiles.",
+          "x": 360.0379333496094,
+          "y": 423.1279602050781,
+          "width": 303.9241638183594,
+          "height": 59.14691162109375,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sign in with Google",
+          "x": 411.9052429199219,
+          "y": 493.1943054199219,
+          "width": 200.18954467773438,
+          "height": 43.677703857421875,
+          "fontSize": 15,
+          "outside": false
+        },
+        {
+          "text": "Rules",
+          "x": 399.0521545410156,
+          "y": 669.72509765625,
+          "width": 44.004730224609375,
+          "height": 40.03790283203125,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Settings",
+          "x": 448.5166015625,
+          "y": 669.72509765625,
+          "width": 61.45025634765625,
+          "height": 40.03790283203125,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "About",
+          "x": 515.4265747070312,
+          "y": 669.72509765625,
+          "width": 48.781982421875,
+          "height": 40.03790283203125,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Privacy",
+          "x": 569.6682739257812,
+          "y": 669.72509765625,
+          "width": 55.265380859375,
+          "height": 40.03790283203125,
+          "fontSize": 14,
+          "outside": false
+        }
+      ],
+      "drill": [
+        {
+          "text": "Menu",
+          "x": 345.47869873046875,
+          "y": 0,
+          "width": 40.03790283203125,
+          "height": 40.03791427612305,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sound",
+          "x": 638.4833984375,
+          "y": 0,
+          "width": 40.0379638671875,
+          "height": 40.03791427612305,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "3m",
+          "x": 375.0521545410156,
+          "y": 152.87203979492188,
+          "width": 41.857818603515625,
+          "height": 58.23695373535156,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "7p",
+          "x": 421.4597473144531,
+          "y": 152.87203979492188,
+          "width": 41.857818603515625,
+          "height": 58.23695373535156,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "2s",
+          "x": 467.8673095703125,
+          "y": 152.87203979492188,
+          "width": 41.85784912109375,
+          "height": 58.23695373535156,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "9m",
+          "x": 514.27490234375,
+          "y": 152.87203979492188,
+          "width": 41.8577880859375,
+          "height": 58.23695373535156,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5s",
+          "x": 560.6824951171875,
+          "y": 152.87203979492188,
+          "width": 41.8577880859375,
+          "height": 58.23695373535156,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "E",
+          "x": 607.090087890625,
+          "y": 152.87203979492188,
+          "width": 41.8577880859375,
+          "height": 58.23695373535156,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4s",
+          "x": 375.0521545410156,
+          "y": 220.20852661132812,
+          "width": 41.857818603515625,
+          "height": 58.236968994140625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1p",
+          "x": 421.4597473144531,
+          "y": 220.20852661132812,
+          "width": 41.857818603515625,
+          "height": 58.236968994140625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "8s",
+          "x": 467.8673095703125,
+          "y": 220.20852661132812,
+          "width": 41.85784912109375,
+          "height": 58.236968994140625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "3s",
+          "x": 514.27490234375,
+          "y": 220.20852661132812,
+          "width": 41.8577880859375,
+          "height": 58.236968994140625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Wh",
+          "x": 560.6824951171875,
+          "y": 220.20852661132812,
+          "width": 41.8577880859375,
+          "height": 58.236968994140625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6m",
+          "x": 607.090087890625,
+          "y": 220.20852661132812,
+          "width": 41.8577880859375,
+          "height": 58.236968994140625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Leave",
+          "x": 343.6587829589844,
+          "y": 709.7630004882812,
+          "width": 265.5355529785156,
+          "height": 43.677734375,
+          "fontSize": 15,
+          "outside": false
+        }
+      ],
+      "table": [
+        {
+          "text": "Menu",
+          "x": 345.47869873046875,
+          "y": 0,
+          "width": 40.03790283203125,
+          "height": 40.03791427612305,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sound",
+          "x": 638.4833984375,
+          "y": 0,
+          "width": 40.0379638671875,
+          "height": 40.03791427612305,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "東East 10 honba · Wall 69Dora",
+          "x": 435.5639953613281,
+          "y": 299.8293762207031,
+          "width": 152.87203979492188,
+          "height": 167.4312744140625,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "5 of characters; activate to select",
+          "x": 341.3839111328125,
+          "y": 687.0142211914062,
+          "width": 23.65875244140625,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "8 of characters; activate to select",
+          "x": 365.04266357421875,
+          "y": 687.0142211914062,
+          "width": 23.658782958984375,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4 of circles; activate to select",
+          "x": 388.7014465332031,
+          "y": 687.0142211914062,
+          "width": 23.658782958984375,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4 of circles; activate to select",
+          "x": 412.3602294921875,
+          "y": 687.0142211914062,
+          "width": 23.65875244140625,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5 of circles; activate to select",
+          "x": 436.01898193359375,
+          "y": 687.0142211914062,
+          "width": 23.65875244140625,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5 of circles; activate to select",
+          "x": 459.677734375,
+          "y": 687.0142211914062,
+          "width": 23.658782958984375,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "7 of circles; activate to select",
+          "x": 483.3365173339844,
+          "y": 687.0142211914062,
+          "width": 23.658782958984375,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "9 of circles; activate to select",
+          "x": 506.99530029296875,
+          "y": 687.0142211914062,
+          "width": 23.65875244140625,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1 of bamboo; activate to select",
+          "x": 530.654052734375,
+          "y": 687.0142211914062,
+          "width": 23.65875244140625,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5 of bamboo; activate to select",
+          "x": 554.3128051757812,
+          "y": 687.0142211914062,
+          "width": 23.65875244140625,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6 of bamboo; activate to select",
+          "x": 577.9715576171875,
+          "y": 687.0142211914062,
+          "width": 23.6588134765625,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6 of bamboo; activate to select",
+          "x": 601.63037109375,
+          "y": 687.0142211914062,
+          "width": 23.65875244140625,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "7 of bamboo; activate to select",
+          "x": 625.2891235351562,
+          "y": 687.0142211914062,
+          "width": 23.65875244140625,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1 of characters; activate to select",
+          "x": 648.9478759765625,
+          "y": 687.0142211914062,
+          "width": 33.668212890625,
+          "height": 31.84832763671875,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Inspect hand",
+          "x": 461.6824951171875,
+          "y": 724.322265625,
+          "width": 100.63507080078125,
+          "height": 29.11846923828125,
+          "fontSize": 12,
+          "outside": false
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "home": [
+        {
+          "text": "East only",
+          "x": 597.5863037109375,
+          "y": 311.3743896484375,
+          "width": 110.90045166015625,
+          "height": 42.654052734375,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "East + South",
+          "x": 712.752197265625,
+          "y": 311.3743896484375,
+          "width": 129.6448974609375,
+          "height": 42.654052734375,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Guided mode",
+          "x": 824.50244140625,
+          "y": 388.684814453125,
+          "width": 55.4501953125,
+          "height": 34.12322998046875,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Play",
+          "x": 602.7014770507812,
+          "y": 423.3412170410156,
+          "width": 234.59710693359375,
+          "height": 59.71563720703125,
+          "fontSize": 17,
+          "outside": false
+        },
+        {
+          "text": "LearnStart ›11 lessons. Start with the tiles.",
+          "x": 541.91943359375,
+          "y": 495.85308837890625,
+          "width": 356.1611328125,
+          "height": 69.31280517578125,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sign in with Google",
+          "x": 602.7014770507812,
+          "y": 577.9620971679688,
+          "width": 234.59710693359375,
+          "height": 51.184814453125,
+          "fontSize": 15,
+          "outside": false
+        },
+        {
+          "text": "Rules",
+          "x": 587.6392822265625,
+          "y": 784.8341064453125,
+          "width": 51.5679931640625,
+          "height": 46.91943359375,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Settings",
+          "x": 645.6054077148438,
+          "y": 784.8341064453125,
+          "width": 72.01202392578125,
+          "height": 46.91943359375,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "About",
+          "x": 724.0155029296875,
+          "y": 784.8341064453125,
+          "width": 57.1663818359375,
+          "height": 46.91943359375,
+          "fontSize": 14,
+          "outside": false
+        },
+        {
+          "text": "Privacy",
+          "x": 787.5800170898438,
+          "y": 784.8341064453125,
+          "width": 64.76409912109375,
+          "height": 46.91943359375,
+          "fontSize": 14,
+          "outside": false
+        }
+      ],
+      "drill": [
+        {
+          "text": "Menu",
+          "x": 524.8578491210938,
+          "y": 0,
+          "width": 46.91943359375,
+          "height": 46.919429779052734,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sound",
+          "x": 868.2227783203125,
+          "y": 0,
+          "width": 46.91943359375,
+          "height": 46.919429779052734,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "3m",
+          "x": 559.5142822265625,
+          "y": 179.14691162109375,
+          "width": 49.0521240234375,
+          "height": 68.24644470214844,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "7p",
+          "x": 613.8981323242188,
+          "y": 179.14691162109375,
+          "width": 49.0521240234375,
+          "height": 68.24644470214844,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "2s",
+          "x": 668.2820434570312,
+          "y": 179.14691162109375,
+          "width": 49.0521240234375,
+          "height": 68.24644470214844,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "9m",
+          "x": 722.6658935546875,
+          "y": 179.14691162109375,
+          "width": 49.0521240234375,
+          "height": 68.24644470214844,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5s",
+          "x": 777.0498046875,
+          "y": 179.14691162109375,
+          "width": 49.0521240234375,
+          "height": 68.24644470214844,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "E",
+          "x": 831.4337158203125,
+          "y": 179.14691162109375,
+          "width": 49.0521240234375,
+          "height": 68.24644470214844,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4s",
+          "x": 559.5142822265625,
+          "y": 258.0568542480469,
+          "width": 49.0521240234375,
+          "height": 68.2464599609375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "1p",
+          "x": 613.8981323242188,
+          "y": 258.0568542480469,
+          "width": 49.0521240234375,
+          "height": 68.2464599609375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "8s",
+          "x": 668.2820434570312,
+          "y": 258.0568542480469,
+          "width": 49.0521240234375,
+          "height": 68.2464599609375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "3s",
+          "x": 722.6658935546875,
+          "y": 258.0568542480469,
+          "width": 49.0521240234375,
+          "height": 68.2464599609375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Wh",
+          "x": 777.0498046875,
+          "y": 258.0568542480469,
+          "width": 49.0521240234375,
+          "height": 68.2464599609375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6m",
+          "x": 831.4337158203125,
+          "y": 258.0568542480469,
+          "width": 49.0521240234375,
+          "height": 68.2464599609375,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Leave",
+          "x": 522.7251586914062,
+          "y": 831.7535400390625,
+          "width": 311.17449951171875,
+          "height": 51.184814453125,
+          "fontSize": 15,
+          "outside": false
+        }
+      ],
+      "table": [
+        {
+          "text": "Menu",
+          "x": 524.8578491210938,
+          "y": 0,
+          "width": 46.91943359375,
+          "height": 46.919429779052734,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "Sound",
+          "x": 868.2227783203125,
+          "y": 0,
+          "width": 46.91943359375,
+          "height": 46.919429779052734,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "東East 10 honba · Wall 69Dora",
+          "x": 630.4265747070312,
+          "y": 351.362548828125,
+          "width": 179.14691162109375,
+          "height": 196.20855712890625,
+          "fontSize": 13.3333,
+          "outside": false
+        },
+        {
+          "text": "2 of characters; activate to select",
+          "x": 520.0592651367188,
+          "y": 805.0947875976562,
+          "width": 27.72515869140625,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6 of characters; activate to select",
+          "x": 547.784423828125,
+          "y": 805.0947875976562,
+          "width": 27.72509765625,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "8 of characters; activate to select",
+          "x": 575.509521484375,
+          "y": 805.0947875976562,
+          "width": 27.72509765625,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "9 of characters; activate to select",
+          "x": 603.234619140625,
+          "y": 805.0947875976562,
+          "width": 27.72509765625,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "2 of circles; activate to select",
+          "x": 630.959716796875,
+          "y": 805.0947875976562,
+          "width": 27.72515869140625,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "4 of bamboo; activate to select",
+          "x": 658.6848754882812,
+          "y": 805.0947875976562,
+          "width": 27.72509765625,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "6 of bamboo; activate to select",
+          "x": 686.4099731445312,
+          "y": 805.0947875976562,
+          "width": 27.72515869140625,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "8 of bamboo; activate to select",
+          "x": 714.1351318359375,
+          "y": 805.0947875976562,
+          "width": 27.72509765625,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "East wind; activate to select",
+          "x": 741.8602294921875,
+          "y": 805.0947875976562,
+          "width": 27.72509765625,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "West wind; activate to select",
+          "x": 769.5853271484375,
+          "y": 805.0947875976562,
+          "width": 27.72509765625,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "West wind; activate to select",
+          "x": 797.3104248046875,
+          "y": 805.0947875976562,
+          "width": 27.72515869140625,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Green dragon; activate to select",
+          "x": 825.0355834960938,
+          "y": 805.0947875976562,
+          "width": 27.72509765625,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Red dragon; activate to select",
+          "x": 852.7606811523438,
+          "y": 805.0947875976562,
+          "width": 27.72515869140625,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "5 of bamboo; activate to select",
+          "x": 880.48583984375,
+          "y": 805.0947875976562,
+          "width": 39.4549560546875,
+          "height": 37.322265625,
+          "fontSize": 16,
+          "outside": false
+        },
+        {
+          "text": "Inspect hand",
+          "x": 661.0341796875,
+          "y": 848.815185546875,
+          "width": 117.93170166015625,
+          "height": 34.1231689453125,
+          "fontSize": 12,
+          "outside": false
+        }
+      ]
+    }
+  ]
+}

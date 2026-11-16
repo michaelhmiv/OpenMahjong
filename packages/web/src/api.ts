@@ -43,6 +43,19 @@ export interface GameRecord {
   readonly stats: HandStats;
 }
 
+/** List endpoints intentionally omit large logs; fetch a detail on demand. */
+export type GameSummary = Pick<GameRecord, "id" | "length" | "placement" | "score" | "finishedAt">;
+
+function isGameSummary(value: unknown): value is GameSummary {
+  if (!value || typeof value !== "object") return false;
+  const row = value as Record<string, unknown>;
+  return typeof row["id"] === "string" && row["id"].length <= 128 &&
+    (row["length"] === "east" || row["length"] === "south") &&
+    typeof row["placement"] === "number" && Number.isInteger(row["placement"]) && row["placement"] >= 1 && row["placement"] <= 4 &&
+    typeof row["score"] === "number" && Number.isSafeInteger(row["score"]) &&
+    typeof row["finishedAt"] === "string" && Number.isFinite(Date.parse(row["finishedAt"]));
+}
+
 /** Aggregated sums behind the Stats screen and the landing strip. */
 export interface StatsSums extends HandStats {
   readonly games: number;
@@ -71,6 +84,9 @@ async function request(
       headers: { "content-type": "application/json", ...(init.headers ?? {}) },
     });
     if (!res.ok) return null;
+    // A successful DELETE/sign-out has no JSON body. Treating its 204
+    // as a parse failure left deleted accounts looking signed in.
+    if (res.status === 204) return {};
     return (await res.json()) as unknown;
   } catch {
     return null;
@@ -112,14 +128,20 @@ export async function fetchStats(fetchFn: FetchFn = fetch): Promise<StatsSums | 
   return typeof sums.games === "number" ? sums : null;
 }
 
-export async function fetchGames(fetchFn: FetchFn = fetch): Promise<GameRecord[] | null> {
+export async function fetchGames(fetchFn: FetchFn = fetch): Promise<GameSummary[] | null> {
   const body = (await request("/api/games", { method: "GET" }, fetchFn)) as
-    | { games?: GameRecord[] }
-    | GameRecord[]
+    | { games?: unknown[] }
+    | unknown[]
     | null;
   if (!body) return null;
   const games = Array.isArray(body) ? body : body.games;
-  return Array.isArray(games) ? games : null;
+  return Array.isArray(games) ? games.filter(isGameSummary) : null;
+}
+
+export async function fetchGame(id: string, fetchFn: FetchFn = fetch): Promise<GameRecord | null> {
+  const body = await request(`/api/games/${encodeURIComponent(id)}`, { method: "GET" }, fetchFn);
+  const value = body && typeof body === "object" && "game" in body ? body.game : body;
+  return isGameSummary(value) && "log" in value && "stats" in value ? value as GameRecord : null;
 }
 
 /** GET /api/settings — the account's synced settings, if any. */
@@ -131,9 +153,12 @@ export async function fetchServerSettings(
     | Partial<Settings>
     | null;
   if (!body) return null;
-  const settings = (body as { settings?: Partial<Settings> }).settings ??
-    (body as Partial<Settings>);
-  return settings && typeof settings === "object" ? settings : null;
+  if (typeof body !== "object" || Array.isArray(body)) return null;
+  // A successful empty account is distinct from an unreachable API:
+  // boot can merge/upload the guest's lesson progress in the former.
+  const settings = "settings" in body ? body.settings : body;
+  if (settings === null) return {};
+  return settings && typeof settings === "object" && !Array.isArray(settings) ? settings as Partial<Settings> : null;
 }
 
 export async function putSettings(
@@ -146,7 +171,7 @@ export async function putSettings(
     {
       method: "PUT",
       headers: csrfHeaders(csrfToken),
-      body: JSON.stringify(settings),
+      body: JSON.stringify({ settings }),
     },
     fetchFn,
   );
@@ -175,16 +200,30 @@ export async function postImport(
   csrfToken: string | null,
   fetchFn: FetchFn = fetch,
 ): Promise<boolean> {
-  const body = await request(
-    "/api/import",
-    {
-      method: "POST",
-      headers: csrfHeaders(csrfToken),
-      body: JSON.stringify({ games: records }),
-    },
-    fetchFn,
-  );
-  return body !== null;
+  // The server bounds each request. Split by count and bytes; retries
+  // are safe because records are idempotent by user/id.
+  let batch: GameRecord[] = [];
+  const send = async (): Promise<boolean> => {
+    if (!batch.length) return true;
+    const body = await request("/api/import", {
+      method: "POST", headers: csrfHeaders(csrfToken),
+      body: JSON.stringify({ games: batch }),
+    }, fetchFn);
+    batch = [];
+    return body !== null;
+  };
+  let bytes = 16;
+  for (const record of records) {
+    const size = new TextEncoder().encode(JSON.stringify(record)).length + 1;
+    if (size > 15 * 1024 * 1024) return false;
+    if (batch.length >= 200 || bytes + size > 15 * 1024 * 1024) {
+      if (!(await send())) return false;
+      bytes = 16;
+    }
+    batch.push(record);
+    bytes += size;
+  }
+  return send();
 }
 
 export async function signOut(
