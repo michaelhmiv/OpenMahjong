@@ -218,6 +218,18 @@ export function placementLabel(rank: number): string {
   return { 1: "1st", 2: "2nd", 3: "3rd", 4: "4th" }[rank] ?? `#${rank}`;
 }
 
+/** "Today" / "Yesterday" / the History date — the home Last game card. */
+export function relativeDateLabel(iso: string, now: Date = new Date()): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  const dayStart = (x: Date): number =>
+    new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const diff = Math.round((dayStart(now) - dayStart(d)) / 86_400_000);
+  if (diff === 0) return "Today";
+  if (diff === 1) return "Yesterday";
+  return historyDateLabel(iso);
+}
+
 /** "Mon, Nov 16" — the History row date format (rendering 03). */
 export function historyDateLabel(iso: string): string {
   const d = new Date(iso);

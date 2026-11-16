@@ -42,6 +42,7 @@ import {
   formatStatsView,
   historyDateLabel,
   placementLabel,
+  relativeDateLabel,
   shouldOfferImport,
   sumRecords,
 } from "./records.js";
@@ -139,6 +140,20 @@ const ABORTIVE_NAMES: Record<string, string> = {
   "suufon-renda": "Suufon Renda (four winds)",
   suukaikan: "Suukaikan (four kan)",
 };
+
+/**
+ * The home tile strip's hand (design rules section 4): tile ids in
+ * set groups of 3-3-3-2-3 — 2m 3m 4m · 3p 4p red-5p · 6s 7s 8s ·
+ * 9s 9s · chun x3. Copy 0 of a five is the red five, so id 52 is the
+ * red 5p.
+ */
+export const HOME_STRIP_GROUPS: number[][] = [
+  [5, 9, 13],
+  [45, 49, 52],
+  [93, 97, 101],
+  [105, 106],
+  [133, 134, 135],
+];
 
 export function tileSymbol(tile: Tile): string {
   if (tile.type < 9) return tile.red ? "t-m5r" : `t-m${tile.type + 1}`;
@@ -281,6 +296,9 @@ export class App {
   private csrfToken: string | null = null;
   private statsSums: StatsSums | null = null;
   private serverGameCount: number | null = null;
+  /** The account's game summaries, kept for the home Last game card;
+   *  null until bootAuth has fetched them. */
+  private serverGames: GameRecord[] | null = null;
   private importOfferCount = 0;
   /** Tutorial state (slice-2 brief §9): progress persists locally and
    *  rides the account settings blob under a namespaced key. */
@@ -379,16 +397,21 @@ export class App {
   // -- home ------------------------------------------------------------------
 
   /**
-   * The landing (slice 2, renderings 01/02): replaces the slice-1 home.
-   * Wordmark + one informational line, length seg, one-tap Play. Signed
-   * in adds the identity chip, the record strip, and History/Stats
-   * entries; signed out shows the Google button instead. Guests get no
-   * record strip and no History/Stats entries — their local history
-   * still lives behind the same screens, reached from Settings.
+   * The landing (slice 2, renderings 01/02; theme v6 home, design
+   * rules section 4): wordmark over a radial glow, the 14-tile strip,
+   * length seg, one-tap Play. Signed in adds the identity chip, the
+   * record strip, the Last game / Learn progress cards (each hidden
+   * when its data doesn't exist), and History/Stats entries; signed
+   * out shows the Learn card and the Google button instead. Guests
+   * get no record strip and no History/Stats entries — their local
+   * history still lives behind the same screens, reached from
+   * Settings.
    */
   private renderHome(): void {
     const el = this.screens.get("home")!;
     el.innerHTML = "";
+    // Glow centre per state (design rules section 1).
+    el.style.setProperty("--glow-y", this.user ? "22%" : "27%");
     const saved = loadGame();
 
     el.append(h("div", { class: "spacer" }));
@@ -402,6 +425,7 @@ export class App {
     const wm = h("div", { class: "wordmark" }, "OPEN MAHJONG");
     wm.append(h("span", { class: "sub" }, "Free forever. Open source mahjong."));
     el.append(wm);
+    el.append(this.homeStripEl());
 
     if (this.user && this.statsSums) {
       const strip = formatRecordStrip(this.statsSums);
@@ -470,21 +494,79 @@ export class App {
       el.append(resume);
     }
 
-    {
-      // The secondary row: History/Stats for signed-in players, and
-      // Learn for everyone — the tutorial needs no account (§9).
-      const sec = h("div", { class: "secrow" });
-      if (this.user) {
-        const hist = h("button", { class: "pillbtn" }, "History");
-        hist.addEventListener("click", () => this.showScreen("history"));
-        const stats = h("button", { class: "pillbtn" }, "Stats");
-        stats.addEventListener("click", () => this.showScreen("stats"));
-        sec.append(hist, stats);
+    if (this.user) {
+      // Signed-in info cards (design rules section 4): Last game from
+      // the newest account record, Learn progress from the tutorial
+      // progress. Each card hides when its data doesn't exist — a
+      // brand-new signed-in user sees neither card.
+      const newest = (this.serverGames ?? []).reduce<GameRecord | null>(
+        (best, g) => (best === null || g.finishedAt > best.finishedAt ? g : best),
+        null,
+      );
+      if (newest) {
+        const card = h("button", { class: "infocard lastcard" });
+        const top = h("span", { class: "ic-top" });
+        top.append(
+          h("span", { class: "ic-label" }, "Last game"),
+          h("span", { class: "ic-date" }, relativeDateLabel(newest.finishedAt)),
+        );
+        card.append(
+          top,
+          h(
+            "span",
+            { class: "ic-result" },
+            `${newest.length === "east" ? "East" : "East + South"} · ${placementLabel(newest.placement)} · ${fmt(newest.score)}`,
+          ),
+        );
+        card.addEventListener("click", () => this.showScreen("history"));
+        el.append(card);
       }
-      const learn = h("button", { class: "pillbtn" }, "Learn");
-      learn.addEventListener("click", () => this.showScreen("learn"));
-      sec.append(learn);
+      const doneCount = this.tutorial.done.length;
+      if (doneCount > 0) {
+        const card = h("button", { class: "infocard learnprog" });
+        const top = h("span", { class: "ic-top" });
+        top.append(
+          h("span", { class: "ic-title" }, `Learn — ${doneCount} of ${MODULES.length} lessons done`),
+          h("span", { class: "ic-cta" }, "Continue ›"),
+        );
+        const bar = h("span", { class: "progbar" });
+        const fill = h("i", {});
+        fill.style.width = `${Math.round((doneCount / MODULES.length) * 100)}%`;
+        bar.append(fill);
+        card.append(top, bar);
+        card.addEventListener("click", () => this.showScreen("learn"));
+        el.append(card);
+      }
+      // The secondary row: History/Stats for signed-in players. Learn
+      // stays as a pill only while no progress card exists, so the
+      // tutorial is always reachable (§9).
+      const sec = h("div", { class: "secrow" });
+      const hist = h("button", { class: "pillbtn" }, "History");
+      hist.addEventListener("click", () => this.showScreen("history"));
+      const stats = h("button", { class: "pillbtn" }, "Stats");
+      stats.addEventListener("click", () => this.showScreen("stats"));
+      sec.append(hist, stats);
+      if (doneCount === 0) {
+        const learn = h("button", { class: "pillbtn" }, "Learn");
+        learn.addEventListener("click", () => this.showScreen("learn"));
+        sec.append(learn);
+      }
       el.append(sec);
+    } else {
+      // Guests get the Learn card in place of the secondary row
+      // (design rules section 4); the tutorial needs no account (§9).
+      const card = h("button", { class: "infocard learncard" });
+      const top = h("span", { class: "ic-top" });
+      top.append(
+        h("span", { class: "ic-title" }, "Learn"),
+        h("span", { class: "ic-cta" }, "Start ›"),
+      );
+      card.append(
+        top,
+        h("span", { class: "ic-line" }, `${MODULES.length} lessons. Start with the tiles.`),
+      );
+      card.addEventListener("click", () => this.showScreen("learn"));
+      el.append(card);
     }
     if (!this.user) {
       const g = h("button", { class: "gbtn" });
@@ -531,6 +613,23 @@ export class App {
     el.append(
       h("div", { class: "footer" }, "Open source under AGPLv3 · github.com/michaelhmiv/OpenMahjong"),
     );
+  }
+
+  /** The home tile strip (design rules section 4): a real 14-tile
+   *  hand rendered with the production tile faces, display only. */
+  private homeStripEl(): HTMLElement {
+    const strip = h("div", { class: "tilestrip", "aria-hidden": "true" });
+    HOME_STRIP_GROUPS.forEach((group, gi) => {
+      group.forEach((id, i) => {
+        const t = h("span", {
+          class: i === 0 && gi > 0 ? "tile t-strip grp" : "tile t-strip",
+        });
+        t.innerHTML = `<svg viewBox="0 0 40 56"><use href="#${tileSymbol(tileById(id))}"/></svg>`;
+        t.append(h("i", { class: "edge" }));
+        strip.append(t);
+      });
+    });
+    return strip;
   }
 
   private avatarEl(user: ApiUser, lg = false): HTMLElement {
@@ -580,6 +679,7 @@ export class App {
     }
     this.statsSums = stats;
     this.serverGameCount = games ? games.length : null;
+    this.serverGames = games;
     this.refreshImportOffer();
     this.renderHome();
   }
@@ -650,6 +750,7 @@ export class App {
     this.renderHome();
     if (await postImport(records, this.csrfToken)) {
       this.serverGameCount = records.length;
+      this.serverGames = records;
       const stats = await fetchStats();
       if (stats) this.statsSums = stats;
       this.renderHome();
@@ -661,6 +762,10 @@ export class App {
   private async postRecord(record: GameRecord): Promise<void> {
     if (await postGame(record, this.csrfToken)) {
       if (this.serverGameCount !== null) this.serverGameCount++;
+      this.serverGames = [
+        record,
+        ...(this.serverGames ?? []).filter((g) => g.id !== record.id),
+      ];
       const stats = await fetchStats();
       if (stats) this.statsSums = stats;
       return;
@@ -674,6 +779,7 @@ export class App {
     this.csrfToken = null;
     this.statsSums = null;
     this.serverGameCount = null;
+    this.serverGames = null;
     this.importOfferCount = 0;
   }
 
