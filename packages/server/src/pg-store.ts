@@ -44,7 +44,8 @@ interface GameRow {
   riichi: number;
   deal_ins: number;
   hands_won: number;
-  win_points: number;
+  /** pg's default int8 parser returns a string; uploads are safe integers. */
+  win_points: string | number;
 }
 
 export class PgStore implements Store {
@@ -177,7 +178,7 @@ export class PgStore implements Store {
         riichi: row.riichi,
         dealIns: row.deal_ins,
         handsWon: row.hands_won,
-        winPoints: row.win_points,
+        winPoints: Number(row.win_points),
       },
     };
   }
@@ -208,14 +209,14 @@ export class PgStore implements Store {
   async getStats(userId: string): Promise<StatsSums> {
     const { rows } = await this.pool.query<StatsSums>(
       `SELECT
-         COUNT(*)::int                                   AS games,
-         COALESCE(SUM(CASE WHEN placement = 1 THEN 1 ELSE 0 END), 0)::int
+         COUNT(*)::float8                                AS games,
+         COALESCE(SUM(CASE WHEN placement = 1 THEN 1 ELSE 0 END), 0)::float8
                                                          AS wins,
-         COALESCE(SUM(placement), 0)::int                AS "placementSum",
-         COALESCE(SUM(hands), 0)::int                    AS hands,
-         COALESCE(SUM(riichi), 0)::int                   AS riichi,
-         COALESCE(SUM(deal_ins), 0)::int                 AS "dealIns",
-         COALESCE(SUM(hands_won), 0)::int                AS "handsWon",
+         COALESCE(SUM(placement), 0)::float8             AS "placementSum",
+         COALESCE(SUM(hands), 0)::float8                 AS hands,
+         COALESCE(SUM(riichi), 0)::float8                AS riichi,
+         COALESCE(SUM(deal_ins), 0)::float8              AS "dealIns",
+         COALESCE(SUM(hands_won), 0)::float8             AS "handsWon",
          COALESCE(SUM(win_points), 0)::float8            AS "winPoints"
        FROM games WHERE user_id = $1`,
       [userId],

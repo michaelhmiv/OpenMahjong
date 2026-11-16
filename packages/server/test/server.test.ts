@@ -7,9 +7,10 @@
  * session expiry, cross-user isolation, and CORS.
  */
 
-import { createServer, type Server } from "node:http";
+import { createServer, request as httpRequest, type Server } from "node:http";
 import { randomUUID } from "node:crypto";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { OAUTH_STATE_TTL_MS } from "../src/auth.js";
 import { createApp } from "../src/app.js";
 import type { Config } from "../src/config.js";
 import type { GoogleClient, GoogleProfile } from "../src/google.js";
@@ -78,6 +79,7 @@ async function setup(
 }
 
 afterEach(async () => {
+  vi.restoreAllMocks();
   for (const server of servers.splice(0)) {
     server.closeAllConnections();
     await new Promise<void>((resolve) => server.close(() => resolve()));
@@ -102,7 +104,7 @@ async function signIn(
 
   const callback = await fetch(
     `${ctx.base}/auth/google/callback?code=${code}&state=${state}`,
-    { redirect: "manual" },
+    { redirect: "manual", headers: { cookie: start.headers.getSetCookie()[0]!.split(";")[0]! } },
   );
   expect(callback.status).toBe(302);
   expect(callback.headers.get("location")).toBe(`${APP_ORIGIN}/`);
@@ -248,10 +250,10 @@ describe("sessions (B2)", () => {
 
   it("sign-out deletes the session and clears the cookie", async () => {
     const ctx = await setup();
-    const { cookie } = await signIn(ctx);
+    const { cookie, csrf } = await signIn(ctx);
     const res = await fetch(`${ctx.base}/auth/signout`, {
       method: "POST",
-      headers: { cookie },
+      headers: { cookie, "x-csrf-token": csrf },
     });
     expect(res.status).toBe(204);
     const cleared = res.headers
@@ -429,6 +431,7 @@ describe("game records", () => {
       ["bad id", { ...good, id: "not-a-uuid" }],
       ["string score", { ...good, score: "28700" }],
       ["bad finishedAt", { ...good, finishedAt: "yesterday" }],
+      ["normalized impossible date", { ...good, finishedAt: "2026-02-30T12:00:00.000Z" }],
       [
         "negative stat",
         {
@@ -738,5 +741,237 @@ describe("CORS", () => {
       headers: { origin: "https://evil.example" },
     });
     expect(res.headers.get("access-control-allow-origin")).toBeNull();
+  });
+});
+
+describe("OAuth transaction security", () => {
+  async function startLogin(ctx: Ctx): Promise<{ state: string; cookie: string }> {
+    const response = await fetch(`${ctx.base}/auth/google/start`, { redirect: "manual" });
+    expect(response.status).toBe(302);
+    const cookie = response.headers.getSetCookie()[0]!;
+    expect(cookie).toContain("__Host-om_oauth_state=");
+    expect(cookie).toContain("Path=/");
+    expect(cookie).toContain("HttpOnly");
+    expect(cookie).toContain("Secure");
+    expect(cookie).toContain("SameSite=Lax");
+    expect(cookie).toContain("Max-Age=600");
+    expect(cookie).not.toContain("Domain=");
+    return {
+      state: new URL(response.headers.get("location")!).searchParams.get("state")!,
+      cookie: cookie.split(";")[0]!,
+    };
+  }
+
+  it("rejects an attacker's callback in another browser without consuming the legitimate transaction", async () => {
+    const ctx = await setup();
+    const alice = await startLogin(ctx);
+    const bob = await startLogin(ctx);
+    const url = `${ctx.base}/auth/google/callback?code=code-a&state=${alice.state}`;
+    for (const cookie of ["", bob.cookie]) {
+      const rejected = await fetch(url, { redirect: "manual", headers: { cookie } });
+      expect(rejected.status).toBe(400);
+      expect(rejected.headers.getSetCookie()).toEqual([]);
+      expect(ctx.store.sessions.size).toBe(0);
+    }
+    const legitimate = await fetch(url, { redirect: "manual", headers: { cookie: alice.cookie } });
+    expect(legitimate.status).toBe(302);
+    expect(ctx.store.sessions.size).toBe(1);
+    expect(legitimate.headers.getSetCookie()).toContainEqual(expect.stringContaining("__Host-om_oauth_state=; Path=/; Max-Age=0"));
+    const replay = await fetch(url, { redirect: "manual", headers: { cookie: alice.cookie } });
+    expect(replay.status).toBe(400);
+    expect(ctx.store.sessions.size).toBe(1);
+  });
+
+  it("rejects an expired transaction even if its browser cookie is present", async () => {
+    const ctx = await setup();
+    const transaction = await startLogin(ctx);
+    const now = Date.now();
+    vi.spyOn(Date, "now").mockReturnValue(now + OAUTH_STATE_TTL_MS + 1);
+    const response = await fetch(`${ctx.base}/auth/google/callback?code=code-a&state=${transaction.state}`, {
+      redirect: "manual", headers: { cookie: transaction.cookie },
+    });
+    expect(response.status).toBe(400);
+    expect(ctx.store.users.size).toBe(0);
+  });
+
+  it("consumes state before the provider exchange finishes, preventing concurrent callback reuse", async () => {
+    let completeExchange!: (profile: GoogleProfile) => void;
+    const exchangeCode = vi.fn(() => new Promise<GoogleProfile>((resolve) => {
+      completeExchange = resolve;
+    }));
+    const ctx = await setup({ google: { ...fakeGoogle(), exchangeCode } });
+    const transaction = await startLogin(ctx);
+    const url = `${ctx.base}/auth/google/callback?code=code-a&state=${transaction.state}`;
+    const options = { redirect: "manual" as const, headers: { cookie: transaction.cookie } };
+    const original = fetch(url, options);
+    try {
+      await vi.waitFor(() => expect(exchangeCode).toHaveBeenCalledTimes(1));
+      const duplicate = await fetch(url, options);
+      expect(duplicate.status).toBe(400);
+      expect(exchangeCode).toHaveBeenCalledTimes(1);
+      expect(ctx.store.sessions.size).toBe(0);
+    } finally {
+      completeExchange?.(PROFILES["code-a"]!);
+    }
+    expect((await original).status).toBe(302);
+    expect(ctx.store.sessions.size).toBe(1);
+  });
+
+  it("caps pending transactions, then recovers capacity after their TTL", async () => {
+    const ctx = await setup();
+    for (let i = 0; i < 1000; i++) {
+      const response = await fetch(`${ctx.base}/auth/google/start`, { redirect: "manual" });
+      expect(response.status).toBe(302);
+    }
+    const full = await fetch(`${ctx.base}/auth/google/start`, { redirect: "manual" });
+    expect(full.status).toBe(429);
+    expect(full.headers.get("retry-after")).toBe("60");
+    vi.spyOn(Date, "now").mockReturnValue(Date.now() + OAUTH_STATE_TTL_MS + 1);
+    const recovered = await fetch(`${ctx.base}/auth/google/start`, { redirect: "manual" });
+    expect(recovered.status).toBe(302);
+  }, 15_000);
+});
+
+describe("bounded API inputs and private response handling", () => {
+  it("requires CSRF for signout and supports the real cross-origin client preflight", async () => {
+    const ctx = await setup();
+    const auth = await signIn(ctx);
+    const preflight = await fetch(`${ctx.base}/auth/signout`, {
+      method: "OPTIONS", headers: { origin: APP_ORIGIN, "access-control-request-method": "POST" },
+    });
+    expect(preflight.status).toBe(204);
+    expect(preflight.headers.get("access-control-allow-origin")).toBe(APP_ORIGIN);
+    expect(preflight.headers.get("access-control-allow-headers")).toContain("x-csrf-token");
+    const attack = await fetch(`${ctx.base}/auth/signout`, {
+      method: "POST", headers: { cookie: auth.cookie, origin: "https://evil.example" },
+    });
+    expect(attack.status).toBe(403);
+    expect(ctx.store.sessions.size).toBe(1);
+    expect(attack.headers.get("access-control-allow-origin")).toBeNull();
+    const signedOut = await fetch(`${ctx.base}/auth/signout`, {
+      method: "POST", headers: { cookie: auth.cookie, "x-csrf-token": auth.csrf, origin: APP_ORIGIN },
+    });
+    expect(signedOut.status).toBe(204);
+    expect(signedOut.headers.get("access-control-allow-origin")).toBe(APP_ORIGIN);
+    expect(ctx.store.sessions.size).toBe(0);
+  });
+
+  it("never caches user or OAuth responses and varies CORS even when no Origin is supplied", async () => {
+    const ctx = await setup();
+    const me = await fetch(`${ctx.base}/api/me`);
+    expect(me.headers.get("cache-control")).toBe("no-store");
+    expect(me.headers.get("vary")).toBe("Origin");
+    expect(me.headers.get("x-content-type-options")).toBe("nosniff");
+    const start = await fetch(`${ctx.base}/auth/google/start`, { redirect: "manual" });
+    expect(start.headers.get("cache-control")).toBe("no-store");
+  });
+
+  it("returns 400 for malformed/invalid game ids instead of a database or URI-decoding 500", async () => {
+    const ctx = await setup();
+    const auth = await signIn(ctx);
+    for (const id of ["not-a-uuid", "%E0%A4%A"]) {
+      const response = await fetch(`${ctx.base}/api/games/${id}`, { headers: { cookie: auth.cookie } });
+      expect(response.status).toBe(400);
+    }
+  });
+
+  it("rejects oversized declared settings and chunked settings before storage", async () => {
+    const ctx = await setup();
+    const auth = await signIn(ctx);
+    const body = JSON.stringify({ settings: { oversized: "x".repeat(70 * 1024) } });
+    const declared = await fetch(`${ctx.base}/api/settings`, {
+      method: "PUT", headers: { cookie: auth.cookie, "x-csrf-token": auth.csrf }, body,
+    });
+    expect(declared.status).toBe(413);
+    const chunkedStatus = await new Promise<number>((resolve, reject) => {
+      const req = httpRequest(`${ctx.base}/api/settings`, {
+        method: "PUT", headers: { cookie: auth.cookie, "x-csrf-token": auth.csrf, "transfer-encoding": "chunked" },
+      }, (res) => { res.resume(); resolve(res.statusCode!); });
+      req.on("error", reject);
+      for (let i = 0; i < body.length; i += 4096) req.write(body.slice(i, i + 4096));
+      req.end();
+    });
+    expect(chunkedStatus).toBe(413);
+    expect(ctx.store.settings.size).toBe(0);
+  });
+
+  it("rejects a streamed overflow before the client finishes sending the body", async () => {
+    const ctx = await setup();
+    const auth = await signIn(ctx);
+    const response = await new Promise<{ status: number; connection: string | undefined }>((resolve, reject) => {
+      const req = httpRequest(`${ctx.base}/api/settings`, {
+        method: "PUT",
+        headers: { cookie: auth.cookie, "x-csrf-token": auth.csrf, "transfer-encoding": "chunked" },
+      }, (res) => {
+        res.resume();
+        res.once("end", () => {
+          resolve({ status: res.statusCode!, connection: res.headers.connection });
+          req.destroy();
+        });
+      });
+      req.on("error", reject);
+      req.setTimeout(2_000, () => { req.destroy(); reject(new Error("server waited for request EOF after overflow")); });
+      req.write("x".repeat(70 * 1024));
+      // Deliberately no req.end(): the input limit must reject during
+      // streaming rather than waiting for an attacker to finish.
+    });
+    expect(response).toEqual({ status: 413, connection: "close" });
+    expect(ctx.store.settings.size).toBe(0);
+  });
+
+  it("rejects excessive imports before any insert and retains null-log legacy records", async () => {
+    const ctx = await setup();
+    const auth = await signIn(ctx);
+    const response = await fetch(`${ctx.base}/api/import`, {
+      method: "POST", headers: { cookie: auth.cookie, "x-csrf-token": auth.csrf },
+      body: JSON.stringify({ games: Array.from({ length: 201 }, () => gameBody(makeGame())) }),
+    });
+    expect(response.status).toBe(400);
+    expect(ctx.store.games.size).toBe(0);
+    const legacy = await postGame(ctx, auth, makeGame({ log: null }));
+    expect(legacy.status).toBe(201);
+  });
+
+  it("rejects unsafe/SQL-overflowing numbers, impossible counters, and deep JSON", async () => {
+    const ctx = await setup();
+    const auth = await signIn(ctx);
+    let deep: unknown = "leaf";
+    for (let i = 0; i < 70; i++) deep = { child: deep };
+    const good = makeGame();
+    for (const game of [
+      { ...good, score: 0.5 },
+      { ...good, score: Number.MAX_SAFE_INTEGER + 1 },
+      { ...good, stats: { ...good.stats, hands: 2_147_483_648 } },
+      { ...good, stats: { ...good.stats, handsWon: 9 } },
+      { ...good, stats: { ...good.stats, winPoints: Number.MAX_SAFE_INTEGER + 1 } },
+      { ...good, log: deep },
+    ]) {
+      const response = await postGame(ctx, auth, game);
+      expect(response.status).toBe(400);
+    }
+    const nonFinite = JSON.stringify(gameBody(good)).replace('"score":28700', '"score":1e999');
+    const overflow = await fetch(`${ctx.base}/api/games`, {
+      method: "POST", headers: { cookie: auth.cookie, "x-csrf-token": auth.csrf }, body: nonFinite,
+    });
+    expect(overflow.status).toBe(400);
+    expect(ctx.store.games.size).toBe(0);
+  });
+
+  it("requires an object settings envelope while preserving namespaced learning progress", async () => {
+    const ctx = await setup();
+    const auth = await signIn(ctx);
+    for (const settings of [null, [], "settings", 42]) {
+      const response = await fetch(`${ctx.base}/api/settings`, {
+        method: "PUT", headers: { cookie: auth.cookie, "x-csrf-token": auth.csrf }, body: JSON.stringify({ settings }),
+      });
+      expect(response.status).toBe(400);
+    }
+    const settings = { sound: true, "openmahjong.tutorial.v1": { completed: ["TU-1"] } };
+    const valid = await fetch(`${ctx.base}/api/settings`, {
+      method: "PUT", headers: { cookie: auth.cookie, "x-csrf-token": auth.csrf }, body: JSON.stringify({ settings }),
+    });
+    expect(valid.status).toBe(204);
+    const stored = await fetch(`${ctx.base}/api/settings`, { headers: { cookie: auth.cookie } });
+    expect(await stored.json()).toEqual({ settings });
   });
 });
