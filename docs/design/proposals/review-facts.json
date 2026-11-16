@@ -1,0 +1,385 @@
+{
+  "seed": "design-review-2",
+  "source": "Original first draw, seat0; current built engine2/policy2; no result or future state inspected.",
+  "view": {
+    "seat": 0,
+    "hand": [
+      {
+        "id": 5,
+        "type": 1,
+        "red": false
+      },
+      {
+        "id": 6,
+        "type": 1,
+        "red": false
+      },
+      {
+        "id": 26,
+        "type": 6,
+        "red": false
+      },
+      {
+        "id": 30,
+        "type": 7,
+        "red": false
+      },
+      {
+        "id": 61,
+        "type": 15,
+        "red": false
+      },
+      {
+        "id": 63,
+        "type": 15,
+        "red": false
+      },
+      {
+        "id": 66,
+        "type": 16,
+        "red": false
+      },
+      {
+        "id": 80,
+        "type": 20,
+        "red": false
+      },
+      {
+        "id": 92,
+        "type": 23,
+        "red": false
+      },
+      {
+        "id": 94,
+        "type": 23,
+        "red": false
+      },
+      {
+        "id": 119,
+        "type": 29,
+        "red": false
+      },
+      {
+        "id": 126,
+        "type": 31,
+        "red": false
+      },
+      {
+        "id": 131,
+        "type": 32,
+        "red": false
+      },
+      {
+        "id": 68,
+        "type": 17,
+        "red": false
+      }
+    ],
+    "melds": [],
+    "players": [
+      {
+        "seat": 0,
+        "score": 25000,
+        "riichi": false,
+        "doubleRiichi": false,
+        "discards": [],
+        "melds": [],
+        "handCount": 14,
+        "isDealer": true,
+        "seatWind": 27
+      },
+      {
+        "seat": 1,
+        "score": 25000,
+        "riichi": false,
+        "doubleRiichi": false,
+        "discards": [],
+        "melds": [],
+        "handCount": 13,
+        "isDealer": false,
+        "seatWind": 28
+      },
+      {
+        "seat": 2,
+        "score": 25000,
+        "riichi": false,
+        "doubleRiichi": false,
+        "discards": [],
+        "melds": [],
+        "handCount": 13,
+        "isDealer": false,
+        "seatWind": 29
+      },
+      {
+        "seat": 3,
+        "score": 25000,
+        "riichi": false,
+        "doubleRiichi": false,
+        "discards": [],
+        "melds": [],
+        "handCount": 13,
+        "isDealer": false,
+        "seatWind": 30
+      }
+    ],
+    "dealer": 0,
+    "roundWind": 27,
+    "kyoku": 1,
+    "honba": 0,
+    "sticks": 0,
+    "wallRemaining": 69,
+    "doraIndicators": [
+      {
+        "id": 67,
+        "type": 16,
+        "red": false
+      }
+    ],
+    "currentTurn": 0
+  },
+  "context": {
+    "drawnTile": {
+      "id": 68,
+      "type": 17,
+      "red": false
+    },
+    "rinshan": false,
+    "canTsumo": false,
+    "ankanOptions": [],
+    "shouminkanOptions": [],
+    "riichiDiscardIds": [],
+    "canKyuushu": false
+  },
+  "chosen": {
+    "tileId": 80,
+    "tileType": 20,
+    "tileName": "3 of bamboo",
+    "isRed": false,
+    "doraDiscarded": 0,
+    "shantenAfter": 3,
+    "improving": [
+      {
+        "type": 5,
+        "name": "6 of characters",
+        "live": 4
+      },
+      {
+        "type": 8,
+        "name": "9 of characters",
+        "live": 4
+      },
+      {
+        "type": 13,
+        "name": "5 of dots",
+        "live": 4
+      },
+      {
+        "type": 14,
+        "name": "6 of dots",
+        "live": 4
+      },
+      {
+        "type": 6,
+        "name": "7 of characters",
+        "live": 3
+      },
+      {
+        "type": 7,
+        "name": "8 of characters",
+        "live": 3
+      },
+      {
+        "type": 17,
+        "name": "9 of dots",
+        "live": 3
+      },
+      {
+        "type": 29,
+        "name": "West wind",
+        "live": 3
+      },
+      {
+        "type": 31,
+        "name": "White dragon",
+        "live": 3
+      },
+      {
+        "type": 32,
+        "name": "Green dragon",
+        "live": 3
+      },
+      {
+        "type": 1,
+        "name": "2 of characters",
+        "live": 2
+      },
+      {
+        "type": 15,
+        "name": "7 of dots",
+        "live": 2
+      },
+      {
+        "type": 16,
+        "name": "8 of dots",
+        "live": 2
+      },
+      {
+        "type": 23,
+        "name": "6 of bamboo",
+        "live": 2
+      }
+    ],
+    "improvingTotal": 42,
+    "waits": [],
+    "danger": 0,
+    "genbutsu": false,
+    "genbutsuAgainst": [],
+    "furiten": false,
+    "reasons": [
+      "fewest-steps"
+    ]
+  },
+  "recommendation": {
+    "tileId": 119,
+    "tileType": 29,
+    "tileName": "West wind",
+    "isRed": false,
+    "doraDiscarded": 0,
+    "shantenAfter": 3,
+    "improving": [
+      {
+        "type": 5,
+        "name": "6 of characters",
+        "live": 4
+      },
+      {
+        "type": 8,
+        "name": "9 of characters",
+        "live": 4
+      },
+      {
+        "type": 13,
+        "name": "5 of dots",
+        "live": 4
+      },
+      {
+        "type": 14,
+        "name": "6 of dots",
+        "live": 4
+      },
+      {
+        "type": 18,
+        "name": "1 of bamboo",
+        "live": 4
+      },
+      {
+        "type": 19,
+        "name": "2 of bamboo",
+        "live": 4
+      },
+      {
+        "type": 21,
+        "name": "4 of bamboo",
+        "live": 4
+      },
+      {
+        "type": 22,
+        "name": "5 of bamboo",
+        "live": 4
+      },
+      {
+        "type": 6,
+        "name": "7 of characters",
+        "live": 3
+      },
+      {
+        "type": 7,
+        "name": "8 of characters",
+        "live": 3
+      },
+      {
+        "type": 17,
+        "name": "9 of dots",
+        "live": 3
+      },
+      {
+        "type": 20,
+        "name": "3 of bamboo",
+        "live": 3
+      },
+      {
+        "type": 31,
+        "name": "White dragon",
+        "live": 3
+      },
+      {
+        "type": 32,
+        "name": "Green dragon",
+        "live": 3
+      },
+      {
+        "type": 1,
+        "name": "2 of characters",
+        "live": 2
+      },
+      {
+        "type": 15,
+        "name": "7 of dots",
+        "live": 2
+      },
+      {
+        "type": 16,
+        "name": "8 of dots",
+        "live": 2
+      },
+      {
+        "type": 23,
+        "name": "6 of bamboo",
+        "live": 2
+      }
+    ],
+    "improvingTotal": 58,
+    "waits": [],
+    "danger": 0,
+    "genbutsu": false,
+    "genbutsuAgainst": [],
+    "furiten": false,
+    "reasons": [
+      "fewest-steps",
+      "policy-preference",
+      "most-improving-tiles"
+    ]
+  },
+  "analysis": {
+    "schemaVersion": 1,
+    "analysisVersion": "discard-analysis-2",
+    "engineVersion": 2,
+    "policyVersion": 2,
+    "ruleset": {
+      "id": "openmahjong-riichi",
+      "version": 1
+    },
+    "informationMode": "player-perspective",
+    "exactFacts": [
+      "shanten",
+      "shape-completing-tiles",
+      "unseen-copy-counts",
+      "discard-furiten",
+      "genbutsu-per-opponent",
+      "discarded-dora-count"
+    ],
+    "heuristicAssessments": [
+      "discard-ranking",
+      "relative-danger",
+      "riichi-versus-dama",
+      "hand-value-proxy"
+    ],
+    "limitations": [
+      "Unseen copies may be in opponents' hands or the dead wall; they are not guaranteed live-wall draws.",
+      "Shape completion does not establish yaku or legal ron; the engine's action context decides legality.",
+      "Discard furiten excludes temporary and riichi-pass furiten, which PlayerView does not expose.",
+      "Defense models riichi threats only. Suji and kabe are heuristics, not proof of safety.",
+      "The policy is not an optimal-play oracle; no win probability, expected value or calibrated numerical grade is computed."
+    ]
+  }
+}
