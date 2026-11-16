@@ -15,10 +15,13 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import {
   SESSION_COOKIE,
   SESSION_TTL_MS,
+  OAUTH_STATE_COOKIE,
+  OAUTH_STATE_TTL_MS,
   clearedSessionCookie,
   hashToken,
   newToken,
   parseCookies,
+  oauthStateCookie,
   sessionCookie,
 } from "./auth.js";
 import type { Config } from "./config.js";
@@ -30,7 +33,7 @@ import type {
   Store,
   User,
 } from "./store.js";
-import { ValidationError, validateGame, validateGameList } from "./validate.js";
+import { ValidationError, validateGame, validateGameList, validateSettings, validatedGameId } from "./validate.js";
 
 export interface AppDeps {
   store: Store;
@@ -38,8 +41,11 @@ export interface AppDeps {
   config: Config;
 }
 
-const MAX_BODY_BYTES = 16 * 1024 * 1024;
-const STATE_TTL_MS = 10 * 60 * 1000;
+const MAX_GAME_BYTES = 2 * 1024 * 1024;
+const MAX_IMPORT_BYTES = 16 * 1024 * 1024;
+const MAX_SETTINGS_BYTES = 64 * 1024;
+/** Bound unauthenticated, process-local state even under a sign-in flood. */
+const MAX_PENDING_STATES = 1000;
 const GAME_LIST_LIMIT = 200;
 
 interface Authed {
@@ -91,14 +97,20 @@ export function createApp(deps: AppDeps): (
     sendJson(res, status, { error });
   }
 
-  async function readJsonBody(req: IncomingMessage): Promise<unknown> {
+  async function readJsonBody(req: IncomingMessage, maxBytes: number): Promise<unknown> {
+    const declaredLength = Number(req.headers["content-length"]);
+    if (Number.isFinite(declaredLength) && declaredLength > maxBytes) {
+      throw new ValidationError("request body too large", 413);
+    }
     const chunks: Buffer[] = [];
     let total = 0;
-    for await (const chunk of req) {
+    // Do not destroy the socket when leaving early: the caller must send a
+    // useful 413 before closing it. Stop reading/buffering as soon as bounded.
+    for await (const chunk of req.iterator({ destroyOnReturn: false })) {
       const buf = chunk as Buffer;
       total += buf.length;
-      if (total > MAX_BODY_BYTES) {
-        throw new ValidationError("request body too large");
+      if (total > maxBytes) {
+        throw new ValidationError("request body too large", 413);
       }
       chunks.push(buf);
     }
@@ -166,12 +178,21 @@ export function createApp(deps: AppDeps): (
     for (const [key, expiry] of pendingStates) {
       if (expiry <= now) pendingStates.delete(key);
     }
-    pendingStates.set(state, now + STATE_TTL_MS);
-    res.writeHead(302, { location: deps.google.consentUrl(state) });
+    if (pendingStates.size >= MAX_PENDING_STATES) {
+      res.setHeader("retry-after", "60");
+      sendError(res, 429, "too many pending sign-ins; try again shortly");
+      return;
+    }
+    pendingStates.set(state, now + OAUTH_STATE_TTL_MS);
+    res.writeHead(302, {
+      location: deps.google.consentUrl(state),
+      "set-cookie": oauthStateCookie(state),
+    });
     res.end();
   }
 
   async function handleGoogleCallback(
+    req: IncomingMessage,
     url: URL,
     res: ServerResponse,
   ): Promise<void> {
@@ -185,12 +206,16 @@ export function createApp(deps: AppDeps): (
       sendError(res, 400, "missing code or state");
       return;
     }
+    const browserState = parseCookies(req.headers.cookie).get(OAUTH_STATE_COOKIE);
     const stateExpiry = pendingStates.get(state);
-    pendingStates.delete(state);
-    if (stateExpiry === undefined || stateExpiry <= Date.now()) {
+    if (browserState !== state || stateExpiry === undefined || stateExpiry <= Date.now()) {
       sendError(res, 400, "invalid or expired state");
       return;
     }
+    // Consume only after browser binding is checked. A callback delivered to
+    // another browser cannot sign that browser in or cancel a legitimate flow.
+    pendingStates.delete(state);
+    res.setHeader("set-cookie", oauthStateCookie("", true));
 
     let profile;
     try {
@@ -215,7 +240,7 @@ export function createApp(deps: AppDeps): (
     });
     res.writeHead(302, {
       location: `${config.appOrigin}/`,
-      "set-cookie": sessionCookie(token, config.cookieDomain),
+      "set-cookie": [sessionCookie(token, config.cookieDomain), oauthStateCookie("", true)],
     });
     res.end();
   }
@@ -224,8 +249,9 @@ export function createApp(deps: AppDeps): (
     req: IncomingMessage,
     res: ServerResponse,
   ): Promise<void> {
-    const token = parseCookies(req.headers.cookie).get(SESSION_COOKIE);
-    if (token) await store.deleteSession(hashToken(token));
+    const authed = await requireMutationAuth(req, res);
+    if (!authed) return;
+    await store.deleteSession(authed.session.tokenHash);
     res.writeHead(204, {
       "set-cookie": clearedSessionCookie(config.cookieDomain),
     });
@@ -241,31 +267,6 @@ export function createApp(deps: AppDeps): (
   ): Promise<void> {
     const method = req.method ?? "GET";
     const path = url.pathname;
-
-    // CORS: exactly the app origin, credentials allowed.
-    const origin = req.headers.origin;
-    const corsOk = origin === config.appOrigin;
-    if (corsOk) {
-      res.setHeader("access-control-allow-origin", config.appOrigin);
-      res.setHeader("access-control-allow-credentials", "true");
-      res.setHeader("vary", "Origin");
-    }
-    if (method === "OPTIONS") {
-      if (corsOk) {
-        res.setHeader(
-          "access-control-allow-methods",
-          "GET, POST, PUT, DELETE, OPTIONS",
-        );
-        res.setHeader(
-          "access-control-allow-headers",
-          "content-type, x-csrf-token",
-        );
-        res.setHeader("access-control-max-age", "86400");
-      }
-      res.writeHead(204);
-      res.end();
-      return;
-    }
 
     if (path === "/api/me" && method === "GET") {
       const authed = await authenticate(req);
@@ -297,7 +298,7 @@ export function createApp(deps: AppDeps): (
     if (path === "/api/games" && method === "POST") {
       const authed = await requireMutationAuth(req, res);
       if (!authed) return;
-      const game = validateGame(await readJsonBody(req));
+      const game = validateGame(await readJsonBody(req, MAX_GAME_BYTES));
       const inserted = await store.insertGame(authed.user.id, game);
       if (inserted) {
         sendJson(res, 201, gameJson(game));
@@ -322,7 +323,7 @@ export function createApp(deps: AppDeps): (
       if (!authed) return;
       const game = await store.getGame(
         authed.user.id,
-        decodeURIComponent(gameMatch[1]!),
+        validatedGameId(gameMatch[1]!),
       );
       if (!game) {
         sendError(res, 404, "game not found");
@@ -351,17 +352,10 @@ export function createApp(deps: AppDeps): (
     if (path === "/api/settings" && method === "PUT") {
       const authed = await requireMutationAuth(req, res);
       if (!authed) return;
-      const body = await readJsonBody(req);
-      if (
-        typeof body !== "object" ||
-        body === null ||
-        !("settings" in body)
-      ) {
-        throw new ValidationError("body must be { settings }");
-      }
+      const settings = validateSettings(await readJsonBody(req, MAX_SETTINGS_BYTES));
       await store.putSettings(
         authed.user.id,
-        (body as Record<string, unknown>)["settings"],
+        settings,
       );
       res.writeHead(204);
       res.end();
@@ -371,7 +365,7 @@ export function createApp(deps: AppDeps): (
     if (path === "/api/import" && method === "POST") {
       const authed = await requireMutationAuth(req, res);
       if (!authed) return;
-      const games = validateGameList(await readJsonBody(req));
+      const games = validateGameList(await readJsonBody(req, MAX_IMPORT_BYTES));
       let inserted = 0;
       for (const game of games) {
         if (await store.insertGame(authed.user.id, game)) inserted += 1;
@@ -396,6 +390,30 @@ export function createApp(deps: AppDeps): (
         url.pathname = path;
         const method = req.method ?? "GET";
 
+        res.setHeader("x-content-type-options", "nosniff");
+        res.setHeader("referrer-policy", "no-referrer");
+        // Responses include private history, OAuth transactions or CSRF tokens.
+        res.setHeader("cache-control", "no-store");
+        const apiPath = path === "/api" || path.startsWith("/api/");
+        if (apiPath || path === "/auth/signout") {
+          res.setHeader("vary", "Origin");
+          const corsOk = req.headers.origin === config.appOrigin;
+          if (corsOk) {
+            res.setHeader("access-control-allow-origin", config.appOrigin);
+            res.setHeader("access-control-allow-credentials", "true");
+          }
+          if (method === "OPTIONS") {
+            if (corsOk) {
+              res.setHeader("access-control-allow-methods", "GET, POST, PUT, DELETE, OPTIONS");
+              res.setHeader("access-control-allow-headers", "content-type, x-csrf-token");
+              res.setHeader("access-control-max-age", "86400");
+            }
+            res.writeHead(204);
+            res.end();
+            return;
+          }
+        }
+
         if (path === "/healthz" && method === "GET") {
           res.writeHead(200, { "content-type": "text/plain" });
           res.end("ok");
@@ -406,21 +424,22 @@ export function createApp(deps: AppDeps): (
           return;
         }
         if (path === "/auth/google/callback" && method === "GET") {
-          await handleGoogleCallback(url, res);
+          await handleGoogleCallback(req, url, res);
           return;
         }
         if (path === "/auth/signout" && method === "POST") {
           await handleSignout(req, res);
           return;
         }
-        if (path === "/api" || path.startsWith("/api/")) {
+        if (apiPath) {
           await handleApi(req, res, url);
           return;
         }
         sendError(res, 404, "not found");
       } catch (err) {
         if (err instanceof ValidationError) {
-          sendError(res, 400, err.message);
+          if (err.status === 413) res.setHeader("connection", "close");
+          sendError(res, err.status, err.message);
           return;
         }
         console.error("[server] request failed:", err);

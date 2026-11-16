@@ -24,25 +24,53 @@ Domain=.openmahjong.app; Path=/`, 30-day expiry. Mutations under
 — 401 without a session, 403 on a bad token. The client learns its
 CSRF token from `GET /api/me`.
 
+Google sign-in also uses a separate, host-only
+`__Host-om_oauth_state` cookie (`HttpOnly; Secure; SameSite=Lax;
+Path=/`, ten-minute expiry). The callback must match the initiating
+browser's cookie and a one-use, unexpired server-side transaction.
+Transactions are currently process-local and capped at 1,000; sign-in
+must be restarted after an API restart, and multi-replica deployment
+requires shared transaction storage first.
+
+`POST /auth/signout` requires the same session/CSRF gate as API
+mutations. Its CORS policy permits the app origin, including preflight.
+Private and authentication responses send `Cache-Control: no-store`.
+
 | Route | Behavior |
 | --- | --- |
 | `GET /healthz` | 200 `ok`, no auth. |
 | `GET /auth/google/start` | 302 to Google's consent screen (scopes `openid profile`). 503 when Google credentials are not configured. |
 | `GET /auth/google/callback` | Verifies state, exchanges the code, upserts the user by Google subject id, creates a session, sets the cookie, 302 to the app origin. |
-| `POST /auth/signout` | Deletes the session, clears the cookie, 204. |
+| `POST /auth/signout` | Requires session + CSRF, deletes the session, clears the cookie, 204. |
 | `GET /api/me` | `{ user: null }` signed out; `{ user: { name, avatarUrl }, csrfToken }` signed in. |
 | `POST /api/games` | Records a finished game `{ id, length, placement, score, finishedAt, log, stats }`. Idempotent on (user, id): 201 on first insert, 200 with the existing record on a repeat. |
 | `GET /api/games` | Summaries `[{ id, finishedAt, length, placement, score }]`, newest first, max 200. |
 | `GET /api/games/:id` | The full record including `log` and `stats`; 404 if not the user's. |
 | `GET /api/stats` | Raw sums `{ games, wins, placementSum, hands, riichi, dealIns, handsWon, winPoints }`; the client derives rates. |
 | `GET /api/settings` | `{ settings }` — the stored object, or `null` when never synced. |
-| `PUT /api/settings` | Stores `{ settings }` verbatim, 204. |
+| `PUT /api/settings` | Stores `{ settings: object }` including namespaced learning progress, 204. |
 | `POST /api/import` | `{ games: [...] }` (same shape as `POST /api/games`) → inserts the ones not already present, returns `{ inserted: n }`. |
 | `DELETE /api/me` | Hard-deletes the user, their games, settings, and sessions (brief A3/B6); clears the cookie; 204. |
 
 Game `stats` are the per-game counters the client computes at game
 end: `{ hands, riichi, dealIns, handsWon, winPoints }`, all
-non-negative integers.
+non-negative safe integers. Counters other than `winPoints` must fit
+PostgreSQL `integer` (maximum 2,147,483,647); riichi, deal-ins, and hands
+won cannot exceed hands played. Scores must be safe integers, and
+`finishedAt` must use an ISO date/time with timezone. Invalid game IDs
+are rejected as 400 before querying a UUID column.
+
+Input limits: settings request 64 KiB, one game request 2 MiB, import
+request 16 MiB and at most 200 games. Each imported log is also bounded
+to 2 MiB. JSON nesting is limited to 64 levels and one million values
+per settings object/log. Requests exceeding byte bounds return 413;
+count/shape violations return 400. Import clients must batch uploads.
+Legacy records with a null decision log remain accepted.
+
+These checks bound storage work and protect the API contract. They do
+not establish that the client played a valid match. Scores, placement,
+statistics, and replay logs are untrusted private history and must
+never supply ratings or authoritative competitive results.
 
 ## Environment
 
@@ -84,7 +112,13 @@ built from this monorepo:
 ```sh
 npm run typecheck --workspace=@openmahjong/server
 npx vitest run packages/server/test/server.test.ts
+npx vitest run packages/server/test   # HTTP + Google client + pg wire types
 ```
 
 The suite runs the real HTTP layer against `MemoryStore` with a fake
-Google client — no network, no live Postgres.
+Google client — no provider network and no live Postgres. A separate
+test exercises the real driver's bigint parser at the Store boundary;
+SQL constraints, migrations, and concurrency still need PostgreSQL
+integration coverage. See
+[`docs/audit/security-performance-audit.md`](../../docs/audit/security-performance-audit.md)
+for known storage, synchronization, abuse-control, and recovery gaps.

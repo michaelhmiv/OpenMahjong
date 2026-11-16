@@ -9,6 +9,20 @@ import { createHash, randomBytes } from "node:crypto";
 
 export const SESSION_COOKIE = "om_session";
 export const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+/** Host-only prefix prevents a sibling subdomain from injecting OAuth state. */
+export const OAUTH_STATE_COOKIE = "__Host-om_oauth_state";
+export const OAUTH_STATE_TTL_MS = 10 * 60 * 1000;
+
+export function oauthStateCookie(state: string, clear = false): string {
+  return [
+    `${OAUTH_STATE_COOKIE}=${clear ? "" : state}`,
+    "Path=/",
+    `Max-Age=${clear ? 0 : OAUTH_STATE_TTL_MS / 1000}`,
+    "HttpOnly",
+    "Secure",
+    "SameSite=Lax",
+  ].join("; ");
+}
 
 export function newToken(): string {
   return randomBytes(32).toString("base64url");

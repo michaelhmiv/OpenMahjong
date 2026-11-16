@@ -44,6 +44,7 @@ export function createGoogleClient(input: {
     async exchangeCode(code: string): Promise<GoogleProfile> {
       const tokenRes = await fetchImpl(TOKEN_ENDPOINT, {
         method: "POST",
+        signal: AbortSignal.timeout(10_000),
         headers: { "content-type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
           code,
@@ -62,6 +63,7 @@ export function createGoogleClient(input: {
       }
 
       const infoRes = await fetchImpl(USERINFO_ENDPOINT, {
+        signal: AbortSignal.timeout(10_000),
         headers: { authorization: `Bearer ${token.access_token}` },
       });
       if (!infoRes.ok) {
