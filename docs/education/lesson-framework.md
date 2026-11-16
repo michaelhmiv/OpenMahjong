@@ -1,0 +1,13 @@
+# Lesson framework
+
+`LessonController` continues to drive the approved existing interface. Its four current interaction variants are info, drill, choice, and seeded scene. Wrong answers stay on the same step and supply feedback. `LessonScene` uses the real engine and current AI; it suspends at seat 0's decision and replays the bounded action log on advancement. It is not an incremental game engine and is not a deep strategic evaluator.
+
+States are initialized, active, feedback/retry, and complete. `serialize()` saves module ID/content version, step, bounded scene seed/actions, counters, and found indices. Constructing with a valid snapshot resumes. Restart is a fresh controller with the same module ID. TU-11 is a real match owned by App: its completion requires the actual game to finish. An empty panel controller is not a TU-11 completion signal.
+
+`education/lesson-progress.ts` validates local/account data before engine execution. Finite nonnegative integer steps must fit current module bounds; known seeds only; at most 512 actions; valid tile IDs/types and discriminated action shapes; bounded counters/selection indices. Replayed actions must be legal in their actual turn/call context. Invalid live actions cannot mutate prior scene state. A failed saved replay restarts the active lesson with feedback while leaving the separate completed-module list intact.
+
+Chi decisions retain their exact two tile identities through a monotonic event scan; a later call cannot reuse an earlier event's mapping. Current engine call-stage markers determine whether pon/kan or chi is decidable, with the historical ask-count fallback retained for compatibility. Named waits respect tiles already owned in melds and do not include a fifth copy.
+
+Historical unversioned snapshots are content version 1. Version 1→2 keeps step order; known seeds/actions are validated under current scenarios. If a behavior correction makes a scene incompatible it restarts that active lesson, rather than claiming byte-identical continuation under changed rules/AI. Unknown future versions are rejected. Full-game historical replay has a separate format and compatibility contract.
+
+Extending to sorting, hand construction, explicit waits, scoring, or safety selection should add a typed interaction/validator and meaningful tests, then an approved rendering before exposing a new surface. Keep large static curriculum data out of this controller; do not pretend callbacks have become a complete data-driven authoring language. Before changing AI, engine behavior, or seeds, run all B9 module completion paths and the TU-11 App game.

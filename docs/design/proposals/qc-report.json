@@ -1,0 +1,2088 @@
+{
+  "observedAt": "2026-11-16T20:45:32.285Z",
+  "status": "Unapproved proposals; independent automated render inspection only",
+  "results": [
+    {
+      "view": "practice",
+      "width": 390,
+      "height": 844,
+      "screenshot": "/workspace/work/design-proposals/qc/practice-390x844.png",
+      "errors": [],
+      "geometry": {
+        "contrastPairs": [
+          {
+            "foreground": "rgb(169, 189, 169)",
+            "background": "rgb(21, 38, 32)",
+            "ratio": 7.924098209897686
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(21, 38, 32)",
+            "ratio": 13.73452027666901
+          },
+          {
+            "foreground": "rgb(217, 180, 92)",
+            "background": "rgb(21, 38, 32)",
+            "ratio": 7.99509971629614
+          },
+          {
+            "foreground": "rgb(169, 189, 169)",
+            "background": "rgb(31, 53, 43)",
+            "ratio": 6.577039265088211
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)",
+            "ratio": 8.469462133741986
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(31, 53, 43)",
+            "ratio": 11.399717261703225
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(13, 24, 18)",
+            "ratio": 15.794837505254792
+          }
+        ],
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "document": {
+          "width": 390,
+          "height": 844
+        },
+        "controls": [
+          {
+            "text": "Back",
+            "x": 12,
+            "y": 29,
+            "width": 44,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Help",
+            "x": 334,
+            "y": 29,
+            "width": 44,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "3m ✓",
+            "x": 99,
+            "y": 392.359375,
+            "width": 91,
+            "height": 101,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "6m ✓",
+            "x": 200,
+            "y": 392.359375,
+            "width": 91,
+            "height": 101,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Why are there two waits?",
+            "x": 20,
+            "y": 641.734375,
+            "width": 350,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Next exercise",
+            "x": 20,
+            "y": 696.734375,
+            "width": 350,
+            "height": 48,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Practice",
+            "x": 20,
+            "y": 790,
+            "width": 171,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Review",
+            "x": 199,
+            "y": 790,
+            "width": 171,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          }
+        ],
+        "text": [
+          {
+            "text": "五",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "一",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "二",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "三",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "四",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "五",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "六",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "七",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "八",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "九",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "東",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "南",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "西",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "北",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "中",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "發",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Design proposal · not released",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "‹",
+            "font": "Figtree, sans-serif",
+            "size": 24,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "OPEN MAHJONG",
+            "font": "Fraunces, serif",
+            "size": 17,
+            "color": "rgb(217, 180, 92)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "?",
+            "font": "Figtree, sans-serif",
+            "size": 17,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "WAIT READING · EXERCISE 2 OF 5",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Find both winning shapes",
+            "font": "Figtree, sans-serif",
+            "size": 23,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Which tiles complete this hand?",
+            "font": "Figtree, sans-serif",
+            "size": 14,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "YOUR 13 TILES",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Three sets, a pair, and 4m–5m.",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "3m ✓",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "✓",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "6m ✓",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "✓",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Both waits found",
+            "font": "Fraunces, serif",
+            "size": 19,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "A 3m makes 3m–4m–5m. A 6m makes 4m–5m–6m.",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "This checks the hand’s shape. A legal win also needs a yaku and must satisfy furiten rules.",
+            "font": "Figtree, sans-serif",
+            "size": 12,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Why are there two waits?",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "The middle 4m–5m shape can extend at either end. It is called a two-sided wait.",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Next exercise",
+            "font": "Figtree, sans-serif",
+            "size": 15,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)"
+          },
+          {
+            "text": "OpenMahjong riichi · exact shape check",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Practice",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)"
+          },
+          {
+            "text": "Review",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "const params=new URLSearchParams(location.search),review=params.get('view')==='review';\nconst proof=",
+            "font": "Figtree, sans-serif",
+            "size": 14,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadedFonts": [
+          {
+            "family": "Figtree",
+            "status": "loaded"
+          },
+          {
+            "family": "Fraunces",
+            "status": "loaded"
+          }
+        ],
+        "bodyStyle": {
+          "font": "Figtree, sans-serif"
+        },
+        "wordmarkStyle": {
+          "font": "Fraunces, serif",
+          "color": "rgb(217, 180, 92)"
+        }
+      },
+      "axe": []
+    },
+    {
+      "view": "practice",
+      "width": 360,
+      "height": 800,
+      "screenshot": "/workspace/work/design-proposals/qc/practice-360x800.png",
+      "errors": [],
+      "geometry": {
+        "contrastPairs": [
+          {
+            "foreground": "rgb(169, 189, 169)",
+            "background": "rgb(21, 38, 32)",
+            "ratio": 7.924098209897686
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(21, 38, 32)",
+            "ratio": 13.73452027666901
+          },
+          {
+            "foreground": "rgb(217, 180, 92)",
+            "background": "rgb(21, 38, 32)",
+            "ratio": 7.99509971629614
+          },
+          {
+            "foreground": "rgb(169, 189, 169)",
+            "background": "rgb(31, 53, 43)",
+            "ratio": 6.577039265088211
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)",
+            "ratio": 8.469462133741986
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(31, 53, 43)",
+            "ratio": 11.399717261703225
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(13, 24, 18)",
+            "ratio": 15.794837505254792
+          }
+        ],
+        "viewport": {
+          "width": 360,
+          "height": 800
+        },
+        "document": {
+          "width": 360,
+          "height": 800
+        },
+        "controls": [
+          {
+            "text": "Back",
+            "x": 12,
+            "y": 29,
+            "width": 44,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Help",
+            "x": 304,
+            "y": 29,
+            "width": 44,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "3m ✓",
+            "x": 84,
+            "y": 374.359375,
+            "width": 91,
+            "height": 98,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "6m ✓",
+            "x": 185,
+            "y": 374.359375,
+            "width": 91,
+            "height": 98,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Why are there two waits?",
+            "x": 16,
+            "y": 612.375,
+            "width": 328,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Next exercise",
+            "x": 16,
+            "y": 667.375,
+            "width": 328,
+            "height": 48,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Practice",
+            "x": 20,
+            "y": 746,
+            "width": 156,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Review",
+            "x": 184,
+            "y": 746,
+            "width": 156,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          }
+        ],
+        "text": [
+          {
+            "text": "五",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "一",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "二",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "三",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "四",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "五",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "六",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "七",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "八",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "九",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "東",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "南",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "西",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "北",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "中",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "發",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Design proposal · not released",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "‹",
+            "font": "Figtree, sans-serif",
+            "size": 24,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "OPEN MAHJONG",
+            "font": "Fraunces, serif",
+            "size": 16,
+            "color": "rgb(217, 180, 92)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "?",
+            "font": "Figtree, sans-serif",
+            "size": 17,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "WAIT READING · EXERCISE 2 OF 5",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Find both winning shapes",
+            "font": "Figtree, sans-serif",
+            "size": 23,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Which tiles complete this hand?",
+            "font": "Figtree, sans-serif",
+            "size": 14,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "YOUR 13 TILES",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Three sets, a pair, and 4m–5m.",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "3m ✓",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "✓",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "6m ✓",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "✓",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Both waits found",
+            "font": "Fraunces, serif",
+            "size": 19,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "A 3m makes 3m–4m–5m. A 6m makes 4m–5m–6m.",
+            "font": "Figtree, sans-serif",
+            "size": 12,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "This checks the hand’s shape. A legal win also needs a yaku and must satisfy furiten rules.",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Why are there two waits?",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "The middle 4m–5m shape can extend at either end. It is called a two-sided wait.",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Next exercise",
+            "font": "Figtree, sans-serif",
+            "size": 15,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)"
+          },
+          {
+            "text": "OpenMahjong riichi · exact shape check",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Practice",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)"
+          },
+          {
+            "text": "Review",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "const params=new URLSearchParams(location.search),review=params.get('view')==='review';\nconst proof=",
+            "font": "Figtree, sans-serif",
+            "size": 14,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadedFonts": [
+          {
+            "family": "Figtree",
+            "status": "loaded"
+          },
+          {
+            "family": "Fraunces",
+            "status": "loaded"
+          }
+        ],
+        "bodyStyle": {
+          "font": "Figtree, sans-serif"
+        },
+        "wordmarkStyle": {
+          "font": "Fraunces, serif",
+          "color": "rgb(217, 180, 92)"
+        }
+      },
+      "axe": []
+    },
+    {
+      "view": "review",
+      "width": 390,
+      "height": 844,
+      "screenshot": "/workspace/work/design-proposals/qc/review-390x844.png",
+      "errors": [],
+      "geometry": {
+        "contrastPairs": [
+          {
+            "foreground": "rgb(169, 189, 169)",
+            "background": "rgb(21, 38, 32)",
+            "ratio": 7.924098209897686
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(21, 38, 32)",
+            "ratio": 13.73452027666901
+          },
+          {
+            "foreground": "rgb(217, 180, 92)",
+            "background": "rgb(21, 38, 32)",
+            "ratio": 7.99509971629614
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)",
+            "ratio": 8.469462133741986
+          },
+          {
+            "foreground": "rgb(169, 189, 169)",
+            "background": "rgb(31, 53, 43)",
+            "ratio": 6.577039265088211
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(31, 53, 43)",
+            "ratio": 11.399717261703225
+          },
+          {
+            "foreground": "rgb(169, 189, 169)",
+            "background": "rgb(46, 74, 58)",
+            "ratio": 4.886435665815463
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(13, 24, 18)",
+            "ratio": 15.794837505254792
+          }
+        ],
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "document": {
+          "width": 390,
+          "height": 844
+        },
+        "controls": [
+          {
+            "text": "Back",
+            "x": 12,
+            "y": 29,
+            "width": 44,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Help",
+            "x": 334,
+            "y": 29,
+            "width": 44,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Previous decision",
+            "x": 258.578125,
+            "y": 108.390625,
+            "width": 44,
+            "height": 44,
+            "disabled": true,
+            "outsideViewport": false
+          },
+          {
+            "text": "Next decision",
+            "x": 326,
+            "y": 108.390625,
+            "width": 44,
+            "height": 44,
+            "disabled": true,
+            "outsideViewport": false
+          },
+          {
+            "text": "Practice tile efficiency",
+            "x": 20,
+            "y": 657.359375,
+            "width": 350,
+            "height": 48,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Practice",
+            "x": 20,
+            "y": 790,
+            "width": 171,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Review",
+            "x": 199,
+            "y": 790,
+            "width": 171,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          }
+        ],
+        "text": [
+          {
+            "text": "五",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "一",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "二",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "三",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "四",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "五",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "六",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "七",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "八",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "九",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "東",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "南",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "西",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "北",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "中",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "發",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Design proposal · not released",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "‹",
+            "font": "Figtree, sans-serif",
+            "size": 24,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "OPEN MAHJONG",
+            "font": "Fraunces, serif",
+            "size": 17,
+            "color": "rgb(217, 180, 92)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "?",
+            "font": "Figtree, sans-serif",
+            "size": 17,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "EAST 1 · YOUR FIRST DISCARD",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Review a decision",
+            "font": "Figtree, sans-serif",
+            "size": 21,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "‹",
+            "font": "Figtree, sans-serif",
+            "size": 22,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "1 / 1",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "›",
+            "font": "Figtree, sans-serif",
+            "size": 22,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Player perspective ✓",
+            "font": "Figtree, sans-serif",
+            "size": 12,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)"
+          },
+          {
+            "text": "✓",
+            "font": "Figtree, sans-serif",
+            "size": 12,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "YOUR HAND BEFORE DISCARDING",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "69 in the live wall · no riichi threats.",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Discard",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Shanten",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Unseen copies*",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Your example3s",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "3s",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "3",
+            "font": "Figtree, sans-serif",
+            "size": 19,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "42",
+            "font": "Figtree, sans-serif",
+            "size": 19,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "AlternativeWest",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "West",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "3",
+            "font": "Figtree, sans-serif",
+            "size": 19,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "58",
+            "font": "Figtree, sans-serif",
+            "size": 19,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "More ways to improve",
+            "font": "Fraunces, serif",
+            "size": 19,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Both choices leave 3 shanten. Discarding West accepts 16 more unseen improving copies.",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "*Unseen copies may be in opponents’ hands or the dead wall. The ranking is a heuristic, not a win pr",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Practice tile efficiency",
+            "font": "Figtree, sans-serif",
+            "size": 15,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)"
+          },
+          {
+            "text": "OpenMahjong riichi · analysis version 2",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Practice",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Review",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)"
+          },
+          {
+            "text": "const params=new URLSearchParams(location.search),review=params.get('view')==='review';\nconst proof=",
+            "font": "Figtree, sans-serif",
+            "size": 14,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadedFonts": [
+          {
+            "family": "Figtree",
+            "status": "loaded"
+          },
+          {
+            "family": "Fraunces",
+            "status": "loaded"
+          }
+        ],
+        "bodyStyle": {
+          "font": "Figtree, sans-serif"
+        },
+        "wordmarkStyle": {
+          "font": "Fraunces, serif",
+          "color": "rgb(217, 180, 92)"
+        }
+      },
+      "axe": []
+    },
+    {
+      "view": "review",
+      "width": 360,
+      "height": 800,
+      "screenshot": "/workspace/work/design-proposals/qc/review-360x800.png",
+      "errors": [],
+      "geometry": {
+        "contrastPairs": [
+          {
+            "foreground": "rgb(169, 189, 169)",
+            "background": "rgb(21, 38, 32)",
+            "ratio": 7.924098209897686
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(21, 38, 32)",
+            "ratio": 13.73452027666901
+          },
+          {
+            "foreground": "rgb(217, 180, 92)",
+            "background": "rgb(21, 38, 32)",
+            "ratio": 7.99509971629614
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)",
+            "ratio": 8.469462133741986
+          },
+          {
+            "foreground": "rgb(169, 189, 169)",
+            "background": "rgb(31, 53, 43)",
+            "ratio": 6.577039265088211
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(31, 53, 43)",
+            "ratio": 11.399717261703225
+          },
+          {
+            "foreground": "rgb(169, 189, 169)",
+            "background": "rgb(46, 74, 58)",
+            "ratio": 4.886435665815463
+          },
+          {
+            "foreground": "rgb(243, 239, 227)",
+            "background": "rgb(13, 24, 18)",
+            "ratio": 15.794837505254792
+          }
+        ],
+        "viewport": {
+          "width": 360,
+          "height": 800
+        },
+        "document": {
+          "width": 360,
+          "height": 800
+        },
+        "controls": [
+          {
+            "text": "Back",
+            "x": 12,
+            "y": 29,
+            "width": 44,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Help",
+            "x": 304,
+            "y": 29,
+            "width": 44,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Previous decision",
+            "x": 232.578125,
+            "y": 108.390625,
+            "width": 44,
+            "height": 44,
+            "disabled": true,
+            "outsideViewport": false
+          },
+          {
+            "text": "Next decision",
+            "x": 300,
+            "y": 108.390625,
+            "width": 44,
+            "height": 44,
+            "disabled": true,
+            "outsideViewport": false
+          },
+          {
+            "text": "Practice tile efficiency",
+            "x": 16,
+            "y": 667.359375,
+            "width": 328,
+            "height": 48,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Practice",
+            "x": 20,
+            "y": 746,
+            "width": 156,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          },
+          {
+            "text": "Review",
+            "x": 184,
+            "y": 746,
+            "width": 156,
+            "height": 44,
+            "disabled": false,
+            "outsideViewport": false
+          }
+        ],
+        "text": [
+          {
+            "text": "五",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "一",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "二",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "三",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "四",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "五",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "六",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "七",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "八",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "九",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 18,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "萬",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 19.5,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "東",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "南",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "西",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "北",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "中",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "發",
+            "font": "\"Noto Sans CJK SC\", \"Noto Sans CJK JP\", sans-serif",
+            "size": 25,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Design proposal · not released",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "‹",
+            "font": "Figtree, sans-serif",
+            "size": 24,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "OPEN MAHJONG",
+            "font": "Fraunces, serif",
+            "size": 16,
+            "color": "rgb(217, 180, 92)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "?",
+            "font": "Figtree, sans-serif",
+            "size": 17,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "EAST 1 · YOUR FIRST DISCARD",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Review a decision",
+            "font": "Figtree, sans-serif",
+            "size": 21,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "‹",
+            "font": "Figtree, sans-serif",
+            "size": 22,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "1 / 1",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "›",
+            "font": "Figtree, sans-serif",
+            "size": 22,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Player perspective ✓",
+            "font": "Figtree, sans-serif",
+            "size": 12,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)"
+          },
+          {
+            "text": "✓",
+            "font": "Figtree, sans-serif",
+            "size": 12,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "YOUR HAND BEFORE DISCARDING",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "69 in the live wall · no riichi threats.",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Discard",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Shanten",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Unseen copies*",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Your example3s",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "3s",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "3",
+            "font": "Figtree, sans-serif",
+            "size": 19,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "42",
+            "font": "Figtree, sans-serif",
+            "size": 19,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "AlternativeWest",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "West",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "3",
+            "font": "Figtree, sans-serif",
+            "size": 19,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "58",
+            "font": "Figtree, sans-serif",
+            "size": 19,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "More ways to improve",
+            "font": "Fraunces, serif",
+            "size": 19,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Both choices leave 3 shanten. Discarding West accepts 16 more unseen improving copies.",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "*Unseen copies may be in opponents’ hands or the dead wall. The ranking is a heuristic, not a win pr",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Practice tile efficiency",
+            "font": "Figtree, sans-serif",
+            "size": 15,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)"
+          },
+          {
+            "text": "OpenMahjong riichi · analysis version 2",
+            "font": "Figtree, sans-serif",
+            "size": 11,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Practice",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(169, 189, 169)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "text": "Review",
+            "font": "Figtree, sans-serif",
+            "size": 13,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgb(46, 74, 58)"
+          },
+          {
+            "text": "const params=new URLSearchParams(location.search),review=params.get('view')==='review';\nconst proof=",
+            "font": "Figtree, sans-serif",
+            "size": 14,
+            "color": "rgb(243, 239, 227)",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ],
+        "loadedFonts": [
+          {
+            "family": "Figtree",
+            "status": "loaded"
+          },
+          {
+            "family": "Fraunces",
+            "status": "loaded"
+          }
+        ],
+        "bodyStyle": {
+          "font": "Figtree, sans-serif"
+        },
+        "wordmarkStyle": {
+          "font": "Fraunces, serif",
+          "color": "rgb(217, 180, 92)"
+        }
+      },
+      "axe": []
+    }
+  ]
+}

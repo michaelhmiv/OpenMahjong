@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Open Mahjong learning UI proposal</title><link rel="stylesheet" href="proposal.css"></head><body>
+<main id="app" class="stage" aria-label="Learning design proposal"></main>
+<script type="module">
+const params=new URLSearchParams(location.search),review=params.get('view')==='review';
+const proof=await (await fetch('review-facts.json')).json();
+const sprites=await (await fetch('tiles.svg')).text();
+document.body.insertAdjacentHTML('afterbegin',`<div class="sprite" aria-hidden="true">${sprites}</div>`);
+const named=['ew','sw','ww','nw','haku','hatsu','chun'];
+const symbol=(type)=>type<9?`m${type+1}`:type<18?`p${type-8}`:type<27?`s${type-17}`:named[type-27];
+const label=(type)=>type<9?`${type+1}m`:type<18?`${type-8}p`:type<27?`${type-17}s`:['East','South','West','North','White','Green','Red'][type-27];
+const tile=(type)=>`<span class="tile" role="img" aria-label="${label(type)}"><svg viewBox="0 0 40 56" aria-hidden="true"><use href="#t-${symbol(type)}"/></svg></span>`;
+const hand=(types)=>`<div class="hand" aria-label="${types.length}-tile hand">${types.map(tile).join('')}</div>`;
+const header=`<div class="proposal">Design proposal · not released</div><header><button class="back" aria-label="Back">‹</button><div class="wordmark">OPEN MAHJONG</div><button class="help" aria-label="Help">?</button></header>`;
+const nav=`<nav aria-label="Proposed learning navigation"><a href="?view=practice" ${!review?'aria-current="page"':''}>Practice</a><a href="?view=review" ${review?'aria-current="page"':''}>Review</a></nav>`;
+let body;
+if(!review){
+ const types=[0,1,2,3,4,9,10,11,22,22,33,33,33];
+ body=`<section class="content"><div class="eyebrow">WAIT READING · EXERCISE 2 OF 5</div><h1>Find both winning shapes</h1><p class="intro">Which tiles complete this hand?</p><div class="card hand-card"><div class="card-label">YOUR 13 TILES</div>${hand(types)}<div class="hand-caption">Three sets, a pair, and 4m–5m.</div></div><div class="answers" aria-label="Selected answers"><button class="answer" aria-pressed="true">${tile(2)}<span>3m <b>✓</b></span></button><button class="answer" aria-pressed="true">${tile(5)}<span>6m <b>✓</b></span></button></div><div class="card feedback" role="status"><h2>Both waits found</h2><p>A 3m makes 3m–4m–5m. A 6m makes 4m–5m–6m.</p><p class="dim">This checks the hand’s shape. A legal win also needs a yaku and must satisfy furiten rules.</p></div><details><summary>Why are there two waits?</summary><p>The middle 4m–5m shape can extend at either end. It is called a two-sided wait.</p></details><button class="primary">Next exercise</button><p class="source">OpenMahjong riichi · exact shape check</p></section>`;
+}else{
+ body=`<section class="content"><div class="eyebrow">EAST 1 · YOUR FIRST DISCARD</div><div class="title-row"><h1>Review a decision</h1><div class="decision-nav" aria-label="Decision navigation"><button disabled aria-label="Previous decision">‹</button><span>1 / 1</span><button disabled aria-label="Next decision">›</button></div></div><div class="perspective">Player perspective <span>✓</span></div><div class="card hand-card"><div class="card-label">YOUR HAND BEFORE DISCARDING</div>${hand(proof.view.hand.map(t=>t.type))}<div class="hand-caption">69 in the live wall · no riichi threats.</div></div><div class="compare card"><div class="compare-head"><span>Discard</span><span>Shanten</span><span>Unseen copies*</span></div><div class="option"><div class="option-name">${tile(20)}<span>Your example<br><b>3s</b></span></div><b>3</b><b>42</b></div><div class="option selected"><div class="option-name">${tile(29)}<span>Alternative<br><b>West</b></span></div><b>3</b><b>58</b></div></div><div class="explanation"><h2>More ways to improve</h2><p>Both choices leave 3 shanten. Discarding West accepts 16 more unseen improving copies.</p><p class="dim">*Unseen copies may be in opponents’ hands or the dead wall. The ranking is a heuristic, not a win probability.</p></div><button class="primary">Practice tile efficiency</button><p class="source">OpenMahjong riichi · analysis version 2</p></section>`;
+}
+document.querySelector('#app').innerHTML=header+body+nav;
+document.querySelectorAll('button:not([disabled])').forEach(button=>button.addEventListener('click',()=>{if(button.classList.contains('primary')){button.textContent='Prototype only — no progress saved';}else if(button.classList.contains('answer')){button.setAttribute('aria-pressed',String(button.getAttribute('aria-pressed')!=='true'));}}));
+</script></body></html>
