@@ -31,51 +31,64 @@ import {
 } from "@openmahjong/engine";
 import {
   countsOfTiles,
-  doraTypesOf,
+  doraInTiles,
+  doraWeightsOf,
+  ownedMeldCounts,
   evaluateDiscards,
   riichiThreats,
   ukeireFast,
-  valueProxy,
   waitsFast,
   visibleCounts,
+  rankDiscardCandidates,
+  shouldDeclareRiichi,
   type DiscardCandidate,
 } from "@openmahjong/ai";
+import { playerPerspectiveEvidence, type AnalysisEvidence } from "./analysis-contract.js";
 
 /** Why an option ranks where it does — the structured reason set the
  *  surfaces render. Codes are stable; wording lives in the surfaces. */
 export type ReasonCode =
   | "fewest-steps" //        minimal shanten after the discard
-  | "most-improving-tiles" // best efficiency among the minimal set
+  | "most-improving-tiles" // most unseen improving copies among shanten-best options
+  | "policy-preference" //  best weighted efficiency, including value heuristics
   | "keeps-riichi-open" //    the discard preserves a riichi declaration
   | "ready" //               the discard leaves the hand tenpai
-  | "two-sided-wait" //      tenpai with exactly two wait types
+  | "two-wait-types" //       two shape-completing tile types; not necessarily ryanmen
   | "multi-wait" //          tenpai with three or more wait types
   | "furiten-wait" //        a wait tile is in your own discard pond
-  | "genbutsu" //            the tile is in a riichi player's pond
+  | "genbutsu" //            the tile is in every riichi opponent's discard history
   | "safe-vs-riichi" //      danger 0 against a riichi threat
   | "dangerous-vs-riichi"; // danger 2+ against a riichi threat
 
 export interface TileRef {
   type: TileType;
   name: string;
-  /** Copies not seen in any visible place (ponds, melds, your hand). */
+  /** Unseen copies: may be in opponents' hands or the dead wall.
+   * This is not a count of drawable tiles in the live wall. */
   live: number;
 }
 
 export interface DiscardAdvice {
-  /** Id of the tile instance to discard (a plain copy when one exists). */
+  /** Exact physical tile instance, including red/plain alternatives. */
   tileId: number;
   tileType: TileType;
   tileName: string;
+  isRed: boolean;
+  /** Bonus dora lost by this discard; dora alone never establish a yaku. */
+  doraDiscarded: number;
   shantenAfter: number;
   /** Tiles that improve the hand after this discard, widest first. */
   improving: TileRef[];
   improvingTotal: number;
-  /** Wait tiles when the discard leaves the hand tenpai. */
+  /** Shape-completing tiles at tenpai; a legal win also needs a yaku. */
   waits: TileRef[];
-  /** 0–3 against the most dangerous riichi threat; 0 with no threat. */
+  /** Relative heuristic danger (not a probability); 0 with no threat. */
   danger: number;
+  /** In the discard history of EVERY current riichi threat. */
   genbutsu: boolean;
+  /** Exact seats whose discard history contains this type. */
+  genbutsuAgainst: number[];
+  /** Discard-based furiten only; temporary/pass furiten is unavailable in PlayerView. */
   furiten: boolean;
   reasons: ReasonCode[];
 }
@@ -85,11 +98,15 @@ export interface RiichiAdvice {
   tileType: TileType;
   tileName: string;
   waits: TileRef[];
-  /** Total live copies across all wait types. */
+  /** Total unseen copies, including hidden hands and dead wall. */
   liveTotal: number;
+  /** The shared opponent policy would declare here (a heuristic). */
+  recommended: boolean;
 }
 
 export interface TurnAdvice {
+  /** Versioned provenance and boundaries for all facts and judgments. */
+  analysis: AnalysisEvidence;
   /** Every legal discard, best first (the policy's own ordering). */
   options: DiscardAdvice[];
   recommendation: DiscardAdvice;
@@ -130,109 +147,45 @@ function joinNames(refs: readonly TileRef[]): string {
   return `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`;
 }
 
-/** The policy's push/fold judgment, mirrored (ai/policy.ts): facing a
- *  riichi with a 1-shanten hand, push when closed or carrying value. */
-function wantsToPush(view: PlayerView, counts: readonly number[]): boolean {
-  if (view.melds.length === 0) return true;
-  return valueProxy(view, counts, doraTypesOf(view)) >= 2;
-}
-
-/**
- * Rank candidates exactly as the policy picks among them
- * (ai/policy.ts turn()): the riichi-keeper pool restriction when not
- * folding, then efficiency / safest-among-best / safest-overall by
- * situation. Returns the full ordering plus the policy's pick.
- */
-function rankCandidates(
-  view: PlayerView,
-  ctx: TurnContext,
-  candidates: DiscardCandidate[],
-): DiscardCandidate[] {
-  const threats = riichiThreats(view);
-  const counts = countsOfTiles(view.hand);
-  const byEfficiency = (a: DiscardCandidate, b: DiscardCandidate): number =>
-    a.shantenAfter - b.shantenAfter ||
-    b.efficiency - a.efficiency ||
-    a.type - b.type;
-  const bestOverall = [...candidates].sort(byEfficiency)[0]!;
-  const folding =
-    threats.length > 0 &&
-    bestOverall.shantenAfter !== 0 &&
-    !(bestOverall.shantenAfter === 1 && wantsToPush(view, counts));
-
-  let pool = candidates;
-  if (!folding && ctx.riichiDiscardIds.length > 0) {
-    const minShanten = Math.min(...candidates.map((c) => c.shantenAfter));
-    const riichiPool = candidates.filter(
-      (c) =>
-        c.shantenAfter === minShanten && ctx.riichiDiscardIds.includes(c.tile.id),
-    );
-    if (riichiPool.length > 0) pool = riichiPool;
-  }
-
-  if (threats.length === 0) {
-    const poolSorted = [...pool].sort(byEfficiency);
-    const rest = candidates.filter((c) => !pool.includes(c)).sort(byEfficiency);
-    return [...poolSorted, ...rest];
-  }
-  if (folding) {
-    return [...candidates].sort(
-      (a, b) =>
-        a.danger - b.danger ||
-        a.shantenAfter - b.shantenAfter ||
-        b.efficiency - a.efficiency ||
-        a.type - b.type,
-    );
-  }
-  // Pushing: safestAmongBest — safety compared only among the
-  // pool's shanten-best, efficiency breaking danger ties.
-  const bySafety = (a: DiscardCandidate, b: DiscardCandidate): number =>
-    a.danger - b.danger || b.efficiency - a.efficiency || a.type - b.type;
-  const poolMinShanten = Math.min(...pool.map((c) => c.shantenAfter));
-  const head = pool.filter((c) => c.shantenAfter === poolMinShanten).sort(bySafety);
-  const tail = [
-    ...pool.filter((c) => c.shantenAfter !== poolMinShanten),
-    ...candidates.filter((c) => !pool.includes(c)),
-  ].sort((a, b) => a.danger - b.danger || byEfficiency(a, b));
-  return [...head, ...tail];
-}
-
 function toAdvice(
   candidate: DiscardCandidate,
   view: PlayerView,
   visible: readonly number[],
   threats: readonly number[],
-  genbutsuTypes: ReadonlySet<TileType>,
   ctx: TurnContext,
   bestShanten: number,
   bestEfficiency: number,
 ): DiscardAdvice {
   const counts = countsOfTiles(view.hand);
   counts[candidate.type]!--;
+  const afterVisible = [...visible];
+  afterVisible[candidate.type]!++;
   const melds = view.melds.length;
   let improving: TileRef[] = [];
   let improvingTotal = 0;
   let waits: TileRef[] = [];
   let furiten = false;
   if (counts.reduce((a, b) => a + b, 0) + 3 * melds === 13) {
-    const ukeire = ukeireFast(counts, visible, melds);
+    const ukeire = ukeireFast(counts, afterVisible, melds);
     improving = tileRefs(
       [...ukeire.improving].sort((a, b) => b.remaining - a.remaining || a.type - b.type),
     );
     improvingTotal = ukeire.totalRemaining;
     if (candidate.shantenAfter === 0) {
-      waits = tileRefs(waitsFast(counts, visible, melds));
+      waits = tileRefs(waitsFast(counts, afterVisible, melds, ownedMeldCounts(view)));
       const ownPond = new Set(
         view.players[view.seat]!.discards.map((d) => d.tile.type),
       );
+      ownPond.add(candidate.type);
       furiten = waits.some((w) => ownPond.has(w.type));
     }
   }
-  const genbutsu = genbutsuTypes.has(candidate.type);
+  const genbutsuAgainst = threats.filter((seat) => view.players[seat]!.discards.some((d) => d.tile.type === candidate.type));
+  const genbutsu = threats.length > 0 && genbutsuAgainst.length === threats.length;
   const reasons: ReasonCode[] = [];
   if (candidate.shantenAfter === bestShanten) reasons.push("fewest-steps");
   if (candidate.shantenAfter === bestShanten && candidate.efficiency === bestEfficiency) {
-    reasons.push("most-improving-tiles");
+    reasons.push("policy-preference");
   }
   if (
     candidate.shantenAfter === bestShanten &&
@@ -240,9 +193,9 @@ function toAdvice(
   ) {
     reasons.push("keeps-riichi-open");
   }
-  if (candidate.shantenAfter === 0) {
+  if (candidate.shantenAfter === 0 && waits.length > 0) {
     reasons.push("ready");
-    if (waits.length === 2) reasons.push("two-sided-wait");
+    if (waits.length === 2) reasons.push("two-wait-types");
     if (waits.length >= 3) reasons.push("multi-wait");
     if (furiten) reasons.push("furiten-wait");
   }
@@ -255,12 +208,15 @@ function toAdvice(
     tileId: candidate.tile.id,
     tileType: candidate.type,
     tileName: tileName(candidate.type),
+    isRed: candidate.tile.red,
+    doraDiscarded: doraInTiles([candidate.tile], doraWeightsOf(view)),
     shantenAfter: candidate.shantenAfter,
     improving,
     improvingTotal,
     waits,
     danger: candidate.danger,
     genbutsu,
+    genbutsuAgainst,
     furiten,
     reasons,
   };
@@ -269,20 +225,23 @@ function toAdvice(
 function headlineFor(advice: TurnAdvice): string {
   const rec = advice.recommendation;
   if (advice.canTsumo) return "You drew a winning tile — declare tsumo.";
-  if (advice.riichi && advice.riichi.tileId === rec.tileId) {
+  if (advice.riichi?.recommended && advice.riichi.tileId === rec.tileId) {
     return `Discard the ${rec.tileName} and declare riichi — waiting on ${joinNames(advice.riichi.waits)}.`;
+  }
+  if (rec.shantenAfter === 0 && rec.furiten) {
+    return `Discard the ${rec.tileName} — the shape is ready, but your discard history prevents ron; you can still win by tsumo with a yaku.`;
   }
   if (rec.shantenAfter === 0 && rec.waits.length > 0) {
     return `Discard the ${rec.tileName} — you are ready, waiting on ${joinNames(rec.waits)}.`;
   }
   if (rec.genbutsu) {
-    return `Discard the ${rec.tileName} — the riichi player has discarded it, so it is safe.`;
+    return `Discard the ${rec.tileName} — each riichi opponent has discarded it, so they cannot ron it.`;
   }
   if (rec.danger === 0 && rec.reasons.includes("safe-vs-riichi")) {
-    return `Discard the ${rec.tileName} — it is safe against the riichi.`;
+    return `Discard the ${rec.tileName} — it is safe from ron by the riichi opponents.`;
   }
   if (rec.improvingTotal > 0) {
-    return `Discard the ${rec.tileName} — ${rec.improvingTotal} tiles improve your hand.`;
+    return `Discard the ${rec.tileName} — ${rec.improvingTotal} unseen tiles could improve your hand.`;
   }
   return `Discard the ${rec.tileName} — fewest steps from ready.`;
 }
@@ -295,24 +254,26 @@ function headlineFor(advice: TurnAdvice): string {
 export function adviseDiscard(view: PlayerView, ctx: TurnContext): TurnAdvice {
   const threats = riichiThreats(view);
   const visible = visibleCounts(view);
-  let candidates = evaluateDiscards(view, ctx);
+  // Opponents need one representative per type; review must also
+  // accept a human's different plain copy or deliberate red discard.
+  let candidates = evaluateDiscards(view, ctx, { allInstances: true });
   // A player in riichi must discard the tile they just drew.
   const selfRiichi = view.players[view.seat]!.riichi;
   if (selfRiichi && ctx.drawnTile) {
     candidates = candidates.filter((c) => c.tile.id === ctx.drawnTile!.id);
   }
-  const ranked = rankCandidates(view, ctx, candidates);
-  const genbutsuTypes = new Set<TileType>();
-  for (const seat of threats) {
-    for (const d of view.players[seat]!.discards) genbutsuTypes.add(d.tile.type);
-  }
+  const ranked = rankDiscardCandidates(view, ctx, candidates);
   const bestShanten = Math.min(...ranked.map((c) => c.shantenAfter));
   const bestEfficiency = Math.max(
     ...ranked.filter((c) => c.shantenAfter === bestShanten).map((c) => c.efficiency),
   );
   const options = ranked.map((c) =>
-    toAdvice(c, view, visible, threats, genbutsuTypes, ctx, bestShanten, bestEfficiency),
+    toAdvice(c, view, visible, threats, ctx, bestShanten, bestEfficiency),
   );
+  const mostImproving = Math.max(...options.filter((o) => o.shantenAfter === bestShanten).map((o) => o.improvingTotal));
+  for (const option of options) {
+    if (option.shantenAfter === bestShanten && option.improvingTotal === mostImproving) option.reasons.push("most-improving-tiles");
+  }
 
   let riichi: RiichiAdvice | null = null;
   if (!selfRiichi && ctx.riichiDiscardIds.length > 0) {
@@ -322,7 +283,9 @@ export function adviseDiscard(view: PlayerView, ctx: TurnContext): TurnAdvice {
       const tile = view.hand.find((t) => t.id === id);
       if (!tile) continue;
       counts[tile.type]!--;
-      const waits = tileRefs(waitsFast(counts, visible, view.melds.length));
+      const afterVisible = [...visible];
+      afterVisible[tile.type]!++;
+      const waits = tileRefs(waitsFast(counts, afterVisible, view.melds.length, ownedMeldCounts(view)));
       counts[tile.type]!++;
       const liveTotal = waits.reduce((sum, w) => sum + w.live, 0);
       if (!bestPick || liveTotal > bestPick.liveTotal) {
@@ -332,6 +295,7 @@ export function adviseDiscard(view: PlayerView, ctx: TurnContext): TurnAdvice {
           tileName: tileName(tile.type),
           waits,
           liveTotal,
+          recommended: candidates.some((c) => c.tile.id === id && shouldDeclareRiichi(view, c)),
         };
       }
     }
@@ -339,6 +303,7 @@ export function adviseDiscard(view: PlayerView, ctx: TurnContext): TurnAdvice {
   }
 
   const advice: TurnAdvice = {
+    analysis: playerPerspectiveEvidence(),
     options,
     recommendation: options[0]!,
     canTsumo: ctx.canTsumo,

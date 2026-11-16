@@ -27,7 +27,11 @@
  * All functions are type-level (per-type counts), like the engine's.
  */
 
-import { TILE_TYPE_COUNT, countTiles, isTerminalOrHonor } from "@openmahjong/engine";
+import { TILE_TYPE_COUNT, countTiles, isTerminalOrHonor, validateCounts } from "@openmahjong/engine";
+
+function validateMeldCount(melds: number): void {
+  if (!Number.isInteger(melds) || melds < 0 || melds > 4) throw new Error("melds must be an integer from 0 to 4");
+}
 
 // ---------------------------------------------------------------------------
 // Segment outcomes
@@ -174,6 +178,8 @@ function honorOutcomesCached(counts: readonly number[]): Outcome[] {
 
 /** Standard-form (4 sets + pair) shanten via segment decomposition. */
 export function shantenStandardFast(counts: readonly number[], melds = 0): number {
+  validateCounts(counts);
+  validateMeldCount(melds);
   const segments: Outcome[][] = [
     suitedOutcomesCached(counts.slice(0, 9)),
     suitedOutcomesCached(counts.slice(9, 18)),
@@ -203,6 +209,7 @@ export function shantenStandardFast(counts: readonly number[], melds = 0): numbe
 
 /** Chiitoitsu (seven pairs) shanten — same formula as the engine's. */
 export function shantenChiitoitsuFast(counts: readonly number[]): number {
+  validateCounts(counts);
   let pairs = 0;
   let unique = 0;
   for (let t = 0; t < TILE_TYPE_COUNT; t++) {
@@ -214,6 +221,7 @@ export function shantenChiitoitsuFast(counts: readonly number[]): number {
 
 /** Kokushi (thirteen orphans) shanten — same formula as the engine's. */
 export function shantenKokushiFast(counts: readonly number[]): number {
+  validateCounts(counts);
   let types = 0;
   let hasPair = false;
   for (let t = 0; t < TILE_TYPE_COUNT; t++) {
@@ -230,6 +238,8 @@ export function shantenKokushiFast(counts: readonly number[]): number {
  * number of open melds already formed. Total must be 13 or 14 tiles.
  */
 export function shantenFast(counts: readonly number[], melds = 0): number {
+  validateCounts(counts);
+  validateMeldCount(melds);
   const closed = countTiles(counts);
   const total = closed + 3 * melds;
   if (total !== 13 && total !== 14) {
@@ -271,6 +281,9 @@ export function ukeireFast(
   visible: readonly number[],
   melds = 0,
 ): FastUkeire {
+  validateCounts(counts);
+  validateCounts(visible, "visible");
+  validateMeldCount(melds);
   const key = `${melds}|${counts.join(",")}|${visible.join(",")}`;
   const hit = ukeireCache.get(key);
   if (hit !== undefined) return hit;
@@ -308,12 +321,17 @@ export function waitsFast(
   counts: readonly number[],
   visible: readonly number[],
   melds = 0,
+  ownedMeldCounts?: readonly number[],
 ): { readonly type: number; readonly remaining: number }[] {
+  validateCounts(visible, "visible");
+  if (ownedMeldCounts) validateCounts(ownedMeldCounts, "ownedMeldCounts");
   if (shantenFast(counts, melds) !== 0) return [];
   const work = [...counts];
   const waits: { type: number; remaining: number }[] = [];
   for (let t = 0; t < TILE_TYPE_COUNT; t++) {
-    if (work[t]! >= 4) continue;
+    // A declared pon/kan still belongs to the player. Its tiles cannot
+    // be reused to complete a closed pair requiring a fifth copy.
+    if (work[t]! + (ownedMeldCounts?.[t] ?? 0) >= 4) continue;
     work[t]!++;
     const wins = shantenFast(work, melds) === -1;
     work[t]!--;

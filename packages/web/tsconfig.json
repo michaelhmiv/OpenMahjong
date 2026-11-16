@@ -16,6 +16,9 @@
       ],
       "@openmahjong/coach": [
         "../coach/src/index.ts"
+      ],
+      "@openmahjong/engine/legacy/v1": [
+        "../engine/src/legacy/v1/index.ts"
       ]
     },
     "sourceMap": false,

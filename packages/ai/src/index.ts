@@ -8,18 +8,26 @@
  */
 
 export { createAiPolicy } from "./policy.js";
+export { createAiPolicy as createLegacyAiPolicy } from "./legacy/v1/policy.js";
+export const AI_POLICY_VERSION = 2 as const;
 export {
   bestByEfficiency,
   countsOfTiles,
   doraInTiles,
   doraTypesOf,
+  doraWeightsOf,
   evaluateDiscards,
   isYakuhai,
   keepValue,
+  rankDiscardCandidates,
+  shouldDeclareRiichi,
   ownSeatWind,
+  ownedMeldCounts,
   safestAmongBest,
   safestOverall,
   valueProxy,
+  yakuhaiHan,
+  type DoraValues,
   type DiscardCandidate,
 } from "./evaluate.js";
 export {

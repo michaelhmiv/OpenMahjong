@@ -7,3 +7,4 @@ export {
   type TileRef,
   type TurnAdvice,
 } from "./advice.js";
+export { ANALYSIS_VERSION, compareDiscards, playerPerspectiveEvidence, type AnalysisEvidence, type DiscardComparison } from "./analysis-contract.js";

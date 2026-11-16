@@ -43,6 +43,19 @@ function playGame(seed: string): { events: readonly GameEvent[]; scores: readonl
 }
 
 describe("TableModel fold", () => {
+  it("keeps the actual ron tile instance and awarded yaku metadata even without a pond discard", () => {
+    const model = new TableModel(0);
+    // A robbed kan has no new pond entry. The engine-provided plain
+    // five must not be replaced by the red copy of the same type.
+    model.apply({ seq: 1, type: "win", seat: 0, fromSeat: 1, winType: "ron", winningTileType: 4,
+      winningTile: 17, yaku: ["honitsu"], yakuDetails: [{ id: "honitsu", han: 2 }],
+      dora: 1, han: 3, fu: 30, payments: [{ seat: 1, amount: 3900 }], stickPoints: 0 });
+    expect(model.lastWin?.winningTile.id).toBe(17);
+    expect(model.lastWin?.winningTile.red).toBe(false);
+    expect(model.lastWin?.yakuDetails).toEqual([{ id: "honitsu", han: 2 }]);
+    expect(model.lastWin?.dora).toBe(1);
+  });
+
   it("accounts for all 136 tiles right after the deal", () => {
     const { events } = playGame("model-deal");
     // Fold up to (not including) the first draw after the deal.

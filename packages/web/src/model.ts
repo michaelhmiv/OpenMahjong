@@ -71,6 +71,9 @@ export interface WinInfo {
   readonly fromSeat?: Seat;
   readonly winningTile: Tile;
   readonly yaku: readonly string[];
+  /** Current logs carry actual awarded han, including open reductions. */
+  readonly yakuDetails?: readonly { readonly id: string; readonly han: number }[];
+  readonly dora?: number;
   readonly han: number;
   readonly fu: number;
   readonly yakumanMultiple: number;
@@ -288,7 +291,9 @@ export class TableModel {
           const last = [...this.players[fromSeat]!.pond]
             .reverse()
             .find((e) => e.tile.type === Number(ev["winningTileType"]));
-          winningTile = last?.tile ?? tileByIdOfType(Number(ev["winningTileType"]), winner);
+          winningTile = typeof ev["winningTile"] === "number"
+            ? tileById(ev["winningTile"])
+            : last?.tile ?? tileByIdOfType(Number(ev["winningTileType"]), winner);
         }
         this.lastWin = {
           seat,
@@ -296,6 +301,8 @@ export class TableModel {
           ...(winType === "ron" ? { fromSeat: Number(ev["fromSeat"]) as Seat } : {}),
           winningTile,
           yaku: [...(ev["yaku"] as readonly string[])],
+          ...(Array.isArray(ev["yakuDetails"]) ? { yakuDetails: (ev["yakuDetails"] as { id: string; han: number }[]).map((y) => ({ ...y })) } : {}),
+          ...(typeof ev["dora"] === "number" ? { dora: ev["dora"] } : {}),
           han: Number(ev["han"]),
           fu: Number(ev["fu"]),
           yakumanMultiple: Number(ev["yakumanMultiple"] ?? 0),

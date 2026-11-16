@@ -1,7 +1,7 @@
 // @vitest-environment node
 /**
  * Coach-core tests (brief §9 / COACH ARCHITECTURE): the advice must be
- * legal (only tiles in hand, one option per distinct type), must agree
+ * legal (each physical discard in hand), must agree
  * with the CPU policy's own pick — the coach is the policy opened up,
  * not a second opinion — must carry facts that match the evaluation
  * (waits, genbutsu, danger), and must be deterministic.
@@ -36,13 +36,12 @@ describe("adviseDiscard on fabricated positions", () => {
     expect(rec.shantenAfter).toBe(0);
     expect(rec.waits.map((w) => w.type)).toEqual([18, 21]);
     expect(rec.reasons).toContain("ready");
-    expect(rec.reasons).toContain("two-sided-wait");
+    expect(rec.reasons).toContain("two-wait-types");
     expect(advice.headline).toBe(
       "Discard the 5 of characters — you are ready, waiting on the 1 of bamboo and the 4 of bamboo.",
     );
-    // One option per distinct tile type in hand.
-    const distinct = new Set(view.hand.map((t) => t.type));
-    expect(advice.options.length).toBe(distinct.size);
+    // Include equivalent plain copies and distinct red-five value.
+    expect(advice.options.map((o) => o.tileId).sort((a, b) => a - b)).toEqual(view.hand.map((t) => t.id).sort((a, b) => a - b));
     for (const o of advice.options) {
       expect(view.hand.some((t) => t.id === o.tileId)).toBe(true);
     }
@@ -160,14 +159,14 @@ describe("adviseDiscard on real game positions", () => {
     let discards = 0;
     for (const { view, ctx, action } of captures) {
       const advice = adviseDiscard(view, ctx);
-      // Legal: options are exactly the distinct types in hand (or the
+      // Legal: options are exactly the physical instances in hand (or the
       // single tsumogiri option in riichi).
       const selfRiichi = view.players[view.seat]!.riichi;
       if (selfRiichi && ctx.drawnTile) {
         expect(advice.options.length).toBe(1);
       } else {
         expect(advice.options.length).toBe(
-          new Set(view.hand.map((t) => t.type)).size,
+          view.hand.length,
         );
       }
       for (const o of advice.options) {

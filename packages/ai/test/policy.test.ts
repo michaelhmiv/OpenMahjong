@@ -163,11 +163,13 @@ describe("defense against riichi", () => {
   });
 
   it("falls back to a suji tile when no genbutsu is held", () => {
-    // Riichi player has discarded 2p: our 5p is suji-safe, and safer
+    // Riichi player has discarded 2p and 8p: both ryanmen sides of 5p
+    // are covered by suji (other wait shapes remain), and safer
     // than every honor/terminal/simple we hold.
     const view = makeView({
       ...foldSpec,
-      discards: [undefined, "2p3z", undefined, undefined],
+      hand: "23489m5699p235s55z", // no held 8p genbutsu; still a fold-worthy 2-shanten hand
+      discards: [undefined, "28p3z", undefined, undefined],
     });
     const drawn = tileByType(view.hand, 17); // 9p
     const action = ai.turn(view, makeTurnCtx({ drawnTile: drawn }));
@@ -286,6 +288,23 @@ describe("call decisions", () => {
     expect(
       ai.call(view, makeCallCtx({ tile, fromSeat: 2, canPon: true })),
     ).toEqual({ type: "pass" });
+  });
+
+  it("uses explicit call stages independently of previous asks", () => {
+    const policy = createAiPolicy();
+    const view = makeView({ hand: "234m345p678s234s3s" });
+    const twoS = tileByType(view.hand, 19);
+    const fourS = tileByType(view.hand, 21);
+    const tile = tilesOf("3s")[0]!;
+    const chi = { ...makeCallCtx({ tile, fromSeat: 3, chiOptions: [[twoS.id, fourS.id]] }), callStage: "chi" as const };
+    // A review can analyze the chi position directly, without having
+    // observed the earlier pon/kan pass or mutating policy history.
+    const expected = { type: "chi", tileIds: [twoS.id, fourS.id] };
+    expect(policy.call(view, chi)).toEqual(expected);
+    expect(policy.call(view, chi)).toEqual(expected);
+    const pon = { ...makeCallCtx({ tile, fromSeat: 3, canPon: true }), callStage: "pon-kan" as const };
+    expect(policy.call(view, pon)).toEqual({ type: "pass" });
+    expect(policy.call(view, pon)).toEqual({ type: "pass" });
   });
 
   it("plays from an open hand: discard evaluation accounts for melds", () => {

@@ -4,6 +4,7 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   resolve: {
     alias: {
+      "@openmahjong/engine/legacy/v1": fileURLToPath(new URL("./packages/engine/src/legacy/v1/index.ts", import.meta.url)),
       // Monorepo: packages consume the engine from source in tests (its
       // published entry is the dist build, which CI does not pre-build).
       "@openmahjong/engine": fileURLToPath(
