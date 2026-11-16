@@ -387,3 +387,17 @@ colour lives in the pieces, closed accent vocabulary.
   construction (600/1000 upm) + tabular-nums set. All text contrasts
   >= 4.5:1, QC-verified. Renderings:
   mahjong-prep/renderings/table-theme-v5/ (base + prompt states).
+
+DARK THEME ONLY (Michael, 2026-11-16, superseding the section 8
+"dark default + light toggle" line): the derived light theme is removed
+from the client — no theme toggle anywhere; theme v5's dark tokens are
+the single theme. "For now" — a light theme may return later only as a
+separately approved design, never as a derivation.
+
+ADS / CLAIMS RULING (Michael, 2026-11-16): Michael expects to show ads
+at first when the game launches publicly, so the product must not claim
+"no ads" or "no gacha" anywhere. Those claims are removed from the home
+tagline, About page, README, package description, page meta, and the
+GitHub repo description. Free forever and no-accounts stand. This
+supersedes the founding "no ads, no gacha" copy line in section 1/2
+wherever it appears as a public claim.
