@@ -1,10 +1,12 @@
 /**
- * @openmahjong/web — placeholder.
+ * @openmahjong/web — the Open Mahjong web client (brief §7–§10).
  *
- * The web client described in brief §7–§10 (land-and-play home, flat
- * top-down table, full animation set) lands in a later slice, after the
- * rendering gate: no UI surface is built before a faithful rendering has
- * passed independent QC and Michael's approval (brief §3, §8).
- * The client will render engine state and hold no game logic of its own.
+ * The app entry is main.ts (Vite). This module re-exports the client's
+ * testable core: the event-log view model, the seat-driver seam, and the
+ * deterministic game runner. The client renders engine state and holds
+ * no game logic of its own.
  */
-export const WEB_PACKAGE_STATUS = "placeholder — see brief §7–§10" as const;
+export * from "./model.js";
+export * from "./drivers.js";
+export * from "./runner.js";
+export * from "./settings.js";

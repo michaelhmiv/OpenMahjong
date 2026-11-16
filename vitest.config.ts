@@ -4,9 +4,8 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   resolve: {
     alias: {
-      // Workspace packages resolve to source in tests (no build step);
-      // the same specifier is mapped for typecheck via each package's
-      // tsconfig paths.
+      // Monorepo: packages consume the engine from source in tests (its
+      // published entry is the dist build, which CI does not pre-build).
       "@openmahjong/engine": fileURLToPath(
         new URL("./packages/engine/src/index.ts", import.meta.url),
       ),
