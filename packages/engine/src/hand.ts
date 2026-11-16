@@ -10,7 +10,7 @@
  * type-level: a red five counts as its type.
  */
 
-import { TILE_TYPE_COUNT, countTiles, isTerminalOrHonor } from "./tiles.js";
+import { TILE_TYPE_COUNT, countTiles, isTerminalOrHonor, validateCounts } from "./tiles.js";
 
 /** Terminal/honor type indices, for kokushi. */
 const TERMINAL_OR_HONOR_TYPES: number[] = [];
@@ -101,6 +101,10 @@ function shantenKokushi(counts: readonly number[]): number {
  *   must contain 13−3·melds or 14−3·melds tiles.
  */
 export function shanten(counts: readonly number[], melds = 0): number {
+  validateCounts(counts);
+  if (!Number.isInteger(melds) || melds < 0 || melds > 4) {
+    throw new Error("melds must be an integer from 0 to 4");
+  }
   const closed = countTiles(counts);
   const total = closed + 3 * melds;
   if (total !== 13 && total !== 14) {
@@ -138,6 +142,11 @@ export function ukeire(
   visible: readonly number[],
   melds = 0,
 ): Ukeire {
+  validateCounts(counts);
+  validateCounts(visible, "visible");
+  for (let t = 0; t < TILE_TYPE_COUNT; t++) {
+    if (counts[t]! + visible[t]! > 4) throw new Error(`Known copies of type ${t} exceed 4`);
+  }
   const closed = countTiles(counts);
   if (closed + 3 * melds !== 13) {
     throw new Error(`ukeire expects a 13-tile hand (incl. melds), got ${closed + 3 * melds}`);

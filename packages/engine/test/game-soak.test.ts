@@ -15,6 +15,7 @@
  * edge and tipped over it on the PR #3 merge run).
  */
 
+import { setTimeout } from "node:timers";
 import { describe, expect, it } from "vitest";
 import {
   Game,

@@ -1,13 +1,15 @@
 /**
  * Differential tests: the AI's fast analysis must agree with the
- * engine's `shanten`/`ukeire` everywhere. The engine is the authority;
- * any disagreement is a bug here, not there.
+ * engine's `shanten`/`ukeire` on legal inputs. Differential agreement
+ * alone does not prove rules correctness: disagreements must be checked
+ * against hand-derived fixtures, and either implementation may be wrong.
  */
 
 import { describe, expect, it } from "vitest";
 import {
   TILE_TYPE_COUNT,
   createRng,
+  parseCounts,
   shanten,
   ukeire,
   type TileType,
@@ -18,6 +20,53 @@ import {
   ukeireFast,
   waitsFast,
 } from "../src/index.js";
+
+describe("independently derived hand shapes", () => {
+  it.each([
+    ["ryanmen", "234m456p678s34s11z", [19, 22], [4, 4]],
+    ["kanchan", "123m456p789s24s11z", [20], [4]],
+    ["penchan", "123m456p789s12s11z", [20], [4]],
+    ["tanki", "123m456p789s234s1z", [27], [3]],
+    ["shanpon", "123m456p789s11z55z", [27, 31], [2, 2]],
+    ["seven pairs", "1122m3344p5566s7z", [33], [3]],
+    ["thirteen-sided kokushi", "19m19p19s1234567z", [0, 8, 9, 17, 18, 26, 27, 28, 29, 30, 31, 32, 33], new Array<number>(13).fill(3)],
+    ["single-sided kokushi", "119m19p19s123456z", [33], [4]],
+  ] as const)("%s waits and copy counts", (_name, notation, types, remaining) => {
+    const counts = parseCounts(notation);
+    const visible = new Array<number>(34).fill(0);
+    expect(shantenFast(counts)).toBe(0);
+    expect(waitsFast(counts, visible)).toEqual(types.map((type, i) => ({ type, remaining: remaining[i] })));
+    expect(ukeireFast(counts, visible).totalRemaining).toBe(remaining.reduce((a, b) => a + b, 0));
+  });
+
+  it("distinguishes shape tenpai from exhausted winning copies", () => {
+    const counts = parseCounts("234m456p678s34s11z");
+    const visible = new Array<number>(34).fill(0);
+    visible[19] = 4;
+    visible[22] = 3;
+    expect(shantenFast(counts)).toBe(0);
+    expect(waitsFast(counts, visible)).toEqual([{ type: 19, remaining: 0 }, { type: 22, remaining: 1 }]);
+    expect(ukeireFast(counts, visible).totalRemaining).toBe(1);
+  });
+
+  it("counts distance to tenpai, not to winning, including a declared meld", () => {
+    expect(shantenFast(parseCounts("123m456p789s11z2z3z"))).toBe(1);
+    expect(shantenFast(parseCounts("123m456p789s1234z"))).toBe(2);
+    expect(shantenFast(parseCounts("123m456p789s234s11z"))).toBe(-1);
+    expect(waitsFast(parseCounts("456p678s34s11z"), new Array<number>(34).fill(0), 1)).toEqual([
+      { type: 19, remaining: 4 }, { type: 22, remaining: 4 },
+    ]);
+  });
+
+  it("does not offer a fifth owned copy alongside a declared pon", () => {
+    // East pon is outside the closed portion; the final East singleton
+    // cannot become a pair because all four Easts are already owned.
+    const counts = parseCounts("123m456p789s1z");
+    const exposed = parseCounts("111z");
+    const visible = [...exposed];
+    expect(waitsFast(counts, visible, 1, exposed)).toEqual([]);
+  });
+});
 
 /** A random legal counts vector: `tiles` tiles over the 34 types, ≤4 each. */
 function randomCounts(rng: ReturnType<typeof createRng>, tiles: number): number[] {
@@ -91,6 +140,23 @@ describe("fast shanten agrees with the engine", () => {
     counts[0] = 5;
     expect(() => shantenFast(counts, 0)).toThrow();
     expect(() => shanten(counts, 0)).toThrow();
+  });
+
+  it("rejects impossible counts before recursive analysis or cache lookup", () => {
+    const hand = parseCounts("234m456p678s34s11z");
+    const negative = [...hand];
+    negative[0] = -1;
+    negative[8] = 1; // total still 13: sum-only validation would miss it
+    const fractional = [...hand];
+    fractional[0] = 0.5;
+    fractional[1] = 0.5;
+    for (const malformed of [negative, fractional, [...hand, 0], hand.slice(1)]) {
+      expect(() => shantenFast(malformed)).toThrow();
+      expect(() => ukeireFast(malformed, new Array<number>(34).fill(0))).toThrow();
+    }
+    expect(() => shantenFast(hand, -1)).toThrow("melds");
+    expect(() => waitsFast(hand, new Array<number>(33).fill(0))).toThrow("34 entries");
+    expect(() => ukeireFast(hand, new Array<number>(34).fill(0.5))).toThrow("integer");
   });
 });
 

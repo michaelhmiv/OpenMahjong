@@ -22,7 +22,7 @@
  * tests rather than corrupting a game.
  */
 
-import { createAiPolicy } from "@openmahjong/ai";
+import { createAiPolicy, createLegacyAiPolicy } from "@openmahjong/ai";
 import type {
   CallAction,
   CallContext,
@@ -53,7 +53,11 @@ export class HumanDriver implements SeatDriver {
 /** The AI seats: @openmahjong/ai's policy behind the seat-driver seam. */
 export class AiDriver implements SeatDriver {
   readonly name = "ai";
-  private readonly policy = createAiPolicy();
+  private readonly policy;
+
+  constructor(legacy = false) {
+    this.policy = legacy ? createLegacyAiPolicy() : createAiPolicy();
+  }
 
   turn(view: PlayerView, ctx: TurnContext): TurnAction {
     return this.policy.turn(view, ctx);

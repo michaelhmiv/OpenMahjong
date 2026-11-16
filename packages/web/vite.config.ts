@@ -9,6 +9,7 @@ export default defineConfig({
   base: "./",
   resolve: {
     alias: {
+      "@openmahjong/engine/legacy/v1": fileURLToPath(new URL("../engine/src/legacy/v1/index.ts", import.meta.url)),
       "@openmahjong/ai": fileURLToPath(
         new URL("../ai/src/index.ts", import.meta.url),
       ),

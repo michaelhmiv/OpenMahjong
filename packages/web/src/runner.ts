@@ -23,6 +23,7 @@
 
 import {
   Game,
+  LegacyGame,
   type CallAction,
   type CallContext,
   type GameEvent,
@@ -34,9 +35,13 @@ import {
   type TurnAction,
   type TurnContext,
 } from "@openmahjong/engine";
-import { HumanDriver, PENDING, type SeatDriver } from "./drivers.js";
+import { AiDriver, HumanDriver, PENDING, type SeatDriver } from "./drivers.js";
 import type { ChiHint } from "./model.js";
 import { newGameId } from "./records.js";
+import { DEFAULT_RULESET } from "@openmahjong/engine";
+import { AI_POLICY_VERSION } from "@openmahjong/ai";
+import { REPLAY_ENGINE_VERSION, validateDecision, validateSavedGame, type SavedGame } from "./replay.js";
+export type { SavedGame } from "./replay.js";
 
 export type Decision = TurnAction | CallAction;
 
@@ -75,16 +80,8 @@ export interface RunnerOptions {
   readonly id?: string;
   /** Driver for the three non-human seats (AiDriver: @openmahjong/ai). */
   readonly aiDriver: SeatDriver;
-}
-
-export interface SavedGame {
-  readonly v: 1;
-  readonly seed: string;
-  readonly length: GameLength;
-  readonly humanSeat: Seat;
-  readonly decisions: readonly Decision[];
-  /** Record id (slice 2); absent in saves from before it existed. */
-  readonly id?: string;
+  /** Compatibility only; new games always default to version 2. */
+  readonly replayVersion?: 1 | 2;
 }
 
 export class GameRunner {
@@ -92,6 +89,7 @@ export class GameRunner {
   readonly length: GameLength;
   readonly humanSeat: Seat;
   readonly id: string;
+  readonly replayVersion: 1 | 2;
   private readonly aiDriver: SeatDriver;
   private readonly humanDriver = new HumanDriver();
 
@@ -108,6 +106,7 @@ export class GameRunner {
     this.humanSeat = opts.humanSeat ?? 0;
     this.id = opts.id ?? newGameId();
     this.aiDriver = opts.aiDriver;
+    this.replayVersion = opts.replayVersion ?? 2;
   }
 
   private driverFor(seat: Seat): SeatDriver {
@@ -189,11 +188,11 @@ export class GameRunner {
             seat: view.seat,
             view,
             ctx,
-            ponDecidable: ctx.phase === "call" && firstAsk,
+            ponDecidable: ctx.phase === "call" && (ctx.callStage ? ctx.callStage === "pon-kan" : firstAsk),
             chiDecidable:
               ctx.phase === "call" &&
               ctx.chiOptions.length > 0 &&
-              (!firstAsk || (!ctx.canPon && !ctx.canKan)),
+              (ctx.callStage ? ctx.callStage === "chi" : (!firstAsk || (!ctx.canPon && !ctx.canKan))),
           });
         }
         this.decisions.push(action);
@@ -203,7 +202,8 @@ export class GameRunner {
       },
     };
 
-    const game = new Game({
+    const Engine = this.replayVersion === 1 ? LegacyGame : Game;
+    const game = new Engine({
       seed: this.seed,
       length: this.length,
       policies: [policy, policy, policy, policy],
@@ -215,6 +215,9 @@ export class GameRunner {
     this.result = null;
     try {
       this.result = game.run();
+      if (cursor !== this.decisions.length) {
+        throw new Error(`Decision log desync: ${this.decisions.length - cursor} unused decisions`);
+      }
     } catch (e) {
       if (e instanceof SuspendSignal) {
         this.pending = e.pending;
@@ -230,6 +233,7 @@ export class GameRunner {
 
   /** The human's answer to the pending decision; advances the game. */
   act(action: Decision): void {
+    action = validateDecision(action);
     if (!this.pending) throw new Error("act() with no pending decision");
     if (this.pending.kind === "turn" && !TURN_TYPES.has(action.type)) {
       throw new Error(`Expected a turn action, got ${action.type}`);
@@ -237,30 +241,44 @@ export class GameRunner {
     if (this.pending.kind === "call" && TURN_TYPES.has(action.type)) {
       throw new Error(`Expected a call action, got ${action.type}`);
     }
+    // An illegal answer must leave the pending position usable. The
+    // replay may append AI actions before detecting a later error.
+    const count = this.decisions.length;
+    const previous = { pending: this.pending, events: this.events, result: this.result, chiHints: this.chiHints };
     this.decisions.push(action);
-    this.pending = null;
-    this.advance();
+    try {
+      this.advance();
+    } catch (error) {
+      this.decisions.length = count;
+      Object.assign(this, previous);
+      throw error;
+    }
   }
 
   serialize(): SavedGame {
-    return {
-      v: 1,
+    const base = {
       seed: this.seed,
       length: this.length,
       humanSeat: this.humanSeat,
       decisions: [...this.decisions],
       id: this.id,
     };
+    return this.replayVersion === 1 ? { v: 1, ...base } : {
+      v: 2, engineVersion: REPLAY_ENGINE_VERSION,
+      ruleset: { id: DEFAULT_RULESET.id, version: DEFAULT_RULESET.version },
+      aiVersion: AI_POLICY_VERSION, ...base,
+    };
   }
 
-  static restore(saved: SavedGame, aiDriver: SeatDriver): GameRunner {
-    if (saved.v !== 1) throw new Error(`Unsupported saved game version ${saved.v}`);
+  static restore(input: unknown, aiDriver: SeatDriver): GameRunner {
+    const saved = validateSavedGame(input);
     const runner = new GameRunner({
       seed: saved.seed,
       length: saved.length,
       humanSeat: saved.humanSeat,
       ...(saved.id ? { id: saved.id } : {}),
-      aiDriver,
+      aiDriver: saved.v === 1 ? new AiDriver(true) : aiDriver,
+      replayVersion: saved.v,
     });
     runner.decisions = [...saved.decisions];
     runner.advance();

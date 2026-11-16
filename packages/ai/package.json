@@ -2,13 +2,14 @@
   "dependencies": {
     "@openmahjong/engine": "0.1.0"
   },
-  "description": "Open Mahjong AI opponents (brief section 6): one solid level \u2014 efficiency core, hand-value judgment, basic defense against riichi \u2014 deciding only through the engine's public state view.",
+  "description": "Open Mahjong AI opponents (brief section 6): one solid level — efficiency core, hand-value judgment, basic defense against riichi — deciding only through the engine's public state view.",
   "license": "AGPL-3.0-only",
   "main": "dist/index.js",
   "name": "@openmahjong/ai",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "prebuild": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\""
   },
   "type": "module",
   "types": "dist/index.d.ts",

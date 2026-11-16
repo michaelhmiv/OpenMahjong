@@ -5,7 +5,8 @@
  * Slice-1 scope, per the brief: defense exists against riichi only.
  * The ranking is the standard beginner-to-intermediate ladder:
  *
- *   genbutsu (the riichi player has discarded the type) — fully safe
+ *   genbutsu (the riichi player has discarded the type) — safe from ron
+ *     by that opponent; this says nothing about other opponents
  *   suji (the type's suji partner, 3 ranks away, is genbutsu)
  *   kabe (all four copies of a neighbouring type are visible, so no
  *        sequence through it can exist) and heavily-visible honors
@@ -28,6 +29,7 @@ import {
 
 export const DANGER_GENBUTSU = 0;
 export const DANGER_SUJI = 12;
+export const DANGER_PARTIAL_SUJI = 32; // one ryanmen side remains for ranks 4–6
 export const DANGER_DEAD_HONOR = 8; // ≤1 copy can remain: tanki at worst
 export const DANGER_THIN_HONOR = 18; // 2 copies remain
 export const DANGER_HONOR = 30;
@@ -41,7 +43,10 @@ export const DANGER_SIMPLE_MIDDLE = 56; // ranks 4–6: most sequence neighbours
 export function visibleCounts(view: PlayerView): number[] {
   const visible = new Array<number>(TILE_TYPE_COUNT).fill(0);
   for (const p of view.players) {
-    for (const d of p.discards) visible[d.tile.type]!++;
+    // The pond retains called tiles as history, but their physical
+    // copies now live in a meld. Counting both makes unseen copies
+    // disappear and can invent a four-tile wall (kabe).
+    for (const d of p.discards) if (!d.called) visible[d.tile.type]!++;
     for (const m of p.melds) for (const t of m.tiles) visible[t.type]!++;
   }
   for (const ind of view.doraIndicators) visible[ind.type]!++;
@@ -84,13 +89,17 @@ export function dangerOf(
       const base = suitOf(type) * 9;
       const sujiPartnerDown = rank - 3 >= 1 ? base + rank - 3 - 1 : -1;
       const sujiPartnerUp = rank + 3 <= 9 ? base + rank + 3 - 1 : -1;
-      if (
-        (sujiPartnerDown >= 0 && discards.has(sujiPartnerDown)) ||
-        (sujiPartnerUp >= 0 && discards.has(sujiPartnerUp))
-      ) {
+      const downSafe = sujiPartnerDown >= 0 && discards.has(sujiPartnerDown);
+      const upSafe = sujiPartnerUp >= 0 && discards.has(sujiPartnerUp);
+      // A middle tile has two ryanmen sides: e.g. 2p genbutsu removes
+      // the 34p wait for 5p, but does not remove the 67p wait for 5p.
+      const middle = rank >= 4 && rank <= 6;
+      if (middle ? downSafe && upSafe : downSafe || upSafe) {
         danger = DANGER_SUJI;
       } else {
-        danger = isTerminal(type)
+        danger = middle && (downSafe || upSafe)
+          ? DANGER_PARTIAL_SUJI
+          : isTerminal(type)
           ? DANGER_TERMINAL
           : rank >= 4 && rank <= 6
             ? DANGER_SIMPLE_MIDDLE

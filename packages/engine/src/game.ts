@@ -41,8 +41,9 @@ import {
   type Tile,
   type TileType,
 } from "./tiles.js";
-import { createWall, FIRST_INDICATOR_INDEX, type Wall } from "./wall.js";
+import { createWall, FIRST_INDICATOR_INDEX, MAX_KAN_DRAWS, validateWall, type Wall } from "./wall.js";
 import { shanten } from "./hand.js";
+import { DEFAULT_RULESET, resolveRuleset, type RulesetReference } from "./ruleset.js";
 import {
   scoreHand,
   type Meld as ScoreMeld,
@@ -137,6 +138,8 @@ export type CallPhase = "ron" | "call" | "chankan";
 
 export interface CallContext {
   readonly phase: CallPhase;
+  /** Explicit priority stage for phase=call; omitted by historical v1 replays. */
+  readonly callStage?: "pon-kan" | "chi";
   /** The discarded tile (ron/call phases) or the kan tile being added
    *  (chankan phase). */
   readonly tile: Tile;
@@ -214,6 +217,9 @@ export interface SettlementEntry {
 
 /** Final settlement (brief S1-12): uma +15/+5/−5/−15, oka 20 to first. */
 export function settle(scores: readonly number[]): SettlementEntry[] {
+  if (scores.length !== 4 || scores.some((s) => !Number.isSafeInteger(s))) {
+    throw new Error("Settlement requires 4 finite integer scores");
+  }
   const oka = ((RETURN_SCORE - START_SCORE) * 4) / 1000; // 20
   const order = scores
     .map((score, seat) => ({ score, seat }))
@@ -259,6 +265,28 @@ export function doraFromIndicator(indicator: TileType): TileType {
   return suitBase + (rank % 9); // rank 9 wraps to rank 1 (index base+0)
 }
 
+function copyTurnContext(ctx: TurnContext): TurnContext {
+  return {
+    ...ctx,
+    drawnTile: ctx.drawnTile ? { ...ctx.drawnTile } : null,
+    ankanOptions: [...ctx.ankanOptions],
+    shouminkanOptions: [...ctx.shouminkanOptions],
+    riichiDiscardIds: [...ctx.riichiDiscardIds],
+  };
+}
+
+function copyCallContext(ctx: CallContext): CallContext {
+  return { ...ctx, tile: { ...ctx.tile }, chiOptions: ctx.chiOptions.map(([a, b]) => [a, b] as const) };
+}
+
+function copyMeld(meld: MeldState): MeldState {
+  return {
+    ...meld,
+    tiles: meld.tiles.map((t) => ({ ...t })),
+    ...(meld.calledTile ? { calledTile: { ...meld.calledTile } } : {}),
+  };
+}
+
 interface PlayerState {
   seat: Seat;
   tiles: Tile[];
@@ -278,6 +306,8 @@ interface PlayerState {
 }
 
 export interface GameOptions {
+  /** Explicit supported house-rule profile (default OpenMahjong riichi v1). */
+  readonly ruleset?: RulesetReference;
   readonly seed: number | string;
   readonly length?: GameLength;
   /** One policy for all seats, or one per seat. */
@@ -337,15 +367,25 @@ export class Game {
   private pendingSuukaikan = false;
 
   constructor(options: GameOptions) {
+    resolveRuleset(options.ruleset);
     this.seed = options.seed;
     this.length = options.length ?? "south";
-    this.wallQueue = [...(options.walls ?? [])];
+    if (!["east", "south"].includes(this.length)) throw new Error("length must be east or south");
+    this.wallQueue = (options.walls ?? []).map((wall) => {
+      validateWall(wall);
+      return { liveWall: wall.liveWall.map((t) => ({ ...t })), deadWall: wall.deadWall.map((t) => ({ ...t })) };
+    });
     this.dealer = options.initialDealer ?? 0;
+    if (!Number.isInteger(this.dealer) || this.dealer < 0 || this.dealer > 3) {
+      throw new Error("initialDealer must be a seat from 0 to 3");
+    }
     this.initialDealer = this.dealer;
     this.scores = options.initialScores
       ? [...options.initialScores]
       : [START_SCORE, START_SCORE, START_SCORE, START_SCORE];
-    if (this.scores.length !== 4) throw new Error("initialScores must have 4 entries");
+    if (this.scores.length !== 4 || this.scores.some((s) => !Number.isSafeInteger(s))) {
+      throw new Error("initialScores must have 4 finite integer entries");
+    }
     const p = options.policies;
     this.policies = Array.isArray(p) ? [...p] : [p, p, p, p];
     if (this.policies.length !== 4) throw new Error("policies must be one policy or 4");
@@ -385,13 +425,23 @@ export class Game {
     player.shantenNow = this.shantenOf(counts, player.melds.length);
     player.waits = [];
     if (player.shantenNow === 0 && countTiles(counts) + 3 * player.melds.length === 13) {
-      for (let t = 0; t < TILE_TYPE_COUNT; t++) {
-        if (counts[t]! >= 4) continue;
-        counts[t]!++;
-        if (this.shantenOf(counts, player.melds.length) === -1) player.waits.push(t);
-        counts[t]!--;
-      }
+      const owned = countsOf([...player.tiles, ...player.melds.flatMap((m) => m.tiles)]);
+      player.waits = this.winningTypes(counts, player.melds.length, owned);
+      // A nominal shape requiring a fifth copy of a tile is not tenpai.
+      if (player.waits.length === 0) player.shantenNow = 1;
     }
+  }
+
+  private winningTypes(counts: readonly number[], melds: number, owned: readonly number[]): TileType[] {
+    const work = [...counts];
+    const waits: TileType[] = [];
+    for (let t = 0; t < TILE_TYPE_COUNT; t++) {
+      if (owned[t]! >= 4) continue;
+      work[t]!++;
+      if (this.shantenOf(work, melds) === -1) waits.push(t);
+      work[t]!--;
+    }
+    return waits;
   }
 
   private seatWindOf(seat: Seat): TileType {
@@ -403,7 +453,9 @@ export class Game {
   }
 
   private liveRemaining(): number {
-    return this.wall.liveWall.length - this.livePtr;
+    // Every rinshan draw moves the live wall's last tile into the dead
+    // wall. Keep the immutable wall layout; its retired tail is never drawn.
+    return this.wall.liveWall.length - this.livePtr - this.rinshanUsed;
   }
 
   private indicators(): Tile[] {
@@ -425,15 +477,15 @@ export class Game {
     const me = this.players[seat]!;
     return {
       seat,
-      hand: [...me.tiles],
-      melds: me.melds,
+      hand: me.tiles.map((t) => ({ ...t })),
+      melds: me.melds.map(copyMeld),
       players: this.players.map((p) => ({
         seat: p.seat,
         score: p.score,
         riichi: p.riichi,
         doubleRiichi: p.doubleRiichi,
-        discards: p.discards,
-        melds: p.melds,
+        discards: p.discards.map((d) => ({ ...d, tile: { ...d.tile } })),
+        melds: p.melds.map(copyMeld),
         handCount: p.tiles.length,
         isDealer: p.seat === this.dealer,
         seatWind: this.seatWindOf(p.seat),
@@ -444,7 +496,7 @@ export class Game {
       honba: this.honba,
       sticks: this.sticks,
       wallRemaining: this.liveRemaining(),
-      doraIndicators: this.indicators(),
+      doraIndicators: this.indicators().map((tile) => ({ ...tile })),
       currentTurn: this.currentTurnSeat,
     };
   }
@@ -453,7 +505,7 @@ export class Game {
 
   // -- top level ----------------------------------------------------------------
   run(): GameResult {
-    this.emit("game-start", { length: this.length, seed: String(this.seed) });
+    this.emit("game-start", { length: this.length, seed: String(this.seed), ruleset: { id: DEFAULT_RULESET.id, version: DEFAULT_RULESET.version } });
     let handsPlayed = 0;
     while (!this.gameOver) {
       this.playHand();
@@ -570,7 +622,7 @@ export class Game {
       let declareRiichi = false;
       decision: for (;;) {
         const ctx = this.turnContext(player, drawnTile, rinshanDraw);
-        const action = this.policies[actor]!.turn(this.viewFor(actor), ctx);
+        const action = this.policies[actor]!.turn(this.viewFor(actor), copyTurnContext(ctx));
         switch (action.type) {
           case "tsumo": {
             if (!ctx.canTsumo) throw new Error(`Seat ${actor}: tsumo declared but not legal`);
@@ -618,20 +670,13 @@ export class Game {
             declareRiichi = action.riichi === true;
             break decision;
           }
+          default:
+            throw new Error(`Seat ${actor}: unknown turn action`);
         }
       }
 
       // Execute the discard.
-      if (declareRiichi) {
-        this.emitScore(actor, -1000);
-        this.sticks++;
-        player.riichi = true;
-        player.doubleRiichi = player.drawCount === 1 && !this.anyCall;
-        player.ippatsu = true;
-        this.riichiCount++;
-        if (this.riichiCount === 4) this.pendingSuucha = true;
-        this.emit("riichi", { seat: actor, double: player.doubleRiichi });
-      } else if (player.riichi) {
+      if (!declareRiichi && player.riichi) {
         player.ippatsu = false; // the ippatsu window closes with this discard
       }
       player.tiles = player.tiles.filter((t) => t.id !== discardTile!.id);
@@ -647,7 +692,7 @@ export class Game {
       });
       this.analyze(player);
 
-      const outcome = this.resolveDiscardWindow(actor, discardTile!);
+      const outcome = this.resolveDiscardWindow(actor, discardTile!, declareRiichi);
       if (outcome.kind !== "none") {
         if (outcome.kind === "handOver") return;
         // A call happened: the caller acts next.
@@ -675,29 +720,34 @@ export class Game {
         this.tryScore(player, drawnTile.type, "tsumo", { rinshan }) !== null;
     }
 
+    // A kan requires a drawn turn, a replacement tile, and a live-wall
+    // tile to replenish the dead wall. No fifth kan is ever legal.
+    const canDeclareKan = drawnTile !== null && this.kanCount < MAX_KAN_DRAWS && this.liveRemaining() > 0;
+    const owned = countsOf([...player.tiles, ...player.melds.flatMap((m) => m.tiles)]);
     const ankanOptions: TileType[] = [];
     for (let t = 0; t < TILE_TYPE_COUNT; t++) {
-      if (counts[t]! < 4) continue;
+      if (!canDeclareKan || counts[t]! < 4) continue;
       if (player.riichi) {
-        // Riichi ankan is legal only if it leaves the waits unchanged.
+        // Compare the original 13-tile riichi hand, not the 14-tile
+        // analysis (whose wait list is intentionally empty after a draw).
+        if (drawnTile!.type !== t) continue;
+        const before = [...counts];
+        before[t]!--;
+        const beforeOwned = [...owned];
+        beforeOwned[t]!--;
         const after = [...counts];
         after[t]! -= 4;
         if (this.shantenOf(after, player.melds.length + 1) !== 0) continue;
-        const waitsAfter: TileType[] = [];
-        for (let w = 0; w < TILE_TYPE_COUNT; w++) {
-          if (after[w]! >= 4) continue;
-          after[w]!++;
-          if (this.shantenOf(after, player.melds.length + 1) === -1) waitsAfter.push(w);
-          after[w]!--;
-        }
-        if (waitsAfter.join() !== player.waits.join()) continue;
+        const waitsBefore = this.winningTypes(before, player.melds.length, beforeOwned);
+        const waitsAfter = this.winningTypes(after, player.melds.length + 1, owned);
+        if (waitsBefore.length === 0 || waitsAfter.join() !== waitsBefore.join()) continue;
       }
       ankanOptions.push(t);
     }
 
     const shouminkanOptions: TileType[] = [];
     for (const meld of player.melds) {
-      if (meld.kind === "pon" && counts[meld.tiles[0]!.type]! >= 1) {
+      if (canDeclareKan && !player.riichi && meld.kind === "pon" && counts[meld.tiles[0]!.type]! >= 1) {
         shouminkanOptions.push(meld.tiles[0]!.type);
       }
     }
@@ -714,7 +764,12 @@ export class Game {
       for (const tile of player.tiles) {
         const after = [...counts];
         after[tile.type]!--;
-        if (this.shantenOf(after, player.melds.length) === 0) riichiDiscardIds.push(tile.id);
+        const afterOwned = [...owned];
+        afterOwned[tile.type]!--;
+        if (this.shantenOf(after, player.melds.length) === 0 &&
+            this.winningTypes(after, player.melds.length, afterOwned).length > 0) {
+          riichiDiscardIds.push(tile.id);
+        }
       }
     }
 
@@ -742,6 +797,7 @@ export class Game {
     fromSeat: Seat,
     phase: CallPhase,
     chankanFromAnkan = false,
+    callStage?: "pon-kan" | "chi",
   ): CallContext {
     let canRon = false;
     if (phase === "ron") {
@@ -753,10 +809,11 @@ export class Game {
         (!chankanFromAnkan || result.yaku.every((y) => y.id === "kokushi" || y.id === "kokushi-13"));
     }
     const counts = countsOf(player.tiles);
-    const canPon = phase === "call" && counts[tile.type]! >= 2;
-    const canKan = phase === "call" && counts[tile.type]! >= 3;
+    const canMeld = phase === "call" && !player.riichi && this.liveRemaining() > 0;
+    const canPon = canMeld && callStage !== "chi" && counts[tile.type]! >= 2;
+    const canKan = canMeld && callStage !== "chi" && this.kanCount < MAX_KAN_DRAWS && counts[tile.type]! >= 3;
     const chiOptions: (readonly [number, number])[] = [];
-    if (phase === "call" && player.seat === (fromSeat + 1) % 4 && tile.type < 27) {
+    if (canMeld && callStage !== "pon-kan" && player.seat === (fromSeat + 1) % 4 && tile.type < 27) {
       const rank = rankOf(tile.type);
       const base = suitOf(tile.type) * 9;
       const patterns: [number, number][] = [
@@ -771,7 +828,7 @@ export class Game {
         if (t1 && t2) chiOptions.push([t1.id, t2.id]);
       }
     }
-    return { phase, tile, fromSeat, canRon, canPon, canKan, chiOptions };
+    return { phase, ...(callStage ? { callStage } : {}), tile, fromSeat, canRon, canPon, canKan, chiOptions };
   }
 
   /** Score a hypothetical win, or null if it is not a legal win (furiten,
@@ -830,6 +887,7 @@ export class Game {
       handCounts,
       melds,
       winningTileType: winTileType,
+      ...(opts.winTileInstance ? { winningTile: opts.winTileInstance.id } : {}),
       winType,
       seatWind: this.seatWindOf(player.seat),
       roundWind: this.roundWind,
@@ -876,12 +934,14 @@ export class Game {
       this.pendingSuukaikan = true;
     }
     this.anyCall = true;
+    for (const p of this.players) p.ippatsu = false;
     this.emit("kan", { seat: player.seat, kind, tileType, kanCount: this.kanCount });
 
     if (kind === "ankan") this.flipIndicator();
     const tile = this.wall.deadWall[this.rinshanUsed++]!;
     player.tiles.push(tile);
     player.drawCount++;
+    player.tempFuriten = false; // a replacement draw is still the player's draw
     this.emit("draw", { seat: player.seat, tile: tile.id, rinshan: true });
     if (kind === "shouminkan") this.flipIndicator();
     this.analyze(player);
@@ -903,7 +963,7 @@ export class Game {
       const player = this.players[seat]!;
       const ctx = this.callContext(player, { id: -1, type: tileType, red: false }, kanPlayer.seat, "chankan");
       if (!ctx.canRon) continue;
-      const action = this.policies[seat]!.call(this.viewFor(seat), ctx);
+      const action = this.policies[seat]!.call(this.viewFor(seat), copyCallContext(ctx));
       if (action.type === "ron") return player;
       if (action.type !== "pass") {
         throw new Error(`Seat ${seat}: ${action.type} not allowed in the chankan window`);
@@ -919,6 +979,7 @@ export class Game {
   private resolveDiscardWindow(
     discarder: Seat,
     tile: Tile,
+    declareRiichi = false,
   ): { kind: "none" } | { kind: "handOver" } | { kind: "call"; seat: Seat; drawnTile: Tile | null } {
     // Ron pass — turn order from the discarder; first declaration takes the
     // head bump. A pass on a legal ron sets (riichi-)furiten.
@@ -926,8 +987,16 @@ export class Game {
       const seat = (discarder + i) % 4;
       const player = this.players[seat]!;
       const ctx = this.callContext(player, tile, discarder, "ron");
-      if (!ctx.canRon) continue;
-      const action = this.policies[seat]!.call(this.viewFor(seat), ctx);
+      if (!ctx.canRon) {
+        // Declining a hand-completing discard imposes temporary furiten
+        // even if the completed hand has no yaku and ron cannot be offered.
+        if (player.waits.includes(tile.type)) {
+          player.tempFuriten = true;
+          if (player.riichi) player.riichiFuriten = true;
+        }
+        continue;
+      }
+      const action = this.policies[seat]!.call(this.viewFor(seat), copyCallContext(ctx));
       if (action.type === "ron") {
         this.resolveRon(player, tile.type, discarder, {
           houtei: this.liveRemaining() === 0,
@@ -942,13 +1011,39 @@ export class Game {
       if (player.riichi) player.riichiFuriten = true;
     }
 
+    // A riichi declaration is established only after its discard survives
+    // ron. If it deals in, the declarer keeps the 1,000 and no stick enters
+    // the pot. Calling the tile for a meld still accepts the declaration.
+    if (declareRiichi) {
+      const player = this.players[discarder]!;
+      this.emitScore(discarder, -1000);
+      this.sticks++;
+      player.riichi = true;
+      player.doubleRiichi = player.drawCount === 1 && !this.anyCall;
+      player.ippatsu = true;
+      this.riichiCount++;
+      if (this.riichiCount === 4) this.pendingSuucha = true;
+      this.emit("riichi", { seat: discarder, double: player.doubleRiichi });
+    }
+
+    // A fourth-kan/four-riichi abort can be interrupted by ron, never
+    // postponed by another meld call on the replacement discard.
+    if (this.pendingSuucha) {
+      this.resolveAbortive("suucha-riichi");
+      return { kind: "handOver" };
+    }
+    if (this.pendingSuukaikan) {
+      this.resolveAbortive("suukaikan");
+      return { kind: "handOver" };
+    }
+
     // Pon / daiminkan pass.
     for (let i = 1; i <= 3; i++) {
       const seat = (discarder + i) % 4;
       const player = this.players[seat]!;
-      const ctx = this.callContext(player, tile, discarder, "call");
+      const ctx = this.callContext(player, tile, discarder, "call", false, "pon-kan");
       if (!ctx.canPon && !ctx.canKan) continue;
-      const action = this.policies[seat]!.call(this.viewFor(seat), ctx);
+      const action = this.policies[seat]!.call(this.viewFor(seat), copyCallContext(ctx));
       if (action.type === "pon") {
         if (!ctx.canPon) throw new Error(`Seat ${seat}: pon not legal`);
         this.formCallMeld(player, discarder, tile, "pon");
@@ -971,9 +1066,9 @@ export class Game {
     {
       const seat = (discarder + 1) % 4;
       const player = this.players[seat]!;
-      const ctx = this.callContext(player, tile, discarder, "call");
+      const ctx = this.callContext(player, tile, discarder, "call", false, "chi");
       if (ctx.chiOptions.length > 0) {
-        const action = this.policies[seat]!.call(this.viewFor(seat), ctx);
+        const action = this.policies[seat]!.call(this.viewFor(seat), copyCallContext(ctx));
         if (action.type === "chi") {
           const wanted = [...action.tileIds].sort().join(",");
           const ok = ctx.chiOptions.some((o) => [...o].sort().join(",") === wanted);
@@ -988,16 +1083,8 @@ export class Game {
     }
 
     // No call: abortive draws that were pending on this discard now fire.
-    if (this.pendingSuucha) {
-      this.resolveAbortive("suucha-riichi");
-      return { kind: "handOver" };
-    }
-    if (this.pendingSuukaikan) {
-      this.resolveAbortive("suukaikan");
-      return { kind: "handOver" };
-    }
     if (
-      this.firstDiscards.length === 4 &&
+      !this.anyCall && this.firstDiscards.length === 4 &&
       this.firstDiscards.every((t) => t === this.firstDiscards[0] && isWind(t))
     ) {
       this.resolveAbortive("suufon-renda");
@@ -1025,9 +1112,6 @@ export class Game {
     pond[pond.length - 1]!.called = true;
     this.anyCall = true;
     for (const p of this.players) p.ippatsu = false; // any call voids ippatsu
-    this.pendingSuucha = false;
-    this.pendingSuukaikan = false;
-
     if (kind === "pon") {
       const taken = player.tiles.filter((t) => t.type === tile.type).slice(0, 2);
       player.tiles = player.tiles.filter((t) => !taken.includes(t));
@@ -1053,6 +1137,7 @@ export class Game {
       const drawn = this.wall.deadWall[this.rinshanUsed++]!;
       player.tiles.push(drawn);
       player.drawCount++;
+      player.tempFuriten = false;
       this.emit("draw", { seat: player.seat, tile: drawn.id, rinshan: true });
       this.flipIndicator();
       this.analyze(player);
@@ -1088,6 +1173,8 @@ export class Game {
       winType: "tsumo",
       winningTile: drawnTile.id,
       yaku: result.yaku.map((y) => y.id),
+      yakuDetails: result.yaku.map((y) => ({ ...y })),
+      dora: result.dora,
       han: result.han,
       fu: result.fu,
       yakumanMultiple: result.yakumanMultiple,
@@ -1117,6 +1204,8 @@ export class Game {
       winningTileType: winTileType,
       chankan: opts.chankan === true,
       yaku: result.yaku.map((y) => y.id),
+      yakuDetails: result.yaku.map((y) => ({ ...y })),
+      dora: result.dora,
       han: result.han,
       fu: result.fu,
       yakumanMultiple: result.yakumanMultiple,

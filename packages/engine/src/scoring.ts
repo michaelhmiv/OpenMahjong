@@ -31,6 +31,7 @@ import {
   isWind,
   rankOf,
   suitOf,
+  validateCounts,
   type TileType,
 } from "./tiles.js";
 import { shanten } from "./hand.js";
@@ -138,6 +139,9 @@ function meldToGroup(meld: Meld): Group {
 }
 
 function validateMeld(meld: Meld): void {
+  if (!["chi", "pon", "ankan", "daiminkan", "shouminkan"].includes(meld.kind)) {
+    throw new Error(`Unknown meld kind: ${String(meld.kind)}`);
+  }
   const kan = meld.kind === "ankan" || meld.kind === "daiminkan" || meld.kind === "shouminkan";
   const want = kan ? 4 : 3;
   if (meld.tiles.length !== want) {
@@ -345,6 +349,11 @@ function evaluateStandard(
       yakumanMultiple += 1;
     }
   }
+  const dragonTriplets = allGroups.filter((g) => g.kind !== "sequence" && isDragon(g.type)).length;
+  if (dragonTriplets === 3) {
+    yakumanYaku.push(Y("daisangen", "Daisangen", 13));
+    yakumanMultiple += 1;
+  }
   const windTriplets = allGroups.filter((g) => g.kind !== "sequence" && isWind(g.type)).length;
   if (windTriplets === 4) {
     yakumanYaku.push(Y("daisuushi", "Daisuushi", 26));
@@ -395,6 +404,8 @@ function evaluateStandard(
   const hasSimple = counts.some((n, t) => n > 0 && isSuited(t) && !isTerminal(t));
   const hasHonor = counts.some((n, t) => n > 0 && isHonor(t));
   if (!hasTerminalOrHonor) add("tanyao", "Tanyao", 1);
+  if (!hasSimple) add("honroutou", "Honroutou", 2);
+  if (dragonTriplets === 2 && isDragon(pairType)) add("shousangen", "Shousangen", 2);
 
   for (const g of allGroups) {
     if (g.kind === "sequence") continue;
@@ -521,10 +532,11 @@ function evaluateChiitoitsu(input: ScoreInput): Candidate | null {
   const hasTerminalOrHonor = counts.some((n, t) => n > 0 && isTerminalOrHonor(t));
   const hasHonor = counts.some((n, t) => n > 0 && isHonor(t));
   if (!hasTerminalOrHonor) add("tanyao", "Tanyao", 1);
-  // All-terminal chiitoitsu is junchan (all-honors / mixed T+H chiitoitsu is
-  // honroutou, a yakuman, handled in the counts pass).
-  const allTerminals = counts.every((n, t) => n === 0 || isTerminal(t));
-  if (allTerminals) add("junchan", "Junchan", 3);
+  // Seven distinct terminal/honor pairs score honroutou (2 han),
+  // in addition to chiitoitsu. They are not a chanta/junchan hand.
+  if (counts.every((n, t) => n === 0 || isTerminalOrHonor(t))) {
+    add("honroutou", "Honroutou", 2);
+  }
 
   const suitsPresent = new Set<number>();
   counts.forEach((n, t) => {
@@ -561,11 +573,9 @@ function countsYakuman(input: ScoreInput, handClosed: boolean, kanCount: number)
   if (kanCount === 4) out.push(Y("suukantsu", "Suukantsu", 13));
 
   const allHonors = counts.every((n, t) => n === 0 || isHonor(t));
-  const allTerminalOrHonor = counts.every((n, t) => n === 0 || isTerminalOrHonor(t));
+  const allTerminals = counts.every((n, t) => n === 0 || isTerminal(t));
   if (allHonors) out.push(Y("tsuiisou", "Tsuiisou", 13));
-  // Honroutou is pushed tentatively here; scoreHand drops it if any other
-  // yakuman is present (it never stacks, and the kokushi form is not it).
-  else if (allTerminalOrHonor) out.push(Y("honroutou", "Honroutou", 13));
+  if (allTerminals) out.push(Y("chinroutou", "Chinroutou", 13));
 
   if (counts.every((n, t) => n === 0 || GREEN_TYPES.has(t))) {
     out.push(Y("ryuuiisou", "Ryuuiisou", 13));
@@ -587,8 +597,9 @@ function countsYakuman(input: ScoreInput, handClosed: boolean, kanCount: number)
     }
   }
 
-  // Chuuren poutou: closed hand (ankan allowed), one suit, 1112345678999 + 1.
-  if (handClosed) {
+  // Chuuren poutou requires an undeclared 14-tile hand; a declared kan
+  // prevents it even though an ankan preserves menzen for other yaku.
+  if (handClosed && input.melds.length === 0) {
     const suits = new Set<number>();
     let hasHonorTile = false;
     counts.forEach((n, t) => {
@@ -626,8 +637,15 @@ function countsYakuman(input: ScoreInput, handClosed: boolean, kanCount: number)
 export function scoreHand(input: ScoreInput): ScoreResult {
   // --- Validation ------------------------------------------------------------
   const counts = input.handCounts;
-  if (counts.length !== TILE_TYPE_COUNT) {
-    throw new Error(`handCounts must have ${TILE_TYPE_COUNT} entries`);
+  validateCounts(counts, "handCounts");
+  if (input.melds.length > 4) throw new Error("A hand may have at most 4 declared melds");
+  if (!["ron", "tsumo"].includes(input.winType)) throw new Error("winType must be ron or tsumo");
+  if (!isWind(input.seatWind) || !Number.isInteger(input.seatWind) ||
+      !isWind(input.roundWind) || !Number.isInteger(input.roundWind)) {
+    throw new Error("seatWind and roundWind must be wind tile types");
+  }
+  if (!Number.isInteger(input.winningTileType) || input.winningTileType < 0 || input.winningTileType >= TILE_TYPE_COUNT) {
+    throw new Error("winningTileType must be a tile type from 0 to 33");
   }
   let kanCount = 0;
   const meldTiles = new Array<number>(TILE_TYPE_COUNT).fill(0);
@@ -704,14 +722,9 @@ export function scoreHand(input: ScoreInput): ScoreResult {
     }
   }
 
-  // Honroutou never stacks with another yakuman: it is a shape yakuman that
-  // stands alone (a kokushi-form hand is not honroutou at all, and a
-  // suuankou/daisuushi hand scores those instead). Drop it whenever any
-  // other yakuman — counts-based or decomposition-based — is present.
+  // Ordinary yaku (including honroutou) never stack onto a true yakuman.
   const decompMultiple = bestDecompYakuman?.yakumanMultiple ?? 0;
-  const fixedWithoutHonroutou = fixedYakumanAll.filter((y) => y.id !== "honroutou");
-  const fixedYakuman =
-    fixedWithoutHonroutou.length > 0 || decompMultiple > 0 ? fixedWithoutHonroutou : fixedYakumanAll;
+  const fixedYakuman = fixedYakumanAll;
   const fixedMultiple = fixedYakuman.reduce((a, y) => a + y.han / 13, 0);
 
   const totalYakuman = fixedMultiple + decompMultiple;

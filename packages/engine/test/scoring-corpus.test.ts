@@ -10,7 +10,7 @@ const ALL_YAKU_IDS = [
   "yakuhai-seat", "yakuhai-round", "haitei", "houtei", "rinshan", "chankan",
   "honchan", "junchan", "ittsu", "sanshoku-doujun", "sanshoku-doukou",
   "toitoi", "sanankou", "sankantsu", "honitsu", "chinitsu", "chiitoitsu",
-  "shousuushi", "daisuushi", "tsuiisou", "honroutou", "chuuren",
+  "shousuushi", "daisuushi", "tsuiisou", "honroutou", "shousangen", "daisangen", "chinroutou", "chuuren",
   "chuuren-junsei", "suukantsu", "suuankou", "suuankou-tanki", "kokushi",
   "kokushi-13", "tenhou", "chiihou", "ryuuiisou",
 ] as const;
@@ -71,6 +71,7 @@ describe("scoring corpus (brief A1)", () => {
     describe(v.id, () => {
       it(`is well-formed — ${v.description}`, () => {
         const hand = parseCounts(v.hand);
+        expect(hand.every((n) => Number.isInteger(n) && n >= 0 && n <= 4)).toBe(true);
         const kanCount = (v.melds ?? []).filter(
           (m) => m.kind === "ankan" || m.kind === "daiminkan" || m.kind === "shouminkan",
         ).length;
@@ -112,7 +113,7 @@ describe("scoring corpus (brief A1)", () => {
         // dora never counts). A kazoe yakuman — yakumanMultiple 1 with only
         // ordinary yaku — reached 13 han *through* its dora, so it reports it.
         const YAKUMAN_IDS = new Set([
-          "shousuushi", "daisuushi", "tsuiisou", "honroutou", "chuuren",
+          "shousuushi", "daisuushi", "tsuiisou", "daisangen", "chinroutou", "chuuren",
           "chuuren-junsei", "suukantsu", "suuankou", "suuankou-tanki",
           "kokushi", "kokushi-13", "tenhou", "chiihou", "ryuuiisou",
         ]);

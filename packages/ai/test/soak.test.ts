@@ -69,24 +69,31 @@ describe("A3 soak: AI vs AI", () => {
       }).run();
       let hands = 0;
       let liveDraws = 0;
+      let replacementDraws = 0;
       let deals = 0;
       let pendingDrawn: string | null = null;
       const checkHand = () => {
         expect(deals).toBe(4);
-        expect(liveDraws).toBeLessThanOrEqual(70);
-        if (pendingDrawn === "exhaustive") expect(liveDraws).toBe(70);
+        // Every replacement draw retires one live-wall tail tile to
+        // retain a fourteen-tile dead wall, so it uses one of the
+        // seventy originally drawable live tiles too.
+        expect(liveDraws + replacementDraws).toBeLessThanOrEqual(70);
+        if (pendingDrawn === "exhaustive") expect(liveDraws + replacementDraws).toBe(70);
       };
       for (const e of result.events) {
         if (e.type === "hand-start") {
           if (hands > 0) checkHand();
           hands++;
           liveDraws = 0;
+          replacementDraws = 0;
           deals = 0;
           pendingDrawn = null;
         } else if (e.type === "deal") {
           deals++;
         } else if (e.type === "draw" && e.rinshan === false) {
           liveDraws++;
+        } else if (e.type === "draw" && e.rinshan === true) {
+          replacementDraws++;
         } else if (e.type === "drawn-hand") {
           pendingDrawn = e.kind as string;
         }

@@ -121,3 +121,15 @@ export function parseCounts(notation: string): number[] {
 export function countTiles(counts: readonly number[]): number {
   return counts.reduce((a, b) => a + b, 0);
 }
+
+/** Validate a physical per-type tile count vector before recursive analysis. */
+export function validateCounts(counts: readonly number[], name = "counts"): void {
+  if (counts.length !== TILE_TYPE_COUNT) {
+    throw new Error(`${name} must have ${TILE_TYPE_COUNT} entries`);
+  }
+  for (let t = 0; t < TILE_TYPE_COUNT; t++) {
+    if (!Number.isInteger(counts[t]) || counts[t]! < 0 || counts[t]! > COPIES_PER_TYPE) {
+      throw new Error(`${name}[${t}] must be an integer from 0 to ${COPIES_PER_TYPE}`);
+    }
+  }
+}

@@ -13,7 +13,7 @@
  *   At most 5 indicators (4 kans) can ever be revealed.
  */
 
-import { buildTileSet, type Tile } from "./tiles.js";
+import { buildTileSet, RED_FIVE_TYPES, type Tile } from "./tiles.js";
 import { createRng } from "./rng.js";
 
 export const DEAD_WALL_SIZE = 14;
@@ -58,4 +58,22 @@ export function rinshanTile(wall: Wall, kanDrawIndex: number): Tile {
     throw new Error(`kanDrawIndex must be 0..${MAX_KAN_DRAWS - 1}, got ${kanDrawIndex}`);
   }
   return wall.deadWall[kanDrawIndex]!;
+}
+
+/** Validate an externally supplied wall against the canonical physical set. */
+export function validateWall(wall: Wall): void {
+  if (wall.liveWall.length !== LIVE_WALL_SIZE || wall.deadWall.length !== DEAD_WALL_SIZE) {
+    throw new Error(`Wall must contain ${LIVE_WALL_SIZE} live and ${DEAD_WALL_SIZE} dead tiles`);
+  }
+  const seen = new Set<number>();
+  for (const tile of [...wall.liveWall, ...wall.deadWall]) {
+    if (!Number.isInteger(tile.id) || tile.id < 0 || tile.id >= 136 || seen.has(tile.id)) {
+      throw new Error("Wall must contain every physical tile exactly once");
+    }
+    if (tile.type !== Math.floor(tile.id / 4) ||
+        tile.red !== (tile.id % 4 === 0 && RED_FIVE_TYPES.has(tile.type))) {
+      throw new Error(`Wall tile ${tile.id} has inconsistent type or red-five identity`);
+    }
+    seen.add(tile.id);
+  }
 }

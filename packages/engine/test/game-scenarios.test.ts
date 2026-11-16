@@ -481,13 +481,24 @@ describe("exhaustive draws (A4)", () => {
       ],
       draws,
     });
-    const policies: Policy[] = [0, 1, 2, 3].map(() => tsumogiriPolicy({ tsumo: false }));
-    const result = new Game({ seed: "nagashi", length: "east", policies, walls: [wall] }).run();
-    const drawn = handEvents(result.events, 1).filter((e) => e.type === "drawn-hand");
+    // This fixture asserts the first hand's settlement. Stop at the
+    // next hand rather than simulate unrelated random later hands;
+    // complete-match termination is covered by the game soak suite.
+    class FirstHandComplete extends Error {}
+    const policies: Policy[] = [0, 1, 2, 3].map(() => {
+      const base = tsumogiriPolicy({ tsumo: false });
+      return { ...base, turn(view, ctx) {
+        if (view.kyoku > 1) throw new FirstHandComplete();
+        return base.turn(view, ctx);
+      } };
+    });
+    const game = new Game({ seed: "nagashi", length: "east", policies, walls: [wall] });
+    expect(() => game.run()).toThrow(FirstHandComplete);
+    const drawn = handEvents(game.events, 1).filter((e) => e.type === "drawn-hand");
     expect(drawn).toHaveLength(1);
     expect(drawn[0]).toMatchObject({ kind: "exhaustive", nagashi: [1] });
     // Non-dealer nagashi mangan: dealer pays 4000, others 2000 (honba 0).
-    expect(scoresAtHandStart(result.events, 2)).toEqual([21000, 33000, 23000, 23000]);
+    expect(scoresAtHandStart(game.events, 2)).toEqual([21000, 33000, 23000, 23000]);
   });
 });
 
