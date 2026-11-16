@@ -36,6 +36,7 @@ import {
 } from "@openmahjong/engine";
 import { HumanDriver, PENDING, type SeatDriver } from "./drivers.js";
 import type { ChiHint } from "./model.js";
+import { newGameId } from "./records.js";
 
 export type Decision = TurnAction | CallAction;
 
@@ -68,6 +69,10 @@ export interface RunnerOptions {
   readonly seed: number | string;
   readonly length: GameLength;
   readonly humanSeat?: Seat;
+  /** Stable id for the finished-game record (slice 2); generated when
+   *  absent, and carried through serialize()/restore() so a resumed
+   *  game keeps the id it started with. */
+  readonly id?: string;
   /** Driver for the three non-human seats (AiDriver: @openmahjong/ai). */
   readonly aiDriver: SeatDriver;
 }
@@ -78,12 +83,15 @@ export interface SavedGame {
   readonly length: GameLength;
   readonly humanSeat: Seat;
   readonly decisions: readonly Decision[];
+  /** Record id (slice 2); absent in saves from before it existed. */
+  readonly id?: string;
 }
 
 export class GameRunner {
   readonly seed: string;
   readonly length: GameLength;
   readonly humanSeat: Seat;
+  readonly id: string;
   private readonly aiDriver: SeatDriver;
   private readonly humanDriver = new HumanDriver();
 
@@ -98,6 +106,7 @@ export class GameRunner {
     this.seed = String(opts.seed);
     this.length = opts.length;
     this.humanSeat = opts.humanSeat ?? 0;
+    this.id = opts.id ?? newGameId();
     this.aiDriver = opts.aiDriver;
   }
 
@@ -240,6 +249,7 @@ export class GameRunner {
       length: this.length,
       humanSeat: this.humanSeat,
       decisions: [...this.decisions],
+      id: this.id,
     };
   }
 
@@ -249,6 +259,7 @@ export class GameRunner {
       seed: saved.seed,
       length: saved.length,
       humanSeat: saved.humanSeat,
+      ...(saved.id ? { id: saved.id } : {}),
       aiDriver,
     });
     runner.decisions = [...saved.decisions];
