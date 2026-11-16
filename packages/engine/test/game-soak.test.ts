@@ -5,8 +5,14 @@
  * The soak drives complete games with a simple legal-move policy:
  * tsumogiri discards, riichi whenever discarding the drawn tile keeps
  * tenpai, tsumo whenever legal, kyuushu whenever offered, and no calls.
- * The full 10,000-game run with the real AI (AI slice) is a parameter
- * change: raise SOAK_GAMES and swap the policy.
+ * The full 10,000-game run with the real AI lives in packages/ai
+ * (its soak test plus the sharded `soak` CI job).
+ *
+ * Chunk tests yield between games (`await tick()`): a vitest worker
+ * running back-to-back synchronous tests never services its progress
+ * RPC, and after ~60 s the run fails with an "onTaskUpdate" timeout
+ * even though every test passed (this file's ~59 s CI run sat on that
+ * edge and tipped over it on the PR #3 merge run).
  */
 
 import { describe, expect, it } from "vitest";
@@ -34,6 +40,7 @@ const soakPolicy: Policy = {
 
 const SOAK_GAMES = 500;
 const SOAK_CHUNK = 50;
+const tick = () => new Promise<void>((r) => setTimeout(r, 0));
 
 describe("A3 soak", () => {
   // Chunked so no single test blocks the worker for long.
@@ -41,7 +48,7 @@ describe("A3 soak", () => {
     Array.from({ length: SOAK_GAMES / SOAK_CHUNK }, (_, i) => i * SOAK_CHUNK),
   )(
     `games starting at seed %i (chunk of ${SOAK_CHUNK}): no illegal states, exact wall accounting, scores sum to 100,000`,
-    (startSeed) => {
+    async (startSeed) => {
       for (let seed = startSeed; seed < startSeed + SOAK_CHUNK; seed++) {
         const result = new Game({ seed: `soak-${seed}`, length: "east", policies: soakPolicy }).run();
 
@@ -79,6 +86,7 @@ describe("A3 soak", () => {
         }
         checkHand(pendingDrawn);
         expect(hands).toBe(result.handsPlayed);
+        await tick();
       }
     },
     900_000,
@@ -86,8 +94,9 @@ describe("A3 soak", () => {
 });
 
 describe("A5 determinism", () => {
-  it("same seed + same policies → identical event log and scores", () => {
+  it("same seed + same policies → identical event log and scores", async () => {
     const a = new Game({ seed: "a5-seed", length: "south", policies: soakPolicy }).run();
+    await tick();
     const b = new Game({ seed: "a5-seed", length: "south", policies: soakPolicy }).run();
     expect(JSON.stringify(b.events)).toBe(JSON.stringify(a.events));
     expect(b.scores).toEqual(a.scores);

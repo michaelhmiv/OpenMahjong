@@ -7,6 +7,12 @@
  */
 
 import { describe, expect, it } from "vitest";
+
+// Yield between games so the vitest worker's event loop can service
+// its progress RPC — a worker blocked in synchronous tests for ~60 s
+// fails the run with an "onTaskUpdate" timeout even when every test
+// passes (see packages/ai/test/soak.test.ts).
+const tick = () => new Promise<void>((r) => setTimeout(r, 0));
 import { Game, type GameEvent, type Policy } from "@openmahjong/engine";
 import { PENDING, TempAiDriver } from "../src/drivers.js";
 import { foldEvents, TableModel } from "../src/model.js";
@@ -64,12 +70,13 @@ describe("TableModel fold", () => {
     expect(model.handInProgress).toBe(false);
   }, 60000);
 
-  it("reconstructs a win: hand, yaku, payments all present and consistent", () => {
+  it("reconstructs a win: hand, yaku, payments all present and consistent", async () => {
     // Fold incrementally; at the first hand-end preceded by a win, the
     // breakdown data must be complete.
     let found = false;
     for (const seed of ["model-win-1", "model-win-2", "model-win-3"]) {
       const { events } = playGame(seed);
+      await tick();
       const model = new TableModel(0);
       for (const ev of events) {
         model.apply(ev);
@@ -91,7 +98,7 @@ describe("TableModel fold", () => {
     expect(found).toBe(true);
   }, 120000);
 
-  it("resolves chi melds into real sequences, with and without hints", () => {
+  it("resolves chi melds into real sequences, with and without hints", async () => {
     // Find a game (through the runner, which produces chi hints) that
     // contains a chi call, then check the meld is a true sequence.
     let checked = false;
@@ -104,6 +111,7 @@ describe("TableModel fold", () => {
         const p = runner.pending!;
         if (p.kind === "turn") runner.act(ai.turn(p.view, p.ctx) as never);
         else runner.act(ai.call(p.view, p.ctx) as never);
+        if (guard % 25 === 0) await tick();
       }
       const chiSeq = runner.events.findIndex((e) => e.type === "call" && e["kind"] === "chi");
       if (chiSeq < 0) continue;
@@ -121,10 +129,11 @@ describe("TableModel fold", () => {
     expect(checked).toBe(true);
   }, 300000);
 
-  it("reconstructs uradora indicators for a riichi win, verifiably", () => {
+  it("reconstructs uradora indicators for a riichi win, verifiably", async () => {
     let checked = false;
     for (const seed of ["model-ura-1", "model-ura-2", "model-ura-3", "model-ura-4", "model-ura-5", "model-ura-6"]) {
       const { events } = playGame(seed);
+      await tick();
       const model = new TableModel(0);
       for (const ev of events) {
         model.apply(ev);

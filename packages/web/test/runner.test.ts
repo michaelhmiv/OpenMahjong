@@ -5,6 +5,12 @@
  */
 
 import { describe, expect, it } from "vitest";
+
+// Yield inside long decision loops so the vitest worker's event loop
+// can service its progress RPC — a worker blocked in synchronous
+// tests for ~60 s fails the run with an "onTaskUpdate" timeout even
+// when every test passes (see packages/ai/test/soak.test.ts).
+const tick = () => new Promise<void>((r) => setTimeout(r, 0));
 import type { CallAction, TurnAction } from "@openmahjong/engine";
 import { TempAiDriver } from "../src/drivers.js";
 import { GameRunner, type SavedGame } from "../src/runner.js";
@@ -36,7 +42,7 @@ describe("GameRunner", () => {
     expect(() => runner.act({ type: "pass" })).toThrow();
   }, 60000);
 
-  it("resume round-trip: serialize -> restore reproduces the identical state", () => {
+  it("resume round-trip: serialize -> restore reproduces the identical state", async () => {
     const ai = new TempAiDriver();
     const runner = new GameRunner({ seed: "runner-resume", length: "east", humanSeat: 0, aiDriver: ai });
     runner.advance();
@@ -46,6 +52,7 @@ describe("GameRunner", () => {
     while (!runner.result && acts < 25) {
       drivePending(runner, ai);
       acts++;
+      await tick();
     }
     const saved: SavedGame = JSON.parse(JSON.stringify(runner.serialize())) as SavedGame;
     const eventsJson = JSON.stringify(runner.events);
@@ -61,18 +68,21 @@ describe("GameRunner", () => {
     expect(restored.result).toBeNull();
   }, 300000);
 
-  it("a restored game finishes with the same scores as the uninterrupted game", () => {
+  it("a restored game finishes with the same scores as the uninterrupted game", async () => {
     const seed = "runner-finish";
-    const playToEnd = (runner: GameRunner, ai: TempAiDriver): readonly number[] => {
+    const playToEnd = async (runner: GameRunner, ai: TempAiDriver): Promise<readonly number[]> => {
       let guard = 0;
-      while (!runner.result && guard++ < 3000) drivePending(runner, ai);
+      while (!runner.result && guard++ < 3000) {
+        drivePending(runner, ai);
+        if (guard % 25 === 0) await tick();
+      }
       if (!runner.result) throw new Error("game did not finish");
       return runner.result.scores;
     };
 
     const direct = new GameRunner({ seed, length: "east", humanSeat: 0, aiDriver: new TempAiDriver() });
     direct.advance();
-    const directScores = playToEnd(direct, new TempAiDriver());
+    const directScores = await playToEnd(direct, new TempAiDriver());
 
     const partial = new GameRunner({ seed, length: "east", humanSeat: 0, aiDriver: new TempAiDriver() });
     partial.advance();
@@ -80,7 +90,7 @@ describe("GameRunner", () => {
     for (let i = 0; i < 10 && !partial.result; i++) drivePending(partial, ai2);
     const saved: SavedGame = JSON.parse(JSON.stringify(partial.serialize())) as SavedGame;
     const restored = GameRunner.restore(saved, new TempAiDriver());
-    const restoredScores = playToEnd(restored, new TempAiDriver());
+    const restoredScores = await playToEnd(restored, new TempAiDriver());
 
     expect([...restoredScores]).toEqual([...directScores]);
     expect(restoredScores.reduce((a, b) => a + b, 0)).toBe(100000);

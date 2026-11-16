@@ -197,6 +197,67 @@ within these hard floors (Michael's rulings + standing floors):
 - Rendering gate: the table, tiles, and every screen in §7 get faithful
   renderings — built from the actual layout, not mood boards — through
   independent QC and Michael's approval BEFORE the client is built.
+- **Accessibility is a first-class requirement, not a setting afterthought
+  (Michael's ruling, 2026-11-16 — the tiles are small, so users must be
+  able to manage and understand the table):**
+  - **Selected-tile magnification:** tapping a hand tile lifts AND enlarges
+    it (~1.5×) before any commitment; the riichi-armed lift is the same
+    language. A player can always inspect a tile big before acting on it.
+  - **Meld dividend:** when melds shrink the closed hand (10/7/4 tiles),
+    hand tiles grow into the freed width automatically.
+  - **Responsive scale-up:** the table scales with the viewport — desktop
+    and tablet tiles are substantially larger; 390px portrait is the
+    minimum case, not the design case.
+  - **"Large tiles" Settings toggle:** pond tiles step down (~22px) and
+    hand tiles step up (~28px) for players who need the hand above all.
+    Gets its own rendering through the QC + approval gate before build.
+  - **Large-print tile faces:** an alternate face set with enlarged glyphs
+    at the same tile geometry, for legibility without layout change.
+  - **No state by color alone:** every game state carried by color (riichi,
+    dora, the decisive prompt button) is also carried by shape, position,
+    or text, so the table reads correctly for color-blind players.
+  - Reduced motion and animation speed already live in §9; sound is
+    one-tap mutable in §10. These are part of the same commitment.
+- **Focus Frame — the zoom/inspect system (Michael's direction 2026-11-16,
+  after the accessibility research report
+  `~/workspace/mahjong-prep/accessibility-research-2026-11-16.md`; all four
+  design decisions approved "yes to all" the same day):**
+  - **Player frame:** tapping any pond opens that player's frame — pond
+    tiles upright and un-rotated at ~44–50px, melds in the SAME frame (read
+    together, never split across views), latest discard badged, riichi
+    declaration tile marked, tsumogiri/tedashi shading shown WITH a small
+    legend (frames are inspection tools: minimal labels are exempt from the
+    table's no-explanatory-text law — decision 2). A context strip carries
+    that player's score/wind/riichi status and the PLAYER'S OWN HAND as the
+    comparison anchor — hand only, no waits/danger summary (that is
+    coaching, parked for slice 2 — decision 3). Read-only and LIVE: new
+    discards animate in while the frame is open; it is a view of state,
+    never a snapshot.
+  - **Center frame:** tapping the center block opens dora indicators each
+    shown BESIDE the dora it indicates (~56px), plus wall/round/honba/
+    sticks/all scores — semantic enrichment, not just bigger pixels.
+  - **Hand focus sheet:** the hand re-wraps at ~48px in TWO ROWS OF 7,
+    order preserved, everything visible (decision 1 — no scrolling row).
+    Fully actionable inside: discard selection, and Riichi/Tsumo/Kan
+    prompts at full size. Entry via a visible hand-expand control (no
+    long-press-only paths anywhere in the system).
+  - **Animation:** shared-element FLIP — tiles travel from their table
+    positions into the frame (un-rotating as they go), ~250–300ms in /
+    ~200ms out; the table stays visible, dimmed, behind. OS reduced-motion
+    swaps travel for crossfade.
+  - **Exit & pre-emption:** tap outside, tap the dimmed zone, back, or
+    swipe down — always the same reverse animation home; no edge-swipe
+    exits. A call window for the player AUTO-DISMISSES any open frame (the
+    game never waits inside a zoom); the player's own turn arriving shows a
+    banner on the frame edge without force-dismissing; hand end closes the
+    frame into the breakdown; tiles that changed while zoomed pulse briefly
+    on the table after exit.
+  - **No free pinch-zoom camera** (rejected on the research evidence:
+    camera drift, event camera-theft, two-handed, WCAG 2.5.1). Semantic
+    tap-to-frame is the only zoom. Tsumogiri shading lives in frames only,
+    never on the base table (decision 4). The system is taught in the first
+    game with a scripted pond tap, plus a one-time hint when an opponent's
+    pond passes ~8 discards.
 
 ## 9. Animation spec (S1-8) — a headline feature
 
@@ -302,3 +363,27 @@ Client (captures + device):
 - **AI strength calibration** — "beats a beginner, honest vs intermediate"
   is judged by simulation stats (A3: deal-in rate, win rate by seat should
   be near-even across identical AIs) plus Michael's A9 play pass.
+
+THEME v5 — APPROVED (Michael, 2026-11-16, after QC pass + notes fix).
+Supersedes the v1–v4 token set everywhere, including the Focus Frame files
+(their geometry and interaction stand; their colours adopt these tokens in
+the client build). Direction: friendlier scheme per the Two Dots reference
+(research: mahjong-prep/two-dots-reference-2026-11-16.md) — quiet ground,
+colour lives in the pieces, closed accent vocabulary.
+- Ground #231f2e (deep plum-charcoal); panel #2f2a3d, borderless, radius
+  20px, separation by a soft 1.16:1 value step (device-pass watch item;
+  fallback is deepening the panel, never restoring borders).
+- Tile backs #554a6b muted plum-slate (edge #3a3249) — green is a piece
+  colour only, never ground. Faces #f6f1e4 warm cream. Ink #f2eff8, dim
+  #b8b0cc. Suit glyph colours unchanged (they outrank the theme).
+- Accents, closed vocabulary: primary sky blue #46a5e0 for chrome only
+  (dealer marker, selection/inspect rings, primary fills); decisive coral
+  red #d63c2e quarantined to Ron/Riichi/Tsumo buttons, riichi markers, the
+  riichi stick's dot, and the call-prompt latest-discard ring. Red never a
+  large surface; NO glow halos — rings are flat 2px.
+- Buttons: true pills (radius = half height), flat fills, no borders or
+  gradients.
+- Type: Nunito (variable, SIL OFL 1.1), self-hosted; digits tabular by
+  construction (600/1000 upm) + tabular-nums set. All text contrasts
+  >= 4.5:1, QC-verified. Renderings:
+  mahjong-prep/renderings/table-theme-v5/ (base + prompt states).
