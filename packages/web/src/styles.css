@@ -25,22 +25,8 @@
   --face: #f6f1e4;
 }
 
-/* Light theme: DERIVED from the same token discipline (quiet ground,
-   closed accent vocabulary) — not separately rendering-approved; flagged
-   in the PR for Michael's judgment in the build. */
-[data-theme="light"] {
-  --bg: #efe9dc;
-  --panel: #fbf8f1;
-  --line: #cfc4ab;
-  --ink: #2b2438;
-  --dim: #6f6785;
-  --accent: #46a5e0;
-  --accent-text: #1c6ea8;
-  --decisive: #d63c2e;
-  --on-accent: #14101f;
-  --page: #e3dcc9;
-  --face: #fbf7ec;
-}
+/* Dark theme only (Michael, 2026-11-16): theme v5's dark tokens above
+   are the single theme; the derived light theme was removed. */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 

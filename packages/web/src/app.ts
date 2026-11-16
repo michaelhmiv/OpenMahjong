@@ -262,7 +262,8 @@ export class App {
   }
 
   private applyTheme(): void {
-    document.documentElement.dataset["theme"] = this.settings.theme;
+    // Dark theme only (Michael, 2026-11-16).
+    document.documentElement.dataset["theme"] = "dark";
     document.documentElement.classList.toggle("large", this.settings.largeTiles);
   }
 
@@ -433,11 +434,6 @@ export class App {
       };
 
       page.append(
-        row("Dark theme", "The approved default. Light is derived from the same palette discipline.", toggle(this.settings.theme === "dark", false, (v) => {
-          this.settings = { ...this.settings, theme: v ? "dark" : "light" };
-          saveSettings(this.settings);
-          this.applyTheme();
-        })),
         row("Sound", "Quiet tile clicks only. No music, no voices.", toggle(this.settings.sound, false, (v) => {
           this.settings = { ...this.settings, sound: v };
           this.sound.enabled = v;
@@ -1324,13 +1320,6 @@ export class App {
         this.settings = { ...this.settings, sound: !this.settings.sound };
         this.sound.enabled = this.settings.sound;
         saveSettings(this.settings);
-        overlay.remove();
-        this.renderTable();
-      }),
-      mk(this.settings.theme === "dark" ? "Theme: dark" : "Theme: light", "ghost", () => {
-        this.settings = { ...this.settings, theme: this.settings.theme === "dark" ? "light" : "dark" };
-        saveSettings(this.settings);
-        this.applyTheme();
         overlay.remove();
         this.renderTable();
       }),
