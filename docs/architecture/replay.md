@@ -1,8 +1,8 @@
 # Replay format and compatibility
 
-Current implementation: `packages/web/src/replay.ts`, `runner.ts`, `review.ts`,
+Current implementation: `packages/web/src/replay.ts`, `runner.ts`, `review.ts`, `review-ui.ts`,
 and the engine's versioned rules descriptor. See [decision review](review.md)
-for the nonvisual review API and [rulesets](rulesets.md) for the named profile.
+for the review core and UI and [rulesets](rulesets.md) for the named profile.
 
 ## Envelopes
 
@@ -61,7 +61,11 @@ AI actions, and records immutable human `PlayerView`/context snapshots at
 their original decision points. No other concealed hands, wall order or
 future outcomes are analysis inputs. Analysis runs on demand per current
 discard; v1 review is display-only and cannot be labeled engine 2 analysis.
-`ReviewNavigator` supports decisions and hands without a new UI screen.
+`ReviewNavigator` supplies the hand/decision controls in `review-ui.ts`. The
+visible Review surface shows original public table details and exact candidate
+facts, labels heuristic rankings/unseen-copy assumptions, and preserves the
+historical-v1 analysis restriction. It does not show concealed opponent hands
+or implement a full-information mode.
 
 Current win events additionally carry awarded per-yaku han and dora, so
 breakdowns render open-hand reductions from engine facts. Historical events
@@ -71,7 +75,8 @@ claim a fully discriminated event contract has been implemented.
 
 ## Persistence and trust
 
-The existing browser storage keys remain unchanged. Shape-corrupt saves
+Existing game/history storage keys remain unchanged. Learning uses versioned
+progress/session and account-scoped cache keys. Shape-corrupt saves
 are ignored without deleting the stored bytes. Invalid record logs can
 lose their replay action while retaining valid history summaries. Settings
 and summary arrays are bounded and validated before use. Storage denial or
@@ -89,8 +94,17 @@ competitive coordinator.
 unsupported versions, malformed/bounded actions, unused tails and rollback.
 `review.test.ts` covers immutable public positions, prefix stopping,
 navigation, legal red-five comparisons and legacy analysis restrictions.
-`api-contract.test.ts` exercises the real client and HTTP handlers together.
+`review-ui.test.ts` checks visible navigation, candidate comparisons, public
+information, legacy restrictions and callbacks. `api-contract.test.ts` exercises
+the real client and HTTP handlers together.
 
-Pending: step-through Review UI, full-information mode with explicit
-labeling, replay-to-practice authoring/validation, asynchronous deep
-analysis, account conflict resolution and incremental gameplay execution.
+Review-to-Practice stores up to fifty bounded record/decision references, with
+skill tags and timestamps. Reopening resolves the validated private game record
+and selects that original decision. Related curated exercises retain their own
+validation; saving a heuristic position never silently publishes a graded puzzle.
+
+Pending: full-information mode with explicit labeling, a validated generated-
+puzzle/graded-position authoring pipeline, richer decision markers, asynchronous
+deep analysis, concurrent account conflict resolution and incremental gameplay
+execution. Final integrated UI/browser results belong to the learning PR; core
+model tests alone do not establish all these workflows.

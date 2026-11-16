@@ -1,0 +1,553 @@
+
+/* Learning layouts approved by Michael on 2026-11-16; see docs/design/proposals. */
+.learning-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ink);
+  background: var(--bg);
+}
+.learning-shell button,.learning-shell a,.learning-shell summary {
+  -webkit-tap-highlight-color: transparent;
+}
+.learning-shell button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  cursor: pointer;
+}
+.learning-shell button:focus-visible,.learning-shell a:focus-visible,.learning-shell summary:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+.learning-shell button:disabled {
+  color: var(--dim);
+  cursor: default;
+}
+.learning-shell header {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 12px;
+  flex: none;
+}
+.learning-shell .wordmark {
+  font-family: Fraunces,serif;
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: .045em;
+  text-align: center;
+  flex: 1;
+}
+.learning-shell header button {
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  font-size: 24px;
+}
+.learning-shell .help {
+  font-size: 17px!important;
+}
+.learning-shell .content {
+  padding: 14px 20px 8px;
+  flex: 1;
+}
+.learning-shell .eyebrow,.learning-shell .card-label {
+  font-size: 11px;
+  letter-spacing: .07em;
+  color: var(--dim);
+  font-weight: 600;
+}
+.learning-shell .eyebrow {
+  margin-bottom: 8px;
+}
+.learning-shell h1 {
+  font-size: 23px;
+  line-height: 1.2;
+  font-weight: 650;
+  margin: 0 0 7px;
+}
+.learning-shell h2 {
+  font: 600 19px/1.25 Fraunces,serif;
+  margin: 0 0 8px;
+}
+.learning-shell .intro {
+  margin: 0 0 17px;
+  color: var(--dim);
+}
+.learning-shell p {
+  margin: 0 0 10px;
+}
+.learning-shell .card {
+  background: var(--panel);
+  border-radius: 20px;
+  padding: 16px;
+}
+.learning-shell .hand-card {
+  margin-bottom: 16px;
+}
+.learning-shell .hand {
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  gap: 6px 3px;
+  margin: 12px 0 10px;
+  justify-content: center;
+  max-width: 310px;
+}
+.learning-shell .tile {
+  display: inline-block;
+  width: 36px;
+  height: 51px;
+  border-radius: 6px;
+  box-shadow: 0 3px 0 #d2c8ad,0 4px 6px #0005;
+  background: var(--face);
+  flex: none;
+}
+.learning-shell .tile svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.learning-shell .hand-caption {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--dim);
+  margin-top: 8px;
+}
+.learning-shell .answers {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.learning-shell .answer {
+  min-width: 91px;
+  min-height: 101px;
+  border: 2px solid var(--ink);
+  background: var(--panel-hi);
+  border-radius: 14px;
+  padding: 9px 18px;
+  display: flex;
+  gap: 9px;
+  flex-direction: column;
+  align-items: center;
+}
+.learning-shell .answer[aria-pressed=false] {
+  border-color: var(--line);
+  background: var(--panel);
+}
+.learning-shell .answer span:not(.tile) {
+  font-size: 13px;
+}
+.learning-shell .answer b {
+  padding-left: 7px;
+  font-weight: 700;
+}
+.learning-shell .feedback p {
+  font-size: 13px;
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+.learning-shell .dim {
+  color: var(--dim);
+}
+.learning-shell .feedback .dim {
+  font-size: 12px;
+  margin: 0;
+}
+.learning-shell details {
+  margin: 7px 0 11px;
+}
+.learning-shell summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 13px;
+}
+.learning-shell summary::after {
+  content: '+';
+  margin-left: auto;
+  font-size: 18px;
+}
+.learning-shell details[open] summary::after {
+  content: '−';
+}
+.learning-shell details p {
+  color: var(--dim);
+  font-size: 13px;
+}
+.learning-shell .primary {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 24px;
+  background: var(--panel-hi);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 15px;
+}
+.learning-shell .source {
+  text-align: center;
+  color: var(--dim);
+  font-size: 11px;
+  margin: 11px 0 4px;
+}
+.learning-shell nav {
+  display: flex;
+  border-top: 1px solid var(--line);
+  padding: 6px 20px 10px;
+  gap: 8px;
+  flex: none;
+}
+.learning-shell nav a {
+  min-height: 44px;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--dim);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 15px;
+}
+.learning-shell nav a[aria-current] {
+  color: var(--ink);
+  background: var(--panel-hi);
+}
+.learning-shell .title-row {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.learning-shell .pill {
+  font-size: 11px;
+  white-space: nowrap;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  padding: 5px 9px;
+}
+.learning-shell .perspective {
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 11px;
+  background: var(--panel-hi);
+  border-radius: 10px;
+  margin: 8px 0 7px;
+}
+.learning-shell .perspective+.intro {
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+.learning-shell .compare {
+  padding: 12px 12px 6px;
+  margin-bottom: 15px;
+}
+.learning-shell .compare-head,.learning-shell .option {
+  display: grid;
+  grid-template-columns: 1.4fr .7fr 1fr;
+  align-items: center;
+  gap: 5px;
+}
+.learning-shell .compare-head {
+  font-size: 11px;
+  color: var(--dim);
+  padding-bottom: 7px;
+}
+.learning-shell .compare-head span:not(:first-child),.learning-shell .option>b {
+  text-align: center;
+}
+.learning-shell .option {
+  padding: 10px 6px;
+  border-top: 1px solid var(--line);
+  font-size: 19px;
+}
+.learning-shell .option-name {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.learning-shell .option-name>.tile {
+  width: 27px;
+  height: 38px;
+}
+.learning-shell .option-name>span:not(.tile) {
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.35;
+}
+.learning-shell .option-name b {
+  font-size: 13px;
+  color: var(--ink);
+  font-weight: 600;
+}
+.learning-shell .option.selected {
+  background: var(--panel-hi);
+  border-radius: 11px;
+  margin: 1px -6px 0;
+  padding-left: 12px;
+  padding-right: 12px;
+  border: 0;
+}
+.learning-shell .explanation h2 {
+  font-size: 19px;
+}
+.learning-shell .explanation p {
+  font-size: 13px;
+  line-height: 1.4;
+}
+.learning-shell .explanation p.dim {
+  font-size: 11px;
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+.learning-shell .stepper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+.learning-shell .stepper button {
+  min-height: 44px;
+  min-width: 95px;
+  background: transparent;
+  font-size: 12px;
+}
+.learning-shell .content:has(.compare)>.source {
+  margin-top: 0;
+}
+@media(max-width:370px) {
+  .learning-shell .content {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .learning-shell .card {
+    padding: 14px;
+  }
+  .learning-shell .hand {
+    gap: 5px 2px;
+  }
+  .learning-shell .tile {
+    width: 34px;
+    height: 48px;
+  }
+  .learning-shell .wordmark {
+    font-size: 16px;
+  }
+  .learning-shell .intro {
+    margin-bottom: 13px;
+  }
+  .learning-shell .hand-card {
+    margin-bottom: 13px;
+  }
+  .learning-shell .answer {
+    min-height: 98px;
+  }
+  .learning-shell .feedback p {
+    font-size: 12px;
+  }
+  .learning-shell .feedback .dim {
+    font-size: 11px;
+  }
+}
+/* Proposal shell keeps navigation available while larger text can scroll. */
+.learning-shell .content {
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.learning-shell .content:has(.compare) {
+  padding-top: 10px;
+}
+.learning-shell .content:has(.compare) .title-row {
+  align-items: center;
+}
+.learning-shell .content:has(.compare) h1 {
+  font-size: 21px;
+  white-space: nowrap;
+}
+.learning-shell .decision-nav {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-size: 11px;
+}
+.learning-shell .decision-nav button {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background: transparent;
+  font-size: 22px;
+}
+.learning-shell .decision-nav span {
+  white-space: nowrap;
+}
+.learning-shell .content:has(.compare) .perspective {
+  margin: 3px 0 12px;
+}
+.learning-shell .content:has(.compare) .hand-card {
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.learning-shell .content:has(.compare) .hand {
+  margin: 10px auto;
+  gap: 5px 3px;
+}
+.learning-shell .content:has(.compare) .hand .tile {
+  width: 28px;
+  height: 40px;
+}
+.learning-shell .content:has(.compare) .hand-caption {
+  margin-top: 5px;
+}
+.learning-shell .content:has(.compare) .option {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+.learning-shell .content:has(.compare) .explanation p.dim {
+  margin-bottom: 12px;
+}
+.learning-shell .content:has(.compare) .source {
+  margin-top: 10px;
+}
+.learning-shell .kj {
+  font-family: "Noto Sans CJK SC","Noto Sans CJK JP",sans-serif;
+}
+.learning-shell .learning-header {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  flex: 0 0 48px;
+  padding: 0 12px;
+}
+.learning-shell .wordmark {
+  margin: 0;
+  padding: 0;
+  font-size: 17px;
+}
+.learning-shell .learning-content, .learning-shell .content {
+  padding: 14px 20px 8px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.learning-shell .learning-nav {
+  display: flex;
+  flex: none;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  padding: 6px 20px 10px;
+}
+.learning-shell .learning-nav button, .learning-shell .learning-nav a {
+  min-height: 44px;
+  flex: 1;
+  color: var(--dim);
+  font-size: 13px;
+  font-weight: 600;
+  background: transparent;
+  border-radius: 15px;
+  text-decoration: none;
+}
+.learning-shell .learning-nav [aria-current] {
+  color: var(--ink);
+  background: var(--panel-hi);
+}
+.learning-shell button, .learning-shell select, .learning-shell input {
+  font: inherit;
+  color: var(--ink);
+  min-height: 44px;
+}
+.learning-shell select, .learning-shell input {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px;
+  max-width: 100%;
+}
+.learning-shell button:focus-visible, .learning-shell [tabindex]:focus-visible, .learning-shell select:focus-visible, .learning-shell input:focus-visible, .learning-shell summary:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.learning-shell .practice-selectors {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.learning-shell .practice-selectors label {
+  min-width: 0;
+  font-size: 11px;
+  color: var(--dim);
+  display: grid;
+  gap: 4px;
+}
+.learning-shell .practice-selectors select {
+  width: 100%;
+  font-size: 12px;
+}
+.learning-shell .answers {
+  flex-wrap: wrap;
+}
+.learning-shell .answer {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px;
+}
+.learning-shell .answer .tile {
+  pointer-events: none;
+}
+.learning-shell .tile {
+  font-size: 14px;
+}
+.learning-shell .saved-reviews {
+  margin-top: 16px;
+}
+.learning-shell .saved-reviews button {
+  margin-bottom: 8px;
+}
+.learning-shell .option {
+  width: 100%;
+  color: var(--ink);
+  background: transparent;
+  text-align: left;
+}
+.learning-shell .option.selected {
+  background: var(--panel-hi);
+}
+.learning-shell .hand .tile {
+  transform: none;
+}
+.learning-shell.review-shell .hand .tile {
+  width: 28px;
+  height: 40px;
+}
+.learning-shell .comparison-select {
+  width: 100%;
+  margin-bottom: 12px;
+}
+@media(max-width:370px) {
+  .learning-shell .learning-content, .learning-shell .content {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+
+.learning-shell.review-shell h1 { font-size:21px; }
+.learning-shell.review-shell .title-row { flex-wrap:wrap; }
+.learning-shell .review-tiles { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
+.learning-shell .review-player { padding:10px 0; border-top:1px solid var(--line); }
+.learning-shell .review-scoreline { font-size:13px; }
+.learning-shell .review-discard, .learning-shell .review-meld { font-size:11px; color:var(--dim); }
+.learning-shell .review-hand-label, .learning-shell .review-alternative-label { display:flex; align-items:center; gap:8px; font-size:12px; margin-bottom:8px; }
+.learning-shell .review-hand-select, .learning-shell .comparison-select { min-width:0; flex:1; }

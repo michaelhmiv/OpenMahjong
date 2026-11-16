@@ -60,7 +60,7 @@ won cannot exceed hands played. Scores must be safe integers, and
 `finishedAt` must use an ISO date/time with timezone. Invalid game IDs
 are rejected as 400 before querying a UUID column.
 
-Input limits: settings request 64 KiB, one game request 2 MiB, import
+Input limits: settings request 2 MiB (bounded learning evidence plus lesson snapshots), one game request 2 MiB, import
 request 16 MiB and at most 200 games. Each imported log is also bounded
 to 2 MiB. JSON nesting is limited to 64 levels and one million values
 per settings object/log. Requests exceeding byte bounds return 413;

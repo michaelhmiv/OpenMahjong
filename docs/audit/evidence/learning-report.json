@@ -1,0 +1,479 @@
+{
+  "base": "http://127.0.0.1:4175/",
+  "observedAt": "2026-11-16T21:32:23.935Z",
+  "scope": {
+    "guestApiFixture": true,
+    "tlsBypass": false,
+    "fullGame": true,
+    "learning": true,
+    "browser": "Chromium headless",
+    "browserVersion": "156.0.8078.79"
+  },
+  "checks": [
+    {
+      "name": "viewport 360x800",
+      "status": "passed",
+      "evidence": {
+        "homeControls": 10,
+        "drillControls": 15,
+        "tableControls": 18
+      }
+    },
+    {
+      "name": "viewport 390x844",
+      "status": "passed",
+      "evidence": {
+        "homeControls": 10,
+        "drillControls": 15,
+        "tableControls": 18
+      }
+    },
+    {
+      "name": "viewport 412x915",
+      "status": "passed",
+      "evidence": {
+        "homeControls": 10,
+        "drillControls": 15,
+        "tableControls": 18
+      }
+    },
+    {
+      "name": "viewport 768x1024",
+      "status": "passed",
+      "evidence": {
+        "homeControls": 10,
+        "drillControls": 15,
+        "tableControls": 18
+      }
+    },
+    {
+      "name": "viewport 1024x768",
+      "status": "passed",
+      "evidence": {
+        "homeControls": 10,
+        "drillControls": 15,
+        "tableControls": 18
+      }
+    },
+    {
+      "name": "viewport 1440x900",
+      "status": "passed",
+      "evidence": {
+        "homeControls": 10,
+        "drillControls": 15,
+        "tableControls": 18
+      }
+    },
+    {
+      "name": "home accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 1
+      }
+    },
+    {
+      "name": "Rules accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "Rules content scrolls by keyboard",
+      "status": "passed",
+      "evidence": {
+        "height": 800,
+        "contentHeight": 1365,
+        "scrollTop": 25
+      }
+    },
+    {
+      "name": "About accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "Privacy accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "Privacy content scrolls by keyboard",
+      "status": "passed",
+      "evidence": {
+        "height": 800,
+        "contentHeight": 922,
+        "scrollTop": 4
+      }
+    },
+    {
+      "name": "in-progress Learn accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "wrong-answer feedback and lesson resume",
+      "status": "passed",
+      "evidence": {
+        "wrongAnswerStayedAtStep": 3,
+        "restoredStep": 4
+      }
+    },
+    {
+      "name": "tile drill works by keyboard",
+      "status": "passed",
+      "evidence": {
+        "tag": "SPAN",
+        "role": "button",
+        "tabIndex": 0,
+        "name": "2p"
+      }
+    },
+    {
+      "name": "settings accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "table accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "hand selection and discard work by keyboard",
+      "status": "passed",
+      "evidence": {
+        "selectedTile": "hand-25",
+        "recordedLegalAction": true
+      }
+    },
+    {
+      "name": "hand focus and pause keep keyboard focus inside",
+      "status": "passed",
+      "evidence": null
+    },
+    {
+      "name": "game resume survives reload",
+      "status": "passed",
+      "evidence": {
+        "restoredTiles": 14
+      }
+    },
+    {
+      "name": "browser back returns from Learn to home",
+      "status": "passed",
+      "evidence": null
+    },
+    {
+      "name": "in-app reduced motion suppresses hand-sheet animation without OS reduction",
+      "status": "passed",
+      "evidence": {
+        "animationName": "none",
+        "animationDuration": "0s",
+        "rootClass": "reduced-motion"
+      }
+    },
+    {
+      "name": "Practice viewport 360x800",
+      "status": "passed",
+      "evidence": {
+        "exerciseId": "wait-ryanmen",
+        "physicalControls": 10
+      }
+    },
+    {
+      "name": "Practice viewport 390x844",
+      "status": "passed",
+      "evidence": {
+        "exerciseId": "wait-ryanmen",
+        "physicalControls": 10
+      }
+    },
+    {
+      "name": "Practice viewport 412x915",
+      "status": "passed",
+      "evidence": {
+        "exerciseId": "wait-ryanmen",
+        "physicalControls": 10
+      }
+    },
+    {
+      "name": "Practice viewport 768x1024",
+      "status": "passed",
+      "evidence": {
+        "exerciseId": "wait-ryanmen",
+        "physicalControls": 10
+      }
+    },
+    {
+      "name": "Practice viewport 1024x768",
+      "status": "passed",
+      "evidence": {
+        "exerciseId": "wait-ryanmen",
+        "physicalControls": 10
+      }
+    },
+    {
+      "name": "Practice viewport 1440x900",
+      "status": "passed",
+      "evidence": {
+        "exerciseId": "wait-ryanmen",
+        "physicalControls": 10
+      }
+    },
+    {
+      "name": "Practice rejects a partial wait answer and resumes after reload",
+      "status": "passed",
+      "evidence": {
+        "wrongStayed": true,
+        "selectedAnswerRestored": true,
+        "attempts": [
+          {
+            "schemaVersion": 1,
+            "taxonomyVersion": 1,
+            "id": "fe4bbe45-0e76-4ec5-abe2-81775fd7cf04",
+            "exerciseId": "wait-ryanmen",
+            "exerciseVersion": 1,
+            "ruleset": {
+              "id": "openmahjong-riichi",
+              "version": 1
+            },
+            "skill": "wait-reading",
+            "at": 1794864776807,
+            "correct": false,
+            "assisted": false,
+            "attemptNumber": 1,
+            "responseMs": 73
+          },
+          {
+            "schemaVersion": 1,
+            "taxonomyVersion": 1,
+            "id": "ea5419d8-91ea-4f0f-b928-47a8a4665980",
+            "exerciseId": "wait-ryanmen",
+            "exerciseVersion": 1,
+            "ruleset": {
+              "id": "openmahjong-riichi",
+              "version": 1
+            },
+            "skill": "wait-reading",
+            "at": 1794864777624,
+            "correct": true,
+            "assisted": true,
+            "attemptNumber": 2,
+            "responseMs": 92
+          }
+        ]
+      }
+    },
+    {
+      "name": "Practice separates independent success from explanation-assisted responses",
+      "status": "passed",
+      "evidence": {
+        "independent": {
+          "schemaVersion": 1,
+          "taxonomyVersion": 1,
+          "id": "8ec2e121-ab7b-4768-88d5-c2ba452cf92e",
+          "exerciseId": "shanten-single-wait",
+          "exerciseVersion": 1,
+          "ruleset": {
+            "id": "openmahjong-riichi",
+            "version": 1
+          },
+          "skill": "shanten",
+          "at": 1794864777739,
+          "correct": true,
+          "assisted": false,
+          "attemptNumber": 1,
+          "responseMs": 62
+        },
+        "assisted": {
+          "schemaVersion": 1,
+          "taxonomyVersion": 1,
+          "id": "58ef7f9e-8b21-4b65-80ea-84b8bf3177bb",
+          "exerciseId": "recognize-terminals",
+          "exerciseVersion": 1,
+          "ruleset": {
+            "id": "openmahjong-riichi",
+            "version": 1
+          },
+          "skill": "tile-recognition",
+          "at": 1794864778088,
+          "correct": true,
+          "assisted": true,
+          "attemptNumber": 1,
+          "responseMs": 313
+        },
+        "completedExerciseRestored": true
+      }
+    },
+    {
+      "name": "first-visit offline reload with cold HTTP cache",
+      "status": "passed",
+      "evidence": [
+        {
+          "key": "openmahjong-3050126e62a9283b",
+          "urls": [
+            "http://127.0.0.1:4175/",
+            "http://127.0.0.1:4175/assets/index-BtdRG-cn.css",
+            "http://127.0.0.1:4175/assets/index-GGJ3Sd5y.js",
+            "http://127.0.0.1:4175/fonts/figtree-var.woff2",
+            "http://127.0.0.1:4175/fonts/fraunces-var.woff2",
+            "http://127.0.0.1:4175/icon.svg",
+            "http://127.0.0.1:4175/index.html",
+            "http://127.0.0.1:4175/manifest.webmanifest",
+            "http://127.0.0.1:4175/privacy/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "hand-end breakdown accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "completed results accessibility",
+      "status": "passed",
+      "evidence": {
+        "violations": [],
+        "incomplete": 0
+      }
+    },
+    {
+      "name": "complete guest East game and reopen history",
+      "status": "passed",
+      "evidence": {
+        "actions": 93,
+        "prompts": {
+          "Pass": 14,
+          "Next hand": 4,
+          "Final results": 1
+        },
+        "seed": "browser-smoke-east-v2",
+        "replayEnvelope": {
+          "v": 2,
+          "engineVersion": 2,
+          "aiVersion": 2,
+          "ruleset": {
+            "id": "openmahjong-riichi",
+            "version": 1
+          }
+        },
+        "introLessonCompletedInSameSession": true,
+        "guidedHintObserved": true,
+        "historyRecords": 1,
+        "statisticsGames": 1,
+        "result": "completed guided match, reopened identical standings, and counted one game in History/Stats"
+      }
+    },
+    {
+      "name": "completed game Review preserves player perspective and bridges to relevant Practice",
+      "status": "passed",
+      "evidence": {
+        "originalHandMatched": true,
+        "publicScores": [
+          "East \u00b7 You \u00b7 25,000 points",
+          "South \u00b7 25,000 points",
+          "West \u00b7 25,000 points",
+          "North \u00b7 25,000 points"
+        ],
+        "chosen": {
+          "tile": "East",
+          "shanten": 2,
+          "unseenCopies": 22
+        },
+        "alternative": {
+          "tile": "8m",
+          "shanten": 2,
+          "unseenCopies": 22
+        },
+        "hands": 5,
+        "recommendedExercise": "ukeire-visible",
+        "completedRelatedPractice": true,
+        "savedDecisionRestoredAfterReload": true,
+        "returnedToNewGame": true
+      }
+    },
+    {
+      "name": "Review viewport 360x800",
+      "status": "passed",
+      "evidence": {
+        "recordId": "adabf135-b661-4cb7-ac30-b3d665a45a46",
+        "physicalControls": 11
+      }
+    },
+    {
+      "name": "Review viewport 390x844",
+      "status": "passed",
+      "evidence": {
+        "recordId": "adabf135-b661-4cb7-ac30-b3d665a45a46",
+        "physicalControls": 11
+      }
+    },
+    {
+      "name": "Review viewport 412x915",
+      "status": "passed",
+      "evidence": {
+        "recordId": "adabf135-b661-4cb7-ac30-b3d665a45a46",
+        "physicalControls": 11
+      }
+    },
+    {
+      "name": "Review viewport 768x1024",
+      "status": "passed",
+      "evidence": {
+        "recordId": "adabf135-b661-4cb7-ac30-b3d665a45a46",
+        "physicalControls": 11
+      }
+    },
+    {
+      "name": "Review viewport 1024x768",
+      "status": "passed",
+      "evidence": {
+        "recordId": "adabf135-b661-4cb7-ac30-b3d665a45a46",
+        "physicalControls": 11
+      }
+    },
+    {
+      "name": "Review viewport 1440x900",
+      "status": "passed",
+      "evidence": {
+        "recordId": "adabf135-b661-4cb7-ac30-b3d665a45a46",
+        "physicalControls": 11
+      }
+    },
+    {
+      "name": "no uncaught browser exceptions",
+      "status": "passed",
+      "evidence": null
+    }
+  ],
+  "diagnostics": [
+    {
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED",
+      "network": "offline"
+    }
+  ],
+  "full_evidence": "GitHub Actions browser-evidence artifact; generated by scripts/browser-smoke.mjs"
+}

@@ -43,7 +43,9 @@ export interface AppDeps {
 
 const MAX_GAME_BYTES = 2 * 1024 * 1024;
 const MAX_IMPORT_BYTES = 16 * 1024 * 1024;
-const MAX_SETTINGS_BYTES = 64 * 1024;
+// Bounded 2,000-attempt learning evidence plus lesson snapshots and
+// saved decision references must synchronize without silent truncation.
+const MAX_SETTINGS_BYTES = 2 * 1024 * 1024;
 /** Bound unauthenticated, process-local state even under a sign-in flood. */
 const MAX_PENDING_STATES = 1000;
 const GAME_LIST_LIMIT = 200;
@@ -276,6 +278,7 @@ export function createApp(deps: AppDeps): (
       }
       sendJson(res, 200, {
         user: {
+          id: authed.user.id,
           name: authed.user.name,
           avatarUrl: authed.user.avatarUrl,
         },

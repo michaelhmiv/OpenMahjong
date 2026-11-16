@@ -463,24 +463,26 @@ legacy-only retention, stable import IDs, and repeated reads/imports.
 
 **Proposed PR:** Browser persistence, account contract, and reliability.
 
-## Important capability gaps, not regressions
+## Baseline capability gaps and subsequent design approval
 
-The History row currently reconstructs a completed game directly to final
-standings (`packages/web/src/app.ts:1042`–`1059` on the baseline). It does
-not provide decision-level navigation, player-perspective alternatives,
-key decisions, or save-to-practice. There is no dedicated Practice screen
-or personal learning dashboard. The beginner → guided game → analysis →
-targeted practice journey in the master brief therefore cannot yet be
-passed as a whole. See the architecture/education audits and roadmap;
-these capabilities must not be described as delivered by fixing the
-existing History rows.
+On the audited baseline, a History row reconstructed a completed game to final
+standings (`packages/web/src/app.ts:1042`–`1059` on the baseline). It did
+not establish decision-level review merely by replaying that result.
+There was no dedicated Practice surface, alternative comparison, or
+saved-position bridge; the intended learning loop could not be passed
+as a whole. Those were capability gaps rather than regressions.
 
-`docs/design-rules.md` §§6 and 10 require an approved rendering for new
-screens and visible design changes. The master brief authorizes building
-these features but also preserves established design decisions. A
-concrete rendering review is the next product gate for the Practice,
-decision-review, and learning-dashboard surfaces; nonvisual models,
-correctness fixes, and browser testing can proceed independently.
+During implementation, the user explicitly approved both concrete
+Practice/Review proposals: “Approve both designs.” The design authority
+now records the approved native learning layout in
+[`docs/design-rules.md`](../design-rules.md) §11. The subsequent interface
+adds real curated Practice, original-player decision/hand navigation,
+qualified alternative comparisons, and a persistent Review-to-Practice
+bridge. Its browser evidence is separate from the repaired foundation
+below. The approval does not authorize describing an advanced learning
+dashboard, calibrated mistake grading, generated game-derived graded
+puzzles, multiplayer, or additional variants as complete; see the
+implementation register and roadmap for their remaining scope.
 
 ## Checks that remain unverified
 
@@ -604,6 +606,98 @@ was not substituted.
 | UX-010 | About, in-progress Learn, and final signed points pass axe after using existing approved text colors. |
 | UX-011 | A completed fresh match contributes exactly one History row and one Stats game; reopening preserves standings. Historical merge/import cases require the separate persistence unit tests; real account import remains unverified here. |
 
-These checks protect the repaired existing experience. They do not claim
-that the master brief's future decision-review, dedicated Practice,
-personal dashboard, multiplayer, or additional-variant screens exist.
+These foundation checks protect the repaired existing experience before
+the separately approved Practice/Review addition. They alone do not prove
+the later learning loop; that requires its own actual-browser verification.
+
+## Approved Practice/Review implementation verification
+
+After approval and implementation of both new screens, the expanded
+browser suite began at 4:32 p.m. America/New_York on November 16, 2026
+(`2026-11-16T21:32:23.935Z`) against the stable local built client:
+
+```sh
+BROWSER_FULL_GAME=1 BROWSER_NO_SANDBOX=1 node scripts/browser-smoke.mjs \
+  http://127.0.0.1:4175 /workspace/work/evidence/learning-final
+```
+
+**Result: 42/42 checks passed; process exit 0.** The new learning checks
+are enabled by default. `BROWSER_LEARNING=0` is an explicit older-build
+audit option and was not used here. The report records Chromium
+`156.0.8078.79`, the guest API fixture, normal TLS handling, and the
+current replay envelope. This build's JavaScript was
+`assets/index-GGJ3Sd5y.js`; its offline cache was
+`openmahjong-3050126e62a9283b`.
+
+The expanded suite preserves the foundation checks and adds:
+
+| Workflow | Actual browser evidence |
+| --- | --- |
+| Learn → Practice | The guest Learn entry opens the real curated exercise interface. Category/exercise selectors expose implemented content rather than claiming future categories. |
+| Incorrect answer and retry | Selecting only 3m for `wait-ryanmen` stays on the same exercise with corrective feedback and no Next action. Reload restores that selection; adding 6m succeeds as an assisted second attempt. |
+| Independent versus assisted evidence | An unassisted first shanten answer and an explanation-assisted terminal-selection answer are stored separately. Completed state and evidence survive reload; lesson completion is not substituted for practice performance. |
+| One continuous beginner session | The browser completes all TU-1 activities through the UI, returns Home, enables the actual Guided-mode checkbox, resumes the controlled current-v2 seed, and observes a real hint at the first settled human decision. No lesson completion is injected into storage. |
+| Guided game completion | The same session completes a real East match, traverses five hands, produces exactly one History record and one Stats game, and reopens identical standings. The replay explicitly uses engine 2, AI 2, and `openmahjong-riichi@1`. |
+| Player-perspective decision review | The first review hand exactly matches the 14 tile labels captured before the original first action. Public context retains four 25,000-point scores, zero future discards, and one original public dora indicator. It does not substitute the eventual results. |
+| Alternative and hand/decision navigation | All 13 other physical first-turn discards are available; the chosen tile is excluded from the alternative picker. Changing an alternative leaves recorded-action facts unchanged; returning to an alternative reproduces its facts. Previous/next and five-hand navigation work. |
+| Review → relevant Practice | The tile-efficiency action opens the validated `ukeire-visible` exercise, whose 5m response is graded correctly. This is a related curated exercise, not a claim that the original game position became a validated graded puzzle. |
+| Saved reference and return to play | The saved-decision collection remains present after answering. Reload preserves the practice session and reference; Review returns to the saved first position. Play again starts a new game ID without replacing the reviewed record. |
+
+These are automated interaction and persistence checks. They establish
+the software path, not that a human has learned the material or improved
+their skill. The automated player's eventual placement is not used to
+grade the reviewed decision.
+
+### Actual rendering and accessibility
+
+Both Practice and Review were captured and measured at **360×800,
+390×844, 412×915, 768×1024, 1024×768, and 1440×900**. All 12 new-screen
+cases used scale 1. The smallest measured control was exactly 44×44
+physical pixels; the smallest measured UI text was 11px. Both approved
+self-hosted fonts loaded. No horizontal document/content overflow was
+found, and fixed header/navigation controls stayed within the viewport.
+Long answer grids, explanations, and public-table details scroll within
+the content area; off-screen vertical content is not claimed to fit in
+one screenshot. The old scaled table's UX-006 target-size finding remains
+separate from these native learning layouts.
+
+All **22 axe reports contained zero violations** in this run, including
+Practice and Review at all six viewport sizes. This remains an automated
+floor, not a complete WCAG conformance or screen-reader certification.
+The earlier keyboard checks, actual long-region scrolling, reduced-motion
+checks, and cold HTTP-cache offline test also passed in the expanded run.
+No uncaught browser exceptions or online console errors were observed;
+one resource-failure console message during the deliberately offline
+phase is retained in the report.
+
+Independent visual QC compared actual Practice/Review captures with the
+approved renderings. The v6 palette, fonts, tile edge/shadow treatment,
+fixed navigation, and readable 360px decision/hand layout were preserved.
+The final correct-answer capture shows Next exercise fully above the
+fixed navigation, Review displays distinct chosen/alternative tiles, and
+the Guided hint clears the hand and score marker. Actual evidence, not
+the prototype alone, supports these statements.
+
+### Implementation QC corrections
+
+The first working learning build passed 42 interaction checks, but source
+and visual review still identified refinements before this final run:
+
+| Area | Observed cause and correction | Final verification |
+| --- | --- | --- |
+| Alternative truthfulness | Defaulting to the recommendation could display the same tile as both chosen and alternative. A forced one-discard position also has no genuine alternative. `review-ui.ts` now filters the chosen physical tile and renders a single-choice restriction instead of a fake comparison when appropriate. | The first-turn browser picker contains 13 distinct other IDs; forced-riichi behavior has dedicated component tests. The inspected final screenshot shows East versus 5m. |
+| Successful Practice continuation | Focusing feedback alone could leave Next exercise partly below the content fold. `practice-ui.ts:152` scrolls the successful primary action into view. | At all six Practice sizes, the entire Next control lies within the content clip above persistent navigation. |
+| Saved-position discoverability | An externally appended saved-position list could disappear when the exercise replaced its DOM. The Practice render supplement recreates it on every render (`practice-ui.ts:267`, App's `savedReviewSupplement`). | The list exists after a correct answer, and a reload restores the saved position through the real record bridge. |
+
+Raw expanded evidence is under `learning-final/`: `report.json`, 22 axe
+JSON files, 71 suite PNGs, and the synthetic completed current-game record
+used for repeatable Review viewport checks. Earlier `learning-first/`
+and `learning-loop-first/` runs are preserved separately. Selected
+captures can be retained with the PR; the runner regenerates the full
+artifact set for CI inspection.
+
+The delivered loop still has clear limits: real account synchronization
+was not browser-tested; full-information replay, full animated table
+replay at every decision, advanced calling/EV grading, generated
+game-derived graded puzzles, a personal analytics dashboard, and native
+device/screen-reader performance are not established by this run.

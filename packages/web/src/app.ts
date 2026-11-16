@@ -50,6 +50,12 @@ import {
   sumRecords,
 } from "./records.js";
 import { GameRunner } from "./runner.js";
+import { buildDecisionReview, type DecisionReview, type ReviewDecision } from "./review.js";
+import { mountReview, type ReviewUIController } from "./review-ui.js";
+import { createPracticeView } from "./practice-ui.js";
+import { SKILLS, type SkillId } from "./education/curriculum.js";
+import { loadPracticeProgress, savePracticeProgress, parsePracticeProgress, mergePracticeProgress, PRACTICE_STORAGE_KEY, type PracticeProgress } from "./education/practice-progress.js";
+import { loadReviewCollection, saveReviewCollection, parseReviewCollection, mergeReviewCollections, addReviewPosition, REVIEW_COLLECTION_KEY } from "./education/review-collection.js";
 import {
   appendRecord,
   clearGame,
@@ -294,7 +300,9 @@ type ScreenName =
   | "results"
   | "history"
   | "stats"
-  | "learn";
+  | "learn"
+  | "practice"
+  | "review";
 
 /** Google's standard four-color "G" (the approved landing button). */
 const GOOGLE_G_SVG = `<svg viewBox="0 0 48 48"><path fill="#FBBC05" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#EA4335" d="M6.3 14.7l6.6-4.8C14.7 7.1 19 4 24 4c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#34A853" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#4285F4" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.2 5.7l6.2 5.2C36.9 39.2 48 32 48 24c0-1.3-.1-2.6-.4-3.9z"/></svg>`;
@@ -347,6 +355,18 @@ export class App {
   private frame: FrameState = null;
   private frameReturnFocus: string | undefined;
   private currentScreen: ScreenName = "home";
+  private practice: PracticeProgress = loadPracticeProgress();
+  private practiceInitialSkill: SkillId | undefined;
+  private reviewData: DecisionReview | null = null;
+  private reviewRecordId: string | null = null;
+  private reviewResumeDecision: number | undefined;
+  private reviewUI: ReviewUIController | null = null;
+  private reviewCollection = loadReviewCollection();
+  private accountLoaded = false;
+  private accountSyncRunning = false;
+  private accountSyncWanted = false;
+  private learningAccountId: string | null = null;
+  private readonly pendingAccountSession = String(Date.now()) + Math.random().toString(36).slice(2);
   private frameChangedTiles = new Set<number>();
   private continueWaiter: (() => void) | null = null;
   private historyRecorded = false;
@@ -393,6 +413,7 @@ export class App {
         this.showScreen(target, false);
       }
     });
+    window.addEventListener("online", () => { void this.bootAuth(); });
     // Account probe runs after first paint and never blocks play:
     // signed-out (or unreachable API) is the default landing state.
     void this.bootAuth();
@@ -419,7 +440,7 @@ export class App {
     this.root.append(sprite);
     this.stage = h("div", { id: "stage" });
     this.root.append(this.stage);
-    for (const name of ["home", "table", "rules", "settings", "about", "privacy", "results", "history", "stats", "learn"] as ScreenName[]) {
+    for (const name of ["home", "table", "rules", "settings", "about", "privacy", "results", "history", "stats", "learn", "practice", "review"] as ScreenName[]) {
       const s = h("section", { class: "screen", id: `screen-${name}` });
       this.screens.set(name, s);
       this.stage.append(s);
@@ -430,6 +451,16 @@ export class App {
   }
 
   private fit(): void {
+    if (this.currentScreen === "practice" || this.currentScreen === "review") {
+      // Approved learning layouts use physical pixels, so a 44px
+      // control remains 44px even on a 360px-wide phone.
+      this.scale = 1;
+      this.stage.style.width = `${Math.min(window.innerWidth, 430)}px`;
+      this.stage.style.height = `${window.innerHeight}px`;
+      this.stage.style.transform = "none";
+      return;
+    }
+    this.stage.style.width = "390px";
     // Width-locked scaling with a fluid stage height (brief section 8:
     // responsive scale-up). The 390x844 composition is the floor case:
     // at exactly 390x844 nothing changes. Taller screens get a taller
@@ -457,6 +488,7 @@ export class App {
   private showScreen(name: ScreenName, pushHistory = true): void {
     const previous = this.currentScreen;
     this.currentScreen = name;
+    this.fit();
     if (pushHistory) {
       const state = { openmahjongScreen: name };
       if (window.history.state?.openmahjongScreen === undefined) window.history.replaceState(state, "");
@@ -468,6 +500,8 @@ export class App {
     if (name === "history") void this.renderHistory();
     if (name === "stats") void this.renderStats();
     if (name === "learn") this.renderLearn();
+    if (name === "practice") this.renderPractice();
+    if (name === "review") this.renderReview();
     if (previous !== name) this.screens.get(name)?.querySelector<HTMLElement>("button, input, [tabindex='0']")?.focus();
   }
 
@@ -733,6 +767,14 @@ export class App {
     if (!me.user) return; // signed out or API down: guest landing stands
     this.user = me.user;
     this.csrfToken = me.csrfToken;
+    this.accountLoaded = false;
+    const accountId = me.user.id ?? null;
+    if (this.learningAccountId !== accountId) {
+      this.learningAccountId = accountId;
+      this.tutorial = mergeProgress(loadTutorialProgress(), parseProgress(this.readLearningCache(TUTORIAL_SETTINGS_KEY)));
+      this.practice = mergePracticeProgress(loadPracticeProgress(), parsePracticeProgress(this.readLearningCache(PRACTICE_STORAGE_KEY)));
+      this.reviewCollection = mergeReviewCollections(loadReviewCollection(), parseReviewCollection(this.readLearningCache(REVIEW_COLLECTION_KEY)));
+    }
     // Settings sync (brief A4): on sign-in the server's saved settings
     // win over this device's — one account, one set of preferences.
     // After this first sync, every local change is pushed back up
@@ -755,11 +797,13 @@ export class App {
       );
       const merged = mergeProgress(this.tutorial, serverProgress);
       this.tutorial = merged;
-      saveTutorialProgress(merged);
-      void putSettings(
-        { ...this.settings, [TUTORIAL_SETTINGS_KEY]: merged } as Settings,
-        this.csrfToken,
-      );
+      this.saveLearningCache(TUTORIAL_SETTINGS_KEY, merged);
+      this.practice = mergePracticeProgress(this.practice, parsePracticeProgress((serverSettings as Record<string, unknown>)[PRACTICE_STORAGE_KEY]));
+      this.saveLearningCache(PRACTICE_STORAGE_KEY, this.practice);
+      this.reviewCollection = mergeReviewCollections(this.reviewCollection, parseReviewCollection((serverSettings as Record<string, unknown>)[REVIEW_COLLECTION_KEY]));
+      this.saveLearningCache(REVIEW_COLLECTION_KEY, this.reviewCollection);
+      this.accountLoaded = true;
+      this.queueAccountSettings();
     }
     this.statsSums = stats;
     this.serverGameCount = games ? games.length : null;
@@ -774,24 +818,55 @@ export class App {
   private persistSettings(): void {
     saveSettings(this.settings);
     this.applyTheme();
-    if (this.user) {
-      void putSettings(
-        { ...this.settings, [TUTORIAL_SETTINGS_KEY]: this.tutorial } as Settings,
-        this.csrfToken,
-      );
-    }
+    this.queueAccountSettings();
   }
 
   /** Save tutorial progress locally and (when signed in) in the
    *  account settings blob. */
   private persistTutorial(): void {
-    saveTutorialProgress(this.tutorial);
-    if (this.user) {
-      void putSettings(
-        { ...this.settings, [TUTORIAL_SETTINGS_KEY]: this.tutorial } as Settings,
-        this.csrfToken,
-      );
+    this.saveLearningCache(TUTORIAL_SETTINGS_KEY, this.tutorial);
+    this.queueAccountSettings();
+  }
+
+  private learningCacheKey(key: string): string {
+    if (this.learningAccountId) return `${key}.account.${encodeURIComponent(this.learningAccountId)}`;
+    // Older APIs did not return an account ID. Keep their private
+    // in-memory session separate until the new backend is available.
+    return this.user ? `${key}.account.pending.${this.pendingAccountSession}` : key;
+  }
+
+  private readLearningCache(key: string): unknown {
+    try { const raw = localStorage.getItem(this.learningCacheKey(key)); return raw && raw.length <= 2 * 1024 * 1024 ? JSON.parse(raw) : null; }
+    catch { return null; }
+  }
+
+  private saveLearningCache(key: string, value: unknown): void {
+    if (this.user && !this.learningAccountId) return;
+    if (!this.learningAccountId) {
+      if (key === TUTORIAL_SETTINGS_KEY) saveTutorialProgress(value as TutorialProgress);
+      else if (key === PRACTICE_STORAGE_KEY) savePracticeProgress(value as PracticeProgress);
+      else if (key === REVIEW_COLLECTION_KEY) saveReviewCollection(value as typeof this.reviewCollection);
+      return;
     }
+    try { localStorage.setItem(this.learningCacheKey(key), JSON.stringify(value)); } catch { /* Keep in memory. */ }
+  }
+
+  /** Serialize this client's writes; keep local evidence on failure and
+   * merge cloud evidence on the next boot/online event before retrying. */
+  private queueAccountSettings(): void {
+    this.accountSyncWanted = true;
+    if (this.accountSyncRunning || !this.user || !this.accountLoaded) return;
+    this.accountSyncRunning = true;
+    void (async () => {
+      try {
+        while (this.accountSyncWanted && this.user && this.accountLoaded) {
+          this.accountSyncWanted = false;
+          const saved = { ...this.settings, [TUTORIAL_SETTINGS_KEY]: this.tutorial,
+            [PRACTICE_STORAGE_KEY]: this.practice, [REVIEW_COLLECTION_KEY]: this.reviewCollection };
+          if (!(await putSettings(saved, this.csrfToken))) { this.accountSyncWanted = true; break; }
+        }
+      } finally { this.accountSyncRunning = false; }
+    })();
   }
 
   /**
@@ -852,6 +927,17 @@ export class App {
   }
 
   private clearAccountState(): void {
+    this.accountLoaded = false;
+    this.learningAccountId = null;
+    this.tutorial = loadTutorialProgress();
+    this.practice = loadPracticeProgress();
+    this.reviewCollection = loadReviewCollection();
+    this.reviewData = null;
+    this.reviewRecordId = null;
+    this.reviewUI?.destroy();
+    this.reviewUI = null;
+    this.screens.get("review")?.replaceChildren();
+    this.screens.get("practice")?.replaceChildren();
     this.user = null;
     this.csrfToken = null;
     this.statsSums = null;
@@ -869,6 +955,11 @@ export class App {
 
   private async deleteAccountFlow(): Promise<void> {
     if (!(await deleteAccount(this.csrfToken))) return;
+    if (this.learningAccountId) {
+      for (const key of [TUTORIAL_SETTINGS_KEY, PRACTICE_STORAGE_KEY, REVIEW_COLLECTION_KEY, "openmahjong.practice-session.v1"]) {
+        try { localStorage.removeItem(this.learningCacheKey(key)); } catch { /* Storage can be blocked. */ }
+      }
+    }
     this.clearAccountState();
     this.renderHome();
     if (this.screens.get("settings")!.classList.contains("active")) this.renderSettings();
@@ -1133,7 +1224,7 @@ export class App {
     if (!record.log) return;
     let replay: GameRunner;
     try {
-      replay = GameRunner.restore(record.log, new AiDriver());
+      replay = GameRunner.restore({ ...record.log, id: record.id }, new AiDriver());
       if (!replay.result) return;
     } catch {
       // Keep the stored summary and the current game intact when a
@@ -2140,12 +2231,100 @@ export class App {
 
   // -- tutorial (slice-2 brief §9) ------------------------------------------
 
+  private learningTile(tile: Tile): HTMLElement {
+    return tileEl(tile, "", { flip: false }).firstElementChild as HTMLElement;
+  }
+
+  private renderPractice(): void {
+    const screen = this.screens.get("practice")!;
+    screen.replaceChildren(createPracticeView({
+      progress: this.practice,
+      persistLocally: false,
+      sessionKey: this.learningCacheKey("openmahjong.practice-session.v1"),
+      ...(this.practiceInitialSkill ? { initialSkill: this.practiceInitialSkill } : {}),
+      renderTile: (type) => this.learningTile(tileById(type * 4 + 1)),
+      onChangeProgress: (progress) => { this.practice = mergePracticeProgress(this.practice, progress); this.saveLearningCache(PRACTICE_STORAGE_KEY, this.practice); this.queueAccountSettings(); },
+      renderSupplement: () => this.savedReviewSupplement(),
+      onBack: () => this.showScreen("learn"),
+      ...((this.reviewData || this.reviewCollection.items.length) ? { onReview: () => {
+        if (this.reviewData) this.showScreen("review");
+        else void this.openSavedReview(this.reviewCollection.items[0]!.recordId, this.reviewCollection.items[0]!.decisionIndex);
+      } } : {}),
+    }));
+  }
+
+  private savedReviewSupplement(): HTMLElement | null {
+    if (!this.reviewCollection.items.length) return null;
+    const details = h("details", { class: "saved-reviews" });
+    details.append(h("summary", {}, `Saved decisions (${this.reviewCollection.items.length})`));
+    for (const item of this.reviewCollection.items) {
+      const button = h("button", { class: "primary" }, `Return to decision ${item.decisionIndex + 1}`);
+      button.addEventListener("click", () => void this.openSavedReview(item.recordId, item.decisionIndex));
+      details.append(button);
+    }
+    return details;
+  }
+
+  private openReview(): void {
+    if (!this.runner) return;
+    try { this.reviewData = buildDecisionReview(this.runner.serialize()); }
+    catch { return; }
+    this.reviewRecordId = this.runner.id;
+    this.reviewResumeDecision = undefined;
+    this.showScreen("review");
+  }
+
+  private renderReview(): void {
+    this.reviewUI?.destroy();
+    const screen = this.screens.get("review")!;
+    if (!this.reviewData) {
+      this.textScreen("review", "Review", (page) => page.append(h("p", {}, "Finish a game and choose Review game to inspect your decisions.")));
+      return;
+    }
+    this.reviewUI = mountReview(screen, { review: this.reviewData,
+      renderTile: (tile) => this.learningTile(tile),
+      onBack: () => this.showScreen(this.runner?.result ? "results" : "history"),
+      onPractice: (position, skills) => this.practiceFromReview(position, skills),
+    });
+    const resume = this.reviewData.positions.findIndex((position) => position.decisionIndex === this.reviewResumeDecision);
+    if (resume >= 0) this.reviewUI.goToDecision(resume);
+  }
+
+  private practiceFromReview(position: ReviewDecision, skills: readonly string[]): void {
+    this.reviewResumeDecision = position.decisionIndex;
+    const selected = skills.filter((skill): skill is SkillId => SKILLS.includes(skill as SkillId));
+    this.practiceInitialSkill = selected[0] ?? "ukeire";
+    if (this.reviewRecordId) {
+      this.reviewCollection = addReviewPosition(this.reviewCollection, { recordId: this.reviewRecordId,
+        decisionIndex: position.decisionIndex, skills: selected.length ? selected : ["ukeire"], addedAt: Date.now() });
+      this.saveLearningCache(REVIEW_COLLECTION_KEY, this.reviewCollection);
+      this.queueAccountSettings();
+    }
+    this.showScreen("practice");
+  }
+
+  private async openSavedReview(recordId: string, decisionIndex: number): Promise<void> {
+    const record = loadRecords().find((candidate) => candidate.id === recordId) ?? (this.user ? await fetchGame(recordId) : null);
+    if (!record?.log) {
+      this.screens.get("practice")?.querySelector(".saved-reviews")?.append(h("p", { role: "status" }, "This game record is unavailable. Try again when it has synced."));
+      return;
+    }
+    this.openRecord(record);
+    if (this.runner?.id !== recordId) return;
+    this.openReview();
+    const index = this.reviewData?.positions.findIndex((position) => position.decisionIndex === decisionIndex) ?? -1;
+    if (index >= 0) { this.reviewResumeDecision = decisionIndex; this.reviewUI?.goToDecision(index); }
+  }
+
   private renderLearn(): void {
     this.textScreen("learn", "Learn", (page) => {
       const doneCount = this.tutorial.done.length;
       page.append(
         h("p", { class: "count" }, `${doneCount} of ${MODULES.length} lessons done`),
       );
+      const practice = h("button", { class: "pillbtn", "aria-label": "Practice" }, "Practice");
+      practice.addEventListener("click", () => { this.practiceInitialSkill = undefined; this.showScreen("practice"); });
+      page.append(practice);
       const bar = h("div", { class: "progbar" });
       const fill = h("i");
       fill.style.width = `${Math.round((doneCount / MODULES.length) * 100)}%`;
@@ -2632,6 +2811,9 @@ export class App {
     const home = h("button", { class: "pillbtn ghost" }, "Home");
     home.addEventListener("click", () => this.showScreen("home"));
     col.append(again, home);
+    const review = h("button", { class: "pillbtn", "aria-label": "Review game" }, "Review game");
+    review.addEventListener("click", () => this.openReview());
+    col.prepend(review);
     page.append(col);
     screen.append(page);
   }
