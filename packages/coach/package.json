@@ -1,0 +1,1 @@
+{"dependencies":{"@openmahjong/ai":"*","@openmahjong/engine":"*"},"exports":{".":{"default":"./dist/index.js","types":"./dist/index.d.ts"}},"main":"dist/index.js","name":"@openmahjong/coach","private":true,"scripts":{"build":"tsc -p tsconfig.json","typecheck":"tsc --noEmit -p tsconfig.json"},"type":"module","types":"dist/index.d.ts","version":"0.1.0"}

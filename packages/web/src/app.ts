@@ -65,6 +65,20 @@ import {
 } from "./settings.js";
 import { ClickSound } from "./sound.js";
 import { TILE_SPRITE_SVG } from "./tiles-sprite.js";
+import { adviseDiscard } from "@openmahjong/coach";
+import {
+  LessonController,
+  MODULES,
+  TUTORIAL_SETTINGS_KEY,
+  loadTutorialProgress,
+  mergeProgress,
+  moduleDef,
+  parseProgress,
+  saveTutorialProgress,
+  type LessonAction,
+  type ModuleId,
+  type TutorialProgress,
+} from "./tutorial.js";
 
 // ---------------------------------------------------------------------------
 // Presentation data (names only — all values come from the engine)
@@ -204,7 +218,8 @@ type ScreenName =
   | "privacy"
   | "results"
   | "history"
-  | "stats";
+  | "stats"
+  | "learn";
 
 /** Google's standard four-color "G" (the approved landing button). */
 const GOOGLE_G_SVG = `<svg viewBox="0 0 48 48"><path fill="#FBBC05" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#EA4335" d="M6.3 14.7l6.6-4.8C14.7 7.1 19 4 24 4c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#34A853" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#4285F4" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.2 5.7l6.2 5.2C36.9 39.2 48 32 48 24c0-1.3-.1-2.6-.4-3.9z"/></svg>`;
@@ -216,6 +231,7 @@ function mergeServerSettings(local: Settings, srv: Partial<Settings>): Settings 
     motion: srv.motion === "reduced" || srv.motion === "standard" ? srv.motion : local.motion,
     largeTiles: typeof srv.largeTiles === "boolean" ? srv.largeTiles : local.largeTiles,
     lastLength: srv.lastLength === "east" || srv.lastLength === "south" ? srv.lastLength : local.lastLength,
+    guided: typeof srv.guided === "boolean" ? srv.guided : local.guided,
   };
 }
 type FrameState =
@@ -266,6 +282,14 @@ export class App {
   private statsSums: StatsSums | null = null;
   private serverGameCount: number | null = null;
   private importOfferCount = 0;
+  /** Tutorial state (slice-2 brief §9): progress persists locally and
+   *  rides the account settings blob under a namespaced key. */
+  private tutorial: TutorialProgress = loadTutorialProgress();
+  private lesson: LessonController | null = null;
+  /** True while the game on the table is TU-11 (the tutorial's full
+   *  guided game): hints are forced on and finishing the game
+   *  completes the module. */
+  private tu11Active = false;
 
   constructor(private readonly root: HTMLElement) {
     this.sound.enabled = this.settings.sound;
@@ -301,7 +325,7 @@ export class App {
     this.root.append(sprite);
     this.stage = h("div", { id: "stage" });
     this.root.append(this.stage);
-    for (const name of ["home", "table", "rules", "settings", "about", "privacy", "results", "history", "stats"] as ScreenName[]) {
+    for (const name of ["home", "table", "rules", "settings", "about", "privacy", "results", "history", "stats", "learn"] as ScreenName[]) {
       const s = h("section", { class: "screen", id: `screen-${name}` });
       this.screens.set(name, s);
       this.stage.append(s);
@@ -322,6 +346,7 @@ export class App {
     if (name === "settings") this.renderSettings();
     if (name === "history") void this.renderHistory();
     if (name === "stats") void this.renderStats();
+    if (name === "learn") this.renderLearn();
   }
 
   private applyTheme(): void {
@@ -388,6 +413,26 @@ export class App {
     seg.append(mkSeg("East only", "east"), mkSeg("East + South", "south"));
     el.append(seg);
 
+    // Guided mode (brief §9 ruling): the pre-game on/off choice for
+    // CPU games — the same single setting as in Settings and the
+    // in-game menu.
+    const grow = h("div", { class: "growrow" });
+    const glab = h("div", {});
+    glab.append(
+      h("div", { class: "lab" }, "Guided mode"),
+      h("div", { class: "note" }, "Hints and explanations during CPU games."),
+    );
+    const gsw = h("label", { class: "switch" });
+    const ginput = h("input", { type: "checkbox" });
+    ginput.checked = this.settings.guided;
+    ginput.addEventListener("change", () => {
+      this.settings = { ...this.settings, guided: ginput.checked };
+      this.persistSettings();
+    });
+    gsw.append(ginput, h("span", { class: "tr" }));
+    grow.append(glab, gsw);
+    el.append(grow);
+
     const play = h("button", { class: "pillbtn primary play" }, "Play");
     play.addEventListener("click", () => {
       this.sound.unlock();
@@ -404,15 +449,23 @@ export class App {
       el.append(resume);
     }
 
-    if (this.user) {
+    {
+      // The secondary row: History/Stats for signed-in players, and
+      // Learn for everyone — the tutorial needs no account (§9).
       const sec = h("div", { class: "secrow" });
-      const hist = h("button", { class: "pillbtn" }, "History");
-      hist.addEventListener("click", () => this.showScreen("history"));
-      const stats = h("button", { class: "pillbtn" }, "Stats");
-      stats.addEventListener("click", () => this.showScreen("stats"));
-      sec.append(hist, stats);
+      if (this.user) {
+        const hist = h("button", { class: "pillbtn" }, "History");
+        hist.addEventListener("click", () => this.showScreen("history"));
+        const stats = h("button", { class: "pillbtn" }, "Stats");
+        stats.addEventListener("click", () => this.showScreen("stats"));
+        sec.append(hist, stats);
+      }
+      const learn = h("button", { class: "pillbtn" }, "Learn");
+      learn.addEventListener("click", () => this.showScreen("learn"));
+      sec.append(learn);
       el.append(sec);
-    } else {
+    }
+    if (!this.user) {
       const g = h("button", { class: "gbtn" });
       g.innerHTML = GOOGLE_G_SVG;
       g.append(document.createTextNode("Sign in with Google"));
@@ -490,6 +543,19 @@ export class App {
       saveSettings(this.settings);
       this.sound.enabled = this.settings.sound;
       this.applyTheme();
+      // Tutorial progress syncs the same way, under its namespaced
+      // key in the settings blob: union of this device and the
+      // account, pushed back so both stores agree.
+      const serverProgress = parseProgress(
+        (serverSettings as Record<string, unknown>)[TUTORIAL_SETTINGS_KEY],
+      );
+      const merged = mergeProgress(this.tutorial, serverProgress);
+      this.tutorial = merged;
+      saveTutorialProgress(merged);
+      void putSettings(
+        { ...this.settings, [TUTORIAL_SETTINGS_KEY]: merged } as Settings,
+        this.csrfToken,
+      );
     }
     this.statsSums = stats;
     this.serverGameCount = games ? games.length : null;
@@ -497,10 +563,29 @@ export class App {
     this.renderHome();
   }
 
-  /** Save settings locally; when signed in, also sync them (brief A4). */
+  /** Save settings locally; when signed in, also sync them (brief A4).
+   *  The synced blob carries the tutorial progress under its
+   *  namespaced key, so a settings save never wipes it server-side. */
   private persistSettings(): void {
     saveSettings(this.settings);
-    if (this.user) void putSettings(this.settings, this.csrfToken);
+    if (this.user) {
+      void putSettings(
+        { ...this.settings, [TUTORIAL_SETTINGS_KEY]: this.tutorial } as Settings,
+        this.csrfToken,
+      );
+    }
+  }
+
+  /** Save tutorial progress locally and (when signed in) in the
+   *  account settings blob. */
+  private persistTutorial(): void {
+    saveTutorialProgress(this.tutorial);
+    if (this.user) {
+      void putSettings(
+        { ...this.settings, [TUTORIAL_SETTINGS_KEY]: this.tutorial } as Settings,
+        this.csrfToken,
+      );
+    }
   }
 
   /**
@@ -771,6 +856,11 @@ export class App {
           this.applyTheme();
           if (this.runner) this.renderTable();
         })),
+        row("Guided mode", "Hints and explanations on the table during CPU games. The same switch is on the home screen and in the in-game menu.", toggle(this.settings.guided, false, (v) => {
+          this.settings = { ...this.settings, guided: v };
+          this.persistSettings();
+          if (this.runner) this.renderTable();
+        })),
       );
     });
   }
@@ -892,9 +982,9 @@ export class App {
 
   // -- game lifecycle --------------------------------------------------------
 
-  private startGame(length: GameLength): void {
+  private startGame(length: GameLength, opts: { seed?: string } = {}): void {
     this.generation++;
-    const seed = `om-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}`;
+    const seed = opts.seed ?? `om-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}`;
     this.runner = new GameRunner({ seed, length, humanSeat: 0, aiDriver: new AiDriver() });
     this.resetDisplay();
     this.historyRecorded = false;
@@ -937,6 +1027,15 @@ export class App {
     if (!this.runner) return;
     if (this.runner.result) {
       clearGame();
+      if (this.tu11Active) {
+        // TU-11 completes when its game finishes (§9): the results
+        // screen the player is looking at is the lesson's end.
+        this.tu11Active = false;
+        if (!this.tutorial.done.includes("tu11")) {
+          this.tutorial = { done: [...this.tutorial.done, "tu11"], active: null };
+          this.persistTutorial();
+        }
+      }
       if (!this.historyRecorded) {
         this.historyRecorded = true;
         const mine = this.runner.result.settlement.find((s) => s.seat === this.humanSeat);
@@ -972,6 +1071,8 @@ export class App {
     this.generation++;
     this.playing = false;
     this.frame = null;
+    this.lesson = null;
+    this.tu11Active = false;
     this.showScreen("home");
   }
 
@@ -1221,7 +1322,10 @@ export class App {
     const header = h("header", { class: "bar" });
     const menuBtn = h("button", { class: "iconbtn", "aria-label": "Menu" });
     menuBtn.innerHTML = ICON_MENU;
-    menuBtn.addEventListener("click", () => this.showPause());
+    menuBtn.addEventListener("click", () => {
+      if (this.lesson) this.showLessonMenu();
+      else this.showPause();
+    });
     const soundBtn = h("button", { class: "iconbtn", "aria-label": "Sound" });
     soundBtn.innerHTML = this.settings.sound ? ICON_SOUND_ON : ICON_SOUND_OFF;
     soundBtn.addEventListener("click", () => {
@@ -1232,6 +1336,18 @@ export class App {
     });
     header.append(menuBtn, h("span", { class: "word" }, "OPEN MAHJONG"), soundBtn);
     t.append(header);
+
+    // Lesson surfaces (§9, tutorial renderings): a finished lesson
+    // shows its completion panel; a panel lesson shows its stage —
+    // neither uses the game zones.
+    if (this.lesson?.done) {
+      t.append(this.lessonCompleteEl());
+      return;
+    }
+    if (this.lesson && !this.lesson.usesTable) {
+      t.append(this.lessonStageEl());
+      return;
+    }
 
     const top = this.seatAt(2);
     const right = this.seatAt(1);
@@ -1292,6 +1408,27 @@ export class App {
       t.append(scrim);
       t.append(this.frameEl());
     }
+
+    // Guided hint overlay (HINT PLACEMENT ruling): a floating layer
+    // anchored above the player's hand — never in table layout, so
+    // pond growth and Large Tiles cannot collide with it.
+    const guide = this.guideHintEl();
+    if (guide) t.append(guide);
+  }
+
+  /**
+   * The guided hint for the pending draw decision, or null whenever
+   * it must not show: guided off, a call prompt or Focus Frame open,
+   * playback running, or no discard decision pending. The advice is
+   * the coach's — the CPU policy's own evaluation, opened up.
+   */
+  private guideHintEl(): HTMLElement | null {
+    if (this.lesson || this.frame || this.playing || !this.runner) return null;
+    if (!this.tu11Active && !this.settings.guided) return null;
+    const pending = this.runner.pending;
+    if (!pending || pending.kind !== "turn" || !this.pendingVisible()) return null;
+    const advice = adviseDiscard(pending.view, pending.ctx);
+    return h("div", { class: "guidehint" }, advice.headline);
   }
 
   private centerEl(): HTMLElement {
@@ -1372,6 +1509,12 @@ export class App {
       if (this.riichiArmed && pending?.kind === "turn" && pending.ctx.riichiDiscardIds.includes(tile.id)) {
         inner.classList.add("riichi-ok");
       }
+      if (this.lesson?.view().highlightRiichi) {
+        const stop = this.lesson.scene?.stop;
+        if (stop?.kind === "turn" && stop.ctx.riichiDiscardIds.includes(tile.id)) {
+          inner.classList.add("riichi-ok");
+        }
+      }
       wrap.addEventListener("click", () => this.onHandTileTap(tile));
       row.append(wrap);
     });
@@ -1380,6 +1523,14 @@ export class App {
   }
 
   private onHandTileTap(tile: Tile): void {
+    if (this.lesson) {
+      // Lesson gates read hand tiles directly (§9): a tap is the
+      // discard/gate action the current step is waiting for.
+      if (this.lesson.view().acceptsTiles) {
+        this.lessonAct({ kind: "tile", tileId: tile.id });
+      }
+      return;
+    }
     const pending = this.runner?.pending;
     if (!pending || pending.kind !== "turn" || this.playing) return;
     this.sound.unlock();
@@ -1400,6 +1551,7 @@ export class App {
   // -- prompts -------------------------------------------------------------------
 
   private promptRowEl(): HTMLElement {
+    if (this.lesson) return this.lessonPanelEl();
     const row = h("div", { class: "promptrow" });
     const pending = this.runner?.pending;
     if (!pending || !this.pendingVisible()) return row;
@@ -1755,6 +1907,273 @@ export class App {
     return sheet;
   }
 
+  // -- tutorial (slice-2 brief §9) ------------------------------------------
+
+  private renderLearn(): void {
+    this.textScreen("learn", "Learn", (page) => {
+      const doneCount = this.tutorial.done.length;
+      page.append(
+        h("p", { class: "count" }, `${doneCount} of ${MODULES.length} lessons done`),
+      );
+      const bar = h("div", { class: "progbar" });
+      const fill = h("i");
+      fill.style.width = `${Math.round((doneCount / MODULES.length) * 100)}%`;
+      bar.append(fill);
+      page.append(bar);
+      const activeId = this.tutorial.active?.module;
+      const firstOpen = MODULES.find((m) => !this.tutorial.done.includes(m.id))?.id;
+      MODULES.forEach((mod, i) => {
+        const isDone = this.tutorial.done.includes(mod.id);
+        const isActive = activeId === mod.id;
+        const isCurrent = isActive || (!activeId && firstOpen === mod.id);
+        const row = h("button", { class: `hrow lrow${isCurrent ? " current" : "" }` });
+        row.dataset["module"] = mod.id;
+        row.append(h("span", { class: "n" }, String(i + 1)));
+        row.append(h("span", { class: "ttl" }, mod.title));
+        if (mod.optional) row.append(h("span", { class: "lenbadge" }, "OPTIONAL"));
+        if (isDone) {
+          const st = h("span", { class: "st" });
+          st.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>`;
+          st.append(document.createTextNode("Done"));
+          row.append(st);
+        } else if (isActive) {
+          row.append(h("span", { class: "st now" }, "In progress"));
+        } else {
+          row.append(h("span", { class: "st" }, `${mod.minutes} min`));
+        }
+        row.insertAdjacentHTML(
+          "beforeend",
+          `<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
+        );
+        row.addEventListener("click", () => this.startLesson(mod.id));
+        page.append(row);
+      });
+    });
+  }
+
+  private startLesson(id: ModuleId): void {
+    if (id === "tu11") {
+      this.startTu11();
+      return;
+    }
+    this.generation++;
+    this.playing = false;
+    this.frame = null;
+    this.runner = null;
+    this.tu11Active = false;
+    const saved = this.tutorial.active?.module === id ? this.tutorial.active : null;
+    this.lesson = new LessonController(id, saved);
+    this.syncLessonProgress();
+    this.syncLessonModel();
+    this.showScreen("table");
+    this.renderTable();
+  }
+
+  /** TU-11 is a real game: the fixed tutorial seed, an East game,
+   *  guided hints forced on. It completes when the game finishes
+   *  (afterAdvance), and its record is a normal game record. */
+  private startTu11(): void {
+    this.lesson = null;
+    this.tutorial = {
+      ...this.tutorial,
+      active: { module: "tu11", step: 0, scene: null, counters: {}, found: [] },
+    };
+    this.persistTutorial();
+    this.tu11Active = true;
+    this.startGame("east", { seed: "om-tu11" });
+  }
+
+  private exitLesson(): void {
+    this.lesson = null;
+    this.showScreen("learn");
+  }
+
+  private lessonAct(action: LessonAction): void {
+    if (!this.lesson) return;
+    this.sound.unlock();
+    this.lesson.handle(action);
+    this.syncLessonProgress();
+    this.syncLessonModel();
+    this.renderTable();
+  }
+
+  private syncLessonProgress(): void {
+    if (!this.lesson) return;
+    if (this.lesson.done) {
+      const id = this.lesson.moduleId;
+      this.tutorial = {
+        done: this.tutorial.done.includes(id)
+          ? this.tutorial.done
+          : [...this.tutorial.done, id],
+        active: null,
+      };
+    } else {
+      this.tutorial = { ...this.tutorial, active: this.lesson.serialize() };
+    }
+    this.persistTutorial();
+  }
+
+  /** The lesson table is the same fold of the event log as a real
+   *  game — the scene's events, folded whole (lessons do not animate
+   *  playback; the panel is the pace). */
+  private syncLessonModel(): void {
+    if (this.lesson?.scene) {
+      this.model = foldEvents(this.lesson.scene.events, 0, this.lesson.scene.chiHints);
+      this.cursor = this.lesson.scene.events.length;
+    }
+  }
+
+  private showLessonMenu(): void {
+    const overlay = h("div", { class: "overlay show" });
+    const card = h("div", { class: "card" });
+    card.append(
+      h("h2", {}, this.lesson ? moduleDef(this.lesson.moduleId).title : "Lesson"),
+      h("div", { class: "sub" }, "Your place in the lesson is saved."),
+    );
+    const col = h("div", { class: "col" });
+    const resume = h("button", { class: "pillbtn primary" }, "Resume");
+    resume.addEventListener("click", () => overlay.remove());
+    const leave = h("button", { class: "pillbtn" }, "Leave lesson");
+    leave.addEventListener("click", () => {
+      overlay.remove();
+      this.exitLesson();
+    });
+    col.append(resume, leave);
+    card.append(col);
+    overlay.append(card);
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) overlay.remove();
+    });
+    this.tableEl.append(overlay);
+  }
+
+  private lessonStripEl(types: readonly number[]): HTMLElement {
+    const strip = h("div", { class: "lstrip" });
+    for (const type of types) strip.append(tileEl(tileById(type * 4 + 1), "t-meld", { flip: false }));
+    return strip;
+  }
+
+  private lessonChoicesEl(): HTMLElement | null {
+    const view = this.lesson!.view();
+    if (!view.choices) return null;
+    const box = h("div", { class: "lchoices" });
+    view.choices.forEach((choice, i) => {
+      const b = h("button", { class: "pillbtn lchoice" });
+      b.append(h("span", {}, choice.label));
+      if (choice.tiles) b.append(this.lessonStripEl(choice.tiles));
+      b.addEventListener("click", () => this.lessonAct({ kind: "choice", index: i }));
+      box.append(b);
+    });
+    return box;
+  }
+
+  private lessonCtlEl(inPanel: boolean): HTMLElement {
+    const view = this.lesson!.view();
+    const ctl = h("div", { class: "revctl" });
+    if (!inPanel) {
+      const leave = h("button", { class: "pillbtn ghost" }, "Leave");
+      leave.addEventListener("click", () => this.exitLesson());
+      ctl.append(leave);
+    }
+    ctl.append(
+      h("span", { class: "step" }, `Step ${view.stepIndex + 1} of ${view.stepCount}`),
+    );
+    for (const b of view.buttons) {
+      const btn = h("button", { class: `pillbtn ${b.cls}` }, b.label);
+      btn.addEventListener("click", () => this.lessonAct({ kind: "button", id: b.id }));
+      ctl.append(btn);
+    }
+    return ctl;
+  }
+
+  /** The lesson panel docked in the player zone (rendering 03) —
+   *  scene lessons ride the real table. */
+  private lessonPanelEl(): HTMLElement {
+    const view = this.lesson!.view();
+    const panel = h("div", { class: "revpanel lessonpanel" });
+    panel.append(h("div", { class: "lab" }, view.lab), h("p", {}, view.text));
+    if (view.note) panel.append(h("p", { class: "dim" }, view.note));
+    if (view.strip) panel.append(this.lessonStripEl(view.strip));
+    const choices = this.lessonChoicesEl();
+    if (choices) panel.append(choices);
+    panel.append(this.lessonCtlEl(true));
+    return panel;
+  }
+
+  /** The panel-lesson stage (rendering 02): prompt panel, drill grid,
+   *  step dots, controls — on the table screen's chrome. */
+  private lessonStageEl(): HTMLElement {
+    const view = this.lesson!.view();
+    const wrap = h("div", { class: "lstage" });
+    const panel = h("div", { class: "revpanel" });
+    panel.append(h("div", { class: "lab" }, view.lab), h("p", {}, view.text));
+    if (view.note && !view.drill) panel.append(h("p", { class: "dim" }, view.note));
+    if (view.strip) panel.append(this.lessonStripEl(view.strip));
+    wrap.append(panel);
+    if (view.drill) {
+      const drill = h("div", { class: "drillpanel" });
+      const grid = h("div", { class: "dgrid" });
+      view.drill.tiles.forEach((type, i) => {
+        const cell = h("span", {
+          class: `cell${view.drill!.found.includes(i) ? " sel" : ""}`,
+        });
+        cell.append(tileEl(tileById(type * 4 + 1), "", { flip: false }));
+        cell.addEventListener("click", () => this.lessonAct({ kind: "drill", index: i }));
+        grid.append(cell);
+      });
+      drill.append(grid);
+      if (view.note) drill.append(h("p", { class: "dnote" }, view.note));
+      wrap.append(drill);
+    }
+    const choices = this.lessonChoicesEl();
+    if (choices) wrap.append(choices);
+    wrap.append(h("div", { class: "tspacer" }));
+    const dots = h("div", { class: "dots" });
+    for (let i = 0; i < view.stepCount; i++) {
+      const d = h("i");
+      if (i < view.stepIndex) d.className = "done";
+      else if (i === view.stepIndex) d.className = "now";
+      dots.append(d);
+    }
+    wrap.append(dots);
+    wrap.append(this.lessonCtlEl(false));
+    return wrap;
+  }
+
+  /** The completion panel (rendering 05): covered lines, course
+   *  progress, and the next lesson offered. */
+  private lessonCompleteEl(): HTMLElement {
+    const def = moduleDef(this.lesson!.moduleId);
+    const wrap = h("div", { class: "revwrap" });
+    wrap.append(h("h2", {}, def.title));
+    const panel = h("div", { class: "revpanel" });
+    panel.append(h("div", { class: "lab" }, "LESSON COMPLETE"));
+    for (const line of def.covered) panel.append(h("p", {}, line));
+    wrap.append(panel);
+    const prog = h("div", { class: "progrow" });
+    prog.append(
+      h("p", { class: "count" }, `${this.tutorial.done.length} of ${MODULES.length} lessons done`),
+    );
+    const bar = h("div", { class: "progbar" });
+    const fill = h("i");
+    fill.style.width = `${Math.round((this.tutorial.done.length / MODULES.length) * 100)}%`;
+    bar.append(fill);
+    prog.append(bar);
+    wrap.append(prog);
+    const ctl = h("div", { class: "revctl" });
+    const all = h("button", { class: "pillbtn ghost" }, "All lessons");
+    all.addEventListener("click", () => this.exitLesson());
+    ctl.append(all);
+    const next = MODULES.find((m) => !this.tutorial.done.includes(m.id));
+    if (next) {
+      const nb = h("button", { class: "pillbtn primary" }, `Next: ${next.title}`);
+      nb.addEventListener("click", () => this.startLesson(next.id));
+      ctl.append(nb);
+    }
+    wrap.append(ctl);
+    return wrap;
+  }
+
   // -- pause + breakdown + results -------------------------------------------------
 
   private showPause(): void {
@@ -1769,6 +2188,12 @@ export class App {
     };
     col.append(
       mk("Resume", "primary", () => overlay.remove()),
+      mk(this.settings.guided ? "Guided: on" : "Guided: off", "ghost", () => {
+        this.settings = { ...this.settings, guided: !this.settings.guided };
+        this.persistSettings();
+        overlay.remove();
+        this.renderTable();
+      }),
       mk(this.settings.sound ? "Sound: on" : "Sound: off", "ghost", () => {
         this.settings = { ...this.settings, sound: !this.settings.sound };
         this.sound.enabled = this.settings.sound;

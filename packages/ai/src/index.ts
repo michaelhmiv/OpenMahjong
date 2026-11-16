@@ -9,6 +9,20 @@
 
 export { createAiPolicy } from "./policy.js";
 export {
+  bestByEfficiency,
+  countsOfTiles,
+  doraInTiles,
+  doraTypesOf,
+  evaluateDiscards,
+  isYakuhai,
+  keepValue,
+  ownSeatWind,
+  safestAmongBest,
+  safestOverall,
+  valueProxy,
+  type DiscardCandidate,
+} from "./evaluate.js";
+export {
   shantenFast,
   shantenStandardFast,
   shantenChiitoitsuFast,

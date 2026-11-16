@@ -25,6 +25,7 @@ Hong Kong, MCR, and American — as rule packs on one shared core.
 | --- | --- |
 | `packages/engine` | The rules engine library (brief §5): tiles, wall, hand analysis (shanten/ukeire), scoring. Pure TypeScript, no UI, no runtime dependencies. |
 | `packages/ai` | The AI opponents (brief §6). Depends only on the engine's public state view. |
+| `packages/coach` | The coach (slice-2 brief §9): the AI's discard evaluation opened up — ranked options with structured reasons (efficiency, waits, danger) for guided hints and lessons. Depends on the engine and the AI evaluation. |
 | `packages/web` | The web client (brief §7–§10). Renders engine state; holds no game logic. |
 
 The approved design brief lives at [`docs/brief-v1.md`](docs/brief-v1.md)
