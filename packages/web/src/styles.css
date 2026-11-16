@@ -1,0 +1,439 @@
+/* Open Mahjong client styles.
+   Table geometry and tokens reproduce the approved renderings
+   (table-v4 geometry + table-theme-v5 tokens + focus-frames-v1 system,
+   colours adopted to theme v5 per the brief's theme block). */
+
+@font-face {
+  font-family: "Nunito";
+  src: url("/fonts/nunito-var.woff2") format("woff2");
+  font-weight: 200 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #231f2e;
+  --panel: #2f2a3d;
+  --line: #4c4562;
+  --ink: #f2eff8;
+  --dim: #b8b0cc;
+  --accent: #46a5e0;
+  --accent-text: #46a5e0;
+  --decisive: #d63c2e;
+  --on-accent: #14101f;
+  --page: #17131f;
+  --face: #f6f1e4;
+}
+
+/* Light theme: DERIVED from the same token discipline (quiet ground,
+   closed accent vocabulary) — not separately rendering-approved; flagged
+   in the PR for Michael's judgment in the build. */
+[data-theme="light"] {
+  --bg: #efe9dc;
+  --panel: #fbf8f1;
+  --line: #cfc4ab;
+  --ink: #2b2438;
+  --dim: #6f6785;
+  --accent: #46a5e0;
+  --accent-text: #1c6ea8;
+  --decisive: #d63c2e;
+  --on-accent: #14101f;
+  --page: #e3dcc9;
+  --face: #fbf7ec;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  background: var(--page);
+  font-family: "Nunito", -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+}
+
+.kj { font-family: "Noto Sans CJK SC", "Noto Sans CJK JP", sans-serif; }
+
+button { font-family: inherit; cursor: pointer; }
+button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+#app { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+
+/* The stage is the approved 390x844 composition, scaled to the viewport
+   (brief section 8: responsive scale-up — 390px portrait is the floor
+   case, not the design case). */
+#stage { position: relative; width: 390px; height: 844px; flex: 0 0 auto; transform-origin: center center; }
+
+.screen { position: absolute; inset: 0; display: none; flex-direction: column; background: var(--bg); overflow: hidden; }
+.screen.active { display: flex; }
+
+/* ------------------------------------------------------------------ */
+/* Shared chrome                                                       */
+/* ------------------------------------------------------------------ */
+
+header.bar {
+  height: 44px; flex: 0 0 44px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 2px;
+}
+header.bar .word { font-size: 12px; letter-spacing: 0.14em; color: var(--dim); font-weight: 600; }
+.iconbtn {
+  width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+  background: none; border: none; color: var(--dim);
+}
+.iconbtn svg { width: 21px; height: 21px; stroke: var(--dim); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+.pillbtn {
+  height: 48px; border: none; border-radius: 24px; padding: 0 26px;
+  font-size: 15px; font-weight: 600; background: var(--panel); color: var(--ink);
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+}
+.pillbtn.primary { background: var(--accent); color: var(--on-accent); font-weight: 700; }
+.pillbtn.decisive { background: var(--decisive); color: #fff; font-weight: 700; }
+.pillbtn.ghost { background: transparent; color: var(--dim); box-shadow: inset 0 0 0 1.5px var(--line); }
+.pillbtn:disabled { opacity: 0.45; cursor: default; }
+
+.linkbtn { background: none; border: none; color: var(--dim); font-size: 14px; font-weight: 600; padding: 10px 14px; min-height: 44px; }
+
+/* ------------------------------------------------------------------ */
+/* Home                                                                */
+/* ------------------------------------------------------------------ */
+
+#screen-home { align-items: center; padding: 0 28px; }
+#screen-home .spacer { flex: 1; }
+.wordmark { font-size: 30px; font-weight: 800; letter-spacing: 0.06em; text-align: center; }
+.wordmark .sub { display: block; font-size: 13px; font-weight: 600; color: var(--dim); letter-spacing: 0.02em; margin-top: 8px; }
+.seg { display: flex; background: var(--panel); border-radius: 999px; padding: 4px; gap: 4px; margin: 26px 0 14px; }
+.seg button {
+  border: none; background: transparent; color: var(--dim); font-size: 14px; font-weight: 600;
+  height: 40px; padding: 0 20px; border-radius: 999px; min-width: 104px;
+}
+.seg button.on { background: var(--accent); color: var(--on-accent); font-weight: 700; }
+#screen-home .play { width: 220px; height: 56px; font-size: 17px; border-radius: 28px; }
+#screen-home .resume { margin-top: 12px; width: 220px; }
+#screen-home .quietrow { display: flex; gap: 6px; margin-bottom: 30px; }
+#screen-home .history { width: 100%; max-width: 320px; margin-top: 22px; }
+#screen-home .history h3 { font-size: 11px; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 6px; }
+#screen-home .history .row {
+  display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0;
+  border-top: 1px solid var(--line); color: var(--dim);
+}
+#screen-home .history .row b { color: var(--ink); }
+
+/* ------------------------------------------------------------------ */
+/* Table (approved geometry)                                           */
+/* ------------------------------------------------------------------ */
+
+#table { position: relative; width: 390px; height: 844px; background: var(--bg); display: flex; flex-direction: column; padding: 0 10px 16px; overflow: hidden; }
+
+.tile { display: block; flex: 0 0 auto; position: relative; }
+.tile svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.45)); }
+.t-hand { width: 25px; height: 35px; }
+.t-pond { width: 25px; height: 35px; }
+.t-back { width: 20px; height: 28px; }
+.t-meld { width: 20px; height: 28px; }
+.t-dora { width: 22px; height: 31px; }
+
+.opp-hand { display: flex; gap: 1.5px; justify-content: center; align-items: flex-start; }
+.meld { display: flex; gap: 1.5px; margin-left: 10px; }
+.meld .side { transform: rotate(90deg); margin: 0 3.5px; }
+.pond { display: grid; grid-template-columns: repeat(6, 25px); gap: 2.5px 1.5px; justify-content: center; padding: 3px; }
+.pond .side { transform: rotate(90deg); }
+.pond.flip { transform: rotate(180deg); }
+.zone-top { padding-top: 6px; }
+.zone-top .pondwrap { padding-top: 14px; }
+
+.band { position: relative; flex: 1 1 auto; margin: 4px 0; display: flex; flex-direction: column; justify-content: space-between; padding: 14px 0 10px; }
+.bandtop { position: relative; height: 24px; display: flex; justify-content: space-between; align-items: center; }
+.bandbot { display: flex; justify-content: center; }
+.stage-mid { position: relative; height: 248px; flex: 0 0 248px; }
+.sidehand { position: absolute; top: 50%; display: flex; flex-direction: column; align-items: center; }
+.sidehand .tile { margin-top: -10px; }
+.sidehand .tile:first-child { margin-top: 0; }
+.sidehand.left { left: 0; transform: translateY(-50%); }
+.sidehand.right { right: 0; transform: translateY(-50%); }
+.sp { position: absolute; top: 50%; transform: translateY(-50%); display: grid; grid-template-rows: repeat(6, 25px); grid-auto-flow: column; gap: 7px 3px; }
+.sp.left { left: 22px; }
+.sp.right { right: 22px; direction: rtl; }
+.sp .cell { width: 35px; height: 25px; position: relative; }
+.sp .tile { position: absolute; left: 50%; top: 50%; }
+.sp.left .tile.rot { transform: translate(-50%, -50%) rotate(-90deg); }
+.sp.right .tile.rot { transform: translate(-50%, -50%) rotate(90deg); }
+.sp .tile.riichi { transform: translate(-50%, -50%); }
+.sp .cell.hl { box-shadow: 0 0 0 2px var(--decisive); border-radius: 7px; }
+/* v4 fix: side ponds condense at 13+ discards (see renderings/table-v4). */
+.sp:has(> .cell:nth-child(13)) { grid-template-rows: repeat(9, 22px); gap: 6px 3px; }
+.sp:has(> .cell:nth-child(13)) .cell { width: 31px; height: 22px; }
+.sp:has(> .cell:nth-child(13)) .tile { width: 22px; height: 31px; }
+
+.center {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 168px; height: 184px; background: var(--panel); border-radius: 20px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  border: none; color: var(--ink); font-family: inherit;
+}
+.center .round { display: flex; align-items: baseline; gap: 7px; }
+.center .round .wind { font-size: 34px; font-weight: 700; line-height: 1; }
+.center .round .rname { font-size: 16px; font-weight: 600; }
+.center .sub { font-size: 12px; color: var(--dim); }
+.stickrow { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+.stick { width: 64px; height: 10px; background: var(--face); border-radius: 4.5px; position: relative; }
+.stick::after { content: ""; position: absolute; left: 50%; top: 50%; width: 5px; height: 5px; border-radius: 50%; background: var(--decisive); transform: translate(-50%, -50%); }
+.stickrow .n { font-size: 11.5px; color: var(--dim); }
+.dorarow { display: flex; align-items: center; gap: 5px; margin-top: 4px; }
+.dorarow .lbl { font-size: 11px; color: var(--dim); margin-right: 1px; }
+
+.chip { background: var(--panel); border-radius: 999px; padding: 5px 12px; font-size: 12px; color: var(--dim); white-space: nowrap; }
+.chip b { color: var(--ink); font-weight: 600; }
+.chip .dealer { color: var(--accent-text); font-weight: 700; }
+.chip.west { position: absolute; left: 50%; transform: translateX(-50%); }
+.chip.turn { box-shadow: 0 0 0 1.5px var(--accent); }
+
+.zone-player .pondwrap { padding-bottom: 14px; }
+.zone-player.with-prompt .pondwrap { padding-bottom: 8px; }
+.handrow { display: flex; align-items: flex-end; justify-content: center; }
+.handrow .tile { margin-right: 1px; }
+.handrow .drawn { margin-left: 11px; transform: translateY(-4px); }
+/* Hand tiles carry expanded invisible hit areas (brief section 8). */
+.handrow .tile::after { content: ""; position: absolute; inset: -9px -2.5px; }
+.handrow .tile.sel { transform: translateY(-10px) scale(1.5); transform-origin: 50% 100%; z-index: 3; }
+.handrow .tile.sel.drawn { transform: translateY(-14px) scale(1.5); }
+.handrow .tile.riichi-ok { box-shadow: 0 0 0 2px var(--accent); border-radius: 4px; }
+
+/* Armed riichi state (table-riichi-v2): hand lifts, table dims. */
+#table.armed .handrow .tile { transform: translateY(-6px); }
+#table.armed .handrow .drawn { transform: translateY(-10px); }
+#table.armed .zone-top, #table.armed .band { opacity: 0.55; }
+
+.promptrow { display: none; justify-content: flex-end; gap: 8px; padding: 2px 2px 10px; }
+.promptrow.show { display: flex; }
+.cbtn {
+  height: 48px; display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 600; border-radius: 24px; border: none;
+  background: var(--panel); color: var(--ink); padding: 0 18px; min-width: 76px;
+}
+.cbtn.ron, .cbtn.riichi, .cbtn.tsumo { width: 92px; background: var(--decisive); color: #fff; font-weight: 700; }
+.cbtn.pass { width: 76px; background: transparent; color: var(--dim); box-shadow: inset 0 0 0 1.5px var(--line); }
+#table.armed .cbtn.riichi { box-shadow: 0 0 0 2px var(--decisive); }
+
+.handctl { display: flex; justify-content: center; padding-top: 6px; }
+.handctl button {
+  background: none; border: none; color: var(--dim); font-size: 12px; font-weight: 600;
+  display: flex; align-items: center; gap: 5px; min-height: 32px; padding: 4px 10px;
+}
+.handctl svg { width: 15px; height: 15px; stroke: var(--dim); fill: none; stroke-width: 2; stroke-linecap: round; }
+
+/* ------------------------------------------------------------------ */
+/* Focus Frames (focus-frames-v1 geometry, theme v5 colours)           */
+/* ------------------------------------------------------------------ */
+
+#table.framed > header, #table.framed > .zone-top,
+#table.framed > .band, #table.framed > .zone-player { opacity: 0.55; }
+.scrim { position: absolute; inset: 0; z-index: 4; background: transparent; border: none; }
+.frame {
+  position: absolute; left: 14px; top: 170px; width: 362px; z-index: 5;
+  background: var(--panel); border-radius: 20px; padding: 14px 16px 16px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+  animation: frame-in 0.26s cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+@keyframes frame-in { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: none; } }
+.fhead { display: flex; align-items: flex-start; justify-content: space-between; }
+.ftitle { font-size: 16px; font-weight: 700; }
+.fsub { font-size: 12px; color: var(--dim); margin-top: 3px; }
+.fclose { width: 44px; height: 44px; flex: 0 0 44px; margin: -8px -8px 0 0; display: flex; align-items: center; justify-content: center; background: none; border: none; }
+.fclose svg { width: 20px; height: 20px; stroke: var(--dim); fill: none; stroke-width: 1.8; stroke-linecap: round; }
+.pill { display: inline-block; background: var(--decisive); color: #fff; border-radius: 999px; padding: 2px 9px; font-size: 11px; font-weight: 700; vertical-align: 2px; margin-left: 7px; }
+.fsec { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; margin: 13px 0 6px; font-weight: 700; }
+.fpond { display: grid; grid-template-columns: repeat(6, 46px); gap: 6px 5px; }
+.fpond .tile { width: 46px; height: 64px; }
+.fpond .tg svg { filter: brightness(0.58) saturate(0.75); }
+.fpond .cell { position: relative; width: 46px; height: 64px; }
+.fpond .cell .tile { position: absolute; left: 0; top: 0; }
+.fpond .riichi .tile { width: 33px; height: 46px; left: 6.5px; top: 9px; transform: rotate(90deg); transform-origin: center; }
+.fpond .riichi { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--decisive); border-radius: 6px; }
+.fpond .latest { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--ink); border-radius: 6px; }
+.legend { display: flex; gap: 16px; margin-top: 10px; }
+.legend .li { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--dim); flex: 1 1 0; }
+.swatch { width: 14px; height: 20px; border-radius: 3px; background: var(--face); flex: 0 0 14px; }
+.swatch.dim { filter: brightness(0.58) saturate(0.75); }
+.anchor { display: flex; align-items: flex-end; gap: 1px; }
+.anchor .tile { width: 22px; height: 31px; }
+.turnbanner {
+  margin-top: 12px; background: var(--accent); color: var(--on-accent); font-weight: 700;
+  font-size: 13px; border-radius: 10px; padding: 8px 12px; text-align: center;
+}
+
+/* Center frame */
+.crow { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; }
+.crow .wind { font-size: 30px; font-weight: 700; line-height: 1; }
+.crow .rname { font-size: 16px; font-weight: 600; }
+.crow .sub { font-size: 12px; color: var(--dim); }
+.dpair { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+.dpair .ind { width: 38px; height: 53px; }
+.dpair .dor { width: 56px; height: 78px; }
+.dpair .arr { font-size: 20px; color: var(--dim); }
+.dpair .dlab { font-size: 11px; color: var(--dim); width: 64px; }
+.scorerow { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-top: 1px solid var(--line); }
+.scorerow .who { color: var(--dim); }
+.scorerow .who b { color: var(--ink); font-weight: 600; }
+
+/* Hand focus sheet */
+.sheet {
+  position: absolute; left: 0; bottom: 0; width: 390px; z-index: 5;
+  background: var(--panel); border-radius: 20px 20px 0 0; padding: 12px 14px 18px;
+  box-shadow: 0 -14px 40px rgba(0, 0, 0, 0.4);
+  animation: sheet-in 0.24s cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+@keyframes sheet-in { from { transform: translateY(26px); opacity: 0.4; } to { transform: none; opacity: 1; } }
+.selpreview { display: flex; align-items: center; gap: 12px; min-height: 0; }
+.selpreview .tile { width: 72px; height: 100px; }
+.selpreview .readout { font-size: 14px; font-weight: 600; }
+.selpreview .readout .dim { color: var(--dim); font-weight: 600; font-size: 12px; display: block; margin-top: 2px; }
+.hgrid { display: grid; grid-template-columns: repeat(7, 48px); gap: 8px 4px; margin-top: 10px; }
+.hgrid .cell { position: relative; width: 48px; height: 67px; }
+.hgrid .tile { width: 48px; height: 67px; position: absolute; left: 0; top: 0; }
+.hgrid .drawn .tile { transform: translateY(-6px); }
+.hgrid .drawn::after { content: ""; position: absolute; left: 9px; right: 9px; bottom: -2px; height: 3px; border-radius: 2px; background: var(--accent); }
+.hgrid .sel { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--accent); border-radius: 8px; z-index: 3; }
+.hgrid .cell::after { content: ""; position: absolute; inset: -4px -2px; }
+.hact { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.hbtn {
+  height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 600; border: none; padding: 0 20px;
+  background: var(--bg); color: var(--ink); flex: 1 1 auto; min-height: 52px;
+}
+.hbtn.decisive { background: var(--decisive); color: #fff; font-weight: 700; }
+.hbtn.primary { background: var(--accent); color: var(--on-accent); font-weight: 700; }
+
+/* Hint bubble (first-game Focus Frame teaching) */
+.hint {
+  position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); top: 120px;
+  background: var(--accent); color: var(--on-accent); font-size: 13px; font-weight: 700;
+  padding: 10px 16px; border-radius: 14px; max-width: 300px; text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* ------------------------------------------------------------------ */
+/* Overlays: pause, breakdown                                          */
+/* ------------------------------------------------------------------ */
+
+.overlay {
+  position: absolute; inset: 0; z-index: 8; display: none;
+  align-items: center; justify-content: center; padding: 22px;
+  background: rgba(10, 8, 16, 0.55);
+}
+.overlay.show { display: flex; }
+.card {
+  background: var(--panel); border-radius: 20px; padding: 20px; width: 100%;
+  max-height: 92%; overflow-y: auto; box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+}
+.card h2 { font-size: 19px; font-weight: 800; margin-bottom: 4px; }
+.card .sub { font-size: 13px; color: var(--dim); margin-bottom: 12px; }
+.card .col { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+.card .col .pillbtn { width: 100%; }
+
+.bk-hand { display: flex; align-items: flex-end; gap: 1px; flex-wrap: wrap; margin: 8px 0 4px; }
+.bk-hand .tile { width: 25px; height: 35px; }
+.bk-hand .tile.win { transform: translateY(-5px); box-shadow: 0 0 0 2px var(--decisive); border-radius: 4px; margin-left: 8px; }
+.bk-hand .meld { margin-left: 8px; }
+.bk-yaku { margin-top: 10px; }
+.bk-yaku .row { display: flex; justify-content: space-between; font-size: 14px; padding: 4px 0; border-top: 1px solid var(--line); }
+.bk-yaku .row.total { font-weight: 800; }
+.bk-yaku .row .han { color: var(--dim); }
+.bk-pay { margin-top: 8px; font-size: 13px; color: var(--dim); }
+.bk-pay b { color: var(--ink); }
+.bk-dora { display: flex; align-items: center; gap: 5px; margin-top: 10px; }
+.bk-dora .lbl { font-size: 11px; color: var(--dim); margin-right: 2px; }
+.bk-dora .tile { width: 22px; height: 31px; }
+
+/* ------------------------------------------------------------------ */
+/* Text screens: Rules / Settings / About / Results                    */
+/* ------------------------------------------------------------------ */
+
+.page { flex: 1; overflow-y: auto; padding: 6px 22px 30px; }
+.page h2 { font-size: 20px; font-weight: 800; margin: 10px 0 12px; }
+.page h3 { font-size: 15px; font-weight: 700; margin: 18px 0 6px; }
+.page p, .page li { font-size: 14px; line-height: 1.5; color: var(--ink); }
+.page p.dim, .page .dim { color: var(--dim); }
+.page ul { padding-left: 20px; }
+.page li { margin-bottom: 4px; }
+.page a { color: var(--accent-text); }
+
+.setrow {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 14px 0; border-top: 1px solid var(--line); min-height: 60px;
+}
+.setrow .lab { font-size: 15px; font-weight: 600; }
+.setrow .note { font-size: 12px; color: var(--dim); margin-top: 2px; max-width: 230px; }
+.switch { position: relative; width: 52px; height: 32px; flex: 0 0 52px; }
+.switch input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.switch .tr { position: absolute; inset: 0; background: var(--line); border-radius: 999px; transition: background 0.15s; }
+.switch .tr::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 26px; height: 26px;
+  border-radius: 50%; background: var(--ink); transition: transform 0.15s;
+}
+.switch input:checked + .tr { background: var(--accent); }
+.switch input:checked + .tr::after { transform: translateX(20px); background: var(--on-accent); }
+.switch input:disabled + .tr { opacity: 0.4; }
+
+.results-table { width: 100%; margin-top: 8px; }
+.results-table .row {
+  display: flex; align-items: baseline; gap: 10px; padding: 10px 0;
+  border-top: 1px solid var(--line); font-size: 15px;
+}
+.results-table .rank { font-weight: 800; width: 26px; color: var(--dim); }
+.results-table .who { flex: 1; font-weight: 600; }
+.results-table .score { color: var(--dim); }
+.results-table .pts { font-weight: 800; min-width: 64px; text-align: right; }
+.results-table .pts.pos { color: var(--accent-text); }
+.results-table .pts.neg { color: var(--decisive); }
+
+/* FLIP animation support: tiles transition transform/opacity while the
+   animation player steps the display model through the event log. */
+.animating .tile { transition: transform 0.22s ease, opacity 0.22s ease; }
+.pulse { animation: pulse 0.7s ease; }
+@keyframes pulse { 0% { filter: brightness(1.7); } 100% { filter: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .frame, .sheet { animation: none; }
+}
+
+/* Frame melds render at pond-inspection size (focus-frames-v1). */
+.fmelds { display: flex; gap: 12px; flex-wrap: wrap; }
+.fmelds .meld { margin-left: 0; }
+.fmeld { width: 46px; height: 64px; }
+.fmeld.side { transform: rotate(90deg); margin: 0 10px; }
+.twrap { display: inline-block; }
+
+/* ===== Large tiles mode (table-large-v1, APPROVED 2026-11-16) =====
+   Hand 28x39 standing in a 208px wrap, two rows of seven (the hand focus
+   sheet's grammar); player melds flow after the closed tiles at pond size
+   22x31, bottom-aligned. Ponds 22x31; side ponds sit permanently in the
+   v4 condensed geometry (9 rows x 2 cols = 18) — no condense step, a pond
+   never resizes mid-hand in this mode. Opponent backs/melds stay 20x28
+   (West's 4-meld top row is 380px at 20px and cannot grow). Panel grows
+   184 -> 196 tall for the larger type scale; chips do not scale; the
+   smallest type in the mode is 12px. The drawn tile trades its margin
+   gap (impossible inside a wrap) for the sheet's marking: a 6px raise
+   plus the primary-blue bar beneath it. */
+html.large .t-hand { width: 28px; height: 39px; }
+html.large .t-pond { width: 22px; height: 31px; }
+html.large .pond { grid-template-columns: repeat(6, 22px); }
+html.large .sp { grid-template-rows: repeat(9, 22px); gap: 6px 3px; }
+html.large .sp .cell { width: 31px; height: 22px; }
+html.large .sp .tile { width: 22px; height: 31px; }
+html.large .center { height: 196px; }
+html.large .center .round .wind { font-size: 38px; }
+html.large .center .round .rname { font-size: 17px; }
+html.large .center .sub { font-size: 13px; }
+html.large .stick { width: 72px; }
+html.large .stickrow .n { font-size: 12px; }
+html.large .dorarow .lbl { font-size: 12px; }
+html.large .handrow { width: 208px; flex-wrap: wrap; row-gap: 8px; margin: 2px auto 0; }
+html.large .handrow .t-meld { width: 22px; height: 31px; }
+html.large .handrow .tile::after { inset: -5px -8px; }
+html.large .handrow .drawn { margin-left: 0; transform: translateY(-6px); }
+html.large .handrow .drawn-host { position: relative; }
+html.large .handrow .drawn-host::after { content: ""; position: absolute; left: 5px; right: 5px; bottom: -5px; height: 3px; border-radius: 2px; background: var(--accent); }
+html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
