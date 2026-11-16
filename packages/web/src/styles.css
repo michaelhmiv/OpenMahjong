@@ -593,6 +593,10 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 .lessonpanel .revctl { padding-top: 12px; }
 .lessonpanel .revctl .pillbtn { padding: 0 14px; }
 .lessonpanel .revctl .pillbtn.primary { flex: 1.5 1 0; }
+/* Tutorial Back control: content-width at the left of the lesson
+   control row; the step's own buttons take the remaining space.
+   pillbtn height (48px) already clears the 44px floor. */
+.revctl .tut-back { flex: 0 1 auto; }
 
 .lstage { flex: 1; display: flex; flex-direction: column; min-height: 0; }
 .drillpanel { background: var(--panel); border-radius: 20px; padding: 18px 16px; margin: 14px 2px 0; }
