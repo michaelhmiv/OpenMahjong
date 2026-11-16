@@ -9,6 +9,11 @@ export default defineConfig({
       "@openmahjong/engine": fileURLToPath(
         new URL("./packages/engine/src/index.ts", import.meta.url),
       ),
+      // Same for the AI package: the web tests exercise the real
+      // opponent from source.
+      "@openmahjong/ai": fileURLToPath(
+        new URL("./packages/ai/src/index.ts", import.meta.url),
+      ),
     },
   },
   test: {

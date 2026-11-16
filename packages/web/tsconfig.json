@@ -1,1 +1,1 @@
-{"compilerOptions":{"declaration":false,"lib":["ES2022","DOM","DOM.Iterable"],"outDir":"dist","paths":{"@openmahjong/engine":["../engine/src/index.ts"]},"sourceMap":false,"types":[]},"extends":"../../tsconfig.base.json","include":["src/**/*.ts","vite.config.ts"]}
+{"compilerOptions":{"declaration":false,"lib":["ES2022","DOM","DOM.Iterable"],"outDir":"dist","paths":{"@openmahjong/ai":["../ai/src/index.ts"],"@openmahjong/engine":["../engine/src/index.ts"]},"sourceMap":false,"types":[]},"extends":"../../tsconfig.base.json","include":["src/**/*.ts","vite.config.ts"]}

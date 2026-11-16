@@ -12,10 +12,10 @@ import { describe, expect, it } from "vitest";
 // when every test passes (see packages/ai/test/soak.test.ts).
 const tick = () => new Promise<void>((r) => setTimeout(r, 0));
 import type { CallAction, TurnAction } from "@openmahjong/engine";
-import { TempAiDriver } from "../src/drivers.js";
+import { AiDriver } from "../src/drivers.js";
 import { GameRunner, type SavedGame } from "../src/runner.js";
 
-function drivePending(runner: GameRunner, ai: TempAiDriver): void {
+function drivePending(runner: GameRunner, ai: AiDriver): void {
   const p = runner.pending;
   if (!p) throw new Error("expected a pending decision");
   if (p.kind === "turn") runner.act(ai.turn(p.view, p.ctx) as TurnAction);
@@ -24,7 +24,7 @@ function drivePending(runner: GameRunner, ai: TempAiDriver): void {
 
 describe("GameRunner", () => {
   it("suspends at the human's first decision (human deals the first hand)", () => {
-    const runner = new GameRunner({ seed: "runner-1", length: "east", humanSeat: 0, aiDriver: new TempAiDriver() });
+    const runner = new GameRunner({ seed: "runner-1", length: "east", humanSeat: 0, aiDriver: new AiDriver() });
     runner.advance();
     expect(runner.result).toBeNull();
     expect(runner.pending).not.toBeNull();
@@ -36,14 +36,14 @@ describe("GameRunner", () => {
   }, 60000);
 
   it("rejects acting with no pending decision and with the wrong action kind", () => {
-    const runner = new GameRunner({ seed: "runner-2", length: "east", humanSeat: 0, aiDriver: new TempAiDriver() });
+    const runner = new GameRunner({ seed: "runner-2", length: "east", humanSeat: 0, aiDriver: new AiDriver() });
     expect(() => runner.act({ type: "pass" })).toThrow();
     runner.advance();
     expect(() => runner.act({ type: "pass" })).toThrow();
   }, 60000);
 
   it("resume round-trip: serialize -> restore reproduces the identical state", async () => {
-    const ai = new TempAiDriver();
+    const ai = new AiDriver();
     const runner = new GameRunner({ seed: "runner-resume", length: "east", humanSeat: 0, aiDriver: ai });
     runner.advance();
     // Play a stretch of the game (through at least one full hand boundary
@@ -60,7 +60,7 @@ describe("GameRunner", () => {
     const pendingSeat = runner.pending?.seat;
     const decisionCount = runner.decisions.length;
 
-    const restored = GameRunner.restore(saved, new TempAiDriver());
+    const restored = GameRunner.restore(saved, new AiDriver());
     expect(JSON.stringify(restored.events)).toBe(eventsJson);
     expect(restored.pending?.kind).toBe(pendingKind);
     expect(restored.pending?.seat).toBe(pendingSeat);
@@ -70,7 +70,7 @@ describe("GameRunner", () => {
 
   it("a restored game finishes with the same scores as the uninterrupted game", async () => {
     const seed = "runner-finish";
-    const playToEnd = async (runner: GameRunner, ai: TempAiDriver): Promise<readonly number[]> => {
+    const playToEnd = async (runner: GameRunner, ai: AiDriver): Promise<readonly number[]> => {
       let guard = 0;
       while (!runner.result && guard++ < 3000) {
         drivePending(runner, ai);
@@ -80,24 +80,24 @@ describe("GameRunner", () => {
       return runner.result.scores;
     };
 
-    const direct = new GameRunner({ seed, length: "east", humanSeat: 0, aiDriver: new TempAiDriver() });
+    const direct = new GameRunner({ seed, length: "east", humanSeat: 0, aiDriver: new AiDriver() });
     direct.advance();
-    const directScores = await playToEnd(direct, new TempAiDriver());
+    const directScores = await playToEnd(direct, new AiDriver());
 
-    const partial = new GameRunner({ seed, length: "east", humanSeat: 0, aiDriver: new TempAiDriver() });
+    const partial = new GameRunner({ seed, length: "east", humanSeat: 0, aiDriver: new AiDriver() });
     partial.advance();
-    const ai2 = new TempAiDriver();
+    const ai2 = new AiDriver();
     for (let i = 0; i < 10 && !partial.result; i++) drivePending(partial, ai2);
     const saved: SavedGame = JSON.parse(JSON.stringify(partial.serialize())) as SavedGame;
-    const restored = GameRunner.restore(saved, new TempAiDriver());
-    const restoredScores = await playToEnd(restored, new TempAiDriver());
+    const restored = GameRunner.restore(saved, new AiDriver());
+    const restoredScores = await playToEnd(restored, new AiDriver());
 
     expect([...restoredScores]).toEqual([...directScores]);
     expect(restoredScores.reduce((a, b) => a + b, 0)).toBe(100000);
   }, 600000);
 
   it("detects a tampered decision log instead of silently desyncing", () => {
-    const ai = new TempAiDriver();
+    const ai = new AiDriver();
     const runner = new GameRunner({ seed: "runner-tamper", length: "east", humanSeat: 0, aiDriver: ai });
     runner.advance();
     drivePending(runner, ai);
@@ -106,6 +106,6 @@ describe("GameRunner", () => {
     const idx = saved.decisions.findIndex((d) => d.type === "discard");
     expect(idx).toBeGreaterThanOrEqual(0);
     (saved.decisions as unknown[])[idx] = { type: "pass" };
-    expect(() => GameRunner.restore(saved, new TempAiDriver())).toThrow(/desync/);
+    expect(() => GameRunner.restore(saved, new AiDriver())).toThrow(/desync/);
   }, 300000);
 });

@@ -68,8 +68,7 @@ export interface RunnerOptions {
   readonly seed: number | string;
   readonly length: GameLength;
   readonly humanSeat?: Seat;
-  /** Driver for the three non-human seats (TempAiDriver in this PR;
-   *  packages/ai's driver drops in here unchanged). */
+  /** Driver for the three non-human seats (AiDriver: @openmahjong/ai). */
   readonly aiDriver: SeatDriver;
 }
 
