@@ -649,7 +649,7 @@ export class App {
     this.textScreen("about", "About", (page) => {
       page.append(
         h("p", {}, "Open Mahjong is a free, open-source mahjong platform — the lichess of mahjong. Riichi ships first; Hong Kong and MCR rules follow as rule packs on the same engine."),
-        h("p", {}, "Free forever. Your settings and game history live only in this browser."),
+        h("p", {}, "Free forever. As a guest, your settings and game history live only in this browser. Signed in, they are saved to your account."),
         h("h3", {}, "License"),
         h("p", {}, "Open Mahjong is free software under the GNU Affero General Public License v3 (AGPLv3). The rules engine is its own TypeScript library, so anyone can build their own client on it."),
         h("h3", {}, "Source"),
