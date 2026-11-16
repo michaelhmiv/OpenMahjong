@@ -10,14 +10,21 @@
  */
 
 import {
+  doraFromIndicator,
   tileTypeName,
   type CallAction,
   type GameEvent,
   type GameLength,
   type Seat,
   type Tile,
+  type TileType,
   type TurnAction,
 } from "@openmahjong/engine";
+import {
+  countsOfTiles,
+  doraWeightsOf,
+  evaluateDiscards,
+} from "@openmahjong/ai";
 import {
   GOOGLE_START_URL,
   deleteAccount,
@@ -74,7 +81,21 @@ import {
 } from "./settings.js";
 import { ClickSound } from "./sound.js";
 import { TILE_SPRITE_SVG } from "./tiles-sprite.js";
-import { adviseDiscard } from "@openmahjong/coach";
+import { adviseDiscard, tileName, type TurnAdvice } from "@openmahjong/coach";
+
+/** Does adding tile `type` to the counts complete a run through it? */
+function suitedWaitRun(counts: readonly number[], type: TileType): boolean {
+  if (type >= 27) return false;
+  const rank = (type % 9) + 1;
+  const base = Math.floor(type / 9) * 9;
+  const has = (r: number) => r >= 1 && r <= 9 && (counts[base + r - 1] ?? 0) > 0;
+  return (
+    (has(rank - 2) && has(rank - 1)) ||
+    (has(rank - 1) && has(rank + 1)) ||
+    (has(rank + 1) && has(rank + 2))
+  );
+}
+import { tileInfo } from "./tile-info.js";
 import {
   LessonController,
   MODULES,
@@ -321,6 +342,7 @@ type FrameState =
   | { kind: "player"; seat: Seat }
   | { kind: "center" }
   | { kind: "hand"; mode: "inspect" | "chi" | "kan" }
+  | { kind: "guide" }
   | null;
 
 const EVENT_DELAYS: Record<string, number> = {
@@ -354,6 +376,11 @@ export class App {
   private riichiDismissed = false;
   private frame: FrameState = null;
   private frameReturnFocus: string | undefined;
+  /** Coach advice for the pending turn decision, memoised on the
+   *  pending object so the hint overlay, the hand ring, and the
+   *  inspect readout share one evaluation per decision. */
+  private guideCacheFor: unknown = null;
+  private guideCacheAdvice: TurnAdvice | null = null;
   private currentScreen: ScreenName = "home";
   private practice: PracticeProgress = loadPracticeProgress();
   private practiceInitialSkill: SkillId | undefined;
@@ -1721,7 +1748,7 @@ export class App {
       for (const child of [...t.children]) {
         if (child !== dialog && child !== scrim && child instanceof HTMLElement) child.inert = true;
       }
-      accessibleDialog(dialog, this.frame.kind === "hand" ? "Your hand" : this.frame.kind === "center" ? "Round details" : "Player details", () => this.closeFrame());
+      accessibleDialog(dialog, this.frame.kind === "hand" ? "Your hand" : this.frame.kind === "guide" ? "Why this move?" : this.frame.kind === "center" ? "Round details" : "Player details", () => this.closeFrame());
     }
 
     // Guided hint overlay (HINT PLACEMENT ruling): a floating layer
@@ -1732,21 +1759,60 @@ export class App {
   }
 
   /**
-   * The guided hint for the pending draw decision, or null whenever
-   * it must not show: guided off, a call prompt or Focus Frame open,
-   * playback running, or no discard decision pending. The advice is
-   * the coach's — the CPU policy's own evaluation, opened up.
+   * The coach's advice for the pending draw decision, or null
+   * whenever guided help must not speak: guided off, a lesson scene
+   * running, playback running, or no discard decision pending. The
+   * advice is the coach's — the CPU policy's own evaluation, opened
+   * up. Shared by the hint overlay, the recommendation ring on the
+   * hand, and the inspect readout's waits rule.
    */
-  private guideHintEl(): HTMLElement | null {
+  private guideAdvice(): TurnAdvice | null {
     // Current strategic analysis must not be attributed to historical
     // rules. Legacy saves retain their original simulation revision.
     if (this.runner?.replayVersion === 1) return null;
-    if (this.lesson || this.frame || this.playing || !this.runner) return null;
+    if (this.lesson || this.playing || !this.runner) return null;
     if (!this.tu11Active && !this.settings.guided) return null;
     const pending = this.runner.pending;
     if (!pending || pending.kind !== "turn" || !this.pendingVisible()) return null;
+    if (this.guideCacheFor === pending) return this.guideCacheAdvice;
     const advice = adviseDiscard(pending.view, pending.ctx);
-    return h("div", { class: "guidehint" }, advice.headline);
+    this.guideCacheFor = pending;
+    this.guideCacheAdvice = advice;
+    return advice;
+  }
+
+  /**
+   * The guided hint overlay: the coach's headline with the named
+   * tile's face beside it (approved rendering A), floating above the
+   * hand. The bubble itself is tappable — it opens the "Why this
+   * move?" explanation sheet — and nothing else about the layer
+   * intercepts touches: the hand and call buttons stay live around
+   * it. Hidden while any Focus Frame (or the sheet itself) is open.
+   */
+  private guideHintEl(): HTMLElement | null {
+    if (this.frame) return null;
+    const advice = this.guideAdvice();
+    if (!advice) return null;
+    const el = h("div", {
+      class: "guidehint",
+      role: "button",
+      tabindex: "0",
+      "aria-label": "Why this move?",
+    });
+    el.append(
+      tileEl(tileById(advice.recommendation.tileId), "gface", { flip: false }),
+      h("span", { class: "gtext" }, advice.headline),
+    );
+    el.addEventListener("click", () => {
+      this.sound.unlock();
+      this.openFrame({ kind: "guide" });
+    });
+    el.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      this.openFrame({ kind: "guide" });
+    });
+    return el;
   }
 
   private centerEl(): HTMLElement {
@@ -1813,6 +1879,10 @@ export class App {
     const size = this.handTileSize();
     const pending = this.runner?.pending;
     const myTurn = pending?.kind === "turn" && !this.playing;
+    // The coach's recommended discard instance carries the ring
+    // (rendering A) for exactly as long as the hint speaks for this
+    // decision; a fresh render for a new decision recomputes it.
+    const recId = this.guideAdvice()?.recommendation.tileId ?? null;
     tiles.forEach((tile, idx) => {
       const isDrawn = drawnId !== null && tile.id === drawnId && idx === tiles.length - 1;
       const wrap = tileEl(tile, "t-hand");
@@ -1823,6 +1893,7 @@ export class App {
       }
       if (isDrawn) wrap.classList.add("drawn-host");
       if (isDrawn) inner.classList.add("drawn");
+      if (recId !== null && tile.id === recId) inner.classList.add("coach-rec");
       if (this.selectedTileId === tile.id) inner.classList.add("sel");
       if (this.riichiArmed && pending?.kind === "turn" && pending.ctx.riichiDiscardIds.includes(tile.id)) {
         inner.classList.add("riichi-ok");
@@ -1985,6 +2056,7 @@ export class App {
   private frameEl(): HTMLElement {
     const frame = this.frame!;
     if (frame.kind === "hand") return this.handSheetEl(frame.mode);
+    if (frame.kind === "guide") return this.guideSheetEl();
     if (frame.kind === "center") return this.centerFrameEl();
     return this.playerFrameEl(frame.seat);
   }
@@ -2100,6 +2172,270 @@ export class App {
     return frame;
   }
 
+  /**
+   * The explanation sheet behind the guided hint (rendering C):
+   * the coach's recommendation in plain beginner language — the
+   * goal for this hand right now, the move, why this tile, and
+   * what the player is waiting for. Every line is template-rendered
+   * from the same adviseDiscard facts the headline uses; no new
+   * evaluator, no free text. The sheet is a Focus Frame: it pauses
+   * nothing and the pending decision waits untouched behind it.
+   */
+  private guideSheetEl(): HTMLElement {
+    const sheet = h("div", { class: "sheet xsheet" });
+    const pending = this.runner?.pending;
+    const advice = this.guideAdvice();
+    const { frame: headShell } = this.frameShell("Guided hint", "");
+    headShell.querySelector(".fsub")?.remove(); // rendering C: no sub line
+    sheet.append(...headShell.childNodes);
+    sheet.firstElementChild!.classList.remove("frame");
+    if (!advice || !pending || pending.kind !== "turn") return sheet;
+
+    const view = pending.view;
+    const ctx = pending.ctx;
+    const rec = advice.recommendation;
+    const sec = (label: string) => sheet.append(h("div", { class: "fsec" }, label));
+    const body = (text: string) => sheet.append(h("p", { class: "xbody" }, text));
+    const display = (name: string) =>
+      name.replace(/ of (characters|dots|bamboo)$/, (m) => ` of ${m[4]!.toUpperCase()}${m.slice(5)}`);
+    const recName = display(rec.tileName);
+    const numWord = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight"];
+
+    // The goal for this hand right now.
+    sec("The goal");
+    if (advice.canTsumo) {
+      body("You are holding a finished hand — four groups of three tiles, plus one pair. Declare the win.");
+    } else if (rec.shantenAfter === 0) {
+      // The composition sentence names the hand's own groups when a
+      // plain decomposition leaves exactly one group open (the
+      // rendering's scene); exotic shapes keep the general sentence.
+      const work = countsOfTiles(view.hand);
+      work[rec.tileType]!--;
+      let sets = view.melds.length;
+      let triplets = 0;
+      let runs = 0;
+      for (let t = 0; t < 34; t++) {
+        while (work[t]! >= 3) { work[t]! -= 3; triplets++; sets++; }
+      }
+      for (let t = 0; t < 25; t++) {
+        if ((t % 9) > 6) continue;
+        while (work[t]! > 0 && work[t + 1]! > 0 && work[t + 2]! > 0) {
+          work[t]!--; work[t + 1]!--; work[t + 2]!--; runs++; sets++;
+        }
+      }
+      let pair = false;
+      for (let t = 0; t < 34; t++) {
+        if (work[t] === 2) { work[t]! -= 2; pair = true; break; }
+      }
+      const remainder = work.reduce((a, b) => a + b, 0);
+      let composition = "";
+      if (sets === 3 && pair && remainder === 2) {
+        const parts = ["the pair"];
+        if (triplets > 0) parts.push(`${numWord[triplets] ?? triplets} triplet${triplets > 1 ? "s" : ""}`);
+        if (runs > 0) parts.push(`${numWord[runs] ?? runs} run${runs > 1 ? "s" : ""}`);
+        const list = parts.length > 1
+          ? `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`
+          : parts[0]!;
+        composition = ` You have ${list}; one group is still open.`;
+      }
+      body(
+        `You are one tile from a finished hand: four groups of three tiles — three in a row, or three of a kind — plus one pair.${composition} One tile from finished is called ready.`,
+      );
+    } else if (rec.shantenAfter === 1) {
+      body(
+        "You are building toward a finished hand: four groups of three tiles — three in a row, or three of a kind — plus one pair. This move leaves the hand one good draw away from ready — one tile from finished.",
+      );
+    } else {
+      body(
+        `You are building toward a finished hand: four groups of three tiles — three in a row, or three of a kind — plus one pair. This move leaves the hand ${rec.shantenAfter} steps away from ready.`,
+      );
+    }
+
+    // The move: the tile's face beside its name and the plain order.
+    sec("The move");
+    const recTile = tileById(rec.tileId);
+    const moveRow = h("div", { class: "xmove" });
+    if (recTile) moveRow.append(tileEl(recTile, "", { flip: false }));
+    const drawn = ctx.drawnTile !== null && ctx.drawnTile.id === rec.tileId;
+    const tenpaiDiscards = evaluateDiscards(view, ctx).filter(
+      (c) => c.shantenAfter === rec.shantenAfter,
+    ).length;
+    const moveFacts: string[] = [];
+    if (advice.riichi?.recommended && advice.riichi.tileId === rec.tileId) {
+      moveFacts.push("Discard it and declare riichi.");
+    } else {
+      moveFacts.push("Discard it.");
+    }
+    if (drawn) moveFacts.push("You just drew this tile,");
+    if (rec.shantenAfter === 0 && tenpaiDiscards === 1) {
+      moveFacts.push(
+        drawn
+          ? "and it is the only discard that leaves the hand ready."
+          : "It is the only discard that leaves the hand ready.",
+      );
+    } else if (rec.shantenAfter === 0) {
+      moveFacts.push(
+        drawn ? "and the hand is ready after it." : "The hand is ready after it.",
+      );
+    }
+    const moveText = h("div", {},
+      h("div", { class: "mname" }, recName),
+      h("div", { class: "msub" }, moveFacts.join(" ")),
+    );
+    moveRow.append(moveText);
+    sheet.append(moveRow);
+
+    // Why this tile.
+    sec("Why this tile");
+    const counts = countsOfTiles(view.hand);
+    const type = rec.tileType;
+    const inHand = counts[type] ?? 0;
+    const suited = type < 27;
+    const rank = suited ? (type % 9) + 1 : 0;
+    const base = suited ? Math.floor(type / 9) * 9 : 0;
+    const near = (r: number) => r >= 1 && r <= 9 && (counts[base + r - 1] ?? 0) > 0;
+    const neighbours = suited && (near(rank - 2) || near(rank - 1) || near(rank + 1) || near(rank + 2));
+    if (inHand === 1 && !neighbours) {
+      const suitName = recName.split(" of ")[1] ?? "";
+      const partners = [rank - 2, rank - 1, rank + 1, rank + 2].filter((r) => r >= 1 && r <= 9);
+      const partnerList = partners.length > 1
+        ? `${partners.slice(0, -1).join(", ")} or ${partners[partners.length - 1]}`
+        : `${partners[0] ?? ""}`;
+      const isolated = suited
+        ? `The ${recName} connects to nothing — no second copy to pair with, no ${partnerList} of ${suitName} to make a run.`
+        : `The ${recName} connects to nothing — no second copy to pair with.`;
+      body(
+        rec.shantenAfter === 0 && tenpaiDiscards === 1
+          ? `${isolated} Every other tile is part of a group or your pair — discard one, its group breaks, and the hand is no longer ready.`
+          : isolated,
+      );
+    } else if (rec.improvingTotal > 0) {
+      body(
+        `${rec.improvingTotal} unseen tiles improve the hand after this discard — the most of any discard.`,
+      );
+    } else {
+      body("It leaves the hand as close to ready as any discard can.");
+    }
+    if (rec.doraDiscarded > 0) {
+      body("It throws away a dora, but the shape it leaves is worth more.");
+    }
+    if (rec.genbutsu) {
+      body("Every riichi opponent has already discarded it, so none of them can win off it.");
+    } else if (rec.reasons.includes("safe-vs-riichi")) {
+      body("No riichi opponent can win off it.");
+    }
+    if (rec.reasons.includes("dangerous-vs-riichi")) {
+      body("A riichi opponent could win off it — it is still the best move toward winning.");
+    }
+    if (rec.furiten) {
+      body("One catch: a tile the hand waits on is in your own discards, so you can only win by drawing it yourself.");
+    }
+    // The value paragraph: why a ready hand stays quiet, or why
+    // riichi is worth declaring — dora named from the indicators.
+    const closed = view.melds.every((m) => m.kind === "ankan");
+    if (!view.players[view.seat]!.riichi && closed && rec.shantenAfter === 0) {
+      const doraWeights = doraWeightsOf(view);
+      let dora = 0;
+      const groups = new Map<string, number>();
+      const tally = (t: Tile, red: boolean) => {
+        const w = (doraWeights.get(t.type) ?? 0) + (red ? 1 : 0);
+        if (w === 0) return;
+        dora += w;
+        const key = red && (doraWeights.get(t.type) ?? 0) === 0
+          ? `red:${t.type}`
+          : `ind:${t.type}`;
+        groups.set(key, (groups.get(key) ?? 0) + w);
+      };
+      for (const t of view.hand) if (t.id !== rec.tileId) tally(t, t.red);
+      for (const m of view.melds) for (const t of m.tiles) tally(t, t.red);
+      if (advice.riichi?.recommended && advice.riichi.tileId === rec.tileId) {
+        body("Riichi — an optional declaration made when your hand is ready — raises the score here. It also locks your hand to discarding only what you draw.");
+      } else if (dora >= 2) {
+        // The approved paragraph (rendering C, final): riichi and
+        // dora defined at first use, the dora named group by group
+        // (indicator groups first, red fives last), then the
+        // indicator itself defined where it is named.
+        const parts: string[] = [];
+        for (const wantKind of ["ind", "red"]) {
+          for (const [key, c] of groups) {
+            const [kind, tStr] = key.split(":");
+            if (kind !== wantKind) continue;
+            const t = Number(tStr) as TileType;
+            const name = display(tileName(t));
+            if (kind === "red") {
+              parts.push(parts.length === 0 ? `one is the red ${name}` : `one the red ${name}`);
+            } else {
+              parts.push(c === 1 ? `one is the ${name}` : `${numWord[c] ?? c} are ${name}`);
+            }
+          }
+        }
+        const partsSentence = parts.length > 0
+          ? `${parts.join(", ")[0]!.toUpperCase()}${parts.join(", ").slice(1)}`
+          : "";
+        const indSentences: string[] = [];
+        const seenInd = new Set<TileType>();
+        for (const [key] of groups) {
+          const [kind, tStr] = key.split(":");
+          if (kind !== "ind") continue;
+          const t = Number(tStr) as TileType;
+          const ind = view.doraIndicators.find((i) => doraFromIndicator(i.type) === t);
+          if (!ind || seenInd.has(ind.type)) continue;
+          seenInd.add(ind.type);
+          indSentences.push(
+            `The face-up tile in the middle of the table, the indicator, is the ${display(tileName(ind.type))}; the tile one step above is a dora.`,
+          );
+        }
+        body(
+          `Already valuable, the hand needs no riichi — an optional declaration made when your hand is ready — with ${numWord[dora] ?? dora} dora — bonus tiles worth extra score.${partsSentence ? ` ${partsSentence}.` : ""}${indSentences.length ? ` ${indSentences.join(" ")}` : ""} Riichi can raise the score, but it locks your hand to discarding only what you draw.`,
+        );
+      }
+    }
+
+    // What the player is waiting for (ready hands).
+    if (rec.shantenAfter === 0 && rec.waits.length > 0) {
+      sec("What you're waiting for");
+      const words = ["", "One", "Two", "Three", "Four"];
+      body(
+        `${words[rec.waits.length] ?? rec.waits.length} ${rec.waits.length === 1 ? "tile finishes" : "tiles finish"} the hand. Their other copies are unseen — in the wall — the pile of tiles everyone draws from — or in another player's hand.`,
+      );
+      const after = counts.slice();
+      after[type] = (after[type] ?? 0) - 1;
+      for (const w of rec.waits) {
+        const row = h("div", { class: "xwait" });
+        row.append(tileEl({ id: -1, type: w.type, red: false }, "", { flip: false }));
+        const held = after[w.type] ?? 0;
+        let fact: string;
+        if (suitedWaitRun(after, w.type)) {
+          // Name the run the wait actually completes: the first
+          // start (lowest first, as the inspect readout reads runs)
+          // whose other two tiles are in hand.
+          const r = (w.type % 9) + 1;
+          const baseW = Math.floor(w.type / 9) * 9;
+          const has = (rr: number) => rr >= 1 && rr <= 9 && (after[baseW + rr - 1] ?? 0) > 0;
+          let start = r;
+          for (const s of [r - 2, r - 1, r]) {
+            if (s < 1 || s + 2 > 9) continue;
+            if ([s, s + 1, s + 2].every((rr) => rr === r || has(rr))) { start = s; break; }
+          }
+          fact = `Completes the ${start}, ${start + 1}, ${start + 2} run · ${w.live} ${w.live === 1 ? "copy" : "copies"} still unseen.`;
+        } else if (held >= 2) {
+          fact = `Completes three of a kind · ${w.live} ${w.live === 1 ? "copy" : "copies"} still unseen.`;
+        } else if (held === 1) {
+          fact = `Completes your pair · ${w.live} ${w.live === 1 ? "copy" : "copies"} still unseen.`;
+        } else {
+          fact = `${w.live} ${w.live === 1 ? "copy" : "copies"} still unseen.`;
+        }
+        row.append(h("div", {},
+          h("div", { class: "wname" }, display(w.name)),
+          h("div", { class: "wfact" }, fact),
+        ));
+        sheet.append(row);
+      }
+      body("Draw one, or claim one an opponent discards with the Ron button, and the hand is complete.");
+    }
+    return sheet;
+  }
+
   private handSheetEl(mode: "inspect" | "chi" | "kan"): HTMLElement {
     const sheet = h("div", { class: "sheet" });
     const pending = this.runner?.pending;
@@ -2109,12 +2445,30 @@ export class App {
     if (selected && mode === "inspect") {
       const preview = h("div", { class: "selpreview" });
       preview.append(tileEl(selected, "", { flip: false }));
-      const readout = h("div", { class: "readout" },
-        `Selected — ${tileLabel(selected)}`,
-      );
-      readout.append(h("span", { class: "dim" },
-        drawnId === selected.id ? "Your draw" : tileTypeName(selected.type),
-      ));
+      const readout = h("div", { class: "readout" });
+      // The approved readout (rendering B): the plain name first,
+      // then the tile's facts — each line only when it is true of
+      // this position. Legacy replays keep the plain label: current
+      // facts must not be attributed to historical rules.
+      const view = pending?.view;
+      if (view && this.runner?.replayVersion !== 1) {
+        let recommendedTileId = this.guideAdvice()?.recommendation.tileId ?? null;
+        if (recommendedTileId === null && pending?.kind === "turn" && !this.lesson) {
+          // The waits rule names the coach-recommended discard
+          // whether or not guided mode is on; the inspect sheet is
+          // the player's own invoked surface.
+          recommendedTileId = adviseDiscard(pending.view, pending.ctx).recommendation.tileId;
+        }
+        const info = tileInfo(view, selected, {
+          drawnTile: pending?.kind === "turn" ? pending.ctx.drawnTile : null,
+          recommendedTileId,
+        });
+        readout.append(h("div", { class: "tname" }, info.name));
+        for (const line of info.lines) readout.append(h("div", { class: "iline" }, line));
+        if (info.waitsLine) readout.append(h("div", { class: "iline waits" }, info.waitsLine));
+      } else {
+        readout.append(h("div", { class: "tname" }, tileLabel(selected)));
+      }
       preview.append(readout);
       sheet.append(preview);
     } else {

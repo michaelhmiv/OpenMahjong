@@ -400,10 +400,12 @@ button.hrow {
   animation: sheet-in 0.24s cubic-bezier(0.2, 0.9, 0.25, 1);
 }
 @keyframes sheet-in { from { transform: translateY(26px); opacity: 0.4; } to { transform: none; opacity: 1; } }
-.selpreview { display: flex; align-items: center; gap: 12px; min-height: 0; }
-.selpreview .tile { width: 72px; height: 100px; }
-.selpreview .readout { font-size: 14px; font-weight: 600; }
-.selpreview .readout .dim { color: var(--dim); font-weight: 600; font-size: 12px; display: block; margin-top: 2px; }
+.selpreview { display: flex; align-items: flex-start; gap: 12px; min-height: 0; }
+.selpreview .tile { width: 72px; height: 100px; flex: 0 0 auto; }
+.selpreview .readout { flex: 1 1 auto; padding-top: 2px; }
+.selpreview .readout .tname { font-size: 17px; font-weight: 700; color: var(--ink); line-height: 1.25; }
+.selpreview .readout .iline { font-size: 13px; color: var(--dim); line-height: 1.4; margin-top: 3px; }
+.selpreview .readout .iline.waits { color: var(--ink); font-weight: 600; }
 .hgrid { display: grid; grid-template-columns: repeat(7, 48px); gap: 8px 4px; margin-top: 10px; }
 .hgrid .cell { position: relative; width: 48px; height: 67px; }
 .hgrid .tile { width: 48px; height: 67px; position: absolute; left: 0; top: 0; }
@@ -512,10 +514,12 @@ button.hrow {
 @media (prefers-reduced-motion: reduce) {
   .frame, .sheet, .pulse { animation: none; }
   .animating .tile { transition: none; }
+  .handrow .tile.coach-rec { animation: none; }
 }
 html.reduced-motion .frame, html.reduced-motion .sheet,
 html.reduced-motion .pulse { animation: none; }
 html.reduced-motion .animating .tile { transition: none; }
+html.reduced-motion .handrow .tile.coach-rec { animation: none; }
 
 /* Frame melds render at pond-inspection size (focus-frames-v1). */
 .fmelds { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -627,9 +631,43 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 .guidehint {
   position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 200px;
   background: var(--panel-hi); color: var(--ink); font-size: 13px; font-weight: 700;
-  padding: 10px 16px; border-radius: 14px; max-width: 320px; text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); pointer-events: none;
+  padding: 10px 16px; border-radius: 14px; width: 300px; max-width: 320px; text-align: left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  display: flex; align-items: center; gap: 10px;
+  /* Only the bubble itself is tappable (it opens the "Why this
+     move?" sheet); the layer around it never blocks the table. */
+  pointer-events: auto; cursor: pointer;
 }
+.guidehint .tile { width: 22px; height: 31px; flex: 0 0 auto; }
+.guidehint .gtext { flex: 1 1 auto; line-height: 1.35; }
+
+/* Coach recommendation ring on the hand tile (rendering A): a flat
+   state-green ring at hand size — deliberately not the player's own
+   selection treatment (the 1.5x lift-and-scale), so the two states
+   can never be confused. The pulse is decoration; the static ring
+   carries the information under reduced motion. */
+.handrow .tile.coach-rec {
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 5px var(--state);
+  border-radius: 5px; z-index: 2;
+  animation: recpulse 1.6s ease-in-out infinite;
+}
+@keyframes recpulse {
+  0%, 100% { box-shadow: 0 0 0 2px var(--bg), 0 0 0 5px var(--state); }
+  50% { box-shadow: 0 0 0 2px var(--bg), 0 0 0 7.5px var(--state); }
+}
+
+/* Guided explanation sheet (rendering C): a reading surface in
+   Focus-Frame grammar — section labels reuse .fsec. */
+.xbody { font-size: 14px; line-height: 1.42; }
+.xbody + .xbody { margin-top: 8px; }
+.xmove { display: flex; align-items: center; gap: 12px; }
+.xmove .tile { width: 28px; height: 39px; flex: 0 0 auto; }
+.xmove .mname { font-size: 16px; font-weight: 700; line-height: 1.25; }
+.xmove .msub { font-size: 13px; color: var(--dim); margin-top: 2px; line-height: 1.35; }
+.xwait { display: flex; align-items: center; gap: 12px; margin-top: 7px; }
+.xwait .tile { width: 24px; height: 34px; flex: 0 0 auto; }
+.xwait .wname { font-size: 14px; font-weight: 600; line-height: 1.3; }
+.xwait .wfact { font-size: 13px; color: var(--dim); margin-top: 1px; line-height: 1.35; }
 
 /* Landing guided-mode row */
 .growrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; max-width: 300px; margin-top: 14px; text-align: left; }
