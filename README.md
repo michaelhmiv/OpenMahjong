@@ -1,14 +1,10 @@
 # Open Mahjong
 
-**The lichess of mahjong.** A free, open-source, web-first mahjong platform —
-real four-player mahjong, presented cleanly, with no characters and no
-account required to play.
+**The lichess of mahjong.** A free, open-source, web-first mahjong platform.
+Four-player riichi mahjong; no account required to play.
 
-Open Mahjong exists because the current options bury a great game under a
-casino shell. This is the game itself: a complete riichi mahjong experience
-built on a rules engine that will carry every major
-variant — riichi first, then Hong Kong, MCR, and American — as rule packs
-on one shared core.
+The rules engine will carry every major variant — riichi first, then
+Hong Kong, MCR, and American — as rule packs on one shared core.
 
 ## Principles
 

@@ -277,7 +277,7 @@ export class App {
 
     el.append(h("div", { class: "spacer" }));
     const wm = h("div", { class: "wordmark" }, "OPEN MAHJONG");
-    wm.append(h("span", { class: "sub" }, "Free forever."));
+    wm.append(h("span", { class: "sub" }, "Free forever. Open source mahjong."));
     el.append(wm);
 
     const seg = h("div", { class: "seg" });
