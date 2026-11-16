@@ -49,12 +49,13 @@ describe("App boot", () => {
     expect(root.querySelector("#screen-home .idchip")).toBeNull();
     expect(root.querySelector("#screen-home .recstrip")).toBeNull();
     // The tutorial's Learn entry is on the landing for guests too
-    // (brief §9: no account required) — it is the only secondary-row
-    // pill a guest gets.
-    const guestSec = [...root.querySelectorAll("#screen-home .secrow .pillbtn")].map(
-      (b) => b.textContent,
-    );
-    expect(guestSec).toEqual(["Learn"]);
+    // (brief §9: no account required) — under theme v6 it is the
+    // Learn card; guests get no secondary row at all.
+    expect(root.querySelector("#screen-home .secrow")).toBeNull();
+    const learnCard = root.querySelector("#screen-home .infocard.learncard");
+    expect(learnCard?.textContent).toContain("Learn");
+    expect(learnCard?.textContent).toContain("Start ›");
+    expect(learnCard?.textContent).toContain("11 lessons. Start with the tiles.");
     expect(root.querySelector("#screen-home .wordmark .sub")?.textContent).toBe(
       "Free forever. Open source mahjong.",
     );
@@ -85,6 +86,9 @@ describe("App boot", () => {
     expect(strip).toContain("Won 3");
     expect(strip).toContain("Avg place 2.4");
     expect(root.querySelector("#screen-home .gbtn")).toBeNull();
+    // No games and no lessons started: neither info card renders, and
+    // Learn stays reachable as the fallback pill (theme v6 grammar).
+    expect(root.querySelector("#screen-home .infocard")).toBeNull();
     const secButtons = [...root.querySelectorAll("#screen-home .secrow .pillbtn")].map(
       (b) => b.textContent,
     );

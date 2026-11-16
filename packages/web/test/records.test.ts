@@ -5,6 +5,7 @@ import {
   computeHandStats,
   formatRecordStrip,
   formatStatsView,
+  relativeDateLabel,
   shouldOfferImport,
   sumRecords,
 } from "../src/records.js";
@@ -210,5 +211,22 @@ describe("shouldOfferImport (brief T4: one-time, first sign-in)", () => {
   });
   it("never re-offers after import or dismissal", () => {
     expect(shouldOfferImport({ ...base, handled: true })).toBe(false);
+  });
+});
+
+describe("relativeDateLabel (home Last game card)", () => {
+  const now = new Date(2026, 10, 16, 15, 0, 0); // Mon Nov 16 2026, local
+  it("labels a game finished earlier today as Today", () => {
+    expect(relativeDateLabel(new Date(2026, 10, 16, 9, 30).toISOString(), now)).toBe("Today");
+  });
+  it("labels yesterday's game as Yesterday, across midnight", () => {
+    expect(relativeDateLabel(new Date(2026, 10, 15, 23, 30).toISOString(), now)).toBe("Yesterday");
+  });
+  it("falls back to the History date format for older games", () => {
+    const iso = new Date(2026, 10, 10, 12, 0).toISOString();
+    expect(relativeDateLabel(iso, now)).toBe("Tue, Nov 10");
+  });
+  it("returns empty for an unparseable date", () => {
+    expect(relativeDateLabel("not-a-date", now)).toBe("");
   });
 });

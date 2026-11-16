@@ -276,10 +276,9 @@ describe("B10: the new-player path, no account", () => {
     );
     new App(root);
     await settle();
-    // Landing: Learn is offered to a guest.
-    const learnBtn = [...root.querySelectorAll("#screen-home .pillbtn")].find(
-      (b) => b.textContent === "Learn",
-    );
+    // Landing: Learn is offered to a guest — the theme-v6 Learn card.
+    const learnBtn = root.querySelector("#screen-home .infocard.learncard");
+    expect(learnBtn).not.toBeNull();
     click(learnBtn);
     await settle();
     expect(root.querySelector("#screen-learn")?.classList.contains("active")).toBe(true);

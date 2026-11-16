@@ -1,32 +1,46 @@
 /* Open Mahjong client styles.
-   Table geometry and tokens reproduce the approved renderings
-   (table-v4 geometry + table-theme-v5 tokens + focus-frames-v1 system,
-   colours adopted to theme v5 per the brief's theme block). */
+   Table geometry reproduces the approved renderings (table-v4
+   geometry + focus-frames-v1 system). Tokens, type and the gold
+   discipline are design rules v6 (docs/design-rules.md): dark felt
+   green + flat gold, Fraunces display + Figtree UI. If this file and
+   the design rules disagree, the design rules win. */
 
 @font-face {
-  font-family: "Nunito";
-  src: url("/fonts/nunito-var.woff2") format("woff2");
-  font-weight: 200 1000;
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Figtree";
+  src: url("/fonts/figtree-var.woff2") format("woff2");
+  font-weight: 300 900;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
-  --bg: #231f2e;
-  --panel: #2f2a3d;
-  --line: #4c4562;
-  --ink: #f2eff8;
-  --dim: #b8b0cc;
-  --accent: #46a5e0;
-  --accent-text: #46a5e0;
+  --bg: #152620;
+  --panel: #1f352b;
+  --panel-hi: #2e4a3a;
+  --line: #3a5a47;
+  --ink: #f3efe3;
+  --dim: #a9bda9;
+  /* Gold is quarantined (design rules section 2): it may be used ONLY
+     by the selectors named there. State styles use --state, never gold,
+     and there is deliberately no single shared accent variable. */
+  --gold: #d9b45c;
+  --on-gold: #1c2a20;
+  --state: #5e9273;
   --decisive: #d63c2e;
-  --on-accent: #14101f;
-  --page: #17131f;
+  --page: #0d1812;
   --face: #f6f1e4;
 }
 
-/* Dark theme only (Michael, 2026-11-16): theme v5's dark tokens above
-   are the single theme; the derived light theme was removed. */
+/* Dark theme only (Michael, 2026-11-16): the v6 dark tokens above are
+   the single theme; there is no light theme. */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -34,7 +48,7 @@ html, body { height: 100%; }
 
 body {
   background: var(--bg);
-  font-family: "Nunito", -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  font-family: "Figtree", -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
   overflow: hidden;
@@ -43,7 +57,7 @@ body {
 .kj { font-family: "Noto Sans CJK SC", "Noto Sans CJK JP", sans-serif; }
 
 button { font-family: inherit; cursor: pointer; }
-button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--state); outline-offset: 2px; }
 
 #app { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
 
@@ -75,7 +89,7 @@ header.bar .word { font-size: 12px; letter-spacing: 0.14em; color: var(--dim); f
   font-size: 15px; font-weight: 600; background: var(--panel); color: var(--ink);
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
 }
-.pillbtn.primary { background: var(--accent); color: var(--on-accent); font-weight: 700; }
+.pillbtn.primary { background: var(--panel-hi); color: var(--ink); font-weight: 700; }
 .pillbtn.decisive { background: var(--decisive); color: #fff; font-weight: 700; }
 .pillbtn.ghost { background: transparent; color: var(--dim); box-shadow: inset 0 0 0 1.5px var(--line); }
 .pillbtn:disabled { opacity: 0.45; cursor: default; }
@@ -86,17 +100,31 @@ header.bar .word { font-size: 12px; letter-spacing: 0.14em; color: var(--dim); f
 /* Home                                                                */
 /* ------------------------------------------------------------------ */
 
-#screen-home { align-items: center; padding: 0 28px; }
+#screen-home {
+  align-items: center; padding: 0 28px;
+  /* Radial glow behind the wordmark zone (design rules section 1):
+     --glow-y is set inline per state (guest 27%, signed-in 22%). */
+  background:
+    radial-gradient(ellipse 380px 340px at 50% var(--glow-y, 27%),
+      #1b3029 0%, #182b23 48%, #152620 100%),
+    var(--bg);
+}
 #screen-home .spacer { flex: 1; }
-.wordmark { font-size: 30px; font-weight: 800; letter-spacing: 0.06em; text-align: center; }
-.wordmark .sub { display: block; font-size: 13px; font-weight: 600; color: var(--dim); letter-spacing: 0.02em; margin-top: 8px; }
+.wordmark { font-family: "Fraunces", Georgia, serif; font-size: 30px; font-weight: 650; letter-spacing: 0.045em; font-optical-sizing: auto; text-align: center; color: var(--gold); }
+.wordmark .sub { display: block; font-family: "Figtree", -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif; font-size: 13px; font-weight: 600; color: var(--dim); letter-spacing: 0.02em; margin-top: 8px; }
 .seg { display: flex; background: var(--panel); border-radius: 999px; padding: 4px; gap: 4px; margin: 26px 0 14px; }
 .seg button {
   border: none; background: transparent; color: var(--dim); font-size: 14px; font-weight: 600;
   height: 40px; padding: 0 20px; border-radius: 999px; min-width: 104px;
 }
-.seg button.on { background: var(--accent); color: var(--on-accent); font-weight: 700; }
-#screen-home .play { width: 220px; height: 56px; font-size: 17px; border-radius: 28px; }
+.seg button.on { background: var(--panel-hi); color: var(--ink); font-weight: 700; }
+/* Play is the one gold-filled button (design rules section 2);
+   ID+class specificity beats the generic .pillbtn.primary rule. */
+#screen-home .play {
+  width: 220px; height: 56px; font-size: 17px; border-radius: 28px;
+  background: var(--gold); color: var(--on-gold);
+  font-family: "Fraunces", Georgia, serif; font-weight: 600;
+}
 #screen-home .resume { margin-top: 12px; width: 220px; }
 #screen-home .quietrow { display: flex; gap: 6px; margin-bottom: 12px; }
 
@@ -118,8 +146,8 @@ header.bar .word { font-size: 12px; letter-spacing: 0.14em; color: var(--dim); f
   font-size: 14px; font-weight: 600;
 }
 .avatar {
-  width: 32px; height: 32px; border-radius: 50%; background: var(--accent);
-  color: var(--on-accent); font-weight: 800; font-size: 15px;
+  width: 32px; height: 32px; border-radius: 50%; background: var(--gold);
+  color: var(--on-gold); font-weight: 800; font-size: 15px;
   display: flex; align-items: center; justify-content: center; flex: 0 0 auto;
   overflow: hidden;
 }
@@ -133,6 +161,44 @@ header.bar .word { font-size: 12px; letter-spacing: 0.14em; color: var(--dim); f
 .recstrip .sep { color: var(--dim); }
 .secrow { display: flex; gap: 10px; width: 220px; margin-top: 12px; }
 .secrow .pillbtn { flex: 1 1 0; padding: 0 8px; }
+
+/* ------------------------------------------------------------------ */
+/* Theme v6 home additions (design rules sections 2-4): the tile     */
+/* strip under the wordmark and the info cards.                      */
+/* ------------------------------------------------------------------ */
+
+#screen-home .quietrow { flex-wrap: nowrap; }
+.quietrow .linkbtn { padding: 10px 7px; }
+
+/* The strip renders a real 14-tile hand with the production tile
+   faces (design rules section 4). Group gaps: 3-3-3-2-3. */
+.tilestrip { position: relative; display: flex; justify-content: center; gap: 1px; margin: 22px -20px 0; }
+.tilestrip::after {
+  content: ""; position: absolute; left: 12px; right: 12px; bottom: -7px; height: 10px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0) 70%);
+}
+.tile.t-strip { width: 24px; height: 34px; }
+.tile.t-strip svg { filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5)); }
+.tile.t-strip .edge { position: absolute; left: 1px; right: 1px; bottom: -3px; height: 6px; background: #d2c8ad; border-radius: 0 0 3px 3px; z-index: -1; }
+.tile.t-strip.grp { margin-left: 7px; }
+.tile.t-strip.grp:first-child { margin-left: 0; }
+
+/* Info cards (Last game / Learn / Learn progress). */
+.infocard {
+  width: 100%; background: var(--panel); border: none; border-radius: 20px;
+  padding: 14px 16px; margin-top: 12px; text-align: left; color: var(--ink);
+  display: flex; flex-direction: column;
+}
+.infocard .ic-top { display: flex; justify-content: space-between; align-items: baseline; }
+.infocard .ic-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); }
+.infocard .ic-date { font-size: 13px; color: var(--dim); }
+.infocard .ic-result { font-family: "Fraunces", Georgia, serif; font-size: 15px; font-weight: 600; margin-top: 5px; }
+.infocard .ic-title { font-family: "Fraunces", Georgia, serif; font-size: 15px; font-weight: 600; }
+.infocard .ic-line { font-size: 13px; color: var(--dim); margin-top: 3px; }
+.infocard .ic-cta { font-size: 14px; font-weight: 700; color: var(--gold); }
+.infocard .progbar { margin-top: 10px; }
+/* The Learn progress fill is one of the six allowed gold roles. */
+.infocard .progbar i { background: var(--gold); }
 .importbox {
   width: 100%; max-width: 320px; background: var(--panel); border-radius: 20px;
   padding: 14px 16px; margin-top: 14px;
@@ -234,9 +300,9 @@ button.hrow {
 
 .chip { background: var(--panel); border-radius: 999px; padding: 5px 12px; font-size: 12px; color: var(--dim); white-space: nowrap; }
 .chip b { color: var(--ink); font-weight: 600; }
-.chip .dealer { color: var(--accent-text); font-weight: 700; }
+.chip .dealer { color: var(--gold); font-weight: 700; }
 .chip.west { position: absolute; left: 50%; transform: translateX(-50%); }
-.chip.turn { box-shadow: 0 0 0 1.5px var(--accent); }
+.chip.turn { box-shadow: 0 0 0 1.5px var(--state); }
 
 .zone-player .pondwrap { padding-bottom: 14px; }
 .zone-player.with-prompt .pondwrap { padding-bottom: 8px; }
@@ -247,7 +313,7 @@ button.hrow {
 .handrow .tile::after { content: ""; position: absolute; inset: -9px -2.5px; }
 .handrow .tile.sel { transform: translateY(-10px) scale(1.5); transform-origin: 50% 100%; z-index: 3; }
 .handrow .tile.sel.drawn { transform: translateY(-14px) scale(1.5); }
-.handrow .tile.riichi-ok { box-shadow: 0 0 0 2px var(--accent); border-radius: 4px; }
+.handrow .tile.riichi-ok { box-shadow: 0 0 0 2px var(--state); border-radius: 4px; }
 
 /* Armed riichi state (table-riichi-v2): hand lifts, table dims. */
 #table.armed .handrow .tile { transform: translateY(-6px); }
@@ -308,7 +374,7 @@ button.hrow {
 .anchor { display: flex; align-items: flex-end; gap: 1px; }
 .anchor .tile { width: 22px; height: 31px; }
 .turnbanner {
-  margin-top: 12px; background: var(--accent); color: var(--on-accent); font-weight: 700;
+  margin-top: 12px; background: var(--panel-hi); color: var(--ink); font-weight: 700;
   font-size: 13px; border-radius: 10px; padding: 8px 12px; text-align: center;
 }
 
@@ -342,8 +408,8 @@ button.hrow {
 .hgrid .cell { position: relative; width: 48px; height: 67px; }
 .hgrid .tile { width: 48px; height: 67px; position: absolute; left: 0; top: 0; }
 .hgrid .drawn .tile { transform: translateY(-6px); }
-.hgrid .drawn::after { content: ""; position: absolute; left: 9px; right: 9px; bottom: -2px; height: 3px; border-radius: 2px; background: var(--accent); }
-.hgrid .sel { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--accent); border-radius: 8px; z-index: 3; }
+.hgrid .drawn::after { content: ""; position: absolute; left: 9px; right: 9px; bottom: -2px; height: 3px; border-radius: 2px; background: var(--state); }
+.hgrid .sel { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--state); border-radius: 8px; z-index: 3; }
 .hgrid .cell::after { content: ""; position: absolute; inset: -4px -2px; }
 .hact { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
 .hbtn {
@@ -352,12 +418,12 @@ button.hrow {
   background: var(--bg); color: var(--ink); flex: 1 1 auto; min-height: 52px;
 }
 .hbtn.decisive { background: var(--decisive); color: #fff; font-weight: 700; }
-.hbtn.primary { background: var(--accent); color: var(--on-accent); font-weight: 700; }
+.hbtn.primary { background: var(--panel-hi); color: var(--ink); font-weight: 700; }
 
 /* Hint bubble (first-game Focus Frame teaching) */
 .hint {
   position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); top: 120px;
-  background: var(--accent); color: var(--on-accent); font-size: 13px; font-weight: 700;
+  background: var(--panel-hi); color: var(--ink); font-size: 13px; font-weight: 700;
   padding: 10px 16px; border-radius: 14px; max-width: 300px; text-align: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
@@ -369,7 +435,7 @@ button.hrow {
 .overlay {
   position: absolute; inset: 0; z-index: 8; display: none;
   align-items: center; justify-content: center; padding: 22px;
-  background: rgba(10, 8, 16, 0.55);
+  background: rgba(6, 12, 9, 0.55);
 }
 .overlay.show { display: flex; }
 .card {
@@ -406,7 +472,7 @@ button.hrow {
 .page p.dim, .page .dim { color: var(--dim); }
 .page ul { padding-left: 20px; }
 .page li { margin-bottom: 4px; }
-.page a { color: var(--accent-text); }
+.page a { color: var(--state); }
 
 .setrow {
   display: flex; align-items: center; justify-content: space-between; gap: 14px;
@@ -421,8 +487,8 @@ button.hrow {
   content: ""; position: absolute; top: 3px; left: 3px; width: 26px; height: 26px;
   border-radius: 50%; background: var(--ink); transition: transform 0.15s;
 }
-.switch input:checked + .tr { background: var(--accent); }
-.switch input:checked + .tr::after { transform: translateX(20px); background: var(--on-accent); }
+.switch input:checked + .tr { background: var(--state); }
+.switch input:checked + .tr::after { transform: translateX(20px); background: var(--ink); }
 .switch input:disabled + .tr { opacity: 0.4; }
 
 .results-table { width: 100%; margin-top: 8px; }
@@ -434,7 +500,7 @@ button.hrow {
 .results-table .who { flex: 1; font-weight: 600; }
 .results-table .score { color: var(--dim); }
 .results-table .pts { font-weight: 800; min-width: 64px; text-align: right; }
-.results-table .pts.pos { color: var(--accent-text); }
+.results-table .pts.pos { color: var(--state); }
 .results-table .pts.neg { color: var(--decisive); }
 
 /* FLIP animation support: tiles transition transform/opacity while the
@@ -464,7 +530,7 @@ button.hrow {
    184 -> 196 tall for the larger type scale; chips do not scale; the
    smallest type in the mode is 12px. The drawn tile trades its margin
    gap (impossible inside a wrap) for the sheet's marking: a 6px raise
-   plus the primary-blue bar beneath it. */
+   plus the state-green bar beneath it. */
 html.large .t-hand { width: 28px; height: 39px; }
 html.large .t-pond { width: 22px; height: 31px; }
 html.large .pond { grid-template-columns: repeat(6, 22px); }
@@ -483,7 +549,7 @@ html.large .handrow .t-meld { width: 22px; height: 31px; }
 html.large .handrow .tile::after { inset: -5px -8px; }
 html.large .handrow .drawn { margin-left: 0; transform: translateY(-6px); }
 html.large .handrow .drawn-host { position: relative; }
-html.large .handrow .drawn-host::after { content: ""; position: absolute; left: 5px; right: 5px; bottom: -5px; height: 3px; border-radius: 2px; background: var(--accent); }
+html.large .handrow .drawn-host::after { content: ""; position: absolute; left: 5px; right: 5px; bottom: -5px; height: 3px; border-radius: 2px; background: var(--state); }
 html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 
 /* ------------------------------------------------------------------ */
@@ -501,7 +567,7 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 .revctl .pillbtn { flex: 1 1 0; }
 .revctl .step { font-size: 13px; font-weight: 600; color: var(--dim); white-space: nowrap; }
 .progbar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin: 0 0 16px; }
-.progbar i { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+.progbar i { display: block; height: 100%; background: var(--state); border-radius: 3px; }
 .progrow { margin-top: 18px; }
 .progrow .count { margin: 0 0 8px; }
 .progrow .progbar { margin: 0; }
@@ -510,8 +576,8 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 .lrow .n { font-size: 12px; font-weight: 700; color: var(--dim); width: 24px; flex: 0 0 24px; }
 .lrow .ttl { font-size: 15px; font-weight: 600; }
 .lrow .st { margin-left: auto; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--dim); white-space: nowrap; }
-.lrow .st svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.lrow .st.now { color: var(--accent-text); }
+.lrow .st svg { width: 16px; height: 16px; stroke: var(--state); fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.lrow .st.now { color: var(--state); }
 .lrow .chev { margin-left: auto; }
 .lrow .st + .chev { margin-left: 0; }
 .lrow .lenbadge { margin-left: auto; }
@@ -530,13 +596,13 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 .dgrid .cell { position: relative; width: 46px; height: 64px; cursor: pointer; }
 .dgrid .tile { width: 46px; height: 64px; position: absolute; left: 0; top: 0; }
 .dgrid .cell.sel { transform: translateY(-4px); }
-.dgrid .cell.sel .tile { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--accent); border-radius: 6px; }
+.dgrid .cell.sel .tile { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--state); border-radius: 6px; }
 .dnote { font-size: 13px; color: var(--dim); text-align: center; margin-top: 12px; }
 .tspacer { flex: 1 1 auto; }
 .dots { display: flex; gap: 8px; justify-content: center; padding: 14px 0 4px; }
 .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
-.dots i.done { background: var(--accent); }
-.dots i.now { background: transparent; box-shadow: inset 0 0 0 2px var(--accent); }
+.dots i.done { background: var(--state); }
+.dots i.now { background: transparent; box-shadow: inset 0 0 0 2px var(--state); }
 
 .lstrip { display: flex; flex-wrap: wrap; gap: 1.5px; margin-top: 8px; }
 .lchoices { display: flex; flex-direction: column; gap: 8px; margin: 14px 2px 0; }
@@ -552,7 +618,7 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
    layer — never part of the table's flow layout. */
 .guidehint {
   position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 200px;
-  background: var(--accent); color: var(--on-accent); font-size: 13px; font-weight: 700;
+  background: var(--panel-hi); color: var(--ink); font-size: 13px; font-weight: 700;
   padding: 10px 16px; border-radius: 14px; max-width: 320px; text-align: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); pointer-events: none;
 }
