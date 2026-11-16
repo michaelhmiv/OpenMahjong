@@ -6,7 +6,7 @@ account required to play.
 
 Open Mahjong exists because the current options bury a great game under a
 casino shell. This is the game itself: a complete riichi mahjong experience
-against honest AI, built on a rules engine that will carry every major
+built on a rules engine that will carry every major
 variant — riichi first, then Hong Kong, MCR, and American — as rule packs
 on one shared core.
 
