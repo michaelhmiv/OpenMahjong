@@ -1,8 +1,8 @@
 # Open Mahjong
 
 **The lichess of mahjong.** A free, open-source, web-first mahjong platform —
-real four-player mahjong, presented cleanly, with no ads, no gacha, no
-in-game currency, no characters, and no account required to play.
+real four-player mahjong, presented cleanly, with no characters and no
+account required to play.
 
 Open Mahjong exists because the current options bury a great game under a
 casino shell. This is the game itself: a complete riichi mahjong experience
@@ -12,7 +12,7 @@ on one shared core.
 
 ## Principles
 
-- **Free forever.** No paywalls, no ads, no gacha, ever.
+- **Free forever.** No paywalls, ever.
 - **Open source** under the GNU AGPL v3.0 — anyone can read, run, and build
   on the code; anyone who runs a modified version as a service must share
   their changes.
