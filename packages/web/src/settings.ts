@@ -6,11 +6,11 @@
 import type { GameLength } from "@openmahjong/engine";
 import type { SavedGame } from "./runner.js";
 
-export type ThemeName = "dark" | "light";
 export type MotionName = "standard" | "reduced";
 
+// Dark theme only (Michael, 2026-11-16): the derived light theme is
+// removed; theme v5's dark tokens are the single theme.
 export interface Settings {
-  theme: ThemeName;
   sound: boolean;
   motion: MotionName;
   largeTiles: boolean;
@@ -23,7 +23,6 @@ const HISTORY_KEY = "openmahjong.history.v1";
 const TAUGHT_KEY = "openmahjong.taught-focus-frame.v1";
 
 export const DEFAULT_SETTINGS: Settings = {
-  theme: "dark",
   sound: true,
   motion: "standard",
   largeTiles: false,
@@ -49,7 +48,10 @@ function writeJson(key: string, value: unknown): void {
 
 export function loadSettings(): Settings {
   const saved = readJson<Partial<Settings>>(SETTINGS_KEY);
-  return { ...DEFAULT_SETTINGS, ...(saved ?? {}) };
+  const merged = { ...DEFAULT_SETTINGS, ...(saved ?? {}) } as Settings & { theme?: unknown };
+  // Drop the retired theme key from settings saved before dark-only.
+  delete merged.theme;
+  return merged;
 }
 
 export function saveSettings(settings: Settings): void {
