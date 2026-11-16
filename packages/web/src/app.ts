@@ -201,6 +201,7 @@ type ScreenName =
   | "rules"
   | "settings"
   | "about"
+  | "privacy"
   | "results"
   | "history"
   | "stats";
@@ -300,7 +301,7 @@ export class App {
     this.root.append(sprite);
     this.stage = h("div", { id: "stage" });
     this.root.append(this.stage);
-    for (const name of ["home", "table", "rules", "settings", "about", "results", "history", "stats"] as ScreenName[]) {
+    for (const name of ["home", "table", "rules", "settings", "about", "privacy", "results", "history", "stats"] as ScreenName[]) {
       const s = h("section", { class: "screen", id: `screen-${name}` });
       this.screens.set(name, s);
       this.stage.append(s);
@@ -442,7 +443,7 @@ export class App {
 
     el.append(h("div", { class: "spacer" }));
     const quiet = h("div", { class: "quietrow" });
-    for (const [label, screen] of [["Rules", "rules"], ["Settings", "settings"], ["About", "about"]] as [string, ScreenName][]) {
+    for (const [label, screen] of [["Rules", "rules"], ["Settings", "settings"], ["About", "about"], ["Privacy", "privacy"]] as [string, ScreenName][]) {
       const b = h("button", { class: "linkbtn" }, label);
       b.addEventListener("click", () => this.showScreen(screen));
       quiet.append(b);
@@ -647,7 +648,7 @@ export class App {
 
     this.textScreen("about", "About", (page) => {
       page.append(
-        h("p", {}, "Open Mahjong is a free, open-source mahjong platform — the lichess of mahjong. Riichi ships first; Hong Kong, MCR, and American rules follow as rule packs on the same engine."),
+        h("p", {}, "Open Mahjong is a free, open-source mahjong platform — the lichess of mahjong. Riichi ships first; Hong Kong and MCR rules follow as rule packs on the same engine."),
         h("p", {}, "Free forever. Your settings and game history live only in this browser."),
         h("h3", {}, "License"),
         h("p", {}, "Open Mahjong is free software under the GNU Affero General Public License v3 (AGPLv3). The rules engine is its own TypeScript library, so anyone can build their own client on it."),
@@ -658,6 +659,28 @@ export class App {
           para.append(a);
           return para;
         })(),
+      );
+    });
+
+    this.textScreen("privacy", "Privacy", (page) => {
+      page.append(
+        h("p", {}, "Last updated: November 16, 2026."),
+        h("h3", {}, "Playing as a guest"),
+        h("p", {}, "Games you play as a guest, your settings, and your game history are stored only in your browser on your device. They are not sent to our servers."),
+        h("h3", {}, "Accounts"),
+        h("p", {}, "If you sign in with Google, we store your Google account identifier, the display name and profile photo from your Google profile, the date you created your account, records of your finished games (date, game length, placement, score, the game's move record, and game statistics), and your settings, so they follow you between devices. We do not receive or store your email address or your Google password."),
+        h("h3", {}, "Cookies"),
+        h("p", {}, "We use one cookie to keep you signed in. We do not use advertising or tracking cookies."),
+        h("h3", {}, "Sharing"),
+        h("p", {}, "We do not sell personal information. Your information is processed by Google (sign-in) and Railway (hosting) only to operate the service."),
+        h("h3", {}, "Deletion"),
+        h("p", {}, "Settings, then Delete account, permanently deletes your account and everything stored with it. Guest data can be removed by clearing your browser's site data."),
+        h("h3", {}, "Children"),
+        h("p", {}, "Open Mahjong is not directed to children under 13."),
+        h("h3", {}, "Changes"),
+        h("p", {}, "If this policy changes, the new version will be posted on this page with an updated date."),
+        h("h3", {}, "Contact"),
+        h("p", {}, "sportfolioholdings@gmail.com"),
       );
     });
   }
