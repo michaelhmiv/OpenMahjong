@@ -1,0 +1,11 @@
+# Open Mahjong
+
+> Open Mahjong is a free, open source web app for playing riichi mahjong against the CPU. No account is needed to play.
+
+Open Mahjong runs in a web browser. Players play riichi mahjong against the CPU in East-only or East + South games with real scoring. The app includes 11 interactive tutorial lessons played on the real table, and a guided mode that offers hints with explanations during CPU games. Signing in with Google is optional and saves game history and settings to the account. Open Mahjong is free and open source under the AGPLv3 license.
+
+## Links
+
+- [Open Mahjong](https://openmahjong.app/): Play riichi mahjong against the CPU in the browser.
+- [Privacy policy](https://openmahjong.app/privacy): How Open Mahjong handles data.
+- [GitHub repository](https://github.com/michaelhmiv/OpenMahjong): Source code, licensed AGPLv3.
