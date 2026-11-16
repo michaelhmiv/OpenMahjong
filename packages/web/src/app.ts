@@ -277,7 +277,7 @@ export class App {
 
     el.append(h("div", { class: "spacer" }));
     const wm = h("div", { class: "wordmark" }, "OPEN MAHJONG");
-    wm.append(h("span", { class: "sub" }, "Free forever. No accounts."));
+    wm.append(h("span", { class: "sub" }, "Free forever. Open source mahjong."));
     el.append(wm);
 
     const seg = h("div", { class: "seg" });
@@ -400,7 +400,7 @@ export class App {
     this.textScreen("about", "About", (page) => {
       page.append(
         h("p", {}, "Open Mahjong is a free, open-source mahjong platform — the lichess of mahjong. Riichi ships first; Hong Kong, MCR, and American rules follow as rule packs on the same engine."),
-        h("p", {}, "Free forever. No accounts — your settings and game history live only in this browser."),
+        h("p", {}, "Free forever. Your settings and game history live only in this browser."),
         h("h3", {}, "License"),
         h("p", {}, "Open Mahjong is free software under the GNU Affero General Public License v3 (AGPLv3). The rules engine is its own TypeScript library, so anyone can build their own client on it."),
         h("h3", {}, "Source"),
