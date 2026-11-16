@@ -340,6 +340,7 @@ export function lastWinEvent(
 
 export type LessonAction =
   | { readonly kind: "continue" }
+  | { readonly kind: "back" }
   | { readonly kind: "drill"; readonly index: number }
   | { readonly kind: "choice"; readonly index: number }
   | { readonly kind: "tile"; readonly tileId: number }
@@ -366,6 +367,7 @@ export interface LessonView {
   readonly buttons: readonly LessonButton[];
   readonly stepIndex: number;
   readonly stepCount: number;
+  readonly canBack: boolean;
   readonly usesTable: boolean;
   readonly highlightRiichi: boolean;
   readonly acceptsTiles: boolean;
@@ -407,6 +409,7 @@ type StepDef =
     };
 
 const CONTINUE: LessonButton = { label: "Continue", cls: "primary", id: "continue" };
+const BACK: LessonButton = { label: "Back", cls: "ghost tut-back", id: "back" };
 const WIND_WORD: Record<number, string> = { 27: "East", 28: "South", 29: "West", 30: "North" };
 
 /** Keep the correct answer at index 1 without duplicate labels at lower bounds. */
@@ -861,6 +864,22 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
 
 const SCENE_MODULES: ReadonlySet<ModuleId> = new Set(["tu3", "tu4", "tu5", "tu6", "tu8", "tu9"]);
 
+/**
+ * The state a step was in when it was entered, captured after its
+ * enter hook ran. Back restores one of these: the scene is rebuilt
+ * by deterministic replay of the decision log as it stood at that
+ * step's entry, so a redone step replaces its earlier decisions
+ * instead of appending to them.
+ */
+interface StepSnapshot {
+  readonly scene: {
+    readonly seed: string;
+    readonly length: GameLength;
+    readonly decisions: readonly SceneDecision[];
+  } | null;
+  readonly counters: Readonly<Record<string, number>>;
+}
+
 export class LessonController {
   readonly moduleId: ModuleId;
   readonly def: ModuleDef;
@@ -871,6 +890,7 @@ export class LessonController {
   found: number[] = [];
   note: string | null = null;
   done = false;
+  private snapshots = new Map<number, StepSnapshot>();
 
   constructor(moduleId: ModuleId, saved?: SavedLessonState | null) {
     this.moduleId = moduleId;
@@ -908,6 +928,10 @@ export class LessonController {
       }
     }
     this.enterStep();
+    // A lesson resumed from saved progress can only go back as far
+    // as this entry point — earlier step-entry states were never
+    // recorded, so Back stays unavailable until the next advance.
+    if (!this.done) this.recordSnapshot();
   }
 
   get step(): StepDef | null {
@@ -942,6 +966,51 @@ export class LessonController {
       return;
     }
     this.enterStep();
+    this.recordSnapshot();
+  }
+
+  /** Capture the current step's entry state for a later Back. */
+  private recordSnapshot(): void {
+    this.snapshots.set(this.stepIndex, {
+      scene: this.scene
+        ? {
+            seed: this.scene.seed,
+            length: this.scene.length,
+            decisions: [...this.scene.decisions],
+          }
+        : null,
+      counters: { ...this.counters },
+    });
+  }
+
+  /** Whether Back can leave the current step. */
+  get canBack(): boolean {
+    return !this.done && this.stepIndex > 0 && this.snapshots.has(this.stepIndex - 1);
+  }
+
+  /**
+   * Return to the previous step's entry state: drills come back
+   * un-answered, scene steps replay to the decision log as it stood
+   * when the step was entered. Snapshots past the target are
+   * discarded, so redoing the step records a fresh entry state and
+   * the saved decision log never grows duplicates.
+   */
+  goBack(): void {
+    if (!this.canBack) return;
+    const target = this.stepIndex - 1;
+    const snap = this.snapshots.get(target)!;
+    for (const key of [...this.snapshots.keys()]) {
+      if (key > target) this.snapshots.delete(key);
+    }
+    this.stepIndex = target;
+    this.counters = { ...snap.counters };
+    this.found = [];
+    this.note = null;
+    this.scene = snap.scene
+      ? LessonScene.restore(snap.scene.seed, snap.scene.decisions, snap.scene.length)
+      : null;
+    // No enterStep(): the snapshot was taken after the enter hook
+    // ran, and replay reproduces its stop exactly.
   }
 
   // -- scene driving helpers (used by the step definitions) -----------
@@ -998,6 +1067,7 @@ export class LessonController {
       note: this.note,
       stepIndex: Math.min(this.stepIndex, this.steps.length - 1),
       stepCount: this.steps.length,
+      canBack: this.canBack,
       usesTable: this.usesTable,
       done: this.done,
     };
@@ -1021,7 +1091,7 @@ export class LessonController {
           strip: step.strip ?? null,
           drill: null,
           choices: null,
-          buttons: [CONTINUE],
+          buttons: this.canBack ? [BACK, CONTINUE] : [CONTINUE],
           highlightRiichi: false,
           acceptsTiles: false,
         };
@@ -1033,7 +1103,7 @@ export class LessonController {
           strip: null,
           drill: { tiles: step.tiles, found: [...this.found] },
           choices: null,
-          buttons: [],
+          buttons: this.canBack ? [BACK] : [],
           highlightRiichi: false,
           acceptsTiles: false,
           note:
@@ -1051,21 +1121,23 @@ export class LessonController {
           drill: null,
           choices:
             typeof step.options === "function" ? step.options(this) : step.options,
-          buttons: [],
+          buttons: this.canBack ? [BACK] : [],
           highlightRiichi: false,
           acceptsTiles: false,
         };
-      case "scene":
+      case "scene": {
+        const stepButtons = step.buttons?.(this) ?? [];
         return {
           ...base,
           text: typeof step.text === "function" ? step.text(this) : step.text,
           strip: null,
           drill: null,
           choices: null,
-          buttons: step.buttons?.(this) ?? [],
+          buttons: this.canBack ? [BACK, ...stepButtons] : stepButtons,
           highlightRiichi: step.highlightRiichi ?? false,
           acceptsTiles: step.acceptsTiles ?? false,
         };
+      }
     }
   }
 
@@ -1073,6 +1145,12 @@ export class LessonController {
 
   handle(action: LessonAction): void {
     if (this.done) return;
+    // Back is the runner's own navigation, never a step gate: it is
+    // intercepted before any step sees the action.
+    if (action.kind === "back" || (action.kind === "button" && action.id === "back")) {
+      this.goBack();
+      return;
+    }
     const step = this.step;
     if (!step) return;
     switch (step.kind) {
