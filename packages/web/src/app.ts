@@ -296,6 +296,7 @@ export class App {
     this.buildShell();
     this.fit();
     window.addEventListener("resize", () => this.fit());
+    window.visualViewport?.addEventListener("resize", () => this.fit());
     this.applyTheme();
     this.renderHome();
     this.showScreen("home");
@@ -336,8 +337,28 @@ export class App {
   }
 
   private fit(): void {
-    this.scale = Math.min(window.innerWidth / 390, window.innerHeight / 844, 1.75);
-    this.stage.style.transform = `scale(${this.scale})`;
+    // Width-locked scaling with a fluid stage height (brief section 8:
+    // responsive scale-up). The 390x844 composition is the floor case:
+    // at exactly 390x844 nothing changes. Taller screens get a taller
+    // stage (the table's middle band and the screens' spacers absorb
+    // the extra height) so the app fills the phone edge to edge at any
+    // aspect ratio; shorter or capped screens letterbox onto the same
+    // ground colour, so no seam ever shows.
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    let s = vw / 390;
+    let stageH = vh / s;
+    if (stageH < 844) {
+      s = vh / 844;
+      stageH = 844;
+    }
+    if (s > 1.75) {
+      s = 1.75;
+      stageH = Math.max(844, vh / s);
+    }
+    this.scale = s;
+    this.stage.style.height = `${stageH}px`;
+    this.stage.style.transform = `scale(${s})`;
   }
 
   private showScreen(name: ScreenName): void {

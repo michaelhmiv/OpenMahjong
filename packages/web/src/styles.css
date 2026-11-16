@@ -33,7 +33,7 @@
 html, body { height: 100%; }
 
 body {
-  background: var(--page);
+  background: var(--bg);
   font-family: "Nunito", -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
@@ -173,7 +173,7 @@ button.hrow {
 /* Table (approved geometry)                                           */
 /* ------------------------------------------------------------------ */
 
-#table { position: relative; width: 390px; height: 844px; background: var(--bg); display: flex; flex-direction: column; padding: 0 10px 16px; overflow: hidden; }
+#table { position: relative; width: 390px; height: 100%; background: var(--bg); display: flex; flex-direction: column; padding: 0 10px 16px; overflow: hidden; }
 
 .tile { display: block; flex: 0 0 auto; position: relative; }
 .tile svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.45)); }
