@@ -33,121 +33,32 @@ import type { ChiHint } from "./model.js";
 // Modules
 // ---------------------------------------------------------------------------
 
-export type ModuleId =
-  | "tu1" | "tu2" | "tu3" | "tu4" | "tu5" | "tu6"
-  | "tu7" | "tu8" | "tu9" | "tu10" | "tu11";
-
-export interface ModuleDef {
-  readonly id: ModuleId;
-  readonly title: string;
-  readonly minutes: number;
-  readonly optional?: boolean;
-  /** Factual one-liners shown on the completion panel (rendering 05). */
-  readonly covered: readonly string[];
-}
-
-export const MODULES: readonly ModuleDef[] = [
-  { id: "tu1", title: "The tiles", minutes: 2, covered: [
-    "34 tile kinds, 4 copies each — 136 tiles",
-    "Three suits, numbered 1 to 9",
-    "Winds and dragons are honors",
-    "1s and 9s are terminals; 2–8 are simples",
-  ] },
-  { id: "tu2", title: "The winning shape", minutes: 2, covered: [
-    "A winning hand is four sets and a pair",
-    "A set is a sequence or a triplet",
-    "Seven pairs and thirteen orphans are the special shapes",
-  ] },
-  { id: "tu3", title: "Draw and discard", minutes: 3, covered: [
-    "Draw one tile, discard one tile",
-    "Your discards form your pond",
-  ] },
-  { id: "tu4", title: "Calling", minutes: 4, covered: [
-    "Chi takes a discard from your left",
-    "Pon and kan take any discard",
-    "Calling opens your hand — no riichi, lower value",
-  ] },
-  { id: "tu5", title: "Ready and winning", minutes: 4, covered: [
-    "Tenpai means one tile from winning",
-    "Your waits are the tiles that complete the hand",
-    "Ron wins on a discard; tsumo on your own draw",
-  ] },
-  { id: "tu6", title: "Riichi", minutes: 3, covered: [
-    "Riichi needs a closed, ready hand and 1,000 points",
-    "After riichi you discard what you draw",
-    "Winning in riichi pays the stick and can add ippatsu",
-  ] },
-  { id: "tu7", title: "Ways to win", minutes: 4, covered: [
-    "Riichi, tanyao, and yakuhai are 1 han each",
-    "Pinfu is closed only, all sequences",
-    "Toitoi and chiitoitsu are 2 han",
-  ] },
-  { id: "tu8", title: "Points and rounds", minutes: 4, covered: [
-    "Han and fu set the points",
-    "Dealer wins pay more",
-    "East then South rounds; the dealer can repeat",
-  ] },
-  { id: "tu9", title: "Not dealing in", minutes: 3, covered: [
-    "A riichi player's discards are genbutsu — safe",
-    "Defense can mean breaking your own hand",
-  ] },
-  { id: "tu10", title: "Coming from American mahjong", minutes: 2, optional: true, covered: [
-    "American mahjong uses jokers and an annual card",
-    "Riichi has neither — yaku are the patterns",
-  ] },
-  { id: "tu11", title: "First game", minutes: 15, covered: [
-    "A full game against the CPU, with guided hints",
-  ] },
-];
-
-export function moduleDef(id: ModuleId): ModuleDef {
-  return MODULES.find((m) => m.id === id)!;
-}
+import { MODULES, moduleDef, type ModuleDef, type ModuleId } from "./education/curriculum.js";
+export { MODULES, moduleDef, type ModuleDef, type ModuleId } from "./education/curriculum.js";
 
 // ---------------------------------------------------------------------------
 // Progress
 // ---------------------------------------------------------------------------
 
-export interface SavedLessonState {
-  readonly module: ModuleId;
-  readonly step: number;
-  readonly scene: { readonly seed: string; readonly decisions: readonly unknown[] } | null;
-  readonly counters: Readonly<Record<string, number>>;
-  readonly found: readonly number[];
-}
-
-export interface TutorialProgress {
-  readonly done: ModuleId[];
-  readonly active: SavedLessonState | null;
-}
+import {
+  mergeProgress, parseSavedLesson, parseSceneDecision, parseTutorialProgress,
+  MAX_LESSON_DECISIONS,
+  type SavedLessonState, type SceneDecision, type TutorialProgress,
+} from "./education/lesson-progress.js";
+export { mergeProgress, type SavedLessonState, type TutorialProgress } from "./education/lesson-progress.js";
 
 export const TUTORIAL_SETTINGS_KEY = "openmahjong.tutorial.v1";
-const TUTORIAL_LOCAL_KEY = "openmahjong.tutorial.v1";
-
+const TUTORIAL_LOCAL_KEY = TUTORIAL_SETTINGS_KEY;
 export const EMPTY_PROGRESS: TutorialProgress = { done: [], active: null };
 
-function isModuleId(v: unknown): v is ModuleId {
-  return typeof v === "string" && MODULES.some((m) => m.id === v);
+function lessonBounds(id: ModuleId) {
+  const steps = stepsFor(id);
+  return { stepCount: steps.length,
+    seeds: steps.flatMap((step) => step.kind === "scene" ? [step.seed] : []) };
 }
 
 export function parseProgress(raw: unknown): TutorialProgress {
-  if (!raw || typeof raw !== "object") return EMPTY_PROGRESS;
-  const obj = raw as { done?: unknown; active?: unknown };
-  const done = Array.isArray(obj.done) ? obj.done.filter(isModuleId) : [];
-  let active: SavedLessonState | null = null;
-  if (obj.active && typeof obj.active === "object") {
-    const a = obj.active as Partial<SavedLessonState>;
-    if (isModuleId(a.module) && typeof a.step === "number") {
-      active = {
-        module: a.module,
-        step: a.step,
-        scene: a.scene ?? null,
-        counters: a.counters ?? {},
-        found: a.found ?? [],
-      } as SavedLessonState;
-    }
-  }
-  return { done, active };
+  return parseTutorialProgress(raw, lessonBounds);
 }
 
 export function loadTutorialProgress(): TutorialProgress {
@@ -165,17 +76,6 @@ export function saveTutorialProgress(progress: TutorialProgress): void {
   } catch {
     // Storage blocked: progress lives in memory for the session.
   }
-}
-
-/** Union two progress records (local + account): completions union;
- *  the active lesson is whichever record has one, preferring the one
- *  whose module is not already complete in the union. */
-export function mergeProgress(
-  a: TutorialProgress,
-  b: TutorialProgress,
-): TutorialProgress {
-  const done = [...new Set([...a.done, ...b.done])];
-  return { done, active: a.active ?? b.active };
 }
 
 // ---------------------------------------------------------------------------
@@ -199,7 +99,37 @@ export type SceneStop =
     }
   | { readonly kind: "gameEnd"; readonly result: GameResult };
 
-export type SceneDecision = TurnAction | CallAction;
+export type { SceneDecision } from "./education/lesson-progress.js";
+
+function assertTurnDecision(action: SceneDecision, view: PlayerView, ctx: TurnContext): asserts action is TurnAction {
+  switch (action.type) {
+    case "discard": {
+      if (!view.hand.some((tile) => tile.id === action.tileId) ||
+        (view.players[view.seat]?.riichi && action.tileId !== ctx.drawnTile?.id) ||
+        (action.riichi && !ctx.riichiDiscardIds.includes(action.tileId))) break;
+      return;
+    }
+    case "tsumo": if (ctx.canTsumo) return; break;
+    case "kyuushu": if (ctx.canKyuushu) return; break;
+    case "ankan": if (ctx.ankanOptions.includes(action.tileType)) return; break;
+    case "shouminkan": if (ctx.shouminkanOptions.includes(action.tileType)) return; break;
+  }
+  throw new Error("Invalid lesson turn decision");
+}
+
+function assertCallDecision(action: SceneDecision, ctx: CallContext): asserts action is CallAction {
+  switch (action.type) {
+    case "pass": return;
+    case "ron": if (ctx.canRon) return; break;
+    case "pon": if (ctx.phase === "call" && ctx.canPon) return; break;
+    case "daiminkan": if (ctx.phase === "call" && ctx.canKan) return; break;
+    case "chi":
+      if (ctx.phase === "call" && ctx.chiOptions.some((option) =>
+        option[0] === action.tileIds[0] && option[1] === action.tileIds[1])) return;
+      break;
+  }
+  throw new Error("Invalid lesson call decision");
+}
 
 class SceneSuspend {
   constructor(readonly stop: SceneStop) {}
@@ -232,8 +162,11 @@ export class LessonScene {
     decisions: readonly SceneDecision[],
     length: GameLength = "east",
   ): LessonScene {
+    if (decisions.length > MAX_LESSON_DECISIONS) throw new Error("Lesson decision log is too long");
+    const parsed = decisions.map((decision) => parseSceneDecision(decision));
+    if (parsed.some((decision) => decision === null)) throw new Error("Invalid lesson decision log");
     const scene = new LessonScene(seed, length);
-    scene.decisions = [...decisions];
+    scene.decisions = parsed as SceneDecision[];
     scene.replay();
     return scene;
   }
@@ -249,8 +182,20 @@ export class LessonScene {
     if (!this.stop || this.stop.kind === "gameEnd") {
       throw new Error("LessonScene.act with no pending decision");
     }
-    this.decisions.push(action);
-    this.replay();
+    const parsed = parseSceneDecision(action);
+    if (!parsed) throw new Error("Invalid lesson action");
+    if (this.decisions.length >= MAX_LESSON_DECISIONS) throw new Error("Lesson decision log is too long");
+    if (this.stop.kind === "turn") assertTurnDecision(parsed, this.stop.view, this.stop.ctx);
+    else assertCallDecision(parsed, this.stop.ctx);
+    const previous = { stop: this.stop, events: this.events, hints: this.chiHints };
+    this.decisions.push(parsed);
+    try { this.replay(); } catch (error) {
+      this.decisions.pop();
+      this.stop = previous.stop;
+      this.events = previous.events;
+      this.chiHints = previous.hints;
+      throw error;
+    }
   }
 
   /** Let the oracle play the current stop. */
@@ -267,10 +212,12 @@ export class LessonScene {
     const hints = new Map<number, ChiHint>();
     let lastChi: { tileIds: readonly [number, number] } | null = null;
     let game: Game;
+    let scanned = 0;
     const scan = () => {
-      for (const ev of game.events) {
+      for (; scanned < game.events.length; scanned++) {
+        const ev = game.events[scanned]!;
         if (ev.type === "call" && ev["kind"] === "chi" && lastChi) {
-          if (!hints.has(ev.seq)) hints.set(ev.seq, { tileIds: lastChi.tileIds });
+          hints.set(ev.seq, { tileIds: lastChi.tileIds });
           lastChi = null;
         }
       }
@@ -283,10 +230,8 @@ export class LessonScene {
         const recorded = this.decisions[cursor];
         if (recorded) {
           cursor++;
-          if (recorded.type === "chi" || recorded.type === "pon" || recorded.type === "ron" || recorded.type === "pass") {
-            throw new Error("LessonScene decision log desync (call action at a turn)");
-          }
-          return recorded as TurnAction;
+          assertTurnDecision(recorded, view, ctx);
+          return recorded;
         }
         throw new SceneSuspend({ kind: "turn", view, ctx, oracle: oracle.turn(view, ctx) });
       },
@@ -298,19 +243,20 @@ export class LessonScene {
         const recorded = this.decisions[cursor];
         if (recorded) {
           cursor++;
+          assertCallDecision(recorded, ctx);
           if (recorded.type === "chi") lastChi = { tileIds: recorded.tileIds };
-          return recorded as CallAction;
+          return recorded;
         }
         throw new SceneSuspend({
           kind: "call",
           view,
           ctx,
           oracle: oracle.call(view, ctx),
-          ponDecidable: ctx.phase === "call" && askCount === 0,
+          ponDecidable: ctx.phase === "call" && (ctx.callStage ? ctx.callStage === "pon-kan" : askCount === 0),
           chiDecidable:
             ctx.phase === "call" &&
             ctx.chiOptions.length > 0 &&
-            (askCount > 0 || (!ctx.canPon && !ctx.canKan)),
+            (ctx.callStage ? ctx.callStage === "chi" : (askCount > 0 || (!ctx.canPon && !ctx.canKan))),
         });
       },
     };
@@ -343,6 +289,7 @@ export class LessonScene {
       this.events = [...game.events];
       this.chiHints = hints;
     }
+    if (cursor !== this.decisions.length) throw new Error("Lesson decision log has unused actions");
   }
 }
 
@@ -356,12 +303,13 @@ export function waitNames(view: PlayerView): string[] {
   for (const t of view.hand) counts[t.type]!++;
   const visible = new Array<number>(34).fill(0);
   for (const p of view.players) {
-    for (const d of p.discards) visible[d.tile.type]!++;
+    for (const d of p.discards) if (!d.called) visible[d.tile.type]!++;
     for (const m of p.melds) for (const t of m.tiles) visible[t.type]!++;
   }
-  for (const t of view.hand) visible[t.type]!++;
   for (const ind of view.doraIndicators) visible[ind.type]!++;
-  return waitsFast(counts, visible, view.melds.length).map((w) => tileName(w.type as TileType));
+  const ownedMeldCounts = new Array<number>(34).fill(0);
+  for (const meld of view.melds) for (const tile of meld.tiles) ownedMeldCounts[tile.type]!++;
+  return waitsFast(counts, visible, view.melds.length, ownedMeldCounts).map((w) => tileName(w.type as TileType));
 }
 
 export function joinTileNames(names: readonly string[]): string {
@@ -461,6 +409,11 @@ type StepDef =
 const CONTINUE: LessonButton = { label: "Continue", cls: "primary", id: "continue" };
 const WIND_WORD: Record<number, string> = { 27: "East", 28: "South", 29: "West", 30: "North" };
 
+/** Keep the correct answer at index 1 without duplicate labels at lower bounds. */
+export function distinctQuizValues(answer: number, gap: number, minimum: number): readonly number[] {
+  return [answer - gap >= minimum ? answer - gap : answer + 2 * gap, answer, answer + gap];
+}
+
 function stepsFor(id: ModuleId): readonly StepDef[] {
   switch (id) {
     case "tu1":
@@ -476,8 +429,8 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
       ];
     case "tu2":
       return [
-        { kind: "info", text: "A winning hand is four sets and a pair — 14 tiles.", strip: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 26, 13, 13] },
-        { kind: "info", text: "A set is three tiles: a sequence in one suit (3-4-5), or a triplet of the same tile.", strip: [11, 12, 13, 26, 26, 26] },
+        { kind: "info", text: "The standard complete shape is four sets and a pair — 14 tiles before any extra tiles for kans. Winning also requires a yaku, explained in Ways to win.", strip: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 26, 13, 13] },
+        { kind: "info", text: "A set is a sequence in one suit (3-4-5), a triplet of the same tile, or a declared four-tile kan.", strip: [11, 12, 13, 26, 26, 26] },
         {
           kind: "choice",
           text: "Which of these is a set?",
@@ -506,7 +459,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
               ? "That is 13 tiles — one short. A complete hand has 14."
               : "Five sets leave no pair. The shape is four sets and a pair.",
         },
-        { kind: "info", text: "Two special shapes also win: seven pairs, and thirteen orphans (one of every terminal and honor, plus a pair). The standard shape comes first — it is most hands you will ever hold." },
+        { kind: "info", text: "Two special shapes also win: seven different pairs, and thirteen orphans (one of every terminal and honor, plus a pair). The standard shape comes first — it is most hands you will ever hold." },
       ];
     case "tu3":
       return [
@@ -624,11 +577,11 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return false;
           },
         },
-        { kind: "info", text: "Kan declares four of a kind: you draw a replacement tile and a new dora indicator flips. Every call opens your hand — an open hand cannot declare riichi and scores less. Call when the set is worth more than the flexibility." },
+        { kind: "info", text: "Kan is four of a kind: take a replacement draw and reveal another dora indicator. Chi, pon, and open kan open the hand; a concealed kan keeps it closed. Opening prevents riichi and can change the hand's yaku or value." },
       ];
     case "tu5":
       return [
-        { kind: "info", text: "A hand one tile away from winning is ready — tenpai. The tiles that complete it are its waits." },
+        { kind: "info", text: "A hand one tile away from a complete shape is ready — tenpai. Its completing tiles are waits. A legal win still needs a yaku, and ron has furiten restrictions." },
         {
           kind: "scene",
           seed: "om-tu5a-99",
@@ -688,7 +641,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
       ];
     case "tu6":
       return [
-        { kind: "info", text: "Riichi is a declaration you make when your closed hand is ready: you pay 1,000 points and bet that you will win the hand." },
+        { kind: "info", text: "Riichi declares your closed hand ready. In OpenMahjong you need at least 1,000 points and four tiles left in the live wall. Pay a 1,000-point stake when you declare." },
         {
           kind: "scene",
           seed: "om-tu6-1420",
@@ -717,8 +670,8 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             const won = evs.slice(from).some((ev) => ev.type === "win" && Number(ev["seat"]) === 0);
             const ended = evs.slice(from).some((ev) => ev.type === "hand-end");
             if (won) return "You won the hand. The 1,000 points come back to you with the winnings.";
-            if (ended) return "The hand ended without your win, and the 1,000 points go to the winner. That is the riichi bet.";
-            return "After riichi your hand is locked: you discard what you draw, and only a winning tile changes that.";
+            if (ended) return "The hand ended without your win. The next winner collects the riichi sticks; a drawn hand carries them forward.";
+            return "After riichi, discard what you draw unless you win or declare a permitted concealed kan. That kan must preserve the waits and hand structure.";
           },
           enter: (c) => {
             const from = c.counters["eventsAtRiichi"] ?? 0;
@@ -738,10 +691,10 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
       ];
     case "tu7":
       return [
-        { kind: "info", text: "A ready hand still needs a yaku — a scoring pattern — to win. These are the beginner set; every one is worth knowing by sight.", strip: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 26, 13, 13] },
-        { kind: "info", text: "Riichi — 1 han. Declare ready on a closed hand. The declaration itself is the yaku, which is why a closed ready hand can always win.", strip: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 13, 13] },
+        { kind: "info", text: "A complete hand still needs a yaku — a scoring pattern — to win. Dora add bonus han but are not a yaku. These are the beginner patterns.", strip: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 26, 13, 13] },
+        { kind: "info", text: "Riichi — 1 han. Declare ready on a closed hand. The declaration supplies a yaku; you must still obey winning rules, including furiten for ron.", strip: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 13, 13] },
         { kind: "info", text: "Tanyao — 1 han. All simples: no terminals and no honors anywhere in the hand.", strip: [2, 3, 4, 12, 13, 14, 21, 22, 23, 20, 20, 20, 5, 5] },
-        { kind: "info", text: "Yakuhai — 1 han. A triplet of dragons, of the round wind, or of your own seat wind.", strip: [33, 33, 33, 1, 2, 3, 12, 13, 14, 23, 24, 25, 13, 13] },
+        { kind: "info", text: "Yakuhai — 1 han for a triplet or kan of dragons, of the round wind, or of your own seat wind. A wind that is both round and seat scores twice.", strip: [33, 33, 33, 1, 2, 3, 12, 13, 14, 23, 24, 25, 13, 13] },
         {
           kind: "choice",
           text: "Which yaku does this hand have?",
@@ -765,8 +718,8 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
               : "No dragon or wind triplet here. Every tile is a simple: tanyao.",
         },
         { kind: "info", text: "Pinfu — 1 han, closed only. All sequences, a pair that is not dragons or a scoring wind, and a two-sided wait.", strip: [1, 2, 3, 12, 13, 14, 21, 22, 23, 24, 25, 26, 19, 19] },
-        { kind: "info", text: "Toitoi — 2 han. Four triplets and a pair; sequences not allowed.", strip: [2, 2, 2, 13, 13, 13, 22, 22, 22, 31, 31, 31, 7, 7] },
-        { kind: "info", text: "Chiitoitsu — 2 han, closed only. Seven pairs instead of the standard shape.", strip: [1, 1, 4, 4, 11, 11, 15, 15, 20, 20, 24, 24, 28, 28] },
+        { kind: "info", text: "Toitoi — 2 han. Four triplets or kans and a pair; sequences not allowed.", strip: [2, 2, 2, 13, 13, 13, 22, 22, 22, 31, 31, 31, 7, 7] },
+        { kind: "info", text: "Chiitoitsu — 2 han, closed only. Seven different pairs instead of the standard shape; four identical tiles do not count as two pairs.", strip: [1, 1, 4, 4, 11, 11, 15, 15, 20, 20, 24, 24, 28, 28] },
       ];
     case "tu8":
       return [
@@ -801,7 +754,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           text: "How many han was your hand?",
           options: (c) => {
             const han = c.winHan();
-            return [han - 1, han, han + 2].map((v) => ({ label: `${Math.max(1, v)} han` }));
+            return distinctQuizValues(han, 1, 1).map((v) => ({ label: `${v} han` }));
           },
           correct: 1,
           wrongNote: "Count again from the winning hand: each yaku gives han, and dora add more.",
@@ -811,7 +764,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           text: "How many fu — minipoints — did it have?",
           options: (c) => {
             const fu = c.winFu();
-            return [fu - 10, fu, fu + 10].map((v) => ({ label: `${Math.max(20, v)} fu` }));
+            return distinctQuizValues(fu, 10, 0).map((v) => ({ label: `${v} fu` }));
           },
           correct: 1,
           wrongNote: "Fu come from the shape: triplets, the pair, the wait, and how the hand was won.",
@@ -828,8 +781,8 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           correct: 1,
           wrongNote: "Add up the payments on the win: a tsumo collects from all three opponents.",
         },
-        { kind: "info", text: "The dealer scores more: a dealer's ron pays half again as much, and a dealer's tsumo collects double from each player. You are the dealer in these lessons." },
-        { kind: "info", text: "A full game runs East 1 to East 4, then South 1 to South 4. The dealer repeats the hand when they win or finish ready at a draw. A game ends early if a player drops below zero points." },
+        { kind: "info", text: "Dealer wins usually pay more at the same han and fu. For a dealer tsumo, all three opponents pay the dealer rate. Payments round up to the next 100 points." },
+        { kind: "info", text: "An East-only game runs East 1 to East 4. East/South continues through South 4. Dealers can repeat on a win or a tenpai draw. OpenMahjong ends a game early if a score falls below zero." },
       ];
     case "tu9":
       return [
@@ -843,7 +796,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             const threat = stop.view.players.find((p) => p.seat !== 0 && p.riichi);
             if (!threat) return "Watch the table — a riichi is coming.";
             const wind = WIND_WORD[threat.seatWind] ?? "";
-            const base = `${wind} has declared riichi. Discard a tile from ${wind}'s pond — those tiles cannot beat you.`;
+            const base = `${wind} has declared riichi. Discard a tile from ${wind}'s pond — ${wind} cannot ron that tile, though another opponent might.`;
             if ((c.counters["misses"] ?? 0) >= 2) {
               const pond = new Set(threat.discards.map((d) => d.tile.type));
               const safe = [...new Set(stop.view.hand.map((t) => t.type))]
@@ -878,7 +831,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return false;
           },
         },
-        { kind: "info", text: "Tiles the riichi player has discarded are genbutsu — they cannot be waiting on their own discards. Staying safe can mean breaking your own hand apart; that is cheaper than dealing in." },
+        { kind: "info", text: "Tiles the riichi player has discarded are genbutsu — safe against that player's ron because of furiten. They may still be dangerous against others, and a furiten player can still tsumo. Folding can mean breaking your own hand; whether to fold depends on the position." },
       ];
     case "tu10":
       return [
@@ -923,17 +876,30 @@ export class LessonController {
     this.moduleId = moduleId;
     this.def = moduleDef(moduleId);
     this.steps = stepsFor(moduleId);
-    if (saved && saved.module === moduleId) {
-      this.stepIndex = Math.min(saved.step, this.steps.length);
-      this.counters = { ...saved.counters };
-      this.found = [...saved.found];
-      if (saved.scene) {
-        this.scene = LessonScene.restore(
-          saved.scene.seed,
-          saved.scene.decisions as SceneDecision[],
-        );
+    const validSaved = parseSavedLesson(saved, lessonBounds);
+    if (validSaved && validSaved.module === moduleId &&
+      (!SCENE_MODULES.has(moduleId) || validSaved.scene !== null)) {
+      try {
+        if (validSaved.scene) {
+          this.scene = LessonScene.restore(validSaved.scene.seed, validSaved.scene.decisions);
+        }
+        if (moduleId === "tu8" && validSaved.step >= 2 &&
+          (!this.scene || !lastWinEvent(this.scene.events))) {
+          throw new Error("Scoring questions require the demonstrated win");
+        }
+        this.stepIndex = validSaved.step;
+        this.counters = { ...validSaved.counters };
+        const step = this.steps[this.stepIndex];
+        this.found = step?.kind === "drill"
+          ? validSaved.found.filter((index) => step.targets.includes(index)) : [];
+        if (this.stepIndex >= this.steps.length) this.done = true;
+      } catch {
+        // A current-engine or legal-action mismatch restarts only this lesson.
+        // Previously completed modules remain in the separate progress record.
+        this.scene = null;
+        this.stepIndex = 0;
+        this.note = "This saved lesson could not be resumed. The lesson has restarted.";
       }
-      if (this.stepIndex >= this.steps.length) this.done = true;
     }
     if (!this.scene && SCENE_MODULES.has(moduleId)) {
       const firstScene = this.steps.find((s) => s.kind === "scene");
@@ -1002,16 +968,20 @@ export class LessonController {
   }
 
   winHan(): number {
-    return Number(this.winEvent()?.["han"] ?? 1);
+    const event = this.winEvent();
+    if (!event) throw new Error("No recorded win for this scoring question");
+    return Number(event["han"]);
   }
 
   winFu(): number {
-    return Number(this.winEvent()?.["fu"] ?? 30);
+    const event = this.winEvent();
+    if (!event) throw new Error("No recorded win for this scoring question");
+    return Number(event["fu"]);
   }
 
   winGained(): number {
     const ev = this.winEvent();
-    if (!ev) return 0;
+    if (!ev) throw new Error("No recorded win for this scoring question");
     const payments = (ev["payments"] as readonly { amount: number }[] | undefined) ?? [];
     return (
       payments.reduce((sum, p) => sum + p.amount, 0) +
@@ -1148,6 +1118,7 @@ export class LessonController {
   serialize(): SavedLessonState {
     return {
       module: this.moduleId,
+      moduleVersion: this.def.version,
       step: this.stepIndex,
       scene: this.scene
         ? { seed: this.scene.seed, decisions: [...this.scene.decisions] }
