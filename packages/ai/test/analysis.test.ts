@@ -43,6 +43,10 @@ function randomVisible(rng: ReturnType<typeof createRng>, hand: readonly number[
 }
 
 describe("fast shanten agrees with the engine", () => {
+  // The differential tests compare against the engine's reference DFS
+  // thousands of times; they take seconds and get explicit timeouts so
+  // a loaded machine (parallel files on few cores) can't flake them
+  // against the 5 s default.
   it("over 4000 seeded random 13/14-tile hands (closed)", () => {
     const rng = createRng("shanten-diff-closed");
     for (let i = 0; i < 4000; i++) {
@@ -50,7 +54,7 @@ describe("fast shanten agrees with the engine", () => {
       const counts = randomCounts(rng, tiles);
       expect(shantenFast(counts, 0)).toBe(shanten(counts, 0));
     }
-  });
+  }, 120_000);
 
   it("over 3000 seeded random hands with open melds", () => {
     const rng = createRng("shanten-diff-open");
@@ -62,7 +66,7 @@ describe("fast shanten agrees with the engine", () => {
       // With melds open, the engine's shanten IS the standard form.
       expect(shantenStandardFast(counts, melds)).toBe(shanten(counts, melds));
     }
-  });
+  }, 120_000);
 
   // The reference here is the engine's own DFS on its worst case, so
   // this test is slow by construction — small sample, long timeout.
@@ -105,7 +109,7 @@ describe("fast ukeire agrees with the engine", () => {
         ref.improving.map((u) => ({ type: u.type, remaining: u.remaining })),
       );
     }
-  });
+  }, 120_000);
 });
 
 describe("waits", () => {

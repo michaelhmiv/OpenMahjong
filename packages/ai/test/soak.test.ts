@@ -22,18 +22,21 @@ import { createAiPolicy } from "../src/index.js";
 
 const SOAK_GAMES = Number(process.env.AI_SOAK_GAMES ?? 120);
 const SEED_OFFSET = Number(process.env.AI_SOAK_SEED_OFFSET ?? 0);
-// Small chunks: one test is one synchronous CPU stretch, and a stretch
-// past ~60 s starves the vitest worker's progress RPC (observed on a
-// throttled VM: all tests pass, then an "onTaskUpdate" timeout error
-// fails the run). Five games ≈ seconds, even on slow hardware.
+// Small chunks plus a yield between games: a vitest worker running
+// back-to-back synchronous tests never services its progress RPC, and
+// after ~60 s the runner kills the run with an "onTaskUpdate" timeout
+// even though every test passed (observed in CI on this file at 126 s
+// and on the engine's soak file at ~59 s). Five games ≈ seconds, and
+// the yield keeps the worker's event loop alive regardless.
 const CHUNK = 5;
+const tick = () => new Promise<void>((r) => setTimeout(r, 0));
 
 describe("A3 soak: AI vs AI", () => {
   it.each(
     Array.from({ length: Math.ceil(SOAK_GAMES / CHUNK) }, (_, i) => i * CHUNK),
   )(
     `games %i.. (chunk of ${CHUNK}): legal, terminating, scores sum to 100,000`,
-    (chunkStart) => {
+    async (chunkStart) => {
       const ai = createAiPolicy();
       const end = Math.min(chunkStart + CHUNK, SOAK_GAMES);
       for (let i = chunkStart; i < end; i++) {
@@ -50,12 +53,13 @@ describe("A3 soak: AI vs AI", () => {
         // happens, so the floor is a completed game, not a hand count.
         expect(result.handsPlayed).toBeGreaterThanOrEqual(1);
         expect(result.events.at(-1)?.type).toBe("game-end");
+        await tick();
       }
     },
     900_000,
   );
 
-  it("wall accounting holds on a sample of games", () => {
+  it("wall accounting holds on a sample of games", async () => {
     const ai = createAiPolicy();
     for (let seed = 0; seed < 5; seed++) {
       const result = new Game({
@@ -89,15 +93,17 @@ describe("A3 soak: AI vs AI", () => {
       }
       checkHand();
       expect(hands).toBe(result.handsPlayed);
+      await tick();
     }
   }, 300_000);
 
-  it("is deterministic: same seed, identical event log", () => {
+  it("is deterministic: same seed, identical event log", async () => {
     const a = new Game({
       seed: "ai-determinism",
       length: "south",
       policies: createAiPolicy(),
     }).run();
+    await tick();
     const b = new Game({
       seed: "ai-determinism",
       length: "south",
@@ -137,7 +143,7 @@ describe("strength sanity", () => {
     Array.from({ length: GAMES / MATCH_CHUNK }, (_, i) => i * MATCH_CHUNK),
   )(
     "match games %i..: accumulate settlement points",
-    (start) => {
+    async (start) => {
       const ai = createAiPolicy();
       const policies: Policy[] = [ai, tsumogiriPolicy, ai, tsumogiriPolicy];
       for (let g = start; g < start + MATCH_CHUNK; g++) {
@@ -150,6 +156,7 @@ describe("strength sanity", () => {
           if (entry.seat % 2 === 0) aiPoints += entry.points;
           else baselinePoints += entry.points;
         }
+        await tick();
       }
     },
     900_000,
