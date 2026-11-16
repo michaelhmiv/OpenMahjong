@@ -17,3 +17,25 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
+
+  # A3 completion (brief §13): the full 10,000-game AI-vs-AI soak. The
+  # fast gate above runs the same test file with its default count
+  # (120 games); this job runs the brief's full count, split across an
+  # 8-shard matrix (8 × 1,250 games, disjoint seed ranges).
+  soak:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    env:
+      AI_SOAK_GAMES: "1250"
+      AI_SOAK_SEED_OFFSET: ${{ matrix.shard * 1250 }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx vitest run packages/ai/test/soak.test.ts -t "A3 soak"

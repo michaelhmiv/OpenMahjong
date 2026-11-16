@@ -1,9 +1,20 @@
 /**
- * @openmahjong/ai — placeholder.
+ * @openmahjong/ai — the slice-1 AI opponent (brief §6).
  *
- * The AI opponents described in brief §6 (efficiency core, hand-value
- * judgment, basic defense) land in a later slice. This package will depend
- * only on the engine's public state view: an AI sees exactly what a human
- * at the table would see — no wall peeking, enforced by API shape.
+ * One solid level: an efficiency core (shanten + ukeire), hand-value
+ * judgment, and basic defense against riichi, deciding through the
+ * engine's public `PlayerView` only — hidden information is unreachable
+ * by API shape, not by honor system.
  */
-export const AI_PACKAGE_STATUS = "placeholder — see brief §6" as const;
+
+export { createAiPolicy } from "./policy.js";
+export {
+  shantenFast,
+  shantenStandardFast,
+  shantenChiitoitsuFast,
+  shantenKokushiFast,
+  ukeireFast,
+  waitsFast,
+  type FastUkeire,
+} from "./analysis.js";
+export { dangerOf, visibleCounts, riichiThreats } from "./danger.js";
