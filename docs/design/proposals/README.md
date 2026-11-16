@@ -1,3 +1,5 @@
+> Michael approved both designs in the implementation session on2026-11-16: “Approve both designs.” Application implementation and browser QC are tracked in the dependent learning UI PR. The images remain the reference proposals.
+
 # Practice and decision review — rendering proposal
 
 **Status: proposed; not approved and not implemented as application screens.**

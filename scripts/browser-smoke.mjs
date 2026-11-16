@@ -16,6 +16,7 @@ const { default: AxeBuilder } = await import(process.env.AXE_MODULE || "@axe-cor
 const base = new URL(process.argv[2] || "http://127.0.0.1:4173").href;
 const output = resolve(process.argv[3] || "work/browser-smoke");
 const bypassTls = process.env.BROWSER_IGNORE_HTTPS_ERRORS === "1";
+const learning = process.env.BROWSER_LEARNING !== "0";
 const launch = { headless: true };
 if (process.env.BROWSER_EXECUTABLE) launch.executablePath = process.env.BROWSER_EXECUTABLE;
 else if (existsSync("/usr/bin/chromium")) launch.executablePath = "/usr/bin/chromium";
@@ -27,8 +28,8 @@ await mkdir(output, { recursive: true });
 const report = {
   base, observedAt: new Date().toISOString(),
   scope: { guestApiFixture: process.env.BROWSER_LIVE_API !== "1", tlsBypass: bypassTls,
-    fullGame: process.env.BROWSER_FULL_GAME === "1", browser: "Chromium headless" },
-  checks: [], diagnostics: [], viewports: [],
+    fullGame: process.env.BROWSER_FULL_GAME === "1", learning, browser: "Chromium headless" },
+  checks: [], diagnostics: [], viewports: [], learningViewports: [],
 };
 const browser = await chromium.launch(launch);
 report.scope.browserVersion = await browser.version();
@@ -105,6 +106,98 @@ async function enterFirstDrill(page) {
   await page.locator('[data-module="tu1"]').click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
+}
+async function completeIntroLesson(page) {
+  await enterFirstDrill(page);
+  // These are the authored visible suit/honor questions, answered
+  // through the same controls as a learner. No progress is injected.
+  for (const index of [2,4,6,8,9]) await page.locator(".dgrid > .cell").nth(index).click();
+  for (const index of [0,2,4,6]) await page.locator(".dgrid > .cell").nth(index).click();
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  for (const index of [0,2,4,6]) await page.locator(".dgrid > .cell").nth(index).click();
+  for (const index of [0,2,4,6]) await page.locator(".dgrid > .cell").nth(index).click();
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await page.getByText("LESSON COMPLETE", { exact: true }).waitFor();
+  await capture(page, "intro-lesson-complete");
+  await page.getByRole("button", { name: "All lessons", exact: true }).click();
+  await page.locator("#screen-learn.active").waitFor();
+  assert.ok(await page.evaluate(() => JSON.parse(localStorage.getItem("openmahjong.tutorial.v1")).done.includes("tu1")));
+  await page.getByRole("button", { name: "Back", exact: true }).click();
+  await page.locator("#screen-home.active").waitFor();
+}
+
+async function enterPractice(page) {
+  await page.locator(".learncard").click();
+  await page.getByRole("button", { name: "Practice", exact: true }).click();
+  await page.locator(".practice-view").waitFor();
+}
+async function chooseExercise(page, skill, id) {
+  const category = page.getByRole("combobox", { name: "Practice category", exact: true });
+  if (await category.inputValue() !== skill) await category.selectOption(skill);
+  const exercise = page.getByRole("combobox", { name: "Exercise", exact: true });
+  if (await exercise.inputValue() !== id) await exercise.selectOption(id);
+  await page.locator(`.practice-view[data-exercise-id="${id}"]`).waitFor();
+}
+async function selectPracticeTile(page, label, keyboard = false) {
+  const tile = page.getByRole("button", { name: `Select ${label}`, exact: true });
+  if (keyboard) { await tile.focus(); await page.keyboard.press("Space"); }
+  else await tile.click();
+  assert.equal(await page.getByRole("button", { name: `Select ${label}`, exact: true }).getAttribute("aria-pressed"), "true");
+}
+async function practiceAttempts(page) {
+  return page.evaluate(() => JSON.parse(localStorage.getItem("openmahjong.practice.v1") || '{"attempts":[]}').attempts);
+}
+function shortTileLabel(label) {
+  const suited = /^(\d) of (characters|circles|bamboo)( \(red five\))?/.exec(label);
+  if (suited) return `${suited[3] ? "Red " : ""}${suited[1]}${{ characters: "m", circles: "p", bamboo: "s" }[suited[2]]}`;
+  return label.replace(/ wind$| dragon$/, "");
+}
+async function reviewFacts(page, kind) {
+  const row = page.locator(`[data-review-option="${kind}"]`);
+  return {
+    tile: await row.locator(".option-name b").innerText(),
+    shanten: Number(await row.locator('[data-fact="shanten"]').innerText()),
+    unseenCopies: Number(await row.locator('[data-fact="unseen-copies"]').innerText()),
+  };
+}
+async function learningGeometry(page, selector) {
+  const geometry = await page.locator(selector).evaluate((root) => {
+    const stage = document.querySelector("#stage");
+    const scale = stage ? stage.getBoundingClientRect().width / stage.offsetWidth : 1;
+    const visible = (element) => element.getClientRects().length > 0 && getComputedStyle(element).visibility !== "hidden";
+    const controlNodes = [...root.querySelectorAll("button, input, select, summary, a[href], [role=button]")].filter(visible);
+    const control = (element) => {
+      const bounds = element.getBoundingClientRect();
+      return { name: element.getAttribute("aria-label") || element.textContent?.trim().slice(0, 90),
+        width: bounds.width, height: bounds.height, x: bounds.x, y: bounds.y,
+        horizontallyOutside: bounds.x < -1 || bounds.right > innerWidth + 1,
+        outside: bounds.x < -1 || bounds.y < -1 || bounds.right > innerWidth + 1 || bounds.bottom > innerHeight + 1 };
+    };
+    const texts = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    for (let text = walker.nextNode(); text; text = walker.nextNode()) {
+      const parent = text.parentElement;
+      if (!text.textContent?.trim() || !parent || parent.closest("svg,script,style") || !visible(parent)) continue;
+      const style = getComputedStyle(parent);
+      texts.push({ text: text.textContent.trim().slice(0, 90), font: style.fontFamily,
+        pixels: parseFloat(style.fontSize) * scale, color: style.color });
+    }
+    return { viewport: { width: innerWidth, height: innerHeight }, stageScale: scale,
+      documentOverflow: document.documentElement.scrollWidth > innerWidth + 1,
+      contentOverflow: [...root.querySelectorAll(".learning-content")].some((element) => element.scrollWidth > element.clientWidth + 1),
+      controls: controlNodes.map(control),
+      fixedControls: [...root.querySelectorAll(".learning-header button, .learning-nav button, .learning-nav a")].filter(visible).map(control),
+      texts, fonts: [...document.fonts].filter((face) => ["Figtree", "Fraunces"].includes(face.family)).map((face) => ({ family: face.family, status: face.status })) };
+  });
+  assert.equal(geometry.documentOverflow, false, "new learning layout must not overflow the document");
+  assert.equal(geometry.contentOverflow, false, "learning content must not overflow horizontally");
+  assert.deepEqual(geometry.controls.filter((control) => control.width < 43.9 || control.height < 43.9), [], "new learning controls must meet the approved physical44px floor");
+  assert.deepEqual(geometry.controls.filter((control) => control.horizontallyOutside), [], "new learning controls must fit horizontally");
+  assert.deepEqual(geometry.fixedControls.filter((control) => control.outside), [], "learning header/navigation must stay visible");
+  assert.deepEqual(geometry.texts.filter((text) => text.pixels < 10.9), [], "new learning text must meet the approved physical11px floor");
+  assert.deepEqual(geometry.texts.filter((text) => !/Figtree|Fraunces/.test(text.font)), [], "new learning UI must use approved UI fonts");
+  assert.ok(["Figtree", "Fraunces"].every((family) => geometry.fonts.some((font) => font.family === family && font.status === "loaded")), "both approved self-hosted font faces must load");
+  return geometry;
 }
 try {
   for (const [width, height] of [[360,800],[390,844],[412,915],[768,1024],[1024,768],[1440,900]]) {
@@ -281,6 +374,91 @@ try {
     return computed;
   }, motionPage);
   await motionContext.close();
+  if (learning) {
+    for (const [width, height] of [[360,800],[390,844],[412,915],[768,1024],[1024,768],[1440,900]]) {
+      const practiceContext = await context({ width, height });
+      let practicePage;
+      await check(`Practice viewport ${width}x${height}`, async () => {
+        practicePage = await open(practiceContext);
+        await enterPractice(practicePage);
+        await chooseExercise(practicePage, "wait-reading", "wait-ryanmen");
+        const unanswered = await learningGeometry(practicePage, ".practice-view");
+        await capture(practicePage, `practice-question-${width}x${height}`);
+        await selectPracticeTile(practicePage, "3m");
+        await selectPracticeTile(practicePage, "6m");
+        await practicePage.getByRole("button", { name: "Check answer", exact: true }).click();
+        await practicePage.getByRole("heading", { name: "Correct", exact: true }).waitFor();
+        const nextVisible = await practicePage.getByRole("button", { name: "Next exercise", exact: true }).evaluate((element) => {
+          const bounds = element.getBoundingClientRect();
+          const clip = element.closest(".learning-content").getBoundingClientRect();
+          return bounds.top >= clip.top - 1 && bounds.bottom <= clip.bottom + 1;
+        });
+        assert.ok(nextVisible, "correct feedback must reveal the whole Next-exercise control above fixed navigation");
+        const answered = await learningGeometry(practicePage, ".practice-view");
+        await capture(practicePage, `practice-feedback-${width}x${height}`);
+        await axe(practicePage, `practice-${width}x${height}`);
+        report.learningViewports.push({ view: "practice", width, height, unanswered, answered });
+        return { exerciseId: "wait-ryanmen", physicalControls: answered.controls.length };
+      }, practicePage);
+      await practiceContext.close();
+    }
+    const practiceContext = await context({ width: 390, height: 844 });
+    const practicePage = await open(practiceContext);
+    await check("Practice rejects a partial wait answer and resumes after reload", async () => {
+      await enterPractice(practicePage);
+      await chooseExercise(practicePage, "wait-reading", "wait-ryanmen");
+      await selectPracticeTile(practicePage, "3m", true);
+      await practicePage.getByRole("button", { name: "Check answer", exact: true }).click();
+      await practicePage.getByRole("heading", { name: "Try again", exact: true }).waitFor();
+      assert.equal(await practicePage.locator(".practice-view").getAttribute("data-exercise-id"), "wait-ryanmen");
+      assert.equal(await practicePage.getByRole("button", { name: "Next exercise", exact: true }).count(), 0);
+      await capture(practicePage, "practice-wrong-answer");
+      await practicePage.reload({ waitUntil: "networkidle" });
+      await enterPractice(practicePage);
+      assert.equal(await practicePage.locator(".practice-view").getAttribute("data-exercise-id"), "wait-ryanmen");
+      assert.equal(await practicePage.getByRole("button", { name: "Select 3m", exact: true }).getAttribute("aria-pressed"), "true");
+      await selectPracticeTile(practicePage, "6m", true);
+      await practicePage.getByRole("button", { name: "Check answer", exact: true }).click();
+      await practicePage.getByRole("button", { name: "Next exercise", exact: true }).waitFor();
+      const attempts = (await practiceAttempts(practicePage)).filter((attempt) => attempt.exerciseId === "wait-ryanmen");
+      assert.equal(attempts.length, 2);
+      assert.equal(attempts[0].correct, false);
+      assert.equal(attempts[1].correct, true);
+      assert.equal(attempts[1].attemptNumber, 2);
+      assert.equal(attempts[1].assisted, true);
+      await capture(practicePage, "practice-correct-retry");
+      return { wrongStayed: true, selectedAnswerRestored: true, attempts };
+    }, practicePage);
+    await check("Practice separates independent success from explanation-assisted responses", async () => {
+      await chooseExercise(practicePage, "shanten", "shanten-single-wait");
+      await practicePage.getByRole("spinbutton", { name: "Your answer (shanten)", exact: true }).fill("0");
+      await practicePage.getByRole("button", { name: "Check answer", exact: true }).click();
+      await practicePage.getByRole("heading", { name: "Correct", exact: true }).waitFor();
+      const independent = (await practiceAttempts(practicePage)).filter((attempt) => attempt.exerciseId === "shanten-single-wait").at(-1);
+      assert.ok(independent?.correct && !independent.assisted && independent.attemptNumber === 1);
+      await chooseExercise(practicePage, "tile-recognition", "recognize-terminals");
+      await practicePage.locator(".practice-explanation > summary").click();
+      for (const tile of ["1m", "1p", "1s", "9m", "9p", "9s"]) await selectPracticeTile(practicePage, tile);
+      await practicePage.getByRole("button", { name: "Check answer", exact: true }).click();
+      await practicePage.getByRole("heading", { name: "Correct", exact: true }).waitFor();
+      const assisted = (await practiceAttempts(practicePage)).filter((attempt) => attempt.exerciseId === "recognize-terminals").at(-1);
+      assert.ok(assisted?.correct && assisted.assisted && assisted.attemptNumber === 1);
+      await practicePage.reload({ waitUntil: "networkidle" });
+      await enterPractice(practicePage);
+      assert.equal(await practicePage.locator(".practice-view").getAttribute("data-exercise-id"), "recognize-terminals");
+      await practicePage.getByRole("button", { name: "Next exercise", exact: true }).waitFor();
+      await practicePage.locator(".practice-evidence > summary").click();
+      assert.match(await practicePage.locator(".practice-evidence").innerText(), /assisted/i);
+      await capture(practicePage, "practice-evidence-restored");
+      await practicePage.getByRole("button", { name: "Back", exact: true }).click();
+      await practicePage.locator("#screen-learn.active").waitFor();
+      await practicePage.goBack();
+      await practicePage.locator(".practice-view").waitFor();
+      assert.equal(await practicePage.locator(".practice-view").getAttribute("data-exercise-id"), "recognize-terminals");
+      return { independent, assisted, completedExerciseRestored: true };
+    }, practicePage);
+    await practiceContext.close();
+  }
   const offlineContext = await context({ width: 390, height: 844 });
   const offline = await open(offlineContext);
   await check("first-visit offline reload with cold HTTP cache", async () => {
@@ -310,8 +488,12 @@ try {
   if (process.env.BROWSER_FULL_GAME === "1") {
     const fullContext = await context({ width: 390, height: 844 });
     const full = await open(fullContext);
+    let completedRecord = null;
+    let firstVisibleHand = [];
     await check("complete guest East game and reopen history", async () => {
+      if (learning) await completeIntroLesson(full);
       await full.getByRole("button", { name: "East only", exact: true }).click();
+      await full.getByRole("checkbox", { name: "Guided mode", exact: true }).check({ force: true });
       await full.getByRole("button", { name: "Play", exact: true }).click();
       await full.locator('.handrow > .twrap[role="button"]').first().waitFor();
       const seed = process.env.BROWSER_FULL_GAME_SEED || "browser-smoke-east-v2";
@@ -333,6 +515,12 @@ try {
       }, "full-match browser evidence must exercise the current engine and policy");
       await full.reload({ waitUntil: "networkidle" });
       await full.getByRole("button", { name: "Resume game", exact: true }).click();
+      await full.locator('.handrow > .twrap[role="button"]').first().waitFor();
+      await full.locator(".guidehint").waitFor({ state: "visible" });
+      assert.ok((await full.locator(".guidehint").innerText()).trim().length > 0, "guided play must explain the first settled human decision");
+      await capture(full, "guided-first-decision");
+      firstVisibleHand = (await full.locator(".handrow > .twrap > .tile").evaluateAll((tiles) => tiles.map((tile) => tile.getAttribute("aria-label")))).map(shortTileLabel).sort();
+      assert.equal(firstVisibleHand.length, 14);
       const deadline = Date.now() + 12 * 60 * 1000;
       let actions = 0;
       let loggedActions = 0;
@@ -385,8 +573,117 @@ try {
       const played = full.locator(".stat").filter({ hasText: "Games played" }).locator(".v");
       assert.equal(await played.innerText(), "1", "one match must contribute once to guest statistics");
       await capture(full, "single-match-stats");
-      return { actions, prompts, seed, replayEnvelope, historyRecords: 1, statisticsGames: 1, result: "completed match, reopened identical standings, and counted one game in History/Stats" };
+      completedRecord = await full.evaluate(() => JSON.parse(localStorage.getItem("openmahjong.records.v1"))[0]);
+      await writeFile(resolve(output, "completed-current-game.json"), JSON.stringify(completedRecord, null, 2));
+      return { actions, prompts, seed, replayEnvelope, introLessonCompletedInSameSession: learning,
+        guidedHintObserved: true, historyRecords: 1, statisticsGames: 1, result: "completed guided match, reopened identical standings, and counted one game in History/Stats" };
     }, full);
+    if (learning) {
+      await check("completed game Review preserves player perspective and bridges to relevant Practice", async () => {
+        assert.ok(completedRecord, "the real match must complete before review can be tested");
+        await full.getByRole("button", { name: "Back", exact: true }).click();
+        await full.getByRole("button", { name: "Settings", exact: true }).click();
+        await full.locator(".setrow").filter({ hasText: "History" }).getByRole("button", { name: "Open", exact: true }).click();
+        await full.locator(".hrow").first().click();
+        await full.locator("#screen-results.active").waitFor();
+        await full.getByRole("button", { name: "Review game", exact: true }).click();
+        await full.locator('.review-shell[data-review-version="2"]').waitFor();
+        assert.match(await full.locator(".perspective").innerText(), /Player perspective/);
+        const original = (await full.locator(".review-shell .hand-card .hand > [role=img]").evaluateAll((tiles) => tiles.map((tile) => tile.getAttribute("aria-label")))).map(shortTileLabel).sort();
+        assert.deepEqual(original, firstVisibleHand, "review must show the exact hand visible before the original first action");
+        await full.locator(".review-public-table > summary").click();
+        const scorelines = await full.locator(".review-public-table .review-scoreline").allTextContents();
+        assert.equal(scorelines.length, 4);
+        assert.ok(scorelines.every((line) => line.includes("25,000 points")), "first-decision context must retain original scores, not final outcomes");
+        assert.equal(await full.locator(".review-public-table .review-discard").count(), 0, "the first decision must not include future discards");
+        assert.equal(await full.locator(".review-public-table [role=img]").count(), 1, "only the initially public dora indicator is visible before any discard or meld");
+        await capture(full, "review-public-first-position");
+        await full.locator(".review-public-table > summary").click();
+        const chosen = await reviewFacts(full, "chosen");
+        const chosenId = String(completedRecord.log.decisions[0].tileId);
+        const picker = full.getByRole("combobox", { name: "Compare another discard", exact: true });
+        const originalAlternativeId = await picker.inputValue();
+        const originalAlternative = await reviewFacts(full, "alternative");
+        const alternativeOptions = await picker.locator("option").evaluateAll((options) => options.map((option) => ({ value: option.value, label: option.textContent })));
+        assert.equal(new Set(alternativeOptions.map((option) => option.value)).size, 13, "all thirteen other physical discards must remain available at the first turn");
+        assert.ok(alternativeOptions.every((option) => option.value !== chosenId), "an alternative must differ from the already displayed chosen tile");
+        const other = alternativeOptions.find((option) => option.value !== originalAlternativeId);
+        assert.ok(other);
+        await picker.selectOption(other.value);
+        assert.equal(await full.getByRole("combobox", { name: "Compare another discard", exact: true }).inputValue(), other.value);
+        const alternative = await reviewFacts(full, "alternative");
+        assert.ok(Number.isInteger(alternative.shanten) && Number.isInteger(alternative.unseenCopies));
+        assert.deepEqual(await reviewFacts(full, "chosen"), chosen, "choosing an alternative must not change the recorded action's exact facts");
+        await full.getByRole("combobox", { name: "Compare another discard", exact: true }).selectOption(originalAlternativeId);
+        assert.deepEqual(await reviewFacts(full, "alternative"), originalAlternative, "returning to an alternative must preserve its original position facts");
+        await full.getByRole("combobox", { name: "Compare another discard", exact: true }).selectOption(other.value);
+        assert.match(await full.locator(".explanation").innerText(), /heuristics|heuristic/);
+        assert.match(await full.locator(".explanation").innerText(), /not win probabilities/);
+        assert.ok(await full.getByRole("button", { name: "Previous decision", exact: true }).isDisabled());
+        await full.getByRole("button", { name: "Next decision", exact: true }).click();
+        assert.match(await full.locator(".decision-nav > span").innerText(), /^2\s*\//);
+        await full.getByRole("button", { name: "Previous decision", exact: true }).click();
+        assert.match(await full.locator(".decision-nav > span").innerText(), /^1\s*\//);
+        const hand = full.getByRole("combobox", { name: "Hand", exact: true });
+        const hands = await hand.locator("option").evaluateAll((options) => options.map((option) => option.value));
+        assert.ok(hands.length > 1, "the completed match must expose hand navigation");
+        await hand.selectOption(hands.at(-1));
+        assert.equal(await full.getByRole("combobox", { name: "Hand", exact: true }).inputValue(), hands.at(-1));
+        await full.getByRole("combobox", { name: "Hand", exact: true }).selectOption(hands[0]);
+        assert.match(await full.locator(".decision-nav > span").innerText(), /^1\s*\//);
+        await axe(full, "review");
+        await capture(full, "review-alternative");
+        await full.getByRole("button", { name: "Practice tile efficiency", exact: true }).click();
+        await full.locator(".practice-view").waitFor();
+        assert.equal(await full.getByRole("combobox", { name: "Practice category", exact: true }).inputValue(), "ukeire");
+        const recommendedId = await full.locator(".practice-view").getAttribute("data-exercise-id");
+        assert.equal(recommendedId, "ukeire-visible");
+        await full.getByRole("button", { name: "Select 5m", exact: true }).click();
+        await full.getByRole("button", { name: "Check answer", exact: true }).click();
+        await full.getByRole("heading", { name: "Correct", exact: true }).waitFor();
+        assert.equal(await full.locator(".saved-reviews").count(), 1, "the saved decision collection must survive exercise rerenders");
+        await capture(full, "review-to-practice");
+        await full.reload({ waitUntil: "networkidle" });
+        await enterPractice(full);
+        assert.equal(await full.locator(".practice-view").getAttribute("data-exercise-id"), recommendedId);
+        await full.getByRole("button", { name: "Next exercise", exact: true }).waitFor();
+        await full.getByRole("button", { name: "Review", exact: true }).click();
+        await full.locator(".review-shell").waitFor();
+        assert.match(await full.locator(".decision-nav > span").innerText(), /^1\s*\//);
+        await full.getByRole("button", { name: "Back", exact: true }).click();
+        await full.locator("#screen-results.active").waitFor();
+        await full.getByRole("button", { name: "Play again", exact: true }).click();
+        await full.locator('.handrow > .twrap[role="button"]').first().waitFor();
+        const newId = await full.evaluate(() => JSON.parse(localStorage.getItem("openmahjong.game.v1")).id);
+        assert.notEqual(newId, completedRecord.id, "returning to play starts a new real game without replacing the reviewed result");
+        await capture(full, "learning-loop-return-play");
+        return { originalHandMatched: true, publicScores: scorelines, chosen, alternative, hands: hands.length,
+          recommendedExercise: recommendedId, completedRelatedPractice: true, savedDecisionRestoredAfterReload: true, returnedToNewGame: true };
+      }, full);
+      if (completedRecord) {
+        for (const [width, height] of [[360,800],[390,844],[412,915],[768,1024],[1024,768],[1440,900]]) {
+          const reviewContext = await context({ width, height });
+          await reviewContext.addInitScript((record) => {
+            try { localStorage.setItem("openmahjong.records.v1", JSON.stringify([record])); } catch { /* about:blank has no origin */ }
+          }, completedRecord);
+          let reviewPage;
+          await check(`Review viewport ${width}x${height}`, async () => {
+            reviewPage = await open(reviewContext);
+            await reviewPage.getByRole("button", { name: "Settings", exact: true }).click();
+            await reviewPage.locator(".setrow").filter({ hasText: "History" }).getByRole("button", { name: "Open", exact: true }).click();
+            await reviewPage.locator(".hrow").first().click();
+            await reviewPage.getByRole("button", { name: "Review game", exact: true }).click();
+            await reviewPage.locator(".review-shell").waitFor();
+            const geometry = await learningGeometry(reviewPage, ".review-shell");
+            await axe(reviewPage, `review-${width}x${height}`);
+            await capture(reviewPage, `review-${width}x${height}`);
+            report.learningViewports.push({ view: "review", width, height, geometry });
+            return { recordId: completedRecord.id, physicalControls: geometry.controls.length };
+          }, reviewPage);
+          await reviewContext.close();
+        }
+      }
+    }
     await fullContext.close();
   }
   await check("no uncaught browser exceptions", async () => {

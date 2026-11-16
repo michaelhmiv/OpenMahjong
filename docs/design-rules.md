@@ -1,6 +1,6 @@
 # Open Mahjong — Design Rules
 
-Version 6 (green), ruled by Michael on 2026-11-16. This document is the
+Version 7 (learning screens; v6 green retained), ruled by Michael on 2026-11-16. This document is the
 design authority for the web app. If code and this document disagree,
 this document wins until it is amended.
 
@@ -100,7 +100,7 @@ runtime.
 
 The screen inventory is fixed by the brief (§7 + slice-2 additions):
 Landing, Table, Hand-end breakdown, Game-end results, Rules, Settings,
-About, Privacy, History, Stats, Review, Learn (index + lesson runner).
+About, Privacy, History, Stats, Review, Learn (index + lesson runner), Practice.
 A new screen requires a brief amendment and an approved rendering.
 
 ## 7. Copy law
@@ -141,3 +141,29 @@ is measured before it ships.
   self-report is never the evidence.
 - This document is amended in the same PR as any approved design
   change.
+
+
+## 11. Approved learning layouts (v7)
+
+Michael approved both Practice and decision Review renderings in this
+implementation session on2026-11-16: “Approve both designs.” The concrete
+[proposals](design/proposals/README.md), four mobile renderings and independent
+[QC](design/proposals/qc-notes.md) are the approved reference for these screens.
+They extend the master brief's Practice/Review scope. V6 tokens, self-hosted
+fonts, gold roles, table geometry and existing screen conventions remain.
+
+Learning screens use an unscaled native-width shell, max430px, full viewport
+height, scrollable content and persistent bottom navigation. At360px and390px,
+interactive controls remain at least44×44physical pixels and UI text at least
+11px. This exception applies to Practice/Review; it does not silently rework
+existing scaled table geometry. New screen CSS is scoped in learning.css.
+
+The Practice exercise is real, validated content with retry/feedback and
+local-first evidence. Decision Review defaults to the original player view,
+labels heuristic rankings and unseen-copy assumptions, and connects to related
+practice. Additional controls needed for real content, hand/decision navigation,
+exercise selection and saved-reference navigation use the same approved type,
+panel, spacing and control vocabulary. They must pass actual browser QC.
+
+Green/cream state roles remain; small semantic text uses cream/dim when the
+state/decisive text color would miss4.5:1. No additional gold role is introduced.

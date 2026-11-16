@@ -390,3 +390,21 @@ stable UUID-form IDs and preserved full-record statistics. Import tests use the
 actual HTTP UUID validator. Legacy-only human seat defaults to0 because that
 format did not store a seat; raw data is retained for future migration.
 **Proposed PR:** Client reliability. No schema migration or deletion is required.
+
+
+## Learning UI release delta — account scope and payload budget
+
+The approved learning UI PR raises the settings request budget from the initial
+64KiB hardening cap to2MiB, matching bounded2,000-attempt practice evidence,
+lesson snapshots and50saved decision references. Declared/chunked overflow
+still rejects before storage; a real client/HTTP test round-trips all2,000
+attempts without truncation. These are private learning records, not ratings.
+
+`/api/me` now returns its opaque internal user ID so the client can scope local
+learning caches and sessions per account. Guest data stays separate; signout
+restores the guest view and account deletion clears that account's local learning
+cache. The provider subject/credential is not returned. An older API without
+an ID cannot write private cloud learning data into the guest cache. DOM and
+real HTTP regressions cover both the identity contract and cross-account cache
+separation. A per-client queue orders account writes; concurrent devices and
+older full-replacement clients still need stronger server conflict semantics.

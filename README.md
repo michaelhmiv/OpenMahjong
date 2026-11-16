@@ -6,10 +6,16 @@ game records and settings across devices.
 
 The existing application includes real scoring and match flow, guided play,
 eleven introductory lessons, hand/match breakdowns, local history and an
-offline-capable PWA. The long-term goal is a connected **Learn → Play → Analyze
-→ Practice → Improve** experience. Full decision-level review, broader practice,
-advanced curriculum, multiplayer and additional variants remain phased work;
-see the [roadmap](docs/product/roadmap.md).
+offline-capable PWA. Practice offers thirteen engine-validated starter exercises
+across eight categories, with retry, resume and assistance-aware evidence. After a
+game, Review navigates original player-perspective decisions, compares discard
+facts and saves decision references for related practice. Optional accounts merge
+learning evidence across sessions without mixing account caches into guest data.
+
+This implements a starter **Learn → Play → Analyze → Practice** loop. Broader
+curriculum, generated puzzles, calibrated deeper analysis, demonstrated learning
+improvement, multiplayer and additional variants remain phased work; see the
+[roadmap](docs/product/roadmap.md).
 
 ## Principles
 
@@ -23,7 +29,7 @@ see the [roadmap](docs/product/roadmap.md).
 [Current decisions](docs/product/vision.md) resolve historical requirements about
 accounts, advertising, themes and feature scope. The original
 [brief-v1](docs/brief-v1.md) remains a historical slice-1 record;
-[design-rules v6](docs/design-rules.md) governs the current visual system. The
+[design-rules v7](docs/design-rules.md) governs the current visual system. The
 long-term master brief is tracked in
 [PR #19](https://github.com/michaelhmiv/OpenMahjong/pull/19).
 
@@ -34,7 +40,7 @@ long-term master brief is tracked in
 | `packages/engine` | Pure deterministic riichi tiles, walls, hand analysis, scoring, legal actions and complete matches |
 | `packages/ai` | Public-information opponents, fast hand analysis and documented strategic heuristics |
 | `packages/coach` | Ranked action facts, reasons and instructional/analysis contracts |
-| `packages/web` | Vite browser client, table/animation, lessons, replay, local data and optional account API |
+| `packages/web` | Vite browser client, table/animation, lessons, Practice, decision Review, local learning/history data and optional account API |
 | `packages/server` | Node HTTP/Google auth, sessions, user-scoped records/settings/statistics and Postgres persistence |
 
 Only riichi is playable. A named rules descriptor is not a generic implementation
@@ -83,7 +89,7 @@ are absent. Guest play remains independent of the API.
   [security policy](SECURITY.md) and [contributing](CONTRIBUTING.md).
 
 Documentation distinguishes implemented behavior, tested evidence and proposals.
-A passing source suite is not proof of a complete learner journey, physical-phone
+A passing source suite is not proof of learning effectiveness, physical-phone
 performance or production recoverability. Implementation PRs include their exact
 verification results and remaining limits.
 

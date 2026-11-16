@@ -1,6 +1,7 @@
 # Architecture overview
 
-Status: implemented baseline and focused foundations, with proposed extensions
+Status: implemented baseline, focused foundations and approved starter learning
+surfaces, with proposed extensions
 explicitly labeled. See [audit](../audit/architecture-audit.md) for defects found
 at `989927b` and [roadmap](../product/roadmap.md) for remaining work.
 
@@ -63,7 +64,9 @@ captures detached/frozen human decision views and indexes hand/decision boundari
 It stops at a partial prefix without inventing additional AI moves. Analysis is
 lazy and limited to current-version discard decisions; historical v1 decisions
 are display-only. This provides review data/navigation without changing the
-ordinary runner's per-action reconstruction or shipping a new Review screen.
+ordinary runner's per-action reconstruction. `review-ui.ts` presents this data
+with hand/decision navigation, original public table details, physical-discard
+comparisons and a related-practice bridge. Legacy v1 remains display-only.
 See [decision review](review.md).
 
 ## Information boundaries
@@ -90,17 +93,26 @@ engine-validated exercises and practice evidence from the renderer. Version
 mismatches migrate explicitly or reset the incompatible active scene while
 preserving valid completions.
 
-Guest progress is local. Tutorial completion is evidence of exposure, not proof
-of independent mastery. Practice models must retain assisted/unassisted context,
-content version and ruleset identity. Nonvisual models do not mean a Practice
-screen or complete adaptive learning journey has shipped.
+`practice-ui.ts` presents thirteen curated, engine-validated exercises across
+eight starter categories. Wrong answers remain retryable, selections and
+assistance survive reload, and optional recommendations prioritize due/unseen
+content without locking categories. It retains content/ruleset versions and
+assisted/unassisted evidence. Tutorial completion remains evidence of exposure,
+not proof of mastery. A starter Practice screen does not establish a complete
+advanced curriculum, adaptive difficulty system or measured learning benefit.
+
+Practice and Review use the owner-approved v7 native-width learning shell, with a
+430px maximum, scrollable content and persistent navigation. It avoids scaling
+44px controls below their physical minimum on 360px phones. Existing table
+geometry is unchanged.
 
 See [curriculum](../education/curriculum.md), [lesson framework](../education/lesson-framework.md),
 [practice](../education/practice-system.md), and [progress](../education/progress-model.md).
 
 ## Persistence and account sync
 
-Guest settings, resumable game, history and tutorial progress use localStorage;
+Guest settings, resumable game, history, lesson/practice evidence and saved
+review references use localStorage;
 blocked/full storage may prevent persistence while play continues. The browser
 cache supports offline assets, not durable backups. Removing site data removes
 guest records.
@@ -109,12 +121,20 @@ The server stores Google subject/name/avatar, opaque hashed sessions, private ga
 records and settings in Postgres. Account deletion cascades through those rows.
 The in-memory store is a test/development implementation with no restart durability.
 
-Baseline sync applies account settings at sign-in and unions tutorial completions.
-The API and frontend must agree on the `{settings}` request envelope and empty
-204 responses. There is no complete multi-device/offline synchronization engine:
-ordered writes, durable outbox, version conflicts and cross-device active-lesson
-resolution remain explicit roadmap work. A write failure must not be represented
-as a verified cloud save.
+Account sync applies the supported `{settings}` envelope and successful empty
+204 responses. It merges lesson completions, assistance-aware practice attempts
+and a bounded collection of record/decision references. Learning cache/session
+keys are scoped by account ID; sign-out restores guest data instead of exposing
+another account's cloud history through guest progress. Current-client writes are
+serialized, and local data survives failure for a boot/online merge and retry.
+The 2 MiB settings bound accommodates at most 2,000 practice attempts plus bounded
+lesson snapshots and fifty decision references without silent truncation.
+
+This is not a durable synchronization outbox or a complete cross-device conflict
+resolver. Concurrent writers, older clients and active-lesson conflicts remain
+explicit roadmap work. A failed write is not a verified cloud save. Saved
+references resolve against validated private game records and never store hidden
+logs in the collection itself.
 
 ## Build boundaries
 
@@ -136,8 +156,9 @@ See [deployment](../deployment.md) for operational scopes and verification limit
 2. Bounded/cancelable deeper analysis and independently calibrated evidence
    labeling precede numerical post-game grades; the current headless comparison
    reports tradeoffs without such grades.
-3. An approved Practice/Analyze rendering precedes new screen implementation under
-   the [v6 design rules](../design-rules.md).
+3. The Practice/Review renderings were QC-checked and approved by Michael; their
+   implementations follow [v7 design rules](../design-rules.md). Future layout or
+   screen expansion still follows that rendering/QC approval process.
 4. A server-authoritative coordinator precedes any real multiplayer or rating.
    [Multiplayer design](multiplayer.md) is a proposal, not a deployed capability.
 5. A genuinely second game proves abstraction requirements before a general

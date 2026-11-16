@@ -10,12 +10,12 @@ not the exit criterion for a user workflow.
 |---|---|---|---|
 | 0 Audit | Existing five-package product inspected; subsystem findings, browser/production observations and current docs recorded | Audit/decision register PR | Every subsystem has evidence, severity, criteria, owner/next unit and explicit unverified checks |
 | 1 Correctness | Real engine/AI/server/lessons exist but audit finds rules, scoring, information-boundary, sync and auth defects | Separate security/sync, engine+replay compatibility, and teaching/AI correctness PRs | Independent regression fixtures, existing suites, clean builds and affected browser paths pass; old records remain readable |
-| 2 Foundations | Focused stack implements versioned current-rules, validated replay/analysis/education/practice models and emitted-library import checks | Typed event payloads, incremental gameplay measurements and browser review integration | Stable validated contracts with compatibility fixtures; new logic added without enlarging monolithic controller algorithms |
+| 2 Foundations | Focused stack implements versioned rules, replay/analysis/education contracts, separate learning renderers and built-package import checks | Typed event payloads, incremental gameplay measurements and deeper cancellation/caching | Stable validated contracts with compatibility fixtures; new logic added without enlarging monolithic algorithms |
 | 3 Beginner learning | Eleven working introductory modules and guided game, with content/progress corrections | Approved beginner expansion rendering, then original interactive tile/shape/waits modules | Guest beginner can finish introductions and guided match, resume accurately, and explain basic win legality without external help |
-| 4 Practice | Nonvisual exercise/evidence models and thirteen curated exact exercises form a foundation; no Practice screen | Approved Practice rendering; curated tile/shanten/ukeire/waits, then yaku/scoring/defense exercises | Real user can answer, receive accurate feedback/retry, choose another drill and retain progress offline |
-| 5 Review | History reconstructs final standings; single-pass headless review now provides frozen player-perspective decisions/navigation, without a Review screen | Approved Analyze rendering + player-perspective decision navigation and exact candidate facts | Finish game → review decision → compare alternatives → save an appropriate practice item works in browser |
+| 4 Practice | Approved starter Practice UI exposes thirteen engine-validated exercises across eight categories, retry/resume, evidence and optional due/unseen recommendations | Broaden original content, supported categories and progressive difficulty; validate generated publication separately | Final browser path: answer → feedback/retry → another drill, with offline resume and honest assistance evidence |
+| 5 Review | Approved Review UI navigates immutable original player-perspective decisions/hands, compares physical discard facts, shows public table details and saves bounded references for related practice | Richer decision markers, explicitly labeled full-information mode and validated game-derived graded exercises | Final browser path: finish game → review → compare → save/reference related practice → return to the original decision |
 | 6 Deeper analysis | One lightweight heuristic opponent/coach, not calibrated expert strategy | Shared evaluator evidence/uncertainty, call/riichi/situation assessment; validate before probabilistic model | Claims match measured behavior, public information only; latency budget/cancelability and calibration report for numerical predictions |
-| 7 Personalized improvement | Tutorial completions and nonvisual assisted-separated evidence/review scheduling models; no integrated dashboard | Persist attempts and review queue; recommendations, then approved insights dashboard | Recommendations trace to assisted/unassisted evidence; conflict-safe reload/account sync; improvement assessed on new tasks |
+| 7 Personalized improvement | Assistance-separated evidence, due/unseen suggestions, account-scoped caches/sessions and bounded evidence/reference merge are integrated into learning UI | Concurrent-device/older-client conflict strategy, broader adaptive difficulty and approved longitudinal insights dashboard | Recommendations trace to evidence; final reload/account merge tests pass; actual improvement assessed on new tasks |
 | 8 Advanced curriculum | Mostly absent; introductory defense is not a full strategy course | Original multi-concept defense/value/placement modules and study collections | Substantive advanced path with accepted alternatives and assumption-qualified explanations, reviewed against rules/evaluator evidence |
 | 9 Multiplayer | No server-authoritative live game coordinator or realtime transport | Private rooms, coordinator, per-seat projections, reconnect/persistence tests | Four real clients finish/reconnect reliably; unauthorized/duplicate/stale actions rejected; hidden tiles never cross boundaries |
 | 10 Competitive/community | No trustworthy competitive data source or ratings | Evaluate four-player placement ratings; casual matchmaking before rated launch; moderation plans before sharing/community | Independently assessed fairness, versioned results, reporting/abandonment policy and calibrated rating behavior |
@@ -44,18 +44,21 @@ accessibility, persistence and performance evidence from the master brief.
    empty 204 handling, summary-to-detail history replay, existing-surface keyboard
    and dialog/accessibility fixes, offline shell installation, deployable builds,
    dependency security checks and browser evidence.
-6. **Practice UX, then review UX:** separate approved renderings and focused
-   implementation units, followed by replay-to-practice integration.
+6. **Approved Practice and Review UI:** Michael approved both QC-checked
+   renderings. The separate dependent learning unit implements real exercises,
+   decision navigation/comparison, saved-reference practice/return and bounded
+   account learning sync; final integrated verification is reported with its PR.
 7. **Evidence-driven recommendations and advanced education:** persisted evidence,
    recommendations, curriculum expansion and validated deeper evaluation in
    dependency order.
 8. **Private multiplayer foundation:** after local learning/review is strong;
    rated/community and variants follow their own detailed plans.
 
-The first five units form the initial implementation stack. Actual PR boundaries
+The first five units form the foundation stack (#20–#24); the approved learning
+UI is its next dependent unit. Actual PR boundaries
 may split further if an independently testable correction is easier to review
 separately. Independent corrections proceed while future screen decisions remain
-open. Use drafts when acceptance is incomplete; no PR grants permission to merge
+open; approval of these two learning screens is already recorded in v7. Use drafts when acceptance is incomplete; no PR grants permission to merge
 or deploy production. The [implementation register](../audit/implementation-status.md)
 tracks all thirty brief sections individually and records the larger remaining scope.
 
@@ -72,7 +75,7 @@ tracks all thirty brief sections individually and records the larger remaining s
 | 10 Evaluation levels, uncertainty and performance | AI/coach audit, analysis/methodology; phase 6 calibration/latency gate |
 | 11 Evidence, recommendations and spaced review | progress-model and success-metrics; phase 7 persistence/transfer gate |
 | 12 Match and decision statistics | success-metrics definitions/segmentation and phase 7 insights |
-| 13–14 UX/design/accessibility | v6 design rules, UX/accessibility audit, browser artifacts and rendering decisions |
+| 13–14 UX/design/accessibility | v7 design rules retaining v6 tokens/table geometry, UX/accessibility audit, browser artifacts and rendering decisions |
 | 15 Architecture, event/schema/API/performance | architecture audit, replay/analysis, testing and deployment docs |
 | 16 Variants and American card constraints | variants proposal; phase 11 separate rules/licensing study |
 | 17 Multiplayer, ratings, fairness and community | multiplayer proposal; phases 9/10 integrity and moderation gates |
@@ -91,10 +94,10 @@ tracks all thirty brief sections individually and records the larger remaining s
 
 | ID | Decision / recommended next step | Work that can proceed now |
 |---|---|---|
-| DEC-UX-1 | Practice and Analyze screen composition: create faithful v6 renderings, independent QC, then owner approval under design-rules§10 | Pure models, curated exercises, replay validation, accessibility fixes within approved surfaces |
+| DEC-UX-1 — resolved for starter screens | Michael approved the independently QC-checked [Practice/Review proposals](../design/proposals/README.md); v7 records their native-width learning layouts | Complete actual browser verification and keep future layout changes within the rendering/QC process |
 | DEC-RULES-1 | Additional selectable house/tournament rules: enumerate behavior differences and fixtures before exposing toggles | Correct intended existing defaults; bind records/content to named current rules |
 | DEC-ANALYSIS-1 | Stronger analysis: benchmark shared heuristics on held-out positions before choosing sampling/rollout compute | Exact legal-action, shanten/ukeire and public-information contracts |
-| DEC-SYNC-1 | Multi-device merge: recommend per-content evidence union, deterministic idempotency and explicit active-lesson conflict handling | Validate current payloads, serialize writes, protect local progress and document failures |
+| DEC-SYNC-1 | Current-client evidence/reference union, account-scoped local cache and serialized writes are implemented; durable outbox, older-client replacement and concurrent active-lesson conflicts still need a versioned policy | Preserve bounded local evidence and test boot/online merge/retry without claiming a complete conflict resolver |
 | DEC-OPS-1 | Staging/backups/recovery: approve actual cost/retention target and rehearse restore before production rollout | Read-only inventory, deployment/rollback runbooks and CI checks |
 | DEC-COMP-1 | Four-player rating/abandonment rules: benchmark placement-native model before ranked launch | Private authoritative coordinator design and information-integrity tests |
 | DEC-VARIANT-1 | Second variant: validate demand, rules clarity and content rights before choosing | Document genuinely shared primitives; preserve riichi behavior |

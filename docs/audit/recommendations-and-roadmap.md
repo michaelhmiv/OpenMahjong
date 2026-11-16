@@ -42,9 +42,16 @@ resolves historical-document drift. [Research](../product/research.md) records w
 external sources were actually read and which UIs remain untested.
 
 This sequence delivers real code corrections and reusable foundations after the
-audit. It does **not** declare the full long-term platform complete. Reviewable
-models are not a complete Practice interface; result replay is not a full analysis
-workspace; a rules descriptor is not support for multiple mahjong traditions.
+audit, followed by the owner-approved starter Practice and decision Review
+surfaces. The [implementation register](implementation-status.md) distinguishes
+these working paths from the full long-term platform. Thirteen curated exercises
+are not the full curriculum; bounded discard comparisons are not calibrated expert
+analysis; a rules descriptor is not support for multiple mahjong traditions.
+
+The focused dependency stack is audit #20 → server #21 → engine/AI/replay #22 →
+education #23 → client reliability #24, followed by the approved learning UI unit.
+Michael approved both concrete Practice/Review proposals after independent QC.
+Final integrated learning browser/unit results belong to that dependent PR.
 
 ## Release gates and evidence gaps
 
@@ -54,7 +61,8 @@ workspace; a rules descriptor is not support for multiple mahjong traditions.
 - New educational/analysis claims require ruleset references and reproducible
   examples; heuristic judgments must carry their assumptions.
 - New visual surfaces require concrete rendering/QC review under the approved
-  design process. Continue independent correctness/model work meanwhile.
+  design process. Practice/Review approval is recorded in v7; final implementation
+  still needs actual-rendering checks. Future layouts follow the same process.
 - Production OAuth, real Postgres migration/restore, physical-phone frame timing,
   PWA OS installation and full beginner-to-review-to-practice transfer need their
   own evidence. Do not convert source inspection or desktop smoke into those claims.

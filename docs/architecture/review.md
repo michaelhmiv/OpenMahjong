@@ -1,9 +1,10 @@
 # Decision review core
 
-`packages/web/src/review.ts` is a headless foundation, not the completed
-post-game Review screen. The existing history interface still opens final
-standings; interactive review and practice collection controls remain work
-for later reviewed UI changes.
+`packages/web/src/review.ts` is the headless reconstruction and analysis
+boundary. `packages/web/src/review-ui.ts` presents it through the approved
+Review layout in [`docs/design/proposals`](../design/proposals/index.html).
+The App opens Review from a finished game's standings and connects its
+practice action to related validated exercises and saved decision references.
 
 `buildDecisionReview` first validates the saved replay envelope and its
 action/count/size limits. It then consumes the recorded four-seat actions
@@ -33,13 +34,52 @@ not evidence that the game ended at that point.
 
 `ReviewNavigator` supports explicit position indices, previous/next without
 wrapping, and navigation to the first recorded human decision in a hand.
-Hands with no recorded human action have no navigable decision entry.
+Hands with no recorded human action have no navigable decision entry. The
+screen exposes these through native decision buttons and a labeled Hand
+selector, retaining distinct entries for dealer repeats.
 
-The current practice catalog is curated and independently validated. This
-module does not convert a heuristic recommendation into a graded puzzle or
-claim that a game-derived exercise has passed that validation pipeline.
+The Review screen shows the original own hand, live-wall count, riichi
+threat count, and expandable public table details: scores, discard histories,
+melds, and dora indicators. It does not expose opponent hands, wall contents,
+or final results alongside a decision. This is a public-information review,
+not a full-information or alternate-outcome simulation.
+
+For current-engine discards, the screen compares the actual physical tile
+discarded with the shared policy's suggested alternative. A labeled native
+selector allows any legal physical discard, including distinct red and
+plain fives other than the already displayed chosen tile. When the chosen
+tile matches the recommendation, the comparison starts at a distinct legal
+option. When only one discard is legal, the screen shows one row and explains
+the restriction; it offers no fictitious alternative. It displays shanten, unseen improving copies, dora discarded,
+shape-completing waits, and explicitly qualified defensive facts. No choice
+is graded from the eventual result. The advice is computed on first opening
+a position, then cached; changing its alternative only compares existing
+structured facts. Call and special-action positions show the recorded action
+and legal context without inventing a strategic grade. Historical version-1
+positions have a prominent historical label and no current analysis.
+
+`mountReview` accepts a reconstructed `DecisionReview`, a tile renderer,
+Back and Practice callbacks, and an optional table-inspection callback. It
+returns a controller with explicit decision selection, current-position
+access, and cleanup. It uses DOM text nodes for external values, native
+controls, focus restoration after re-rendering, and an accessible scrolling
+main region. The approved layout has no new fonts or palette colors.
+
+The current practice catalog is curated and independently validated. Review
+passes the original position and relevant skill tags to the App. Discards
+suggest ukeire, shanten, and wait-reading; calls offer the existing hand
+construction foundation, labeled "Practice hand building". Dedicated calling
+drills are not yet in the catalog. The App stores bounded decision references
+so a learner can return to the same reviewed position. This does not convert
+a heuristic recommendation into a graded puzzle or claim that a game-derived
+exercise has passed that validation pipeline.
 
 Verification: `npx vitest run packages/web/test/review.test.ts` compares the
 reconstruction with views captured in an independently played full game,
 compares full and truncated-prefix analysis, checks the immutable information
 boundary and legacy behavior, and rejects illegal/trailing records.
+`packages/web/test/review-ui.test.ts` checks the independent approved fixture's
+42-versus-58 unseen-copy comparison, alternative and hand navigation, public
+table snapshots, call and legacy limitations, practice callbacks, keyboard
+focus preservation, empty records, and cleanup. Browser evidence covers the
+separate App entry points and responsive rendering.

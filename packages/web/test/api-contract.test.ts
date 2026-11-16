@@ -39,6 +39,7 @@ function game(): GameRecord {
 }
 describe("client/server account contract", () => {
   it("distinguishes an empty account's settings from an offline failure", async () => {
+    expect((await fetchMe(client)).user?.id).toBe(userId);
     expect(await fetchServerSettings(client)).toEqual({});
     const offline = (async () => { throw new TypeError("offline"); }) as typeof fetch;
     expect(await fetchServerSettings(offline)).toBeNull();
@@ -50,6 +51,17 @@ describe("client/server account contract", () => {
     expect(await store.getSettings(userId)).toEqual(settings);
     expect(await putSettings(DEFAULT_SETTINGS, "wrong", client)).toBe(false);
     expect(await store.getSettings(userId)).toEqual(settings);
+  });
+  it("syncs the bounded 2000-attempt learning history without silently truncating it", async () => {
+    const attempts = Array.from({ length: 2000 }, (_, index) => ({
+      schemaVersion: 1, taxonomyVersion: 1, id: `learning-attempt-${index}`, exerciseId: "wait-ryanmen",
+      exerciseVersion: 1, ruleset: { id: "openmahjong-riichi", version: 1 }, skill: "wait-reading",
+      at: 1_700_000_000_000 + index, correct: true, assisted: false, attemptNumber: 1, responseMs: 500,
+    }));
+    const settings = { ...DEFAULT_SETTINGS, "openmahjong.practice.v1": { schemaVersion: 1, attempts } };
+    expect(new TextEncoder().encode(JSON.stringify(settings)).length).toBeGreaterThan(64 * 1024);
+    expect(await putSettings(settings, csrf, client)).toBe(true);
+    expect(await fetchServerSettings(client)).toEqual(settings);
   });
   it("distinguishes history summaries from replay details", async () => {
     const record = game();

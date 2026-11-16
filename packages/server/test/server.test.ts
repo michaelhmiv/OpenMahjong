@@ -878,7 +878,7 @@ describe("bounded API inputs and private response handling", () => {
   it("rejects oversized declared settings and chunked settings before storage", async () => {
     const ctx = await setup();
     const auth = await signIn(ctx);
-    const body = JSON.stringify({ settings: { oversized: "x".repeat(70 * 1024) } });
+    const body = JSON.stringify({ settings: { oversized: "x".repeat(2 * 1024 * 1024 + 1024) } });
     const declared = await fetch(`${ctx.base}/api/settings`, {
       method: "PUT", headers: { cookie: auth.cookie, "x-csrf-token": auth.csrf }, body,
     });
@@ -911,7 +911,7 @@ describe("bounded API inputs and private response handling", () => {
       });
       req.on("error", reject);
       req.setTimeout(2_000, () => { req.destroy(); reject(new Error("server waited for request EOF after overflow")); });
-      req.write("x".repeat(70 * 1024));
+      req.write("x".repeat(2 * 1024 * 1024 + 1024));
       // Deliberately no req.end(): the input limit must reject during
       // streaming rather than waiting for an attacker to finish.
     });
