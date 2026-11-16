@@ -182,6 +182,13 @@ within these hard floors (Michael's rulings + standing floors):
   size — a tile face must be identifiable at a glance at its smallest
   on-screen size (opponents' hands and ponds), verified in renderings.
 - Type floor 11px; tap targets ≥44px (call buttons comfortably above it).
+  Clarification (Michael's ruling, 2026-11-15, adopting Jeff's recommendation
+  after QC surfaced it on rendering v1): the 44px floor governs CONTROLS —
+  buttons, prompts, menu items. Hand tiles are not controls-sized: 14 tiles
+  cannot each be 44px across a 390px screen. In the client build, hand tiles
+  carry EXPANDED INVISIBLE HIT AREAS (generous touch slop overlapping
+  neighbors, nearest-tile resolution) so selection is never fiddly despite
+  the ~25px visual width.
   No emojis anywhere in UI. No anime, no characters, no mascots.
 - Portrait-first geometry: player hand along the bottom at full readable
   size, opponents left/top/right with compact but legible tiles, ponds in
