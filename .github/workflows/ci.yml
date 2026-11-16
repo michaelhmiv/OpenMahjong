@@ -27,10 +27,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+        # Actions expressions have no arithmetic operators, so each
+        # shard's seed offset is spelled out (shard × 1,250 games).
+        include:
+          - { shard: 0, offset: 0 }
+          - { shard: 1, offset: 1250 }
+          - { shard: 2, offset: 2500 }
+          - { shard: 3, offset: 3750 }
+          - { shard: 4, offset: 5000 }
+          - { shard: 5, offset: 6250 }
+          - { shard: 6, offset: 7500 }
+          - { shard: 7, offset: 8750 }
     env:
       AI_SOAK_GAMES: "1250"
-      AI_SOAK_SEED_OFFSET: "${{ matrix.shard * 1250 }}"
+      AI_SOAK_SEED_OFFSET: "${{ matrix.offset }}"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
