@@ -96,6 +96,7 @@ function suitedWaitRun(counts: readonly number[], type: TileType): boolean {
   );
 }
 import { tileInfo } from "./tile-info.js";
+import { adSlotEl } from "./ads.js";
 import {
   LessonController,
   MODULES,
@@ -758,6 +759,11 @@ export class App {
     el.append(
       h("div", { class: "footer" }, "Open source under AGPLv3 · github.com/michaelhmiv/OpenMahjong"),
     );
+    // AdSense banner (adsense-slot-v1): last element of the Home
+    // flow. adSlotEl returns null while ADSENSE_CONFIG is empty, so
+    // the shipped Home is unchanged until both ids are configured.
+    const adSlot = adSlotEl();
+    if (adSlot) el.append(adSlot);
   }
 
   /** The home tile strip (design rules section 4): a real 14-tile
@@ -1077,9 +1083,17 @@ export class App {
         h("h3", {}, "Accounts"),
         h("p", {}, "If you sign in with Google, we store your Google account identifier, the display name and profile photo from your Google profile, the date you created your account, records of your finished games (date, game length, placement, score, the game's move record, and game statistics), and your settings, so they follow you between devices. We do not receive or store your email address or your Google password."),
         h("h3", {}, "Cookies"),
-        h("p", {}, "We use one cookie to keep you signed in. We do not use advertising or tracking cookies."),
+        h("p", {}, "We use one cookie to keep you signed in. Advertising cookies are described in the Advertising section below."),
+        h("h3", {}, "Advertising"),
+        (() => {
+          const para = h("p", {}, "This site uses Google AdSense to display ads. Google and its partners use cookies to serve and measure ads. The ads shown on this site are non-personalized: they are based on the content of the page and general location, not on your visits to other sites. Google describes how it uses information from sites that use its services at ");
+          const partner = h("a", { href: "https://policies.google.com/technologies/partner-sites", target: "_blank", rel: "noreferrer" }, "policies.google.com/technologies/partner-sites");
+          const settings = h("a", { href: "https://adssettings.google.com", target: "_blank", rel: "noreferrer" }, "adssettings.google.com");
+          para.append(partner, document.createTextNode(". You can review and control ad settings at "), settings, document.createTextNode("."));
+          return para;
+        })(),
         h("h3", {}, "Sharing"),
-        h("p", {}, "We do not sell personal information. Your information is processed by Google (sign-in) and Railway (hosting) only to operate the service."),
+        h("p", {}, "We do not sell personal information. Your information is processed by Google (sign-in and advertising) and Railway (hosting) only to operate the service."),
         h("h3", {}, "Deletion"),
         h("p", {}, "Settings, then Delete account, permanently deletes your account and everything stored with it. Guest data can be removed by clearing your browser's site data."),
         h("h3", {}, "Children"),
