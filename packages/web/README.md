@@ -1,48 +1,92 @@
 # @openmahjong/web
 
-The Open Mahjong web client, per brief §7–§10: land-and-play home, a flat
-straight-down table (portrait-first, dark theme default, theme v5 tokens),
-traditional tile faces drawn clean, the §9 animation set as one motion
-language, the §8 Focus Frame inspect system, and tile-click sound only.
-Offline-capable PWA; anonymous play with settings and history in local
-storage only (brief §11).
+The Vite browser client for OpenMahjong: guest riichi play against AI, eleven
+introductory lessons, guided hints, table/Focus Frame interaction, hand and match
+breakdowns, local history and optional Google account persistence. The approved
+appearance is v6 dark felt green/gold with Fraunces/Figtree; see
+[design rules](../../docs/design-rules.md).
 
-The client renders `@openmahjong/engine` state and holds no game logic of
-its own — if client and engine disagree, the engine is right by
-definition.
+The engine owns legal transitions and scoring; the renderer must not introduce a
+second rules implementation. Engine behavior is still verified against independent
+fixtures: source authority does not make an incorrect rule true.
 
-## Architecture
+## Runtime ownership
 
-- `src/model.ts` — TableModel: the rendered table as a pure fold of the
-  engine's event log (brief §9).
-- `src/drivers.ts` — the seat-driver seam. `HumanDriver` defers every
-  decision to the UI; `AiDriver` adapts the real opponent from
-  `@openmahjong/ai` (brief §6) to the same interface.
-- `src/runner.ts` — GameRunner: drives the synchronous engine from the
-  event-driven UI via deterministic replay (brief A5). Every decision is
-  logged; replaying seed + log reproduces the identical event prefix and
-  suspends at the human's next decision. The saved game in local storage
-  is exactly that log, so a mid-game refresh resumes the same state
-  (A8).
-- `src/app.ts` — screens (§7), table rendering, playback/FLIP animation,
-  prompts, Focus Frames, breakdown, results.
-- `src/sound.ts` — synthesized WebAudio tile clicks (no audio assets).
-- `src/settings.ts` — local-storage settings, saved game, history.
+| Module | Responsibility |
+|---|---|
+| `src/model.ts` | Fold engine events into table presentation state |
+| `src/drivers.ts` | Human suspension and current/legacy AI policy adapters |
+| `src/runner.ts`, `src/replay.ts` | Deterministic decision replay, validated versioned saves and historical behavior compatibility |
+| `src/review.ts` | One-pass recorded-action reconstruction, frozen player-perspective decisions and headless navigation/comparison; no new screen |
+| `src/app.ts` | Existing screens, table controls, animation, lessons, Focus Frames, hand/match results and account orchestration |
+| `src/tutorial.ts` | Existing lesson interactions and real seeded gameplay scenes |
+| `src/education/` | Versioned curriculum, bounded lesson progress, curated practice validation and assistance-aware evidence/review models |
+| `src/settings.ts` | Guest-local settings, in-progress game and private history |
+| `src/api.ts` | Optional authenticated account HTTP client; session cookie/CSRF remain server-owned |
+| `src/sound.ts` | Quiet synthesized tile clicks |
+| `public/sw.js`, `vite.config.ts` | Build-versioned offline shell and asset precache |
 
-## Build & hosting
+New games use the current engine and AI revisions. Version-1 saves keep an
+isolated historical implementation rather than silently changing their result;
+see the [replay contract](../../docs/architecture/replay.md). Reconstructing the
+whole match on each human action remains a measured-performance follow-up, not an
+incremental engine/snapshot API.
+
+The practice/evidence models are nonvisual foundations. There is no complete
+Practice screen, advanced curriculum or review-to-practice workflow yet. History
+result replay must not be described as decision-level analysis. See the
+[implementation register](../../docs/audit/implementation-status.md).
+
+## Storage and information boundaries
+
+Guest settings, tutorial progress, saves and history use browser storage. Full or
+blocked storage can prevent persistence; clearing site data removes local records.
+Optional accounts store private records/settings through `packages/server`, backed
+by Postgres in production. Guest play does not depend on that API being reachable.
+Client-submitted results are private, unrated records, never official rating input.
+
+Internal engine events may contain hidden tiles. AI/coach inputs are restricted
+to the legitimate player view. Future review must reconstruct the information at
+the decision boundary; full-information inspection requires a separately labeled
+mode and must not contaminate advice.
+
+The production build precaches its shipped shell, scripts, styles, fonts and
+privacy document as one revision. Offline availability starts after installation
+completes; a successful same-session reload with a warm HTTP cache is insufficient
+proof. The browser smoke clears HTTP cache while preserving service-worker
+CacheStorage, then reloads and plays offline. Browser storage is not a backup.
+
+## Development and build
+
+From the repository root, using a runtime supported by the root `engines` range:
 
 ```sh
-npm install          # from the repo root (workspaces)
-npm run build        # in this package: vite build -> packages/web/dist/
+npm ci
+npm run dev --workspace=@openmahjong/web -- --host 0.0.0.0
+npm run build --workspace=@openmahjong/web
+PORT=4173 node packages/web/server.mjs
 ```
 
-The build output is a static site (`packages/web/dist/`, relative asset
-paths, service worker included) suitable for Railway static hosting per
-brief §11: point a Railway static service at `packages/web/dist` (build
-command `npm run build` in `packages/web`). No server component exists in
-slice 1. Deployment itself is a separate, owner-run step.
+Vite bundles workspace libraries from source; an engine/AI prebuild is unnecessary
+for the web build. `server.mjs` serves `packages/web/dist` and the standalone
+`/privacy` document. The account service is a separate Node server, not part of the
+static bundle. Existing Railway services and release/rollback considerations are
+in the [deployment guide](../../docs/deployment.md); building a PR is not permission
+to deploy production.
 
-## Tests
+## Verification
 
-From the repo root: `npm test` (Vitest) — includes the model fold,
-driver legality/determinism, and runner resume round-trip suites.
+From the repository root:
+
+```sh
+npm run typecheck --workspace=@openmahjong/web
+npx vitest run packages/web/test --maxWorkers=2
+BROWSER_EXECUTABLE=/usr/bin/chromium node scripts/browser-smoke.mjs http://127.0.0.1:4173 work/browser-smoke
+```
+
+The final command needs the built static server and Chromium. It records actual
+viewports, keyboard/accessibility, persistence and offline evidence using a guest
+API fixture. `BROWSER_FULL_GAME=1` adds a complete East match and History replay.
+See [testing strategy](../../docs/testing/strategy.md) for the full repository gates,
+physical-device/production limitations and the distinction between model tests and
+a complete learner journey.

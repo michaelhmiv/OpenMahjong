@@ -3,20 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "license": "AGPL-3.0-only",
-  "description": "Open Mahjong — the lichess of mahjong. Free, open source.",
+  "description": "Open Mahjong \u2014 the lichess of mahjong. Free, open source.",
   "type": "module",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "test": "vitest run"
+    "test": "vitest run --maxWorkers=2",
+    "build:libs": "npm run build --workspace=@openmahjong/engine && npm run build --workspace=@openmahjong/ai && npm run build --workspace=@openmahjong/coach",
+    "build": "npm run build:libs && npm run build --workspace=@openmahjong/server && npm run build --workspace=@openmahjong/web",
+    "check:packages": "node scripts/check-package-imports.mjs",
+    "test:browser": "node scripts/browser-smoke.mjs",
+    "check:security": "npm audit --audit-level=moderate"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "playwright-core": "^1.65.1",
     "typescript": "^5.7.0",
-    "vitest": "^3.0.0"
+    "vitest": "^5.1.0",
+    "@types/node": "^22.0.0"
   },
   "engines": {
-    "node": ">=20"
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   }
 }

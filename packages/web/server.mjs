@@ -30,13 +30,22 @@ const TYPES = {
 
 async function sendFile(res, path) {
   const data = await readFile(path);
-  res.writeHead(200, { "Content-Type": TYPES[extname(path)] || "application/octet-stream" });
+  res.writeHead(200, {
+    "Content-Type": TYPES[extname(path)] || "application/octet-stream",
+    "Cache-Control": path.includes(`${join(root, "assets")}/`) ? "public, max-age=31536000, immutable" : "no-cache",
+  });
   res.end(data);
 }
 
 const server = createServer(async (req, res) => {
   try {
     const url = new URL(req.url || "/", "http://localhost");
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    if (url.pathname === "/healthz") {
+      const ready = (await stat(join(root, "index.html")).catch(() => null))?.isFile() === true;
+      res.writeHead(ready ? 200 : 503, { "Content-Type": "application/json", "Cache-Control": "no-store" });
+      return res.end(JSON.stringify({ ok: ready }));
+    }
     const rel = normalize(decodeURIComponent(url.pathname)).replace(/^(\.\.[/\\])+/, "");
     let path = join(root, rel);
     let info = await stat(path).catch(() => null);
@@ -45,6 +54,10 @@ const server = createServer(async (req, res) => {
       info = await stat(path).catch(() => null);
     }
     if (info?.isFile()) return await sendFile(res, path);
+    if (url.pathname.startsWith("/assets/") || extname(url.pathname)) {
+      res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" });
+      return res.end("not found");
+    }
     // SPA fallback: the app shell.
     return await sendFile(res, join(root, "index.html"));
   } catch {

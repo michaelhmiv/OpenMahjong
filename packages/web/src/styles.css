@@ -472,7 +472,7 @@ button.hrow {
 .page p.dim, .page .dim { color: var(--dim); }
 .page ul { padding-left: 20px; }
 .page li { margin-bottom: 4px; }
-.page a { color: var(--state); }
+.page a { color: var(--ink); }
 
 .setrow {
   display: flex; align-items: center; justify-content: space-between; gap: 14px;
@@ -500,8 +500,8 @@ button.hrow {
 .results-table .who { flex: 1; font-weight: 600; }
 .results-table .score { color: var(--dim); }
 .results-table .pts { font-weight: 800; min-width: 64px; text-align: right; }
-.results-table .pts.pos { color: var(--state); }
-.results-table .pts.neg { color: var(--decisive); }
+.results-table .pts.pos { color: var(--ink); }
+.results-table .pts.neg { color: var(--ink); }
 
 /* FLIP animation support: tiles transition transform/opacity while the
    animation player steps the display model through the event log. */
@@ -510,8 +510,12 @@ button.hrow {
 @keyframes pulse { 0% { filter: brightness(1.7); } 100% { filter: none; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .frame, .sheet { animation: none; }
+  .frame, .sheet, .pulse { animation: none; }
+  .animating .tile { transition: none; }
 }
+html.reduced-motion .frame, html.reduced-motion .sheet,
+html.reduced-motion .pulse { animation: none; }
+html.reduced-motion .animating .tile { transition: none; }
 
 /* Frame melds render at pond-inspection size (focus-frames-v1). */
 .fmelds { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -577,7 +581,7 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 .lrow .ttl { font-size: 15px; font-weight: 600; }
 .lrow .st { margin-left: auto; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--dim); white-space: nowrap; }
 .lrow .st svg { width: 16px; height: 16px; stroke: var(--state); fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.lrow .st.now { color: var(--state); }
+.lrow .st.now { color: var(--ink); }
 .lrow .chev { margin-left: auto; }
 .lrow .st + .chev { margin-left: 0; }
 .lrow .lenbadge { margin-left: auto; }
