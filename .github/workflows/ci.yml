@@ -30,7 +30,7 @@ jobs:
         shard: [0, 1, 2, 3, 4, 5, 6, 7]
     env:
       AI_SOAK_GAMES: "1250"
-      AI_SOAK_SEED_OFFSET: ${{ matrix.shard * 1250 }}
+      AI_SOAK_SEED_OFFSET: "${{ matrix.shard * 1250 }}"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
