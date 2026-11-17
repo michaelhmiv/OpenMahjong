@@ -1,4 +1,6 @@
 import {
+  activeTableEvents,
+  riichiBust,
   validateScoringSession,
   type ScoringSession,
   type TableEvent,
@@ -99,9 +101,22 @@ export function appendTableEvent(
   event: TableEvent,
   recordId = tableId(),
 ): TableCopy {
+  if (copy.session.finished)
+    throw new Error(
+      "This session is finished. Reopen it before making changes.",
+    );
+  // A correction re-records an existing entry (same recordId) and stays
+  // available on a busted table so the bust hand itself can be fixed;
+  // genuinely new entries and deposits are refused once riichi ends.
+  const isCorrection = activeTableEvents(copy.session).some(
+    (row) => row.id === recordId,
+  );
+  if (!isCorrection && riichiBust(copy.session))
+    throw new Error(
+      "This Riichi game ended when a player fell below zero points.",
+    );
   const session: ScoringSession = {
     ...copy.session,
-    finished: false,
     revision: copy.session.revision + 1,
     updatedAt: new Date().toISOString(),
     ledger: [
@@ -111,27 +126,51 @@ export function appendTableEvent(
   };
   return { ...copy, session: validateScoringSession(session) };
 }
-export function nextUndoTarget(
-  session: ScoringSession,
-): LedgerOperation | undefined {
+/** Operation ids currently disabled by an active undo (an undo that was
+ * itself undone no longer disables its target). */
+function disabledOperations(session: ScoringSession): Set<string> {
   const disabled = new Set<string>();
   for (const op of [...session.ledger].reverse())
     if (op.kind === "undo" && !disabled.has(op.id)) disabled.add(op.target);
+  return disabled;
+}
+export function nextUndoTarget(
+  session: ScoringSession,
+): LedgerOperation | undefined {
+  const disabled = disabledOperations(session);
   return [...session.ledger]
     .reverse()
     .find((op) => op.kind === "set" && !disabled.has(op.id));
 }
 export function undoTable(copy: TableCopy): TableCopy {
+  if (copy.session.finished)
+    throw new Error(
+      "This session is finished. Reopen it before making changes.",
+    );
   const target = nextUndoTarget(copy.session);
   if (!target) return copy;
+  if (target.kind !== "set") return copy;
+  // "Undo last entry" removes the ENTRY: every still-active set operation
+  // carrying the entry's recordId — the original recording and each
+  // correction of it — is undone, never just the latest correction.
+  const disabled = disabledOperations(copy.session);
+  const chain = copy.session.ledger.filter(
+    (op) =>
+      op.kind === "set" &&
+      op.recordId === target.recordId &&
+      !disabled.has(op.id),
+  );
   const session: ScoringSession = {
     ...copy.session,
-    finished: false,
     revision: copy.session.revision + 1,
     updatedAt: new Date().toISOString(),
     ledger: [
       ...copy.session.ledger,
-      { id: tableId(), kind: "undo", target: target.id },
+      ...[...chain].reverse().map((op) => ({
+        id: tableId(),
+        kind: "undo" as const,
+        target: op.id,
+      })),
     ],
   };
   return { ...copy, session: validateScoringSession(session) };

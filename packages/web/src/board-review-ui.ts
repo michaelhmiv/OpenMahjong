@@ -1,4 +1,5 @@
 import { variantAdapter, type Tile } from "@openmahjong/engine";
+import { formatStandingsPoints } from "./records.js";
 import { tileById } from "./model.js";
 import { BoardTimeline, eventLabel } from "./board-review.js";
 import { mountReview, type ReviewUIController } from "./review-ui.js";
@@ -55,7 +56,7 @@ export function mountGameDetail(
       el("b", `${entry.score.toLocaleString("en-US")} points`),
       el(
         "span",
-        `${entry.points > 0 ? "+" : ""}${entry.points.toFixed(1)} settlement`,
+        `${entry.points > 0 ? "+" : ""}${formatStandingsPoints(entry.points)} settlement`,
       ),
     );
     main.append(row);

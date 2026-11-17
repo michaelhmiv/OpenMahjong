@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import {
   calculateDraft,
   DEFAULT_HK_SETTINGS,
+  DEFAULT_TAIWANESE_SETTINGS,
   TABLE_PRESETS,
   type CalculationDraft,
   type ScoringSession,
@@ -245,16 +246,37 @@ describe("Taiwanese calculator", () => {
     expect(root.textContent).not.toContain("Fu");
   });
   it("shows distinct payer amounts for a nondealer self-draw and documents corrected tai before recording", () => {
+    // Dealer repeats are derived from the ledger, never typed in: two
+    // recorded dealer wins put the derived repeat counter at 2.
+    const dealerWin = (honba: number): CalculationDraft => ({
+      input: {
+        variant: "taiwanese",
+        path: "fast",
+        context: { winner: 0, payer: 1, dealer: 0, winType: "ron", honba },
+        tai: 1,
+        settings: DEFAULT_TAIWANESE_SETTINGS,
+      },
+      corrections: [],
+    });
+    const repeatedSession: ScoringSession = {
+      ...taiSession,
+      ledger: [0, 1].map((i) => ({
+        id: `op-${i}`,
+        kind: "set" as const,
+        recordId: `hand-${i}`,
+        event: { kind: "win" as const, wins: [dealerWin(i)] },
+      })),
+    };
     mountVariantCalculator(root, {
-      session: taiSession,
+      session: repeatedSession,
       renderTile: () => document.createElement("span"),
       onBack: () => {},
       onRecord: () => {},
     });
+    expect(root.textContent).toContain("Dealer repeats: 2");
     click("Fast tai entry");
     fill("Winner", "1");
     fill("Win type", "tsumo");
-    fill("Dealer repeats (0 for first deal)", "2");
     fill("Tai excluding dealer bonus", "3");
     click("Calculate payments");
     expect(root.textContent).toContain("A pays B 110 points");
