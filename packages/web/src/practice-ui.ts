@@ -145,7 +145,8 @@ export function createPracticeView(options: PracticeViewOptions): HTMLElement {
     if (local) savePracticeProgress(progress);
     options.onChangeProgress?.(progress);
     completed = feedback.correct;
-    // The feedback reveals the explanation, so subsequent responses are aided.
+    // Feedback has been shown (hint or explanation), so subsequent
+    // responses are aided.
     assisted = true;
     validationMessage = null; saveSession(); render();
     root.querySelector<HTMLElement>(".feedback")?.focus();
@@ -235,7 +236,24 @@ export function createPracticeView(options: PracticeViewOptions): HTMLElement {
     if (validationMessage) { const message = el("p", "dim", validationMessage); message.setAttribute("role", "alert"); content.append(message); }
     if (feedback) {
       const box = el("div", "card feedback"); box.tabIndex = -1; box.setAttribute("role", "status"); box.setAttribute("aria-live", "polite");
-      box.append(el("h2", "", feedback.correct ? "Correct" : "Try again"), el("p", "", feedback.explanation));
+      box.append(el("h2", "", feedback.correct ? "Correct" : "Try again"));
+      if (feedback.correct) {
+        // The explanation names the answer, so it renders only once
+        // the exercise is answered correctly. While it is still open,
+        // feedback is the hint plus pick counts (never which picks).
+        box.append(el("p", "", feedback.explanation));
+      } else {
+        box.append(el("p", "", feedback.hint));
+        if (typeof feedback.extraPicks === "number" && typeof feedback.missingPicks === "number") {
+          box.append(el("p", "dim",
+            `${feedback.extraPicks === 1 ? "1 pick does not belong" : `${feedback.extraPicks} picks do not belong`}; ` +
+            `${feedback.missingPicks === 1 ? "1 pick is missing" : `${feedback.missingPicks} picks are missing`}.`));
+          if (exercise.kind === "recognition" || exercise.kind === "waits" ||
+            exercise.kind === "ukeire" || exercise.kind === "defense") {
+            box.append(el("p", "dim", "Tap a picked tile again to un-pick it."));
+          }
+        }
+      }
       if (exercise.kind === "waits") box.append(el("p", "dim", "This checks the hand's shape. A legal win also needs a yaku and must satisfy furiten rules."));
       if (typeof feedback.facts["unseenImprovingCopies"] === "number") box.append(el("p", "dim", `${feedback.facts["unseenImprovingCopies"]} unseen improving copies; their actual locations are unknown.`));
       content.append(box);

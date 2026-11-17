@@ -31,23 +31,65 @@ export const VARIANT_RELEASES: {
     released: true,
   },
 ];
-export interface VariantQuestion {
+/** Lesson format v2 (brief-lesson-rebuild-v2, PR A): a lesson is a
+ * sequence of steps. Each step carries one idea of text and may show
+ * tiles, picture a hand, and/or pose one check question. A question's
+ * `hint` is the wrong-answer teaching feedback: it restates the rule
+ * or the method and never states the answer. `explanation` is shown
+ * only after a correct answer. */
+interface VariantQuestionBase {
   readonly id: string;
   readonly prompt: string;
-  readonly choices: readonly string[];
-  readonly answer: number;
   readonly explanation: string;
+  readonly hint: string;
   readonly tiles?: string;
   readonly verify: () => string;
+}
+export interface VariantChoiceQuestion extends VariantQuestionBase {
+  readonly kind: "choice";
+  readonly choices: readonly string[];
+  readonly answer: number;
+}
+export interface VariantTilePickQuestion extends VariantQuestionBase {
+  readonly kind: "tile-pick";
+  /** Notation for the shown tile row; tiles are tapped by position. */
+  readonly tiles: string;
+  /** Indices into the expanded tile row that must be picked. */
+  readonly picks: readonly number[];
+}
+export type VariantQuestion = VariantChoiceQuestion | VariantTilePickQuestion;
+export interface VariantStep {
+  readonly text?: string;
+  /** Notation for a row of tiles shown with this step. */
+  readonly tiles?: string;
+  /** Notation for a pictured hand shown with this step. */
+  readonly hand?: string;
+  readonly question?: VariantQuestion;
 }
 export interface VariantLesson {
   readonly id: string;
   readonly variant: VariantId;
   readonly profileId: string;
-  readonly version: 1;
+  readonly version: 2;
   readonly title: string;
-  readonly paragraphs: readonly string[];
-  readonly questions: readonly VariantQuestion[];
+  readonly steps: readonly VariantStep[];
+}
+/** Mechanical v1→v2 conversion used by the content files: each
+ * paragraph becomes a text step, then each question becomes a
+ * question step, preserving the old read-then-check order. */
+export function stepsFromParagraphs(
+  paragraphs: readonly string[],
+  questions: readonly VariantQuestion[],
+): VariantStep[] {
+  return [
+    ...paragraphs.map((text) => ({ text })),
+    ...questions.map((question) => ({ question })),
+  ];
+}
+export function variantLessonQuestions(
+  lesson: VariantLesson,
+): VariantQuestion[] {
+  return lesson.steps.flatMap((s) => (s.question ? [s.question] : []));
 }
 const hk = (
   id: string,
@@ -58,10 +100,9 @@ const hk = (
   id: `hk-${id}`,
   variant: "hong-kong",
   profileId: "openmahjong-hkos",
-  version: 1,
+  version: 2,
   title,
-  paragraphs,
-  questions,
+  steps: stepsFromParagraphs(paragraphs, questions),
 });
 const fact = (
   id: string,
@@ -69,12 +110,15 @@ const fact = (
   choices: string[],
   answer: number,
   explanation: string,
+  hint: string,
 ): VariantQuestion => ({
+  kind: "choice",
   id,
   prompt,
   choices,
   answer,
   explanation,
+  hint,
   verify: () => choices[answer]!,
 });
 const scored = (notation: string, selfDraw = false) =>
@@ -107,14 +151,14 @@ export const VARIANT_LESSONS: VariantLesson[] = [
         "How many physical tiles are in this table’s inventory?",
         ["136", "144", "152"],
         1,
-        "Four copies of 34 ordinary kinds make 136, plus eight unique bonus tiles.",
+        "Four copies of 34 ordinary kinds make 136, plus eight unique bonus tiles.", "Count the ordinary tiles first: four copies of each of the 34 kinds. Then add the unique bonus tiles.",
       ),
       fact(
         "hk-flower-kind",
         "Does a season fill a place in a numbered sequence?",
         ["Yes", "No"],
         1,
-        "A season is exposed and replaced. It never belongs to a sequence, triplet or pair.",
+        "A season is exposed and replaced. It never belongs to a sequence, triplet or pair.", "Think about what a season does when you draw it: it is set aside and replaced, not kept as part of the hand.",
       ),
     ],
   ),
@@ -133,7 +177,7 @@ export const VARIANT_LESSONS: VariantLesson[] = [
           "How many sets does the displayed standard hand contain?",
           ["Three", "Four", "Five"],
           1,
-          "123m, 456m, 123p and 789s are four sequences. The two East tiles form the pair.",
+          "123m, 456m, 123p and 789s are four sequences. The two East tiles form the pair.", "Break the shown hand into groups of three and one pair, suit by suit.",
         ),
         tiles: "123456m123p789s11z",
         verify: () =>
@@ -149,7 +193,7 @@ export const VARIANT_LESSONS: VariantLesson[] = [
         "How many physical tiles are in a standard winning hand with one declared quad?",
         ["Fourteen", "Fifteen", "Seventeen"],
         1,
-        "Four sets and a pair use fourteen structural places. A quad contributes one extra physical tile.",
+        "Four sets and a pair use fourteen structural places. A quad contributes one extra physical tile.", "Start from the fourteen places of four sets and a pair, then add the quad's one extra physical tile.",
       ),
     ],
   ),
@@ -167,14 +211,14 @@ export const VARIANT_LESSONS: VariantLesson[] = [
         "South discards. Which seat may claim that tile for a sequence?",
         ["East", "West", "North"],
         1,
-        "West is immediately after South in turn order. A triplet could be claimed by any opponent.",
+        "West is immediately after South in turn order. A triplet could be claimed by any opponent.", "A sequence claim belongs only to the player whose turn comes immediately after the discarder.",
       ),
       fact(
         "hk-priority",
         "East can win and North can claim a triplet on the same discard. Which has priority?",
         ["The win", "The triplet"],
         0,
-        "A legal win takes priority over triplets, quads and sequences.",
+        "A legal win takes priority over triplets, quads and sequences.", "Compare the claim kinds: a completed winning hand outranks any set claim.",
       ),
     ],
   ),
@@ -192,14 +236,14 @@ export const VARIANT_LESSONS: VariantLesson[] = [
         "Which plant number belongs to West?",
         ["1", "2", "3", "4"],
         2,
-        "East is 1, South 2, West 3 and North 4.",
+        "East is 1, South 2, West 3 and North 4.", "Seat numbers run in turn order: East is 1, then South, West and North.",
       ),
       fact(
         "hk-quartet",
         "At this table, how much is one complete plant quartet worth, including its own-seat plant?",
         ["One fan", "Two fan", "Three fan"],
         2,
-        "The complete quartet adds two fan and its own-seat plant adds one.",
+        "The complete quartet adds two fan and its own-seat plant adds one.", "Add the quartet bonus to what the quartet's own-seat member already earns on its own.",
       ),
     ],
   ),
@@ -213,21 +257,25 @@ export const VARIANT_LESSONS: VariantLesson[] = [
     ],
     [
       {
+        kind: "choice",
         id: "hk-two-fan",
         prompt: "Can the displayed hand win on a discard with no flowers?",
         choices: ["Yes", "No"],
         answer: 1,
         explanation:
           "All sequences gives one fan and no flowers gives one. Two is below the three-fan minimum.",
+        hint: "Count this hand's fan from the lesson — its sequences and the no-flower award — and compare the total with the three-fan minimum.",
         tiles: "123456m123p789s11z",
         verify: () => (scored("123456m123p789s11z").eligible ? "Yes" : "No"),
       },
       {
+        kind: "choice",
         id: "hk-three-fan",
         prompt: "Can that same arrangement win by self-draw?",
         choices: ["Yes", "No"],
         answer: 0,
         explanation: "Self-draw adds the third fan, making the hand eligible.",
+        hint: "Compare the two ways of winning: winning on your own draw adds a fan that a discard win does not.",
         tiles: "123456m123p789s11z",
         verify: () =>
           scored("123456m123p789s11z", true).eligible ? "Yes" : "No",
@@ -248,14 +296,14 @@ export const VARIANT_LESSONS: VariantLesson[] = [
         "You hold East in the East round. How much does an East triplet earn from wind awards?",
         ["One fan", "Two fan", "No fan"],
         1,
-        "The seat-wind and round-wind awards each contribute one.",
+        "The seat-wind and round-wind awards each contribute one.", "Check the two wind awards separately: one for your seat wind, one for the round wind.",
       ),
       fact(
         "hk-dragon-exclusion",
         "Does Big Three Dragons also add three separate dragon-triplet awards?",
         ["Yes", "No"],
         1,
-        "Its eight-fan award replaces the individual dragon awards.",
+        "Its eight-fan award replaces the individual dragon awards.", "Larger patterns replace the smaller awards they contain instead of stacking with them.",
       ),
     ],
   ),
@@ -269,12 +317,14 @@ export const VARIANT_LESSONS: VariantLesson[] = [
     ],
     [
       {
+        kind: "choice",
         id: "hk-discard-payment",
         prompt: "At three fan, how many points does the discarder pay?",
         choices: ["8", "16", "32"],
         answer: 1,
         explanation:
           "Three fan converts to base 8. The discarder pays twice the base, or 16.",
+        hint: "Convert three fan to base points first; the discarder pays double the base.",
         verify: () =>
           String(
             hongKongPayments(3, { winner: 0, payer: 1, selfDraw: false }).find(
@@ -283,12 +333,14 @@ export const VARIANT_LESSONS: VariantLesson[] = [
           ),
       },
       {
+        kind: "choice",
         id: "hk-self-payment",
         prompt: "At three fan by self-draw, how much does each opponent pay?",
         choices: ["8", "16", "48"],
         answer: 1,
         explanation:
           "Every opponent pays twice base 8. Forty-eight is the combined gain, not one player's payment.",
+        hint: "On a self-draw every opponent pays the same doubled amount; the total received is three times one payment.",
         verify: () =>
           String(
             hongKongPayments(3, { winner: 0, payer: 1, selfDraw: true })[0]!
@@ -311,14 +363,14 @@ export const VARIANT_LESSONS: VariantLesson[] = [
         "Which quad can be robbed at this table?",
         ["An added quad", "Every concealed quad"],
         0,
-        "The exposed triplet's fourth tile is offered for a win claim before the upgrade completes.",
+        "The exposed triplet's fourth tile is offered for a win claim before the upgrade completes.", "Robbing applies to the fourth tile being added to an exposed triplet, before the upgrade completes.",
       ),
       fact(
         "hk-no-dora",
         "Does a quad reveal a dora indicator in Hong Kong Old Style?",
         ["Yes", "No"],
         1,
-        "Dora is a Riichi rule. This variant awards its own scoring patterns instead.",
+        "Dora is a Riichi rule. This variant awards its own scoring patterns instead.", "Dora belongs to a different game; check which scoring features this table actually has.",
       ),
     ],
   ),
@@ -336,14 +388,14 @@ export const VARIANT_LESSONS: VariantLesson[] = [
         "How many different kinds are required for Thirteen Orphans before its duplicate?",
         ["Twelve", "Thirteen", "Fourteen"],
         1,
-        "Six terminal kinds plus four winds and three dragons make thirteen.",
+        "Six terminal kinds plus four winds and three dragons make thirteen.", "Count the required kinds: the 1 and 9 of each suit, plus every wind and dragon.",
       ),
       fact(
         "hk-cap",
         "Does a fifteen-fan hand pay more than a ten-fan hand under this preset?",
         ["Yes", "No"],
         1,
-        "Both use the ten-fan cap when converting to payments.",
+        "Both use the ten-fan cap when converting to payments.", "Payments are converted after applying the ten-fan cap, whatever the hand's counted fan.",
       ),
     ],
   ),
@@ -361,14 +413,14 @@ export const VARIANT_LESSONS: VariantLesson[] = [
         "East wins. Who deals the next hand?",
         ["East again", "South"],
         0,
-        "East repeats after its win in this profile.",
+        "East repeats after its win in this profile.", "The match lesson states what happens to the deal after East wins; look for that rule.",
       ),
       fact(
         "hk-public-review",
         "May a later winning hand be used to judge an earlier discard?",
         ["Yes", "No"],
         1,
-        "Review is outcome-blind and uses the immutable public information from the original decision.",
+        "Review is outcome-blind and uses the immutable public information from the original decision.", "Review judges a decision only by the information public at the moment it was made.",
       ),
     ],
   ),
@@ -378,16 +430,37 @@ export const VARIANT_LESSONS: VariantLesson[] = [
 export function variantLessons(variant: VariantId): VariantLesson[] {
   return VARIANT_LESSONS.filter((l) => l.variant === variant);
 }
+/** Validates one question against its own oracle: a choice question's
+ * key must match verify(); a tile-pick's picks must be in-range,
+ * unique, and match verify(). Every question needs a hint that can be
+ * shown while the question is still open. */
+export function validateVariantQuestion(q: VariantQuestion): void {
+  if (!q.hint.trim() || !q.explanation.trim())
+    throw new Error(`Invalid exercise ${q.id}`);
+  if (q.kind === "choice") {
+    if (q.choices[q.answer] !== q.verify())
+      throw new Error(`Invalid exercise ${q.id}`);
+  } else {
+    const rowLength = parseCounts(q.tiles).reduce((a, b) => a + b, 0);
+    if (
+      q.picks.length === 0 ||
+      new Set(q.picks).size !== q.picks.length ||
+      q.picks.some((p) => !Number.isInteger(p) || p < 0 || p >= rowLength) ||
+      q.verify() !== q.picks.join(",")
+    )
+      throw new Error(`Invalid exercise ${q.id}`);
+  }
+}
 export function validateVariantContent(): void {
   validateMcrGuide();
   const ids = new Set<string>();
   for (const l of VARIANT_LESSONS) {
-    if (ids.has(l.id) || l.version !== 1)
+    if (ids.has(l.id) || l.version !== 2)
       throw new Error("Invalid lesson identity");
     ids.add(l.id);
-    for (const q of l.questions) {
-      if (ids.has(q.id) || q.choices[q.answer] !== q.verify())
-        throw new Error(`Invalid exercise ${q.id}`);
+    for (const q of variantLessonQuestions(l)) {
+      if (ids.has(q.id)) throw new Error(`Invalid exercise ${q.id}`);
+      validateVariantQuestion(q);
       ids.add(q.id);
     }
   }

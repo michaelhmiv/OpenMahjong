@@ -593,6 +593,16 @@
 .variant-answers [aria-pressed="true"] {
   outline: 2px solid var(--ink);
 }
+.variant-tile-pick .variant-tile-choice {
+  padding: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.variant-tile-pick [aria-pressed="true"] {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
 .variant-education select {
   min-height: 44px;
   background: var(--panel);

@@ -6,7 +6,11 @@ import {
   createTaiwaneseAdapter,
   type VariantScoreInput,
 } from "@openmahjong/engine";
-import type { VariantLesson, VariantQuestion } from "./variant-content.js";
+import {
+  stepsFromParagraphs,
+  type VariantLesson,
+  type VariantQuestion,
+} from "./variant-content.js";
 const lesson = (
   id: string,
   title: string,
@@ -16,10 +20,9 @@ const lesson = (
   id: `tw-${id}`,
   variant: "taiwanese",
   profileId: "openmahjong-taiwanese-every-flower",
-  version: 1,
+  version: 2,
   title,
-  paragraphs,
-  questions,
+  steps: stepsFromParagraphs(paragraphs, questions),
 });
 const fact = (
   id: string,
@@ -27,12 +30,15 @@ const fact = (
   choices: string[],
   answer: number,
   explanation: string,
+  hint: string,
 ): VariantQuestion => ({
+  kind: "choice",
   id: `tw-${id}`,
   prompt,
   choices,
   answer,
   explanation,
+  hint,
   verify: () => choices[answer]!,
 });
 const scored = (hand: string, extra: Partial<VariantScoreInput> = {}) =>
@@ -67,7 +73,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
           "How many sets are in this complete Taiwanese hand?",
           ["Four", "Five", "Six"],
           1,
-          "123m, 456m, 123p, 789s and the East triplet make five sets, plus the dragon pair.",
+          "123m, 456m, 123p, 789s and the East triplet make five sets, plus the dragon pair.", "Count the groups of three in the shown hand, then check for the pair.",
         ),
         tiles: "123456m123p789s111z55z",
         verify: () =>
@@ -81,7 +87,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
         "How many ordinary physical tiles are in a winning hand with one quad?",
         ["Seventeen", "Eighteen", "Twenty-two"],
         1,
-        "Seventeen structural places plus the quad’s extra physical tile makes eighteen.",
+        "Seventeen structural places plus the quad’s extra physical tile makes eighteen.", "Start from the seventeen structural places, then add the quad's extra physical tile.",
       ),
     ],
   ),
@@ -99,14 +105,14 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
         "Does a West triplet score when West is neither your seat nor the round?",
         ["Yes", "No"],
         0,
-        "Every-wind scoring gives one tai to any wind triplet in this profile.",
+        "Every-wind scoring gives one tai to any wind triplet in this profile.", "This table scores wind triplets without asking whose seat or round it is.",
       ),
       fact(
         "ting",
         "Must you declare Ting before winning here?",
         ["Yes", "No"],
         1,
-        "The named no-Ting profile has no ready declaration requirement or bonus.",
+        "The named no-Ting profile has no ready declaration requirement or bonus.", "Look back at the profile lesson: it describes how ready declarations are handled at this table.",
       ),
     ],
   ),
@@ -124,14 +130,14 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
         "You chow a 3 using 4 and 5. May you immediately discard a 6 of that suit?",
         ["Yes", "No"],
         1,
-        "That would swap the same sequence position. This profile prohibits the 3 and 6 discards.",
+        "That would swap the same sequence position. This profile prohibits the 3 and 6 discards.", "After claiming, you may not discard a tile that simply swaps into the same sequence position.",
       ),
       fact(
         "late-claim",
         "Only three live tiles remain. May you make an ordinary triplet claim?",
         ["Yes", "No"],
         1,
-        "Ordinary set claims require at least four live tiles in this profile; win claims are separate.",
+        "Ordinary set claims require at least four live tiles in this profile; win claims are separate.", "Ordinary set claims near the wall's end need a minimum number of live tiles remaining.",
       ),
     ],
   ),
@@ -150,7 +156,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
           "A winner exposed all four plants and no seasons. How many flower-related tai are counted?",
           ["4", "6", "8"],
           1,
-          "Four individual flowers plus the complete-quartet bonus of two makes six.",
+          "Four individual flowers plus the complete-quartet bonus of two makes six.", "Add the four individual flower points first, then the complete-quartet bonus.",
         ),
         verify: () =>
           String(
@@ -164,7 +170,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
         "Do eight flowers end the hand before its ordinary structure is complete in this profile?",
         ["Yes", "No"],
         1,
-        "The completed-hand eight-flower option is explicitly selected here.",
+        "The completed-hand eight-flower option is explicitly selected here.", "In this profile the eight-flower bonus still sits on top of a completed ordinary hand.",
       ),
     ],
   ),
@@ -183,7 +189,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
           "How many tai does the combined closed self-draw award contribute?",
           ["2", "3", "5"],
           1,
-          "Concealed self-draw is three total, replacing the individual closed and self-draw awards.",
+          "Concealed self-draw is three total, replacing the individual closed and self-draw awards.", "The combined award replaces the separate closed and self-draw awards; do not stack them.",
         ),
         verify: () =>
           String(
@@ -197,7 +203,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
         "Five concealed triplets are present. Do you add the three- and four-triplet tiers too?",
         ["Yes", "No"],
         1,
-        "Only the highest concealed-triplet tier is counted.",
+        "Only the highest concealed-triplet tier is counted.", "Concealed-triplet tiers are alternatives: only the highest tier that fits is counted.",
       ),
     ],
   ),
@@ -215,14 +221,14 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
         "Can a self-drawn hand receive the strict All Sequences award here?",
         ["Yes", "No"],
         1,
-        "This profile requires an actual two-sided discard completion for All Sequences.",
+        "This profile requires an actual two-sided discard completion for All Sequences.", "The strict All Sequences award depends on how the hand was completed \u2014 check the winning method.",
       ),
       fact(
         "dragon-exclusion",
         "Big Three Dragons is present. Are its three individual dragon-triplet awards added too?",
         ["Yes", "No"],
         1,
-        "The larger dragon award replaces the individual dragon awards.",
+        "The larger dragon award replaces the individual dragon awards.", "The larger dragon award replaces the individual dragon-triplet awards it contains.",
       ),
     ],
   ),
@@ -240,14 +246,14 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
         "You passed an eligible win. Does the next draw alone restore all win eligibility?",
         ["Yes", "No"],
         1,
-        "A non-winning-kind discard or a concealed/added quad is required; drawing alone does not clear passed win.",
+        "A non-winning-kind discard or a concealed/added quad is required; drawing alone does not clear passed win.", "Clearing a passed win takes a specific action; simply drawing again is not one of them.",
       ),
       fact(
         "all-claimed",
         "All Claimed is awarded. Is the unique pair-wait point added too?",
         ["Yes", "No"],
         1,
-        "The two-tai All Claimed award replaces the unique-wait point in this profile.",
+        "The two-tai All Claimed award replaces the unique-wait point in this profile.", "All Claimed replaces the unique-wait point rather than adding to it.",
       ),
     ],
   ),
@@ -265,14 +271,14 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
         "Which quad may be robbed?",
         ["An added quad", "Every concealed quad"],
         0,
-        "The fourth tile upgrading an exposed triplet is offered for a win claim first.",
+        "The fourth tile upgrading an exposed triplet is offered for a win claim first.", "Robbing applies to the fourth tile being added to an exposed triplet.",
       ),
       fact(
         "quad-replacement",
         "Can the immediate replacement after a directly claimed exposed quad be won by self-draw here?",
         ["Yes", "No"],
         1,
-        "This profile explicitly prohibits that self-draw, including a following flower-replacement chain.",
+        "This profile explicitly prohibits that self-draw, including a following flower-replacement chain.", "This profile restricts winning on the replacement that follows a claimed exposed quad.",
       ),
     ],
   ),
@@ -291,7 +297,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
           "A nondealer self-draws at three tai on the dealer’s second repeat. How much does the dealer pay at 30/10?",
           ["60", "110", "180"],
           1,
-          "Dealer involvement adds 1 + 2×2 = 5 tai. Base30 + (3+5)×10 = 110.",
+          "Dealer involvement adds 1 + 2×2 = 5 tai. Base30 + (3+5)×10 = 110.", "The dealer's payment includes the dealer bonus: one extra tai plus two per repeat, on top of the hand's tai.",
         ),
         verify: () =>
           String(
@@ -310,7 +316,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
           "How much does either other nondealer pay in that example?",
           ["60", "110", "180"],
           0,
-          "Their payment does not involve the dealer: base30 + 3×10 = 60.",
+          "Their payment does not involve the dealer: base30 + 3×10 = 60.", "A payment between two nondealers does not involve the dealer, so no dealer bonus is added.",
         ),
         verify: () =>
           String(
@@ -340,7 +346,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
           "The hand ends without a winner before the repeat cap. Does the dealer repeat?",
           ["Yes", "No"],
           0,
-          "Draws retain the dealer and increase the repeat count in this profile.",
+          "Draws retain the dealer and increase the repeat count in this profile.", "The match lesson states what a hand without a winner does to the deal and the repeat count.",
         ),
         verify: () =>
           createTaiwaneseAdapter().progression(null, 0, 0).repeat
@@ -352,7 +358,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
         "Four players started with 1,000 each. What is the total after ordinary win transfers?",
         ["3,000", "4,000", "It depends on tai"],
         1,
-        "Payments transfer points, so the combined total stays 4,000.",
+        "Payments transfer points, so the combined total stays 4,000.", "Payments move points between players; they neither create nor remove points.",
       ),
     ],
   ),

@@ -63,6 +63,36 @@ describe("approved Practice interactions", () => {
     expect(mount().querySelector(".feedback h2")?.textContent).toBe("Correct");
   });
 
+  it("recognize-honors journey: a stale wrong pick keeps the exercise wrong, feedback teaches without naming the answer, un-picking corrects it", () => {
+    const exercise = CURATED_EXERCISES.find((entry) => entry.id === "recognize-honors")!;
+    const view = mount("recognize-honors");
+    // Wrong tile first (index 0 is a suited tile).
+    answerChoice(view, 0);
+    click(view, "Check answer");
+    let feedback = view.querySelector(".feedback")!;
+    expect(feedback.querySelector("h2")?.textContent).toBe("Try again");
+    expect(feedback.textContent).not.toContain(exercise.explanation);
+    expect(feedback.textContent).toContain(exercise.hint);
+    expect(feedback.textContent).toContain("1 pick does not belong");
+    expect(feedback.textContent).toContain("Tap a picked tile again to un-pick it.");
+    // Add exactly the correct set; the stale wrong pick still fails it.
+    for (const index of exercise.expected) answerChoice(view, index);
+    click(view, "Check answer");
+    feedback = view.querySelector(".feedback")!;
+    expect(feedback.querySelector("h2")?.textContent).toBe("Try again");
+    expect(feedback.textContent).not.toContain(exercise.explanation);
+    expect(feedback.textContent).toContain("1 pick does not belong");
+    expect(feedback.textContent).toContain("0 picks are missing");
+    expect(feedback.textContent).toContain("Tap a picked tile again to un-pick it.");
+    // Un-pick the wrong tile; now the answer is correct and the
+    // explanation becomes visible.
+    answerChoice(view, 0);
+    click(view, "Check answer");
+    feedback = view.querySelector(".feedback")!;
+    expect(feedback.querySelector("h2")?.textContent).toBe("Correct");
+    expect(feedback.textContent).toContain(exercise.explanation);
+  });
+
   it("counts immediately revealed explanation answers as assisted and prevents duplicate submit", () => {
     const view = mount("wait-tanki");
     view.querySelector<HTMLElement>(".practice-explanation summary")!.click();

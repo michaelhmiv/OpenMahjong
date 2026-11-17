@@ -16,6 +16,10 @@ interface ExerciseBase {
   readonly difficulty: 1 | 2 | 3 | 4 | 5;
   readonly prompt: string;
   readonly explanation: string;
+  /** Wrong-answer teaching feedback: restates the rule or method and
+   * never names the answer. Shown while the exercise is still open;
+   * `explanation` is shown only after a correct answer. */
+  readonly hint: string;
   readonly source: { readonly kind: "curated"; readonly reference: string };
   readonly expected: PracticeAnswer;
 }
@@ -116,7 +120,7 @@ export function validateExercise(raw: unknown): PracticeValidation {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return { valid: false, errors: ["Invalid exercise"] };
   const exercise = raw as PracticeExercise;
   if (typeof exercise.id !== "string" || typeof exercise.prompt !== "string" ||
-    typeof exercise.explanation !== "string" || !exercise.ruleset ||
+    typeof exercise.explanation !== "string" || typeof exercise.hint !== "string" || !exercise.ruleset ||
     typeof exercise.ruleset !== "object" || !exercise.source || exercise.source.kind !== "curated" ||
     typeof exercise.source.reference !== "string" || !exercise.source.reference.trim() ||
     !SKILLS.includes(exercise.skill) || !Number.isInteger(exercise.difficulty) ||
@@ -129,7 +133,7 @@ export function validateExercise(raw: unknown): PracticeValidation {
   if (exercise.ruleset.id !== EDUCATION_RULESET.id || exercise.ruleset.version !== EDUCATION_RULESET.version) {
     errors.push("Unsupported ruleset");
   }
-  if (!exercise.prompt.trim() || !exercise.explanation.trim()) errors.push("Missing instructional text");
+  if (!exercise.prompt.trim() || !exercise.explanation.trim() || !exercise.hint.trim()) errors.push("Missing instructional text");
   try {
     const expectedKind = exercise.kind === "shape" ? "boolean" :
       exercise.kind === "scoring" || exercise.kind === "shanten" ? "number" : "array";
@@ -154,6 +158,12 @@ export interface PracticeFeedback {
   readonly correct: boolean;
   readonly expected: PracticeAnswer;
   readonly explanation: string;
+  readonly hint: string;
+  /** For array-answer exercises: how many submitted picks are not in
+   * the answer set, and how many answer picks were not submitted.
+   * Counts only — never which picks. Absent for scalar answers. */
+  readonly extraPicks?: number;
+  readonly missingPicks?: number;
   readonly facts: Readonly<Record<string, number>>;
 }
 export function checkPracticeAnswer(exercise: PracticeExercise, answer: PracticeAnswer): PracticeFeedback {
@@ -165,8 +175,15 @@ export function checkPracticeAnswer(exercise: PracticeExercise, answer: Practice
     facts["shanten"] = result.shanten;
     facts["unseenImprovingCopies"] = result.totalRemaining;
   }
+  const counts: { extraPicks?: number; missingPicks?: number } = {};
+  if (Array.isArray(exercise.expected) && Array.isArray(answer)) {
+    const expected = new Set(exercise.expected.map((v) => JSON.stringify(v)));
+    const given = new Set(answer.map((v) => JSON.stringify(v)));
+    counts.extraPicks = [...given].filter((v) => !expected.has(v)).length;
+    counts.missingPicks = [...expected].filter((v) => !given.has(v)).length;
+  }
   return { correct: sameAnswer(answer, exercise.expected), expected: exercise.expected,
-    explanation: exercise.explanation, facts };
+    explanation: exercise.explanation, hint: exercise.hint, ...counts, facts };
 }
 
 const EMPTY_VISIBLE = new Array<number>(34).fill(0);
@@ -179,49 +196,49 @@ const SCORE_BASE = { melds: [], seatWind: 28, roundWind: 27, riichi: false, dora
 export const CURATED_EXERCISES: readonly PracticeExercise[] = [
   { ...BASE, id: "recognize-honors", kind: "recognition", skill: "tile-recognition",
     prompt: "Select the winds and dragons.", tiles: [0, 8, 27, 13, 31, 22, 33], category: "honor", expected: [2, 4, 6],
-    explanation: "East, white dragon, and red dragon are honors; numbered tiles are suited tiles." },
+    hint: "Honors are the four winds and the three dragons. A tile with a suit and a number is a suited tile, not an honor.", explanation: "East, white dragon, and red dragon are honors; numbered tiles are suited tiles." },
   { ...BASE, id: "recognize-terminals", kind: "recognition", skill: "tile-recognition",
     prompt: "Select the suited 1s and 9s.", tiles: [0, 9, 18, 8, 17, 26, 27, 4], category: "terminal", expected: [0, 1, 2, 3, 4, 5],
-    explanation: "Only ranks 1 and 9 of the three suits are terminals. Winds are honors." },
+    hint: "A terminal is the 1 or the 9 of a numbered suit. Winds and dragons are honors, not terminals.", explanation: "Only ranks 1 and 9 of the three suits are terminals. Winds are honors." },
   { ...BASE, id: "shape-standard", kind: "shape", skill: "hand-construction",
     prompt: "Does this hand have a complete shape? This question does not establish a legal win.",
     position: { counts: parseCounts("234m345p678s999s55p") }, expected: true,
-    explanation: "234m, 345p, 678s, and 999s form four sets; 55p is the pair. A legal win also needs a yaku." },
+    hint: "Count the sets: three identical tiles, or three in a row in one suit, make a set. A complete hand is four sets plus one pair.", explanation: "234m, 345p, 678s, and 999s form four sets; 55p is the pair. A legal win also needs a yaku." },
   { ...BASE, id: "shape-seven-pairs", kind: "shape", skill: "hand-construction",
     prompt: "Does this hand have a complete shape?", position: { counts: parseCounts("22m55m33p77p33s77s22z") }, expected: true,
-    explanation: "Seven different pairs form chiitoitsu, a special closed-hand shape." },
+    hint: "Look for a special shape as well as sets: seven different pairs also form a complete hand.", explanation: "Seven different pairs form chiitoitsu, a special closed-hand shape." },
   { ...BASE, id: "shanten-single-wait", kind: "shanten", skill: "shanten",
     prompt: "How many shanten is this 13-tile hand?", position: { counts: parseCounts("123m123p123s777z5m") }, expected: 0,
-    explanation: "Four sets are complete. Another 5m makes the pair, so this hand is tenpai: zero shanten." },
+    hint: "Shanten counts how many tile changes separate the hand from a complete shape. A hand one tile away from finishing is tenpai.", explanation: "Four sets are complete. Another 5m makes the pair, so this hand is tenpai: zero shanten." },
   { ...BASE, id: "shanten-seven-pairs", kind: "shanten", skill: "shanten", difficulty: 2,
     prompt: "How many shanten is this hand, considering special shapes?", position: { counts: parseCounts("11m44m77m22p55p88s3z") }, expected: 0,
-    explanation: "Six pairs and a single West are tenpai for seven different pairs. Another West completes it." },
+    hint: "Count shanten for the special shapes too, not only for four sets and a pair.", explanation: "Six pairs and a single West are tenpai for seven different pairs. Another West completes it." },
   { ...BASE, id: "wait-tanki", kind: "waits", skill: "wait-reading",
     prompt: "Select every tile type that completes the shape, regardless of unseen copies.",
     position: { counts: parseCounts("123m123p123s777z5m") }, expected: [4],
-    explanation: "Only 5m completes the pair. The three sequences and red-dragon triplet are already complete." },
+    hint: "Try adding each tile kind in turn: a wait is a kind that turns this hand into four sets and a pair.", explanation: "Only 5m completes the pair. The three sequences and red-dragon triplet are already complete." },
   { ...BASE, id: "wait-ryanmen", kind: "waits", skill: "wait-reading", difficulty: 2,
     prompt: "Select every tile type that completes the shape, regardless of unseen copies.",
     position: { counts: parseCounts("123m123p777z55s45m") }, expected: [2, 5],
-    explanation: "The incomplete 45m sequence accepts 3m or 6m. The other three sets and pair are complete." },
+    hint: "Look at the one unfinished part of the hand. A two-sided sequence wait can be completed from either end.", explanation: "The incomplete 45m sequence accepts 3m or 6m. The other three sets and pair are complete." },
   { ...BASE, id: "ukeire-visible", kind: "ukeire", skill: "ukeire", difficulty: 2,
     prompt: "Select improving tile types with at least one unseen copy. Two 5m are visible outside your hand.",
     position: { counts: parseCounts("123m123p123s777z5m"), visibleOutsideHand: parseCounts("55m") }, expected: [4],
-    explanation: "Only 5m completes the pair. One is in hand and two are visible, leaving one unseen copy; its actual location is unknown." },
+    hint: "An improving tile must complete the hand and still have a copy you have not seen. Count the copies in your hand and among the visible tiles.", explanation: "Only 5m completes the pair. One is in hand and two are visible, leaving one unseen copy; its actual location is unknown." },
   { ...BASE, id: "yaku-tanyao", kind: "yaku", skill: "yaku", difficulty: 2,
     prompt: "Identify every yaku for this closed ron hand, won on 4m without riichi.",
     position: { ...SCORE_BASE, handCounts: parseCounts("234m555p345s678s22m"), winningTileType: 3, winType: "ron" }, expected: ["tanyao"],
-    explanation: "Every tile is a simple, so tanyao applies. The dot triplet rules out pinfu; riichi was not declared." },
+    hint: "Check every tile in the hand: a yaku based on simples allows no terminals and no honors anywhere.", explanation: "Every tile is a simple, so tanyao applies. The dot triplet rules out pinfu; riichi was not declared." },
   { ...BASE, id: "score-riichi-pinfu", kind: "scoring", skill: "scoring", difficulty: 2,
     prompt: "How many total points does a nondealer collect for this riichi pinfu ron, with no dora, honba, or sticks?",
     position: { ...SCORE_BASE, handCounts: parseCounts("234m345p345s789s22s"), riichi: true, winningTileType: 1, winType: "ron" }, expected: 2000,
-    explanation: "Riichi and pinfu give 2 han. Closed ron gives 30 fu: 30 × 2^(2+2) = 480 base; 480 × 4 rounds to 2,000." },
+    hint: "Work in order: count the han, then the fu, then the base points, and round the ron payment up.", explanation: "Riichi and pinfu give 2 han. Closed ron gives 30 fu: 30 × 2^(2+2) = 480 base; 480 × 4 rounds to 2,000." },
   { ...BASE, id: "score-chiitoitsu", kind: "scoring", skill: "scoring", difficulty: 2,
     prompt: "How many total points does a nondealer collect for this seven-pairs ron, with no bonuses?",
     position: { ...SCORE_BASE, handCounts: parseCounts("22m55m33p77p33s77s22z"), winningTileType: 28, winType: "ron" }, expected: 1600,
-    explanation: "Chiitoitsu is 2 han and exactly 25 fu. Base 25 × 16 = 400; a nondealer ron is 400 × 4 = 1,600." },
+    hint: "Seven pairs has its own fixed fu. Use that fu with its han in the base-points formula, then multiply for a ron.", explanation: "Chiitoitsu is 2 han and exactly 25 fu. Base 25 × 16 = 400; a nondealer ron is 400 × 4 = 1,600." },
   { ...BASE, id: "defense-one-opponent", kind: "defense", skill: "defense",
     prompt: "Select candidate types guaranteed safe against this riichi opponent's ron. No safety is claimed against the others.",
     opponentRiichi: true, discarded: [0, 4, 9, 27], candidates: [4, 13, 27], expected: [4, 27],
-    explanation: "5m and East are in that opponent's pond, so furiten prevents their ron. 5p has no such guarantee; other opponents are separate threats." },
+    hint: "A tile in that opponent's own discard pond cannot complete their hand \u2014 that is furiten. A tile with no such guarantee is not safe.", explanation: "5m and East are in that opponent's pond, so furiten prevents their ron. 5p has no such guarantee; other opponents are separate threats." },
 ];

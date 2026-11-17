@@ -3220,13 +3220,14 @@ export class App {
     const page = h("div", { class: "tabpage" });
     el.append(page);
     page.append(h("h2", {}, "Learn"));
+    page.append(h("p", { class: "dim" }, "Lessons teach each game from the first tile. Start with lesson 1 of the game you want to learn."));
+    page.append(this.guidedRowEl());
+    for (const section of LEARN_SECTIONS) page.append(this.learnSectionEl(section));
     const practice = h("button", { class: "pillbtn", "aria-label": "Practice" }, "Practice");
     practice.addEventListener("click", () => { this.practiceInitialSkill = undefined; this.showScreen("practice"); });
     const prow = h("div", { class: "practicerow" });
     prow.append(practice);
     page.append(prow);
-    page.append(this.guidedRowEl());
-    for (const section of LEARN_SECTIONS) page.append(this.learnSectionEl(section));
     this.variantProgress = mergeVariantProgress(this.variantProgress, parseVariantProgress(this.readLearningCache(VARIANT_LEARNING_KEY)));
     for (const release of VARIANT_RELEASES.filter((v) => v.released)) {
       page.append(this.variantLearnSectionEl(release));
@@ -3253,7 +3254,7 @@ export class App {
       "data-section": release.id,
     });
     head.append(
-      h("span", { class: "secttl" }, release.name),
+      h("span", { class: "secttl" }, release.id === "mcr" ? "MCR (Mahjong Competition Rules)" : release.name),
       h("span", { class: "seccount" }, `${doneCount} of ${lessons.length} lessons done`),
     );
     head.insertAdjacentHTML(
@@ -3282,7 +3283,6 @@ export class App {
       this.variantReturnReview = false;
       this.showScreen("variant-learn");
     });
-    wrap.append(practice);
     const activeId = lessons.find((l) => this.variantProgress.active[l.id] && !isDone(l.id))?.id;
     const firstOpen = lessons.find((l) => !isDone(l.id))?.id;
     lessons.forEach((lesson, i) => {
@@ -3313,6 +3313,7 @@ export class App {
       });
       wrap.append(row);
     });
+    wrap.append(practice);
     return wrap;
   }
 
@@ -3601,7 +3602,12 @@ export class App {
     const all = h("button", { class: "pillbtn ghost" }, "All lessons");
     all.addEventListener("click", () => this.exitLesson());
     ctl.append(all);
-    const next = MODULES.find((m) => !this.tutorial.done.includes(m.id));
+    // Next is the first incomplete module AFTER the one just
+    // completed; only when none remains after it do we fall back to
+    // the first incomplete module overall.
+    const completedIndex = MODULES.findIndex((m) => m.id === this.lesson!.moduleId);
+    const next = MODULES.slice(completedIndex + 1).find((m) => !this.tutorial.done.includes(m.id))
+      ?? MODULES.find((m) => !this.tutorial.done.includes(m.id));
     if (next) {
       const nb = h("button", { class: "pillbtn primary" }, `Next: ${next.title}`);
       nb.addEventListener("click", () => this.startLesson(next.id));
