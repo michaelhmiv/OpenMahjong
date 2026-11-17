@@ -48,9 +48,12 @@ for (const variant of [process.argv[4] ?? "hong-kong"]) {
         );
     });
     await page.goto(base);
+    // The Play variant picker is a segment control (radio group), not
+    // a select: click the segment carrying the variant's name.
     await page
-      .getByLabel("Play variant", { exact: true })
-      .selectOption(variant);
+      .getByRole("radiogroup", { name: "Play variant", exact: true })
+      .getByRole("radio", { name, exact: true })
+      .click();
     await page.getByRole("button", { name: "East", exact: true }).click();
     await page.screenshot({ path: `${out}/play-${width}.png` });
     await page
