@@ -871,7 +871,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
       ];
     case "tu9":
       return [
-        { kind: "info", text: "Points are lost by dealing in: discarding the tile that completes another player's tenpai hand. That player wins by ron, and the player who discarded pays for the whole hand. The danger is sharpest after an opponent declares riichi — their hand is tenpai, and any of their waits that you discard can cost you the hand. This lesson practices the safest answer." },
+        { kind: "info", text: "Points are lost by dealing in: discarding the tile that completes another player's tenpai hand. That player wins by ron, and the player who discarded pays for the whole hand. The danger is sharpest after an opponent declares riichi — their hand is tenpai, and any of their waits that you discard can cost you the hand. Declaring riichi costs the player who declares a 1,000-point stake, paid at once, so their score drops by 1,000 the moment they declare. This lesson practices the safest answer." },
         {
           kind: "scene",
           seed: "om-tu9-2",
@@ -881,7 +881,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             const threat = stop.view.players.find((p) => p.seat !== 0 && p.riichi);
             if (!threat) return "Watch the table — a riichi is coming.";
             const wind = WIND_WORD[threat.seatWind] ?? "";
-            const base = `${wind} has declared riichi, so ${wind}'s hand is tenpai. Discard a tile from ${wind}'s pond — the tiles ${wind} has already thrown away, face up in front of them. Those tiles are safe against ${wind}: if any tile ${wind} is waiting for is in ${wind}'s own pond, ${wind} cannot win by ron at all — and a tile sitting in their own pond can never be the tile they take from you. Another opponent might still be waiting on them.`;
+            const base = `${wind} has declared riichi, so ${wind}'s hand is tenpai. ${wind} paid the 1,000-point stake to declare, which is why ${wind}'s score stands at ${threat.score.toLocaleString("en-US")}. Discard a tile from ${wind}'s pond — the tiles ${wind} has already thrown away, face up in front of them. Those tiles are safe against ${wind}: if any tile ${wind} is waiting for is in ${wind}'s own pond, ${wind} cannot win by ron at all — and a tile sitting in their own pond can never be the tile they take from you. Another opponent might still be waiting on them.`;
             if ((c.counters["misses"] ?? 0) >= 2) {
               const pond = new Set(threat.discards.map((d) => d.tile.type));
               const safe = [...new Set(stop.view.hand.map((t) => t.type))]

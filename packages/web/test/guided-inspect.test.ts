@@ -490,7 +490,7 @@ describe("guided explanation sheet: the rendering C scene", () => {
     // The final approved value paragraph: riichi, dora and the
     // indicator each defined at first use.
     expect(bodies[2]).toBe(
-      "Already valuable, the hand needs no riichi — an optional declaration made when your hand is ready — with four dora — bonus tiles worth extra score. Three are 8 of Bamboo, one the red 5 of Dots. The face-up tile in the middle of the table, the indicator, is the 7 of Bamboo; the tile one step above is a dora. Riichi can raise the score, but it locks your hand to discarding only what you draw.",
+      "Already valuable, the hand needs no riichi — an optional declaration made when your hand is ready — with four dora — bonus tiles worth extra score. Three are 8 of Bamboo, one the red 5 of Dots. The face-up tile in the middle of the table, the indicator, is the 7 of Bamboo; the tile one step above is a dora. Riichi can raise the score, but declaring it costs 1,000 points, and it locks your hand to discarding only what you draw.",
     );
     expect(bodies[3]).toBe(
       "Two tiles finish the hand. Their other copies are unseen — in the wall — the pile of tiles everyone draws from — or in another player's hand.",
