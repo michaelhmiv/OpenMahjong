@@ -121,8 +121,12 @@ async function completeIntroLesson(page) {
   await cont(); // bamboo introduction
   await drill([2,4,6,8,9]); // bamboo
   await cont(); // characters introduction
+  await cont(); // all nine characters faces, labelled in order
+  await cont(); // the 6 and the 9 side by side
   await drill([1,4,6,8,11]); // characters
   await cont(); // winds introduction
+  await drill([1]); // East wind, name to face
+  await drill([2]); // North wind, name to face
   await cont(); // dragons introduction
   await drill([0,2,4,6]); // honors
   await cont(); // terminals introduction
@@ -130,6 +134,7 @@ async function completeIntroLesson(page) {
   await drill([0,2,4,6]); // terminals
   await cont(); // four copies of every tile
   await cont(); // the red-tinted 5s
+  await cont(); // the tile shorthand codes
   await page.getByText("LESSON COMPLETE", { exact: true }).waitFor();
   await capture(page, "intro-lesson-complete");
   await page.getByRole("button", { name: "All lessons", exact: true }).click();
