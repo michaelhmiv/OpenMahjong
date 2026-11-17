@@ -1,5 +1,12 @@
 # Open Mahjong — Design Rules
 
+Implementation exception, 2026-11-17: the owner's approved #39/#31/#32/#33/#34
+implementation request explicitly supersedes intermediate brief/rendering approval
+stops for this program. Record decisions, retain these visual laws, and capture
+completed browser renderings. It excludes every photo-input feature. This
+exception does not authorize deployment, merging or issue comments. See
+[implementation program](implementation-program.md).
+
 Version 7 (learning screens; v6 green retained), ruled by Michael on 2026-11-16. This document is the
 design authority for the web app. If code and this document disagree,
 this document wins until it is amended.
@@ -260,3 +267,22 @@ records the shell the renderings specify.)
   every settings row (sound, reduced motion, large tiles, guided
   mode), the About links (Rules, About, Privacy), and the AGPL
   footer.
+
+## 14. Game details, board review and in-person tools
+
+Finished Games rows open a separate game-detail surface with final standings,
+settlement and a selectable row for every recorded hand. Rows use the winner's
+wind during that hand. Board review uses a portrait-first four-seat board, an
+event slider and labeled event/decision/jump controls. Concealed opponent tiles
+remain backs. The coach comparison appears at the original decision, using the
+existing explained heuristic analysis. Game details and review have no bottom nav.
+
+Play includes an in-person calculator/scorekeeper entry. Its drilled-in screens
+use the same green panels, green/cream selection roles, self-hosted fonts and
+native-width scrolling shell. Both tile and fast input keep context controls
+visible in the form. Payment lines lead each result; original facts and editable
+corrections follow. Recording requires confirmation. Session history, correction,
+undo, pot disposition and settlement are explicit controls. No account is needed
+for manual use. Games labels these sessions separately from CPU statistics.
+
+Variant table implementation retains the v4 top/side ponds, per-side13th-discard condensation and absolute-sized Focus Frames. Native44px selection targets use two rows of seven for13/14-tile hands and a third row for Taiwanese16/17-tile hands, including Large Tiles. Selected faces stay in a fixed preview slot. Guided hints float above the hand and disappear during calls, playback or an open frame. The additional row is the required five-set extension; existing Riichi table geometry remains untouched. Table settings use the same accessible sheet grammar. All four Learn sections remain collapsible and profile-specific.

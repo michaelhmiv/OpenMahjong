@@ -1,21 +1,32 @@
 # Open Mahjong
 
-A free, open-source, browser-first mahjong platform. Play four-player riichi
-against AI and learn without an account. Optional Google sign-in saves private
-game records and settings across devices.
+A free, open-source, browser-first mahjong platform. Play four-player Riichi,
+Hong Kong Old Style, MCR (WMO 2006) or Taiwanese against CPU opponents, learn
+without an account, and review complete games on the board. Optional Google
+sign-in carries private history, learning progress and active games across devices.
 
-The existing application includes real scoring and match flow, guided play,
-eleven introductory lessons, hand/match breakdowns, local history and an
-offline-capable PWA. Practice offers thirteen engine-validated starter exercises
-across eight categories, with retry, resume and assistance-aware evidence. After a
-game, Review navigates original player-perspective decisions, compares discard
-facts and saves decision references for related practice. Optional accounts merge
-learning evidence across sessions without mixing account caches into guest data.
+Game details show final standings, settlement and every recorded hand. Board
+review seeks all players’ events using indexed checkpoints, keeps opponents
+concealed and explains supported decisions from immutable public information.
+Legacy engine-one review remains display-only. Saved decisions lead to validated
+Practice and return to the same position.
 
-This implements a starter **Learn → Play → Analyze → Practice** loop. Broader
-curriculum, generated puzzles, calibrated deeper analysis, demonstrated learning
-improvement, multiplayer and additional variants remain phased work; see the
-[roadmap](docs/product/roadmap.md).
+In-person tools offer actual-tile detection and fast scoring-unit entry, a
+correctable payer-first breakdown, four named players, ledgers, undo, deposits
+where applicable, penalties and settlement. Manual tools save locally and work
+offline without an account. Optional private ledger sync uses revision checks,
+idempotent writes and conflict preservation. The American helper accepts values
+from the player’s own physical card; it contains no annual-card patterns and is
+not a playable American variant. Photo input is excluded.
+
+The original Riichi curriculum is joined by thirty original variant lessons,
+sixty corrective checks and a searchable reference for all 81 MCR patterns.
+Profile-specific practice, public-information coaching, history, statistics and
+resume use the same scoring sources as gameplay and calculators. Strategic
+advice remains heuristic; no calibrated grading scale is claimed.
+
+Broader curricula, generated puzzles, demonstrated learning improvement and
+multiplayer remain phased work; see the [roadmap](docs/product/roadmap.md).
 
 ## Principles
 
@@ -37,15 +48,18 @@ long-term master brief is tracked in
 
 | Package | Responsibility |
 |---|---|
-| `packages/engine` | Pure deterministic riichi tiles, walls, hand analysis, scoring, legal actions and complete matches |
+| `packages/engine` | Deterministic Riichi engine, separate Chinese-family adapters, hand analysis, shared scoring/payments and ledgers |
 | `packages/ai` | Public-information opponents, fast hand analysis and documented strategic heuristics |
 | `packages/coach` | Ranked action facts, reasons and instructional/analysis contracts |
 | `packages/web` | Vite browser client, table/animation, lessons, Practice, decision Review, local learning/history data and optional account API |
 | `packages/server` | Node HTTP/Google auth, sessions, user-scoped records/settings/statistics and Postgres persistence |
 
-Only riichi is playable. A named rules descriptor is not a generic implementation
-of Hong Kong, MCR or American mahjong. Private browser-submitted history is unrated
-and must not be used as an authoritative competitive result.
+Playable profiles are [Riichi](docs/architecture/rulesets.md), [Hong Kong Clear Chapter](docs/rules/hong-kong.md), [MCR WMO 2006](docs/rules/mcr.md) and [Taiwanese Every-flower, no Ting, 30/10](docs/rules/taiwanese.md). These are explicit, versioned profiles, not universal house-rule coverage. New variants use executable adapters, not renamed Riichi flags. Private browser-submitted CPU history remains unrated and is not proof of a competitive result.
+
+The MCR scorer incorporates pinned MIT code by Jeff Wang; readable source,
+licenses and the reproducible optional compiler build ship under
+[engine/vendor/mcr](packages/engine/vendor/mcr/NOTICE.md). Normal npm builds run
+entirely from checked-in JavaScript/TypeScript with no scoring service or compiler.
 
 ## Development
 
@@ -55,13 +69,10 @@ repository root:
 ```sh
 npm ci
 npm run typecheck
-npx vitest run --maxWorkers=2
-npm run build --workspace=@openmahjong/engine
-npm run build --workspace=@openmahjong/ai
-npm run build --workspace=@openmahjong/coach
-node scripts/check-package-imports.mjs
-npm run build --workspace=@openmahjong/web
-npm run build --workspace=@openmahjong/server
+npm test
+npm run build
+npm run check:packages
+npm run check:security
 npm run dev --workspace=@openmahjong/web -- --host 0.0.0.0
 ```
 
@@ -78,6 +89,7 @@ are absent. Guest play remains independent of the API.
   and [research](docs/product/research.md).
 - [Audit index and priorities](docs/audit/recommendations-and-roadmap.md) and
   [section-by-section implementation status](docs/audit/implementation-status.md).
+- [Approved implementation program](docs/implementation-program.md), [in-person ledgers/API](docs/architecture/in-person.md) and [verification/evidence](docs/audit/program-verification.md).
 - [Architecture](docs/architecture/overview.md), [rulesets](docs/architecture/rulesets.md),
   [replay](docs/architecture/replay.md), [decision review](docs/architecture/review.md), [analysis](docs/architecture/analysis.md),
   proposed [multiplayer](docs/architecture/multiplayer.md) and

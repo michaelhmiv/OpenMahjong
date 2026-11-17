@@ -1,8 +1,18 @@
-# Variant architecture proposal
+# Executable variant adapters
 
-Status: riichi is the only implemented playable variant. This document prepares a
-second-variant investigation; it does not claim a generic variant engine exists.
-The [rulesets reference](rulesets.md) describes the current riichi descriptor.
+Status, 2026-11-17: Riichi retains its existing controller and historical engines. Hong Kong Old Style, MCR WMO 2006 and Taiwanese Every-flower now have executable, engine-three profiles. American is a payment helper only. Photo recognition is excluded. See the [approved program](../implementation-program.md) for the owner's process exception and [verification](../audit/program-verification.md) for actual checks.
+
+`engine/src/variants/types.ts` defines the adapter boundary. Adapters own inventory, standing size, winning structure, score, payments, legal contexts, public projection, replacement semantics and dealer progression. Taiwanese's per-match restriction state is created fresh by the registry; it is never shared across independent games. The common Chinese-family coordinator shares proven packet dealing, physical identities, calls and event transport without executing the Riichi state machine.
+
+| Variant | Recorded profile | Hand | Scorer and lifecycle |
+| --- | --- | --- | --- |
+| Hong Kong Old Style | `openmahjong-hkos@1` | 13/14; four sets | Clear Chapter, min3/cap10, flowers, half-spicy, sourced splits/repeats |
+| MCR | `openmahjong-mcr-2006@1` | 13/14 plus special forms | All81/exclusions, flower-excluded minimum8, MCR payments,16 fixed hands |
+| Taiwanese | `openmahjong-taiwanese-every-flower@1` | 16/17; five sets | Every-flower tai, passed-win/claim restrictions, per-payer dealer bonus, repeats |
+
+Every profile integrates CPU seat drivers, original lessons, heuristic coaching, board review, validated practice, calculator, variant-scoped statistics/history and local/private account resume. Their rule briefs record supported defaults and excluded alternatives. Shared schema-three validation is imported by both client and server; unknown identities/versions fail explicitly. In-person ledgers have their own version and endpoints, and never enter CPU statistics.
+
+The sections below retain the baseline investigation and design rationale. Statements about baseline coupling describe Riichi, not the new adapters.
 
 ## Actual coupling
 
@@ -29,9 +39,9 @@ A variant implementation may share an analyzer without sharing a controller or
 scorer. American exchanges cannot be expressed honestly as another riichi draw
 flag.
 
-## Proposed versioned contract
+## Contract rationale
 
-A future registry entry should identify a variant family, immutable ruleset ID and
+A registry entry identifies a variant family, immutable ruleset ID and
 version, executable rules implementation version, supported record schema,
 capabilities and educational vocabulary. A family-specific adapter owns:
 

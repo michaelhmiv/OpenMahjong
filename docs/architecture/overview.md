@@ -1,8 +1,6 @@
 # Architecture overview
 
-Status: implemented baseline, focused foundations and approved starter learning
-surfaces, with proposed extensions
-explicitly labeled. See [audit](../audit/architecture-audit.md) for defects found
+Status, 2026-11-17: Riichi plus executable Hong Kong, MCR and Taiwanese adapters, indexed board review, versioned in-person ledgers and profile-specific learning/practice. Multiplayer and broader generated curricula remain proposals. See [audit](../audit/architecture-audit.md) for defects found
 at `989927b` and [roadmap](../product/roadmap.md) for remaining work.
 
 ## Runtime and dependency flow
@@ -13,13 +11,14 @@ persistence; it does not run official online matches.
 
 ```mermaid
 flowchart TD
-  Engine["engine: deterministic riichi rules"] --> AI["ai: public-information opponent and evaluation"]
+  Engine["engine: Riichi and versioned variant adapters; shared scoring/ledgers"] --> AI["ai: public-information opponent and evaluation"]
   Engine --> Coach["coach: evidence and explanations"]
   AI --> Coach
   Engine --> Web["web: DOM, table, lessons, replay and local storage"]
   AI --> Web
   Coach --> Web
   Web -->|"optional authenticated HTTPS"| Server["server: accounts and private records"]
+  Engine -->|"completed ledger validation"| Server
   Server --> PG["Postgres"]
 ```
 
