@@ -7,7 +7,9 @@ export const MAX_LESSON_DECISIONS = 512;
 export type SceneDecision = TurnAction | CallAction;
 export interface SavedLessonState {
   readonly module: ModuleId;
-  /** Absent on historical snapshots. Version 1 -> 2 keeps step order unchanged. */
+  /** Absent on historical snapshots. Version 3 rewrote the lesson
+   * scripts and changed step order, so saves stamped with an older
+   * content version restart their lesson instead of resuming. */
   readonly moduleVersion?: number;
   readonly step: number;
   readonly scene: { readonly seed: string; readonly decisions: readonly SceneDecision[] } | null;
@@ -63,8 +65,10 @@ export function parseSavedLesson(
   const id = raw["module"];
   const bounds = boundsFor(id);
   const version = raw["moduleVersion"];
-  // Unknown content cannot safely resume under today's step definitions.
-  if (version !== undefined && version !== 1 && version !== moduleDef(id).version) return null;
+  // Unknown or superseded content cannot safely resume under today's
+  // step definitions. Unversioned records predate content versioning
+  // and are stamped with the current version below.
+  if (version !== undefined && version !== moduleDef(id).version) return null;
   if (!integer(raw["step"], bounds.stepCount)) return null;
   let scene: SavedLessonState["scene"] = null;
   if (raw["scene"] != null) {

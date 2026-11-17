@@ -10,6 +10,13 @@
  * Copy law (brief §9): lesson text is informational, one line per
  * idea, no slogans. Progress persists locally for guests and rides
  * the account settings blob (namespaced key) when signed in.
+ *
+ * Content version 3 (tutorial rebuild brief v1, 2026-11-16): the
+ * lessons are written for a player who has never seen a mahjong
+ * tile. Every thing is shown, named in plain words, and read aloud
+ * before any step asks for it, and no term is used before the step
+ * that teaches it — the term order is audited by
+ * test/tutorial-terms.test.ts.
  */
 
 import {
@@ -421,19 +428,29 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
   switch (id) {
     case "tu1":
       return [
-        { kind: "info", text: "There are 34 kinds of tile, with 4 copies of each — 136 tiles in the wall." },
-        { kind: "info", text: "Three suits — characters, dots, and bamboo — are numbered 1 to 9.", strip: [0, 1, 2, 3, 4, 5, 6, 7, 8] },
-        { kind: "drill", text: "Tap the bamboo tiles.", tiles: [2, 15, 19, 8, 22, 27, 21, 9, 25, 20, 31, 5], targets: [2, 4, 6, 8, 9], wrongNote: "Not that one — bamboo tiles are the green sticks." },
-        { kind: "drill", text: "Tap the dot tiles.", tiles: [10, 4, 16, 20, 14, 30, 17, 3, 24, 0, 1, 32], targets: [0, 2, 4, 6], wrongNote: "Not that one — dot tiles are the circles." },
-        { kind: "info", text: "Winds and dragons are honors. Honors have no numbers and never form sequences.", strip: [27, 28, 29, 30, 31, 32, 33] },
-        { kind: "drill", text: "Tap the honor tiles.", tiles: [27, 3, 28, 15, 29, 19, 33, 23, 8, 11, 7, 22], targets: [0, 2, 4, 6], wrongNote: "Not that one — honors are the winds and dragons." },
-        { kind: "drill", text: "Tap the terminal tiles — the 1s and 9s.", tiles: [0, 13, 26, 2, 8, 24, 9, 21, 5, 10, 25, 27], targets: [0, 2, 4, 6], wrongNote: "Not that one — terminals are only the 1 and the 9 of a suit." },
-        { kind: "info", text: "Tiles 2 to 8 are simples. One 5 in each suit is red — a red five is a bonus dora, worth extra when you win with it." },
+        { kind: "info", text: "Mahjong is played with tiles. A tile's face tells you what it is: this face shows five circles, so this tile is the 5 of dots.", strip: [13] },
+        { kind: "info", text: "Tiles come in three suits — three groups of tiles that share one kind of face. The first suit is dots, numbered 1 to 9. Read a dots tile by counting its circles: the number of circles is the tile's number.", strip: [9, 10, 11, 12, 13, 14, 15, 16, 17] },
+        { kind: "drill", text: "Tap every dots tile — the tiles whose faces are made of circles.", tiles: [2, 19, 9, 27, 13, 5, 17, 22, 11, 15, 31, 8], targets: [2, 4, 6, 8, 9], wrongNote: "Not that one — a dots tile's face is circles. Count the circles to read its number." },
+        { kind: "info", text: "The second suit is bamboo, numbered 1 to 9. Read a bamboo tile by counting its green sticks: the number of sticks is the tile's number. One exception: the 1 of bamboo, first in this row, is a picture of a bird — it has no sticks to count.", strip: [18, 19, 20, 21, 22, 23, 24, 25, 26] },
+        { kind: "drill", text: "Tap every bamboo tile — the tiles with the green sticks.", tiles: [2, 15, 19, 8, 22, 27, 21, 9, 25, 20, 31, 5], targets: [2, 4, 6, 8, 9], wrongNote: "Not that one — bamboo tiles are the green sticks." },
+        { kind: "info", text: "The third suit is characters, numbered 1 to 9. A characters tile has a two-part face: the dark character on top is the number, and the red character below is the suit's mark — it means ten thousand, and it is the same on every characters tile. The top characters are numbers written in Chinese: one line is 1, two lines are 2, three lines are 3. This row runs 1 to 9, left to right.", strip: [0, 1, 2, 3, 4, 5, 6, 7, 8] },
+        { kind: "drill", text: "Tap every characters tile — the two-part faces with the red mark at the bottom.", tiles: [10, 4, 16, 30, 1, 24, 8, 27, 6, 20, 14, 3], targets: [1, 4, 6, 8, 11], wrongNote: "Not that one — a characters tile has two parts: a dark number character on top and the red mark below it." },
+        { kind: "info", text: "Seven tiles belong to no suit. They are honors, and they have no numbers. Four of them are winds, named for the compass points: East, South, West, and North. Each wind's face is a single dark character.", strip: [27, 28, 29, 30] },
+        { kind: "info", text: "The other three honors are dragons. The red dragon's face is a red character. The green dragon's face is a green character. The white dragon's face is blank, inside a frame.", strip: [31, 32, 33] },
+        { kind: "drill", text: "Tap every honor tile — the winds and the dragons.", tiles: [27, 3, 28, 15, 29, 19, 33, 23, 8, 11, 7, 22], targets: [0, 2, 4, 6], wrongNote: "Not that one — honors are the winds and the dragons. They have no numbers." },
+        { kind: "info", text: "The 1 and the 9 of each suit have a name: terminals. They are the tiles at the two ends of a suit. This row shows all six: the 1 and the 9 of characters, of dots, and of bamboo.", strip: [0, 8, 9, 17, 18, 26] },
+        { kind: "info", text: "Every numbered tile from 2 to 8 is a simple. Simples are the middle tiles of a suit — every suited tile that is not a terminal.", strip: [10, 11, 12, 13, 14, 15, 16] },
+        { kind: "drill", text: "Tap every terminal tile — the 1s and the 9s.", tiles: [0, 13, 26, 2, 8, 24, 9, 21, 5, 10, 25, 27], targets: [0, 2, 4, 6], wrongNote: "Not that one — a terminal is only the 1 or the 9 of a suit." },
+        { kind: "info", text: "There are four copies of every tile: 34 kinds of tile, four copies each, 136 tiles in all. The four copies of a kind are identical, so any copy can stand in for another." },
+        { kind: "info", text: "One 5 in each suit is printed on a red-tinted tile instead of a plain one. It is still a 5 of its suit in every way, but it is worth a bonus when it ends up in a winning hand. That bonus is explained in 'Ways to win'." },
       ];
     case "tu2":
       return [
-        { kind: "info", text: "The standard complete shape is four sets and a pair — 14 tiles before any extra tiles for kans. Winning also requires a yaku, explained in Ways to win.", strip: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 26, 13, 13] },
-        { kind: "info", text: "A set is a sequence in one suit (3-4-5), a triplet of the same tile, or a declared four-tile kan.", strip: [11, 12, 13, 26, 26, 26] },
+        { kind: "info", text: "You hold 13 tiles. A hand wins when it becomes 14 tiles arranged in one particular shape. This lesson names the parts of that shape, one at a time." },
+        { kind: "info", text: "The shape is built from groups of three tiles: sets. One kind of set is a sequence — three tiles in a row in one suit. This is a sequence: 3, 4, 5 of dots.", strip: [11, 12, 13] },
+        { kind: "info", text: "The other kind of set is a triplet — three copies of the same tile. This is a triplet: three 9s of bamboo.", strip: [26, 26, 26] },
+        { kind: "info", text: "The last part of the shape is a pair — two copies of the same tile. This is a pair: two 5s of dots. A winning hand has exactly one pair.", strip: [13, 13] },
+        { kind: "info", text: "Put the parts together: a complete hand is four sets and a pair, 14 tiles in all. This hand is complete — four sets, and the two 5s of dots are its pair.", strip: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 26, 13, 13] },
         {
           kind: "choice",
           text: "Which of these is a set?",
@@ -445,8 +462,8 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           correct: 0,
           wrongNote: (_c, i) =>
             i === 1
-              ? "Those skip a number — a sequence is three in a row."
-              : "That is a pair. A hand needs exactly one pair, plus four sets.",
+              ? "Those skip a number — a sequence is three in a row, with no gaps."
+              : "That is a pair — two copies of the same tile. A pair is part of the shape, but it is not a set.",
         },
         {
           kind: "choice",
@@ -460,22 +477,25 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           wrongNote: (_c, i) =>
             i === 1
               ? "That is 13 tiles — one short. A complete hand has 14."
-              : "Five sets leave no pair. The shape is four sets and a pair.",
+              : "Five sets leave no room for the pair. The shape is four sets and a pair.",
         },
-        { kind: "info", text: "Two special shapes also win: seven different pairs, and thirteen orphans (one of every terminal and honor, plus a pair). The standard shape comes first — it is most hands you will ever hold." },
+        { kind: "info", text: "Two more shapes also win. Seven pairs: seven different pairs and nothing else. Thirteen orphans: one of every terminal and every honor, with one of them twice, as the pair. Most winning hands use the standard shape — four sets and a pair — so that shape comes first." },
       ];
     case "tu3":
       return [
-        { kind: "info", text: "Your hand is at the bottom. On your turn you draw one tile, then discard one tile." },
+        { kind: "info", text: "Your hand is at the bottom of the table, and the other three players sit around it. A turn works like this: you draw one tile — take it from the face-down tiles — and then you discard one tile: tap a tile in your hand to throw it away. Drawing and then discarding keeps your hand at 13 tiles while you build toward four sets and a pair." },
         {
           kind: "scene",
           seed: "om-tu3",
           text: (c) => {
             const stop = c.scene?.stop;
-            if (stop?.kind === "turn" && stop.ctx.drawnTile) {
-              return `You drew the ${tileName(stop.ctx.drawnTile.type)}. Discard one tile.`;
+            if ((c.counters["discards"] ?? 0) === 0) {
+              return "This is a real hand, on the real table. The other players take their turns by themselves. You have drawn a tile: tap any tile in your hand to discard it. Discarding a tile you do not need makes room for the next draw. Make six discards.";
             }
-            return "Discard one tile.";
+            if (stop?.kind === "turn" && stop.ctx.drawnTile) {
+              return `You drew the ${tileName(stop.ctx.drawnTile.type)}. Tap a tile in your hand to discard it.`;
+            }
+            return "Tap a tile in your hand to discard it.";
           },
           enter: (c) => c.autoToTurn(),
           acceptsTiles: true,
@@ -488,15 +508,22 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return false;
           },
         },
-        { kind: "info", text: "Draw, discard, repeat — that is the whole turn. The tiles you discard form your pond, face up in front of you." },
+        { kind: "info", text: "Draw, discard, repeat — that is the whole turn. Your discarded tiles stay face up in front of you, in the order you discarded them: that area is your pond. All four ponds are face up for everyone to see, and later lessons will read them." },
       ];
     case "tu4":
       return [
-        { kind: "info", text: "Calling claims another player's discard to finish a set. The set is placed face up — and your hand is open from then on." },
+        { kind: "info", text: "Tiles reach your hand by drawing. But sometimes another player discards a tile that completes a set in your hand. When that happens, you can claim the discard at once, instead of waiting to draw the tile yourself. Claiming a discard is a call. The completed set is placed face up beside your hand, and your hand is open from then on: everyone can see that set." },
+        { kind: "info", text: "The first call is chi. Chi claims a discard from the player on your left — only from that player — to complete a sequence. If you hold the 2 and 3 of dots, and the player on your left discards the 4 of dots, chi takes it, and you have the sequence 2, 3, 4 at once.", strip: [10, 11, 12] },
         {
           kind: "scene",
           seed: "om-tu4chi-5",
-          text: "Watch the discards. A tile you can use is coming.",
+          text: (c) => {
+            const stop = c.scene?.stop;
+            if (stop?.kind === "call") {
+              return `The player on your left has discarded the ${tileName(stop.ctx.tile.type)}. It completes a sequence with two tiles in your hand. Tap Chi to claim it and finish the sequence now, instead of waiting to draw that tile yourself. In a real game you could also tap Pass and let it go by.`;
+            }
+            return "Watch the player on your left — a discard you can use is coming.";
+          },
           enter: (c) =>
             c.autoTo(
               (s) => s.kind === "call" && s.chiDecidable && s.ctx.chiOptions.length > 0,
@@ -528,11 +555,17 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return false;
           },
         },
-        { kind: "info", text: "Chi takes a discard only from the player on your left, and only to finish a sequence. The called tile turns sideways in your new set." },
+        { kind: "info", text: "The second call is pon. Pon claims any player's discard to complete a triplet. If you hold two copies of a tile and any opponent discards the third copy, pon takes it at once, and the triplet is placed face up beside your hand.", strip: [13, 13] },
         {
           kind: "scene",
           seed: "om-tu4pon-24",
-          text: "Watch the discards. A tile you can use is coming.",
+          text: (c) => {
+            const stop = c.scene?.stop;
+            if (stop?.kind === "call") {
+              return `Another player has discarded the ${tileName(stop.ctx.tile.type)}, and you hold two copies of it. Tap Pon to claim it and complete the triplet now, instead of waiting to draw the third copy yourself. In a real game you could also tap Pass.`;
+            }
+            return "Watch the discards — a tile you hold two copies of is coming.";
+          },
           enter: (c) =>
             c.autoTo((s) => s.kind === "call" && s.ponDecidable && s.ctx.canPon),
           buttons: () => [
@@ -552,11 +585,17 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return false;
           },
         },
-        { kind: "info", text: "Pon takes any player's discard to finish a triplet. It is faster than drawing the third tile yourself — and it opens your hand." },
+        { kind: "info", text: "The third call is kan: a set of four copies of the same tile. You can call kan on a discard when you hold the other three copies, or declare kan from four copies in your own hand — declaring it yourself keeps your hand closed. After a kan you draw an extra tile, because the set of four leaves your hand one tile short." },
         {
           kind: "scene",
           seed: "om-tu4kan-29",
-          text: "Watch the discards. A tile you can use is coming.",
+          text: (c) => {
+            const stop = c.scene?.stop;
+            if (stop?.kind === "call") {
+              return `Another player has discarded the ${tileName(stop.ctx.tile.type)}, and you hold the other three copies. Tap Kan to claim it and complete the set of four. You then draw an extra tile, because a set of four leaves your hand one tile short. In a real game you could also tap Pass.`;
+            }
+            return "Watch the discards — a tile you hold three copies of is coming.";
+          },
           enter: (c) =>
             c.autoTo((s) => s.kind === "call" && s.ponDecidable && s.ctx.canKan),
           buttons: () => [
@@ -580,20 +619,22 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return false;
           },
         },
-        { kind: "info", text: "Kan is four of a kind: take a replacement draw and reveal another dora indicator. Chi, pon, and open kan open the hand; a concealed kan keeps it closed. Opening prevents riichi and can change the hand's yaku or value." },
+        { kind: "info", text: "A kan also turns a new tile face up on the table: a dora indicator. It marks a bonus tile, a dora. For a suited tile, the dora is the next number up in the same suit — an indicator showing the 3 of dots makes the 4 of dots a dora. Each dora in a winning hand adds to the hand's score. The red-tinted 5s from the first lesson are always dora, indicator or not." },
+        { kind: "info", text: "Chi, pon, and a kan called on a discard all open your hand: the set sits face up where everyone can see it. An open hand cannot use every scoring pattern — some patterns need a closed hand. A kan declared from four copies in your own hand is the exception: it keeps your hand closed." },
       ];
     case "tu5":
       return [
-        { kind: "info", text: "A hand one tile away from a complete shape is ready — tenpai. Its completing tiles are waits. A legal win still needs a yaku, and ron has furiten restrictions." },
+        { kind: "info", text: "When a hand is one tile away from the complete shape — four sets and a pair — the hand is ready. Ready has a name: tenpai. The tiles that would complete the hand are its waits. This hand is tenpai: it is waiting on the 5 of dots to make its pair.", strip: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 26, 13] },
+        { kind: "info", text: "A tenpai hand wins when one of its waits arrives. If you draw the wait yourself, the win is tsumo. If another player discards the wait and you claim that discard, the win is ron. The next two scenes show one of each: first a tsumo, then a ron." },
         {
           kind: "scene",
           seed: "om-tu5a-99",
           text: (c) => {
             const stop = c.scene?.stop;
             if (stop?.kind === "turn" && stop.ctx.canTsumo) {
-              return "You drew a winning tile. Declare tsumo.";
+              return `You drew the ${tileName(stop.ctx.drawnTile!.type)} — it is one of your waits, and your hand is complete. Tap Tsumo to win the hand.`;
             }
-            return "Your hand is ready. Watch what you draw.";
+            return "Your hand is tenpai. The other players take their turns; watch what you draw.";
           },
           enter: (c) => c.autoTo((s) => s.kind === "turn" && s.ctx.canTsumo),
           acceptsTiles: true,
@@ -610,7 +651,8 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return false;
           },
         },
-        { kind: "info", text: "Tsumo — you drew the winning tile yourself. Every other player pays you." },
+        { kind: "info", text: "That was tsumo: a win on a tile you drew yourself. When you win by tsumo, all three opponents pay you." },
+        { kind: "info", text: "One rule limits ron: furiten. If one of your waits is a tile you discarded earlier yourself — a tile now sitting in your own pond — then you are in furiten, and you cannot ron at all, not even on a different wait. You can still win by tsumo. Furiten ends when your waits change." },
         {
           kind: "scene",
           seed: "om-tu5b-4",
@@ -618,9 +660,9 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             const stop = c.scene?.stop;
             if (stop?.kind === "call") {
               const waits = waitNames(stop.view);
-              return `You are ready, waiting on ${joinTileNames(waits)}. A winning tile was just discarded.`;
+              return `You are tenpai, waiting on ${joinTileNames(waits)}. Another player has just discarded one of your waits. Tap Ron to claim it and win the hand — only the player who discarded it pays you. In a real game you could tap Pass, but not here.`;
             }
-            return "You are ready. Watch the discards.";
+            return "You are tenpai. Watch the discards — one of your waits is coming.";
           },
           enter: (c) => c.autoTo((s) => s.kind === "call" && s.ctx.canRon),
           buttons: () => [
@@ -640,15 +682,15 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return false;
           },
         },
-        { kind: "info", text: "Ron — you won on another player's discard. Only the player who discarded pays." },
+        { kind: "info", text: "That was ron: a win on another player's discard. Only the player who discarded the winning tile pays you — the other two pay nothing." },
       ];
     case "tu6":
       return [
-        { kind: "info", text: "Riichi declares your closed hand ready. In OpenMahjong you need at least 1,000 points and four tiles left in the live wall. Pay a 1,000-point stake when you declare." },
+        { kind: "info", text: "Riichi is a declaration you make while discarding, when your hand is tenpai and still closed — you have made no calls. Declaring riichi pays a stake of 1,000 points at once. After that, your hand is locked: on each of your turns you discard the tile you drew, unless that tile wins the hand or can form a kan with copies already in your hand. In exchange, riichi itself is a scoring pattern, so a hand that has declared riichi can always win, by tsumo or by ron. You need at least 1,000 points to declare, and at least four tiles left to draw." },
         {
           kind: "scene",
           seed: "om-tu6-1420",
-          text: "Discard the tile that keeps you ready, and declare riichi with it.",
+          text: "This hand is tenpai and closed, and it is your turn. The tiles that keep the hand tenpai are marked. Tap one of the marked tiles: tapping it discards the tile and declares riichi with that discard, and the 1,000-point stake is paid. Any other discard would leave the hand more than one tile from complete, and riichi needs a tenpai hand.",
           acceptsTiles: true,
           highlightRiichi: true,
           gate: (c, a) => {
@@ -660,7 +702,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
               c.counters["eventsAtRiichi"] = c.scene!.events.length;
               return true;
             }
-            c.note = "That discard leaves you more than one tile from ready — riichi needs a ready hand.";
+            c.note = "That tile is not one of the marked discards — it would leave you more than one tile from complete, and riichi needs a tenpai hand.";
             return false;
           },
         },
@@ -672,9 +714,9 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             const from = c.counters["eventsAtRiichi"] ?? 0;
             const won = evs.slice(from).some((ev) => ev.type === "win" && Number(ev["seat"]) === 0);
             const ended = evs.slice(from).some((ev) => ev.type === "hand-end");
-            if (won) return "You won the hand. The 1,000 points come back to you with the winnings.";
-            if (ended) return "The hand ended without your win. The next winner collects the riichi sticks; a drawn hand carries them forward.";
-            return "After riichi, discard what you draw unless you win or declare a permitted concealed kan. That kan must preserve the waits and hand structure.";
+            if (won) return "You won the hand. Your 1,000-point stake comes back to you, on top of the winnings.";
+            if (ended) return "The hand ended without your win. The stake stays on the table: the next player to win a hand collects it.";
+            return "After riichi, you discard each tile you draw, unless it wins the hand. The rest of this hand plays out by itself — watch how it ends.";
           },
           enter: (c) => {
             const from = c.counters["eventsAtRiichi"] ?? 0;
@@ -694,10 +736,10 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
       ];
     case "tu7":
       return [
-        { kind: "info", text: "A complete hand still needs a yaku — a scoring pattern — to win. Dora add bonus han but are not a yaku. These are the beginner patterns.", strip: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 26, 13, 13] },
-        { kind: "info", text: "Riichi — 1 han. Declare ready on a closed hand. The declaration supplies a yaku; you must still obey winning rules, including furiten for ron.", strip: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 13, 13] },
-        { kind: "info", text: "Tanyao — 1 han. All simples: no terminals and no honors anywhere in the hand.", strip: [2, 3, 4, 12, 13, 14, 21, 22, 23, 20, 20, 20, 5, 5] },
-        { kind: "info", text: "Yakuhai — 1 han for a triplet or kan of dragons, of the round wind, or of your own seat wind. A wind that is both round and seat scores twice.", strip: [33, 33, 33, 1, 2, 3, 12, 13, 14, 23, 24, 25, 13, 13] },
+        { kind: "info", text: "A complete shape is not enough to win. The hand must also contain at least one yaku — a scoring pattern in the tiles. Each yaku is worth han, the units a hand's value is counted in; the next lesson turns han into points. Dora are not yaku: each dora adds 1 han as a bonus, but a hand with dora and no yaku still cannot win. This lesson introduces the patterns a beginner meets first.", strip: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 26, 13, 13] },
+        { kind: "info", text: "Riichi — 1 han. The declaration from the Riichi lesson is itself a yaku: a closed hand that declares riichi has its pattern, and can win by tsumo or by ron. Furiten still limits ron.", strip: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 13, 13] },
+        { kind: "info", text: "Tanyao — 1 han. Every tile in the hand is a simple: no terminals and no honors anywhere in the hand.", strip: [2, 3, 4, 12, 13, 14, 21, 22, 23, 20, 20, 20, 5, 5] },
+        { kind: "info", text: "Yakuhai — 1 han for a triplet or kan of dragons, of the round wind, or of your own seat wind — the wind of the seat you are sitting in. A triplet that is both the round wind and your seat wind counts twice: 2 han.", strip: [33, 33, 33, 1, 2, 3, 12, 13, 14, 23, 24, 25, 13, 13] },
         {
           kind: "choice",
           text: "Which yaku does this hand have?",
@@ -707,8 +749,9 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           wrongNote: (_c, i) =>
             i === 1
               ? "The red dragons are honors — tanyao allows none."
-              : "Riichi is a declaration, not a shape. The built-in yaku here is the dragon triplet.",
+              : "Riichi is a declaration, not a pattern in the tiles. The yaku here is the dragon triplet: yakuhai.",
         },
+        { kind: "info", text: "Pinfu — 1 han, closed hands only. All four sets are sequences, the pair is not a dragon or a scoring wind, and the hand waits on a tile that completes a sequence from either end.", strip: [1, 2, 3, 12, 13, 14, 21, 22, 23, 24, 25, 26, 19, 19] },
         {
           kind: "choice",
           text: "Which yaku does this hand have?",
@@ -717,25 +760,24 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           correct: 1,
           wrongNote: (_c, i) =>
             i === 0
-              ? "Pinfu is all sequences — this hand has a triplet of 5 of dots."
-              : "No dragon or wind triplet here. Every tile is a simple: tanyao.",
+              ? "Pinfu is all sequences — this hand has a triplet of the 5 of dots."
+              : "No dragon or wind triplet here — no yakuhai. Every tile is a simple, so the yaku is tanyao.",
         },
-        { kind: "info", text: "Pinfu — 1 han, closed only. All sequences, a pair that is not dragons or a scoring wind, and a two-sided wait.", strip: [1, 2, 3, 12, 13, 14, 21, 22, 23, 24, 25, 26, 19, 19] },
-        { kind: "info", text: "Toitoi — 2 han. Four triplets or kans and a pair; sequences not allowed.", strip: [2, 2, 2, 13, 13, 13, 22, 22, 22, 31, 31, 31, 7, 7] },
-        { kind: "info", text: "Chiitoitsu — 2 han, closed only. Seven different pairs instead of the standard shape; four identical tiles do not count as two pairs.", strip: [1, 1, 4, 4, 11, 11, 15, 15, 20, 20, 24, 24, 28, 28] },
+        { kind: "info", text: "Toitoi — 2 han. All four sets are triplets or kans, plus the pair. No sequences anywhere.", strip: [2, 2, 2, 13, 13, 13, 22, 22, 22, 31, 31, 31, 7, 7] },
+        { kind: "info", text: "Chiitoitsu — 2 han, closed hands only. Seven different pairs instead of the standard shape. Four identical tiles count as one pair, not two.", strip: [1, 1, 4, 4, 11, 11, 15, 15, 20, 20, 24, 24, 28, 28] },
       ];
     case "tu8":
       return [
-        { kind: "info", text: "Points come from two numbers: han, from your yaku and dora, and fu, minipoints from the hand's shape. Each han roughly doubles the hand's value." },
+        { kind: "info", text: "A winning hand is paid in points, and the points come from two numbers. Han counts the hand's value: each yaku gives han, and each dora adds 1 han. Fu are minipoints from the hand's shape — its triplets, its pair, its wait, and how it was won. Each extra han roughly doubles what the hand pays. This lesson wins a real hand, then reads the numbers off that win." },
         {
           kind: "scene",
           seed: "om-tu5a-261",
           text: (c) => {
             const stop = c.scene?.stop;
             if (stop?.kind === "turn" && stop.ctx.canTsumo) {
-              return "You drew a winning tile. Declare tsumo, and watch what it pays.";
+              return "You drew a winning tile. Tap Tsumo to win the hand, and watch what it pays.";
             }
-            return "Watch your hand — a winning draw is coming.";
+            return "This hand is one tile from complete. Watch your draws: a winning tile is coming, and the questions after it are about what the win pays.";
           },
           enter: (c) => c.autoTo((s) => s.kind === "turn" && s.ctx.canTsumo),
           acceptsTiles: true,
@@ -784,12 +826,12 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           correct: 1,
           wrongNote: "Add up the payments on the win: a tsumo collects from all three opponents.",
         },
-        { kind: "info", text: "Dealer wins usually pay more at the same han and fu. For a dealer tsumo, all three opponents pay the dealer rate. Payments round up to the next 100 points." },
-        { kind: "info", text: "An East-only game runs East 1 to East 4. East/South continues through South 4. Dealers can repeat on a win or a tenpai draw. OpenMahjong ends a game early if a score falls below zero." },
+        { kind: "info", text: "One player in each hand is the dealer: the player sitting in the East seat for that hand. A dealer's win pays more — on a dealer tsumo, all three opponents pay the dealer rate — and a dealer also pays more when another player wins by tsumo. All payments round up to the next 100 points." },
+        { kind: "info", text: "If the dealer wins a hand, or a hand is drawn with the dealer tenpai, the same dealer deals the next hand, and the honba count rises by one. Honba are a bonus counter: each honba adds 300 points to the next winning hand. An East-only game runs from East 1 to East 4; an East/South game continues through South 4. A game ends early if any player's score falls below zero." },
       ];
     case "tu9":
       return [
-        { kind: "info", text: "Dealing into a ready hand — ron — is how points are lost. When another player declares riichi, defense starts: some of your tiles are provably safe." },
+        { kind: "info", text: "Points are lost by dealing in: discarding the tile that completes another player's tenpai hand. That player wins by ron, and the player who discarded pays for the whole hand. The danger is sharpest after an opponent declares riichi — their hand is tenpai, and any of their waits that you discard can cost you the hand. This lesson practices the safest answer." },
         {
           kind: "scene",
           seed: "om-tu9-2",
@@ -799,7 +841,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             const threat = stop.view.players.find((p) => p.seat !== 0 && p.riichi);
             if (!threat) return "Watch the table — a riichi is coming.";
             const wind = WIND_WORD[threat.seatWind] ?? "";
-            const base = `${wind} has declared riichi. Discard a tile from ${wind}'s pond — ${wind} cannot ron that tile, though another opponent might.`;
+            const base = `${wind} has declared riichi, so ${wind}'s hand is tenpai. Discard a tile from ${wind}'s pond — the tiles ${wind} has already thrown away, face up in front of them. ${wind} cannot win on a tile in their own pond, so those tiles are safe against ${wind}. Another opponent might still be waiting on them.`;
             if ((c.counters["misses"] ?? 0) >= 2) {
               const pond = new Set(threat.discards.map((d) => d.tile.type));
               const safe = [...new Set(stop.view.hand.map((t) => t.type))]
@@ -834,14 +876,14 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return false;
           },
         },
-        { kind: "info", text: "Tiles the riichi player has discarded are genbutsu — safe against that player's ron because of furiten. They may still be dangerous against others, and a furiten player can still tsumo. Folding can mean breaking your own hand; whether to fold depends on the position." },
+        { kind: "info", text: "The tiles in a riichi player's own pond are genbutsu, and they are safe against that player. The reason is furiten: a player whose waits include a tile in their own pond cannot ron at all. Genbutsu are safe only against that one player — another opponent could still win on the same tile, and the riichi player can still win by drawing their wait. Staying safe can mean discarding tiles your own hand needed; whether defense is worth it depends on the score, the round, and how close your own hand is." },
       ];
     case "tu10":
       return [
-        { kind: "info", text: "American mahjong is a different game played with a similar tile set. This lesson is the differences only — the American variant is not out yet." },
-        { kind: "info", text: "No jokers. American sets include joker tiles that stand for other tiles; here every tile is itself, and the wall is 136 tiles." },
-        { kind: "info", text: "No Charleston. American play starts by passing tiles between players; here you are dealt 13 tiles and the hand begins." },
-        { kind: "info", text: "No annual card. American hands come from a card of set patterns published each year. Here, any hand with the winning shape and a yaku scores — the patterns are the yaku you have already learned." },
+        { kind: "info", text: "American mahjong is a different game played with a similar set of tiles. This lesson lists the differences only. Everything in the other lessons is riichi." },
+        { kind: "info", text: "No jokers. American sets include joker tiles, which can stand for other tiles. Riichi has no jokers: every tile is itself, and the full set is the 136 tiles from the first lesson." },
+        { kind: "info", text: "No Charleston. American play begins with the Charleston, a passing of tiles between players. Riichi has no passing: you are dealt 13 tiles, and the hand begins." },
+        { kind: "info", text: "No annual card. In American mahjong, the winning hands are printed on a card that is published each year. Riichi has no card: any hand with the complete shape and a yaku wins, and the yaku are the patterns from 'Ways to win'." },
         {
           kind: "choice",
           text: "What takes the place of the annual card here?",

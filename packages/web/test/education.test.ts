@@ -71,7 +71,7 @@ describe("bounded lesson resume", () => {
   it("migrates existing unversioned records and deduplicates completions", () => {
     const progress = parseProgress({ done: ["tu1", "tu1", "future"], active: state });
     expect(progress.done).toEqual(["tu1"]);
-    expect(progress.active?.moduleVersion).toBe(2);
+    expect(progress.active?.moduleVersion).toBe(3);
     expect(new LessonController("tu1", progress.active).stepIndex).toBe(2);
   });
   it("drops invalid bounds, unknown content versions and oversized action logs", () => {

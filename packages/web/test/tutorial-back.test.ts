@@ -47,7 +47,7 @@ describe("Back navigation in the lesson runner", () => {
     expect(first.drill).not.toBeNull();
     expect(first.canBack).toBe(true);
     expect(first.buttons[0]).toMatchObject({ id: "back", label: "Back" });
-    // Complete the bamboo drill (targets are the drill's own indices).
+    // Complete the dots drill (targets are the drill's own indices).
     for (const index of [2, 4, 6, 8, 9]) c.handle({ kind: "drill", index });
     expect(c.stepIndex).toBe(3);
     // Back: the drill returns exactly as first presented.
@@ -138,7 +138,11 @@ describe("Back navigation in the lesson runner", () => {
     back(c);
     expect(c.stepIndex).toBe(0);
     c.handle({ kind: "button", id: "continue" });
-    c.handle({ kind: "button", id: "continue" });
+    // Steps 1–4 are explanations, steps 5 and 6 are the two shape
+    // questions (the correct answer is the first option in both),
+    // and step 7 closes the lesson.
+    for (let i = 0; i < 4; i++) c.handle({ kind: "button", id: "continue" });
+    expect(c.stepIndex).toBe(5);
     c.handle({ kind: "choice", index: 0 });
     c.handle({ kind: "choice", index: 0 });
     c.handle({ kind: "button", id: "continue" });
