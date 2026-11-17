@@ -24,6 +24,16 @@ jobs:
       - run: npm run typecheck
       - run: npm run build
       - run: npm run check:packages
+      # Security gate policy (owner ruling, 2026-11-17): the BLOCKING
+      # audit (check:security) covers production dependencies only
+      # (npm audit --omit=dev). The full audit, dev dependencies
+      # included, runs after the test suite as an advisory,
+      # non-blocking report (check:security:dev). Rationale: picomatch
+      # GHSA-fc5q-39xc-vjpf (ReDoS) has no patched release and reaches
+      # this repo only through the dev toolchain (picomatch <-
+      # fdir/tinyglobby <- vite/vitest); it must not block merges or
+      # skip the test suite, and it stays visible in the advisory
+      # report until upstream ships a fix.
       - run: npm run check:security
       # Same suite as `npm test`, with worker parallelism capped: the
       # suite contains several minute-long game-simulation files, and
@@ -33,6 +43,14 @@ jobs:
       # packages/ai/test/soak.test.ts). Two workers keep the main
       # process responsive and each worker fed.
       - run: npx vitest run --maxWorkers=2
+      # Advisory only: the full audit, dev dependencies included.
+      # Never fails the job; it keeps dev-only advisories (e.g.
+      # picomatch GHSA-fc5q-39xc-vjpf) visible in CI output until
+      # they are patched upstream. See the gate policy note above.
+      - name: Full dependency audit (advisory, non-blocking)
+        if: always()
+        continue-on-error: true
+        run: npm run check:security:dev
 
   # A3 completion (brief §13): the full 10,000-game AI-vs-AI soak. The
   # fast gate above runs the same test file with its default count
