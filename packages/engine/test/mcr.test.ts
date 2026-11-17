@@ -73,6 +73,40 @@ describe("MCR WMO 2006", () => {
     const c = score("111122m3344p5566s", { winningTile: 23 });
     expect(c.patterns.map((p) => p.name)).toContain("Seven Pairs");
   });
+  it("awards the 2006 six-point mixed-kong combination without inventing an 82nd catalog pattern", () => {
+    // Rulebook fan 57 explicitly gives one concealed + one melded kong 6.
+    // Add Short Straight (1), terminal pung (1) and No Honors (1) = 9.
+    // Individual quad awards must not be counted again. With only their
+    // individual 1+2 values this hand would incorrectly fail the minimum.
+    const result = score("1111m222277p345678s", {
+      winningTile: 23,
+      melds: [
+        { kind: "daiminkan", tiles: [0, 0, 0, 0] },
+        { kind: "ankan", tiles: [10, 10, 10, 10] },
+      ],
+    });
+    expect(result.units).toBe(9);
+    expect(result.qualifyingUnits).toBe(9);
+    expect(result.eligible).toBe(true);
+    expect(result.patterns).toContainEqual({
+      id: "mcr-mixed-kong-combination",
+      name: "One concealed and one melded kong",
+      units: 6,
+    });
+    expect(
+      result.patterns.some((p) =>
+        ["Melded Kong", "Concealed Kong", "Two Melded Kongs"].includes(p.name),
+      ),
+    ).toBe(false);
+    expect(mcrPatterns()).toHaveLength(81);
+    expect(mcrPayments(9, { winner: 1, payer: 0, selfDraw: false }, 0)).toEqual(
+      [
+        { seat: 0, amount: 17 },
+        { seat: 2, amount: 8 },
+        { seat: 3, amount: 8 },
+      ],
+    );
+  });
   it("excludes flowers from eligibility and pays eight base points from every loser", () => {
     const a = score("123456m234p567s11z", {
       flowers: [34, 35, 36, 37, 38, 39, 40, 41],

@@ -25,7 +25,7 @@
 
 #include "tile.h"
 
-#define SUPPORT_CONCEALED_KONG_AND_MELDED_KONG      0  // 支持明暗杠
+#define SUPPORT_CONCEALED_KONG_AND_MELDED_KONG      1  // 2006 combination under fan 57; not a catalog entry
 #define KNITTED_STRAIGHT_BODY_WITH_ECS              1  // 组合龙龙身的边嵌钓
 #define DISTINGUISH_PURE_SHIFTED_CHOWS              0  // 区分一色三（四）步的宽窄
 #define NINE_GATES_WHEN_BLESSING_OF_HEAVEN          1  // 天和支持九莲宝灯
@@ -375,7 +375,7 @@ static const uint16_t fan_value_table[FAN_TABLE_SIZE] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     1
 #if SUPPORT_CONCEALED_KONG_AND_MELDED_KONG
-    , 5
+    , 6  // WMO 2006 fan 57: one concealed and one melded kong
 #endif
 #if SUPPORT_BLESSINGS
     , 8, 8, 8, 8
