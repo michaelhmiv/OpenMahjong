@@ -69,6 +69,97 @@ jobs:
       - run: npm ci
       - run: npx vitest run packages/ai/test/soak.test.ts -t "A3 soak"
 
+  # Per-variant completion soak: 10,000 games per variant, sharded by
+  # measured cost (see packages/ai/test/variant-soak.test.ts header).
+  # hong-kong and taiwanese mirror the riichi shard shape (8 × 1,250);
+  # mcr games cost ~7× a riichi game (vendored scorer on every win
+  # check), so mcr runs 50 × 200 for a comparable shard envelope.
+  variant-soak:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { variant: hong-kong, shard: 0, games: 1250, offset: 0 }
+          - { variant: hong-kong, shard: 1, games: 1250, offset: 1250 }
+          - { variant: hong-kong, shard: 2, games: 1250, offset: 2500 }
+          - { variant: hong-kong, shard: 3, games: 1250, offset: 3750 }
+          - { variant: hong-kong, shard: 4, games: 1250, offset: 5000 }
+          - { variant: hong-kong, shard: 5, games: 1250, offset: 6250 }
+          - { variant: hong-kong, shard: 6, games: 1250, offset: 7500 }
+          - { variant: hong-kong, shard: 7, games: 1250, offset: 8750 }
+          - { variant: taiwanese, shard: 0, games: 1250, offset: 0 }
+          - { variant: taiwanese, shard: 1, games: 1250, offset: 1250 }
+          - { variant: taiwanese, shard: 2, games: 1250, offset: 2500 }
+          - { variant: taiwanese, shard: 3, games: 1250, offset: 3750 }
+          - { variant: taiwanese, shard: 4, games: 1250, offset: 5000 }
+          - { variant: taiwanese, shard: 5, games: 1250, offset: 6250 }
+          - { variant: taiwanese, shard: 6, games: 1250, offset: 7500 }
+          - { variant: taiwanese, shard: 7, games: 1250, offset: 8750 }
+          - { variant: mcr, shard: 0, games: 200, offset: 0 }
+          - { variant: mcr, shard: 1, games: 200, offset: 200 }
+          - { variant: mcr, shard: 2, games: 200, offset: 400 }
+          - { variant: mcr, shard: 3, games: 200, offset: 600 }
+          - { variant: mcr, shard: 4, games: 200, offset: 800 }
+          - { variant: mcr, shard: 5, games: 200, offset: 1000 }
+          - { variant: mcr, shard: 6, games: 200, offset: 1200 }
+          - { variant: mcr, shard: 7, games: 200, offset: 1400 }
+          - { variant: mcr, shard: 8, games: 200, offset: 1600 }
+          - { variant: mcr, shard: 9, games: 200, offset: 1800 }
+          - { variant: mcr, shard: 10, games: 200, offset: 2000 }
+          - { variant: mcr, shard: 11, games: 200, offset: 2200 }
+          - { variant: mcr, shard: 12, games: 200, offset: 2400 }
+          - { variant: mcr, shard: 13, games: 200, offset: 2600 }
+          - { variant: mcr, shard: 14, games: 200, offset: 2800 }
+          - { variant: mcr, shard: 15, games: 200, offset: 3000 }
+          - { variant: mcr, shard: 16, games: 200, offset: 3200 }
+          - { variant: mcr, shard: 17, games: 200, offset: 3400 }
+          - { variant: mcr, shard: 18, games: 200, offset: 3600 }
+          - { variant: mcr, shard: 19, games: 200, offset: 3800 }
+          - { variant: mcr, shard: 20, games: 200, offset: 4000 }
+          - { variant: mcr, shard: 21, games: 200, offset: 4200 }
+          - { variant: mcr, shard: 22, games: 200, offset: 4400 }
+          - { variant: mcr, shard: 23, games: 200, offset: 4600 }
+          - { variant: mcr, shard: 24, games: 200, offset: 4800 }
+          - { variant: mcr, shard: 25, games: 200, offset: 5000 }
+          - { variant: mcr, shard: 26, games: 200, offset: 5200 }
+          - { variant: mcr, shard: 27, games: 200, offset: 5400 }
+          - { variant: mcr, shard: 28, games: 200, offset: 5600 }
+          - { variant: mcr, shard: 29, games: 200, offset: 5800 }
+          - { variant: mcr, shard: 30, games: 200, offset: 6000 }
+          - { variant: mcr, shard: 31, games: 200, offset: 6200 }
+          - { variant: mcr, shard: 32, games: 200, offset: 6400 }
+          - { variant: mcr, shard: 33, games: 200, offset: 6600 }
+          - { variant: mcr, shard: 34, games: 200, offset: 6800 }
+          - { variant: mcr, shard: 35, games: 200, offset: 7000 }
+          - { variant: mcr, shard: 36, games: 200, offset: 7200 }
+          - { variant: mcr, shard: 37, games: 200, offset: 7400 }
+          - { variant: mcr, shard: 38, games: 200, offset: 7600 }
+          - { variant: mcr, shard: 39, games: 200, offset: 7800 }
+          - { variant: mcr, shard: 40, games: 200, offset: 8000 }
+          - { variant: mcr, shard: 41, games: 200, offset: 8200 }
+          - { variant: mcr, shard: 42, games: 200, offset: 8400 }
+          - { variant: mcr, shard: 43, games: 200, offset: 8600 }
+          - { variant: mcr, shard: 44, games: 200, offset: 8800 }
+          - { variant: mcr, shard: 45, games: 200, offset: 9000 }
+          - { variant: mcr, shard: 46, games: 200, offset: 9200 }
+          - { variant: mcr, shard: 47, games: 200, offset: 9400 }
+          - { variant: mcr, shard: 48, games: 200, offset: 9600 }
+          - { variant: mcr, shard: 49, games: 200, offset: 9800 }
+    env:
+      AI_VARIANT_SOAK_VARIANT: "${{ matrix.variant }}"
+      AI_VARIANT_SOAK_GAMES: "${{ matrix.games }}"
+      AI_VARIANT_SOAK_SEED_OFFSET: "${{ matrix.offset }}"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx vitest run packages/ai/test/variant-soak.test.ts -t "variant soak"
+
   browser:
     runs-on: ubuntu-latest
     steps:
