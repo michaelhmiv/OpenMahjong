@@ -342,6 +342,7 @@
   border-radius: 12px;
   padding: 8px;
   font: inherit;
+  font-size: 14px;
 }
 .variant-table header,
 .variant-education header {
@@ -372,8 +373,39 @@
   flex-direction: column;
   gap: 10px;
 }
-.variant-table-content > *,
 .variant-education-content > * {
+  flex-shrink: 0;
+}
+/* The variant table never scrolls as a whole: the summary stays
+   pinned, the public board scrolls in its own zone, and the dock
+   (own hand, actions, coach, status) is always on screen — a call
+   prompt or a discard decision must never open below the fold
+   (design-rules §5: 390x844 is the floor case). */
+.variant-table-content {
+  overflow: hidden;
+}
+.variant-table-content > .variant-center {
+  flex: none;
+}
+.variant-board-scroll {
+  flex: 1 1 auto;
+  min-height: 96px;
+  overflow-y: auto;
+}
+.variant-dock {
+  /* The dock holds every control the player acts on, so it takes
+     its full height first; the board zone absorbs the squeeze.
+     The cap keeps a board sliver visible in breakdown states,
+     where the dock scrolls internally instead. */
+  flex: none;
+  max-height: 75%;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.variant-dock > * {
   flex-shrink: 0;
 }
 .variant-table button,
@@ -702,21 +734,9 @@
 .variant-my-pond {
   margin: 5px 0;
 }
-.variant-coach.variant-floating {
-  position: absolute;
-  z-index: 3;
-  left: 12px;
-  right: 12px;
-  padding: 6px;
-  border: 1px solid var(--line);
-  font-size: 12px;
-}
-.variant-floating button {
-  width: 100%;
-}
-.variant-table:has(dialog[open]) .variant-floating {
-  display: none;
-}
+/* The coach panel lives in the dock, in flow: it never overlays
+   the player's own pond (the retired .variant-floating absolute
+   panel covered ~71% of it in late-hand states). */
 .variant-focus {
   width: 390px;
   max-width: calc(100vw - 8px);

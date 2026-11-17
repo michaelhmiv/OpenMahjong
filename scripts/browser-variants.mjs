@@ -170,11 +170,12 @@ for (const variant of [process.argv[4] ?? "hong-kong"]) {
     await page.goto(base);
     await page.getByRole("button", { name: "Learn", exact: true }).click();
     const section = page
-      .locator("details")
-      .filter({ has: page.locator("summary", { hasText: name }) });
-    await section.locator("summary").click();
+      .locator(".learnsec")
+      .filter({ has: page.locator(".secttl", { hasText: name }) });
+    if ((await section.locator(".sechead").getAttribute("aria-expanded")) !== "true")
+      await section.locator(".sechead").click();
     await page.screenshot({ path: `${out}/learn-${width}.png` });
-    await section.getByRole("button").first().click();
+    await section.getByRole("button", { name: `Practice ${name}` }).click();
     await page.screenshot({ path: `${out}/lesson-${width}.png` });
     assert.deepEqual(errors, []);
     assert.deepEqual(axe.violations, []);

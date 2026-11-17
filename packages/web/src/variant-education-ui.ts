@@ -169,33 +169,57 @@ export function mountVariantEducation(
       ),
     );
     if (options.practice) {
-      const picker = el("select");
-      picker.setAttribute("aria-label", "Practice exercise");
-      questions.forEach((row, i) => {
-        const option = el(
-          "option",
-          `${row.lesson.title} · ${row.question.prompt}`,
+      // Same two-step picker grammar as Riichi Practice
+      // (.practice-selectors: a category select, then an exercise
+      // select within it) — here the category is the lesson.
+      const currentRow = questions[practiceIndex]!;
+      const selectors = el("div", "", "practice-selectors");
+      const lessonLabel = el("label", "Lesson");
+      const lessonPicker = el("select");
+      lessonPicker.setAttribute("aria-label", "Practice lesson");
+      for (const l of variantLessons(options.variant)) {
+        const option = el("option", l.title);
+        option.value = l.id;
+        lessonPicker.append(option);
+      }
+      lessonPicker.value = currentRow.lesson.id;
+      lessonPicker.addEventListener("change", () => {
+        const first = questions.findIndex(
+          (row) => row.lesson.id === lessonPicker.value,
         );
-        option.value = String(i);
-        picker.append(option);
-      });
-      picker.value = String(practiceIndex);
-      picker.addEventListener("change", () => {
-        practiceIndex = Number(picker.value);
+        if (first >= 0) practiceIndex = first;
         chosen = undefined;
         checked = false;
         render();
       });
+      lessonLabel.append(lessonPicker);
+      const exerciseLabel = el("label", "Exercise");
+      const exercisePicker = el("select");
+      exercisePicker.setAttribute("aria-label", "Practice exercise");
+      questions.forEach((row, i) => {
+        if (row.lesson.id !== currentRow.lesson.id) return;
+        const option = el("option", row.question.prompt);
+        option.value = String(i);
+        exercisePicker.append(option);
+      });
+      exercisePicker.value = String(practiceIndex);
+      exercisePicker.addEventListener("change", () => {
+        practiceIndex = Number(exercisePicker.value);
+        chosen = undefined;
+        checked = false;
+        render();
+      });
+      exerciseLabel.append(exercisePicker);
+      selectors.append(lessonLabel, exerciseLabel);
       main.append(
-        picker,
+        selectors,
         el(
           "p",
           "These are authored, checked exercises. A coach preference from your game is not used as a right-or-wrong answer.",
           "dim",
         ),
       );
-      const row = questions[practiceIndex]!;
-      quiz(row.question, row.lesson);
+      quiz(currentRow.question, currentRow.lesson);
       return;
     }
     if (step === 0) {
