@@ -11,11 +11,13 @@ import { randomUUID } from "node:crypto";
 import {
   EMPTY_STATS,
   type GameRecord,
+  type GameVariant,
   type GameSummary,
   type ResumeEntry,
   type Session,
   type StatsSums,
   type Store,
+  type StoredTable, type TableWriteResult,
   type User,
 } from "./store.js";
 
@@ -26,6 +28,23 @@ export class MemoryStore implements Store {
   readonly games = new Map<string, GameRecord>();
   readonly settings = new Map<string, unknown>();
   readonly resume = new Map<string, ResumeEntry>();
+  readonly tables = new Map<string, StoredTable>();
+  readonly tableWrites = new Map<string, { digest: string }>();
+
+  async listTables(userId: string): Promise<StoredTable[]> {
+    return [...this.tables].filter(([key]) => key.startsWith(`${userId}:`)).map(([, value]) => structuredClone(value)).slice(-100).reverse();
+  }
+  async getTable(userId: string, id: string): Promise<StoredTable | null> { return structuredClone(this.tables.get(`${userId}:${id}`) ?? null); }
+  async writeTable(userId: string, id: string, expectedRevision: number, mutationId: string, digest: string, state: unknown): Promise<TableWriteResult> {
+    const key = `${userId}:${id}`, writeKey = `${key}:${mutationId}`, previous = this.tableWrites.get(writeKey);
+    const current = this.tables.get(key) ?? null;
+    if (previous) return { status: previous.digest === digest ? "duplicate" : "key-reused", entry: structuredClone(current) };
+    if ([...this.tableWrites.keys()].filter(k=>k.startsWith(`${key}:`)).length >= 10000) return { status:"conflict",entry:structuredClone(current) };
+    if ((current?.revision ?? 0) !== expectedRevision || (!current && [...this.tables.keys()].filter(k => k.startsWith(`${userId}:`)).length >= 100)) return { status: "conflict", entry: structuredClone(current) };
+    const entry = { id, revision: expectedRevision + 1, state: structuredClone(state) };
+    this.tables.set(key, entry); this.tableWrites.set(writeKey, { digest });
+    return { status: "saved", entry: structuredClone(entry) };
+  }
 
   async upsertUser(input: {
     googleSub: string;
@@ -72,6 +91,8 @@ export class MemoryStore implements Store {
     }
     this.settings.delete(id);
     this.resume.delete(id);
+    for (const key of this.tables.keys()) if (key.startsWith(`${id}:`)) this.tables.delete(key);
+    for (const key of this.tableWrites.keys()) if (key.startsWith(`${id}:`)) this.tableWrites.delete(key);
   }
 
   async createSession(input: {
@@ -125,14 +146,15 @@ export class MemoryStore implements Store {
       length: g.length,
       placement: g.placement,
       score: g.score,
+      ...(g.variant ? { variant: g.variant } : {}),
     }));
   }
 
-  async getStats(userId: string): Promise<StatsSums> {
+  async getStats(userId: string, variant: GameVariant = "riichi"): Promise<StatsSums> {
     const prefix = `${userId}:`;
     const sums: StatsSums = { ...EMPTY_STATS };
     for (const [key, game] of this.games) {
-      if (!key.startsWith(prefix)) continue;
+      if (!key.startsWith(prefix) || (game.variant ?? "riichi") !== variant) continue;
       sums.games += 1;
       if (game.placement === 1) sums.wins += 1;
       sums.placementSum += game.placement;

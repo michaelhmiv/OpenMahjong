@@ -127,3 +127,12 @@ SQL constraints, migrations, and concurrency still need PostgreSQL
 integration coverage. See
 [`docs/audit/security-performance-audit.md`](../../docs/audit/security-performance-audit.md)
 for known storage, synchronization, abuse-control, and recovery gaps.
+
+
+## In-person ledgers and new variants
+
+Authenticated `GET /api/table-sessions`, `GET /api/table-sessions/:id` and CSRF-protected `PUT /api/table-sessions/:id` carry private scoring ledgers. PUT accepts `{expectedRevision, mutationId, session}`; shared engine validation recomputes completed-hand scoring and payments. A successful CAS advances the server revision; duplicate IDs with the same canonical digest are idempotent, changed payloads cannot reuse a key, and conflicts return only that owner's current copy. Bodies, sessions and write history are bounded. Deletion cascades remove ledgers and idempotency records. See [ledger/API reference](../../docs/architecture/in-person.md).
+
+CPU game uploads/resume accept strict schema3 variant/profile pairs for Hong Kong, MCR and Taiwanese, including full four-round length. They remain private, unrated client claims: the server validates envelopes, not competitive outcomes, and never runs an official CPU match. `GET /api/stats?variant=...` accepts only riichi/hong-kong/mcr/taiwanese; absent means Riichi for compatibility. In-person ledgers never contribute to CPU statistics. Shared scoring of explicitly entered completed hands is the exception to the earlier baseline's statement that the server executes no rules logic.
+
+Migrations006/007 add ledgers, idempotency records and variant/full-length storage while preserving old rows as Riichi. Ordered migration transactions run under a schema-scoped advisory lock on one connection, preventing races during concurrent boots. The loopback-only `postgres-integration.test.ts` verifies fresh schemas, upgrades from the original five, concurrency, ownership, variant mapping and deletion. The browser sync fixture uses a disposable local MemoryStore and synthetic sessions, not production OAuth or user data.
