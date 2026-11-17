@@ -14,3 +14,4 @@ export * from "./api.js";
 export * from "./records.js";
 export * from "./replay.js";
 export * from "./review.js";
+export * from "./ads.js";
