@@ -11,6 +11,7 @@ import {
   EMPTY_STATS,
   type GameRecord,
   type GameSummary,
+  type ResumeEntry,
   type Session,
   type StatsSums,
   type Store,
@@ -92,7 +93,8 @@ export class PgStore implements Store {
   }
 
   async deleteUser(id: string): Promise<void> {
-    // Games, sessions, and settings reference users ON DELETE CASCADE.
+    // Games, sessions, settings, and in-progress games reference users
+    // ON DELETE CASCADE.
     await this.pool.query(`DELETE FROM users WHERE id = $1`, [id]);
   }
 
@@ -239,6 +241,39 @@ export class PgStore implements Store {
        ON CONFLICT (user_id) DO UPDATE
          SET settings = EXCLUDED.settings, updated_at = now()`,
       [userId, JSON.stringify(settings)],
+    );
+  }
+
+  async getResume(userId: string): Promise<ResumeEntry | null> {
+    const { rows } = await this.pool.query<{
+      state: unknown;
+      client_saved_at: Date;
+    }>(
+      `SELECT state, client_saved_at
+         FROM in_progress_games WHERE user_id = $1`,
+      [userId],
+    );
+    const row = rows[0];
+    if (!row) return null;
+    return { state: row.state, clientSavedAt: row.client_saved_at };
+  }
+
+  async putResume(userId: string, entry: ResumeEntry): Promise<void> {
+    await this.pool.query(
+      `INSERT INTO in_progress_games (user_id, state, client_saved_at, updated_at)
+       VALUES ($1, $2, $3, now())
+       ON CONFLICT (user_id) DO UPDATE
+         SET state = EXCLUDED.state,
+             client_saved_at = EXCLUDED.client_saved_at,
+             updated_at = now()`,
+      [userId, JSON.stringify(entry.state), entry.clientSavedAt],
+    );
+  }
+
+  async deleteResume(userId: string): Promise<void> {
+    await this.pool.query(
+      `DELETE FROM in_progress_games WHERE user_id = $1`,
+      [userId],
     );
   }
 }

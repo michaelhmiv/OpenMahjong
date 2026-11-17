@@ -12,6 +12,7 @@ import {
   EMPTY_STATS,
   type GameRecord,
   type GameSummary,
+  type ResumeEntry,
   type Session,
   type StatsSums,
   type Store,
@@ -24,6 +25,7 @@ export class MemoryStore implements Store {
   readonly sessions = new Map<string, Session>();
   readonly games = new Map<string, GameRecord>();
   readonly settings = new Map<string, unknown>();
+  readonly resume = new Map<string, ResumeEntry>();
 
   async upsertUser(input: {
     googleSub: string;
@@ -69,6 +71,7 @@ export class MemoryStore implements Store {
       if (key.startsWith(`${id}:`)) this.games.delete(key);
     }
     this.settings.delete(id);
+    this.resume.delete(id);
   }
 
   async createSession(input: {
@@ -148,5 +151,17 @@ export class MemoryStore implements Store {
 
   async putSettings(userId: string, settings: unknown): Promise<void> {
     this.settings.set(userId, settings);
+  }
+
+  async getResume(userId: string): Promise<ResumeEntry | null> {
+    return this.resume.get(userId) ?? null;
+  }
+
+  async putResume(userId: string, entry: ResumeEntry): Promise<void> {
+    this.resume.set(userId, entry);
+  }
+
+  async deleteResume(userId: string): Promise<void> {
+    this.resume.delete(userId);
   }
 }

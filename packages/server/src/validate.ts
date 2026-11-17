@@ -44,7 +44,7 @@ function isNonNegativeInt(value: unknown): value is number {
 }
 
 /** Bound nested JSON before JSON.stringify/pg traversal can exhaust the stack. */
-function validateJsonDepth(input: unknown): void {
+export function validateJsonDepth(input: unknown): void {
   let nodes = 0;
   function visit(value: unknown, depth: number): void {
     if (++nodes > 1_000_000) throw new ValidationError("JSON contains too many values");
@@ -153,6 +153,69 @@ export function validateGame(input: unknown): GameRecord {
     log: input["log"],
     stats: validateGameStats(input["stats"]),
   };
+}
+
+const MAX_RESUME_STATE_BYTES = 2 * 1024 * 1024;
+/** The client's replay cap (replay.ts MAX_REPLAY_DECISIONS). */
+const MAX_RESUME_DECISIONS = 20_000;
+
+export interface ResumeUpload {
+  state: Record<string, unknown>;
+  clientSavedAt: Date;
+}
+
+/**
+ * In-progress resume upload (ruling, 2026-11-16): `{ state, savedAt }`
+ * where state is the client's serialized SavedGame. Like game logs,
+ * the server stores the state verbatim and never interprets the
+ * decision log — validation checks only the envelope, the fields the
+ * resume flow depends on, JSON depth, and the size bound.
+ */
+export function validateResume(input: unknown): ResumeUpload {
+  if (!isRecord(input)) {
+    throw new ValidationError("body must be { state, savedAt }");
+  }
+  const state = input["state"];
+  if (!isRecord(state)) throw new ValidationError("state must be an object");
+  if (state["v"] !== 1 && state["v"] !== 2) {
+    throw new ValidationError("state.v must be 1 or 2");
+  }
+  if (typeof state["seed"] !== "string" || state["seed"].length > 256) {
+    throw new ValidationError("state.seed must be a string of at most 256 characters");
+  }
+  if (state["length"] !== "east" && state["length"] !== "south") {
+    throw new ValidationError('state.length must be "east" or "south"');
+  }
+  if (!isNonNegativeInt(state["humanSeat"]) || state["humanSeat"] > 3) {
+    throw new ValidationError("state.humanSeat must be an integer 0..3");
+  }
+  if (
+    !Array.isArray(state["decisions"]) ||
+    state["decisions"].length > MAX_RESUME_DECISIONS
+  ) {
+    throw new ValidationError(
+      `state.decisions must be an array of at most ${MAX_RESUME_DECISIONS} decisions`,
+    );
+  }
+  if (
+    state["id"] !== undefined &&
+    (typeof state["id"] !== "string" || state["id"].length > 128)
+  ) {
+    throw new ValidationError("state.id must be a string of at most 128 characters");
+  }
+  validateJsonDepth(state);
+  if (Buffer.byteLength(JSON.stringify(state), "utf8") > MAX_RESUME_STATE_BYTES) {
+    throw new ValidationError("resume state too large");
+  }
+  const savedAtRaw = input["savedAt"];
+  if (!isIsoInstant(savedAtRaw)) {
+    throw new ValidationError("savedAt must be an ISO string");
+  }
+  const clientSavedAt = new Date(savedAtRaw);
+  if (Number.isNaN(clientSavedAt.getTime())) {
+    throw new ValidationError("savedAt must be an ISO string");
+  }
+  return { state, clientSavedAt };
 }
 
 export function validateGameList(input: unknown): GameRecord[] {

@@ -9,6 +9,7 @@
  */
 
 import type { GameLength } from "@openmahjong/engine";
+import { parseSavedGame } from "./replay.js";
 import type { SavedGame } from "./runner.js";
 import type { Settings } from "./settings.js";
 
@@ -173,6 +174,74 @@ export async function putSettings(
       headers: csrfHeaders(csrfToken),
       body: JSON.stringify({ settings }),
     },
+    fetchFn,
+  );
+  return body !== null;
+}
+
+/** The account's in-progress game (ruling, 2026-11-16): the same
+ *  serialized SavedGame the client keeps locally, plus when the
+ *  client saved it (ISO string). */
+export interface ResumePayload {
+  readonly state: SavedGame;
+  readonly savedAt: string;
+}
+
+/**
+ * GET /api/resume. Tri-state on purpose: a stored payload, "empty"
+ * (signed in, nothing stored — the local copy wins by default), or
+ * null when the call failed (offline/401/down) — a failure must never
+ * be mistaken for "nothing stored" and overwrite local state.
+ */
+export async function fetchResume(
+  fetchFn: FetchFn = fetch,
+): Promise<ResumePayload | "empty" | null> {
+  const body = (await request("/api/resume", { method: "GET" }, fetchFn)) as
+    | { resume?: unknown }
+    | null;
+  if (!body || typeof body !== "object" || !("resume" in body)) return null;
+  if (body.resume === null) return "empty";
+  const resume = body.resume as { state?: unknown; savedAt?: unknown };
+  if (!resume || typeof resume !== "object") return null;
+  const state = parseSavedGame(resume.state);
+  if (!state) return null;
+  if (
+    typeof resume.savedAt !== "string" ||
+    !Number.isFinite(Date.parse(resume.savedAt))
+  ) {
+    return null;
+  }
+  return { state, savedAt: resume.savedAt };
+}
+
+/** PUT /api/resume — upsert the caller's in-progress game. */
+export async function putResume(
+  payload: ResumePayload,
+  csrfToken: string | null,
+  fetchFn: FetchFn = fetch,
+  opts: { keepalive?: boolean } = {},
+): Promise<boolean> {
+  const body = await request(
+    "/api/resume",
+    {
+      method: "PUT",
+      headers: csrfHeaders(csrfToken),
+      body: JSON.stringify(payload),
+      ...(opts.keepalive ? { keepalive: true } : {}),
+    },
+    fetchFn,
+  );
+  return body !== null;
+}
+
+/** DELETE /api/resume — the game finished or was abandoned. */
+export async function deleteResume(
+  csrfToken: string | null,
+  fetchFn: FetchFn = fetch,
+): Promise<boolean> {
+  const body = await request(
+    "/api/resume",
+    { method: "DELETE", headers: csrfHeaders(csrfToken) },
     fetchFn,
   );
   return body !== null;

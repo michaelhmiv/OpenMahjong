@@ -975,3 +975,201 @@ describe("bounded API inputs and private response handling", () => {
     expect(await stored.json()).toEqual({ settings });
   });
 });
+
+describe("in-progress resume carry-over (ruling, 2026-11-16)", () => {
+  const SAVED_AT = "2026-11-16T15:04:05.000Z";
+
+  /** The client's exact upload envelope: its serialized SavedGame
+   *  (stored verbatim) plus the save timestamp. */
+  function resumeBody(overrides: Record<string, unknown> = {}): Record<string, unknown> {
+    return {
+      state: {
+        v: 2,
+        seed: "om-resume-test",
+        length: "south",
+        humanSeat: 0,
+        decisions: [{ type: "discard", tileId: 12 }],
+        id: "resume-game-1",
+        engineVersion: 2,
+        ruleset: { id: "riichi", version: 1 },
+        aiVersion: 3,
+      },
+      savedAt: SAVED_AT,
+      ...overrides,
+    };
+  }
+
+  function putResume(ctx: Ctx, auth: { cookie: string; csrf: string }, body: unknown, csrf: string | null = auth.csrf) {
+    return fetch(`${ctx.base}/api/resume`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        cookie: auth.cookie,
+        ...(csrf === null ? {} : { "x-csrf-token": csrf }),
+      },
+      body: JSON.stringify(body),
+    });
+  }
+
+  function getResume(ctx: Ctx, auth: { cookie: string }) {
+    return fetch(`${ctx.base}/api/resume`, { headers: { cookie: auth.cookie } });
+  }
+
+  it("requires a session for every resume route", async () => {
+    const ctx = await setup();
+    expect((await fetch(`${ctx.base}/api/resume`)).status).toBe(401);
+    expect(
+      (await fetch(`${ctx.base}/api/resume`, {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(resumeBody()),
+      })).status,
+    ).toBe(401);
+    expect(
+      (await fetch(`${ctx.base}/api/resume`, { method: "DELETE" })).status,
+    ).toBe(401);
+  });
+
+  it("enforces CSRF on resume mutations", async () => {
+    const ctx = await setup();
+    const auth = await signIn(ctx);
+    expect((await putResume(ctx, auth, resumeBody(), null)).status).toBe(403);
+    expect((await putResume(ctx, auth, resumeBody(), "wrong-token")).status).toBe(403);
+    const del = await fetch(`${ctx.base}/api/resume`, {
+      method: "DELETE",
+      headers: { cookie: auth.cookie },
+    });
+    expect(del.status).toBe(403);
+    expect(ctx.store.resume.size).toBe(0);
+  });
+
+  it("round-trips the in-progress game verbatim with the client envelope", async () => {
+    const ctx = await setup();
+    const auth = await signIn(ctx);
+
+    const before = await getResume(ctx, auth);
+    expect(await before.json()).toEqual({ resume: null });
+
+    const body = resumeBody();
+    expect((await putResume(ctx, auth, body)).status).toBe(204);
+
+    const after = await getResume(ctx, auth);
+    expect(await after.json()).toEqual({
+      resume: { state: body["state"], savedAt: SAVED_AT },
+    });
+
+    // Upsert: a later save replaces the stored game wholesale.
+    const newer = resumeBody({
+      state: {
+        ...(body["state"] as Record<string, unknown>),
+        decisions: [
+          { type: "discard", tileId: 12 },
+          { type: "pass" },
+        ],
+      },
+      savedAt: "2026-11-16T15:09:41.000Z",
+    });
+    expect((await putResume(ctx, auth, newer)).status).toBe(204);
+    const final = await getResume(ctx, auth);
+    expect(await final.json()).toEqual({
+      resume: { state: newer["state"], savedAt: "2026-11-16T15:09:41.000Z" },
+    });
+    expect(ctx.store.resume.size).toBe(1);
+  });
+
+  it("DELETE clears the stored game and is idempotent", async () => {
+    const ctx = await setup();
+    const auth = await signIn(ctx);
+    expect((await putResume(ctx, auth, resumeBody())).status).toBe(204);
+
+    const del = await fetch(`${ctx.base}/api/resume`, {
+      method: "DELETE",
+      headers: { cookie: auth.cookie, "x-csrf-token": auth.csrf },
+    });
+    expect(del.status).toBe(204);
+    expect(await (await getResume(ctx, auth)).json()).toEqual({ resume: null });
+
+    const again = await fetch(`${ctx.base}/api/resume`, {
+      method: "DELETE",
+      headers: { cookie: auth.cookie, "x-csrf-token": auth.csrf },
+    });
+    expect(again.status).toBe(204);
+    expect(ctx.store.resume.size).toBe(0);
+  });
+
+  it("isolates the in-progress game per user", async () => {
+    const ctx = await setup();
+    const alice = await signIn(ctx, "code-a");
+    const bob = await signIn(ctx, "code-b");
+
+    expect((await putResume(ctx, alice, resumeBody())).status).toBe(204);
+
+    // Bob never sees Alice's game, and his clear cannot touch it.
+    expect(await (await getResume(ctx, bob)).json()).toEqual({ resume: null });
+    const bobClear = await fetch(`${ctx.base}/api/resume`, {
+      method: "DELETE",
+      headers: { cookie: bob.cookie, "x-csrf-token": bob.csrf },
+    });
+    expect(bobClear.status).toBe(204);
+    const aliceAfter = await getResume(ctx, alice);
+    expect(await aliceAfter.json()).toEqual({
+      resume: { state: resumeBody()["state"], savedAt: SAVED_AT },
+    });
+  });
+
+  it("rejects malformed resume uploads with 400", async () => {
+    const ctx = await setup();
+    const auth = await signIn(ctx);
+    const good = resumeBody();
+    const goodState = good["state"] as Record<string, unknown>;
+    const cases: unknown[] = [
+      {},
+      { savedAt: SAVED_AT },
+      { state: goodState },
+      { state: "not-an-object", savedAt: SAVED_AT },
+      { state: { ...goodState, v: 3 }, savedAt: SAVED_AT },
+      { state: { ...goodState, seed: 42 }, savedAt: SAVED_AT },
+      { state: { ...goodState, length: "west" }, savedAt: SAVED_AT },
+      { state: { ...goodState, humanSeat: 4 }, savedAt: SAVED_AT },
+      { state: { ...goodState, decisions: "none" }, savedAt: SAVED_AT },
+      {
+        state: {
+          ...goodState,
+          decisions: Array.from({ length: 20_001 }, () => ({ type: "pass" })),
+        },
+        savedAt: SAVED_AT,
+      },
+      { state: goodState, savedAt: "not-a-date" },
+      { state: goodState, savedAt: 1_700_000_000_000 },
+    ];
+    for (const body of cases) {
+      expect((await putResume(ctx, auth, body)).status).toBe(400);
+    }
+    expect(ctx.store.resume.size).toBe(0);
+  });
+
+  it("rejects an oversized resume state with 400", async () => {
+    const ctx = await setup();
+    const auth = await signIn(ctx);
+    // State JSON just over the 2 MiB bound, body still under the raw cap.
+    const body = resumeBody({ state: {
+      ...(resumeBody()["state"] as Record<string, unknown>),
+      padding: "x".repeat(2_097_000),
+    } });
+    expect((await putResume(ctx, auth, body)).status).toBe(400);
+    expect(ctx.store.resume.size).toBe(0);
+  });
+
+  it("account deletion removes the stored in-progress game", async () => {
+    const ctx = await setup();
+    const auth = await signIn(ctx);
+    expect((await putResume(ctx, auth, resumeBody())).status).toBe(204);
+    expect(ctx.store.resume.size).toBe(1);
+    const res = await fetch(`${ctx.base}/api/me`, {
+      method: "DELETE",
+      headers: { cookie: auth.cookie, "x-csrf-token": auth.csrf },
+    });
+    expect(res.status).toBe(204);
+    expect(ctx.store.resume.size).toBe(0);
+  });
+});

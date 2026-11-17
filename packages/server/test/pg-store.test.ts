@@ -20,3 +20,37 @@ describe("Postgres wire-type boundary", () => {
     expect(JSON.parse(JSON.stringify(game)).stats.winPoints).toBe(9100);
   });
 });
+
+describe("PgStore resume mapping", () => {
+  it("maps the in-progress row to a ResumeEntry and back", async () => {
+    const savedAt = new Date("2026-11-16T15:04:05.000Z");
+    const state = { v: 2, seed: "om-x", length: "east", humanSeat: 1, decisions: [] };
+    const query = vi.fn(async (sql: string, _params?: unknown[]) => {
+      if (sql.startsWith("SELECT state, client_saved_at")) {
+        return { rows: [{ state, client_saved_at: savedAt }] };
+      }
+      return { rows: [], rowCount: 1 };
+    });
+    const pool = { query } as unknown as Pool;
+    const store = new PgStore(pool);
+
+    await expect(store.getResume("user-1")).resolves.toEqual({
+      state,
+      clientSavedAt: savedAt,
+    });
+
+    await store.putResume("user-1", { state, clientSavedAt: savedAt });
+    const upsert = query.mock.calls.find(([sql]) => sql.includes("in_progress_games") && sql.includes("INSERT"));
+    expect(upsert).toBeTruthy();
+    expect(upsert![1]).toEqual(["user-1", JSON.stringify(state), savedAt]);
+
+    await store.deleteResume("user-1");
+    const del = query.mock.calls.find(([sql]) => sql.startsWith("DELETE FROM in_progress_games"));
+    expect(del).toBeTruthy();
+  });
+
+  it("returns null when no in-progress row exists", async () => {
+    const pool = { query: vi.fn().mockResolvedValue({ rows: [] }) } as unknown as Pool;
+    await expect(new PgStore(pool).getResume("user-1")).resolves.toBeNull();
+  });
+});

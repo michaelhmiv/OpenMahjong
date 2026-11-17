@@ -79,6 +79,7 @@ import {
   saveSettings,
   type Settings,
 } from "./settings.js";
+import { ResumeSync } from "./resume-sync.js";
 import { ClickSound } from "./sound.js";
 import { TILE_SPRITE_SVG } from "./tiles-sprite.js";
 import { adviseDiscard, tileName, type TurnAdvice } from "@openmahjong/coach";
@@ -404,6 +405,11 @@ export class App {
    *  play never depends on it. */
   private user: ApiUser | null = null;
   private csrfToken: string | null = null;
+  /** In-progress game carry-over (ruling, 2026-11-16): mirrors the
+   *  local resume save to the account when signed in. */
+  private readonly resumeSync = new ResumeSync({
+    auth: () => ({ signedIn: !!this.user, csrfToken: this.csrfToken }),
+  });
   private statsSums: StatsSums | null = null;
   private serverGameCount: number | null = null;
   /** The account's game summaries, kept for the home Last game card;
@@ -442,6 +448,8 @@ export class App {
       }
     });
     window.addEventListener("online", () => { void this.bootAuth(); });
+    // Carry-over: don't let a debounced resume push die with the tab.
+    window.addEventListener("pagehide", () => { this.resumeSync.flush(); });
     // Account probe runs after first paint and never blocks play:
     // signed-out (or unreachable API) is the default landing state.
     void this.bootAuth();
@@ -838,6 +846,10 @@ export class App {
       this.accountLoaded = true;
       this.queueAccountSettings();
     }
+    // Resume carry-over (ruling, 2026-11-16): reconcile the local
+    // in-progress game with the account copy before Home renders —
+    // the newer of the two is what Resume will offer.
+    await this.resumeSync.reconcile();
     this.statsSums = stats;
     this.serverGameCount = games ? games.length : null;
     this.serverGames = games;
@@ -1383,6 +1395,7 @@ export class App {
     if (!this.runner) return;
     if (this.runner.result) {
       clearGame();
+      this.resumeSync.noteClear();
       if (this.tu11Active) {
         // TU-11 completes when its game finishes (§9): the results
         // screen the player is looking at is the lesson's end.
@@ -1413,7 +1426,9 @@ export class App {
         if (this.user) void this.postRecord(record);
       }
     } else {
-      saveGame(this.runner.serialize());
+      const state = this.runner.serialize();
+      const savedAt = saveGame(state);
+      this.resumeSync.noteSave(state, savedAt);
     }
   }
 
@@ -1429,6 +1444,7 @@ export class App {
   private restartGame(): void {
     if (!this.runner) return;
     clearGame();
+    this.resumeSync.noteClear();
     this.startGame(this.runner.length);
   }
 

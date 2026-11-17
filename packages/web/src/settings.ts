@@ -27,6 +27,10 @@ export interface Settings {
 
 const SETTINGS_KEY = "openmahjong.settings.v1";
 const GAME_KEY = "openmahjong.game.v1";
+/** When the in-progress game was saved (epoch ms). The account
+ *  carry-over (resume-sync.ts) compares it against the server copy's
+ *  timestamp: the newer of local/account wins. */
+const GAME_SAVED_AT_KEY = "openmahjong.game.savedat.v1";
 const HISTORY_KEY = "openmahjong.history.v1";
 const RECORDS_KEY = "openmahjong.records.v1";
 const IMPORT_KEY = "openmahjong.import-handled.v1";
@@ -73,17 +77,39 @@ export function saveSettings(settings: Settings): void {
   writeJson(SETTINGS_KEY, settings);
 }
 
-export function saveGame(game: SavedGame): void {
+/** Save the in-progress game, stamped with the save time (epoch ms,
+ *  returned so the account sync pushes the same timestamp). */
+export function saveGame(game: SavedGame): number {
+  const savedAt = Date.now();
   writeJson(GAME_KEY, game);
+  writeJson(GAME_SAVED_AT_KEY, savedAt);
+  return savedAt;
+}
+
+/** Store a game with a known save time — the account copy that won
+ *  the newer-of-local/account comparison at sign-in. */
+export function storeGame(game: SavedGame, savedAt: number): void {
+  writeJson(GAME_KEY, game);
+  writeJson(GAME_SAVED_AT_KEY, savedAt);
 }
 
 export function loadGame(): SavedGame | null {
   return parseSavedGame(readJson<unknown>(GAME_KEY));
 }
 
+/** When the stored game was saved (epoch ms), or null when unknown
+ *  (a save written before timestamps existed counts as oldest). */
+export function loadGameSavedAt(): number | null {
+  const value = readJson<unknown>(GAME_SAVED_AT_KEY);
+  return typeof value === "number" && Number.isFinite(value) && value > 0
+    ? value
+    : null;
+}
+
 export function clearGame(): void {
   try {
     localStorage.removeItem(GAME_KEY);
+    localStorage.removeItem(GAME_SAVED_AT_KEY);
   } catch {
     /* ignore */
   }
