@@ -193,7 +193,7 @@ describe("app shell: Learn sections", () => {
     await settle();
     // No native disclosure/progress elements anywhere on Learn.
     expect(root.querySelectorAll("#screen-learn details, #screen-learn summary, #screen-learn progress").length).toBe(0);
-    for (const title of ["Hong Kong Old Style", "MCR", "Taiwanese"]) {
+    for (const title of ["Hong Kong Old Style", "MCR (Mahjong Competition Rules)", "Taiwanese"]) {
       const section = sectionByTitle(title);
       expect(section, title).toBeTruthy();
       expect(section.querySelector(".sechead")?.getAttribute("aria-expanded")).toBe("true");
@@ -208,14 +208,37 @@ describe("app shell: Learn sections", () => {
     }
   });
 
+  it("orders Learn: intro line, riichi section, riichi practice row, then variant sections with practice below the lessons", async () => {
+    new App(root);
+    await settle();
+    tab("learn").click();
+    await settle();
+    const page = root.querySelector("#screen-learn .tabpage")!;
+    expect(page.textContent).toContain("Lessons teach each game from the first tile. Start with lesson 1 of the game you want to learn.");
+    const children = [...page.children];
+    const riichiIndex = children.findIndex((c) => c.querySelector?.(".secttl")?.textContent === "Riichi");
+    const practiceIndex = children.findIndex((c) => c.classList.contains("practicerow"));
+    const hkIndex = children.findIndex((c) => c.querySelector?.(".secttl")?.textContent === "Hong Kong Old Style");
+    expect(riichiIndex).toBeGreaterThanOrEqual(0);
+    expect(practiceIndex).toBeGreaterThan(riichiIndex);
+    expect(hkIndex).toBeGreaterThan(practiceIndex);
+    // Each variant section's Practice button sits below its lesson rows.
+    const hk = sectionByTitle("Hong Kong Old Style");
+    const hkChildren = [...hk.children];
+    const lastRow = hkChildren.map((c) => c.classList.contains("lrow")).lastIndexOf(true);
+    const practiceBtn = hkChildren.findIndex((c) => c.textContent === "Practice Hong Kong Old Style");
+    expect(lastRow).toBeGreaterThanOrEqual(0);
+    expect(practiceBtn).toBeGreaterThan(lastRow);
+  });
+
   it("collapses a variant section under its own id, independently of Riichi", async () => {
     new App(root);
     await settle();
     tab("learn").click();
     await settle();
-    sectionByTitle("MCR").querySelector<HTMLButtonElement>(".sechead")?.click();
+    sectionByTitle("MCR (Mahjong Competition Rules)").querySelector<HTMLButtonElement>(".sechead")?.click();
     await settle();
-    expect(sectionByTitle("MCR").querySelectorAll(".lrow").length).toBe(0);
+    expect(sectionByTitle("MCR (Mahjong Competition Rules)").querySelectorAll(".lrow").length).toBe(0);
     expect(JSON.parse(localStorage.getItem("openmahjong.learn.collapsed.v1") ?? "[]")).toEqual(["mcr"]);
     expect(sectionByTitle("Riichi").querySelectorAll(".lrow").length).toBe(11);
   });

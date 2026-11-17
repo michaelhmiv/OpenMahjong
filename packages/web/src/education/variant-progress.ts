@@ -1,28 +1,32 @@
-import { VARIANT_LESSONS, type VariantLesson } from "./variant-content.js";
+import {
+  VARIANT_LESSONS,
+  variantLessonQuestions,
+  type VariantLesson,
+} from "./variant-content.js";
 export interface VariantAttempt {
   readonly id: string;
   readonly questionId: string;
   readonly profileId: string;
-  readonly contentVersion: 1;
+  readonly contentVersion: 2;
   readonly correct: boolean;
   readonly assisted: boolean;
   readonly at: number;
 }
 export interface VariantLearningProgress {
-  readonly v: 1;
+  readonly v: 2;
   readonly completed: readonly {
     lessonId: string;
-    version: 1;
+    version: 2;
     profileId: string;
     at: number;
   }[];
   readonly active: Readonly<
-    Record<string, { step: number; version: 1; profileId: string; at: number }>
+    Record<string, { step: number; version: 2; profileId: string; at: number }>
   >;
   readonly attempts: readonly VariantAttempt[];
 }
 export const emptyVariantProgress = (): VariantLearningProgress => ({
-  v: 1,
+  v: 2,
   completed: [],
   active: {},
   attempts: [],
@@ -32,7 +36,7 @@ function record(v: unknown): v is Record<string, unknown> {
 }
 export function parseVariantProgress(input: unknown): VariantLearningProgress {
   const out = emptyVariantProgress();
-  if (!record(input) || input["v"] !== 1) return out;
+  if (!record(input) || input["v"] !== 2) return out;
   const completed: VariantLearningProgress["completed"][number][] = [],
     active: Record<string, VariantLearningProgress["active"][string]> = {},
     attempts: VariantAttempt[] = [];
@@ -49,7 +53,7 @@ export function parseVariantProgress(input: unknown): VariantLearningProgress {
         )
           completed.push({
             lessonId: lesson.id,
-            version: 1,
+            version: 2,
             profileId: lesson.profileId,
             at: Number(row["at"]),
           });
@@ -64,18 +68,20 @@ export function parseVariantProgress(input: unknown): VariantLearningProgress {
           row["profileId"] === l.profileId &&
           Number.isSafeInteger(row["step"]) &&
           Number(row["step"]) >= 0 &&
-          Number(row["step"]) <= l.questions.length + 1 &&
+          Number(row["step"]) <= l.steps.length &&
           Number.isSafeInteger(row["at"])
         )
           active[key] = {
             step: Number(row["step"]),
-            version: 1,
+            version: 2,
             profileId: l.profileId,
             at: Number(row["at"]),
           };
       }
   const questions = new Map(
-    VARIANT_LESSONS.flatMap((l) => l.questions.map((q) => [q.id, l] as const)),
+    VARIANT_LESSONS.flatMap((l) =>
+      variantLessonQuestions(l).map((q) => [q.id, l] as const),
+    ),
   );
   if (Array.isArray(input["attempts"]))
     for (const row of input["attempts"].slice(-2000))
@@ -95,13 +101,13 @@ export function parseVariantProgress(input: unknown): VariantLearningProgress {
             id: row["id"],
             questionId: String(row["questionId"]),
             profileId: lesson.profileId,
-            contentVersion: 1,
+            contentVersion: 2,
             correct: row["correct"],
             assisted: row["assisted"],
             at: Number(row["at"]),
           });
       }
-  return { v: 1, completed, active, attempts };
+  return { v: 2, completed, active, attempts };
 }
 export function mergeVariantProgress(
   a: VariantLearningProgress,
@@ -123,7 +129,7 @@ export function mergeVariantProgress(
   for (const [key, row] of Object.entries(b.active))
     if (!active[key] || active[key]!.at < row.at) active[key] = row;
   return parseVariantProgress({
-    v: 1,
+    v: 2,
     completed: [...complete.values()],
     active,
     attempts: [...attempts.values()].slice(-2000),

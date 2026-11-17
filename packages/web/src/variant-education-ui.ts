@@ -7,6 +7,7 @@ import {
 import {
   VARIANT_LESSONS,
   VARIANT_RELEASES,
+  variantLessonQuestions,
   variantLessons,
   type VariantLesson,
   type VariantQuestion,
@@ -56,12 +57,27 @@ export function mountVariantEducation(
   let progress = options.progress,
     step = progress.active[lesson.id]?.step ?? 0,
     chosen: number | undefined,
+    picks = new Set<number>(),
+    wrongChoices = new Set<number>(),
     checked = false,
     correct = false,
     alive = true;
-  const questions = variantLessons(options.variant).flatMap((l) =>
-    l.questions.map((q) => ({ lesson: l, question: q })),
-  );
+  // Practice draws only from lessons the player has completed. A
+  // review-driven entry (initialTopic) also includes its own lesson,
+  // so a saved decision can always send the player to its questions.
+  const completedIds = new Set(progress.completed.map((c) => c.lessonId));
+  const practicePool = variantLessons(options.variant)
+    .filter(
+      (l) => completedIds.has(l.id) || l.id === options.initialTopic,
+    )
+    .flatMap((l) =>
+      variantLessonQuestions(l).map((q) => ({ lesson: l, question: q })),
+    );
+  const questions = options.practice
+    ? practicePool
+    : variantLessons(options.variant).flatMap((l) =>
+        variantLessonQuestions(l).map((q) => ({ lesson: l, question: q })),
+      );
   let practiceIndex = Math.max(
     0,
     questions.findIndex((row) => row.lesson.id === options.initialTopic),
@@ -83,11 +99,18 @@ export function mountVariantEducation(
     progress = next;
     options.onProgress(next);
   }
-  function tiles(q: VariantQuestion): HTMLElement {
+  function resetAnswer(): void {
+    chosen = undefined;
+    picks = new Set();
+    wrongChoices = new Set();
+    checked = false;
+    correct = false;
+  }
+  function tilesRow(notation?: string): HTMLElement {
     const row = el("div", "", "variant-example-tiles");
-    if (!q.tiles) return row;
+    if (!notation) return row;
     const inventory = variantAdapter(options.variant).inventory();
-    parseCounts(q.tiles).forEach((count, type) => {
+    parseCounts(notation).forEach((count, type) => {
       for (let c = 0; c < count; c++)
         row.append(
           options.renderTile(
@@ -97,27 +120,74 @@ export function mountVariantEducation(
     });
     return row;
   }
-  function quiz(q: VariantQuestion, owner: VariantLesson): void {
-    main.append(el("h2", q.prompt), tiles(q));
-    const group = el("div", "", "variant-answers");
-    group.setAttribute("role", "group");
-    group.setAttribute("aria-label", "Answer choices");
-    q.choices.forEach((choice, index) => {
-      const b = button(choice, () => {
-        chosen = index;
-        checked = false;
-        render();
-      });
-      b.setAttribute("aria-pressed", String(chosen === index));
-      group.append(b);
+  /** The expanded tile faces of a notation string, in row order. */
+  function tileFaces(notation: string): Tile[] {
+    const inventory = variantAdapter(options.variant).inventory();
+    const faces: Tile[] = [];
+    parseCounts(notation).forEach((count, type) => {
+      for (let c = 0; c < count; c++)
+        faces.push(inventory.find((t) => t.type === type && t.id % 4 === c)!);
     });
-    main.append(group);
+    return faces;
+  }
+  function advance(continueLabel: string, next: () => void): void {
+    main.append(button(continueLabel, () => {
+      resetAnswer();
+      next();
+      render();
+    }));
+  }
+  function quiz(q: VariantQuestion, owner: VariantLesson): void {
+    main.append(el("h2", q.prompt));
+    if (q.kind === "tile-pick") {
+      const row = el("div", "", "variant-example-tiles variant-tile-pick");
+      row.setAttribute("role", "group");
+      row.setAttribute("aria-label", "Tiles to pick from");
+      tileFaces(q.tiles).forEach((face, index) => {
+        const b = el("button", "", "variant-tile-choice");
+        b.type = "button";
+        b.setAttribute("aria-pressed", String(picks.has(index)));
+        b.setAttribute("aria-label", `Tile ${index + 1}`);
+        b.append(options.renderTile(face));
+        b.addEventListener("click", () => {
+          if (checked && correct) return;
+          if (picks.has(index)) picks.delete(index);
+          else picks.add(index);
+          checked = false;
+          render();
+        });
+        row.append(b);
+      });
+      main.append(row);
+    } else {
+      main.append(tilesRow(q.tiles));
+      const group = el("div", "", "variant-answers");
+      group.setAttribute("role", "group");
+      group.setAttribute("aria-label", "Answer choices");
+      q.choices.forEach((choice, index) => {
+        const b = button(choice, () => {
+          chosen = index;
+          checked = false;
+          render();
+        });
+        b.setAttribute("aria-pressed", String(chosen === index));
+        b.disabled = wrongChoices.has(index);
+        group.append(b);
+      });
+      main.append(group);
+    }
     const feedback = el("p", "", "card");
     feedback.setAttribute("role", "status");
     const check = button("Check answer", () => {
-      if (chosen === undefined) return;
-      correct = chosen === q.answer;
+      const isCorrect =
+        q.kind === "tile-pick"
+          ? picks.size === q.picks.length &&
+            q.picks.every((p) => picks.has(p))
+          : chosen === q.answer;
+      correct = isCorrect;
       checked = true;
+      if (!correct && q.kind === "choice" && chosen !== undefined)
+        wrongChoices.add(chosen);
       const assisted = progress.attempts.some((a) => a.questionId === q.id);
       persist({
         ...progress,
@@ -127,7 +197,7 @@ export function mountVariantEducation(
             id: crypto.randomUUID(),
             questionId: q.id,
             profileId: owner.profileId,
-            contentVersion: 1 as const,
+            contentVersion: 2 as const,
             correct,
             assisted,
             at: Date.now(),
@@ -136,26 +206,64 @@ export function mountVariantEducation(
       });
       render();
     });
-    check.disabled = chosen === undefined || (checked && correct);
+    check.disabled =
+      (q.kind === "tile-pick" ? picks.size === 0 : chosen === undefined) ||
+      (checked && correct);
     main.append(check);
     if (checked) {
-      feedback.textContent = `${correct ? "Correct." : "Try again."} ${q.explanation}`;
+      if (correct) {
+        feedback.textContent = `Correct. ${q.explanation}`;
+      } else if (q.kind === "tile-pick") {
+        const extra = [...picks].filter((p) => !q.picks.includes(p)).length;
+        const missing = q.picks.filter((p) => !picks.has(p)).length;
+        feedback.textContent =
+          `Try again. ${q.hint} ` +
+          `${extra === 1 ? "1 pick does not belong" : `${extra} picks do not belong`}; ` +
+          `${missing === 1 ? "1 pick is missing" : `${missing} picks are missing`}. ` +
+          "Tap a picked tile again to un-pick it.";
+      } else {
+        feedback.textContent = `Try again. ${q.hint}`;
+      }
       main.append(feedback);
     }
     if (checked && correct)
-      main.append(
-        button(options.practice ? "Next exercise" : "Continue", () => {
-          chosen = undefined;
-          checked = false;
-          if (options.practice)
-            practiceIndex = (practiceIndex + 1) % questions.length;
-          else {
-            step++;
-            persist(lessonStep(progress, lesson, step));
-          }
-          render();
-        }),
-      );
+      advance(options.practice ? "Next exercise" : "Continue", () => {
+        if (options.practice)
+          practiceIndex = (practiceIndex + 1) % questions.length;
+        else {
+          step++;
+          persist(lessonStep(progress, lesson, step));
+        }
+      });
+  }
+  function mcrReference(): HTMLElement {
+    const reference = el("section"),
+      search = el("input");
+    search.type = "search";
+    search.placeholder = "Find a pattern";
+    search.setAttribute("aria-label", "Search the 81 MCR patterns");
+    const rows = el("div");
+    const drawReference = () => {
+      rows.replaceChildren();
+      for (const p of mcrPatternGuide().filter((p) =>
+        `${p.name} ${p.family} ${p.description}`
+          .toLowerCase()
+          .includes(search.value.toLowerCase()),
+      )) {
+        const d = el("details");
+        d.append(
+          el("summary", `${p.name} · ${p.units} fan`),
+          el("p", p.family, "dim"),
+          el("p", p.description),
+          el("p", p.restrictions),
+        );
+        rows.append(d);
+      }
+    };
+    search.addEventListener("input", drawReference);
+    reference.append(el("h2", "All 81 scoring patterns"), search, rows);
+    drawReference();
+    return reference;
   }
   function render(): void {
     if (!alive) return;
@@ -164,11 +272,22 @@ export function mountVariantEducation(
     main.append(
       el(
         "p",
-        `${VARIANT_RELEASES.find((v) => v.id === options.variant)?.name ?? options.variant} · ${options.variant === "hong-kong" ? "Clear Chapter preset" : "Recorded rules profile"}`,
+        VARIANT_RELEASES.find((v) => v.id === options.variant)?.name ??
+          options.variant,
         "dim",
       ),
     );
     if (options.practice) {
+      if (questions.length === 0) {
+        main.append(
+          el(
+            "p",
+            "Finish a lesson first — its questions appear here for practice.",
+          ),
+          button("Back to Learn", options.onBack),
+        );
+        return;
+      }
       // Same two-step picker grammar as Riichi Practice
       // (.practice-selectors: a category select, then an exercise
       // select within it) — here the category is the lesson.
@@ -178,6 +297,7 @@ export function mountVariantEducation(
       const lessonPicker = el("select");
       lessonPicker.setAttribute("aria-label", "Practice lesson");
       for (const l of variantLessons(options.variant)) {
+        if (!questions.some((row) => row.lesson.id === l.id)) continue;
         const option = el("option", l.title);
         option.value = l.id;
         lessonPicker.append(option);
@@ -188,8 +308,7 @@ export function mountVariantEducation(
           (row) => row.lesson.id === lessonPicker.value,
         );
         if (first >= 0) practiceIndex = first;
-        chosen = undefined;
-        checked = false;
+        resetAnswer();
         render();
       });
       lessonLabel.append(lessonPicker);
@@ -205,8 +324,7 @@ export function mountVariantEducation(
       exercisePicker.value = String(practiceIndex);
       exercisePicker.addEventListener("change", () => {
         practiceIndex = Number(exercisePicker.value);
-        chosen = undefined;
-        checked = false;
+        resetAnswer();
         render();
       });
       exerciseLabel.append(exercisePicker);
@@ -222,52 +340,22 @@ export function mountVariantEducation(
       quiz(currentRow.question, currentRow.lesson);
       return;
     }
-    if (step === 0) {
-      for (const paragraph of lesson.paragraphs)
-        main.append(el("p", paragraph));
-      if (lesson.id === "mcr-families") {
-        const reference = el("section"),
-          search = el("input");
-        search.type = "search";
-        search.placeholder = "Find a pattern";
-        search.setAttribute("aria-label", "Search the 81 MCR patterns");
-        const rows = el("div");
-        const drawReference = () => {
-          rows.replaceChildren();
-          for (const p of mcrPatternGuide().filter((p) =>
-            `${p.name} ${p.family} ${p.description}`
-              .toLowerCase()
-              .includes(search.value.toLowerCase()),
-          )) {
-            const d = el("details");
-            d.append(
-              el("summary", `${p.name} · ${p.units} fan`),
-              el("p", p.family, "dim"),
-              el("p", p.description),
-              el("p", p.restrictions),
-            );
-            rows.append(d);
-          }
-        };
-        search.addEventListener("input", drawReference);
-        reference.append(el("h2", "All 81 scoring patterns"), search, rows);
-        drawReference();
-        main.append(reference);
-      }
+    if (step < lesson.steps.length) {
+      const current = lesson.steps[step]!;
       main.append(
-        button("Check understanding", () => {
-          step = 1;
+        el("p", `Step ${step + 1} of ${lesson.steps.length}`, "dim"),
+      );
+      if (current.text) main.append(el("p", current.text));
+      if (current.tiles) main.append(tilesRow(current.tiles));
+      if (current.hand) main.append(tilesRow(current.hand));
+      if (current.question) {
+        quiz(current.question, lesson);
+      } else {
+        advance("Continue", () => {
+          step++;
           persist(lessonStep(progress, lesson, step));
-          render();
-        }),
-      );
-      return;
-    }
-    if (step <= lesson.questions.length) {
-      main.append(
-        el("p", `Question ${step} of ${lesson.questions.length}`, "dim"),
-      );
-      quiz(lesson.questions[step - 1]!, lesson);
+        });
+      }
       return;
     }
     if (!progress.completed.some((c) => c.lessonId === lesson.id))
@@ -277,7 +365,7 @@ export function mountVariantEducation(
           ...progress.completed,
           {
             lessonId: lesson.id,
-            version: 1,
+            version: 2,
             profileId: lesson.profileId,
             at: Date.now(),
           },
@@ -285,16 +373,15 @@ export function mountVariantEducation(
       });
     main.append(
       el("h2", "Lesson complete"),
-      el(
-        "p",
-        "Both checks have been answered correctly. Earlier incorrect or assisted attempts remain in your learning record.",
-      ),
+      el("p", `You finished “${lesson.title}”.`),
+    );
+    if (lesson.id === "mcr-families") main.append(mcrReference());
+    main.append(
       button("Back to Learn", options.onBack),
       button("Start guided play", options.onPlay),
       button("Restart lesson", () => {
         step = 0;
-        chosen = undefined;
-        checked = false;
+        resetAnswer();
         persist(lessonStep(progress, lesson, 0));
         render();
       }),

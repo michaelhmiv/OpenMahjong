@@ -41,6 +41,24 @@ describe("practice publication gate", () => {
     expect(validateExercise({ ...wait, position: { counts: impossible } }).valid).toBe(false);
     expect(validateExercise({ ...wait, ruleset: { id: "wrc", version: 2025 } }).valid).toBe(false);
   });
+  it("gives every curated exercise a hint and counts extra/missing picks without naming them", () => {
+    for (const exercise of CURATED_EXERCISES) {
+      expect(exercise.hint.trim().length, exercise.id).toBeGreaterThan(0);
+    }
+    const recognition = CURATED_EXERCISES.find((exercise) => exercise.id === "recognize-honors")!;
+    const stale = checkPracticeAnswer(recognition, [0, 2, 4, 6]);
+    expect(stale.correct).toBe(false);
+    expect(stale.extraPicks).toBe(1);
+    expect(stale.missingPicks).toBe(0);
+    expect(stale.hint).toBe(recognition.hint);
+    const short = checkPracticeAnswer(recognition, [2]);
+    expect(short.extraPicks).toBe(0);
+    expect(short.missingPicks).toBe(2);
+    const scalar = checkPracticeAnswer(
+      CURATED_EXERCISES.find((exercise) => exercise.id === "shanten-single-wait")!, 1);
+    expect(scalar.extraPicks).toBeUndefined();
+    expect(scalar.missingPicks).toBeUndefined();
+  });
   it("accepts unordered selections without coercing string answers into tile indices", () => {
     const recognition = CURATED_EXERCISES[0]!;
     expect(checkPracticeAnswer(recognition, [6, 2, 4]).correct).toBe(true);
