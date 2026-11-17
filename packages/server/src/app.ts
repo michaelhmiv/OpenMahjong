@@ -33,7 +33,7 @@ import type {
   Store,
   User,
 } from "./store.js";
-import { ValidationError, validateGame, validateGameList, validateSettings, validatedGameId } from "./validate.js";
+import { ValidationError, validateGame, validateGameList, validateResume, validateSettings, validatedGameId } from "./validate.js";
 
 export interface AppDeps {
   store: Store;
@@ -46,6 +46,9 @@ const MAX_IMPORT_BYTES = 16 * 1024 * 1024;
 // Bounded 2,000-attempt learning evidence plus lesson snapshots and
 // saved decision references must synchronize without silent truncation.
 const MAX_SETTINGS_BYTES = 2 * 1024 * 1024;
+// The resume state itself is capped at 2 MiB in validateResume; the
+// raw body gets envelope slack ({ state, savedAt } plus whitespace).
+const MAX_RESUME_BYTES = 2 * 1024 * 1024 + 64 * 1024;
 /** Bound unauthenticated, process-local state even under a sign-in flood. */
 const MAX_PENDING_STATES = 1000;
 const GAME_LIST_LIMIT = 200;
@@ -360,6 +363,46 @@ export function createApp(deps: AppDeps): (
         authed.user.id,
         settings,
       );
+      res.writeHead(204);
+      res.end();
+      return;
+    }
+
+    // In-progress carry-over (ruling, 2026-11-16): one stored game per
+    // user, keyed by the session — a request can only ever touch the
+    // caller's own row.
+    if (path === "/api/resume" && method === "GET") {
+      const authed = await requireAuth(req, res);
+      if (!authed) return;
+      const entry = await store.getResume(authed.user.id);
+      sendJson(res, 200, {
+        resume: entry
+          ? {
+              state: entry.state,
+              savedAt: entry.clientSavedAt.toISOString(),
+            }
+          : null,
+      });
+      return;
+    }
+
+    if (path === "/api/resume" && method === "PUT") {
+      const authed = await requireMutationAuth(req, res);
+      if (!authed) return;
+      const upload = validateResume(await readJsonBody(req, MAX_RESUME_BYTES));
+      await store.putResume(authed.user.id, {
+        state: upload.state,
+        clientSavedAt: upload.clientSavedAt,
+      });
+      res.writeHead(204);
+      res.end();
+      return;
+    }
+
+    if (path === "/api/resume" && method === "DELETE") {
+      const authed = await requireMutationAuth(req, res);
+      if (!authed) return;
+      await store.deleteResume(authed.user.id);
       res.writeHead(204);
       res.end();
       return;

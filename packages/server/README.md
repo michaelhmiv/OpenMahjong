@@ -1,7 +1,8 @@
 # @openmahjong/server
 
 The Open Mahjong backend (slice 2): Google sign-in, sessions,
-finished-game records, stats sums, and settings sync. It stores
+finished-game records, stats sums, settings sync, and in-progress
+game carry-over. It stores
 records only — it never runs game logic and never sees a live hand
 (brief §3/§5). Post-game review runs entirely in the client from the
 stored decision log.
@@ -49,6 +50,9 @@ Private and authentication responses send `Cache-Control: no-store`.
 | `GET /api/stats` | Raw sums `{ games, wins, placementSum, hands, riichi, dealIns, handsWon, winPoints }`; the client derives rates. |
 | `GET /api/settings` | `{ settings }` — the stored object, or `null` when never synced. |
 | `PUT /api/settings` | Stores `{ settings: object }` including namespaced learning progress, 204. |
+| `GET /api/resume` | `{ resume }` — `{ state, savedAt }` for the caller's in-progress game, or `null` when none is stored. Session required. |
+| `PUT /api/resume` | Stores `{ state, savedAt }` (the client's serialized SavedGame plus its save time) as the caller's one in-progress game, replacing any previous one; 204. Session + CSRF required. |
+| `DELETE /api/resume` | Clears the caller's in-progress game (finishing or abandoning a game); idempotent, 204. Session + CSRF required. |
 | `POST /api/import` | `{ games: [...] }` (same shape as `POST /api/games`) → inserts the ones not already present, returns `{ inserted: n }`. |
 | `DELETE /api/me` | Hard-deletes the user, their games, settings, and sessions (brief A3/B6); clears the cookie; 204. |
 
@@ -62,7 +66,8 @@ are rejected as 400 before querying a UUID column.
 
 Input limits: settings request 2 MiB (bounded learning evidence plus lesson snapshots), one game request 2 MiB, import
 request 16 MiB and at most 200 games. Each imported log is also bounded
-to 2 MiB. JSON nesting is limited to 64 levels and one million values
+to 2 MiB. A resume state is bounded to 2 MiB and at most 20,000
+decisions; envelope/shape violations return 400. JSON nesting is limited to 64 levels and one million values
 per settings object/log. Requests exceeding byte bounds return 413;
 count/shape violations return 400. Import clients must batch uploads.
 Legacy records with a null decision log remain accepted.
@@ -87,9 +92,9 @@ never supply ratings or authoritative competitive results.
 ## Storage and migrations
 
 Postgres, schema in `migrations/` (`001_users`, `002_sessions`,
-`003_games`, `004_settings`). A small runner executes unapplied
+`003_games`, `004_settings`, `005_resume`). A small runner executes unapplied
 migrations at boot, each in a transaction, recording them in
-`schema_migrations`. Games, sessions, and settings reference `users`
+`schema_migrations`. Games, sessions, settings, and in-progress games reference `users`
 `ON DELETE CASCADE`, which is what makes `DELETE /api/me` a hard
 delete.
 

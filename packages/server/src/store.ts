@@ -86,7 +86,7 @@ export interface Store {
     avatarUrl: string | null;
   }): Promise<User>;
   getUserById(id: string): Promise<User | null>;
-  /** Hard delete; games, settings, and sessions cascade (brief A3/B6). */
+  /** Hard delete; games, settings, resume, and sessions cascade (brief A3/B6). */
   deleteUser(id: string): Promise<void>;
 
   createSession(input: {
@@ -107,4 +107,18 @@ export interface Store {
   /** The stored settings JSON, or null when the user never synced. */
   getSettings(userId: string): Promise<unknown>;
   putSettings(userId: string, settings: unknown): Promise<void>;
+
+  /** The user's in-progress game, or null when none is stored. */
+  getResume(userId: string): Promise<ResumeEntry | null>;
+  putResume(userId: string, entry: ResumeEntry): Promise<void>;
+  /** Idempotent: clearing a user with nothing stored is a no-op. */
+  deleteResume(userId: string): Promise<void>;
+}
+
+/** A signed-in player's unfinished game (ruling, 2026-11-16). */
+export interface ResumeEntry {
+  /** The client's serialized SavedGame, stored verbatim. */
+  state: unknown;
+  /** When the client saved the game; the newer copy wins at sign-in. */
+  clientSavedAt: Date;
 }

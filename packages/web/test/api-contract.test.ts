@@ -6,7 +6,11 @@ import { createApp } from "../../server/src/app.js";
 import { hashToken } from "../../server/src/auth.js";
 import { loadConfig } from "../../server/src/config.js";
 import { MemoryStore } from "../../server/src/memory-store.js";
-import { deleteAccount, fetchGame, fetchGames, fetchMe, fetchServerSettings, postGame, postImport, putSettings, signOut, type GameRecord } from "../src/api.js";
+import { deleteAccount, deleteResume, fetchGame, fetchGames, fetchMe, fetchResume, fetchServerSettings, postGame, postImport, putResume, putSettings, signOut, type GameRecord } from "../src/api.js";
+import { REPLAY_ENGINE_VERSION } from "../src/replay.js";
+import type { SavedGame } from "../src/runner.js";
+import { AI_POLICY_VERSION } from "@openmahjong/ai";
+import { DEFAULT_RULESET } from "@openmahjong/engine";
 import { DEFAULT_SETTINGS } from "../src/settings.js";
 import { mergeLocalGameRecords } from "../src/records.js";
 
@@ -51,6 +55,40 @@ describe("client/server account contract", () => {
     expect(await store.getSettings(userId)).toEqual(settings);
     expect(await putSettings(DEFAULT_SETTINGS, "wrong", client)).toBe(false);
     expect(await store.getSettings(userId)).toEqual(settings);
+  });
+  it("round-trips the in-progress game through the resume envelope", async () => {
+    const state: SavedGame = {
+      v: 2,
+      engineVersion: REPLAY_ENGINE_VERSION,
+      ruleset: { id: DEFAULT_RULESET.id, version: DEFAULT_RULESET.version },
+      aiVersion: AI_POLICY_VERSION,
+      seed: "om-contract",
+      length: "south",
+      humanSeat: 0,
+      decisions: [{ type: "discard", tileId: 12 }],
+      id: "contract-game",
+    };
+    const savedAt = "2026-11-16T15:04:05.000Z";
+
+    // Empty account is a distinct answer from a failed call.
+    expect(await fetchResume(client)).toBe("empty");
+
+    expect(await putResume({ state, savedAt }, csrf, client)).toBe(true);
+    expect(await store.getResume(userId)).toEqual({
+      state,
+      clientSavedAt: new Date(savedAt),
+    });
+    expect(await fetchResume(client)).toEqual({ state, savedAt });
+
+    // A bad CSRF token changes nothing.
+    expect(await putResume({ state, savedAt }, "wrong", client)).toBe(false);
+    expect(await fetchResume(client)).toEqual({ state, savedAt });
+
+    expect(await deleteResume(csrf, client)).toBe(true);
+    expect(await fetchResume(client)).toBe("empty");
+    expect(await store.getResume(userId)).toBeNull();
+    // Clearing twice is fine.
+    expect(await deleteResume(csrf, client)).toBe(true);
   });
   it("syncs the bounded 2000-attempt learning history without silently truncating it", async () => {
     const attempts = Array.from({ length: 2000 }, (_, index) => ({
