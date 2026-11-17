@@ -163,22 +163,61 @@ describe("app shell: Play states", () => {
 });
 
 describe("app shell: Learn sections", () => {
+  const sectionByTitle = (title: string) =>
+    [...root.querySelectorAll("#screen-learn .learnsec")].find(
+      (s) => s.querySelector(".secttl")?.textContent === title,
+    )!;
+
   it("collapses and re-expands the Riichi section, persisting the choice", async () => {
     new App(root);
     await settle();
     tab("learn").click();
     await settle();
-    expect(root.querySelector("#screen-learn .sechead")?.getAttribute("aria-expanded")).toBe("true");
-    expect(root.querySelectorAll("#screen-learn .lrow").length).toBe(11);
-    expect(root.querySelector("#screen-learn .seccount")?.textContent).toBe("0 of 11 lessons done");
-    root.querySelector<HTMLButtonElement>("#screen-learn .sechead")?.click();
+    expect(sectionByTitle("Riichi").querySelector(".sechead")?.getAttribute("aria-expanded")).toBe("true");
+    expect(sectionByTitle("Riichi").querySelectorAll(".lrow").length).toBe(11);
+    expect(sectionByTitle("Riichi").querySelector(".seccount")?.textContent).toBe("0 of 11 lessons done");
+    sectionByTitle("Riichi").querySelector<HTMLButtonElement>(".sechead")?.click();
     await settle();
-    expect(root.querySelector("#screen-learn .sechead")?.getAttribute("aria-expanded")).toBe("false");
-    expect(root.querySelectorAll("#screen-learn .lrow").length).toBe(0);
+    expect(sectionByTitle("Riichi").querySelector(".sechead")?.getAttribute("aria-expanded")).toBe("false");
+    expect(sectionByTitle("Riichi").querySelectorAll(".lrow").length).toBe(0);
     expect(JSON.parse(localStorage.getItem("openmahjong.learn.collapsed.v1") ?? "[]")).toEqual(["riichi"]);
-    root.querySelector<HTMLButtonElement>("#screen-learn .sechead")?.click();
+    sectionByTitle("Riichi").querySelector<HTMLButtonElement>(".sechead")?.click();
     await settle();
-    expect(root.querySelectorAll("#screen-learn .lrow").length).toBe(11);
+    expect(sectionByTitle("Riichi").querySelectorAll(".lrow").length).toBe(11);
+  });
+
+  it("renders every variant section in the Riichi section grammar", async () => {
+    new App(root);
+    await settle();
+    tab("learn").click();
+    await settle();
+    // No native disclosure/progress elements anywhere on Learn.
+    expect(root.querySelectorAll("#screen-learn details, #screen-learn summary, #screen-learn progress").length).toBe(0);
+    for (const title of ["Hong Kong Old Style", "MCR", "Taiwanese"]) {
+      const section = sectionByTitle(title);
+      expect(section, title).toBeTruthy();
+      expect(section.querySelector(".sechead")?.getAttribute("aria-expanded")).toBe("true");
+      expect(section.querySelector(".seccount")?.textContent).toMatch(/^0 of 10 lessons done$/);
+      expect(section.querySelector(".progbar")).not.toBeNull();
+      const rows = section.querySelectorAll(".lrow");
+      expect(rows.length).toBe(10);
+      // Rows carry the Riichi row parts: number, title, chevron.
+      expect(rows[0]?.querySelector(".n")?.textContent).toBe("1");
+      expect(rows[0]?.querySelector(".ttl")?.textContent?.length).toBeGreaterThan(0);
+      expect(rows[0]?.querySelector(".chev")).not.toBeNull();
+    }
+  });
+
+  it("collapses a variant section under its own id, independently of Riichi", async () => {
+    new App(root);
+    await settle();
+    tab("learn").click();
+    await settle();
+    sectionByTitle("MCR").querySelector<HTMLButtonElement>(".sechead")?.click();
+    await settle();
+    expect(sectionByTitle("MCR").querySelectorAll(".lrow").length).toBe(0);
+    expect(JSON.parse(localStorage.getItem("openmahjong.learn.collapsed.v1") ?? "[]")).toEqual(["mcr"]);
+    expect(sectionByTitle("Riichi").querySelectorAll(".lrow").length).toBe(11);
   });
 });
 

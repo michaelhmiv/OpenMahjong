@@ -123,6 +123,7 @@ header.bar .word { font-size: 12px; letter-spacing: 0.14em; color: var(--dim); f
   width: 220px; height: 56px; font-size: 17px; border-radius: 28px;
   background: var(--gold); color: var(--on-gold);
   font-family: "Fraunces", Georgia, serif; font-weight: 600;
+  margin-top: 14px;
 }
 
 /* ------------------------------------------------------------------ */
@@ -251,6 +252,10 @@ button.hrow {
 .sidehand.left { left: 0; transform: translateY(-50%); }
 .sidehand.right { right: 0; transform: translateY(-50%); }
 .sp { position: absolute; top: 50%; transform: translateY(-50%); display: grid; grid-template-rows: repeat(6, 25px); grid-auto-flow: column; gap: 7px 3px; }
+/* A one-column side pond is 35px wide — under the §5 tap floor.
+   Like the hand tiles, the strip keeps its approved visual and
+   gains an expanded invisible hit area (35 + 5 + 5 = 45px). */
+.sp::after { content: ""; position: absolute; inset: 0 -5px; }
 .sp.left { left: 22px; }
 .sp.right { right: 22px; direction: rtl; }
 .sp .cell { width: 35px; height: 25px; position: relative; }
@@ -324,7 +329,11 @@ button.hrow {
 .handctl button {
   background: none; border: none; color: var(--dim); font-size: 12px; font-weight: 600;
   display: flex; align-items: center; gap: 5px; min-height: 32px; padding: 4px 10px;
+  position: relative;
 }
+/* The button's 32px visual is part of the table's fitted geometry;
+   its hit area expands invisibly to the §5 floor (32 + 6 + 6). */
+.handctl button::after { content: ""; position: absolute; inset: -6px 0; }
 .handctl svg { width: 15px; height: 15px; stroke: var(--dim); fill: none; stroke-width: 2; stroke-linecap: round; }
 
 /* ------------------------------------------------------------------ */
@@ -471,9 +480,9 @@ button.hrow {
 }
 .setrow .lab { font-size: 15px; font-weight: 600; }
 .setrow .note { font-size: 12px; color: var(--dim); margin-top: 2px; max-width: 230px; }
-.switch { position: relative; width: 52px; height: 32px; flex: 0 0 52px; }
+.switch { position: relative; width: 52px; height: 44px; flex: 0 0 52px; }
 .switch input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
-.switch .tr { position: absolute; inset: 0; background: var(--line); border-radius: 999px; transition: background 0.15s; }
+.switch .tr { position: absolute; inset: 6px 0; background: var(--line); border-radius: 999px; transition: background 0.15s; }
 .switch .tr::after {
   content: ""; position: absolute; top: 3px; left: 3px; width: 26px; height: 26px;
   border-radius: 50%; background: var(--ink); transition: transform 0.15s;
@@ -729,7 +738,7 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 .distbar { display: flex; gap: 2px; height: 26px; border-radius: 8px; overflow: hidden; margin-top: 10px; }
 .distbar i { display: block; height: 100%; }
 .distlab { display: flex; gap: 2px; margin-top: 6px; }
-.distlab span { font-size: 11.5px; color: var(--dim); text-align: center; }
+.distlab span { font-size: 11.5px; color: var(--dim); text-align: center; min-width: max-content; white-space: nowrap; }
 .distlab b { color: var(--ink); font-weight: 700; }
 
 /* Games: the in-progress row (rendering 07's inset treatment). */

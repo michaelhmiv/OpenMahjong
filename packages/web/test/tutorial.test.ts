@@ -284,7 +284,12 @@ describe("B10: the new-player path, no account", () => {
     click(learnBtn);
     await settle();
     expect(root.querySelector("#screen-learn")?.classList.contains("active")).toBe(true);
-    const rows = root.querySelectorAll("#screen-learn .lrow");
+    // The Riichi section rows (variant sections render their own
+    // .lrow rows in the same grammar further down the tab).
+    const riichiSection = [...root.querySelectorAll("#screen-learn .learnsec")].find(
+      (s) => s.querySelector(".secttl")?.textContent === "Riichi",
+    )!;
+    const rows = riichiSection.querySelectorAll(".lrow");
     expect(rows.length).toBe(11);
     click(rows[0]);
     await settle();

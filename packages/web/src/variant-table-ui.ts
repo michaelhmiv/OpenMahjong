@@ -92,7 +92,14 @@ export function mountVariantTable(
     status = el("p", "", "dim");
   status.setAttribute("role", "status");
   hand.setAttribute("aria-label", "Your concealed tiles");
-  main.append(summary, board, hand, controls, coach, status);
+  // Board scrolls in its own zone; the dock (hand, actions, coach,
+  // status) is pinned on screen — decisions never open below the
+  // fold and the coach never overlays the player's own pond.
+  const boardScroll = el("div", "", "variant-board-scroll"),
+    dock = el("div", "", "variant-dock");
+  boardScroll.append(board);
+  dock.append(hand, controls, coach, status);
+  main.append(summary, boardScroll, dock);
   const tile = (value: Tile) => {
     const n = options.renderTile(value);
     n.setAttribute("role", "img");
@@ -289,6 +296,12 @@ export function mountVariantTable(
       },
       largeTiles,
     });
+    // The player's own pond lives in the dock, directly above the
+    // hand (the Riichi table's arrangement): always on screen and
+    // inspectable, never scrolled away inside the board zone and
+    // never under the coach panel.
+    const mine = board.querySelector(".variant-my-pond");
+    if (mine) dock.insertBefore(mine, hand);
     const own = model.players[runner.humanSeat]!,
       pending = runner.pending;
     if (
@@ -339,8 +352,6 @@ export function mountVariantTable(
     hand.append(ownPublic);
     controls.replaceChildren();
     coach.replaceChildren();
-    coach.classList.remove("variant-floating");
-    coach.style.top = "";
     if (paused) {
       const breakdown = el("section", "", "card variant-breakdown");
       if (model.lastWin) {
@@ -473,11 +484,6 @@ export function mountVariantTable(
           ),
           why,
         );
-        coach.classList.add("variant-floating");
-        requestAnimationFrame(() => {
-          if (alive)
-            coach.style.top = `${hand.offsetTop - coach.offsetHeight - 8}px`;
-        });
       }
     } else if (pending) {
       const c = pending.context;

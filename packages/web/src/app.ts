@@ -3228,14 +3228,92 @@ export class App {
     page.append(this.guidedRowEl());
     for (const section of LEARN_SECTIONS) page.append(this.learnSectionEl(section));
     this.variantProgress = mergeVariantProgress(this.variantProgress, parseVariantProgress(this.readLearningCache(VARIANT_LEARNING_KEY)));
-    for (const release of VARIANT_RELEASES.filter(v=>v.released)) {
-      const lessons=variantLessons(release.id),done=lessons.filter(l=>this.variantProgress.completed.some(c=>c.lessonId===l.id)).length;
-      const section=h("details",{class:"variant-learn-section"});section.append(h("summary",{},`${release.name} · ${done} of ${lessons.length} lessons done`));
-      const progress=h("progress",{value:String(done),max:String(lessons.length),"aria-label":`${release.name} lesson progress`});section.append(progress);
-      const practice=h("button",{class:"pillbtn"},`Practice ${release.name}`);practice.addEventListener("click",()=>{this.variantLearningId=release.id;this.variantPracticeMode=true;this.variantReturnReview=false;this.showScreen("variant-learn");});section.append(practice);
-      for(const lesson of lessons){const row=h("button",{class:"hrow"},`${lesson.title}${this.variantProgress.completed.some(c=>c.lessonId===lesson.id)?" · Done":""}`);row.addEventListener("click",()=>{this.variantLearningId=release.id;this.variantLessonId=lesson.id;this.variantPracticeMode=false;this.variantReturnReview=false;this.showScreen("variant-learn");});section.append(row);}
-      page.append(section);
+    for (const release of VARIANT_RELEASES.filter((v) => v.released)) {
+      page.append(this.variantLearnSectionEl(release));
     }
+  }
+
+  /** A variant's Learn section, in the same grammar as the Riichi
+   *  section (design-rules §13: variant sections slot into the same
+   *  structure without restructuring the tab): sechead, state-green
+   *  progbar, and lrow lesson rows with number, title, status, and
+   *  chevron. Variant lessons carry no minutes metadata, so an
+   *  untouched row shows no status span rather than an invented
+   *  duration. Collapse state persists with the Riichi section's,
+   *  keyed by the variant id. */
+  private variantLearnSectionEl(release: (typeof VARIANT_RELEASES)[number]): HTMLElement {
+    const lessons = variantLessons(release.id);
+    const isDone = (id: string) => this.variantProgress.completed.some((c) => c.lessonId === id);
+    const doneCount = lessons.filter((l) => isDone(l.id)).length;
+    const collapsed = this.collapsedSections.has(release.id);
+    const wrap = h("div", { class: "learnsec" });
+    const head = h("button", {
+      class: "sechead",
+      "aria-expanded": String(!collapsed),
+      "data-section": release.id,
+    });
+    head.append(
+      h("span", { class: "secttl" }, release.name),
+      h("span", { class: "seccount" }, `${doneCount} of ${lessons.length} lessons done`),
+    );
+    head.insertAdjacentHTML(
+      "beforeend",
+      `<svg class="chev${collapsed ? " closed" : ""}" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
+    );
+    head.addEventListener("click", () => {
+      if (this.collapsedSections.has(release.id)) this.collapsedSections.delete(release.id);
+      else this.collapsedSections.add(release.id);
+      try {
+        localStorage.setItem(LEARN_COLLAPSED_KEY, JSON.stringify([...this.collapsedSections]));
+      } catch { /* A display preference; losing it is harmless. */ }
+      this.renderLearn();
+    });
+    wrap.append(head);
+    if (collapsed) return wrap;
+    const bar = h("div", { class: "progbar" });
+    const fill = h("i");
+    fill.style.width = `${lessons.length ? Math.round((doneCount / lessons.length) * 100) : 0}%`;
+    bar.append(fill);
+    wrap.append(bar);
+    const practice = h("button", { class: "pillbtn" }, `Practice ${release.name}`);
+    practice.addEventListener("click", () => {
+      this.variantLearningId = release.id;
+      this.variantPracticeMode = true;
+      this.variantReturnReview = false;
+      this.showScreen("variant-learn");
+    });
+    wrap.append(practice);
+    const activeId = lessons.find((l) => this.variantProgress.active[l.id] && !isDone(l.id))?.id;
+    const firstOpen = lessons.find((l) => !isDone(l.id))?.id;
+    lessons.forEach((lesson, i) => {
+      const done = isDone(lesson.id);
+      const isActive = activeId === lesson.id;
+      const isCurrent = isActive || (!activeId && firstOpen === lesson.id);
+      const row = h("button", { class: `hrow lrow${isCurrent ? " current" : ""}` });
+      row.append(h("span", { class: "n" }, String(i + 1)));
+      row.append(h("span", { class: "ttl" }, lesson.title));
+      if (done) {
+        const st = h("span", { class: "st" });
+        st.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>`;
+        st.append(document.createTextNode("Done"));
+        row.append(st);
+      } else if (isActive) {
+        row.append(h("span", { class: "st now" }, "In progress"));
+      }
+      row.insertAdjacentHTML(
+        "beforeend",
+        `<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
+      );
+      row.addEventListener("click", () => {
+        this.variantLearningId = release.id;
+        this.variantLessonId = lesson.id;
+        this.variantPracticeMode = false;
+        this.variantReturnReview = false;
+        this.showScreen("variant-learn");
+      });
+      wrap.append(row);
+    });
+    return wrap;
   }
 
   private learnSectionEl(section: (typeof LEARN_SECTIONS)[number]): HTMLElement {
