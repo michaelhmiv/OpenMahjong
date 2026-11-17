@@ -407,11 +407,13 @@ describe("TU-11 and the guided overlay", () => {
 describe("issue #35: call-option rendering", () => {
   it("TU-4's chi options carry the resulting set as faces, not a prose label", () => {
     const c = new LessonController("tu4");
-    while (c.view().stepIndex < 1 && !c.done) {
+    // Rebuilt TU-4 (PR #37): two info steps precede the chi scene —
+    // step 0 introduces calls, step 1 teaches chi, the scene is step 2.
+    while (c.view().stepIndex < 2 && !c.done) {
       c.handle({ kind: "button", id: "continue" });
     }
     const view = c.view();
-    expect(view.stepIndex).toBe(1);
+    expect(view.stepIndex).toBe(2);
     const chi = view.buttons.filter((b) => b.id.startsWith("chi:"));
     expect(chi.length).toBe(2);
     const sets: string[] = [];
@@ -444,16 +446,17 @@ describe("issue #35: call-option rendering", () => {
     click(root.querySelector('[data-module="tu4"]'));
     await settle();
     expect(root.querySelector("#screen-table")?.classList.contains("active")).toBe(true);
-    click(
-      [...root.querySelectorAll<HTMLElement>("#table .revctl .pillbtn")].find(
-        (b) => b.textContent === "Continue",
-      ),
-    );
-    // The scene auto-plays to the chi call stop; poll for the buttons.
+    // Rebuilt TU-4 (PR #37): two info steps precede the chi scene, so
+    // keep tapping Continue until the scene's chi buttons appear.
     let btns: HTMLElement[] = [];
     for (let i = 0; i < 200 && btns.length < 2; i++) {
       await settle(2);
       btns = [...root.querySelectorAll<HTMLElement>("#table .lessonpanel .revctl .pillbtn.callopt")];
+      if (btns.length >= 2) break;
+      const cont = [...root.querySelectorAll<HTMLElement>("#table .revctl .pillbtn")].find(
+        (b) => b.textContent === "Continue",
+      );
+      if (cont) click(cont);
     }
     expect(btns.length).toBe(2);
     for (const b of btns) {
