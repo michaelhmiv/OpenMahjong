@@ -10,16 +10,18 @@ import { settle, doraFromIndicator } from "./game.js";
 import { buildTileSet } from "./tiles.js";
 import {
   DEFAULT_HK_SETTINGS,
+  HONG_KONG,
   hongKongPayments,
   scoreHongKong,
   type HongKongSettings,
 } from "./variants/hong-kong.js";
 import {
+  createTaiwaneseAdapter,
   scoreTaiwanese,
   taiwanesePayments,
   type TaiwaneseSettings,
 } from "./variants/taiwanese.js";
-import { scoreMcr, mcrPayments } from "./variants/mcr.js";
+import { scoreMcr, mcrPayments, MCR } from "./variants/mcr.js";
 import type { VariantScoreInput } from "./variants/types.js";
 import { isOrphans, standardShapes } from "./variants/shapes.js";
 
@@ -777,6 +779,93 @@ export function activeTableEvents(
       records.set(op.recordId, op.event);
   return [...records].map(([id, event]) => ({ id, event }));
 }
+export interface SessionProgression {
+  readonly dealer: number;
+  readonly roundWind: number;
+  readonly honba: number;
+}
+/**
+ * Dealer, round wind and repeat counter for the next hand, derived from
+ * the recorded ledger — the scorekeeper never asks for them. Win and draw
+ * events advance the state through the variant's own progression rule
+ * (riichi: dealer win repeats with honba + 1, an exhaustive draw repeats
+ * only a ready dealer and still adds a honba, an abortive draw repeats
+ * with honba + 1; the Chinese variants use their adapters' progression).
+ * Deposits and penalties belong to the current hand and do not advance
+ * it. Pass `beforeRecordId` for the state in force at an existing entry
+ * (used when correcting it). The scorekeeper has no match length, so the
+ * round wind stops advancing at North.
+ */
+export function derivedSessionState(
+  session: ScoringSession,
+  beforeRecordId?: string,
+): SessionProgression {
+  let dealer = 0,
+    roundWind = 27,
+    honba = 0;
+  const advance = (repeat: boolean, repeats: number): void => {
+    honba = repeats;
+    if (!repeat) {
+      dealer = (dealer + 1) % 4;
+      if (dealer === 0 && roundWind < 30) roundWind++;
+    }
+  };
+  const adapter =
+    session.variant === "hong-kong"
+      ? HONG_KONG
+      : session.variant === "mcr"
+        ? MCR
+        : session.variant === "taiwanese"
+          ? createTaiwaneseAdapter()
+          : undefined;
+  for (const { id, event } of activeTableEvents(session)) {
+    if (id === beforeRecordId) break;
+    if (event.kind === "win") {
+      const first = event.wins[0]!.input.context;
+      // The recorded context is the state the hand was actually played
+      // in; trust it over the running derivation so ledgers recorded
+      // before derivation existed stay consistent.
+      dealer = first.dealer;
+      honba = first.honba;
+      const ordered = [...event.wins].sort(
+        (a, b) =>
+          ((a.input.context.winner - first.payer + 4) % 4) -
+          ((b.input.context.winner - first.payer + 4) % 4),
+      );
+      const accepted =
+        session.settings.multipleRon === "head-bump"
+          ? ordered.slice(0, 1)
+          : ordered;
+      if (adapter) {
+        const progression = adapter.progression(
+          accepted[0]!.input.context.winner,
+          dealer,
+          honba,
+        );
+        advance(progression.repeat, progression.repeats);
+      } else if (session.variant === "american") {
+        advance(false, 0);
+      } else {
+        const dealerWon = accepted.some(
+          (win) => win.input.context.winner === dealer,
+        );
+        advance(dealerWon, dealerWon ? honba + 1 : 0);
+      }
+    } else if (event.kind === "draw") {
+      if (adapter) {
+        const progression = adapter.progression(null, dealer, honba);
+        advance(progression.repeat, progression.repeats);
+      } else if (session.variant === "american") {
+        advance(false, 0);
+      } else {
+        const repeat =
+          event.reason === "abortive" || event.ready.includes(dealer);
+        advance(repeat, honba + 1);
+      }
+    }
+  }
+  return { dealer, roundWind, honba };
+}
 export interface LedgerTotals {
   readonly scores: readonly number[];
   readonly pot: number;
@@ -942,6 +1031,18 @@ export function recomputeSession(session: ScoringSession): LedgerTotals {
     });
   }
   return { scores, pot, rows };
+}
+/**
+ * Tobi: a riichi table ends the moment any player's score falls below
+ * zero. Derived from the recomputed totals, so a session recorded before
+ * this rule existed still presents as ended. Other variants' ledgers
+ * legitimately run negative balances and never bust.
+ */
+export function riichiBust(session: ScoringSession): boolean {
+  return (
+    session.variant === "riichi" &&
+    recomputeSession(session).scores.slice(0, 4).some((score) => score < 0)
+  );
 }
 export function validateScoringSession(input: unknown): ScoringSession {
   if (

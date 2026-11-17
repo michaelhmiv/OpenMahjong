@@ -12,6 +12,13 @@ import type { GameRecord, HandStats, StatsSums } from "./api.js";
 import type { SavedGame } from "./runner.js";
 import type { HistoryLine } from "./settings.js";
 
+/** Standings/settlement points: whole numbers print as integers
+ * ("+140 net points"), never with a forced decimal ("+140.0");
+ * fractional rank-settlement points keep their one decimal. */
+export function formatStandingsPoints(n: number): string {
+  return Number.isInteger(n) ? n.toLocaleString("en-US") : n.toFixed(1);
+}
+
 export const ZERO_HAND_STATS: HandStats = {
   hands: 0,
   riichi: 0,

@@ -9,6 +9,7 @@ import {
   readTables,
   syncTable,
   tableStorageKey,
+  undoTable,
   writeTable,
   type TableCopy,
 } from "../src/in-person-store.js";
@@ -90,6 +91,16 @@ describe("offline in-person workflows", () => {
     ui.destroy();
     mount(id);
     expect(root.textContent).toContain("Player 2 · 30,200 points");
+    // Dealer, round wind and honba are derived from the ledger: the
+    // non-dealer win moved the deal to Player 2 with no manual entry.
+    expect(root.textContent).toContain(
+      "East round · Player 2 deals next · Repeat counter (honba) 0",
+    );
+    expect(
+      [...root.querySelectorAll("label")].some((l) =>
+        l.textContent?.startsWith("Dealer (East)"),
+      ),
+    ).toBe(false);
     click("Correct this entry");
     fill("Entered han · Original 3", "4");
     fill("Reason for manual correction", "Table corrected han");
@@ -103,12 +114,136 @@ describe("offline in-person workflows", () => {
     click("Confirm correction");
     expect(readTables()[0]!.session.ledger).toHaveLength(2);
     expect(root.textContent).toContain("Player 2 · 33,000 points");
+    // Undo last entry removes the ENTRY — original recording and its
+    // correction — not just the correction: scores return to the
+    // pre-entry state and the ledger row is gone.
     click("Undo last entry");
-    expect(root.textContent).toContain("Player 2 · 30,200 points");
+    expect(root.textContent).toContain("Player 2 · 25,000 points");
+    expect(root.querySelectorAll(".ledger-row")).toHaveLength(0);
+    expect(readTables()[0]!.session.ledger).toHaveLength(4);
     click("Final standings and settlement");
-    expect(root.textContent).toContain("Player 4 pays Player 2 5,200 points");
     click("Finish session");
     expect(readTables()[0]!.session.finished).toBe(true);
+    // A finished session is sealed: no entry or edit controls remain.
+    expect(
+      [...root.querySelectorAll("button")].some(
+        (b) => b.textContent === "Calculate a hand",
+      ),
+    ).toBe(false);
+    expect(
+      [...root.querySelectorAll("button")].some(
+        (b) => b.textContent === "Undo last entry",
+      ),
+    ).toBe(false);
+    const sealedCopy = readTables()[0]!;
+    expect(() =>
+      appendTableEvent(sealedCopy, { kind: "deposit", seat: 0 }),
+    ).toThrow(/finished/);
+    expect(() => undoTable(sealedCopy)).toThrow(/finished/);
+    // Reopening deliberately returns it to editable.
+    click("Reopen session");
+    expect(
+      [...root.querySelectorAll("button")].some(
+        (b) => b.textContent === "Calculate a hand",
+      ),
+    ).toBe(true);
+    expect(readTables()[0]!.session.finished).toBe(false);
+  });
+  it("derives dealer and honba across consecutive riichi hands", () => {
+    mount();
+    click("New table session");
+    click("Start scorekeeper");
+    // Hand 1: the dealer (Player 1) wins on a discard — deal repeats,
+    // honba rises, and the next hand's payments include the honba.
+    click("Fast han / fu");
+    fill("Discarding player", "3");
+    fill("Han · Scoring doubles, including bonus tiles", "3");
+    fill("Fu · Hand points before the han multipliers", "40");
+    click("Calculate payments");
+    expect(root.textContent).toContain("Player 4 pays Player 1 7,700 points");
+    let confirm = control(
+      "I confirm the payment breakdown",
+    ) as HTMLInputElement;
+    confirm.checked = true;
+    confirm.dispatchEvent(new Event("change"));
+    click("Confirm and add to table");
+    expect(root.textContent).toContain(
+      "East round · Player 1 deals next · Repeat counter (honba) 1",
+    );
+    // Hand 2: a non-dealer wins — the deal passes and honba resets.
+    click("Calculate a hand");
+    click("Fast han / fu");
+    fill("Winner", "1");
+    fill("Discarding player", "2");
+    fill("Han · Scoring doubles, including bonus tiles", "3");
+    fill("Fu · Hand points before the han multipliers", "40");
+    click("Calculate payments");
+    expect(root.textContent).toContain("Player 3 pays Player 2 5,500 points");
+    confirm = control("I confirm the payment breakdown") as HTMLInputElement;
+    confirm.checked = true;
+    confirm.dispatchEvent(new Event("change"));
+    click("Confirm and add to table");
+    expect(root.textContent).toContain(
+      "East round · Player 2 deals next · Repeat counter (honba) 0",
+    );
+  });
+  it("ends a riichi session when a player falls below zero (tobi)", () => {
+    mount();
+    click("New table session");
+    click("Start scorekeeper");
+    click("Fast han / fu");
+    fill("True yakuman multiple (0 for ordinary hands)", "1");
+    click("Calculate payments");
+    expect(root.textContent).toContain("Player 2 pays Player 1 48,000 points");
+    const confirm = control(
+      "I confirm the payment breakdown",
+    ) as HTMLInputElement;
+    confirm.checked = true;
+    confirm.dispatchEvent(new Event("change"));
+    click("Confirm and add to table");
+    expect(root.textContent).toContain("Player 2 · -23,000 points");
+    expect(root.textContent).toContain("fell below zero points");
+    // No further entries or deposits are offered; the settlement is
+    // presented in place and still settles the negative player exactly.
+    const buttons = [...root.querySelectorAll("button")].map(
+      (b) => b.textContent,
+    );
+    expect(buttons).not.toContain("Calculate a hand");
+    expect(buttons).not.toContain("Record riichi deposit");
+    expect(buttons).toContain("Correct this entry");
+    expect(root.textContent).toContain("Player 2 pays Player 1 48,000 points");
+    const busted = readTables()[0]!;
+    expect(() =>
+      appendTableEvent(busted, { kind: "deposit", seat: 0 }),
+    ).toThrow(/ended/);
+    expect(() =>
+      appendTableEvent(busted, {
+        kind: "draw",
+        reason: "abortive",
+        ready: [],
+      }),
+    ).toThrow(/ended/);
+  });
+  it("prints whole-number settlement nets as integers", () => {
+    mount();
+    click("New table session");
+    const preset = control("Named preset");
+    preset.value = "hong-kong-clear@1";
+    preset.dispatchEvent(new Event("change", { bubbles: true }));
+    click("Start scorekeeper");
+    click("Fast fan entry");
+    fill("Fan · Scoring units", "5");
+    click("Calculate payments");
+    expect(root.textContent).toContain("Player 2 pays Player 1 48 points");
+    const confirm = control(
+      "I confirm the payment breakdown",
+    ) as HTMLInputElement;
+    confirm.checked = true;
+    confirm.dispatchEvent(new Event("change"));
+    click("Confirm and add to table");
+    click("Final standings and settlement");
+    expect(root.textContent).toContain("+96 net points");
+    expect(root.textContent).not.toContain(".0 net points");
   });
   it("detects entered tiles, keeps opponents/card patterns out and invalidates edited results", () => {
     mount();

@@ -3,6 +3,7 @@ import {
   DEFAULT_TAIWANESE_SETTINGS,
   calculateDraft,
   declaredGroup,
+  derivedSessionState,
   variantAdapter,
   tileTypeName,
   type CalculationDraft,
@@ -83,13 +84,19 @@ export function mountVariantCalculator(
     existing = options.existing;
   const initial =
       existing?.input.variant === variant ? existing.input : undefined,
+    // Dealer, round wind and dealer repeats are derived from the
+    // session ledger, never asked. A correction keeps the context its
+    // entry was recorded in.
+    derived = derivedSessionState(options.session),
     ctx = initial?.context ?? {
       winner: 0,
       payer: 1,
-      dealer: 0,
+      dealer: derived.dealer,
       winType: "ron",
-      honba: 0,
-    };
+      honba: derived.honba,
+    },
+    roundWind =
+      initial?.path === "tiles" ? initial.hand.roundWind : derived.roundWind;
   let path: "tiles" | "fast" = initial?.path ?? "tiles";
   const status = el("p", "", "tool-status");
   status.setAttribute("role", "status");
@@ -98,17 +105,12 @@ export function mountVariantCalculator(
     names = options.session.names.map((n, i) => [String(i), n] as const),
     winner = select(names, String(ctx.winner)),
     payer = select(names, String(ctx.payer)),
-    dealer = select(names, String(ctx.dealer)),
     win = select(
       [
         ["ron", "Win on a discard"],
         ["tsumo", "Self-draw"],
       ],
       ctx.winType,
-    ),
-    round = select(
-      ["East", "South", "West", "North"].map((n, i) => [String(27 + i), n]),
-      String(initial?.path === "tiles" ? initial.hand.roundWind : 27),
     );
   form.append(
     el(
@@ -122,15 +124,15 @@ export function mountVariantCalculator(
     ),
   );
   const context = el("div", "", "tool-grid");
-  const repeats = input(ctx.honba);
-  if (variant === "taiwanese")
-    context.append(field("Dealer repeats (0 for first deal)", repeats));
   context.append(
     field("Winner", winner),
     field("Discarding player", payer),
-    field("Dealer (East)", dealer),
     field("Win type", win),
-    field("Round wind", round),
+    el(
+      "p",
+      `${["East", "South", "West", "North"][roundWind - 27]} round · Dealer (East): ${options.session.names[ctx.dealer]}${variant === "taiwanese" ? ` · Dealer repeats: ${ctx.honba}` : ""}`,
+      "dim",
+    ),
   );
   form.append(context);
   const house =
@@ -445,9 +447,9 @@ export function mountVariantCalculator(
     const context: CalculationContext = {
       winner: Number(winner.value),
       payer: Number(payer.value),
-      dealer: Number(dealer.value),
+      dealer: ctx.dealer,
       winType: win.value as "ron" | "tsumo",
-      honba: variant === "taiwanese" ? Number(repeats.value) : 0,
+      honba: variant === "taiwanese" ? ctx.honba : 0,
     };
     const settings: HongKongSettings = {
       minimum: Number(min.value),
@@ -493,7 +495,7 @@ export function mountVariantCalculator(
         winningTile: Number(winning.value),
         selfDraw: context.winType === "tsumo",
         seatWind: 27 + ((context.winner - context.dealer + 4) % 4),
-        roundWind: Number(round.value),
+        roundWind: roundWind,
         flowers: flowers.map((t) => t.type),
         replacement: flags["replacement"]!.checked,
         robbingQuad: flags["robbingQuad"]!.checked,

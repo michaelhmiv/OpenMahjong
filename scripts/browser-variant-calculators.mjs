@@ -128,10 +128,9 @@ try {
           )
           .fill(variant === "mcr" ? "8" : "3");
         if (variant === "taiwanese") {
+          // Dealer repeats are derived from the ledger (the tile hand
+          // above was a dealer win, so the counter already reads 1).
           await page.getByLabel("Winner", { exact: true }).selectOption("1");
-          await page
-            .getByLabel("Dealer repeats (0 for first deal)", { exact: true })
-            .fill("2");
           await page
             .getByLabel("Win type", { exact: true })
             .selectOption("tsumo");
@@ -204,9 +203,12 @@ try {
       await page.reload();
       await click("In-person calculator and scorekeeper");
       await page.locator(".tool-session").first().click();
+      // Undo last entry removed the corrected entry entirely: the
+      // American ledger is empty again, the variant ledgers keep only
+      // their tile-entered hand.
       assert.equal(
         await page.locator(".ledger-row").count(),
-        variant === "american" ? 1 : 2,
+        variant === "american" ? 0 : 1,
       );
       await snap("offline");
       assert.deepEqual(errors, []);

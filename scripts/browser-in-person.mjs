@@ -149,7 +149,9 @@ for (const viewport of [
   });
   assert.deepEqual(errors, []);
   assert.deepEqual(axe.violations, []);
-  assert.equal(await page.locator(".ledger-row").count(), 2);
+  // Undo last entry removed the corrected fast entry entirely; only the
+  // tile-entered hand remains in the ledger.
+  assert.equal(await page.locator(".ledger-row").count(), 1);
   report.push({
     viewport,
     errors,

@@ -4,8 +4,10 @@ import {
   buildTileSet,
   calculateDraft,
   computeRiichiPoints,
+  derivedSessionState,
   doraFromIndicator,
   recomputeSession,
+  riichiBust,
   sessionSettlement,
   tileTypeName,
   validateScoringSession,
@@ -17,6 +19,7 @@ import {
   type TableEvent,
   type Tile,
 } from "@openmahjong/engine";
+import { formatStandingsPoints } from "./records.js";
 import { mountVariantCalculator } from "./variant-calculator-ui.js";
 import {
   appendTableEvent,
@@ -209,7 +212,7 @@ export function mountInPerson(
     for (const copy of readTables(options.accountId).reverse())
       main.append(
         button(
-          `${copy.session.variant === "american" ? "American payment helper" : copy.session.variant === "hong-kong" ? "Hong Kong Old Style" : copy.session.variant === "mcr" ? "MCR" : copy.session.variant === "taiwanese" ? "Taiwanese" : "Riichi"} · ${copy.session.names.join(", ")} · ${copy.session.finished ? "Finished" : "In progress"}`,
+          `${copy.session.variant === "american" ? "American payment helper" : copy.session.variant === "hong-kong" ? "Hong Kong Old Style" : copy.session.variant === "mcr" ? "MCR" : copy.session.variant === "taiwanese" ? "Taiwanese" : "Riichi"} · ${copy.session.names.join(", ")} · ${copy.session.finished || riichiBust(copy.session) ? "Finished" : "In progress"}`,
           () => {
             current = copy;
             showSession();
@@ -354,6 +357,8 @@ export function mountInPerson(
               : "Riichi scorekeeper",
     );
     const totals = recomputeSession(current.session);
+    const busted = riichiBust(current.session);
+    const sealed = current.session.finished;
     const scores = el("section", "", "card tool-scores");
     totals.scores.forEach((score, i) =>
       scores.append(
@@ -368,22 +373,60 @@ export function mountInPerson(
           "dim",
         ),
       );
+    if (!sealed && !busted) {
+      const state = derivedSessionState(current.session);
+      scores.append(
+        el(
+          "p",
+          current.session.variant === "american"
+            ? `${name(state.dealer)} deals next`
+            : `${SEATS[state.roundWind - 27]} round · ${name(state.dealer)} deals next${current.session.variant === "riichi" ? ` · Repeat counter (honba) ${state.honba}` : current.session.variant === "taiwanese" ? ` · Dealer repeats ${state.honba}` : ""}`,
+          "dim",
+        ),
+      );
+    }
     main.append(scores);
-    main.append(
-      button("Calculate a hand", () => showCalculator()),
-      button("Hand without a winner", () => eventForm("draw")),
-      button("Penalty", () => eventForm("penalty")),
-    );
-    if (current.session.variant === "riichi")
+    if (busted)
+      main.append(
+        el(
+          "p",
+          "A player fell below zero points, so this Riichi game has ended. No further entries or deposits can be recorded. Corrections and undo remain available, and the final standings and settlement are below.",
+          "card",
+        ),
+      );
+    if (sealed)
+      main.append(
+        el(
+          "p",
+          "This session is finished and read-only. Reopen it to make changes.",
+          "dim",
+        ),
+      );
+    if (!sealed && !busted)
+      main.append(
+        button("Calculate a hand", () => showCalculator()),
+        button("Hand without a winner", () => eventForm("draw")),
+        button("Penalty", () => eventForm("penalty")),
+      );
+    if (!sealed && !busted && current.session.variant === "riichi")
       main.append(button("Record riichi deposit", () => eventForm("deposit")));
-    const undo = button("Undo last entry", () =>
-      safe(() => {
-        save(undoTable(current!));
-        showSession();
-      }),
-    );
-    undo.disabled = !nextUndoTarget(current.session);
-    main.append(undo, button("Final standings and settlement", finish));
+    if (!sealed) {
+      const undo = button("Undo last entry", () =>
+        safe(() => {
+          save(undoTable(current!));
+          showSession();
+        }),
+      );
+      undo.disabled = !nextUndoTarget(current.session);
+      main.append(undo);
+    }
+    main.append(button("Final standings and settlement", finish));
+    if (sealed)
+      main.append(button("Reopen session", () => safe(reopenSession)));
+    if (busted) {
+      main.append(el("h2", "Final standings and settlement"));
+      renderSettlement(main);
+    }
     if (options.accountId)
       main.append(
         button("Sync privately to account", () => {
@@ -457,12 +500,15 @@ export function mountInPerson(
             .join(" · "),
           "dim",
         ),
-        button("Correct this entry", () =>
-          row.event.kind === "win"
-            ? showCalculator(row.id, row.event.wins)
-            : eventForm(row.event.kind, row.id, row.event),
-        ),
       );
+      if (!current.session.finished)
+        card.append(
+          button("Correct this entry", () =>
+            row.event.kind === "win"
+              ? showCalculator(row.id, row.event.wins)
+              : eventForm(row.event.kind, row.id, row.event),
+          ),
+        );
       main.append(card);
     }
   }
@@ -516,7 +562,7 @@ export function mountInPerson(
         ],
         "custom",
       ),
-      penaltyDealer = select(seats, "0");
+      penaltyDealer = derivedSessionState(current.session, recordId).dealer;
     const wallBet = check("Bettor selected the wall and no player won");
     const wallValue = input(25);
     if (kind === "draw") {
@@ -537,10 +583,7 @@ export function mountInPerson(
     if (kind === "penalty")
       form.append(
         ...(current.session.variant === "riichi"
-          ? [
-              field("Penalty preset", penaltyType),
-              field("Dealer (East)", penaltyDealer),
-            ]
+          ? [field("Penalty preset", penaltyType)]
           : []),
         field("Paying player", who),
         field("Points per recipient (agreed payments)", amount),
@@ -590,7 +633,7 @@ export function mountInPerson(
           };
         if (kind === "penalty" && penaltyType.value === "chombo") {
           const offender = Number(who.value),
-            east = Number(penaltyDealer.value),
+            east = penaltyDealer,
             p = computeRiichiPoints(
               5,
               0,
@@ -628,19 +671,31 @@ export function mountInPerson(
     form.addEventListener("input", () => preview.replaceChildren());
     main.append(form, preview);
   }
-  function finish(): void {
+  function reopenSession(): void {
     if (!current) return;
-    start("Settlement");
+    save({
+      ...current,
+      session: {
+        ...current.session,
+        finished: false,
+        revision: current.session.revision + 1,
+        updatedAt: new Date().toISOString(),
+      },
+    });
+    showSession();
+  }
+  function renderSettlement(host: HTMLElement): void {
+    if (!current) return;
     const result = sessionSettlement(current.session);
     for (const entry of result.standings)
-      main.append(
+      host.append(
         el(
           "p",
-          `${entry.rank}. ${name(entry.seat)} · ${entry.score.toLocaleString("en-US")} points · ${entry.points > 0 ? "+" : ""}${entry.points.toFixed(1)}${current.session.settings.settlement === "openmahjong" ? " rank settlement" : " net points"}`,
+          `${entry.rank}. ${name(entry.seat)} · ${entry.score.toLocaleString("en-US")} points · ${entry.points > 0 ? "+" : ""}${formatStandingsPoints(entry.points)}${current.session.settings.settlement === "openmahjong" ? " rank settlement" : " net points"}`,
           "card",
         ),
       );
-    main.append(
+    host.append(
       el("h2", "Point transfers"),
       payments(result.transfers),
       el(
@@ -650,21 +705,41 @@ export function mountInPerson(
           : "These transfers settle each player’s net point balance.",
         "dim",
       ),
-      button("Finish session", () =>
-        safe(() => {
-          save({
-            ...current!,
-            session: {
-              ...current!.session,
-              finished: true,
-              revision: current!.session.revision + 1,
-              updatedAt: new Date().toISOString(),
-            },
-          });
-          showSession();
-        }),
-      ),
     );
+  }
+  function finish(): void {
+    if (!current) return;
+    start("Settlement");
+    renderSettlement(main);
+    if (riichiBust(current.session))
+      main.append(
+        el(
+          "p",
+          "This Riichi game ended when a player fell below zero points.",
+          "dim",
+        ),
+      );
+    else if (current.session.finished)
+      main.append(
+        button("Reopen session", () => safe(reopenSession)),
+      );
+    else
+      main.append(
+        button("Finish session", () =>
+          safe(() => {
+            save({
+              ...current!,
+              session: {
+                ...current!.session,
+                finished: true,
+                revision: current!.session.revision + 1,
+                updatedAt: new Date().toISOString(),
+              },
+            });
+            showSession();
+          }),
+        ),
+      );
   }
   function showCalculator(
     recordId?: string,
@@ -690,18 +765,24 @@ export function mountInPerson(
       first = existing[0];
     let path = first?.input.path ?? "tiles";
     if (variant === "american") path = "fast";
+    // Dealer, round wind and honba are derived from the ledger, never
+    // asked. A correction keeps the context its entry was recorded in.
+    const derived = derivedSessionState(current.session, recordId);
     const context = first?.input.context ?? {
       winner: 0,
-      dealer: 0,
+      dealer: derived.dealer,
       payer: 1,
       winType: "ron",
-      honba: 0,
+      honba: derived.honba,
     };
+    const roundWind =
+      first?.input.variant === "riichi" && first.input.path === "tiles"
+        ? first.input.hand.roundWind
+        : derived.roundWind;
     const form = el("form"),
       ctxBox = el("div", "", "tool-grid"),
       choices = current.session.names.map((n, i) => [String(i), n] as const);
     const winner = select(choices, String(context.winner)),
-      dealer = select(choices, String(context.dealer)),
       payer = select(choices, String(context.payer)),
       win = select(
         [
@@ -712,25 +793,19 @@ export function mountInPerson(
           ],
         ],
         context.winType,
-      ),
-      honba = input(context.honba);
-    const round = select(
-      SEATS.map((n, i) => [String(27 + i), n]),
-      String(
-        first?.input.variant === "riichi" && first.input.path === "tiles"
-          ? first.input.hand.roundWind
-          : 27,
-      ),
-    );
-    if (variant === "riichi") ctxBox.append(field("Round wind", round));
+      );
     ctxBox.append(
       field("Winner", winner),
-      field("Dealer (East)", dealer),
       field("Win type", win),
       field("Discarding player", payer),
+      el(
+        "p",
+        variant === "american"
+          ? `Dealer (East): ${name(context.dealer)}`
+          : `${SEATS[roundWind - 27]} round · Dealer (East): ${name(context.dealer)} · Repeat counter (honba): ${context.honba}`,
+        "dim",
+      ),
     );
-    if (variant === "riichi")
-      ctxBox.append(field("Repeat counter (honba)", honba));
     form.append(ctxBox);
     const paths = el("div", "", "tool-grid"),
       tilePath = button("Enter actual tiles", () => switchPath("tiles")),
@@ -1042,10 +1117,10 @@ export function mountInPerson(
     function makeDraft(): CalculationDraft {
       const ctx: CalculationContext = {
         winner: Number(winner.value),
-        dealer: Number(dealer.value),
+        dealer: context.dealer,
         payer: Number(payer.value),
         winType: win.value as "ron" | "tsumo",
-        honba: Number(honba.value),
+        honba: context.honba,
       };
       let entered: CalculatorInput;
       if (variant === "american")
@@ -1109,7 +1184,7 @@ export function mountInPerson(
             winningTileType: Number(winning.value),
             winType: ctx.winType,
             seatWind: 27 + ((ctx.winner - ctx.dealer + 4) % 4),
-            roundWind: Number(round.value),
+            roundWind: roundWind,
             riichi: flags["riichi"]!.control.checked,
             ...declared,
             dora,

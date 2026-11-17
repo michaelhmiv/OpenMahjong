@@ -50,6 +50,7 @@ import {
   ZERO_HAND_STATS,
   buildGameRecord,
   formatRecordStrip,
+  formatStandingsPoints,
   formatStatsView,
   historyDateLabel,
   mergeLocalGameRecords,
@@ -220,6 +221,8 @@ export function tileLabel(tile: Tile): string {
 function fmt(n: number): string {
   return n.toLocaleString("en-US");
 }
+
+
 
 // ---------------------------------------------------------------------------
 // DOM helpers
@@ -3736,7 +3739,7 @@ export class App {
     for (const entry of sorted) {
       const p = this.model.players[entry.seat]!;
       const row = h("div", { class: "row" });
-      const pts = `${entry.points > 0 ? "+" : ""}${entry.points.toFixed(1)}`;
+      const pts = `${entry.points > 0 ? "+" : ""}${formatStandingsPoints(entry.points)}`;
       row.append(
         h("span", { class: "rank" }, `${entry.rank}`),
         h("span", { class: "who" }, entry.seat === this.humanSeat ? "You" : WIND_NAMES[p.seatWind]!),
