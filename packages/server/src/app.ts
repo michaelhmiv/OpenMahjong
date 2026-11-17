@@ -12,6 +12,8 @@
  */
 
 import type { IncomingMessage, ServerResponse } from "node:http";
+import { createHash } from "node:crypto";
+import { validateScoringSession } from "@openmahjong/engine";
 import {
   SESSION_COOKIE,
   SESSION_TTL_MS,
@@ -32,6 +34,7 @@ import type {
   Session,
   Store,
   User,
+  GameVariant,
 } from "./store.js";
 import { ValidationError, validateGame, validateGameList, validateResume, validateSettings, validatedGameId } from "./validate.js";
 
@@ -61,6 +64,7 @@ interface Authed {
 function gameJson(game: GameRecord): Record<string, unknown> {
   return {
     id: game.id,
+    ...(game.variant ? { variant: game.variant } : {}),
     length: game.length,
     placement: game.placement,
     score: game.score,
@@ -73,6 +77,7 @@ function gameJson(game: GameRecord): Record<string, unknown> {
 function summaryJson(game: GameSummary): Record<string, unknown> {
   return {
     id: game.id,
+    ...(game.variant ? { variant: game.variant } : {}),
     finishedAt: game.finishedAt.toISOString(),
     length: game.length,
     placement: game.placement,
@@ -315,6 +320,35 @@ export function createApp(deps: AppDeps): (
       return;
     }
 
+    if (path === "/api/table-sessions" && method === "GET") {
+      const authed = await requireAuth(req, res); if (!authed) return;
+      const entries = await store.listTables(authed.user.id);
+      sendJson(res, 200, { sessions: entries.map(entry => {
+        const state = validateScoringSession(entry.state);
+        return { id: entry.id, revision: entry.revision, variant: state.variant, names: state.names, finished: state.finished, updatedAt: state.updatedAt };
+      }) }); return;
+    }
+    if (path.startsWith("/api/table-sessions/")) {
+      const id = path.slice("/api/table-sessions/".length);
+      if (!/^[A-Za-z0-9_-]{1,128}$/.test(id)) throw new ValidationError("invalid session id");
+      if (method === "GET") {
+        const authed = await requireAuth(req, res); if (!authed) return;
+        const entry = await store.getTable(authed.user.id, id);
+        if (!entry) sendError(res, 404, "session not found"); else sendJson(res, 200, { session: entry }); return;
+      }
+      if (method === "PUT") {
+        const authed = await requireMutationAuth(req, res); if (!authed) return;
+        const body = await readJsonBody(req, 576000) as Record<string, unknown>;
+        if (!body || !Number.isSafeInteger(body["expectedRevision"]) || Number(body["expectedRevision"]) < 0 || Number(body["expectedRevision"]) > 1000000 || typeof body["mutationId"] !== "string" || !/^[A-Za-z0-9_-]{1,128}$/.test(body["mutationId"])) throw new ValidationError("invalid session write");
+        let state;
+        try { state = validateScoringSession(body["session"]); } catch { throw new ValidationError("invalid scoring ledger"); }
+        if (state.id !== id) throw new ValidationError("session id mismatch");
+        const digest = createHash("sha256").update(JSON.stringify(state)).digest("hex");
+        const result = await store.writeTable(authed.user.id, id, Number(body["expectedRevision"]), body["mutationId"], digest, state);
+        sendJson(res, result.status === "saved" || result.status === "duplicate" ? 200 : 409, result); return;
+      }
+    }
+
     if (path === "/api/games" && method === "GET") {
       const authed = await requireAuth(req, res);
       if (!authed) return;
@@ -342,7 +376,9 @@ export function createApp(deps: AppDeps): (
     if (path === "/api/stats" && method === "GET") {
       const authed = await requireAuth(req, res);
       if (!authed) return;
-      sendJson(res, 200, await store.getStats(authed.user.id));
+      const variant = url.searchParams.get("variant") ?? "riichi";
+      if (!["riichi","hong-kong","mcr","taiwanese"].includes(variant)) throw new ValidationError("unsupported stats variant");
+      sendJson(res, 200, await store.getStats(authed.user.id, variant as GameVariant));
       return;
     }
 
