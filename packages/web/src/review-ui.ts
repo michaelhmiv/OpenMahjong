@@ -1,7 +1,7 @@
 /** Player-perspective review UI. The caller reconstructs the review once;
  * this view requests analysis only for the selected decision and caches it. */
-import type { Tile } from "@openmahjong/engine";
-import { compareDiscards, type DiscardAdvice, type TurnAdvice } from "@openmahjong/coach";
+import { tileTypeName, type Tile } from "@openmahjong/engine";
+import { adviseVariantDiscard, compareDiscards, type DiscardAdvice, type TurnAdvice } from "@openmahjong/coach";
 import { analyzeReviewDecision, analyzeReviewMoments, ReviewNavigator, type DecisionReview, type ReviewDecision, type ReviewMomentAnalysis } from "./review.js";
 import { momentTexts } from "./moment-text.js";
 import type { SkillId } from "./education/curriculum.js";
@@ -12,6 +12,8 @@ export interface ReviewUIOptions {
   readonly onBack: () => void;
   readonly onPractice: (position: ReviewDecision, skills: readonly SkillId[]) => void;
   readonly onInspectTable?: (position: ReviewDecision) => void;
+  /** Board review supplies the surrounding navigation. */
+  readonly embedded?: boolean;
 }
 export interface ReviewUIController {
   readonly currentPosition: ReviewDecision | null;
@@ -27,6 +29,7 @@ function node<K extends keyof HTMLElementTagNameMap>(tag: K, className = "", tex
 }
 function shortName(tile: Tile): string {
   const type = tile.type;
+  if (type >= 34) return tileTypeName(type);
   return `${tile.red ? "Red " : ""}${type < 9 ? `${type + 1}m` : type < 18 ? `${type - 8}p` : type < 27 ? `${type - 17}s` : [...WINDS, "White", "Green", "Red"][type - 27]}`;
 }
 function roundLabel(position: ReviewDecision): string {
@@ -46,6 +49,7 @@ export function mountReview(container: HTMLElement, options: ReviewUIOptions): R
   const adviceCache = new Map<number, TurnAdvice | null>();
   const momentCache = new Map<number, ReviewMomentAnalysis>();
   const alternatives = new Map<number, number>();
+  const variantCache = new Map<number, ReturnType<typeof adviseVariantDiscard>>();
   let destroyed = false;
   let showHelp = false;
 
@@ -104,7 +108,7 @@ export function mountReview(container: HTMLElement, options: ReviewUIOptions): R
     detail.append(node("summary", "", "Table at this decision"));
     const indicators = node("div", "review-indicators");
     indicators.append(node("p", "card-label", "DORA INDICATORS"), tileList(position.view.doraIndicators, "review-tiles"));
-    detail.append(indicators);
+    if (!position.variant) detail.append(indicators);
     for (const player of position.view.players) {
       const section = node("section", "review-player");
       const name = `${WINDS[player.seatWind - 27] ?? `Seat ${player.seat + 1}`}${player.seat === position.view.seat ? " · You" : ""}`;
@@ -230,7 +234,7 @@ export function mountReview(container: HTMLElement, options: ReviewUIOptions): R
     const help = button("?", "help", () => { showHelp = !showHelp; render(); }, "help"); help.setAttribute("aria-label", "Review help");
     help.setAttribute("aria-expanded", String(showHelp));
     header.append(back, node("div", "wordmark", "OPEN MAHJONG"), help);
-    const content = node("main", "learning-content content");
+    const content = options.embedded ? node("section", "learning-content content") : node("main", "learning-content content");
     content.tabIndex = 0;
     content.setAttribute("aria-label", "Game review");
     if (showHelp) content.append(node("p", "card", "Review uses only what you could see at each decision. Compare choices before considering the eventual result. Unseen-copy counts describe unknown locations; strategic rankings are estimates."));
@@ -238,32 +242,41 @@ export function mountReview(container: HTMLElement, options: ReviewUIOptions): R
       content.append(node("h1", "", "Review a decision"), node("p", "", "No player decisions have been recorded in this replay."));
     } else {
       content.append(node("div", "eyebrow", `${roundLabel(position)} · YOUR ${position.kind === "turn" ? "TURN" : "CALL DECISION"}`));
+      if(options.embedded)content.append(node("p","review-position-count",`${navigator.positionIndex+1} / ${options.review.positions.length} decisions`));
       const title = node("div", "title-row"); title.append(node("h1", "", "Review a decision"));
       const navigation = node("div", "decision-nav"); navigation.setAttribute("aria-label", "Decision navigation");
       const previous = button("‹", "", () => { navigator.previous(); render(); }, "previous"); previous.setAttribute("aria-label", "Previous decision"); previous.disabled = navigator.positionIndex === 0;
       const next = button("›", "", () => { navigator.next(); render(); }, "next"); next.setAttribute("aria-label", "Next decision"); next.disabled = navigator.positionIndex + 1 === options.review.positions.length;
-      navigation.append(previous, node("span", "", `${navigator.positionIndex + 1} / ${options.review.positions.length}`), next); title.append(navigation); content.append(title);
+      navigation.append(previous, node("span", "", `${navigator.positionIndex + 1} / ${options.review.positions.length}`), next); if (!options.embedded) title.append(navigation); content.append(title);
       const handLabel = node("label", "review-hand-label", "Hand"); const hands = node("select", "review-hand-select"); hands.setAttribute("aria-label", "Hand"); hands.dataset["reviewControl"] = "hand";
       const seenHands = new Set<number>();
       for (const entry of options.review.positions) if (!seenHands.has(entry.handIndex)) {
         seenHands.add(entry.handIndex); const option = node("option", "", `${roundLabel(entry)} · ${entry.view.honba} honba · hand ${entry.handIndex + 1}`);
         option.value = String(entry.handIndex); option.selected = entry.handIndex === position.handIndex; hands.append(option);
       }
-      hands.addEventListener("change", () => { navigator.goToHand(Number(hands.value)); render(); }); handLabel.append(hands); content.append(handLabel);
+      hands.addEventListener("change", () => { navigator.goToHand(Number(hands.value)); render(); }); handLabel.append(hands); if (!options.embedded) content.append(handLabel);
       content.append(node("div", "perspective", "Player perspective ✓"));
       if (position.engineVersion === 1) content.append(node("p", "legacy-notice card", "Historical replay · engine version 1. Current strategic analysis is unavailable; this replay preserves its historical rules behavior."));
       const handCard = node("div", "card hand-card"); handCard.append(node("div", "card-label", "YOUR HAND AT THIS DECISION"), tileList(position.view.hand));
       const threats = position.view.players.filter((player) => player.seat !== position.view.seat && player.riichi).length;
       handCard.append(node("div", "hand-caption", `${position.view.wallRemaining} in the live wall · ${threats ? `${threats} riichi threat${threats === 1 ? "" : "s"}` : "no riichi threats"}.`)); content.append(handCard);
+      if (position.variant) handCard.querySelector(".hand-caption")!.textContent = `${position.view.wallRemaining} tiles in the live wall.`;
       const advice = getAdvice(position);
       const moments = getMoments(position);
-      if (advice) content.append(analysisPanel(position, advice));
+      if (position.variant && position.kind === "turn" && position.action.type === "discard") {
+        if (!variantCache.has(position.decisionIndex)) variantCache.set(position.decisionIndex, adviseVariantDiscard(position.view));
+        const read = variantCache.get(position.decisionIndex)!;
+        const played = position.view.hand.find(t => position.action.type === "discard" && t.id === position.action.tileId)!;
+        const panel = node("section", "card variant-comparison");
+        panel.append(node("h2", "", "Played move and coach preference"), node("p", "", `You discarded ${shortName(played)}.`), node("p", "", read.explanation), node("p", "dim", read.limitations));
+        content.append(panel);
+      } else if (advice) content.append(analysisPanel(position, advice));
       else {
         const facts = node("div", "card review-action-facts"); facts.append(node("h2", "", position.kind === "call" ? "Call decision" : "Recorded action"), node("p", "", `Your action: ${position.action.type}.`));
         if (position.kind === "call") facts.append(node("p", "", `${position.engineVersion === 1 ? "Recorded historical call flags" : "Legal opportunities in this window"}: ${[position.context.canRon ? "ron" : "", position.context.canPon ? "pon" : "", position.context.canKan ? "open kan" : "", position.context.chiOptions.length ? "chi" : "", "pass"].filter(Boolean).join(", ")}.`));
         else facts.append(node("p", "", `Winning by tsumo was ${position.context.canTsumo ? "legal" : "unavailable"} at this turn.`));
         if (position.engineVersion !== 1 && !moments.available) {
-          facts.append(node("p", "dim", moments.reason === "not-recorded"
+          facts.append(node("p", "dim", position.variant ? "This action is ungraded. The recorded legal opportunities are shown; discard comparisons use a public-information heuristic." : moments.reason === "not-recorded"
             ? "This game was recorded before moment capture, so this window is not graded. Games recorded now grade call, kan, riichi, and win choices as well as discards."
             : "This view records legality. It does not grade calling, kan, or winning-action strategy."));
         }
@@ -273,18 +286,17 @@ export function mountReview(container: HTMLElement, options: ReviewUIOptions): R
       content.append(publicTable(position));
       const practiceLabel = position.kind === "call" ? "Practice hand building" : advice ? "Practice tile efficiency" : "Practice this concept";
       const practice = button(practiceLabel, "primary", () => options.onPractice(position, skillsFor(position)), "practice"); practice.disabled = position.engineVersion === 1; content.append(practice);
-      content.append(node("p", "source", position.engineVersion === 1 ? "Historical engine 1 · display only" : `OpenMahjong riichi · ${advice?.analysis.analysisVersion ?? "exact legal context"}${options.review.complete ? "" : " · recorded prefix"}`));
+      content.append(node("p", "source", position.engineVersion === 1 ? "Historical engine 1 · display only" : position.variant ? `${position.variant} · Heuristic advice` : `OpenMahjong riichi · ${advice?.analysis.analysisVersion ?? "exact legal context"}${options.review.complete ? "" : " · recorded prefix"}`));
     }
-    const nav = node("nav", "learning-nav"); nav.setAttribute("aria-label", "Learning navigation");
-    const practiceNav = button("Practice", "", () => { if (position) options.onPractice(position, skillsFor(position)); }, "practice-nav"); practiceNav.disabled = !position || position.engineVersion === 1;
-    const reviewNav = button("Review", "", () => {}, "review-nav"); reviewNav.setAttribute("aria-current", "page"); nav.append(practiceNav, reviewNav);
-    shell.append(header, content, nav); container.replaceChildren(shell);
+    if (options.embedded) shell.append(content);
+    else shell.append(header, content);
+    container.replaceChildren(shell);
     if (focusKey) container.querySelector<HTMLElement>(`[data-review-control="${focusKey}"]`)?.focus();
   }
   render();
   return {
     get currentPosition() { return navigator.current; },
     goToDecision(index) { if (!destroyed) { navigator.goTo(index); render(); } },
-    destroy() { destroyed = true; adviceCache.clear(); momentCache.clear(); alternatives.clear(); container.replaceChildren(); },
+    destroy() { destroyed = true; adviceCache.clear(); momentCache.clear(); alternatives.clear(); variantCache.clear(); container.replaceChildren(); },
   };
 }

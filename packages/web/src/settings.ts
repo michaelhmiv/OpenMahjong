@@ -150,7 +150,7 @@ export function loadRecords(): GameRecord[] {
   if (!Array.isArray(rows)) return [];
   return rows.filter((row): row is GameRecord => {
     if (!row || typeof row !== "object" || typeof row.id !== "string" || row.id.length > 128 || !validDate(row.finishedAt)) return false;
-    if (row.length !== "east" && row.length !== "south") return false;
+    if (row.length !== "east" && row.length !== "south" && row.length !== "full") return false;
     if (!Number.isInteger(row.placement) || row.placement < 1 || row.placement > 4 || !Number.isSafeInteger(row.score)) return false;
     const stats = row.stats;
     return !!stats && typeof stats === "object" && ["hands", "riichi", "dealIns", "handsWon", "winPoints"]

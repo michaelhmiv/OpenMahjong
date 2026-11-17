@@ -19,6 +19,8 @@ import {
   type Tile,
   type TileType,
   type TurnAction,
+  type VariantId,
+  type VariantLength,
 } from "@openmahjong/engine";
 import {
   countsOfTiles,
@@ -56,9 +58,19 @@ import {
   sumRecords,
 } from "./records.js";
 import { GameRunner, type SavedGame } from "./runner.js";
-import { buildDecisionReview, type DecisionReview, type MomentGrade, type ReviewDecision } from "./review.js";
+import { type DecisionReview, type MomentGrade, type ReviewDecision } from "./review.js";
 import { momentTexts, type MomentText } from "./moment-text.js";
-import { mountReview, type ReviewUIController } from "./review-ui.js";
+import { type ReviewUIController } from "./review-ui.js";
+import { buildBoardReview, type BoardTimeline } from "./board-review.js";
+import { mountBoardReview, mountGameDetail } from "./board-review-ui.js";
+import { mountInPerson } from "./in-person-ui.js";
+import { readTables, deleteTableAccountCache, rememberTableAccount, offlineTableAccount } from "./in-person-store.js";
+import { VariantRunner } from "./variant-runner.js";
+import { variantHomeHand } from "./variant-motifs.js";
+import { mountVariantTable } from "./variant-table-ui.js";
+import { mountVariantEducation } from "./variant-education-ui.js";
+import { VARIANT_RELEASES, VARIANT_LEARNING_KEY, variantLessons } from "./education/variant-content.js";
+import { emptyVariantProgress, mergeVariantProgress, parseVariantProgress, type VariantLearningProgress } from "./education/variant-progress.js";
 import { createPracticeView } from "./practice-ui.js";
 import { SKILLS, type SkillId } from "./education/curriculum.js";
 import { loadPracticeProgress, savePracticeProgress, parsePracticeProgress, mergePracticeProgress, PRACTICE_STORAGE_KEY, type PracticeProgress } from "./education/practice-progress.js";
@@ -190,6 +202,7 @@ export const HOME_STRIP_GROUPS: number[][] = [
 ];
 
 export function tileSymbol(tile: Tile): string {
+  if (tile.type >= 34 && tile.type < 42) return `t-f${tile.type - 34}`;
   if (tile.type < 9) return tile.red ? "t-m5r" : `t-m${tile.type + 1}`;
   if (tile.type < 18) return tile.red ? "t-p5r" : `t-p${tile.type - 8}`;
   if (tile.type < 27) return tile.red ? "t-s5r" : `t-s${tile.type - 17}`;
@@ -339,6 +352,10 @@ type ScreenName =
   | "rules"
   | "about"
   | "privacy"
+  | "variant-table"
+  | "variant-learn"
+  | "tables"
+  | "details"
   | "results"
   | "games"
   | "learn"
@@ -448,6 +465,18 @@ export class App {
   private settings: Settings = loadSettings();
   private readonly sound = new ClickSound();
   private runner: GameRunner | null = null;
+  private variantRunner: VariantRunner | null = null;
+  private variantUI: {destroy():void} | null = null;
+  private variantEducationUI: {destroy():void} | null = null;
+  private variantChoice: VariantId | "riichi" = "riichi";
+  private variantLength: VariantLength = "full";
+  private historyVariant: VariantId | "riichi" = "riichi";
+  private variantProgress: VariantLearningProgress = emptyVariantProgress();
+  private variantLessonId: string | undefined;
+  private variantLearningId: VariantId = "hong-kong";
+  private variantPracticeMode = false;
+  private variantPracticeTopic: string | undefined;
+  private variantReturnReview = false;
   private model = new TableModel(0);
   private cursor = 0;
   private playing = false;
@@ -473,6 +502,10 @@ export class App {
   private practice: PracticeProgress = loadPracticeProgress();
   private practiceInitialSkill: SkillId | undefined;
   private reviewData: DecisionReview | null = null;
+  private reviewTimeline: BoardTimeline | null = null;
+  private reviewHandIndex = 0;
+  private tableUI: {destroy():void} | null = null;
+  private tableSessionId: string | undefined;
   private reviewRecordId: string | null = null;
   private reviewResumeDecision: number | undefined;
   private reviewUI: ReviewUIController | null = null;
@@ -570,7 +603,7 @@ export class App {
     this.root.append(this.stage);
     const screensWrap = h("div", { class: "screens" });
     this.stage.append(screensWrap);
-    for (const name of ["home", "table", "rules", "about", "privacy", "results", "games", "learn", "practice", "review", "more"] as ScreenName[]) {
+    for (const name of ["home", "table", "rules", "about", "privacy", "variant-table", "variant-learn", "tables", "details", "results", "games", "learn", "practice", "review", "more"] as ScreenName[]) {
       const s = h("section", { class: "screen", id: `screen-${name}` });
       this.screens.set(name, s);
       screensWrap.append(s);
@@ -595,7 +628,7 @@ export class App {
   }
 
   private fit(): void {
-    if (this.currentScreen === "practice" || this.currentScreen === "review") {
+    if (this.currentScreen === "practice" || this.currentScreen === "review" || this.currentScreen === "details" || this.currentScreen === "tables" || this.currentScreen === "variant-table" || this.currentScreen === "variant-learn") {
       // Approved learning layouts use physical pixels, so a 44px
       // control remains 44px even on a 360px-wide phone.
       this.scale = 1;
@@ -656,6 +689,13 @@ export class App {
     if (name === "learn") this.renderLearn();
     if (name === "practice") this.renderPractice();
     if (name === "review") this.renderReview();
+    if (name === "details") this.renderGameDetail();
+    if (name === "tables") this.renderInPerson();
+    if (name === "variant-table") this.renderVariantTable();
+    if (name === "variant-learn") this.renderVariantEducation();
+    if (previous === "variant-table" && name !== "variant-table") { this.variantUI?.destroy(); this.variantUI = null; }
+    if (previous === "variant-learn" && name !== "variant-learn") { this.variantEducationUI?.destroy(); this.variantEducationUI = null; }
+    if (previous === "tables" && name !== "tables") { this.tableUI?.destroy(); this.tableUI = null; }
     if (previous !== name) this.screens.get(name)?.querySelector<HTMLElement>("button, input, [tabindex='0']")?.focus();
   }
 
@@ -703,8 +743,20 @@ export class App {
       case "results":
         this.showScreen("home");
         break;
+      case "variant-table":
+        this.showScreen("home");
+        break;
+      case "variant-learn":
+        this.showScreen(this.variantReturnReview ? "review" : "learn");
+        break;
+      case "tables":
+        this.showScreen(this.lastRoot);
+        break;
+      case "details":
+        this.showScreen("games");
+        break;
       case "review":
-        this.showScreen(this.runner?.result ? "results" : "games");
+        this.showScreen("details");
         break;
       case "practice":
         this.showScreen("learn");
@@ -752,6 +804,15 @@ export class App {
     if (summary) body.append(this.continueCardEl(summary));
     else body.append(this.motifRowEl());
 
+    const releases = VARIANT_RELEASES.filter(v => v.released);
+    if (releases.length) {
+      const label = h("label", {class:"play-variant-label"}, "Variant");
+      const picker = h("select", {"aria-label":"Play variant",class:"play-variant"});
+      for (const [id,name] of [["riichi","Riichi"],...releases.map(v=>[v.id,v.name])]) { const option=h("option",{value:id!},name!); picker.append(option); }
+      picker.value = this.variantChoice;
+      picker.addEventListener("change",()=>{this.variantChoice=picker.value as VariantId | "riichi";this.renderPlay();});
+      label.append(picker);body.append(label);
+    }
     const seg = h("div", { class: "seg" });
     const mkSeg = (label: string, len: GameLength) => {
       const b = h("button", { class: this.settings.lastLength === len ? "on" : "" }, label);
@@ -762,7 +823,11 @@ export class App {
       });
       return b;
     };
-    seg.append(mkSeg("East only", "east"), mkSeg("East + South", "south"));
+    if (this.variantChoice === "riichi") seg.append(mkSeg("East only", "east"), mkSeg("East + South", "south"));
+    else for (const [length,label] of [["east","East"],["south","East + South"],["full","Four rounds"]] as const) {
+      const b=h("button",{class:this.variantLength===length?"on":""},label);
+      b.addEventListener("click",()=>{this.variantLength=length;this.renderPlay();});seg.append(b);
+    }
     body.append(seg);
 
     body.append(this.guidedRowEl());
@@ -770,11 +835,15 @@ export class App {
     const play = h("button", { class: "pillbtn primary play" }, "Play");
     play.addEventListener("click", () => {
       this.sound.unlock();
-      this.startGame(this.settings.lastLength);
+      if (this.variantChoice === "riichi") this.startGame(this.settings.lastLength);
+      else this.startVariantGame(this.variantChoice);
     });
     body.append(play);
+    const tableTools = h("button", { class:"pillbtn table-tools-entry" }, "In-person calculator and scorekeeper");
+    tableTools.addEventListener("click", () => { this.tableSessionId = undefined; this.showScreen("tables"); });
+    body.append(tableTools);
 
-    if (this.user && this.statsSums) {
+    if (this.user && this.statsSums && this.variantChoice === "riichi") {
       const strip = formatRecordStrip(this.statsSums);
       const part = (label: string, value: string): HTMLElement => {
         const s = h("span", {}, `${label} `);
@@ -831,13 +900,16 @@ export class App {
       [-7.6, -1.85], [-8, -0.62], [-8, 0.62], [-7.6, 1.85], [-6.8, 3.08],
       [-5.7, 4.31], [-4.2, 5.54], [-2.3, 6.77], [0, 8],
     ];
-    HOME_STRIP_GROUPS.flat().forEach((id, i) => {
-      const [ty, rot] = arcs[i]!;
+    const tiles = this.variantChoice === "riichi" ? HOME_STRIP_GROUPS.flat().map(tileById) : variantHomeHand(this.variantChoice);
+    tiles.forEach((tile, i) => {
+      const extended = tiles.length > 14;
+      const [ty, rot] = extended ? [-8 * Math.sin(Math.PI * i / (tiles.length - 1)), -8 + 16 * i / (tiles.length - 1)] : arcs[i]!;
+      const left = extended ? 17 + 323 * i / (tiles.length - 1) : lefts[i];
       const t = h("span", {
         class: "tile t-fan",
-        style: `left:${lefts[i]}px;top:18px;z-index:${i + 1};transform:translateY(${ty}px) rotate(${rot}deg)`,
+        style: `left:${left}px;top:18px;z-index:${i + 1};transform:translateY(${ty}px) rotate(${rot}deg)`,
       });
-      t.innerHTML = `<svg viewBox="0 0 40 56"><use href="#${tileSymbol(tileById(id))}"/></svg>`;
+      t.innerHTML = `<svg viewBox="0 0 40 56"><use href="#${tileSymbol(tile)}"/></svg>`;
       t.append(h("i", { class: "edge" }));
       wrap.append(t);
     });
@@ -849,9 +921,9 @@ export class App {
   private motifRowEl(): HTMLElement {
     const row = h("div", { class: "motifrow", "aria-hidden": "true" });
     const left = h("div", { class: "motif" });
-    left.append(h("span", { class: "cap" }, "Dora"));
+    left.append(h("span", { class: "cap" }, this.variantChoice === "riichi" ? "Dora" : "Flowers"));
     const dora = h("span", { class: "tile t-dora" });
-    dora.innerHTML = `<svg viewBox="0 0 40 56"><use href="#${tileSymbol(tileById(49))}"/></svg>`;
+    dora.innerHTML = `<svg viewBox="0 0 40 56"><use href="#${this.variantChoice === "riichi" ? tileSymbol(tileById(49)) : "t-f0"}"/></svg>`;
     left.append(dora);
     const right = h("div", { class: "motif" });
     const winds = h("span", { class: "winds" });
@@ -910,7 +982,7 @@ export class App {
    *  and the row only ever describe a game actually in progress. */
   private savedGameSummary(saved: SavedGame): SavedSummary | null {
     try {
-      const runner = GameRunner.restore(saved, new AiDriver());
+      const runner = saved.v === 3 ? VariantRunner.restore(saved) : GameRunner.restore(saved, new AiDriver());
       if (runner.result) return null;
       const model = foldEvents(runner.events, runner.humanSeat, runner.chiHints);
       const human = model.players[runner.humanSeat]!;
@@ -920,7 +992,7 @@ export class App {
       const byWind = [...model.players].sort((a, b) => a.seatWind - b.seatWind);
       return {
         round: `${WIND_NAMES[model.roundWind]} ${model.kyoku}`,
-        lengthLabel: saved.length === "south" ? "East + South" : "East only",
+        lengthLabel: `${saved.v === 3 ? (VARIANT_RELEASES.find(v=>v.id===saved.variant)?.name ?? saved.variant) + " · " : ""}${saved.length === "full" ? "Four rounds" : saved.length === "south" ? "East + South" : "East only"}`,
         standing: `You are ${placementLabel(ranked.indexOf(human) + 1)}`,
         humanScore: human.score,
         scores: byWind.map((p) => ({
@@ -1014,6 +1086,7 @@ export class App {
       this.tutorial = mergeProgress(loadTutorialProgress(), parseProgress(this.readLearningCache(TUTORIAL_SETTINGS_KEY)));
       this.practice = mergePracticeProgress(loadPracticeProgress(), parsePracticeProgress(this.readLearningCache(PRACTICE_STORAGE_KEY)));
       this.reviewCollection = mergeReviewCollections(loadReviewCollection(), parseReviewCollection(this.readLearningCache(REVIEW_COLLECTION_KEY)));
+      this.variantProgress = mergeVariantProgress(this.variantProgress, parseVariantProgress(this.readLearningCache(VARIANT_LEARNING_KEY)));
     }
     // Settings sync (brief A4): on sign-in the server's saved settings
     // win over this device's — one account, one set of preferences.
@@ -1042,6 +1115,8 @@ export class App {
       this.saveLearningCache(PRACTICE_STORAGE_KEY, this.practice);
       this.reviewCollection = mergeReviewCollections(this.reviewCollection, parseReviewCollection((serverSettings as Record<string, unknown>)[REVIEW_COLLECTION_KEY]));
       this.saveLearningCache(REVIEW_COLLECTION_KEY, this.reviewCollection);
+      this.variantProgress = mergeVariantProgress(this.variantProgress, parseVariantProgress((serverSettings as Record<string,unknown>)[VARIANT_LEARNING_KEY]));
+      this.saveLearningCache(VARIANT_LEARNING_KEY, this.variantProgress);
       this.accountLoaded = true;
       this.queueAccountSettings();
     }
@@ -1093,6 +1168,7 @@ export class App {
       if (key === TUTORIAL_SETTINGS_KEY) saveTutorialProgress(value as TutorialProgress);
       else if (key === PRACTICE_STORAGE_KEY) savePracticeProgress(value as PracticeProgress);
       else if (key === REVIEW_COLLECTION_KEY) saveReviewCollection(value as typeof this.reviewCollection);
+      else if (key === VARIANT_LEARNING_KEY) { try { localStorage.setItem(key,JSON.stringify(value)); } catch { /* Keep progress in memory. */ } }
       return;
     }
     try { localStorage.setItem(this.learningCacheKey(key), JSON.stringify(value)); } catch { /* Keep in memory. */ }
@@ -1109,7 +1185,7 @@ export class App {
         while (this.accountSyncWanted && this.user && this.accountLoaded) {
           this.accountSyncWanted = false;
           const saved = { ...this.settings, [TUTORIAL_SETTINGS_KEY]: this.tutorial,
-            [PRACTICE_STORAGE_KEY]: this.practice, [REVIEW_COLLECTION_KEY]: this.reviewCollection };
+            [PRACTICE_STORAGE_KEY]: this.practice, [REVIEW_COLLECTION_KEY]: this.reviewCollection, [VARIANT_LEARNING_KEY]: this.variantProgress };
           if (!(await putSettings(saved, this.csrfToken))) { this.accountSyncWanted = true; break; }
         }
       } finally { this.accountSyncRunning = false; }
@@ -1174,12 +1250,18 @@ export class App {
   }
 
   private clearAccountState(): void {
+    if (this.user?.id) deleteTableAccountCache(this.user.id);
+    this.tableUI?.destroy(); this.tableUI = null;
+    this.screens.get("tables")?.replaceChildren();
+    this.screens.get("details")?.replaceChildren();
     this.accountLoaded = false;
     this.learningAccountId = null;
     this.tutorial = loadTutorialProgress();
     this.practice = loadPracticeProgress();
+    this.variantProgress = parseVariantProgress(this.readLearningCache(VARIANT_LEARNING_KEY));
     this.reviewCollection = loadReviewCollection();
     this.reviewData = null;
+    this.reviewTimeline = null;
     this.reviewRecordId = null;
     this.reviewUI?.destroy();
     this.reviewUI = null;
@@ -1203,7 +1285,7 @@ export class App {
   private async deleteAccountFlow(): Promise<void> {
     if (!(await deleteAccount(this.csrfToken))) return;
     if (this.learningAccountId) {
-      for (const key of [TUTORIAL_SETTINGS_KEY, PRACTICE_STORAGE_KEY, REVIEW_COLLECTION_KEY, "openmahjong.practice-session.v1"]) {
+      for (const key of [TUTORIAL_SETTINGS_KEY, PRACTICE_STORAGE_KEY, REVIEW_COLLECTION_KEY, VARIANT_LEARNING_KEY, "openmahjong.practice-session.v1"]) {
         try { localStorage.removeItem(this.learningCacheKey(key)); } catch { /* Storage can be blocked. */ }
       }
     }
@@ -1275,10 +1357,11 @@ export class App {
 
     this.textScreen("about", "About", (page) => {
       page.append(
-        h("p", {}, "Open Mahjong is a free, open-source mahjong platform — the lichess of mahjong. Riichi ships first; Hong Kong and MCR rules follow as rule packs on the same engine."),
+        h("p", {}, "Open Mahjong is a free, open-source mahjong platform. Play Riichi, Hong Kong Old Style, MCR or Taiwanese against CPU opponents, study games, and keep an in-person score ledger."),
         h("p", {}, "Free forever. As a guest, your settings and game history live only in this browser. Signed in, they are saved to your account."),
         h("h3", {}, "License"),
-        h("p", {}, "Open Mahjong is free software under the GNU Affero General Public License v3 (AGPLv3). The rules engine is its own TypeScript library, so anyone can build their own client on it."),
+        h("p", {}, "Open Mahjong is free software under the GNU Affero General Public License v3 (AGPLv3). The rules engine is a separate library, so anyone can build their own client on it. MCR includes the MIT-licensed mahjong-algorithm scorer by Jeff Wang (2016–2023); its readable source, full license and reproducible build ship in the repository."),
+        h("p", {}, h("a", {href:"./third-party-notices.txt",target:"_blank",rel:"noreferrer"}, "Third-party notices")),
         h("h3", {}, "Source"),
         (() => {
           const para = h("p", {});
@@ -1291,11 +1374,12 @@ export class App {
 
     this.textScreen("privacy", "Privacy", (page) => {
       page.append(
-        h("p", {}, "Last updated: November 16, 2026."),
+        h("p", {}, "Last updated: November 17, 2026."),
         h("h3", {}, "Playing as a guest"),
         h("p", {}, "Games you play as a guest, your settings, and your game history are stored only in your browser on your device. They are not sent to our servers."),
         h("h3", {}, "Accounts"),
         h("p", {}, "If you sign in with Google, we store your Google account identifier, the display name and profile photo from your Google profile, the date you created your account, records of your finished games (date, game length, placement, score, the game's move record, and game statistics), and your settings, so they follow you between devices. We do not receive or store your email address or your Google password."),
+        h("p", {}, 'If you choose private sync for an in-person session, we also store its player names, entered completed hands, scoring corrections, ledger and settlement. These sessions are separate from CPU statistics. Local-only sessions stay on your device; conflicting offline copies are preserved for your review.'),
         h("h3", {}, "Cookies"),
         h("p", {}, "We use one cookie to keep you signed in. Advertising cookies are described in the Advertising section below."),
         h("h3", {}, "Advertising"),
@@ -1448,25 +1532,26 @@ export class App {
     let rows: (GameSummary | GameRecord)[];
     let sums: StatsSums;
     let handStats: boolean;
+    const selectedVariant = this.historyVariant;
     if (this.user) {
-      const [games, fresh] = await Promise.all([fetchGames(), fetchStats()]);
-      rows = games ?? [];
+      const [games, fresh] = await Promise.all([fetchGames(), fetchStats(fetch, selectedVariant)]);
+      rows = (games ?? []).filter(r => (r.variant ?? "riichi") === selectedVariant);
       this.serverGameCount = rows.length;
       this.serverGames = rows;
-      if (fresh) this.statsSums = fresh;
-      sums = this.statsSums ?? {
+      if (fresh && selectedVariant === "riichi") this.statsSums = fresh;
+      sums = fresh ?? (selectedVariant === "riichi" ? this.statsSums : null) ?? {
         games: 0, wins: 0, placementSum: 0,
         hands: 0, riichi: 0, dealIns: 0, handsWon: 0, winPoints: 0, since: null,
       };
       handStats = true;
     } else {
-      const local = this.localGameRecords();
+      const local = this.localGameRecords().filter(r => (r.variant ?? "riichi") === selectedVariant);
       rows = local;
       // Guest: game-level sums over every local record; hand-level
       // sums only over records that actually carry them — rates are
       // never invented from records that lack the data (brief T3).
       const base = sumRecords(local);
-      const hand = sumRecords(loadRecords());
+      const hand = sumRecords(loadRecords().filter(r => (r.variant ?? "riichi") === selectedVariant));
       sums = {
         ...base,
         hands: hand.hands,
@@ -1475,25 +1560,30 @@ export class App {
         handsWon: hand.handsWon,
         winPoints: hand.winPoints,
       };
-      handStats = loadRecords().length > 0;
+      handStats = loadRecords().some(r => (r.variant ?? "riichi") === selectedVariant);
     }
     rows = [...rows].sort((a, b) => (a.finishedAt < b.finishedAt ? 1 : -1));
-    if (!this.screens.get("games")!.classList.contains("active")) return;
+    if (!this.screens.get("games")!.classList.contains("active") || this.historyVariant !== selectedVariant) return;
     const el = this.screens.get("games")!;
     el.innerHTML = "";
     const page = h("div", { class: "tabpage" });
     el.append(page);
     page.append(h("h2", {}, "Games"));
+    if (VARIANT_RELEASES.some(v=>v.released)) {
+      const picker=h("select",{"aria-label":"Games variant",class:"play-variant"});
+      for (const [id,name] of [["riichi","Riichi"],...VARIANT_RELEASES.filter(v=>v.released).map(v=>[v.id,v.name])]) picker.append(h("option",{value:id!},name!));
+      picker.value=selectedVariant;picker.addEventListener("change",()=>{this.historyVariant=picker.value as VariantId | "riichi";void this.renderGames();});page.append(picker);
+    }
     const east = rows.filter((r) => r.length === "east").length;
     page.append(
-      h("p", { class: "count" }, `${rows.length} recorded game${rows.length === 1 ? "" : "s"} — ${east} East, ${rows.length - east} East + South`),
+      h("p", { class: "count" }, `${rows.length} recorded game${rows.length === 1 ? "" : "s"} — ${east} East, ${rows.filter(r=>r.length==="south").length} East + South${rows.some(r=>r.length==="full")?`, ${rows.filter(r=>r.length==="full").length} four rounds`:""}`),
     );
     const saved = loadGame();
     const summary = saved ? this.savedGameSummary(saved) : null;
     if (summary) page.append(this.inProgressRowEl(summary));
     if (rows.length > 0) page.append(this.distCardEl(rows));
     const grid = h("div", { class: "statgrid" });
-    for (const b of formatStatsView(sums, { handStats })) {
+    for (const b of formatStatsView(sums, { handStats }).filter(b => selectedVariant === "riichi" || b.label !== "Riichi rate")) {
       const st = h("div", { class: "stat" });
       st.append(h("div", { class: "v" }, b.value), h("div", { class: "l" }, b.label));
       if (b.sample) st.append(h("div", { class: "s" }, b.sample));
@@ -1504,6 +1594,15 @@ export class App {
       page.append(h("p", { class: "dim" }, "No games recorded yet."));
     }
     for (const r of rows) page.append(this.historyRowEl(r));
+    const tables = readTables(this.user?.id);
+    if (tables.length) {
+      page.append(h("h3", {}, "At the table"), h("p", { class: "dim" }, "In-person sessions · Excluded from CPU-game statistics"));
+      for (const copy of [...tables].reverse()) {
+        const row = h("button", { class: "hrow" }, `${copy.session.variant === "american" ? "American helper" : copy.session.variant === "hong-kong" ? "Hong Kong Old Style" : copy.session.variant === "mcr" ? "MCR" : copy.session.variant === "taiwanese" ? "Taiwanese" : "Riichi"} · ${copy.session.finished ? "Finished" : "In progress"} · ${copy.session.names.join(", ")}`);
+        row.addEventListener("click", () => { this.tableSessionId = copy.session.id; this.showScreen("tables"); });
+        page.append(row);
+      }
+    }
   }
 
   /** The placement distribution card (rendering 04): one segment
@@ -1532,7 +1631,7 @@ export class App {
     const row = h("button", { class: "hrow" });
     row.append(
       h("span", { class: "when" }, historyDateLabel(r.finishedAt)),
-      h("span", { class: "lenbadge" }, r.length === "east" ? "EAST" : "EAST + SOUTH"),
+      h("span", { class: "lenbadge" }, r.length === "full" ? "FOUR ROUNDS" : r.length === "east" ? "EAST" : "EAST + SOUTH"),
     );
     const res = h("span", { class: "res" });
     res.append(h("b", {}, placementLabel(r.placement)), document.createTextNode(" "));
@@ -1560,31 +1659,78 @@ export class App {
     return row;
   }
 
-  /** Replay a finished record to its final standings (rendering 03's
-   *  row tap): the runner replays deterministically to the result, and
-   *  the existing game-end results screen shows it. The step-through
-   *  review is a later slice. */
+  /** History is reconstructed independently of the live runner and resume slot. */
   private openRecord(record: GameRecord): void {
     if (!record.log) return;
-    let replay: GameRunner;
     try {
-      replay = GameRunner.restore({ ...record.log, id: record.id }, new AiDriver());
-      if (!replay.result) return;
-    } catch {
-      // Keep the stored summary and the current game intact when a
-      // record is incompatible or corrupt. Never silently repair it.
-      return;
-    }
-    this.generation++;
-    this.playing = false;
-    this.frame = null;
-    this.runner = replay;
-    this.resetDisplay();
-    this.historyRecorded = true; // a replay is not a new game
-    this.model = foldEvents(this.runner.events, this.humanSeat, this.runner.chiHints);
-    this.cursor = this.runner.events.length;
-    this.renderResults();
-    this.showScreen("results");
+      const timeline = buildBoardReview({ ...record.log, id: record.id });
+      if (!timeline.data.review.complete) return;
+      this.reviewTimeline = timeline;
+      this.reviewData = timeline.data.review;
+      this.reviewRecordId = record.id;
+      this.reviewResumeDecision = undefined;
+      this.showScreen("details");
+    } catch { /* Corrupt history leaves the active game and stored bytes intact. */ }
+  }
+
+  private startVariantGame(variant: VariantId, seed = `om-${Date.now().toString(36)}`): void {
+    this.generation++;this.playing=false;this.runner=null;
+    this.variantRunner=new VariantRunner({seed,variant,length:this.variantLength,humanSeat:0});
+    this.variantRunner.advance();this.saveVariantGame();this.showScreen("variant-table");
+  }
+
+  private saveVariantGame(): void {
+    if(!this.variantRunner)return;
+    const state=this.variantRunner.serialize();const savedAt=saveGame(state);this.resumeSync.noteSave(state,savedAt);
+    if(this.variantRunner.result)this.recordVariantGame();
+  }
+
+  private recordVariantGame(): GameRecord | null {
+    const r=this.variantRunner;if(!r?.result)return null;
+    const existing=loadRecords().find(record=>record.id===r.id);if(existing){clearGame();this.resumeSync.noteClear();return existing;}
+    const mine=r.result.settlement.find(s=>s.seat===r.humanSeat)!;
+    const record=buildGameRecord({id:r.id,variant:r.variant,length:r.length,placement:mine.rank,score:mine.score,finishedAt:new Date().toISOString(),log:r.serialize(),events:r.events,humanSeat:r.humanSeat});
+    appendRecord(record);clearGame();this.resumeSync.noteClear();if(this.user)void this.postRecord(record);return record;
+  }
+
+  private renderVariantTable(): void {
+    this.variantUI?.destroy();if(!this.variantRunner)return;
+    this.variantUI=mountVariantTable(this.screens.get("variant-table")!,{runner:this.variantRunner,renderTile:t=>this.learningTile(t),onBack:()=>this.showScreen("home"),
+      onSave:()=>this.saveVariantGame(),onFinish:()=>{this.recordVariantGame();},onReview:()=>{const record=this.recordVariantGame();if(record)this.openRecord(record);},onSound:kind=>this.sound.click(kind),soundEnabled:this.settings.sound,onSettings:settings=>{this.settings={...this.settings,...settings};this.sound.enabled=this.settings.sound;this.persistSettings();},guided:this.settings.guided,largeTiles:this.settings.largeTiles,reducedMotion:this.reducedMotion,resume:true});
+  }
+
+  private renderVariantEducation(): void {
+    this.variantProgress=mergeVariantProgress(this.variantProgress,parseVariantProgress(this.readLearningCache(VARIANT_LEARNING_KEY)));
+    this.variantEducationUI?.destroy();
+    this.variantEducationUI=mountVariantEducation(this.screens.get("variant-learn")!,{variant:this.variantLearningId,...(this.variantLessonId?{lessonId:this.variantLessonId}:{}),practice:this.variantPracticeMode,
+      ...(this.variantPracticeTopic?{initialTopic:this.variantPracticeTopic}:{}),progress:this.variantProgress,renderTile:t=>this.learningTile(t),
+      onProgress:progress=>{this.variantProgress=progress;this.saveLearningCache(VARIANT_LEARNING_KEY,progress);this.queueAccountSettings();},
+      onBack:()=>this.showScreen(this.variantReturnReview?"review":"learn"),onPlay:()=>{this.variantChoice=this.variantLearningId;this.startVariantGame(this.variantLearningId);}});
+  }
+
+  private renderInPerson(): void {
+    this.tableUI?.destroy();
+    if(this.user?.id)rememberTableAccount(this.user.id);
+    // The network hint can remain "online" when requests fail, including
+    // after an offline reload. A remembered ID selects local data only.
+    const accountId=this.user?.id??offlineTableAccount();
+    this.tableUI = mountInPerson(this.screens.get("tables")!, {
+      onBack: () => this.showScreen(this.lastRoot), renderTile: tile => this.learningTile(tile),
+      ...(accountId ? { accountId } : {}), ...(this.csrfToken ? { csrfToken: this.csrfToken } : {}),
+      savedAccountCopy:!!accountId&&!this.user,
+      getAuth:()=>this.user?.id&&this.csrfToken?{accountId:this.user.id,csrfToken:this.csrfToken}:undefined,
+      ...(this.tableSessionId ? { initialId: this.tableSessionId } : {}),
+    });
+  }
+
+  private renderGameDetail(): void {
+    if (!this.reviewTimeline) return;
+    mountGameDetail(this.screens.get("details")!, this.reviewTimeline,
+      () => this.showScreen("games"), (index) => {
+        this.reviewHandIndex = index;
+        this.reviewResumeDecision = undefined;
+        this.showScreen("review");
+      });
   }
 
   // -- game lifecycle --------------------------------------------------------
@@ -1592,6 +1738,7 @@ export class App {
   private startGame(length: GameLength, opts: { seed?: string } = {}): void {
     this.generation++;
     const seed = opts.seed ?? `om-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}`;
+    this.variantRunner = null;
     this.runner = new GameRunner({ seed, length, humanSeat: 0, aiDriver: new AiDriver() });
     this.resetDisplay();
     this.historyRecorded = false;
@@ -1605,6 +1752,7 @@ export class App {
   private resumeGame(): void {
     const saved = loadGame();
     if (!saved) return;
+    if (saved.v === 3) { try { this.variantRunner = VariantRunner.restore(saved); this.runner = null; this.generation++; this.showScreen("variant-table"); } catch { /* Preserve incompatible bytes. */ } return; }
     let restored: GameRunner;
     try { restored = GameRunner.restore(saved, new AiDriver()); }
     catch { return; }
@@ -3003,23 +3151,24 @@ export class App {
 
   private openReview(): void {
     if (!this.runner) return;
-    try { this.reviewData = buildDecisionReview(this.runner.serialize()); }
+    try { this.reviewTimeline = buildBoardReview(this.runner.serialize()); this.reviewData = this.reviewTimeline.data.review; }
     catch { return; }
     this.reviewRecordId = this.runner.id;
     this.reviewResumeDecision = undefined;
-    this.showScreen("review");
+    this.reviewHandIndex = 0;
+    this.showScreen("details");
   }
 
   private renderReview(): void {
     this.reviewUI?.destroy();
     const screen = this.screens.get("review")!;
-    if (!this.reviewData) {
-      this.textScreen("review", "Review", (page) => page.append(h("p", {}, "Finish a game and choose Review game to inspect your decisions.")));
+    if (!this.reviewData || !this.reviewTimeline) {
+      this.textScreen("review", "Review", (page) => page.append(h("p", {}, "Open a finished game in Games, then select a hand to review its board.")));
       return;
     }
-    this.reviewUI = mountReview(screen, { review: this.reviewData,
+    this.reviewUI = mountBoardReview(screen, { timeline: this.reviewTimeline, handIndex: this.reviewHandIndex,
       renderTile: (tile) => this.learningTile(tile),
-      onBack: () => this.showScreen(this.runner?.result ? "results" : "games"),
+      onBack: () => this.showScreen("details"),
       onPractice: (position, skills) => this.practiceFromReview(position, skills),
     });
     const resume = this.reviewData.positions.findIndex((position) => position.decisionIndex === this.reviewResumeDecision);
@@ -3036,7 +3185,11 @@ export class App {
       this.saveLearningCache(REVIEW_COLLECTION_KEY, this.reviewCollection);
       this.queueAccountSettings();
     }
-    this.showScreen("practice");
+    if (position.variant) {
+      this.variantLearningId=position.variant;this.variantPracticeMode=true;this.variantReturnReview=true;
+      this.variantPracticeTopic=position.variant==="mcr"?(position.kind==="call"?"mcr-claims":"mcr-eligibility"):position.variant==="taiwanese"?(position.kind==="call"?"tw-turns":"tw-waits"):(position.kind==="call"?"hk-turns":"hk-minimum");
+      this.showScreen("variant-learn");
+    } else this.showScreen("practice");
   }
 
   private async openSavedReview(recordId: string, decisionIndex: number): Promise<void> {
@@ -3046,8 +3199,8 @@ export class App {
       return;
     }
     this.openRecord(record);
-    if (this.runner?.id !== recordId) return;
-    this.openReview();
+    if (this.reviewRecordId !== recordId) return;
+    this.showScreen("review");
     const index = this.reviewData?.positions.findIndex((position) => position.decisionIndex === decisionIndex) ?? -1;
     if (index >= 0) { this.reviewResumeDecision = decisionIndex; this.reviewUI?.goToDecision(index); }
   }
@@ -3055,7 +3208,7 @@ export class App {
   /**
    * The Learn tab (rendering 03 + Michael's build requirement,
    * 2026-11-16): Practice and the guided row sit above collapsible
-   * per-variant sections — today only Riichi — each with its own
+   * per-variant sections, each with its own
    * progress. Future variant sections append to LEARN_SECTIONS.
    */
   private renderLearn(): void {
@@ -3071,6 +3224,15 @@ export class App {
     page.append(prow);
     page.append(this.guidedRowEl());
     for (const section of LEARN_SECTIONS) page.append(this.learnSectionEl(section));
+    this.variantProgress = mergeVariantProgress(this.variantProgress, parseVariantProgress(this.readLearningCache(VARIANT_LEARNING_KEY)));
+    for (const release of VARIANT_RELEASES.filter(v=>v.released)) {
+      const lessons=variantLessons(release.id),done=lessons.filter(l=>this.variantProgress.completed.some(c=>c.lessonId===l.id)).length;
+      const section=h("details",{class:"variant-learn-section"});section.append(h("summary",{},`${release.name} · ${done} of ${lessons.length} lessons done`));
+      const progress=h("progress",{value:String(done),max:String(lessons.length),"aria-label":`${release.name} lesson progress`});section.append(progress);
+      const practice=h("button",{class:"pillbtn"},`Practice ${release.name}`);practice.addEventListener("click",()=>{this.variantLearningId=release.id;this.variantPracticeMode=true;this.variantReturnReview=false;this.showScreen("variant-learn");});section.append(practice);
+      for(const lesson of lessons){const row=h("button",{class:"hrow"},`${lesson.title}${this.variantProgress.completed.some(c=>c.lessonId===lesson.id)?" · Done":""}`);row.addEventListener("click",()=>{this.variantLearningId=release.id;this.variantLessonId=lesson.id;this.variantPracticeMode=false;this.variantReturnReview=false;this.showScreen("variant-learn");});section.append(row);}
+      page.append(section);
+    }
   }
 
   private learnSectionEl(section: (typeof LEARN_SECTIONS)[number]): HTMLElement {

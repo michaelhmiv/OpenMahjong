@@ -144,3 +144,42 @@ requires restore evidence.
 Each PR reports exact commands, results, skipped/unverified checks, relevant
 artifacts and remaining risks. Do not invent screenshots, benchmarks, database
 checks or CI statuses.
+
+## Review, table tools and executable variants (2026-11-17)
+
+Run the normal repository gates with the manifest's supported Node version:
+
+```sh
+npm ci
+npm run typecheck
+npm test
+npm run build
+npm run check:packages
+npm run check:security
+```
+
+Engine fixtures separately compose all81 MCR pattern examples and test exclusions, eight-before-flowers eligibility, arithmetic, legal/illegal claims and match flow. Taiwanese tests use five-set structures, quad extras, passed-win recovery, prohibited claim swaps, no-Ting scoring and per-payer dealer bonuses. A separate AI test compares the fast five-set analyzer against the independent engine DFS; a24-match variant soak conserves all144 physical tiles and all points at every seat request. Frozen Riichi legacy fixtures remain part of the same gate.
+
+`postgres-integration.test.ts` is opt-in: set `OPENMAHJONG_TEST_DB` to an explicit loopback PostgreSQL test database. It creates and drops only randomly named fixture schemas, covering clean migrations, a prior-five-migration upgrade, concurrent boots, every variant's SQL mapping/statistics, atomic table revisions, duplicates, ownership and deletion cascades. CI runs it against an ephemeral PostgreSQL17 service. Never point this fixture at production or an arbitrary non-loopback database.
+
+The following use the **built application** and real Chromium. Serve it first with `PORT=4173 node packages/web/server.mjs`. `BROWSER_EXECUTABLE` can select an installed browser; set `BROWSER_NO_SANDBOX=1` only in an isolated container requiring it.
+
+```sh
+BROWSER_FULL_GAME=1 npm run test:browser -- http://127.0.0.1:4173 work/browser-smoke
+node scripts/browser-in-person.mjs http://127.0.0.1:4173 work/program-evidence/riichi-tools
+for variant in hong-kong mcr taiwanese; do
+  node scripts/browser-variants.mjs http://127.0.0.1:4173 work/program-evidence/variants "$variant"
+done
+node scripts/browser-variant-calculators.mjs http://127.0.0.1:4173 work/program-evidence/calculators
+node scripts/browser-variant-sizing.mjs http://127.0.0.1:4173 work/program-evidence/sizing
+node scripts/browser-review-timeline.mjs http://127.0.0.1:4173 work/program-evidence/review
+node scripts/browser-table-sync.mjs http://127.0.0.1:4173 work/program-evidence/sync
+```
+
+The scripts assert accessible names, zero axe violations in new surfaces, real UI recording/corrections/undo/settlement, cache-cleared offline reload, completed variant matches, profile-scoped history, practice return, late side-pond geometry, Large Tiles, keyboard Focus Frames, exact resume, historical active-game isolation and indexed seeking on a named sixteen-hand long record. Measurements separate synchronous DOM work from two-frame latency and identify desktop browser versus mobile viewport; they are not mobile-hardware benchmarks.
+
+`node scripts/index-program-evidence.mjs work/program-evidence` builds a relative-link
+gallery of the actual screenshots and workflow reports. Final commands, observed
+results and verification limits are in [the program verification report](../audit/program-verification.md).
+
+`browser-table-sync` runs the real HTTP account/session handlers with a disposable MemoryStore and runtime-only synthetic session credentials, then uses two isolated browser stores to exercise carry-over, offline write conflicts, preservation of both copies and deletion of that fixture account. OAuth consent, production TLS/cookie behavior and an actual user's account are explicitly outside that fixture. Raw credentials are never written to reports or screenshots. CI uploads only synthetic workflow evidence.

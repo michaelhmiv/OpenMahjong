@@ -19,7 +19,7 @@ not the exit criterion for a user workflow.
 | 8 Advanced curriculum | Mostly absent; introductory defense is not a full strategy course | Original multi-concept defense/value/placement modules and study collections | Substantive advanced path with accepted alternatives and assumption-qualified explanations, reviewed against rules/evaluator evidence |
 | 9 Multiplayer | No server-authoritative live game coordinator or realtime transport | Private rooms, coordinator, per-seat projections, reconnect/persistence tests | Four real clients finish/reconnect reliably; unauthorized/duplicate/stale actions rejected; hidden tiles never cross boundaries |
 | 10 Competitive/community | No trustworthy competitive data source or ratings | Evaluate four-player placement ratings; casual matchmaking before rated launch; moderation plans before sharing/community | Independently assessed fairness, versioned results, reporting/abandonment policy and calibrated rating behavior |
-| 11 Variants | Riichi only; current tile/turn/scoring model is riichi-specific | Choose one variant after demand/rules/licensing study; dedicated engine and educational fixtures | New game is authentic, independently tested and never receives riichi-only advice |
+| 11 Variants | Executable Hong Kong Old Style, MCR WMO2006 and Taiwanese Every-flower adapters join Riichi, with calculators,30 lessons,60 checks, coaching, review, practice and account carry-over | Broader house profiles and curricula require their own sourced implementations | Named profiles, independent scoring/exclusion/legal fixtures, real browser/offline evidence and preserved Riichi outcomes |
 
 Do not mark phases 3–11 complete because a data interface, a research document or
 a lesson label exists. Every shipped workflow needs functional, educational,
@@ -100,8 +100,11 @@ tracks all thirty brief sections individually and records the larger remaining s
 | DEC-SYNC-1 | Current-client evidence/reference union, account-scoped local cache and serialized writes are implemented; durable outbox, older-client replacement and concurrent active-lesson conflicts still need a versioned policy | Preserve bounded local evidence and test boot/online merge/retry without claiming a complete conflict resolver |
 | DEC-OPS-1 | Staging/backups/recovery: approve actual cost/retention target and rehearse restore before production rollout | Read-only inventory, deployment/rollback runbooks and CI checks |
 | DEC-COMP-1 | Four-player rating/abandonment rules: benchmark placement-native model before ranked launch | Private authoritative coordinator design and information-integrity tests |
-| DEC-VARIANT-1 | Second variant: validate demand, rules clarity and content rights before choosing | Document genuinely shared primitives; preserve riichi behavior |
+| DEC-VARIANT-1 — resolved for this program | Owner selected HK Old Style → MCR → Taiwanese, including calculators; photo input excluded | See the named rule briefs and executable adapters; preserve Riichi/historical behavior |
 
 These are decision records, not requests for redundant approval of already
 authorized fixes. A future decision should be presented with concrete renderings,
 fixtures, measured options or a deployment plan, as appropriate.
+
+
+Program update, 2026-11-17: [the approved implementation](../implementation-program.md) expands phase5 with game details/all-event indexed board review and supplies the three named phase11 variants plus local/private in-person ledgers. Its owner instruction explicitly supersedes intermediate brief/rendering approval stops; the visual laws remain. [Verification/evidence](../audit/program-verification.md) records the actual completed checks and remaining limits. Broader pedagogical effectiveness, multiplayer and unsupported house profiles are not implied by this work.

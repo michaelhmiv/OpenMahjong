@@ -1,15 +1,16 @@
 /** Decision review from recorded actions. No UI, hidden-hand replay,
  * invented actions, outcome grading, or current analysis of legacy rules. */
 import {
-  Game, LegacyGame,
+  Game, LegacyGame, VariantGame, type VariantId,
   type CallAction, type CallContext, type PlayerView, type Policy,
-  type TurnAction, type TurnContext,
+  type TurnAction, type TurnContext, type GameEvent, type GameResult,
 } from "@openmahjong/engine";
 import {
   adviseCall, adviseDiscard, adviseKan, adviseRiichi, adviseWin, compareDiscards,
   type CallAdvice, type DiscardComparison, type KanAdvice, type RiichiGrade, type TurnAdvice, type WinAdvice,
 } from "@openmahjong/coach";
 import { validateSavedGame, type MomentRecord } from "./replay.js";
+import type { ChiHint } from "./model.js";
 
 interface DecisionPositionBase {
   /** Index in the complete four-seat decision log, not just human actions. */
@@ -17,7 +18,8 @@ interface DecisionPositionBase {
   /** Zero-based hand serial; repeated dealer hands have distinct indices. */
   readonly handIndex: number;
   readonly eventSequence: number;
-  readonly engineVersion: 1 | 2;
+  readonly engineVersion: 1 | 2 | 3;
+  readonly variant?: VariantId;
   readonly informationMode: "player-perspective";
   readonly view: PlayerView;
 }
@@ -27,7 +29,8 @@ export type ReviewDecision = DecisionPositionBase & (
 );
 export interface DecisionReview {
   readonly schemaVersion: 1;
-  readonly engineVersion: 1 | 2;
+  readonly engineVersion: 1 | 2 | 3;
+  readonly variant?: VariantId;
   readonly complete: boolean;
   readonly consumedDecisions: number;
   readonly positions: readonly ReviewDecision[];
@@ -52,25 +55,48 @@ function immutableSnapshot<T>(value: T): T {
 /** One simulation pass. Exhausting a partial log suspends before the
  * next action, even if it belongs to an AI seat. No AI policy is run. */
 export function buildDecisionReview(input: unknown): DecisionReview {
+  return reconstructReview(input).review;
+}
+
+/** Full replay material is deliberately separate from DecisionReview and
+ * ReviewDecision: none of this envelope is accepted by a coach evaluator. */
+export interface ReconstructedReview {
+  readonly review: DecisionReview;
+  readonly events: readonly GameEvent[];
+  readonly chiHints: ReadonlyMap<number, ChiHint>;
+  readonly result: GameResult | null;
+  readonly humanSeat: number;
+}
+export function reconstructReview(input: unknown): ReconstructedReview {
   const saved = validateSavedGame(input);
-  const engineVersion = saved.v === 1 ? 1 : 2;
+  const engineVersion = saved.v === 1 ? 1 : saved.v === 3 ? 3 : 2;
   const positions: ReviewDecision[] = [];
   let cursor = 0;
   let scanned = 0;
   let handIndex = -1;
-  let game: Game | LegacyGame;
-  const take = () => {
-    if (cursor === saved.decisions.length) throw new EndOfRecordedPrefix();
+  let lastChi: readonly [number, number] | undefined;
+  const chiHints = new Map<number, ChiHint>();
+  let game: Game | LegacyGame | VariantGame;
+  const scan = () => {
     for (; scanned < game.events.length; scanned++) {
-      if (game.events[scanned]!.type === "hand-start") handIndex++;
+      const event = game.events[scanned]!;
+      if (event.type === "hand-start") handIndex++;
+      if (event.type === "call" && event["kind"] === "chi" && lastChi) {
+        chiHints.set(event.seq, { tileIds: lastChi });
+        lastChi = undefined;
+      }
     }
+  };
+  const take = () => {
+    scan();
+    if (cursor === saved.decisions.length) throw new EndOfRecordedPrefix();
     return saved.decisions[cursor++]!;
   };
   const capture = (position: Omit<DecisionPositionBase, "informationMode" | "engineVersion" | "decisionIndex" | "handIndex" | "eventSequence"> &
     ({ kind: "turn"; context: TurnContext; action: TurnAction } | { kind: "call"; context: CallContext; action: CallAction })) => {
     if (position.view.seat !== saved.humanSeat) return;
     positions.push(immutableSnapshot({ ...position, decisionIndex: cursor - 1, handIndex,
-      eventSequence: game.events.length - 1, engineVersion, informationMode: "player-perspective" }));
+      eventSequence: game.events.length - 1, engineVersion, ...(saved.v === 3 ? { variant: saved.variant } : {}), informationMode: "player-perspective" }));
   };
   const policy: Policy = {
     turn(view, context) {
@@ -82,34 +108,39 @@ export function buildDecisionReview(input: unknown): DecisionReview {
     call(view, context) {
       const action = take();
       if (TURN_TYPES.has(action.type)) throw new Error(`Decision log desync at ${cursor - 1}: expected call action`);
+      if (action.type === "chi") lastChi = action.tileIds;
       capture({ kind: "call", view, context, action: action as CallAction });
       return action as CallAction;
     },
   };
   const Engine = saved.v === 1 ? LegacyGame : Game;
-  game = new Engine({ seed: saved.seed, length: saved.length, policies: [policy, policy, policy, policy] });
+  game = saved.v === 3 ? new VariantGame({ seed: saved.seed, variant: saved.variant, length: saved.length, policies: [policy, policy, policy, policy] }) : new Engine({ seed: saved.seed, length: saved.length, policies: [policy, policy, policy, policy] });
   let complete = false;
+  let result: GameResult | null = null;
   try {
-    game.run();
+    result = game.run();
     complete = true;
     if (cursor !== saved.decisions.length) throw new Error("Decision log desync: unused decisions after game end");
   } catch (error) {
     if (!(error instanceof EndOfRecordedPrefix)) throw error;
   }
-  return Object.freeze({ schemaVersion: 1, engineVersion, complete, consumedDecisions: cursor,
+  scan();
+  const review: DecisionReview = Object.freeze({ schemaVersion: 1, engineVersion, ...(saved.v === 3 ? { variant: saved.variant } : {}), complete, consumedDecisions: cursor,
     positions: Object.freeze(positions),
     moments: Object.freeze(saved.v === 2 && saved.moments ? [...saved.moments] : []) });
+  return { review, events: immutableSnapshot(game.events), chiHints, result, humanSeat: saved.humanSeat };
 }
 
 export type ReviewAnalysis =
   | { readonly available: true; readonly advice: TurnAdvice; readonly comparison: DiscardComparison }
-  | { readonly available: false; readonly reason: "legacy-rules" | "not-a-discard" };
+  | { readonly available: false; readonly reason: "legacy-rules" | "not-a-discard" | "variant-evaluator" };
 
 /** Analysis is requested per position so reconstructing a review never
  * runs every discard evaluator on the UI thread. Its only position input
  * is the immutable player view and legal context from that instant. */
 export function analyzeReviewDecision(position: ReviewDecision, alternativeTileId?: number): ReviewAnalysis {
   if (position.engineVersion === 1) return { available: false, reason: "legacy-rules" };
+  if (position.engineVersion === 3) return { available: false, reason: "variant-evaluator" };
   if (position.kind !== "turn" || position.action.type !== "discard") return { available: false, reason: "not-a-discard" };
   const advice = adviseDiscard(position.view, position.context);
   return { available: true, advice, comparison: compareDiscards(advice, position.action.tileId, alternativeTileId) };
@@ -180,6 +211,7 @@ function positionHasOffer(position: ReviewDecision): boolean {
  * only the view and context of the moment itself. */
 export function analyzeReviewMoments(review: DecisionReview, position: ReviewDecision): ReviewMomentAnalysis {
   if (position.engineVersion === 1) return { available: false, reason: "legacy-rules" };
+  if (position.engineVersion === 3) return { available: false, reason: "no-moment" };
   // Hand-built reviews (older fixtures) may omit the moments field;
   // treat that as a game with no recorded moments.
   const record = (review.moments ?? []).find((m) => m.decisionIndex === position.decisionIndex);

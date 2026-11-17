@@ -6,7 +6,7 @@ for the review core and UI and [rulesets](rulesets.md) for the named profile.
 
 ## Envelopes
 
-New games serialize as schema 2:
+New **Riichi** games continue to serialize as schema 2:
 
 ```json
 {
@@ -108,3 +108,20 @@ puzzle/graded-position authoring pipeline, richer decision markers, asynchronous
 deep analysis, concurrent account conflict resolution and incremental gameplay
 execution. Final integrated UI/browser results belong to the learning PR; core
 model tests alone do not establish all these workflows.
+
+
+## Chinese-family schema 3
+
+```json
+{"v":3,"engineVersion":3,"aiVersion":1,"variant":"taiwanese","ruleset":{"id":"openmahjong-taiwanese-every-flower","version":1},"seed":"example","length":"full","humanSeat":0,"id":"client-uuid","decisions":[]}
+```
+
+The registry accepts only the canonical profile for the selected variant, its supported version, engine3/AI1 and east/south/full length. Shared `validateVariantReplay` serves client and server. The bound is 50,000 actions and **2 MiB minus 4 KiB of UTF-8 JSON**, reserving space for the surrounding upload envelope. Old schemas keep their existing 20,000-action limits. The larger new bound accommodates long Taiwanese dealer repeats; it does not weaken tile/count/identity checks.
+
+`VariantRunner` consumes the exact action prefix, checks every answer against the pending legal view/context, then invokes CPU seat drivers only for new decisions. Invalid human answers are rejected before generator mutation. `GameRunner.restore` explicitly refuses schema3. No schema1/2 is upgraded or reinterpreted as another variant. A new variant retains its profile on local saves, private resume, game summaries and history/statistics; unknown combinations fail explicitly.
+
+Full reconstruction material (including concealed tiles, flower/quad events and exact chi hints) is retained outside coach inputs. `reconstructReview` builds immutable decision-time public views and all-event data once; `BoardTimeline` checkpoints every16events. Seeking folds at most15 later events and never replays the engine. Concealed opponent quads are masked in MCR and Taiwanese, including physical IDs, even though full reconstruction retains their actual identities. Historical views never overwrite the active runner or resume slot.
+
+Taiwanese restriction hooks replay passed wins, prohibited claim swaps, passed pungs and exposed-quad self-draw restrictions. Its sixteen/seventeen-tile hand size and quad extras are validated by the five-set adapter and rendered without thirteen/fourteen-tile slicing. See [Taiwanese audit](../rules/taiwanese.md).
+
+Versioned **in-person scoring ledgers** are not replays; [their API and conflict semantics](in-person.md) are separate. CPU records remain unrated private client claims, while ledger writes are validated with the shared completed-hand scoring/payment functions.

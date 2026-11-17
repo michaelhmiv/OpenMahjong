@@ -86,3 +86,6 @@ adding remote deep analysis, ratings, social sharing or another variant.
 These recommendations are product/engineering inferences from the cited sources
 and this repository's audit. They are not claims that other platforms lack the
 proposed capabilities.
+
+
+Implementation note, 2026-11-17: the statement above about no copied third-party code describes that earlier research pass. The approved implementation now incorporates the pinned MIT MCR algorithm with its full license and readable source; see [provenance](../../packages/engine/vendor/mcr/NOTICE.md). New lesson and reference prose is original.

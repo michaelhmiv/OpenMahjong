@@ -1,0 +1,762 @@
+.game-detail > .learning-content,
+.board-review > .learning-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 16px;
+}
+.game-detail header,
+.board-review header {
+  height: auto;
+  min-height: 60px;
+  gap: 12px;
+}
+.game-detail header button,
+.board-review header button {
+  width: auto;
+  min-width: 44px;
+  font-size: 13px;
+}
+.game-detail header h1,
+.board-review header h1 {
+  font-size: 20px;
+  margin: 0;
+}
+.game-detail .detail-standing {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.game-detail .detail-standing span:last-child {
+  grid-column: 1/-1;
+  color: var(--dim);
+}
+.detail-hand {
+  width: 100%;
+  text-align: left;
+  margin: 5px 0;
+  white-space: normal;
+}
+.board-review .learning-content {
+  padding: 12px;
+}
+.board-review select,
+.board-review input[type="range"] {
+  width: 100%;
+  min-height: 44px;
+  margin: 6px 0;
+}
+.timeline-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.timeline-controls button {
+  font-size: 12px;
+  min-height: 44px;
+  padding: 6px;
+}
+.review-board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: var(--bg);
+  border-radius: 20px;
+  padding: 10px;
+}
+.board-seat {
+  min-width: 0;
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 8px;
+}
+.board-seat h2 {
+  font-family: Figtree, sans-serif;
+  font-size: 12px;
+  margin: 0 0 6px;
+}
+.board-seat-0,
+.board-seat-2 {
+  grid-column: 1/-1;
+}
+.board-seat-2 {
+  grid-row: 1;
+}
+.board-seat-3 {
+  grid-row: 2;
+  grid-column: 1;
+}
+.board-seat-1 {
+  grid-row: 2;
+  grid-column: 2;
+}
+.board-center {
+  grid-column: 1/-1;
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 12px;
+}
+.board-seat-0 {
+  grid-row: 4;
+}
+.board-tiles {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.learning-shell .board-tiles .tile {
+  width: 20px;
+  height: 28px;
+  min-width: 20px;
+}
+.board-tile-back {
+  display: inline-block;
+  width: 12px;
+  height: 18px;
+  background: #33503f;
+  border-bottom: 3px solid #223528;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px #0d1812;
+}
+.board-pond {
+  margin-top: 8px;
+}
+.board-pond > span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.board-pond small {
+  font-size: 11px;
+}
+.board-pond .called {
+  opacity: 0.65;
+}
+.board-meld {
+  margin: 6px 0;
+  font-size: 11px;
+}
+.board-advice .learning-shell {
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+.board-advice .learning-content {
+  overflow: visible;
+  padding: 12px 0;
+}
+.timeline-status {
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+}
+
+.game-detail header button.primary,
+.board-review header button.primary {
+  width: 44px;
+  min-width: 44px;
+  flex: 0 0 44px;
+  background: transparent;
+  font-size: 24px;
+  padding: 0;
+}
+.board-review input[type="range"] {
+  accent-color: var(--state);
+}
+.learning-shell .board-seat h2 {
+  font:
+    600 12px/1.4 Figtree,
+    sans-serif;
+}
+.table-tools {
+  height: 100%;
+}
+.table-tools header {
+  min-height: 60px;
+  height: auto;
+  gap: 12px;
+}
+.table-tools header button {
+  width: 44px;
+  flex: 0 0 44px;
+  font-size: 24px;
+}
+.table-tools header h1 {
+  font-size: 22px;
+  margin: 0;
+}
+.tools-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tools-content > * {
+  flex-shrink: 0;
+}
+.table-tools .card,
+.game-detail .card,
+.board-review .card {
+  max-height: none;
+  overflow: visible;
+  box-shadow: none;
+}
+.table-tools .tool-scores {
+  overflow: visible;
+  min-height: max-content;
+}
+.tools-content form,
+.tool-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tool-field {
+  font-size: 13px;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.tool-field:has(input[type="checkbox"]) {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+}
+.tool-field input,
+.tool-field select {
+  width: 100%;
+  min-height: 44px;
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  padding: 8px;
+}
+.tool-field input[type="checkbox"] {
+  width: 24px;
+  min-height: 24px;
+  accent-color: var(--state);
+}
+.tool-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.table-tools button {
+  min-height: 44px;
+  border-radius: 20px;
+  white-space: normal;
+  padding: 10px 14px;
+  line-height: 1.3;
+}
+.table-tools .tool-session {
+  text-align: left;
+  background: var(--panel);
+  color: var(--ink);
+}
+.tool-tile-picker {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+  margin: 12px 0;
+}
+.tool-tile-row {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.table-tools .tile-choice {
+  padding: 4px;
+  min-width: 44px;
+  min-height: 48px;
+  background: transparent;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-tools .tile-choice .tile,
+.table-tools .tool-meld .tile {
+  width: 25px;
+  height: 35px;
+}
+.tool-meld {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 8px 0;
+}
+.table-tools [aria-pressed="true"] {
+  outline: 2px solid var(--state);
+  outline-offset: -2px;
+}
+.calculator-output,
+.ledger-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.payment-lines {
+  background: var(--panel);
+  border-radius: 20px;
+  padding: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.payment-lines p:last-child {
+  margin-bottom: 0;
+}
+.tool-status:not(:empty) {
+  padding: 10px;
+  background: var(--panel);
+  border-radius: 12px;
+}
+.table-tools-entry {
+  margin-top: 10px;
+  font-size: 13px;
+  min-height: 44px;
+}
+.play-variant-label {
+  width: 100%;
+  font-size: 12px;
+  color: var(--dim);
+  margin-bottom: 8px;
+}
+.play-variant {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px;
+  font: inherit;
+}
+.variant-table header,
+.variant-education header {
+  min-height: 60px;
+  height: auto;
+  gap: 12px;
+}
+.variant-table header button,
+.variant-education header button {
+  width: 44px;
+  flex: 0 0 44px;
+  padding: 0;
+  font-size: 24px;
+  background: transparent;
+}
+.variant-table header h1,
+.variant-education header h1 {
+  font-size: 21px;
+  margin: 0;
+}
+.variant-table-content,
+.variant-education-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.variant-table-content > *,
+.variant-education-content > * {
+  flex-shrink: 0;
+}
+.variant-table button,
+.variant-education button {
+  min-height: 44px;
+  font: inherit;
+  line-height: 1.3;
+  border-radius: 14px;
+  padding: 8px 12px;
+  color: var(--ink);
+}
+.variant-table .card,
+.variant-education .card {
+  max-height: none;
+  overflow: visible;
+  box-shadow: none;
+}
+.variant-center {
+  display: grid;
+  grid-template-columns: 1fr auto 48px;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  min-height: 64px;
+}
+.variant-selection-preview {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.variant-selection-preview .tile {
+  width: 38px;
+  height: 53px;
+}
+.variant-large .variant-selection-preview .tile {
+  width: 42px;
+  height: 59px;
+}
+.variant-public-board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.variant-opponent {
+  min-width: 0;
+  background: var(--panel);
+  padding: 7px;
+  border-radius: 12px;
+  font-size: 11px;
+}
+.variant-opponent .opponent-label {
+  width: 100%;
+  background: transparent;
+  font-size: 12px;
+  text-align: left;
+  padding: 4px;
+}
+.opponent-2 {
+  grid-column: 1/-1;
+  grid-row: 1;
+}
+.opponent-3 {
+  grid-column: 1;
+  grid-row: 2;
+}
+.opponent-1 {
+  grid-column: 2;
+  grid-row: 2;
+}
+.variant-public-board .board-tiles .tile {
+  width: 17px;
+  height: 24px;
+}
+.variant-public-board .board-tiles .called {
+  opacity: 0.65;
+}
+.variant-own-hand h2 {
+  font:
+    600 13px/1.4 Figtree,
+    sans-serif;
+  margin-bottom: 6px;
+}
+.variant-hand-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 3px;
+}
+.variant-hand-grid .variant-hand-tile {
+  min-width: 0;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  background: transparent;
+  border-radius: 8px;
+}
+.variant-hand-tile .tile {
+  width: 25px;
+  height: 35px;
+}
+.variant-large .variant-hand-tile .tile {
+  width: 28px;
+  height: 39px;
+}
+.variant-hand-tile[aria-pressed="true"] {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+.variant-hand-tile.coach-choice {
+  box-shadow: inset 0 0 0 2px var(--state);
+}
+.variant-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.variant-actions > *:only-child,
+.variant-breakdown {
+  grid-column: 1/-1;
+}
+.variant-coach {
+  background: var(--panel);
+  border-radius: 20px;
+  padding: 12px;
+  font-size: 13px;
+}
+.variant-coach:empty {
+  display: none;
+}
+.variant-focus {
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  max-width: calc(100vw - 24px);
+  width: 420px;
+  padding: 20px;
+  margin: auto;
+  max-height: 90vh;
+  overflow: auto;
+  font:
+    14px/1.5 Figtree,
+    sans-serif;
+}
+.variant-focus::backdrop {
+  background: #0d1812cc;
+}
+.variant-focus h2 {
+  font-family: Fraunces, serif;
+}
+.variant-focus-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(48px, 1fr));
+  gap: 6px;
+  margin: 12px 0;
+}
+.variant-focus-tiles .tile-choice {
+  padding: 0;
+  background: transparent;
+}
+.variant-focus-tiles .tile {
+  width: 48px;
+  height: 67px;
+}
+.variant-education-content {
+  line-height: 1.6;
+  padding: 16px;
+}
+.variant-education-content .variant-example-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  padding: 12px 0;
+}
+.variant-example-tiles .tile {
+  width: 25px;
+  height: 35px;
+}
+.variant-answers {
+  display: grid;
+  gap: 8px;
+}
+.variant-answers [aria-pressed="true"] {
+  outline: 2px solid var(--ink);
+}
+.variant-education select {
+  min-height: 44px;
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  padding: 8px;
+  max-width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.variant-learn-section {
+  margin-top: 16px;
+}
+.variant-learn-section summary {
+  min-height: 44px;
+  padding: 10px 0;
+  font:
+    600 18px/1.4 Fraunces,
+    serif;
+  cursor: pointer;
+}
+.variant-learn-section progress {
+  width: 100%;
+  height: 8px;
+  margin: 6px 0 12px;
+  accent-color: var(--state);
+}
+/* Variant boards retain v4 side-pond geometry and the 13th-discard
+   transition. Native controls extend the hand into 2 rows (3 for TW). */
+.variant-table header h1 {
+  flex: 1;
+  font:
+    600 20px/1.2 Fraunces,
+    serif;
+}
+.variant-table-content {
+  position: relative;
+}
+.variant-public-board.variant-v4 {
+  display: block;
+  width: 100%;
+  max-width: 390px;
+  margin: 0 auto;
+}
+.variant-v4 .band {
+  padding: 10px 0 0;
+  margin: 0;
+}
+.variant-v4 .bandtop {
+  height: 44px;
+}
+.variant-v4 .stage-mid {
+  height: 248px;
+}
+.variant-v4 .chip {
+  font:
+    500 11px/1.3 Figtree,
+    sans-serif;
+  min-height: 44px;
+  padding: 4px 8px;
+}
+.variant-v4 .center {
+  font-size: 13px;
+  padding: 8px;
+  border-radius: 14px;
+}
+.variant-v4 .pond:empty {
+  min-height: 8px;
+}
+.variant-v4 .opp-hand {
+  flex-wrap: wrap;
+  row-gap: 2px;
+}
+.variant-v4 .t-back {
+  width: 20px;
+  height: 28px;
+}
+.variant-v4 .sidehand .tile {
+  margin-top: -10px;
+}
+.variant-v4 .sidehand .tile:first-child {
+  margin-top: 0;
+}
+.variant-v4 .pond {
+  grid-template-columns: repeat(6, 25px);
+}
+.variant-v4 .t-pond {
+  width: 25px;
+  height: 35px;
+}
+.variant-v4 .sp:has(> .cell:nth-child(13)),
+.variant-v4.variant-large .sp {
+  grid-template-rows: repeat(9, 22px);
+  gap: 6px 3px;
+}
+.variant-v4 .sp:has(> .cell:nth-child(13)) .cell,
+.variant-v4.variant-large .sp .cell {
+  width: 31px;
+  height: 22px;
+}
+.variant-v4 .sp:has(> .cell:nth-child(13)) .tile,
+.variant-v4.variant-large .sp .tile {
+  width: 22px;
+  height: 31px;
+}
+.variant-v4.variant-large .pond {
+  grid-template-columns: repeat(6, 22px);
+}
+.variant-v4.variant-large .t-pond {
+  width: 22px;
+  height: 31px;
+}
+.variant-board-sets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+  margin-top: 4px;
+}
+.variant-board-sets:empty {
+  display: none;
+}
+.variant-board-sets .meld {
+  margin-left: 4px;
+  gap: 1px;
+}
+.variant-board-sets .t-meld {
+  width: 17px;
+  height: 24px;
+}
+.variant-side-sets {
+  display: flex;
+  justify-content: space-between;
+  gap: 80px;
+}
+.variant-side-sets > * {
+  max-width: 45%;
+}
+.variant-my-pond {
+  margin: 5px 0;
+}
+.variant-coach.variant-floating {
+  position: absolute;
+  z-index: 3;
+  left: 12px;
+  right: 12px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  font-size: 12px;
+}
+.variant-floating button {
+  width: 100%;
+}
+.variant-table:has(dialog[open]) .variant-floating {
+  display: none;
+}
+.variant-focus {
+  width: 390px;
+  max-width: calc(100vw - 8px);
+  padding: 16px;
+}
+.variant-focus > button {
+  margin: 4px 0;
+}
+.variant-focus-tiles {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px 2px;
+}
+.variant-education input[type="search"] {
+  min-height: 44px;
+  padding: 8px;
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  width: 100%;
+}
+.variant-education details {
+  padding: 6px 0;
+}
+.variant-education summary {
+  min-height: 44px;
+  cursor: pointer;
+}
+@media (max-width: 375px) {
+  .variant-focus-tiles {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 375px) {
+  .variant-v4 .center {
+    width: 140px;
+  }
+  .variant-v4 .center .round .wind {
+    font-size: 28px;
+  }
+}

@@ -266,11 +266,8 @@ export function createPracticeView(options: PracticeViewOptions): HTMLElement {
     content.append(stats);
     const supplement = options.renderSupplement?.();
     if (supplement) content.append(supplement);
+    if (options.onReview) content.append(button("Return to review", "primary", options.onReview));
     root.append(content);
-    const nav = el("nav", "learning-nav"); nav.setAttribute("aria-label", "Learning navigation");
-    const current = button("Practice", "", () => {}); current.setAttribute("aria-current", "page"); nav.append(current);
-    if (options.onReview) nav.append(button("Review", "", options.onReview));
-    root.append(nav);
   }
   saveSession(); render(); return root;
 }

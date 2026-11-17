@@ -307,6 +307,7 @@ export class GameRunner {
 
   static restore(input: unknown, aiDriver: SeatDriver): GameRunner {
     const saved = validateSavedGame(input);
+    if (saved.v === 3) throw new Error("Use the variant runner for schema-3 records");
     const runner = new GameRunner({
       seed: saved.seed,
       length: saved.length,

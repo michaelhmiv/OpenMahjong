@@ -1,5 +1,7 @@
 # Master brief implementation status
 
+Program update (2026-11-17): the table below is the earlier audit baseline. The approved five-issue program adds indexed board review, in-person ledgers/calculators and three executable variants; see [current verification and issue-by-issue status](program-verification.md) and the [program authority](../implementation-program.md).
+
 Status date: November 16, 2026. Baseline: `989927b`. This register maps every
 numbered section of the supplied master brief to actual code or documentation
 and the remaining acceptance gate. It describes the implementation stack, not a

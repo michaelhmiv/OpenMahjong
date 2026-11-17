@@ -1,5 +1,5 @@
 /** Versioned, bounded replay data. No DOM, storage, or engine execution. */
-import { DEFAULT_RULESET, type GameLength, type Seat } from "@openmahjong/engine";
+import { DEFAULT_RULESET, validateVariantReplay, type VariantReplay, type GameLength, type Seat } from "@openmahjong/engine";
 import { AI_POLICY_VERSION } from "@openmahjong/ai";
 import type { Decision } from "./runner.js";
 
@@ -51,7 +51,7 @@ export interface MomentRecord {
   readonly shouminkanOptions?: readonly number[];
   readonly riichiDiscardIds?: readonly number[];
 }
-export type SavedGame = LegacySavedGame | CurrentSavedGame;
+export type SavedGame = LegacySavedGame | CurrentSavedGame | VariantReplay;
 
 export class ReplayValidationError extends Error {
   override readonly name = "ReplayValidationError";
@@ -145,7 +145,9 @@ function validateMoment(value: unknown, decisions: readonly Decision[]): MomentR
 /** Structural validation precedes any reconstruction of untrusted data.
  * Legality and complete log consumption are checked by GameRunner. */
 export function validateSavedGame(value: unknown): SavedGame {
+  if (record(value) && value["v"] === 3) return validateVariantReplay(value);
   requireValid(record(value), "Replay must be an object");
+  requireValid(value["variant"] === undefined || value["variant"] === "riichi", "Old replay schemas support Riichi only");
   requireValid(value["v"] === 1 || value["v"] === 2, "Unsupported saved game version");
   requireValid(typeof value["seed"] === "string" && value["seed"].length <= 256, "Invalid replay seed");
   requireValid(value["length"] === "east" || value["length"] === "south", "Invalid game length");

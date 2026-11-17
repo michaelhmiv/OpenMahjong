@@ -169,7 +169,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run build --workspace=@openmahjong/web
+      - run: npm run build
       - run: npx playwright-core install --with-deps chromium
       - name: Guest, lessons, accessibility, replay, and offline smoke
         run: |
@@ -179,6 +179,15 @@ jobs:
             sleep 1
           done
           npm run test:browser -- http://127.0.0.1:4173 work/browser-smoke
+          node scripts/browser-in-person.mjs http://127.0.0.1:4173 work/program-evidence/riichi-tools
+          for variant in hong-kong mcr taiwanese; do
+            node scripts/browser-variants.mjs http://127.0.0.1:4173 work/program-evidence/variants "$variant"
+          done
+          node scripts/browser-variant-calculators.mjs http://127.0.0.1:4173 work/program-evidence/calculators
+          node scripts/browser-variant-sizing.mjs http://127.0.0.1:4173 work/program-evidence/sizing
+          node scripts/browser-review-timeline.mjs http://127.0.0.1:4173 work/program-evidence/review
+          node scripts/browser-table-sync.mjs http://127.0.0.1:4173 work/program-evidence/sync
+          node scripts/index-program-evidence.mjs work/program-evidence
         env:
           BROWSER_FULL_GAME: "1"
       - uses: actions/upload-artifact@v4
@@ -187,4 +196,29 @@ jobs:
           name: browser-evidence
           path: |
             work/browser-smoke/
+            work/program-evidence/
             /tmp/openmahjong-web.log
+
+  postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: openmahjong_test
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d openmahjong_test"
+          --health-interval 5s --health-timeout 3s --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx vitest run packages/server/test/postgres-integration.test.ts
+        env:
+          OPENMAHJONG_TEST_DB: postgresql://postgres@127.0.0.1:5432/openmahjong_test

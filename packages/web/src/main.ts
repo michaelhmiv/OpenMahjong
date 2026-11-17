@@ -1,6 +1,7 @@
 import { App } from "./app.js";
 import "./styles.css";
 import "./learning.css";
+import "./tools.css";
 
 const root = document.getElementById("app");
 if (!root) throw new Error("Missing #app root element");
