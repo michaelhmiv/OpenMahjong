@@ -25,7 +25,7 @@ describe("PgStore resume mapping", () => {
   it("maps the in-progress row to a ResumeEntry and back", async () => {
     const savedAt = new Date("2026-11-16T15:04:05.000Z");
     const state = { v: 2, seed: "om-x", length: "east", humanSeat: 1, decisions: [] };
-    const query = vi.fn(async (sql: string) => {
+    const query = vi.fn(async (sql: string, _params?: unknown[]) => {
       if (sql.startsWith("SELECT state, client_saved_at")) {
         return { rows: [{ state, client_saved_at: savedAt }] };
       }
