@@ -63,19 +63,29 @@ or cream accents, not gold. (This rule exists because a shared
 v6 mockups; QC caught it. Do not reintroduce a single accent variable
 that carries gold into states.)
 
+The medium surface system (§15) adds one text-grade derivative of
+the chun sprite red for small dealer text on tint surfaces:
+#9e2b25 (4.66:1 on the face tint, 5.40:1 on the sheet tint). The
+sprite red #bf3b34 itself is reserved for tile glyphs and for
+graphic marks (the dealer ring), never for text below 18px on a
+tint surface.
+
 ## 3. Type system
 
 Two self-hosted variable fonts (SIL OFL 1.1), in `public/fonts/`:
 Fraunces and Figtree. No other UI typeface. No webfont downloads at
 runtime.
 
-- **Fraunces** — display roles only: the wordmark (weight 650, 30px,
-  letter-spacing 0.045em on home), the Play button label (600), card
-  titles, and the Last game value line.
-- **Figtree** — everything else: buttons, pills, segment control,
-  record strip, labels, body text, scores, settings, history.
-- Figures are tabular wherever numbers align or update:
-  `font-variant-numeric: tabular-nums` (Figtree's `tnum`).
+Two typefaces, two roles (Material's brand/plain split).
+**Fraunces is the brand face**: the wordmark and screen titles —
+the title at the top of every screen, tab roots included — at
+their existing sizes. **Figtree is the plain face**: section
+labels, buttons, body, and all tabular figures (with
+`font-variant-numeric: tabular-nums` where figures align).
+In-screen section heads already set in Fraunces keep it. No other
+element takes Fraunces; a design that wants it elsewhere amends
+this section first.
+
 - Tile kanji use the CJK stack (`"Noto Sans CJK SC", "Noto Sans CJK
   JP", sans-serif`) — that is a glyph font, not a UI typeface.
 - Type floor: 11px. Nothing renders text below 11px.
@@ -282,7 +292,7 @@ remain backs. The coach comparison appears at the original decision, using the
 existing explained heuristic analysis. Game details and review have no bottom nav.
 
 Play includes an in-person calculator/scorekeeper entry. Its drilled-in screens
-use the same green panels, green/cream selection roles, self-hosted fonts and
+use the medium surface system (§15), self-hosted fonts and
 native-width scrolling shell. Both tile and fast input keep context controls
 visible in the form. Payment lines lead each result; original facts and editable
 corrections follow. Recording requires confirmation. Session history, correction,
@@ -290,3 +300,55 @@ undo, pot disposition and settlement are explicit controls. No account is needed
 for manual use. Games labels these sessions separately from CPU statistics.
 
 Variant table implementation retains the v4 top/side ponds, per-side13th-discard condensation and absolute-sized Focus Frames. Native44px selection targets use two rows of seven for13/14-tile hands and a third row for Taiwanese16/17-tile hands, including Large Tiles. Selected faces stay in a fixed preview slot. Guided hints float above the hand and disappear during calls, playback or an open frame. The additional row is the required five-set extension; existing Riichi table geometry remains untouched. Table settings use the same accessible sheet grammar. All four Learn sections remain collapsible and profile-specific.
+
+## 15. The medium surface system
+
+Locked Nov 17, 2026 (calc-v6 scorekeeper iteration; carried
+across all non-table screens in calc-v7). The in-game table is
+out of scope.
+
+**Tints.** Three surfaces derived from the app's own palette —
+state green #5e9273 mixed toward the tile face #f6f1e4 in sRGB:
+sheet #d8decd (20/80), face #c2d1be (34/66), deep #a7c0a9
+(52/48). Ink on tints is #1c2a20; secondary ink is the tile-back
+#33503f. No other tint or hue may be introduced.
+
+**Emphasis order.** One primary object per screen, one step
+down, then quiet chrome: sheet → face → panel → felt. A screen's
+commit verb wears the sheet tint. The settlement/payment block
+wears the deep tint (a flipped tile). Selected states wear the
+face tint with real tile depth (lit top edge inset, weighted
+drop shadow, four-sided border language, 6px corners on small
+objects, 8px on large surfaces).
+
+**Seats are tile objects.** Anywhere seats or standings appear
+off the table — scorekeeper, review, games — they are small
+tiles in the face tint, never plain boxes.
+
+**The dealer mark is the one color job.** Chun red marks the
+dealer and nothing else: the wind-chip glyph, a full ring on
+the dealer's seat tile, the wind label, or a "Dealer" suffix.
+Red never means selection, error, or emphasis elsewhere.
+Small dealer text on tints uses the text-grade red of §2.
+
+**De-boxing.** One container per unified subject. Lists —
+ledger entries, standings, game rows, hand rows, settings
+rows, session rows — are unboxed: spacing, hairline dividers,
+type hierarchy. An expanded row stays on the list's own
+surface; it never becomes a darker island.
+
+**Actions.** Slim and sharp: 36px visual height, 6px corners,
+with an invisible expansion to a 48px tap area. Text size never
+shrinks to slim a button. Navigation chrome quiets down: the
+back control is a bare 30px/600 glyph with no fill on a 44×44
+tap box.
+
+**Headers (alignment).** A screen's title and its back glyph
+are optically centered on one shared line; measured text-box
+centers must agree within 1px. The back button is a 44×44
+flex box centering the glyph at line-height 1; titles take
+line-height 1.2.
+
+**Density and type.** The shipped screens' information density
+is kept. Type sizes do not change under this system; §3's
+typeface roles are the only typographic change.

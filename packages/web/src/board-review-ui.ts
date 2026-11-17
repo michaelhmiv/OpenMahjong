@@ -177,6 +177,9 @@ export function mountBoardReview(
     for (let relative = 0; relative < 4; relative++) {
       const player = model.players[(timeline.data.humanSeat + relative) % 4]!;
       const area = el("section", "", `board-seat board-seat-${relative}`);
+      // The dealer mark (design rules section 15): medium.css rings
+      // this seat in chun and appends the " · Dealer" suffix.
+      if (player.isDealer) area.setAttribute("data-dealer", "true");
       area.append(
         el(
           "h2",

@@ -3,6 +3,10 @@ import { initAnalytics } from "./analytics.js";
 import "./styles.css";
 import "./learning.css";
 import "./tools.css";
+/* The medium surface system (design rules section 15) loads last:
+   it is a refinement layer over the three sheets above, in the
+   same cascade position the approved calc-v7 frames used. */
+import "./medium.css";
 
 const root = document.getElementById("app");
 if (!root) throw new Error("Missing #app root element");
