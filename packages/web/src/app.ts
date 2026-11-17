@@ -809,12 +809,49 @@ export class App {
 
     const releases = VARIANT_RELEASES.filter(v => v.released);
     if (releases.length) {
-      const label = h("label", {class:"play-variant-label"}, "Variant");
-      const picker = h("select", {"aria-label":"Play variant",class:"play-variant"});
-      for (const [id,name] of [["riichi","Riichi"],...releases.map(v=>[v.id,v.name])]) { const option=h("option",{value:id!},name!); picker.append(option); }
-      picker.value = this.variantChoice;
-      picker.addEventListener("change",()=>{this.variantChoice=picker.value as VariantId | "riichi";this.renderPlay();});
-      label.append(picker);body.append(label);
+      // Variant picker: a .seg control, not a select (approved rendering
+      // play-picker-v1 option B, Michael 2026-11-17; design rules
+      // section 6). Content-sized segments at 12px so the four shipped
+      // names fit four-across; radio-group semantics with roving
+      // tabindex and arrow-key movement, matching the old select's
+      // behaviour exactly (set variantChoice, re-render).
+      const wrap = h("div", { class: "play-variant-label" }, "Variant");
+      const picker = h("div", { class: "seg play-variant-seg", role: "radiogroup", "aria-label": "Play variant" });
+      const choices: [VariantId | "riichi", string][] = [
+        ["riichi", "Riichi"],
+        ...releases.map(v => [v.id, v.name] as [VariantId | "riichi", string]),
+      ];
+      const choose = (id: VariantId | "riichi") => {
+        if (this.variantChoice === id) return;
+        this.variantChoice = id;
+        this.renderPlay();
+      };
+      choices.forEach(([id, name], i) => {
+        const selected = this.variantChoice === id;
+        const b = h("button", {
+          type: "button",
+          class: selected ? "on" : "",
+          role: "radio",
+          "aria-checked": String(selected),
+          tabindex: selected ? "0" : "-1",
+        }, name);
+        b.addEventListener("click", () => choose(id));
+        b.addEventListener("keydown", (ev) => {
+          let next: number | null = null;
+          if (ev.key === "ArrowRight" || ev.key === "ArrowDown") next = (i + 1) % choices.length;
+          else if (ev.key === "ArrowLeft" || ev.key === "ArrowUp") next = (i + choices.length - 1) % choices.length;
+          else if (ev.key === "Home") next = 0;
+          else if (ev.key === "End") next = choices.length - 1;
+          if (next === null || next === i) return;
+          ev.preventDefault();
+          choose(choices[next]![0]);
+          // renderPlay rebuilt the seg; move focus to the new selection.
+          el.querySelectorAll<HTMLButtonElement>(".play-variant-seg button")[next]?.focus();
+        });
+        picker.append(b);
+      });
+      wrap.append(picker);
+      body.append(wrap);
     }
     const seg = h("div", { class: "seg" });
     const mkSeg = (label: string, len: GameLength) => {

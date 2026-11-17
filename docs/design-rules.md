@@ -246,11 +246,15 @@ records the shell the renderings specify.)
   is precious; the board and its tools get all of it.
 - Play is the former landing, restructured: wordmark (alone, per
   section 7), the section-4 fan, the motif row in the fresh state,
-  the Continue card when a game is in progress, the length segment
-  control, the guided row, Play, the record strip when the account
-  has stats, the tile-back wall, and the AdSense slot at the foot
-  (section 2's geometry unchanged). Sign-in lives on More, never
-  on Play.
+  the Continue card when a game is in progress, the variant segment
+  control, the length segment control, the guided row, Play, the
+  record strip when the account has stats, the tile-back wall, and
+  the AdSense slot at the foot (section 2's geometry unchanged).
+  Sign-in lives on More, never on Play. The variant picker is a
+  `.seg` control with content-sized segments and 12px labels — the
+  four shipped names (Riichi, Hong Kong Old Style, MCR, Taiwanese)
+  do not fit four-across at the segment control's 14px (approved
+  rendering play-picker-v1, option B, 2026-11-17).
 - Learn organizes lessons in collapsible per-variant sections
   (today: Riichi), each with its own progress bar (state green,
   section 2). Hong Kong, MCR, and Taiwanese sections slot into the
