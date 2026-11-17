@@ -4,6 +4,9 @@ import { SKILLS, type SkillId } from "./curriculum.js";
 
 export const REVIEW_COLLECTION_KEY = "openmahjong.review-practice.v1";
 export const MAX_REVIEW_POSITIONS = 50;
+// References cover the largest supported (schema-three) log. Resolving the
+// record still validates its actual variant, version and decision count.
+export const MAX_REFERENCED_DECISIONS = 50_000;
 export interface ReviewPracticePosition {
   readonly recordId: string;
   readonly decisionIndex: number;
@@ -23,7 +26,7 @@ function position(value: unknown): ReviewPracticePosition | null {
   if (!object(value)) return null;
   const { recordId, decisionIndex, skills, addedAt } = value;
   if (typeof recordId !== "string" || !recordId.trim() || recordId.length > 128 ||
-      typeof decisionIndex !== "number" || !Number.isSafeInteger(decisionIndex) || decisionIndex < 0 || decisionIndex >= 20_000 ||
+      typeof decisionIndex !== "number" || !Number.isSafeInteger(decisionIndex) || decisionIndex < 0 || decisionIndex >= MAX_REFERENCED_DECISIONS ||
       typeof addedAt !== "number" || !Number.isSafeInteger(addedAt) || addedAt < 0 || addedAt > 8_000_000_000_000_000 ||
       !Array.isArray(skills) || skills.length > SKILLS.length ||
       !skills.every((skill) => SKILLS.includes(skill))) return null;
