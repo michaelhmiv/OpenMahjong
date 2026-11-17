@@ -1,0 +1,44 @@
+name: QC51 measurement (independent, PR #51)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright-core install --with-deps chromium
+      - name: Serve PR head build on 4176
+        run: |
+          PORT=4176 node packages/web/server.mjs > /tmp/qc51-web.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            curl --fail --silent http://127.0.0.1:4176/ > /dev/null && break
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:4176/ > /dev/null
+      - name: QC part A (tabs, learn, practice, games)
+        run: node qc51/qc.mjs > /tmp/qc51-a.log 2>&1; echo "exit=$?" >> /tmp/qc51-a.log; tail -5 /tmp/qc51-a.log
+      - name: QC part A2 (variant lesson, more)
+        run: node qc51/qc-a2.mjs > /tmp/qc51-a2.log 2>&1; echo "exit=$?" >> /tmp/qc51-a2.log; tail -5 /tmp/qc51-a2.log
+      - name: QC part B (tables)
+        run: node qc51/qc-b.mjs > /tmp/qc51-b.log 2>&1; echo "exit=$?" >> /tmp/qc51-b.log; tail -5 /tmp/qc51-b.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qc51-out
+          path: |
+            qc51/out/
+            /tmp/qc51-a.log
+            /tmp/qc51-a2.log
+            /tmp/qc51-b.log
+            /tmp/qc51-web.log
