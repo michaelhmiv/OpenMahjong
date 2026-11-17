@@ -6,9 +6,14 @@ import type { TurnAdvice } from "./advice.js";
  * of replay serialization and the selected rules profile. */
 export const ANALYSIS_VERSION = "discard-analysis-2" as const;
 
+/** The moment evaluators (coaching remainder brief, G1–G4) carry their
+ * own version: their facts and judgments are a different contract
+ * from the discard analysis. */
+export const MOMENT_ANALYSIS_VERSION = "moment-analysis-1" as const;
+
 export interface AnalysisEvidence {
   readonly schemaVersion: 1;
-  readonly analysisVersion: typeof ANALYSIS_VERSION;
+  readonly analysisVersion: typeof ANALYSIS_VERSION | typeof MOMENT_ANALYSIS_VERSION;
   readonly engineVersion: typeof ENGINE_VERSION;
   readonly policyVersion: typeof AI_POLICY_VERSION;
   readonly ruleset: RulesetReference;
@@ -37,6 +42,32 @@ export function playerPerspectiveEvidence(): AnalysisEvidence {
       "Discard furiten excludes temporary and riichi-pass furiten, which PlayerView does not expose.",
       "Defense models riichi threats only. Suji and kabe are heuristics, not proof of safety.",
       "The policy is not an optimal-play oracle; no win probability, expected value or calibrated numerical grade is computed.",
+    ],
+  };
+}
+
+/** Evidence for the moment evaluators (calls, kans, riichi, win
+ * choices). Same player-perspective boundary as the discard analysis;
+ * the facts and limitations name what a moment read can and cannot
+ * know — a kan's new indicator tile and a riichi hand's ura dora are
+ * hidden, so those consequences are stated as exposure and minimums,
+ * never as values. */
+export function momentPerspectiveEvidence(): AnalysisEvidence {
+  return {
+    schemaVersion: 1,
+    analysisVersion: MOMENT_ANALYSIS_VERSION,
+    engineVersion: ENGINE_VERSION,
+    policyVersion: AI_POLICY_VERSION,
+    ruleset: { id: DEFAULT_RULESET.id, version: DEFAULT_RULESET.version },
+    informationMode: "player-perspective",
+    exactFacts: ["call-offers", "shanten-before-after", "unseen-copy-counts", "win-values-from-visible-dora", "furiten-consequences", "kan-dora-exposure", "score-and-round-context"],
+    heuristicAssessments: ["call-ranking", "yaku-path-reachability", "riichi-versus-dama", "win-now-versus-ceiling"],
+    limitations: [
+      "The tile a kan reveals as the next dora indicator sits in the dead wall and is unknowable; only exposure — how many owned tiles could become dora — is computed.",
+      "Win values for a hand in riichi exclude ura dora, which stay hidden until the hand ends; a stated riichi win value is a minimum.",
+      "Yaku-path reachability covers the main paths (yakuhai, all simples, one suit, seven pairs, thirteen orphans, riichi); rarer paths such as three-colour runs are not enumerated.",
+      "The policy is not an optimal-play oracle; no win probability, expected value or calibrated numerical grade is computed.",
+      "A first-draw win (tenhou or chiihou) is not probed; the engine scores the real win if it is taken.",
     ],
   };
 }

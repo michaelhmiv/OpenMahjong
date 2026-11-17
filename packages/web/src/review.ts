@@ -5,8 +5,11 @@ import {
   type CallAction, type CallContext, type PlayerView, type Policy,
   type TurnAction, type TurnContext,
 } from "@openmahjong/engine";
-import { adviseDiscard, compareDiscards, type DiscardComparison, type TurnAdvice } from "@openmahjong/coach";
-import { validateSavedGame } from "./replay.js";
+import {
+  adviseCall, adviseDiscard, adviseKan, adviseRiichi, adviseWin, compareDiscards,
+  type CallAdvice, type DiscardComparison, type KanAdvice, type RiichiGrade, type TurnAdvice, type WinAdvice,
+} from "@openmahjong/coach";
+import { validateSavedGame, type MomentRecord } from "./replay.js";
 
 interface DecisionPositionBase {
   /** Index in the complete four-seat decision log, not just human actions. */
@@ -28,6 +31,9 @@ export interface DecisionReview {
   readonly complete: boolean;
   readonly consumedDecisions: number;
   readonly positions: readonly ReviewDecision[];
+  /** Validated moment records from the saved game (empty when the
+   * game predates moment capture or is a legacy replay). */
+  readonly moments: readonly MomentRecord[];
 }
 class EndOfRecordedPrefix {}
 const TURN_TYPES = new Set(["discard", "ankan", "shouminkan", "tsumo", "kyuushu"]);
@@ -91,7 +97,8 @@ export function buildDecisionReview(input: unknown): DecisionReview {
     if (!(error instanceof EndOfRecordedPrefix)) throw error;
   }
   return Object.freeze({ schemaVersion: 1, engineVersion, complete, consumedDecisions: cursor,
-    positions: Object.freeze(positions) });
+    positions: Object.freeze(positions),
+    moments: Object.freeze(saved.v === 2 && saved.moments ? [...saved.moments] : []) });
 }
 
 export type ReviewAnalysis =
@@ -106,6 +113,97 @@ export function analyzeReviewDecision(position: ReviewDecision, alternativeTileI
   if (position.kind !== "turn" || position.action.type !== "discard") return { available: false, reason: "not-a-discard" };
   const advice = adviseDiscard(position.view, position.context);
   return { available: true, advice, comparison: compareDiscards(advice, position.action.tileId, alternativeTileId) };
+}
+
+// ---------------------------------------------------------------------------
+// Coaching moments (G1–G4): call / kan / riichi / win grades
+// ---------------------------------------------------------------------------
+
+export type MomentGrade =
+  | { readonly kind: "call"; readonly advice: CallAdvice }
+  | { readonly kind: "kan"; readonly advice: KanAdvice }
+  | { readonly kind: "riichi"; readonly advice: RiichiGrade }
+  | { readonly kind: "win"; readonly advice: WinAdvice };
+
+export type ReviewMomentAnalysis =
+  | { readonly available: true; readonly grades: readonly MomentGrade[] }
+  /** legacy-rules: engine v1 replay. not-recorded: the window held a
+   * graded offer but the game predates moment capture. unverified:
+   * a record exists but its offers do not match the reconstructed
+   * position — never grade from an unverified record. no-moment:
+   * the window held no graded offer. */
+  | { readonly available: false; readonly reason: "legacy-rules" | "not-recorded" | "unverified" | "no-moment" };
+
+function sameIds(a: readonly number[], b: readonly number[]): boolean {
+  return a.length === b.length && a.every((value, i) => value === b[i]);
+}
+
+function recordMatchesPosition(record: MomentRecord, position: ReviewDecision): boolean {
+  if (record.kind !== position.kind) return false;
+  if (JSON.stringify(record.choice) !== JSON.stringify(position.action)) return false;
+  if (position.kind === "call") {
+    const ctx = position.context;
+    return (
+      record.phase === ctx.phase &&
+      record.tileType === ctx.tile.type &&
+      record.fromSeat === ctx.fromSeat &&
+      record.canRon === ctx.canRon &&
+      record.canPon === ctx.canPon &&
+      record.canKan === ctx.canKan &&
+      JSON.stringify(record.chiOptions ?? []) === JSON.stringify(ctx.chiOptions)
+    );
+  }
+  const ctx = position.context;
+  return (
+    record.canTsumo === ctx.canTsumo &&
+    record.drawnTileType === (ctx.drawnTile?.type ?? null) &&
+    sameIds(record.ankanOptions ?? [], ctx.ankanOptions) &&
+    sameIds(record.shouminkanOptions ?? [], ctx.shouminkanOptions) &&
+    sameIds(record.riichiDiscardIds ?? [], ctx.riichiDiscardIds)
+  );
+}
+
+function positionHasOffer(position: ReviewDecision): boolean {
+  if (position.kind === "call") {
+    const ctx = position.context;
+    return ctx.canRon || ctx.canPon || ctx.canKan || ctx.chiOptions.length > 0;
+  }
+  const ctx = position.context;
+  return ctx.canTsumo || ctx.ankanOptions.length > 0 || ctx.shouminkanOptions.length > 0 || ctx.riichiDiscardIds.length > 0;
+}
+
+/** Grade the coaching moments at one position from its recorded
+ * moment. The record is verified against the reconstructed position
+ * first (offers and choice must match exactly); a game recorded
+ * before moment capture grades discards only — moments are never
+ * fabricated for it. Grades are outcome-blind: the evaluators see
+ * only the view and context of the moment itself. */
+export function analyzeReviewMoments(review: DecisionReview, position: ReviewDecision): ReviewMomentAnalysis {
+  if (position.engineVersion === 1) return { available: false, reason: "legacy-rules" };
+  const record = review.moments.find((m) => m.decisionIndex === position.decisionIndex);
+  if (!record) {
+    return { available: false, reason: positionHasOffer(position) ? "not-recorded" : "no-moment" };
+  }
+  if (!recordMatchesPosition(record, position)) return { available: false, reason: "unverified" };
+  const grades: MomentGrade[] = [];
+  if (position.kind === "call") {
+    grades.push({ kind: "call", advice: adviseCall(position.view, position.context) });
+  } else {
+    const ctx = position.context;
+    if (ctx.canTsumo && (position.action.type === "tsumo" || position.action.type === "discard")) {
+      const win = adviseWin(position.view, ctx);
+      if (win) grades.push({ kind: "win", advice: win });
+    }
+    if (ctx.ankanOptions.length > 0 || ctx.shouminkanOptions.length > 0) {
+      const kan = adviseKan(position.view, ctx);
+      if (kan) grades.push({ kind: "kan", advice: kan });
+    }
+    if (ctx.riichiDiscardIds.length > 0 && position.action.type === "discard") {
+      const riichi = adviseRiichi(position.view, ctx);
+      if (riichi) grades.push({ kind: "riichi", advice: riichi });
+    }
+  }
+  return grades.length > 0 ? { available: true, grades } : { available: false, reason: "no-moment" };
 }
 
 /** Navigation is independent of presentation and never wraps silently. */

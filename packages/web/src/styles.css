@@ -303,8 +303,14 @@ button.hrow {
 #table.armed .handrow .drawn { transform: translateY(-10px); }
 #table.armed .zone-top, #table.armed .band { opacity: 0.55; }
 
-.promptrow { display: none; justify-content: flex-end; gap: 8px; padding: 2px 2px 10px; }
+.promptrow { display: none; justify-content: flex-end; gap: 8px; padding: 2px 2px 10px; flex-wrap: wrap; }
 .promptrow.show { display: flex; }
+.cbtn.momenthint {
+  flex: 1 1 100%; height: auto; min-height: 44px; padding: 8px 14px;
+  font-size: 13px; font-weight: 500; line-height: 1.35; text-align: left;
+  border-radius: 14px; background: transparent; color: var(--dim);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+}
 .cbtn {
   height: 48px; display: flex; align-items: center; justify-content: center;
   font-size: 15px; font-weight: 600; border-radius: 24px; border: none;

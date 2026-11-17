@@ -56,7 +56,8 @@ import {
   sumRecords,
 } from "./records.js";
 import { GameRunner, type SavedGame } from "./runner.js";
-import { buildDecisionReview, type DecisionReview, type ReviewDecision } from "./review.js";
+import { buildDecisionReview, type DecisionReview, type MomentGrade, type ReviewDecision } from "./review.js";
+import { momentTexts, type MomentText } from "./moment-text.js";
 import { mountReview, type ReviewUIController } from "./review-ui.js";
 import { createPracticeView } from "./practice-ui.js";
 import { SKILLS, type SkillId } from "./education/curriculum.js";
@@ -81,7 +82,7 @@ import {
 import { ResumeSync } from "./resume-sync.js";
 import { ClickSound } from "./sound.js";
 import { TILE_SPRITE_SVG } from "./tiles-sprite.js";
-import { adviseDiscard, tileName, type TurnAdvice } from "@openmahjong/coach";
+import { adviseCall, adviseDiscard, adviseKan, adviseRiichi, adviseWin, tileName, type TurnAdvice } from "@openmahjong/coach";
 
 /** Does adding tile `type` to the counts complete a run through it? */
 function suitedWaitRun(counts: readonly number[], type: TileType): boolean {
@@ -423,6 +424,7 @@ type FrameState =
   | { kind: "center" }
   | { kind: "hand"; mode: "inspect" | "chi" | "kan" }
   | { kind: "guide" }
+  | { kind: "moment" }
   | null;
 
 const EVENT_DELAYS: Record<string, number> = {
@@ -461,6 +463,12 @@ export class App {
    *  inspect readout share one evaluation per decision. */
   private guideCacheFor: unknown = null;
   private guideCacheAdvice: TurnAdvice | null = null;
+  /** The coaching moment (call / win / riichi / kan) for the pending
+   *  decision, memoised on the pending object like the discard
+   *  advice, so the prompt-row hint and the moment sheet share one
+   *  evaluation per decision. */
+  private guideMomentFor: unknown = null;
+  private guideMomentGrade: MomentGrade | null = null;
   private currentScreen: ScreenName = "home";
   private practice: PracticeProgress = loadPracticeProgress();
   private practiceInitialSkill: SkillId | undefined;
@@ -2012,7 +2020,7 @@ export class App {
       for (const child of [...t.children]) {
         if (child !== dialog && child !== scrim && child instanceof HTMLElement) child.inert = true;
       }
-      accessibleDialog(dialog, this.frame.kind === "hand" ? "Your hand" : this.frame.kind === "guide" ? "Why this move?" : this.frame.kind === "center" ? "Round details" : "Player details", () => this.closeFrame());
+      accessibleDialog(dialog, this.frame.kind === "hand" ? "Your hand" : this.frame.kind === "guide" || this.frame.kind === "moment" ? "Why this move?" : this.frame.kind === "center" ? "Round details" : "Player details", () => this.closeFrame());
     }
 
     // Guided hint overlay (HINT PLACEMENT ruling): a floating layer
@@ -2046,6 +2054,49 @@ export class App {
   }
 
   /**
+   * The coaching moment for the pending decision — a call window, a
+   * win offer, a riichi choice, or a kan offer — graded by the same
+   * coach evaluators Review uses, under the same gates as the
+   * discard advice. One moment speaks per decision, in the brief's
+   * priority: a call window stands alone; at a turn, a win offer
+   * outranks the riichi choice, which outranks a kan offer. The
+   * hint lives in the prompt row that owns the moment — never on
+   * the base table (brief G5 surface law).
+   */
+  private guideMoment(): MomentGrade | null {
+    if (this.runner?.replayVersion === 1) return null;
+    if (this.lesson || this.playing || !this.runner) return null;
+    if (!this.tu11Active && !this.settings.guided) return null;
+    const pending = this.runner.pending;
+    if (!pending || !this.pendingVisible()) return null;
+    if (this.guideMomentFor === pending) return this.guideMomentGrade;
+    let grade: MomentGrade | null = null;
+    if (pending.kind === "call") {
+      const ctx = pending.ctx;
+      if (ctx.canRon || ctx.canPon || ctx.canKan || ctx.chiOptions.length > 0) {
+        grade = { kind: "call", advice: adviseCall(pending.view, ctx) };
+      }
+    } else {
+      const ctx = pending.ctx;
+      if (ctx.canTsumo) {
+        const win = adviseWin(pending.view, ctx);
+        if (win) grade = { kind: "win", advice: win };
+      }
+      if (!grade && ctx.riichiDiscardIds.length > 0 && !this.riichiDismissed) {
+        const riichi = adviseRiichi(pending.view, ctx);
+        if (riichi) grade = { kind: "riichi", advice: riichi };
+      }
+      if (!grade && (ctx.ankanOptions.length > 0 || ctx.shouminkanOptions.length > 0)) {
+        const kan = adviseKan(pending.view, ctx);
+        if (kan) grade = { kind: "kan", advice: kan };
+      }
+    }
+    this.guideMomentFor = pending;
+    this.guideMomentGrade = grade;
+    return grade;
+  }
+
+  /**
    * The guided hint overlay: the coach's headline with the named
    * tile's face beside it (approved rendering A), floating above the
    * hand. The bubble itself is tappable — it opens the "Why this
@@ -2055,6 +2106,10 @@ export class App {
    */
   private guideHintEl(): HTMLElement | null {
     if (this.frame) return null;
+    // A win offer owns the turn: the discard headline would argue
+    // with the win moment's read in the prompt row, so the floating
+    // overlay stays silent while a tsumo is on offer.
+    if (this.guideMoment()?.kind === "win") return null;
     const advice = this.guideAdvice();
     if (!advice) return null;
     const el = h("div", {
@@ -2218,6 +2273,19 @@ export class App {
       });
       return b;
     };
+    // The coaching moment's one-line hint, inside the prompt row
+    // that owns the moment (never on the base table). Tapping it
+    // opens the moment sheet; it never blocks or times the decision.
+    const momentHint = (): HTMLElement | null => {
+      const grade = this.guideMoment();
+      if (!grade) return null;
+      const b = h("button", { class: "cbtn momenthint", "aria-label": "Why this move?" }, grade.advice.headline);
+      b.addEventListener("click", () => {
+        this.sound.unlock();
+        this.openFrame({ kind: "moment" });
+      });
+      return b;
+    };
 
     if (pending.kind === "call") {
       const ctx = pending.ctx;
@@ -2235,6 +2303,8 @@ export class App {
         }
       }
       row.append(btn("Pass", "pass", () => this.humanAct({ type: "pass" })));
+      const callHint = momentHint();
+      if (callHint) row.append(callHint);
       return row;
     }
 
@@ -2290,6 +2360,11 @@ export class App {
       row.classList.add("show");
       row.append(btn("Kyuushu", "pass", () => this.humanAct({ type: "kyuushu" })));
     }
+    const turnHint = momentHint();
+    if (turnHint) {
+      row.classList.add("show");
+      row.append(turnHint);
+    }
     return row;
   }
 
@@ -2321,6 +2396,7 @@ export class App {
     const frame = this.frame!;
     if (frame.kind === "hand") return this.handSheetEl(frame.mode);
     if (frame.kind === "guide") return this.guideSheetEl();
+    if (frame.kind === "moment") return this.momentSheetEl();
     if (frame.kind === "center") return this.centerFrameEl();
     return this.playerFrameEl(frame.seat);
   }
@@ -2434,6 +2510,36 @@ export class App {
       frame.append(h("div", { class: "turnbanner" }, "Your turn — close this view to play."));
     }
     return frame;
+  }
+
+  /**
+   * The explanation sheet behind a coaching moment's prompt-row
+   * hint: the same xsheet grammar as the discard sheet — the moment
+   * in plain words (every term defined at first use), the coach's
+   * read, and the facts it rests on. Text is shared with Review
+   * (moment-text.ts) so a moment reads identically live and
+   * post-game. Like the guide sheet it is a Focus Frame: the
+   * pending decision waits untouched behind it.
+   */
+  private momentSheetEl(): HTMLElement {
+    const sheet = h("div", { class: "sheet xsheet" });
+    const pending = this.runner?.pending;
+    const grade = this.guideMoment();
+    const { frame: headShell } = this.frameShell("Guided hint", "");
+    headShell.querySelector(".fsub")?.remove();
+    sheet.append(...headShell.childNodes);
+    sheet.firstElementChild!.classList.remove("frame");
+    if (!grade || !pending) return sheet;
+    const text: MomentText = momentTexts([grade], { kind: pending.kind, view: pending.view, action: null })[0]!;
+    const sec = (label: string) => sheet.append(h("div", { class: "fsec" }, label));
+    const body = (line: string) => sheet.append(h("p", { class: "xbody" }, line));
+    sec("The moment");
+    for (const term of text.terms) body(term);
+    sec("The read");
+    body(text.headline);
+    sec("The facts");
+    for (const fact of text.facts) body(fact);
+    return sheet;
   }
 
   /**

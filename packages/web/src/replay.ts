@@ -20,6 +20,36 @@ export interface CurrentSavedGame extends ReplayBase {
   readonly engineVersion: typeof REPLAY_ENGINE_VERSION;
   readonly ruleset: { readonly id: string; readonly version: number };
   readonly aiVersion: typeof AI_POLICY_VERSION;
+  /** Coaching-moment records (coaching remainder brief, log-first
+   * dependency): the offers at selected human decisions and the
+   * choice made, so Review can grade call/kan/riichi/win moments
+   * from the record instead of fabricating them. Absent on games
+   * recorded before moment capture — those grade discards only. */
+  readonly moments?: readonly MomentRecord[];
+}
+
+/** The offers at one human decision, recorded when the decision was
+ * made. `choice` always equals `decisions[decisionIndex]`; validation
+ * enforces it, and Review re-verifies the offers against the
+ * reconstructed position before grading. */
+export interface MomentRecord {
+  readonly decisionIndex: number;
+  readonly kind: "call" | "turn";
+  readonly choice: Decision;
+  // Call-window offers (kind === "call").
+  readonly phase?: "ron" | "call" | "chankan";
+  readonly tileType?: number;
+  readonly fromSeat?: number;
+  readonly canRon?: boolean;
+  readonly canPon?: boolean;
+  readonly canKan?: boolean;
+  readonly chiOptions?: readonly (readonly [number, number])[];
+  // Turn offers (kind === "turn").
+  readonly canTsumo?: boolean;
+  readonly drawnTileType?: number | null;
+  readonly ankanOptions?: readonly number[];
+  readonly shouminkanOptions?: readonly number[];
+  readonly riichiDiscardIds?: readonly number[];
 }
 export type SavedGame = LegacySavedGame | CurrentSavedGame;
 
@@ -59,6 +89,59 @@ export function validateDecision(value: unknown): Decision {
   }
 }
 
+const TURN_TYPE_NAMES = new Set(["discard", "ankan", "shouminkan", "tsumo", "kyuushu"]);
+
+function validateTileTypeList(value: unknown, maxLength: number, label: string): number[] {
+  requireValid(Array.isArray(value) && value.length <= maxLength, `Invalid ${label}`);
+  for (const entry of value as unknown[]) requireValid(integer(entry, 33), `Invalid ${label}`);
+  return [...(value as number[])];
+}
+
+function validateMoment(value: unknown, decisions: readonly Decision[]): MomentRecord {
+  requireValid(record(value), "Moment must be an object");
+  const decisionIndex = value["decisionIndex"];
+  requireValid(integer(decisionIndex, MAX_REPLAY_DECISIONS) && decisionIndex < decisions.length, "Moment decision index out of range");
+  const kind = value["kind"];
+  requireValid(kind === "call" || kind === "turn", "Invalid moment kind");
+  const choice = validateDecision(value["choice"]);
+  requireValid(JSON.stringify(choice) === JSON.stringify(decisions[decisionIndex]), "Moment choice does not match the decision log");
+  requireValid(TURN_TYPE_NAMES.has(choice.type) === (kind === "turn"), "Moment kind does not match its choice");
+  if (kind === "call") {
+    const phase = value["phase"];
+    requireValid(phase === "ron" || phase === "call" || phase === "chankan", "Invalid moment phase");
+    requireValid(integer(value["tileType"], 33), "Invalid moment tile type");
+    requireValid(integer(value["fromSeat"], 3), "Invalid moment seat");
+    for (const flag of ["canRon", "canPon", "canKan"] as const) {
+      requireValid(typeof value[flag] === "boolean", `Invalid moment flag ${flag}`);
+    }
+    const chi = value["chiOptions"];
+    requireValid(Array.isArray(chi) && chi.length <= 4, "Invalid moment chi options");
+    const chiOptions = (chi as unknown[]).map((pair) => {
+      requireValid(Array.isArray(pair) && pair.length === 2 && integer(pair[0], 135) && integer(pair[1], 135) && pair[0] !== pair[1], "Invalid moment chi option");
+      return [pair[0], pair[1]] as const;
+    });
+    return {
+      decisionIndex, kind, choice, phase,
+      tileType: value["tileType"], fromSeat: value["fromSeat"],
+      canRon: value["canRon"] as boolean, canPon: value["canPon"] as boolean, canKan: value["canKan"] as boolean,
+      chiOptions,
+    };
+  }
+  requireValid(typeof value["canTsumo"] === "boolean", "Invalid moment tsumo flag");
+  requireValid(value["drawnTileType"] === null || integer(value["drawnTileType"], 33), "Invalid moment drawn tile");
+  const riichiIds = value["riichiDiscardIds"];
+  requireValid(Array.isArray(riichiIds) && riichiIds.length <= 14, "Invalid moment riichi discards");
+  for (const id of riichiIds as unknown[]) requireValid(integer(id, 135), "Invalid moment riichi discards");
+  return {
+    decisionIndex, kind, choice,
+    canTsumo: value["canTsumo"],
+    drawnTileType: value["drawnTileType"] as number | null,
+    ankanOptions: validateTileTypeList(value["ankanOptions"], 4, "moment ankan options"),
+    shouminkanOptions: validateTileTypeList(value["shouminkanOptions"], 4, "moment shouminkan options"),
+    riichiDiscardIds: [...(riichiIds as number[])],
+  };
+}
+
 /** Structural validation precedes any reconstruction of untrusted data.
  * Legality and complete log consumption are checked by GameRunner. */
 export function validateSavedGame(value: unknown): SavedGame {
@@ -80,7 +163,17 @@ export function validateSavedGame(value: unknown): SavedGame {
     const ruleset = value["ruleset"];
     requireValid(record(ruleset) && ruleset["id"] === DEFAULT_RULESET.id && ruleset["version"] === DEFAULT_RULESET.version, "Unsupported replay ruleset");
     requireValid(value["aiVersion"] === AI_POLICY_VERSION, "Unsupported replay AI version");
-    return { v: 2, engineVersion: REPLAY_ENGINE_VERSION, ruleset: { id: DEFAULT_RULESET.id, version: DEFAULT_RULESET.version }, aiVersion: AI_POLICY_VERSION, ...base };
+    let moments: readonly MomentRecord[] | undefined;
+    if (value["moments"] !== undefined) {
+      const rawMoments = value["moments"];
+      requireValid(Array.isArray(rawMoments) && rawMoments.length <= base.decisions.length, "Too many moments");
+      const parsed = rawMoments.map((entry) => validateMoment(entry, base.decisions));
+      for (let i = 1; i < parsed.length; i++) {
+        requireValid(parsed[i]!.decisionIndex > parsed[i - 1]!.decisionIndex, "Moments out of order");
+      }
+      moments = parsed;
+    }
+    return { v: 2, engineVersion: REPLAY_ENGINE_VERSION, ruleset: { id: DEFAULT_RULESET.id, version: DEFAULT_RULESET.version }, aiVersion: AI_POLICY_VERSION, ...base, ...(moments && moments.length > 0 ? { moments } : {}) };
   })();
   requireValid(new TextEncoder().encode(JSON.stringify(canonical)).length <= MAX_REPLAY_BYTES, "Replay exceeds size limit");
   return canonical;
