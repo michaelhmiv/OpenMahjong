@@ -188,6 +188,6 @@ describe("approved player-perspective review UI", () => {
   it("keeps empty prefixes usable without enabling undefined practice positions", () => {
     mount({ schemaVersion: 1, engineVersion: 2, complete: false, consumedDecisions: 0, positions: [] });
     expect(root.textContent).toContain("No player decisions have been recorded");
-    expect(root.querySelector<HTMLButtonElement>("[data-review-control=practice-nav]")?.disabled).toBe(true);
+    expect(root.querySelector(".learning-nav")).toBeNull();
   });
 });

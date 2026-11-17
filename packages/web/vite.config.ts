@@ -49,5 +49,9 @@ export default defineConfig({
   build: {
     outDir: "dist",
     assetsInlineLimit: 0,
+    rollupOptions: {output: {manualChunks(id) {
+      if(id.includes("/variants/mcr-runtime."))return "mcr-scorer";
+      if(id.includes("/legacy/v1/"))return "legacy-v1";
+    }}},
   },
 });

@@ -22,7 +22,7 @@
  * tests rather than corrupting a game.
  */
 
-import { createAiPolicy, createLegacyAiPolicy } from "@openmahjong/ai";
+import { createAiPolicy, createLegacyAiPolicy, createVariantPolicy } from "@openmahjong/ai";
 import type {
   CallAction,
   CallContext,
@@ -66,4 +66,11 @@ export class AiDriver implements SeatDriver {
   call(view: PlayerView, ctx: CallContext): CallAction {
     return this.policy.call(view, ctx);
   }
+}
+/** Variant-owned policy behind the same public seat-driver boundary. */
+export class VariantAiDriver implements SeatDriver {
+  readonly name="variant-ai";
+  private readonly policy=createVariantPolicy();
+  turn(view:PlayerView,context:TurnContext):TurnAction{return this.policy.turn(view,context);}
+  call(view:PlayerView,context:CallContext):CallAction{return this.policy.call(view,context);}
 }

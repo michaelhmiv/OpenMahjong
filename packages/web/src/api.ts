@@ -8,7 +8,7 @@
  * carry the CSRF token issued by GET /api/me.
  */
 
-import type { GameLength } from "@openmahjong/engine";
+import type { VariantLength as GameLength, VariantId } from "@openmahjong/engine";
 import { parseSavedGame } from "./replay.js";
 import type { SavedGame } from "./runner.js";
 import type { Settings } from "./settings.js";
@@ -33,6 +33,7 @@ export interface HandStats {
 
 /** A finished-game record, the POST /api/games (and /api/import) shape. */
 export interface GameRecord {
+  readonly variant?: VariantId | "riichi";
   readonly id: string;
   readonly length: GameLength;
   readonly placement: number;
@@ -45,13 +46,13 @@ export interface GameRecord {
 }
 
 /** List endpoints intentionally omit large logs; fetch a detail on demand. */
-export type GameSummary = Pick<GameRecord, "id" | "length" | "placement" | "score" | "finishedAt">;
+export type GameSummary = Pick<GameRecord, "id" | "length" | "placement" | "score" | "finishedAt" | "variant">;
 
 function isGameSummary(value: unknown): value is GameSummary {
   if (!value || typeof value !== "object") return false;
   const row = value as Record<string, unknown>;
   return typeof row["id"] === "string" && row["id"].length <= 128 &&
-    (row["length"] === "east" || row["length"] === "south") &&
+    (row["length"] === "east" || row["length"] === "south" || row["length"] === "full") && (row["variant"] === undefined || ["riichi", "hong-kong", "mcr", "taiwanese"].includes(String(row["variant"]))) &&
     typeof row["placement"] === "number" && Number.isInteger(row["placement"]) && row["placement"] >= 1 && row["placement"] <= 4 &&
     typeof row["score"] === "number" && Number.isSafeInteger(row["score"]) &&
     typeof row["finishedAt"] === "string" && Number.isFinite(Date.parse(row["finishedAt"]));
@@ -119,8 +120,8 @@ export async function initAuth(fetchFn: FetchFn = fetch): Promise<MeResult> {
   }
 }
 
-export async function fetchStats(fetchFn: FetchFn = fetch): Promise<StatsSums | null> {
-  const body = (await request("/api/stats", { method: "GET" }, fetchFn)) as
+export async function fetchStats(fetchFn: FetchFn = fetch, variant = "riichi"): Promise<StatsSums | null> {
+  const body = (await request(variant === "riichi" ? "/api/stats" : `/api/stats?variant=${encodeURIComponent(variant)}`, { method: "GET" }, fetchFn)) as
     | { stats?: StatsSums }
     | StatsSums
     | null;
