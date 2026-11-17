@@ -344,6 +344,23 @@
   font: inherit;
   font-size: 14px;
 }
+/* Play variant picker as a .seg control (approved rendering
+   play-picker-v1 option B, 2026-11-17; design rules section 6):
+   content-sized segments at 12px so the four shipped names fit
+   four-across. The .seg base supplies the bar and the 40px buttons
+   (section 5's recorded exception); these rules only size the
+   segments to their labels inside the Variant label block. */
+.play-variant-seg {
+  margin: 6px 0 0;
+  width: 100%;
+}
+.play-variant-seg button {
+  min-width: 0;
+  padding: 0 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  flex: 1 1 auto;
+}
 .variant-table header,
 .variant-education header {
   min-height: 60px;

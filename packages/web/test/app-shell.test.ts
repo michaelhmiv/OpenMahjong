@@ -162,6 +162,70 @@ describe("app shell: Play states", () => {
   });
 });
 
+describe("app shell: Play variant picker (segment control)", () => {
+  const segButtons = () =>
+    [...root.querySelectorAll<HTMLButtonElement>("#screen-home .play-variant-seg button")];
+  const checkedLabel = () =>
+    segButtons().find((b) => b.getAttribute("aria-checked") === "true")?.textContent;
+
+  it("renders four radio segments with the real labels and no Play select", async () => {
+    new App(root);
+    await settle();
+    const group = root.querySelector("#screen-home .play-variant-seg");
+    expect(group?.getAttribute("role")).toBe("radiogroup");
+    expect(group?.getAttribute("aria-label")).toBe("Play variant");
+    expect(segButtons().map((b) => b.textContent)).toEqual([
+      "Riichi",
+      "Hong Kong Old Style",
+      "MCR",
+      "Taiwanese",
+    ]);
+    for (const b of segButtons()) expect(b.getAttribute("role")).toBe("radio");
+    // The old native select is gone from the Play tab.
+    expect(root.querySelector("#screen-home select.play-variant")).toBeNull();
+    // Riichi starts selected, with the roving tabindex on it.
+    expect(checkedLabel()).toBe("Riichi");
+    expect(segButtons().map((b) => b.classList.contains("on"))).toEqual([true, false, false, false]);
+    expect(segButtons().map((b) => b.tabIndex)).toEqual([0, -1, -1, -1]);
+  });
+
+  it("clicking a segment changes the variant and its downstream Play state", async () => {
+    new App(root);
+    await settle();
+    segButtons()[2]!.click(); // MCR
+    await settle();
+    expect(checkedLabel()).toBe("MCR");
+    expect(segButtons().map((b) => b.tabIndex)).toEqual([-1, -1, 0, -1]);
+    // Downstream: the length seg switches to the variant lengths and
+    // the motif caption follows the variant (Flowers, not Dora).
+    const lengthSeg = root.querySelectorAll("#screen-home .seg:not(.play-variant-seg) button");
+    expect([...lengthSeg].map((b) => b.textContent)).toEqual(["East", "East + South", "Four rounds"]);
+    expect(root.querySelector("#screen-home .motifrow .cap")?.textContent).toBe("Flowers");
+    // And back: Riichi restores the riichi lengths and Dora caption.
+    segButtons()[0]!.click();
+    await settle();
+    expect(checkedLabel()).toBe("Riichi");
+    const riichiSeg = root.querySelectorAll("#screen-home .seg:not(.play-variant-seg) button");
+    expect([...riichiSeg].map((b) => b.textContent)).toEqual(["East only", "East + South"]);
+    expect(root.querySelector("#screen-home .motifrow .cap")?.textContent).toBe("Dora");
+  });
+
+  it("arrow keys move the selection and focus follows", async () => {
+    new App(root);
+    await settle();
+    const first = segButtons()[0]!;
+    first.focus();
+    first.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }));
+    await settle();
+    expect(checkedLabel()).toBe("Hong Kong Old Style");
+    expect(document.activeElement?.textContent).toBe("Hong Kong Old Style");
+    document.activeElement!.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowLeft", bubbles: true }));
+    await settle();
+    expect(checkedLabel()).toBe("Riichi");
+    expect(document.activeElement?.textContent).toBe("Riichi");
+  });
+});
+
 describe("app shell: Learn sections", () => {
   const sectionByTitle = (title: string) =>
     [...root.querySelectorAll("#screen-learn .learnsec")].find(
