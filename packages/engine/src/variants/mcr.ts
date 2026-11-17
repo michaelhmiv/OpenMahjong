@@ -43,7 +43,11 @@ let catalog: readonly McrPattern[] | undefined;
 export function mcrPatterns(): readonly McrPattern[] {
   if (catalog) return catalog;
   const m = core();
-  if (m._mcr_size() !== 82) throw new Error("Unexpected MCR pattern edition");
+  // 81 named patterns plus index zero and the internal mixed-kong
+  // combination. The 2006 book specifies it under pattern 57, not as
+  // an 82nd named pattern; its six-point value differs from later rules.
+  if (m._mcr_size() !== 83 || m._mcr_value(82) !== 6)
+    throw new Error("Unexpected MCR pattern edition");
   return (catalog = Object.freeze(
     Array.from({ length: 81 }, (_, n) => {
       const i = n + 1,
@@ -146,6 +150,13 @@ export function scoreMcr(input: VariantScoreInput): VariantScore {
             },
           ]
         : [];
+    });
+  const mixedKongs = m.HEAP32[out + 82]!;
+  if (mixedKongs)
+    found.push({
+      id: "mcr-mixed-kong-combination",
+      name: "One concealed and one melded kong",
+      units: 6 * mixedKongs,
     });
   if (found.reduce((sum, p) => sum + p.units, 0) !== units)
     throw new Error("MCR scorer breakdown mismatch");
