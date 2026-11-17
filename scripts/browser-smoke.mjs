@@ -109,14 +109,27 @@ async function enterFirstDrill(page) {
 }
 async function completeIntroLesson(page) {
   await enterFirstDrill(page);
-  // These are the authored visible suit/honor questions, answered
-  // through the same controls as a learner. No progress is injected.
-  for (const index of [2,4,6,8,9]) await page.locator(".dgrid > .cell").nth(index).click();
-  for (const index of [0,2,4,6]) await page.locator(".dgrid > .cell").nth(index).click();
-  await page.getByRole("button", { name: "Continue", exact: true }).click();
-  for (const index of [0,2,4,6]) await page.locator(".dgrid > .cell").nth(index).click();
-  for (const index of [0,2,4,6]) await page.locator(".dgrid > .cell").nth(index).click();
-  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  // These are the authored identification drills, answered through
+  // the same controls as a learner. No progress is injected. Each
+  // suit is introduced by an explanation step (a Continue) before
+  // its drill; the indices are the drills' own target cells.
+  const cont = () => page.getByRole("button", { name: "Continue", exact: true }).click();
+  const drill = async (indices) => {
+    for (const index of indices) await page.locator(".dgrid > .cell").nth(index).click();
+  };
+  await drill([2,4,6,8,9]); // dots
+  await cont(); // bamboo introduction
+  await drill([2,4,6,8,9]); // bamboo
+  await cont(); // characters introduction
+  await drill([1,4,6,8,11]); // characters
+  await cont(); // winds introduction
+  await cont(); // dragons introduction
+  await drill([0,2,4,6]); // honors
+  await cont(); // terminals introduction
+  await cont(); // simples introduction
+  await drill([0,2,4,6]); // terminals
+  await cont(); // four copies of every tile
+  await cont(); // the red-tinted 5s
   await page.getByText("LESSON COMPLETE", { exact: true }).waitFor();
   await capture(page, "intro-lesson-complete");
   await page.getByRole("button", { name: "All lessons", exact: true }).click();
@@ -259,7 +272,7 @@ try {
     const before = await page.locator(".revctl .step").innerText();
     await page.locator(".dgrid > .cell").nth(0).click();
     assert.equal(await page.locator(".revctl .step").innerText(), before);
-    assert.match(await page.locator(".drillpanel").innerText(), /bamboo/i);
+    assert.match(await page.locator(".drillpanel").innerText(), /dots/i);
     assert.equal(await page.getByRole("button", { name: "Continue", exact: true }).count(), 0);
     await capture(page, "wrong-answer");
     for (const index of [2,4,6,8,9]) await page.locator(".dgrid > .cell").nth(index).click();
@@ -275,7 +288,11 @@ try {
     return { wrongAnswerStayedAtStep: 3, restoredStep: 4 };
   }, page);
   await check("tile drill works by keyboard", async () => {
-    const tile = page.locator(".dgrid > .cell").nth(0);
+    // The resume above lands on the bamboo introduction (step 4);
+    // one Continue reaches the bamboo drill (targets 2,4,6,8,9).
+    await page.getByRole("button", { name: "Continue", exact: true }).click();
+    assert.match(await page.locator(".revctl .step").innerText(), /Step 5/);
+    const tile = page.locator(".dgrid > .cell").nth(2);
     const semantic = await tile.evaluate((e) => ({ tag: e.tagName, role: e.getAttribute("role"), tabIndex: e.tabIndex, name: e.getAttribute("aria-label") }));
     assert.ok(semantic.tag === "BUTTON" || semantic.role === "button", "drill tile needs button semantics");
     assert.ok(semantic.tabIndex >= 0, "drill tile must be focusable");
@@ -283,8 +300,8 @@ try {
     await tile.focus();
     await page.keyboard.press("Enter");
     assert.equal(await page.locator(".dgrid > .cell.sel").count(), 1);
-    for (const index of [2,4,6]) { await page.locator(".dgrid > .cell").nth(index).focus(); await page.keyboard.press("Space"); }
-    assert.match(await page.locator(".revctl .step").innerText(), /Step 5/);
+    for (const index of [4,6,8,9]) { await page.locator(".dgrid > .cell").nth(index).focus(); await page.keyboard.press("Space"); }
+    assert.match(await page.locator(".revctl .step").innerText(), /Step 6/);
     return semantic;
   }, page);
   // Fresh navigation makes later checks independent of drill failure.

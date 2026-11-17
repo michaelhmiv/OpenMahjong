@@ -120,7 +120,7 @@ describe("B9: scripted completion path per module", () => {
     c.handle({ kind: "button", id: "continue" });
     const before = c.view();
     expect(before.drill).not.toBeNull();
-    // Index 0 of the bamboo drill is a characters tile — a wrong tap.
+    // Index 0 of the dots drill is a characters tile — a wrong tap.
     c.handle({ kind: "drill", index: 0 });
     expect(c.view().stepIndex).toBe(before.stepIndex);
     expect(c.view().note).toBeTruthy();
