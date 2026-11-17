@@ -218,7 +218,7 @@ describe("Back in the lesson DOM", () => {
     );
     new App(root);
     await settle();
-    click(root.querySelector("#screen-home .infocard.learncard"));
+    click(root.querySelector('.tabbtn[data-tab="learn"]'));
     await settle();
     click(root.querySelectorAll("#screen-learn .lrow")[0]);
     await settle();

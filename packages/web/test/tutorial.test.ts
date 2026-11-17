@@ -277,7 +277,7 @@ describe("B10: the new-player path, no account", () => {
     new App(root);
     await settle();
     // Landing: Learn is offered to a guest — the theme-v6 Learn card.
-    const learnBtn = root.querySelector("#screen-home .infocard.learncard");
+    const learnBtn = root.querySelector('.tabbtn[data-tab="learn"]');
     expect(learnBtn).not.toBeNull();
     click(learnBtn);
     await settle();
@@ -317,8 +317,8 @@ describe("B10: the new-player path, no account", () => {
     expect(root.querySelector("#screen-learn")?.classList.contains("active")).toBe(true);
     expect(root.querySelectorAll("#screen-learn .lrow")[0]?.textContent).toContain("Done");
     // And a real game starts from the landing, still no account.
-    const back = root.querySelector("#screen-learn .bar .iconbtn");
-    click(back);
+    // Learn is a tab root in the shell: the Play tab is the way back.
+    click(root.querySelector('.tabbtn[data-tab="home"]'));
     await settle();
     click(root.querySelector("#screen-home .play"));
     await settle();

@@ -38,7 +38,11 @@ Gold is flat. Never a gradient, never a glow, never a shadow colour.
 Gold may appear ONLY on:
 - the wordmark ("OPEN MAHJONG")
 - the Play button fill (label in on-gold `#1c2a20`)
-- the Learn progress-bar fill
+- progress fill on Play-tab info cards (the Continue-card context,
+  as rendered in app-shell-v1 02). The Learn tab's progress bars —
+  per-section and overall — are STATE GREEN, not gold (clarified
+  2026-11-16: the shipped Learn bar was always state green; the
+  gold progress role refers to the Play/Continue infocard context)
 - the "Start ›" / "Continue ›" card CTAs
 - the signed-in identity avatar fill
 - the table's dealer-wind label ("East · You")
@@ -74,7 +78,7 @@ runtime.
 - Faces: traditional, clean/flat, high contrast, on `#f6f1e4`.
 - Every rendered tile carries the physical treatment: bottom edge +
   soft drop shadow. Tiles are objects, never flat stickers.
-- The home screen strip is a real, complete winning hand (2m 3m 4m ·
+- The Play tab's fan is a real, complete winning hand (2m 3m 4m ·
   3p 4p red-5p · 6s 7s 8s · 9s 9s · chun chun chun), grouped as a hand
   sorts, decorative only.
 - No state is carried by colour alone.
@@ -98,17 +102,26 @@ runtime.
 
 ## 6. Screens
 
-The screen inventory is fixed by the brief (§7 + slice-2 additions):
-Landing, Table, Hand-end breakdown, Game-end results, Rules, Settings,
-About, Privacy, History, Stats, Review, Learn (index + lesson runner), Practice.
+The screen inventory is fixed by the brief (§7 + slice-2 additions),
+as restructured by the app shell (section 13): the four tab roots —
+Play (the landing), Learn (index + lesson runner), Games (stats
+header + history list; the former History and Stats screens merged),
+More (account + settings + about links; the former Settings screen
+re-homed) — and the drilled-in screens: Table, Hand-end breakdown,
+Game-end results, Rules, About, Privacy, Review, Practice.
 A new screen requires a brief amendment and an approved rendering.
 
 ## 7. Copy law
 
 Product copy is purely informational text. No slogans, no flourish,
-no descriptor lines. The wordmark carries exactly one line:
-"Free forever. Open source mahjong." Nothing is added line-by-line;
-any copy change is swept across the whole surface at once.
+no descriptor lines. The wordmark stands alone in the app UI: its
+former companion line ("Free forever. Open source mahjong.") was
+removed by ruling on 2026-11-16 — not everyone knows what open
+source means, and the line was not information. Factual
+free/open-source mentions in About text, page metadata, and
+noscript content are not the wordmark surface and are unaffected.
+Nothing is added line-by-line; any copy change is swept across the
+whole surface at once.
 
 Claims discipline: the app is free and open source. Do not claim
 "no ads" or "no gacha" — ads may be shown at first at public launch.
@@ -207,3 +220,43 @@ and the inspect readout.
   the hand's tenpai form. All facts come from the player's own view;
   legacy (v1) replays keep the plain label rather than attributing
   current facts to historical rules.
+
+## 13. App shell and navigation
+
+(Approved renderings app-shell-v1, ruled 2026-11-16; this section
+records the shell the renderings specify.)
+
+- The app is a bottom-nav shell with FOUR tab roots: Play, Learn,
+  Games, More. The tab bar is 83px including its border; the active
+  tab is a panel-hi pill with a cream label and a state-green icon.
+  Gold never appears in the tab bar.
+- NAV LAW: the tab bar exists ONLY on the four tab roots. Every
+  drilled-in screen — the live game, a lesson, Review, Practice,
+  results, Rules, About, Privacy — renders WITHOUT the tab bar and
+  keeps its top-area navigation (the bar header with its back
+  control, the game's hamburger), with swipe-back as the return
+  gesture where the platform does not already provide one. Space
+  is precious; the board and its tools get all of it.
+- Play is the former landing, restructured: wordmark (alone, per
+  section 7), the section-4 fan, the motif row in the fresh state,
+  the Continue card when a game is in progress, the length segment
+  control, the guided row, Play, the record strip when the account
+  has stats, the tile-back wall, and the AdSense slot at the foot
+  (section 2's geometry unchanged). Sign-in lives on More, never
+  on Play.
+- Learn organizes lessons in collapsible per-variant sections
+  (today: Riichi), each with its own progress bar (state green,
+  section 2). Hong Kong, MCR, and Taiwanese sections slot into the
+  same structure without restructuring the tab. Practice and the
+  guided row sit above the sections.
+- Games merges the former History and Stats screens: a stats
+  header (placement distribution + the six shipped stat blocks,
+  labels and formulas unchanged) over the finished-games list. An
+  in-progress game is listed at the top with a state-green dot, an
+  IN PROGRESS pill, its live state, and a Resume action; tapping
+  it resumes, never reviews. Completed games keep their results →
+  Review path until the game-summary restructure lands.
+- More carries the account block (identity, sign out, delete),
+  every settings row (sound, reduced motion, large tiles, guided
+  mode), the About links (Rules, About, Privacy), and the AGPL
+  footer.

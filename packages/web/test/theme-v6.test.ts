@@ -55,7 +55,6 @@ describe("theme v6: gold discipline (design rules section 2)", () => {
     ".wordmark",
     "#screen-home .play",
     ".infocard .ic-cta",
-    ".infocard .progbar i",
     ".avatar",
     ".chip .dealer",
   ]);
@@ -134,8 +133,8 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe("theme v6: home tile strip", () => {
-  it("renders the specified 14-tile hand in 3-3-3-2-3 groups", async () => {
+describe("theme v6: Play fan", () => {
+  it("renders the specified 14-tile hand fanned, in 3-3-3-2-3 groups", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn(async () => {
@@ -144,7 +143,7 @@ describe("theme v6: home tile strip", () => {
     );
     new App(root);
     await settle();
-    const tiles = [...root.querySelectorAll("#screen-home .tilestrip .tile.t-strip")];
+    const tiles = [...root.querySelectorAll("#screen-home .fanwrap .tile.t-fan")];
     expect(tiles.length).toBe(14);
     const hrefs = tiles.map(
       (t) => t.querySelector("use")?.getAttribute("href") ?? "",
@@ -160,12 +159,7 @@ describe("theme v6: home tile strip", () => {
       "#t-s9", "#t-s9",
       "#t-chun", "#t-chun", "#t-chun",
     ]);
-    // Group gaps: the first tile of groups 2-5 carries .grp.
-    const grpAt = tiles
-      .map((t, i) => (t.classList.contains("grp") ? i : -1))
-      .filter((i) => i >= 0);
-    expect(grpAt).toEqual([3, 6, 9, 11]);
-    // Depth treatment: every strip tile carries its edge element.
+    // Depth treatment: every fan tile carries its edge element.
     for (const t of tiles) expect(t.querySelector("i.edge")).not.toBeNull();
     // The glow centre is pinned for the guest state.
     expect(
@@ -173,7 +167,7 @@ describe("theme v6: home tile strip", () => {
     ).toBe("27%");
   });
 
-  it("shows Last game + Learn progress cards for a signed-in player with data", async () => {
+  it("shows the game on the Games tab and progress on Learn for a signed-in player with data", async () => {
     localStorage.setItem(
       "openmahjong.tutorial.v1",
       JSON.stringify({ done: ["tu1", "tu2", "tu3"] }),
@@ -209,23 +203,28 @@ describe("theme v6: home tile strip", () => {
     );
     new App(root);
     await settle();
-    const last = root.querySelector("#screen-home .infocard.lastcard");
-    expect(last?.textContent).toContain("Last game");
-    expect(last?.textContent).toContain("Today");
-    expect(last?.textContent).toContain("East + South · 1st · 32,400");
-    const prog = root.querySelector("#screen-home .infocard.learnprog");
-    expect(prog?.textContent).toContain("Learn — 3 of 11 lessons done");
-    expect(prog?.textContent).toContain("Continue ›");
-    expect(
-      prog?.querySelector<HTMLElement>(".progbar i")?.style.width,
-    ).toBe("27%");
-    // With a progress card present, the fallback Learn pill is gone.
-    const secButtons = [...root.querySelectorAll("#screen-home .secrow .pillbtn")].map(
-      (b) => b.textContent,
-    );
-    expect(secButtons).toEqual(["History", "Stats"]);
     expect(
       root.querySelector("#screen-home")?.style.getPropertyValue("--glow-y"),
     ).toBe("22%");
+    // The finished game is a row on the Games tab (the old Last game
+    // card retired with the hub).
+    root.querySelector<HTMLButtonElement>('.tabbtn[data-tab="games"]')?.click();
+    await settle();
+    const row = root.querySelector("#screen-games .hrow");
+    expect(row?.textContent).toContain("EAST + SOUTH");
+    expect(row?.textContent).toContain("1st");
+    expect(row?.textContent).toContain("32,400");
+    expect(root.querySelector("#screen-games .count")?.textContent).toBe(
+      "1 recorded game — 0 East, 1 East + South",
+    );
+    // Lesson progress lives on the Learn tab, per variant section.
+    root.querySelector<HTMLButtonElement>('.tabbtn[data-tab="learn"]')?.click();
+    await settle();
+    expect(root.querySelector("#screen-learn .seccount")?.textContent).toBe(
+      "3 of 11 lessons done",
+    );
+    expect(
+      root.querySelector<HTMLElement>("#screen-learn .progbar i")?.style.width,
+    ).toBe("27%");
   });
 });

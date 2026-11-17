@@ -102,7 +102,7 @@ async function leaveLesson(page) {
   await page.getByRole("button", { name: "Leave lesson", exact: true }).click();
 }
 async function enterFirstDrill(page) {
-  await page.locator(".learncard").click();
+  await page.locator('.tabbtn[data-tab="learn"]').click();
   await page.locator('[data-module="tu1"]').click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
@@ -122,12 +122,12 @@ async function completeIntroLesson(page) {
   await page.getByRole("button", { name: "All lessons", exact: true }).click();
   await page.locator("#screen-learn.active").waitFor();
   assert.ok(await page.evaluate(() => JSON.parse(localStorage.getItem("openmahjong.tutorial.v1")).done.includes("tu1")));
-  await page.getByRole("button", { name: "Back", exact: true }).click();
+  await page.locator('.tabbtn[data-tab="home"]').click();
   await page.locator("#screen-home.active").waitFor();
 }
 
 async function enterPractice(page) {
-  await page.locator(".learncard").click();
+  await page.locator('.tabbtn[data-tab="learn"]').click();
   await page.getByRole("button", { name: "Practice", exact: true }).click();
   await page.locator(".practice-view").waitFor();
 }
@@ -208,7 +208,7 @@ try {
       const home = await controls(page);
       assert.deepEqual(home.filter((x) => x.outside), [], "home controls must stay within viewport");
       await capture(page, `home-${width}x${height}`);
-      await page.locator(".learncard").click();
+      await page.locator('.tabbtn[data-tab="learn"]').click();
       await capture(page, `learn-${width}x${height}`);
       await page.locator('[data-module="tu1"]').click();
       await page.getByRole("button", { name: "Continue", exact: true }).click();
@@ -217,9 +217,9 @@ try {
       assert.deepEqual(drill.filter((x) => x.outside), [], "drill controls must stay within viewport");
       await capture(page, `drill-${width}x${height}`);
       await leaveLesson(page);
-      await page.getByRole("button", { name: "Back", exact: true }).click();
+      await page.locator('.tabbtn[data-tab="home"]').click();
       await page.getByRole("button", { name: "East only", exact: true }).click();
-      await page.getByRole("button", { name: "Play", exact: true }).click();
+      await page.locator("#screen-home .play").click();
       await page.locator(".handrow > .twrap").first().waitFor();
       const table = await controls(page);
       assert.deepEqual(table.filter((x) => x.outside), [], "table controls must stay within viewport");
@@ -235,6 +235,7 @@ try {
   const c = await context({ width: 390, height: 844 });
   const page = await open(c);
   await check("home accessibility", () => axe(page, "home"), page);
+  await page.locator('.tabbtn[data-tab="more"]').click();
   for (const name of ["Rules", "About", "Privacy"]) {
     await page.getByRole("button", { name, exact: true }).click();
     await check(`${name} accessibility`, () => axe(page, name.toLowerCase()), page);
@@ -264,9 +265,9 @@ try {
     for (const index of [2,4,6,8,9]) await page.locator(".dgrid > .cell").nth(index).click();
     assert.match(await page.locator(".revctl .step").innerText(), /Step 4/);
     await leaveLesson(page);
-    await page.getByRole("button", { name: "Back", exact: true }).click();
+    await page.locator('.tabbtn[data-tab="home"]').click();
     await page.reload({ waitUntil: "networkidle" });
-    await page.locator(".learncard").click();
+    await page.locator('.tabbtn[data-tab="learn"]').click();
     await check("in-progress Learn accessibility", () => axe(page, "learn-in-progress"), page);
     assert.match(await page.locator('[data-module="tu1"]').innerText(), /In progress/);
     await page.locator('[data-module="tu1"]').click();
@@ -288,14 +289,14 @@ try {
   }, page);
   // Fresh navigation makes later checks independent of drill failure.
   await page.goto(base, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Settings", exact: true }).click();
+  await page.locator('.tabbtn[data-tab="more"]').click();
   await check("settings accessibility", () => axe(page, "settings"), page);
   await page.locator(".setrow").filter({ hasText: "Reduced motion" }).locator("input").check({ force: true });
   await page.locator(".setrow").filter({ hasText: "Large tiles" }).locator("input").check({ force: true });
   await capture(page, "settings");
-  await page.getByRole("button", { name: "Back", exact: true }).click();
+  await page.locator('.tabbtn[data-tab="home"]').click();
   await page.getByRole("button", { name: "East only", exact: true }).click();
-  await page.getByRole("button", { name: "Play", exact: true }).click();
+  await page.locator("#screen-home .play").click();
   await page.locator(".handrow > .twrap").first().waitFor();
   await check("table accessibility", () => axe(page, "table"), page);
   await capture(page, "table-large");
@@ -349,7 +350,7 @@ try {
   }, page);
   await page.goto(base, { waitUntil: "networkidle" });
   await check("browser back returns from Learn to home", async () => {
-    await page.locator(".learncard").click();
+    await page.locator('.tabbtn[data-tab="learn"]').click();
     await page.goBack({ waitUntil: "domcontentloaded" });
     assert.equal(await page.locator("#screen-home.active").count(), 1);
   }, page);
@@ -358,10 +359,10 @@ try {
   const motionPage = await open(motionContext);
   await check("in-app reduced motion suppresses hand-sheet animation without OS reduction", async () => {
     assert.equal(await motionPage.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches), false);
-    await motionPage.getByRole("button", { name: "Settings", exact: true }).click();
+    await motionPage.locator('.tabbtn[data-tab="more"]').click();
     await motionPage.getByRole("checkbox", { name: "Reduced motion", exact: true }).check({ force: true });
-    await motionPage.getByRole("button", { name: "Back", exact: true }).click();
-    await motionPage.getByRole("button", { name: "Play", exact: true }).click();
+    await motionPage.locator('.tabbtn[data-tab="home"]').click();
+    await motionPage.locator("#screen-home .play").click();
     await motionPage.locator(".handrow > .twrap").first().waitFor();
     await motionPage.getByRole("button", { name: "Inspect hand", exact: true }).click();
     const computed = await motionPage.getByRole("dialog").evaluate((element) => {
@@ -476,7 +477,7 @@ try {
     await offline.locator("#screen-home.active").waitFor();
     await offline.evaluate(() => document.fonts.ready);
     assert.ok(await offline.evaluate(() => document.fonts.check('14px "Figtree"') && document.fonts.check('30px "Fraunces"')), "shipped fonts must load offline");
-    await offline.getByRole("button", { name: "Play", exact: true }).click();
+    await offline.locator("#screen-home .play").click();
     await offline.locator(".handrow > .twrap").first().waitFor();
     await capture(offline, "offline-table");
     await offline.goto(new URL("privacy", base).href, { waitUntil: "networkidle" });
@@ -494,7 +495,7 @@ try {
       if (learning) await completeIntroLesson(full);
       await full.getByRole("button", { name: "East only", exact: true }).click();
       await full.getByRole("checkbox", { name: "Guided mode", exact: true }).check({ force: true });
-      await full.getByRole("button", { name: "Play", exact: true }).click();
+      await full.locator("#screen-home .play").click();
       await full.locator('.handrow > .twrap[role="button"]').first().waitFor();
       const seed = process.env.BROWSER_FULL_GAME_SEED || "browser-smoke-east-v2";
       // Public guest-save schema is a legitimate scenario input. Start
@@ -559,17 +560,15 @@ try {
       await check("completed results accessibility", () => axe(full, "results"), full);
       await capture(full, "completed-game");
       await full.getByRole("button", { name: "Home", exact: true }).click();
-      await full.getByRole("button", { name: "Settings", exact: true }).click();
-      await full.locator(".setrow").filter({ hasText: "History" }).getByRole("button", { name: "Open", exact: true }).click();
-      assert.equal(await full.locator(".hrow").count(), 1, "one fresh completed match must produce exactly one History record");
-      assert.match(await full.locator("#screen-history .count").innerText(), /^1 recorded game$/);
+      await full.locator('.tabbtn[data-tab="games"]').click();
+      assert.equal(await full.locator("#screen-games .hrow").count(), 1, "one fresh completed match must produce exactly one History record");
+      assert.match(await full.locator("#screen-games .count").innerText(), /^1 recorded game — 1 East, 0 East \+ South$/);
       await full.locator(".hrow").first().click();
       assert.equal(await full.locator("#screen-results.active").count(), 1);
       assert.equal(await full.locator(".results-table").innerText(), standings, "reopened standings must preserve the completed result");
       await capture(full, "history-record-results");
       await full.getByRole("button", { name: "Home", exact: true }).click();
-      await full.getByRole("button", { name: "Settings", exact: true }).click();
-      await full.locator(".setrow").filter({ hasText: "Stats" }).getByRole("button", { name: "Open", exact: true }).click();
+      await full.locator('.tabbtn[data-tab="games"]').click();
       const played = full.locator(".stat").filter({ hasText: "Games played" }).locator(".v");
       assert.equal(await played.innerText(), "1", "one match must contribute once to guest statistics");
       await capture(full, "single-match-stats");
@@ -581,9 +580,7 @@ try {
     if (learning) {
       await check("completed game Review preserves player perspective and bridges to relevant Practice", async () => {
         assert.ok(completedRecord, "the real match must complete before review can be tested");
-        await full.getByRole("button", { name: "Back", exact: true }).click();
-        await full.getByRole("button", { name: "Settings", exact: true }).click();
-        await full.locator(".setrow").filter({ hasText: "History" }).getByRole("button", { name: "Open", exact: true }).click();
+        await full.locator('.tabbtn[data-tab="games"]').click();
         await full.locator(".hrow").first().click();
         await full.locator("#screen-results.active").waitFor();
         await full.getByRole("button", { name: "Review game", exact: true }).click();
@@ -669,8 +666,7 @@ try {
           let reviewPage;
           await check(`Review viewport ${width}x${height}`, async () => {
             reviewPage = await open(reviewContext);
-            await reviewPage.getByRole("button", { name: "Settings", exact: true }).click();
-            await reviewPage.locator(".setrow").filter({ hasText: "History" }).getByRole("button", { name: "Open", exact: true }).click();
+            await reviewPage.locator('.tabbtn[data-tab="games"]').click();
             await reviewPage.locator(".hrow").first().click();
             await reviewPage.getByRole("button", { name: "Review game", exact: true }).click();
             await reviewPage.locator(".review-shell").waitFor();
