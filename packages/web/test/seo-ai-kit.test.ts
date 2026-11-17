@@ -10,7 +10,9 @@ import { describe, expect, it } from "vitest";
  */
 
 const WEB = "packages/web";
-const DESCRIPTION = "Open Mahjong — the lichess of mahjong. Free, open source.";
+const TITLE = "Open Mahjong — Play Riichi Mahjong Online, Free";
+const DESCRIPTION =
+  "Play riichi mahjong online in your browser against the CPU, with real scoring, 11 interactive tutorial lessons, and guided hints with explanations. Free and open source — no account or download needed.";
 const AI_BOTS = [
   "GPTBot",
   "OAI-SearchBot",
@@ -86,10 +88,14 @@ describe("index.html head", () => {
     expect(html).toContain('<link rel="canonical" href="https://openmahjong.app/" />');
   });
 
+  it("has the document title carrying the factual search copy", () => {
+    expect(html).toContain(`<title>${TITLE}</title>`);
+  });
+
   it("has the full Open Graph block with the verbatim description", () => {
     expect(html).toContain('<meta property="og:type" content="website" />');
     expect(html).toContain('<meta property="og:site_name" content="Open Mahjong" />');
-    expect(html).toContain('<meta property="og:title" content="Open Mahjong" />');
+    expect(html).toContain(`<meta property="og:title" content="${TITLE}" />`);
     expect(html).toContain(`<meta property="og:description" content="${DESCRIPTION}" />`);
     expect(html).toContain('<meta property="og:url" content="https://openmahjong.app/" />');
     expect(html).toContain('<meta property="og:image" content="https://openmahjong.app/og-image.png" />');
@@ -97,7 +103,7 @@ describe("index.html head", () => {
 
   it("has the Twitter card block matching OG", () => {
     expect(html).toContain('<meta name="twitter:card" content="summary_large_image" />');
-    expect(html).toContain('<meta name="twitter:title" content="Open Mahjong" />');
+    expect(html).toContain(`<meta name="twitter:title" content="${TITLE}" />`);
     expect(html).toContain(`<meta name="twitter:description" content="${DESCRIPTION}" />`);
     expect(html).toContain('<meta name="twitter:image" content="https://openmahjong.app/og-image.png" />');
   });
@@ -143,5 +149,38 @@ describe("og-image.png", () => {
     expect(bytes.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
     expect(bytes.readUInt32BE(16)).toBe(1200);
     expect(bytes.readUInt32BE(20)).toBe(630);
+  });
+});
+
+describe("favicon set (plan gap Q6)", () => {
+  const html = indexHtml();
+
+  function pngDims(name: string): [number, number] {
+    const bytes = readFileSync(resolve(process.cwd(), `${WEB}/public/${name}`));
+    expect(bytes.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
+    return [bytes.readUInt32BE(16), bytes.readUInt32BE(20)];
+  }
+
+  it("ships PNG fallbacks at real dimensions next to the SVG", () => {
+    expect(pngDims("icon-192.png")).toEqual([192, 192]);
+    expect(pngDims("icon-512.png")).toEqual([512, 512]);
+    expect(pngDims("apple-touch-icon.png")).toEqual([180, 180]);
+  });
+
+  it("declares the SVG, both PNGs, and the apple-touch-icon in the head", () => {
+    expect(html).toContain('<link rel="icon" type="image/svg+xml" href="./icon.svg" />');
+    expect(html).toContain('<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />');
+    expect(html).toContain('<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png" />');
+    expect(html).toContain('<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />');
+  });
+
+  it("lists the PNG icons in the PWA manifest alongside the SVG", () => {
+    const manifest = JSON.parse(pub("manifest.webmanifest")) as {
+      icons: { src: string; sizes: string; type: string }[];
+    };
+    const bySrc = new Map(manifest.icons.map((icon) => [icon.src, icon]));
+    expect(bySrc.get("./icon.svg")?.type).toBe("image/svg+xml");
+    expect(bySrc.get("./icon-192.png")).toMatchObject({ sizes: "192x192", type: "image/png" });
+    expect(bySrc.get("./icon-512.png")).toMatchObject({ sizes: "512x512", type: "image/png" });
   });
 });
