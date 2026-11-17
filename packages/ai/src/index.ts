@@ -33,6 +33,7 @@ export {
 export {
   shantenFast,
   shantenStandardFast,
+  shantenTaiwaneseFast,
   shantenChiitoitsuFast,
   shantenKokushiFast,
   ukeireFast,
@@ -40,3 +41,4 @@ export {
   type FastUkeire,
 } from "./analysis.js";
 export { dangerOf, visibleCounts, riichiThreats } from "./danger.js";
+export * from "./variant-policy.js";

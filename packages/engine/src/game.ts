@@ -77,7 +77,9 @@ export type GameEventType =
   | "drawn-hand"
   | "score"
   | "hand-end"
-  | "game-end";
+  | "game-end"
+  | "flower"
+  | "robbed-kong";
 
 export interface GameEvent {
   readonly seq: number;

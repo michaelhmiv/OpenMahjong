@@ -75,6 +75,7 @@ const HONOR_NAMES = ["E", "S", "W", "N", "Wh", "Gr", "Rd"] as const;
 
 /** Short name for a tile type, e.g. 4 -> "5m", 27 -> "E", 33 -> "Rd". */
 export function tileTypeName(type: TileType): string {
+  if (type >= 34 && type < 42) return ["Plum", "Orchid", "Chrysanthemum", "Bamboo flower", "Spring", "Summer", "Autumn", "Winter"][type - 34]!;
   if (isHonor(type)) return HONOR_NAMES[type - 27]!;
   return `${rankOf(type)}${SUIT_LETTERS[suitOf(type)]}`;
 }

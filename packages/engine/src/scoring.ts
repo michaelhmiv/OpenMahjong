@@ -254,7 +254,7 @@ interface Points {
   readonly tsumoPoints: { readonly nonDealer: number; readonly dealer: number } | null;
 }
 
-function computePoints(
+export function computeRiichiPoints(
   han: number,
   fu: number,
   yakumanMultiple: number,
@@ -730,7 +730,7 @@ export function scoreHand(input: ScoreInput): ScoreResult {
   const totalYakuman = fixedMultiple + decompMultiple;
   if (totalYakuman > 0) {
     const yaku = [...fixedYakuman, ...(bestDecompYakuman?.yakumanYaku ?? [])];
-    const points = computePoints(13 * totalYakuman, 0, totalYakuman, isDealer, input.winType, input.honba);
+    const points = computeRiichiPoints(13 * totalYakuman, 0, totalYakuman, isDealer, input.winType, input.honba);
     return {
       yaku,
       han: 13 * totalYakuman,
@@ -757,7 +757,7 @@ export function scoreHand(input: ScoreInput): ScoreResult {
     if (cand.yakuHan === 0) return; // no yaku — not a winning hand
     const han = cand.yakuHan + input.dora;
     const multiple = han >= 13 ? 1 : 0; // kazoe yakuman
-    const points = computePoints(han, cand.fu, multiple, isDealer, input.winType, input.honba);
+    const points = computeRiichiPoints(han, cand.fu, multiple, isDealer, input.winType, input.honba);
     const gain = winnerGain(points, isDealer);
     if (
       !best ||
