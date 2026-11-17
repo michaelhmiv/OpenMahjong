@@ -10,9 +10,9 @@ import { describe, expect, it } from "vitest";
  */
 
 const WEB = "packages/web";
-const TITLE = "Open Mahjong — Play Mahjong Online, Free";
+const TITLE = "Open Mahjong — Riichi, Hong Kong, MCR & Taiwanese Mahjong, Free";
 const DESCRIPTION =
-  "Play mahjong online in your browser against the CPU, with real scoring, interactive tutorial lessons, and guided hints with explanations. Free and open source — no account or download needed.";
+  "Play mahjong online against the CPU — Riichi, Hong Kong, MCR, and Taiwanese — with real scoring, lessons for each variant, and guided hints. Free and open source; no account or download needed.";
 const AI_BOTS = [
   "GPTBot",
   "OAI-SearchBot",
@@ -116,6 +116,9 @@ describe("index.html head", () => {
     expect(data.name).toBe("Open Mahjong");
     expect(data.url).toBe("https://openmahjong.app/");
     expect(data.applicationCategory).toBe("GameApplication");
+    expect(data.description).toBe(
+      "Free, open source web app for playing Riichi, Hong Kong, MCR, and Taiwanese mahjong against the CPU, with real scoring for each variant, tutorial lessons, guided hints, and in-person score calculators. No account needed to play."
+    );
     const offers = data.offers as Record<string, unknown>;
     expect(offers.price).toBe("0");
     expect(offers.priceCurrency).toBe("USD");
@@ -133,7 +136,7 @@ describe("index.html noscript", () => {
     expect(body).toContain("<h1>Open Mahjong</h1>");
     expect(body).toContain("Free forever. Open source mahjong.");
     expect(body).toContain("mahjong against the CPU");
-    expect(body).toContain("11 interactive tutorial lessons");
+    expect(body).toContain("41 interactive tutorial lessons");
     expect(body).toContain('href="https://github.com/michaelhmiv/OpenMahjong"');
     expect(body).toContain('href="/privacy"');
     expect(body.toLowerCase()).not.toContain("no ads");
