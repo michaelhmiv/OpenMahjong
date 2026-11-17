@@ -47,11 +47,12 @@ export interface ModuleDef {
 
 type CatalogEntry = Omit<ModuleDef, "version" | "rulesets" | "sources" | "reviewEligible">;
 function lesson(entry: CatalogEntry): ModuleDef {
-  // Content version 3 (2026-11-16): the zero-assumption rewrite —
-  // every lesson shows and names a thing before asking for it, and
-  // no term is used before its teaching step. Version-2 saves
+  // Content version 4 (2026-11-17, lesson rebuild PR E): the
+  // riichi repairs — completed tile reading, the table tour,
+  // signalled scene changes, stated stakes, TU-8's worked score
+  // breakdown, TU-9's single furiten statement. Version-3 saves
   // restart their lesson (see lesson-progress.ts).
-  return { ...entry, version: 3, rulesets: [EDUCATION_RULESET], reviewEligible: true,
+  return { ...entry, version: 4, rulesets: [EDUCATION_RULESET], reviewEligible: true,
     sources: ["docs/architecture/rulesets.md", "packages/engine/src/game.ts", "packages/engine/src/scoring.ts"] };
 }
 
@@ -59,10 +60,11 @@ export const MODULES: readonly ModuleDef[] = [
   lesson({ id: "tu1", title: "The tiles", minutes: 5, stage: 1, domains: ["A"],
     skills: ["tile-recognition"], prerequisites: [], interactions: ["read", "identify"],
     objectives: ["Tell the three suits apart and read each tile's number", "Identify honors, terminals, and simples"],
-    completionCriteria: "Find every target in all five identification exercises, then finish the explanations.",
+    completionCriteria: "Find every target in all seven identification exercises, then finish the explanations.",
     covered: ["34 tile kinds, 4 copies each — 136 tiles", "Three suits, numbered 1 to 9, read by counting circles, counting sticks, or the top character",
-      "Winds and dragons are honors, with no numbers", "1s and 9s are terminals; 2–8 are simples",
-      "One red-tinted 5 in each suit"] }),
+      "All nine characters faces read by the top character; the 6 and the 9 told apart side by side",
+      "Winds matched name to face: East, South, West, North", "Winds and dragons are honors, with no numbers", "1s and 9s are terminals; 2–8 are simples",
+      "One red-tinted 5 in each suit", "Tile codes: a number plus m, p, or s; E, S, W, N for the winds; Wh, Gr, Rd for the dragons"] }),
   lesson({ id: "tu2", title: "The winning shape", minutes: 3, stage: 1, domains: ["A"],
     skills: ["hand-construction"], prerequisites: ["tu1"], interactions: ["read", "choose"],
     objectives: ["Recognize sets and pairs", "Distinguish a complete standard shape from an incomplete shape"],
@@ -73,7 +75,8 @@ export const MODULES: readonly ModuleDef[] = [
     skills: ["hand-construction"], prerequisites: ["tu2"], interactions: ["read", "seeded-game"],
     objectives: ["Discard legal tiles on the real table", "Locate your discard pond"],
     completionCriteria: "Make six legal discards and finish the turn explanation.",
-    covered: ["Draw one tile, discard one tile", "Your discards form your pond"] }),
+    covered: ["Draw one tile, discard one tile", "Your discards form your pond",
+      "Table furniture: seat winds, the round label, the wall and its count, the dora indicator, the honba counter, 25,000 starting points"] }),
   lesson({ id: "tu4", title: "Calling", minutes: 5, stage: 2, domains: ["B"],
     skills: ["calling", "yaku"], prerequisites: ["tu3"], interactions: ["read", "seeded-game"],
     objectives: ["Make legal chi, pon, and kan calls", "Distinguish an open call from a concealed kan",
@@ -111,12 +114,13 @@ export const MODULES: readonly ModuleDef[] = [
     objectives: ["Find a riichi opponent's genbutsu", "State which opponent the safety guarantee covers"],
     completionCriteria: "Discard a tile previously discarded by the identified riichi opponent and finish the explanation.",
     covered: ["A riichi player's discards are safe against that player's ron", "They can still be dangerous against other opponents",
-      "Defense can mean breaking your own hand"] }),
+      "Sometimes no discard is safe; defense can mean breaking your own hand"] }),
   lesson({ id: "tu10", title: "Coming from American mahjong", minutes: 2, optional: true,
     stage: 1, domains: ["A"], skills: ["hand-construction", "yaku"], prerequisites: ["tu7"],
     interactions: ["read", "choose"], objectives: ["Distinguish riichi from American mahjong"],
     completionCriteria: "Identify yaku as riichi's scoring patterns and finish the comparison.",
-    covered: ["American mahjong commonly uses jokers and an annual card", "Riichi has neither — yaku are the patterns"] }),
+    covered: ["American mahjong commonly uses jokers and an annual card", "American mahjong begins with the Charleston, a pass of tiles between players; riichi has no passing",
+      "Riichi has neither jokers nor a card — yaku are the patterns"] }),
   lesson({ id: "tu11", title: "First game", minutes: 15, stage: 2, domains: ["I"],
     skills: ["hand-construction", "calling", "riichi", "situation"],
     prerequisites: ["tu3", "tu4", "tu5", "tu6", "tu7", "tu8", "tu9"], interactions: ["seeded-game"],

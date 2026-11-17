@@ -269,7 +269,7 @@ function click(el: Element | null | undefined): void {
 }
 
 describe("B10: the new-player path, no account", () => {
-  it("landing → Learn → TU-1 → completion → a real game", async () => {
+  it("landing → Learn → TU-1 → completion → a real game", { timeout: 60_000 }, async () => {
     // Reduced motion collapses playback delays to zero, so the real
     // game below settles within the test's tick budget.
     localStorage.setItem(
@@ -540,6 +540,38 @@ describe("issue #35: call-option rendering", () => {
       expect(b.querySelectorAll(".callfaces .tile").length).toBe(3);
       expect(b.querySelectorAll(".callfaces .tile.side").length).toBe(1);
     }
+  });
+
+  it("TU-2 choice rows activate on a plain mouse click (PR E item 10)", async () => {
+    localStorage.setItem(
+      "openmahjong.settings.v1",
+      JSON.stringify({ sound: false, motion: "reduced", largeTiles: false, lastLength: "east", guided: false }),
+    );
+    new App(root);
+    await settle();
+    click(root.querySelector('.tabbtn[data-tab="learn"]'));
+    await settle();
+    click(root.querySelector('[data-module="tu2"]'));
+    await settle();
+    // Advance through the info steps until the first choice appears.
+    let choices: HTMLElement[] = [];
+    for (let i = 0; i < 50 && choices.length === 0; i++) {
+      await settle(2);
+      choices = [...root.querySelectorAll<HTMLElement>("#table .lchoices .lchoice")];
+      if (choices.length) break;
+      const cont = [...root.querySelectorAll<HTMLElement>("#table .revctl .pillbtn")].find(
+        (b) => b.textContent === "Continue",
+      );
+      if (cont) click(cont);
+    }
+    expect(choices.length).toBeGreaterThan(0);
+    const stepBefore = root.querySelector("#table .revctl .step")?.textContent;
+    // A plain MouseEvent click — the panel harness's tap-only result
+    // does not reproduce: lessonChoicesEl binds standard click on a
+    // real <button>, and the correct first choice advances the lesson.
+    click(choices[0]);
+    await settle();
+    expect(root.querySelector("#table .revctl .step")?.textContent).not.toBe(stepBefore);
   });
 
   it("seat chips paint above the side tile columns (CSS)", () => {

@@ -120,9 +120,15 @@ function collect(id: ModuleId): CollectedStep[] {
     throw new Error(`audit driver stuck on ${id} at step ${view.stepIndex}`);
   }
   expect(c.done).toBe(true);
-  return [...byStep.entries()]
+  const steps = [...byStep.entries()]
     .sort((a, b) => a[0] - b[0])
     .map(([step, texts]) => ({ module: id, step, texts }));
+  // The completion recap (the module's `covered` list, shown on the
+  // completion screen) is player-visible text too — the panel found
+  // terms escaping the audit there. Audit it as a pseudo-step after
+  // the lesson's last step (PR E item 2).
+  steps.push({ module: id, step: 999, texts: [c.def.title, ...c.def.covered] });
+  return steps;
 }
 
 let collected: CollectedStep[] = [];
@@ -161,27 +167,39 @@ const TERMS: readonly {
   { term: "suit", pattern: /\bsuits?\b/i, module: "tu1", step: 1 },
   { term: "bamboo", pattern: /\bbamboo\b/i, module: "tu1", step: 3 },
   { term: "characters", pattern: /\bcharacters\b/i, module: "tu1", step: 5 },
-  { term: "honor", pattern: /\bhonors?\b/i, module: "tu1", step: 7 },
-  { term: "terminal", pattern: /\bterminals?\b/i, module: "tu1", step: 10 },
-  { term: "simple", pattern: /\bsimples?\b/i, module: "tu1", step: 11 },
+  { term: "honor", pattern: /\bhonors?\b/i, module: "tu1", step: 9 },
+  { term: "terminal", pattern: /\bterminals?\b/i, module: "tu1", step: 14 },
+  { term: "simple", pattern: /\bsimples?\b/i, module: "tu1", step: 15 },
   { term: "set", pattern: /\bsets?\b/i, module: "tu2", step: 1 },
   { term: "sequence", pattern: /\bsequences?\b/i, module: "tu2", step: 1 },
   { term: "triplet", pattern: /\btriplets?\b/i, module: "tu2", step: 2 },
   { term: "pair", pattern: /\bpairs?\b/i, module: "tu2", step: 3 },
   { term: "draw", pattern: /\bdraw(s|n|ing)?\b/i, module: "tu3", step: 0 },
   { term: "discard", pattern: /\bdiscard(s|ed|ing)?\b/i, module: "tu3", step: 0 },
-  { term: "pond", pattern: /\bponds?\b/i, module: "tu3", step: 2 },
+  { term: "pond", pattern: /\bponds?\b/i, module: "tu3", step: 0 },
+  // Table furniture (PR E item 2): TU-3 is the first lesson on the
+  // real table, and its opening step tours the furniture — seat
+  // winds, the round label, the wall, the dora indicator and the
+  // DORA label, the honba counter, the 25,000 starting scores.
+  { term: "seat wind", pattern: /\bseat wind\b/i, module: "tu3", step: 0 },
+  { term: "wall", pattern: /\bwall\b/i, module: "tu3", step: 0 },
+  { term: "dora", pattern: /\bdora\b/i, module: "tu3", step: 0 },
+  { term: "dora indicator", pattern: /\bdora indicator\b/i, module: "tu3", step: 0 },
+  { term: "honba", pattern: /\bhonba\b/i, module: "tu3", step: 0 },
   { term: "call", pattern: /\bcall(s|ed|ing)?\b/i, module: "tu4", step: 0 },
   { term: "chi", pattern: /\bchi\b/i, module: "tu4", step: 1 },
   { term: "pon", pattern: /\bpon\b/i, module: "tu4", step: 3 },
   { term: "kan", pattern: /\bkans?\b/i, module: "tu4", step: 5 },
-  { term: "dora", pattern: /\bdora\b/i, module: "tu4", step: 7 },
   { term: "tenpai", pattern: /\btenpai\b/i, module: "tu5", step: 0 },
   { term: "furiten", pattern: /\bfuriten\b/i, module: "tu5", step: 4 },
-  { term: "riichi", pattern: /\briichi\b/i, module: "tu6", step: 0 },
+  // Riichi's stake first moves in TU-5's scenes (the panel's
+  // unexplained 25,000 → 24,000), so TU-5's tsumo scene defines
+  // riichi in plain words at that first use; TU-6 is the full
+  // teaching lesson (PR E item 4).
+  { term: "riichi", pattern: /\briichi\b/i, module: "tu5", step: 2 },
   { term: "yaku", pattern: /\byaku\b/i, module: "tu7", step: 0 },
-  { term: "dealer", pattern: /\bdealers?\b/i, module: "tu8", step: 5 },
-  { term: "honba", pattern: /\bhonba\b/i, module: "tu8", step: 6 },
+  { term: "scoring pattern", pattern: /\bscoring pattern\b/i, module: "tu7", step: 0 },
+  { term: "dealer", pattern: /\bdealers?\b/i, module: "tu8", step: 6 },
 ];
 
 describe("A1: no term is used before the step that teaches it", () => {
@@ -256,6 +274,55 @@ describe("A2: nothing is asked before it has been shown and named", () => {
   it("TU-7 defines yaku as a scoring pattern in its first step", () => {
     expect(textsAt("tu7", 0)).toContain("yaku — a scoring pattern");
   });
+
+  it("TU-1 completes characters reading before any drill uses the faces (PR E item 1)", () => {
+    // All nine faces labelled in order, with the reading method.
+    expect(textsAt("tu1", 6)).toContain("labelled in order: 1, 2, 3, 4, 5, 6, 7, 8, 9");
+    expect(textsAt("tu1", 6)).toContain("that character is the number");
+    // The 6 and the 9 side by side, before the characters drill (step 8).
+    expect(textsAt("tu1", 7)).toContain("the 6 on the left, the 9 on the right");
+    // Wind name→face matching drills.
+    expect(openingText("tu1", 10)).toContain("Tap the East wind");
+    expect(openingText("tu1", 11)).toContain("Tap the North wind");
+    // The tile shorthand codes are taught (3m / Wh / Rd style).
+    expect(textsAt("tu1", 19)).toContain("3m is the 3 of characters");
+    expect(textsAt("tu1", 19)).toContain("Wh for the white dragon");
+    expect(textsAt("tu1", 19)).toContain("Rd for the red dragon");
+  });
+
+  it("TU-3 tours the table furniture when the table first appears (PR E item 2)", () => {
+    const tour = textsAt("tu3", 0);
+    expect(tour).toContain("seat wind");
+    expect(tour).toContain("'East 1'");
+    expect(tour).toContain("the wall");
+    expect(tour).toContain("dora indicator");
+    expect(tour).toContain("DORA");
+    expect(tour).toContain("honba counter");
+    expect(tour).toContain("25,000 points");
+  });
+
+  it("TU-8 shows the worked score breakdown before its questions (PR E item 5)", () => {
+    const breakdown = textsAt("tu8", 2);
+    expect(breakdown).toContain("counted out in full");
+    expect(breakdown).toContain("That makes 9 han in all");
+    expect(breakdown).toContain("The fu are 25");
+    expect(breakdown).toContain("You gained 25,000 points in all");
+    // The han question's hint points at that shown breakdown, never
+    // at a hand that no longer exists.
+    expect(textsAt("tu8", 3)).toContain("breakdown on the step before this one");
+    expect(textsAt("tu8", 3)).not.toContain("Count again from the winning hand");
+  });
+
+  it("TU-9 states the furiten rule one way in both steps (PR E item 6)", () => {
+    expect(textsAt("tu9", 1)).toContain("cannot win by ron at all");
+    expect(textsAt("tu9", 2)).toContain("cannot win by ron at all");
+    expect(textsAt("tu9", 2)).toContain("no discard is completely safe");
+    expect(textsAt("tu9", 2)).toContain("covers only that one riichi player");
+  });
+
+  it("TU-10 confirms a correct answer visibly (PR E item 8)", () => {
+    expect(textsAt("tu10", 4)).toContain("Correct — that is the right answer");
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -285,9 +352,25 @@ describe("A3: scene openers state what happens, what to tap, and why", () => {
 
   it("TU-6's scene explains the tap declares riichi and pays the stake", () => {
     const text = openingText("tu6", 1);
-    expect(text).toContain("Tap one of the marked tiles");
+    expect(text).toContain("Tap the marked tile");
     expect(text).toContain("declares riichi");
     expect(text).toContain("1,000-point stake is paid");
+  });
+
+  it("scene steps that start a new position say so (PR E item 3)", () => {
+    expect(openingText("tu4", 2)).toContain("New example");
+    expect(openingText("tu4", 4)).toContain("New example");
+    expect(openingText("tu4", 6)).toContain("New example");
+    expect(openingText("tu5", 5)).toContain("New example");
+    expect(openingText("tu8", 1)).toContain("New example");
+  });
+
+  it("TU-6's closing scene reconciles its stakes and scores (PR E item 3)", () => {
+    const text = openingText("tu6", 2);
+    expect(text).toContain("the table has moved on to the next hand");
+    expect(text).toContain("ended in a draw");
+    expect(text).toContain("also declared riichi after you");
+    expect(text).toContain("back at 25,000 even though you paid the 1,000 stake");
   });
 
   it("TU-8's scene names the tap and says to watch what the win pays", () => {
