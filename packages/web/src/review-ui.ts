@@ -2,7 +2,8 @@
  * this view requests analysis only for the selected decision and caches it. */
 import type { Tile } from "@openmahjong/engine";
 import { compareDiscards, type DiscardAdvice, type TurnAdvice } from "@openmahjong/coach";
-import { analyzeReviewDecision, ReviewNavigator, type DecisionReview, type ReviewDecision } from "./review.js";
+import { analyzeReviewDecision, analyzeReviewMoments, ReviewNavigator, type DecisionReview, type ReviewDecision, type ReviewMomentAnalysis } from "./review.js";
+import { momentTexts } from "./moment-text.js";
 import type { SkillId } from "./education/curriculum.js";
 
 export interface ReviewUIOptions {
@@ -43,6 +44,7 @@ function skillsFor(position: ReviewDecision): readonly SkillId[] {
 export function mountReview(container: HTMLElement, options: ReviewUIOptions): ReviewUIController {
   const navigator = new ReviewNavigator(options.review);
   const adviceCache = new Map<number, TurnAdvice | null>();
+  const momentCache = new Map<number, ReviewMomentAnalysis>();
   const alternatives = new Map<number, number>();
   let destroyed = false;
   let showHelp = false;
@@ -71,6 +73,31 @@ export function mountReview(container: HTMLElement, options: ReviewUIOptions): R
       adviceCache.set(position.decisionIndex, result.available ? result.advice : null);
     }
     return adviceCache.get(position.decisionIndex) ?? null;
+  };
+  const getMoments = (position: ReviewDecision): ReviewMomentAnalysis => {
+    if (!momentCache.has(position.decisionIndex)) {
+      momentCache.set(position.decisionIndex, analyzeReviewMoments(options.review, position));
+    }
+    return momentCache.get(position.decisionIndex)!;
+  };
+  const momentPanels = (position: ReviewDecision, analysis: Extract<ReviewMomentAnalysis, { available: true }>): HTMLElement => {
+    const wrap = node("div", "review-moments");
+    for (const text of momentTexts(analysis.grades, position)) {
+      const card = node("section", "card moment-card");
+      card.dataset["momentKind"] = text.kind;
+      card.append(node("p", "card-label", text.title.toUpperCase()));
+      card.append(node("h2", "", text.headline));
+      card.append(node("p", "", text.choiceLine));
+      const facts = node("div", "moment-facts");
+      for (const fact of text.facts) facts.append(node("p", "", fact));
+      card.append(facts);
+      const terms = node("details", "review-facts");
+      terms.append(node("summary", "", "The moment — terms in plain words"));
+      for (const term of text.terms) terms.append(node("p", "", term));
+      card.append(terms);
+      wrap.append(card);
+    }
+    return wrap;
   };
   const publicTable = (position: ReviewDecision): HTMLElement => {
     const detail = node("details", "review-public-table");
@@ -229,13 +256,20 @@ export function mountReview(container: HTMLElement, options: ReviewUIOptions): R
       const threats = position.view.players.filter((player) => player.seat !== position.view.seat && player.riichi).length;
       handCard.append(node("div", "hand-caption", `${position.view.wallRemaining} in the live wall · ${threats ? `${threats} riichi threat${threats === 1 ? "" : "s"}` : "no riichi threats"}.`)); content.append(handCard);
       const advice = getAdvice(position);
+      const moments = getMoments(position);
       if (advice) content.append(analysisPanel(position, advice));
       else {
         const facts = node("div", "card review-action-facts"); facts.append(node("h2", "", position.kind === "call" ? "Call decision" : "Recorded action"), node("p", "", `Your action: ${position.action.type}.`));
         if (position.kind === "call") facts.append(node("p", "", `${position.engineVersion === 1 ? "Recorded historical call flags" : "Legal opportunities in this window"}: ${[position.context.canRon ? "ron" : "", position.context.canPon ? "pon" : "", position.context.canKan ? "open kan" : "", position.context.chiOptions.length ? "chi" : "", "pass"].filter(Boolean).join(", ")}.`));
         else facts.append(node("p", "", `Winning by tsumo was ${position.context.canTsumo ? "legal" : "unavailable"} at this turn.`));
-        if (position.engineVersion !== 1) facts.append(node("p", "dim", "This view records legality. It does not grade calling, kan, or winning-action strategy.")); content.append(facts);
+        if (position.engineVersion !== 1 && !moments.available) {
+          facts.append(node("p", "dim", moments.reason === "not-recorded"
+            ? "This game was recorded before moment capture, so this window is not graded. Games recorded now grade call, kan, riichi, and win choices as well as discards."
+            : "This view records legality. It does not grade calling, kan, or winning-action strategy."));
+        }
+        content.append(facts);
       }
+      if (moments.available) content.append(momentPanels(position, moments));
       content.append(publicTable(position));
       const practiceLabel = position.kind === "call" ? "Practice hand building" : advice ? "Practice tile efficiency" : "Practice this concept";
       const practice = button(practiceLabel, "primary", () => options.onPractice(position, skillsFor(position)), "practice"); practice.disabled = position.engineVersion === 1; content.append(practice);
@@ -251,6 +285,6 @@ export function mountReview(container: HTMLElement, options: ReviewUIOptions): R
   return {
     get currentPosition() { return navigator.current; },
     goToDecision(index) { if (!destroyed) { navigator.goTo(index); render(); } },
-    destroy() { destroyed = true; adviceCache.clear(); alternatives.clear(); container.replaceChildren(); },
+    destroy() { destroyed = true; adviceCache.clear(); momentCache.clear(); alternatives.clear(); container.replaceChildren(); },
   };
 }

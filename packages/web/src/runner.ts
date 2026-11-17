@@ -40,8 +40,9 @@ import type { ChiHint } from "./model.js";
 import { newGameId } from "./records.js";
 import { DEFAULT_RULESET } from "@openmahjong/engine";
 import { AI_POLICY_VERSION } from "@openmahjong/ai";
-import { REPLAY_ENGINE_VERSION, validateDecision, validateSavedGame, type SavedGame } from "./replay.js";
+import { REPLAY_ENGINE_VERSION, validateDecision, validateSavedGame, type MomentRecord, type SavedGame } from "./replay.js";
 export type { SavedGame } from "./replay.js";
+export type { MomentRecord } from "./replay.js";
 
 export type Decision = TurnAction | CallAction;
 
@@ -94,6 +95,10 @@ export class GameRunner {
   private readonly humanDriver = new HumanDriver();
 
   decisions: Decision[] = [];
+  /** Coaching-moment records for human decisions (offers + choice),
+   * aligned with `decisions` by decisionIndex. Only decisions with
+   * a graded offer (a call, kan, riichi, or win window) get one. */
+  moments: MomentRecord[] = [];
   events: readonly GameEvent[] = [];
   pending: PendingDecision | null = null;
   result: GameResult | null = null;
@@ -231,6 +236,32 @@ export class GameRunner {
     }
   }
 
+  /** The moment record for the pending decision, or null when the
+   * window holds no graded offer (a plain discard turn, a call ask
+   * where only passing is legal). */
+  private momentFor(pending: PendingDecision, choice: Decision, decisionIndex: number): MomentRecord | null {
+    if (pending.kind === "call") {
+      const ctx = pending.ctx;
+      if (!ctx.canRon && !ctx.canPon && !ctx.canKan && ctx.chiOptions.length === 0) return null;
+      return {
+        decisionIndex, kind: "call", choice,
+        phase: ctx.phase, tileType: ctx.tile.type, fromSeat: ctx.fromSeat,
+        canRon: ctx.canRon, canPon: ctx.canPon, canKan: ctx.canKan,
+        chiOptions: ctx.chiOptions.map(([a, b]) => [a, b] as const),
+      };
+    }
+    const ctx = pending.ctx;
+    if (!ctx.canTsumo && ctx.ankanOptions.length === 0 && ctx.shouminkanOptions.length === 0 && ctx.riichiDiscardIds.length === 0) return null;
+    return {
+      decisionIndex, kind: "turn", choice,
+      canTsumo: ctx.canTsumo,
+      drawnTileType: ctx.drawnTile?.type ?? null,
+      ankanOptions: [...ctx.ankanOptions],
+      shouminkanOptions: [...ctx.shouminkanOptions],
+      riichiDiscardIds: [...ctx.riichiDiscardIds],
+    };
+  }
+
   /** The human's answer to the pending decision; advances the game. */
   act(action: Decision): void {
     action = validateDecision(action);
@@ -245,11 +276,14 @@ export class GameRunner {
     // replay may append AI actions before detecting a later error.
     const count = this.decisions.length;
     const previous = { pending: this.pending, events: this.events, result: this.result, chiHints: this.chiHints };
+    const moment = this.momentFor(this.pending, action, count);
+    if (moment) this.moments.push(moment);
     this.decisions.push(action);
     try {
       this.advance();
     } catch (error) {
       this.decisions.length = count;
+      if (moment) this.moments.pop();
       Object.assign(this, previous);
       throw error;
     }
@@ -267,6 +301,7 @@ export class GameRunner {
       v: 2, engineVersion: REPLAY_ENGINE_VERSION,
       ruleset: { id: DEFAULT_RULESET.id, version: DEFAULT_RULESET.version },
       aiVersion: AI_POLICY_VERSION, ...base,
+      ...(this.moments.length > 0 ? { moments: [...this.moments] } : {}),
     };
   }
 
@@ -281,6 +316,7 @@ export class GameRunner {
       replayVersion: saved.v,
     });
     runner.decisions = [...saved.decisions];
+    runner.moments = saved.v === 2 && saved.moments ? [...saved.moments] : [];
     runner.advance();
     return runner;
   }
