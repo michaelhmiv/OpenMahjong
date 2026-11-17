@@ -10,9 +10,9 @@ import { describe, expect, it } from "vitest";
  */
 
 const WEB = "packages/web";
-const TITLE = "Open Mahjong — Play Riichi Mahjong Online, Free";
+const TITLE = "Open Mahjong — Play Mahjong Online, Free";
 const DESCRIPTION =
-  "Play riichi mahjong online in your browser against the CPU, with real scoring, 11 interactive tutorial lessons, and guided hints with explanations. Free and open source — no account or download needed.";
+  "Play mahjong online in your browser against the CPU, with real scoring, interactive tutorial lessons, and guided hints with explanations. Free and open source — no account or download needed.";
 const AI_BOTS = [
   "GPTBot",
   "OAI-SearchBot",
@@ -132,7 +132,7 @@ describe("index.html noscript", () => {
     const body = match![1];
     expect(body).toContain("<h1>Open Mahjong</h1>");
     expect(body).toContain("Free forever. Open source mahjong.");
-    expect(body).toContain("riichi mahjong against the CPU");
+    expect(body).toContain("mahjong against the CPU");
     expect(body).toContain("11 interactive tutorial lessons");
     expect(body).toContain('href="https://github.com/michaelhmiv/OpenMahjong"');
     expect(body).toContain('href="/privacy"');
