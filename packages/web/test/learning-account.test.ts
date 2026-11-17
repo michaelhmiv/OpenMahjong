@@ -52,8 +52,8 @@ describe("learning account integration", () => {
     const a = mount(); await tick();
     expect(JSON.parse(localStorage.getItem(PRACTICE_STORAGE_KEY)!).attempts.map((entry: PracticeAttempt) => entry.id)).toEqual(["guest"]);
     expect(localStorage.getItem(`${PRACTICE_STORAGE_KEY}.account.account-a`)).toContain("account-a");
-    (a.querySelector('[aria-label="Settings"]') ?? [...a.querySelectorAll("button")].find((button) => button.textContent === "Settings"))!.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-    [...a.querySelectorAll<HTMLButtonElement>("#screen-settings button")].find((button) => button.textContent === "Sign out")!.click();
+    a.querySelector<HTMLButtonElement>('.tabbtn[data-tab="more"]')!.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    [...a.querySelectorAll<HTMLButtonElement>("#screen-more button")].find((button) => button.textContent === "Sign out")!.click();
     await tick();
     owner = "account-b";
     a.remove(); mount(); await tick();

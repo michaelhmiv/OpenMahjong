@@ -52,11 +52,10 @@ import {
   historyDateLabel,
   mergeLocalGameRecords,
   placementLabel,
-  relativeDateLabel,
   shouldOfferImport,
   sumRecords,
 } from "./records.js";
-import { GameRunner } from "./runner.js";
+import { GameRunner, type SavedGame } from "./runner.js";
 import { buildDecisionReview, type DecisionReview, type ReviewDecision } from "./review.js";
 import { mountReview, type ReviewUIController } from "./review-ui.js";
 import { createPracticeView } from "./practice-ui.js";
@@ -317,18 +316,77 @@ type ScreenName =
   | "home"
   | "table"
   | "rules"
-  | "settings"
   | "about"
   | "privacy"
   | "results"
-  | "history"
-  | "stats"
+  | "games"
   | "learn"
   | "practice"
-  | "review";
+  | "review"
+  | "more";
 
-/** Google's standard four-color "G" (the approved landing button). */
-const GOOGLE_G_SVG = `<svg viewBox="0 0 48 48"><path fill="#FBBC05" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#EA4335" d="M6.3 14.7l6.6-4.8C14.7 7.1 19 4 24 4c3.1 0 5.8 1.2 8 3l5.7-5.7C34.3 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#34A853" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#4285F4" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.2 5.7l6.2 5.2C36.9 39.2 48 32 48 24c0-1.3-.1-2.6-.4-3.9z"/></svg>`;
+/** The four tab roots of the app shell (approved 2026-11-16). The
+ *  "home" screen is the Play tab. */
+type TabRoot = "home" | "learn" | "games" | "more";
+const TAB_ROOTS: readonly TabRoot[] = ["home", "learn", "games", "more"];
+
+/** Tab bar definitions (app shell, renderings 01-06): labels and
+ *  icon geometry are the approved mocks', verbatim. */
+const TAB_DEFS: { name: TabRoot; label: string; icon: string }[] = [
+  {
+    name: "home",
+    label: "Play",
+    icon: `<rect x="5" y="3" width="14" height="18" rx="3"/><circle cx="9.2" cy="9.2" r="1.7" style="fill:currentColor;stroke:none"/><circle cx="14.8" cy="9.2" r="1.7" style="fill:currentColor;stroke:none"/><circle cx="12" cy="15" r="1.7" style="fill:currentColor;stroke:none"/>`,
+  },
+  {
+    name: "learn",
+    label: "Learn",
+    icon: `<path d="M12 6.2C10.2 4.7 8 4.2 4 4.2v13.6c4 0 6.2.5 8 2 1.8-1.5 4-2 8-2V4.2c-4 0-6.2.5-8 2z"/><path d="M12 6.2v13.6"/>`,
+  },
+  {
+    name: "games",
+    label: "Games",
+    icon: `<path d="M9 5.5h11M9 12h11M9 18.5h11"/><circle cx="4.5" cy="5.5" r="1.3" style="fill:currentColor;stroke:none"/><circle cx="4.5" cy="12" r="1.3" style="fill:currentColor;stroke:none"/><circle cx="4.5" cy="18.5" r="1.3" style="fill:currentColor;stroke:none"/>`,
+  },
+  {
+    name: "more",
+    label: "More",
+    icon: `<path d="M3.5 8h9M18 8h2.5M3.5 16h3M12 16h8.5"/><circle cx="15.2" cy="8" r="2.3"/><circle cx="9.2" cy="16" r="2.3"/>`,
+  },
+];
+
+/** Collapsed Learn sections persist on this device only — a display
+ *  preference, never account data. */
+const LEARN_COLLAPSED_KEY = "openmahjong.learn.collapsed.v1";
+
+function loadCollapsedSections(): Set<string> {
+  try {
+    const v: unknown = JSON.parse(localStorage.getItem(LEARN_COLLAPSED_KEY) ?? "[]");
+    return new Set(Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : []);
+  } catch {
+    return new Set();
+  }
+}
+
+/** Learn's per-variant sections (Michael's build requirement,
+ *  2026-11-16): lessons are grouped by variant from the start, so
+ *  the Hong Kong, MCR, and Taiwanese sections slot in here later
+ *  without restructuring the tab. */
+const LEARN_SECTIONS: { id: string; title: string; modules: typeof MODULES }[] = [
+  { id: "riichi", title: "Riichi", modules: MODULES },
+];
+
+/** Live state of an in-progress game, derived from its saved record
+ *  by the engine — the only source the Continue card and the Games
+ *  in-progress row may read. */
+interface SavedSummary {
+  round: string;
+  lengthLabel: string;
+  standing: string;
+  humanScore: number;
+  scores: { name: string; score: number }[];
+}
+
 
 /** Pick the known settings keys out of a server payload, typed. */
 function mergeServerSettings(local: Settings, srv: Partial<Settings>): Settings {
@@ -432,7 +490,7 @@ export class App {
     window.addEventListener("resize", () => this.fit());
     window.visualViewport?.addEventListener("resize", () => this.fit());
     this.applyTheme();
-    this.renderHome();
+    this.renderPlay();
     // Browser history survives reload; the in-memory runner does not.
     // Reconcile this entry with the actual landing before navigation.
     window.history.replaceState({ openmahjongScreen: "home" }, "");
@@ -468,6 +526,12 @@ export class App {
   private stage!: HTMLElement;
   private screens = new Map<ScreenName, HTMLElement>();
   private tableEl!: HTMLElement;
+  private tabbar!: HTMLElement;
+  private tabBtns: HTMLButtonElement[] = [];
+  /** The tab root a drilled-in screen returns to. */
+  private lastRoot: TabRoot = "home";
+  private swipeStart: { x: number; y: number } | null = null;
+  private collapsedSections = loadCollapsedSections();
 
   private buildShell(): void {
     this.root.innerHTML = "";
@@ -476,14 +540,30 @@ export class App {
     this.root.append(sprite);
     this.stage = h("div", { id: "stage" });
     this.root.append(this.stage);
-    for (const name of ["home", "table", "rules", "settings", "about", "privacy", "results", "history", "stats", "learn", "practice", "review"] as ScreenName[]) {
+    const screensWrap = h("div", { class: "screens" });
+    this.stage.append(screensWrap);
+    for (const name of ["home", "table", "rules", "about", "privacy", "results", "games", "learn", "practice", "review", "more"] as ScreenName[]) {
       const s = h("section", { class: "screen", id: `screen-${name}` });
       this.screens.set(name, s);
-      this.stage.append(s);
+      screensWrap.append(s);
     }
     this.tableEl = h("div", { id: "table" });
     this.screens.get("table")!.append(this.tableEl);
+    // App shell (approved 2026-11-16): one persistent tab bar whose
+    // visibility showScreen governs — it exists ONLY on the four tab
+    // roots (nav law, design rules section 13).
+    this.tabbar = h("nav", { class: "tabbar", "aria-label": "Main" });
+    for (const def of TAB_DEFS) {
+      const b = h("button", { class: "tabbtn", "data-tab": def.name });
+      b.innerHTML = `<svg viewBox="0 0 24 24">${def.icon}</svg>`;
+      b.append(h("span", {}, def.label));
+      b.addEventListener("click", () => this.showScreen(def.name));
+      this.tabBtns.push(b);
+      this.tabbar.append(b);
+    }
+    this.stage.append(this.tabbar);
     this.buildTextScreens();
+    this.installSwipeBack();
   }
 
   private fit(): void {
@@ -531,14 +611,79 @@ export class App {
       else if (previous !== name) window.history.pushState(state, "");
     }
     for (const [n, el] of this.screens) el.classList.toggle("active", n === name);
-    if (name === "home") this.renderHome();
-    if (name === "settings") this.renderSettings();
-    if (name === "history") void this.renderHistory();
-    if (name === "stats") void this.renderStats();
+    // Nav law: the tab bar exists only on the four tab roots; every
+    // drilled-in screen renders without it.
+    const isRoot = (TAB_ROOTS as readonly string[]).includes(name);
+    if (isRoot) this.lastRoot = name as TabRoot;
+    this.tabbar.hidden = !isRoot;
+    for (const b of this.tabBtns) {
+      const on = b.dataset["tab"] === name;
+      b.classList.toggle("on", on);
+      if (on) b.setAttribute("aria-current", "page");
+      else b.removeAttribute("aria-current");
+    }
+    if (name === "home") this.renderPlay();
+    if (name === "more") this.renderMore();
+    if (name === "games") void this.renderGames();
     if (name === "learn") this.renderLearn();
     if (name === "practice") this.renderPractice();
     if (name === "review") this.renderReview();
     if (previous !== name) this.screens.get(name)?.querySelector<HTMLElement>("button, input, [tabindex='0']")?.focus();
+  }
+
+  /** Swipe-back for drilled-in screens (nav law): a left-edge
+   *  swipe returns the way the top-area Back control does, on the
+   *  web where no platform gesture covers it. The table and any
+   *  open dialog are excluded — the game has its own menu, and a
+   *  dialog's own dismissal wins. */
+  private installSwipeBack(): void {
+    this.stage.addEventListener(
+      "touchstart",
+      (e) => {
+        const t = e.touches[0];
+        if (!t) return;
+        const rect = this.stage.getBoundingClientRect();
+        const x = (t.clientX - rect.left) / this.scale;
+        this.swipeStart = x <= 24 ? { x: t.clientX, y: t.clientY } : null;
+      },
+      { passive: true },
+    );
+    this.stage.addEventListener(
+      "touchend",
+      (e) => {
+        const start = this.swipeStart;
+        this.swipeStart = null;
+        if (!start) return;
+        const t = e.changedTouches[0];
+        if (!t) return;
+        const dx = (t.clientX - start.x) / this.scale;
+        const dy = (t.clientY - start.y) / this.scale;
+        if (dx > 60 && Math.abs(dy) < 40) this.swipeBack();
+      },
+      { passive: true },
+    );
+  }
+
+  private swipeBack(): void {
+    if (document.querySelector('[role="dialog"]')) return;
+    switch (this.currentScreen) {
+      case "rules":
+      case "about":
+      case "privacy":
+        this.showScreen(this.lastRoot);
+        break;
+      case "results":
+        this.showScreen("home");
+        break;
+      case "review":
+        this.showScreen(this.runner?.result ? "results" : "games");
+        break;
+      case "practice":
+        this.showScreen("learn");
+        break;
+      default:
+        break;
+    }
   }
 
   private applyTheme(): void {
@@ -548,38 +693,58 @@ export class App {
     document.documentElement.classList.toggle("reduced-motion", this.settings.motion === "reduced");
   }
 
-  // -- home ------------------------------------------------------------------
+  // -- Play tab --------------------------------------------------------------
 
   /**
-   * The landing (slice 2, renderings 01/02; theme v6 home, design
-   * rules section 4): wordmark over a radial glow, the 14-tile strip,
-   * length seg, one-tap Play. Signed in adds the identity chip, the
-   * record strip, the Last game / Learn progress cards (each hidden
-   * when its data doesn't exist), and History/Stats entries; signed
-   * out shows the Learn card and the Google button instead. Guests
-   * get no record strip and no History/Stats entries — their local
-   * history still lives behind the same screens, reached from
-   * Settings.
+   * The Play tab (app shell renderings 01/02, approved 2026-11-16):
+   * the wordmark standing alone (the companion tagline line is
+   * retired) over the fan of the section-4 hand, the motif row in
+   * the fresh state or the Continue card when a game is in progress,
+   * the length seg, the guided row, one-tap Play, the record strip
+   * when the account has stats, the one-time import offer, and the
+   * tile-back wall over the reserved AdSense slot. Sign-in lives on
+   * the More tab; the old hub's identity chip, Last game / Learn
+   * progress cards, secondary row, and quiet row are retired (their
+   * content lives on the Games and Learn tabs now).
    */
-  private renderHome(): void {
+  private renderPlay(): void {
     const el = this.screens.get("home")!;
     el.innerHTML = "";
     // Glow centre per state (design rules section 1).
     el.style.setProperty("--glow-y", this.user ? "22%" : "27%");
     const saved = loadGame();
+    const body = h("div", { class: "playbody" });
+    el.append(body);
 
-    el.append(h("div", { class: "spacer" }));
+    body.append(h("div", { class: "spacer" }));
+    body.append(h("div", { class: "wordmark" }, "OPEN MAHJONG"));
+    body.append(this.fanEl());
 
-    if (this.user) {
-      const chip = h("div", { class: "idchip" });
-      chip.append(this.avatarEl(this.user), document.createTextNode(this.user.name));
-      el.append(chip);
-    }
+    const summary = saved ? this.savedGameSummary(saved) : null;
+    if (summary) body.append(this.continueCardEl(summary));
+    else body.append(this.motifRowEl());
 
-    const wm = h("div", { class: "wordmark" }, "OPEN MAHJONG");
-    wm.append(h("span", { class: "sub" }, "Free forever. Open source mahjong."));
-    el.append(wm);
-    el.append(this.homeStripEl());
+    const seg = h("div", { class: "seg" });
+    const mkSeg = (label: string, len: GameLength) => {
+      const b = h("button", { class: this.settings.lastLength === len ? "on" : "" }, label);
+      b.addEventListener("click", () => {
+        this.settings = { ...this.settings, lastLength: len };
+        this.persistSettings();
+        this.renderPlay();
+      });
+      return b;
+    };
+    seg.append(mkSeg("East only", "east"), mkSeg("East + South", "south"));
+    body.append(seg);
+
+    body.append(this.guidedRowEl());
+
+    const play = h("button", { class: "pillbtn primary play" }, "Play");
+    play.addEventListener("click", () => {
+      this.sound.unlock();
+      this.startGame(this.settings.lastLength);
+    });
+    body.append(play);
 
     if (this.user && this.statsSums) {
       const strip = formatRecordStrip(this.statsSums);
@@ -596,25 +761,104 @@ export class App {
         h("span", { class: "sep" }, "·"),
         part("Avg place", strip.avgPlace),
       );
-      el.append(rs);
+      body.append(rs);
     }
 
-    const seg = h("div", { class: "seg" });
-    const mkSeg = (label: string, len: GameLength) => {
-      const b = h("button", { class: this.settings.lastLength === len ? "on" : "" }, label);
-      b.addEventListener("click", () => {
-        this.settings = { ...this.settings, lastLength: len };
-        this.persistSettings();
-        this.renderHome();
+    if (this.importOfferCount > 0) {
+      const box = h("div", { class: "importbox" });
+      box.append(
+        h("div", { class: "txt" }, `Import ${this.importOfferCount} games from this device`),
+      );
+      const rowEl = h("div", { class: "row" });
+      const imp = h("button", { class: "pillbtn primary" }, "Import");
+      imp.addEventListener("click", () => void this.doImport());
+      const dis = h("button", { class: "pillbtn ghost" }, "Dismiss");
+      dis.addEventListener("click", () => {
+        markImportHandled();
+        this.importOfferCount = 0;
+        this.renderPlay();
       });
-      return b;
-    };
-    seg.append(mkSeg("East only", "east"), mkSeg("East + South", "south"));
-    el.append(seg);
+      rowEl.append(imp, dis);
+      box.append(rowEl);
+      body.append(box);
+    }
 
-    // Guided mode (brief §9 ruling): the pre-game on/off choice for
-    // CPU games — the same single setting as in Settings and the
-    // in-game menu.
+    body.append(h("div", { class: "spacer" }));
+    body.append(this.wallEl());
+    // AdSense banner (adsense-slot-v1): last element of the Play
+    // flow. adSlotEl returns null while ADSENSE_CONFIG is empty, so
+    // the shipped tab is unchanged until both ids are configured.
+    const adSlot = adSlotEl();
+    if (adSlot) body.append(adSlot);
+  }
+
+  /** The Play fan (rendering 01): the section-4 hand fanned over its
+   *  ground shadow, display only. Geometry is the approved mock's:
+   *  23px steps with 6px group gaps, arc translate/rotate pairs. */
+  private fanEl(): HTMLElement {
+    const wrap = h("div", { class: "fanwrap", "aria-hidden": "true" });
+    const lefts = [17, 40, 63, 92, 115, 138, 167, 190, 213, 242, 265, 294, 317, 340];
+    const arcs: [number, number][] = [
+      [0, -8], [-2.3, -6.77], [-4.2, -5.54], [-5.7, -4.31], [-6.8, -3.08],
+      [-7.6, -1.85], [-8, -0.62], [-8, 0.62], [-7.6, 1.85], [-6.8, 3.08],
+      [-5.7, 4.31], [-4.2, 5.54], [-2.3, 6.77], [0, 8],
+    ];
+    HOME_STRIP_GROUPS.flat().forEach((id, i) => {
+      const [ty, rot] = arcs[i]!;
+      const t = h("span", {
+        class: "tile t-fan",
+        style: `left:${lefts[i]}px;top:18px;z-index:${i + 1};transform:translateY(${ty}px) rotate(${rot}deg)`,
+      });
+      t.innerHTML = `<svg viewBox="0 0 40 56"><use href="#${tileSymbol(tileById(id))}"/></svg>`;
+      t.append(h("i", { class: "edge" }));
+      wrap.append(t);
+    });
+    return wrap;
+  }
+
+  /** The fresh-state motif row (rendering 01): the dora indicator
+   *  beside the tile it indicates, and the four seat winds. */
+  private motifRowEl(): HTMLElement {
+    const row = h("div", { class: "motifrow", "aria-hidden": "true" });
+    const left = h("div", { class: "motif" });
+    left.append(h("span", { class: "cap" }, "Dora"));
+    const dora = h("span", { class: "tile t-dora" });
+    dora.innerHTML = `<svg viewBox="0 0 40 56"><use href="#${tileSymbol(tileById(49))}"/></svg>`;
+    left.append(dora);
+    const right = h("div", { class: "motif" });
+    const winds = h("span", { class: "winds" });
+    for (const id of [109, 113, 117, 121]) {
+      const w = h("span", { class: "tile t-meld" });
+      w.innerHTML = `<svg viewBox="0 0 40 56"><use href="#${tileSymbol(tileById(id))}"/></svg>`;
+      winds.append(w);
+    }
+    right.append(winds, h("span", { class: "cap" }, "Winds"));
+    row.append(left, right);
+    return row;
+  }
+
+  /** The tile-back wall at the Play tab's foot (rendering 01). QC
+   *  note N3: row 2 drops one back so its brick offset never pushes
+   *  a tile past the stage edge. */
+  private wallEl(): HTMLElement {
+    const wall = h("div", { class: "wall", "aria-hidden": "true" });
+    const mkRow = (count: number, cls: string) => {
+      const row = h("div", { class: `wrow ${cls}` });
+      for (let i = 0; i < count; i++) {
+        const t = h("span", { class: "tile" });
+        t.innerHTML = `<svg viewBox="0 0 40 56"><use href="#t-back"/></svg>`;
+        row.append(t);
+      }
+      return row;
+    };
+    wall.append(mkRow(16, "r1"), mkRow(15, "r2"));
+    return wall;
+  }
+
+  /** Guided mode row (renderings 01/03): the pre-game on/off choice
+   *  for CPU games — the same single setting as on the More tab and
+   *  in the in-game menu. */
+  private guidedRowEl(): HTMLElement {
     const grow = h("div", { class: "growrow" });
     const glab = h("div", {});
     glab.append(
@@ -630,165 +874,92 @@ export class App {
     });
     gsw.append(ginput, h("span", { class: "tr" }));
     grow.append(glab, gsw);
-    el.append(grow);
-
-    const play = h("button", { class: "pillbtn primary play" }, "Play");
-    play.addEventListener("click", () => {
-      this.sound.unlock();
-      this.startGame(this.settings.lastLength);
-    });
-    el.append(play);
-
-    if (saved) {
-      const resume = h("button", { class: "pillbtn ghost resume" }, "Resume game");
-      resume.addEventListener("click", () => {
-        this.sound.unlock();
-        this.resumeGame();
-      });
-      el.append(resume);
-    }
-
-    if (this.user) {
-      // Signed-in info cards (design rules section 4): Last game from
-      // the newest account record, Learn progress from the tutorial
-      // progress. Each card hides when its data doesn't exist — a
-      // brand-new signed-in user sees neither card.
-      const newest = (this.serverGames ?? []).reduce<GameSummary | null>(
-        (best, g) => (best === null || g.finishedAt > best.finishedAt ? g : best),
-        null,
-      );
-      if (newest) {
-        const card = h("button", { class: "infocard lastcard" });
-        const top = h("span", { class: "ic-top" });
-        top.append(
-          h("span", { class: "ic-label" }, "Last game"),
-          h("span", { class: "ic-date" }, relativeDateLabel(newest.finishedAt)),
-        );
-        card.append(
-          top,
-          h(
-            "span",
-            { class: "ic-result" },
-            `${newest.length === "east" ? "East" : "East + South"} · ${placementLabel(newest.placement)} · ${fmt(newest.score)}`,
-          ),
-        );
-        card.addEventListener("click", () => this.showScreen("history"));
-        el.append(card);
-      }
-      const doneCount = this.tutorial.done.length;
-      if (doneCount > 0) {
-        const card = h("button", { class: "infocard learnprog" });
-        const top = h("span", { class: "ic-top" });
-        top.append(
-          h("span", { class: "ic-title" }, `Learn — ${doneCount} of ${MODULES.length} lessons done`),
-          h("span", { class: "ic-cta" }, "Continue ›"),
-        );
-        const bar = h("span", { class: "progbar" });
-        const fill = h("i", {});
-        fill.style.width = `${Math.round((doneCount / MODULES.length) * 100)}%`;
-        bar.append(fill);
-        card.append(top, bar);
-        card.addEventListener("click", () => this.showScreen("learn"));
-        el.append(card);
-      }
-      // The secondary row: History/Stats for signed-in players. Learn
-      // stays as a pill only while no progress card exists, so the
-      // tutorial is always reachable (§9).
-      const sec = h("div", { class: "secrow" });
-      const hist = h("button", { class: "pillbtn" }, "History");
-      hist.addEventListener("click", () => this.showScreen("history"));
-      const stats = h("button", { class: "pillbtn" }, "Stats");
-      stats.addEventListener("click", () => this.showScreen("stats"));
-      sec.append(hist, stats);
-      if (doneCount === 0) {
-        const learn = h("button", { class: "pillbtn" }, "Learn");
-        learn.addEventListener("click", () => this.showScreen("learn"));
-        sec.append(learn);
-      }
-      el.append(sec);
-    } else {
-      // Guests get the Learn card in place of the secondary row
-      // (design rules section 4); the tutorial needs no account (§9).
-      const card = h("button", { class: "infocard learncard" });
-      const top = h("span", { class: "ic-top" });
-      top.append(
-        h("span", { class: "ic-title" }, "Learn"),
-        h("span", { class: "ic-cta" }, "Start ›"),
-      );
-      card.append(
-        top,
-        h("span", { class: "ic-line" }, `${MODULES.length} lessons. Start with the tiles.`),
-      );
-      card.addEventListener("click", () => this.showScreen("learn"));
-      el.append(card);
-    }
-    if (!this.user) {
-      const g = h("button", { class: "gbtn" });
-      g.innerHTML = GOOGLE_G_SVG;
-      g.append(document.createTextNode("Sign in with Google"));
-      g.addEventListener("click", () => {
-        window.location.href = GOOGLE_START_URL;
-      });
-      el.append(g);
-    }
-
-    if (this.importOfferCount > 0) {
-      const box = h("div", { class: "importbox" });
-      box.append(
-        h("div", { class: "txt" }, `Import ${this.importOfferCount} games from this device`),
-      );
-      const rowEl = h("div", { class: "row" });
-      const imp = h("button", { class: "pillbtn primary" }, "Import");
-      imp.addEventListener("click", () => void this.doImport());
-      const dis = h("button", { class: "pillbtn ghost" }, "Dismiss");
-      dis.addEventListener("click", () => {
-        markImportHandled();
-        this.importOfferCount = 0;
-        this.renderHome();
-      });
-      rowEl.append(imp, dis);
-      box.append(rowEl);
-      el.append(box);
-    }
-
-    el.append(h("div", { class: "spacer" }));
-    const quiet = h("div", { class: "quietrow" });
-    for (const [label, screen] of [["Rules", "rules"], ["Settings", "settings"], ["About", "about"], ["Privacy", "privacy"]] as [string, ScreenName][]) {
-      const b = h("button", { class: "linkbtn" }, label);
-      b.addEventListener("click", () => this.showScreen(screen));
-      quiet.append(b);
-    }
-    if (this.user) {
-      const out = h("button", { class: "linkbtn" }, "Sign out");
-      out.addEventListener("click", () => void this.signOutFlow());
-      quiet.append(out);
-    }
-    el.append(quiet);
-    el.append(
-      h("div", { class: "footer" }, "Open source under AGPLv3 · github.com/michaelhmiv/OpenMahjong"),
-    );
-    // AdSense banner (adsense-slot-v1): last element of the Home
-    // flow. adSlotEl returns null while ADSENSE_CONFIG is empty, so
-    // the shipped Home is unchanged until both ids are configured.
-    const adSlot = adSlotEl();
-    if (adSlot) el.append(adSlot);
+    return grow;
   }
 
-  /** The home tile strip (design rules section 4): a real 14-tile
-   *  hand rendered with the production tile faces, display only. */
-  private homeStripEl(): HTMLElement {
-    const strip = h("div", { class: "tilestrip", "aria-hidden": "true" });
-    HOME_STRIP_GROUPS.forEach((group, gi) => {
-      group.forEach((id, i) => {
-        const t = h("span", {
-          class: i === 0 && gi > 0 ? "tile t-strip grp" : "tile t-strip",
-        });
-        t.innerHTML = `<svg viewBox="0 0 40 56"><use href="#${tileSymbol(tileById(id))}"/></svg>`;
-        t.append(h("i", { class: "edge" }));
-        strip.append(t);
-      });
+  /** Restore the saved game and read its live state off the folded
+   *  model. A finished or unreadable save yields null — the card
+   *  and the row only ever describe a game actually in progress. */
+  private savedGameSummary(saved: SavedGame): SavedSummary | null {
+    try {
+      const runner = GameRunner.restore(saved, new AiDriver());
+      if (runner.result) return null;
+      const model = foldEvents(runner.events, runner.humanSeat, runner.chiHints);
+      const human = model.players[runner.humanSeat]!;
+      const ranked = [...model.players].sort(
+        (a, b) => b.score - a.score || a.seatWind - b.seatWind,
+      );
+      const byWind = [...model.players].sort((a, b) => a.seatWind - b.seatWind);
+      return {
+        round: `${WIND_NAMES[model.roundWind]} ${model.kyoku}`,
+        lengthLabel: saved.length === "south" ? "East + South" : "East only",
+        standing: `You are ${placementLabel(ranked.indexOf(human) + 1)}`,
+        humanScore: human.score,
+        scores: byWind.map((p) => ({
+          name: p === human ? "You" : WIND_NAMES[p.seatWind]!,
+          score: p.score,
+        })),
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  /** The Continue card (rendering 02): the production infocard
+   *  grammar carrying the saved game's live state, gold Continue. */
+  private continueCardEl(summary: SavedSummary): HTMLElement {
+    const card = h("button", { class: "infocard contcard", "aria-label": "Resume game" });
+    const top = h("span", { class: "ic-top" });
+    top.append(
+      h("span", { class: "ic-label" }, "Game in progress"),
+      h("span", { class: "ic-date" }, summary.lengthLabel),
+    );
+    card.append(
+      top,
+      h("span", { class: "ic-result" }, `${summary.round} · ${summary.standing}`),
+    );
+    const scores = h("span", { class: "ic-scores" });
+    for (const s of summary.scores) {
+      const span = h("span", {}, `${s.name} `);
+      span.append(h("b", {}, fmt(s.score)));
+      scores.append(span);
+    }
+    card.append(scores);
+    const foot = h("span", { class: "ic-foot" });
+    foot.append(h("span", { class: "ic-cta" }, "Continue ›"));
+    card.append(foot);
+    card.addEventListener("click", () => {
+      this.sound.unlock();
+      this.resumeGame();
     });
-    return strip;
+    return card;
+  }
+
+  /** The Games tab's in-progress row (rendering 07's inset
+   *  treatment): state-green dot, IN PROGRESS pill, live state,
+   *  Resume action. Tapping it resumes — never a review. */
+  private inProgressRowEl(summary: SavedSummary): HTMLElement {
+    const row = h("button", { class: "iprow", "aria-label": "Resume game" });
+    const main = h("span", { class: "ipmain" });
+    main.append(
+      h("span", { class: "l1" }, `${summary.round} · ${summary.lengthLabel}`),
+      h("span", { class: "l2" }, `${summary.standing} · ${fmt(summary.humanScore)} points`),
+    );
+    const right = h("span", { class: "ipright" });
+    const pill = h("span", { class: "ippill" });
+    pill.append(h("span", { class: "ipdot" }), document.createTextNode("IN PROGRESS"));
+    const resume = h("span", { class: "resume" }, "Resume");
+    resume.insertAdjacentHTML(
+      "beforeend",
+      `<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
+    );
+    right.append(pill, resume);
+    row.append(main, right);
+    row.addEventListener("click", () => {
+      this.sound.unlock();
+      this.resumeGame();
+    });
+    return row;
   }
 
   private avatarEl(user: ApiUser, lg = false): HTMLElement {
@@ -854,7 +1025,10 @@ export class App {
     this.serverGameCount = games ? games.length : null;
     this.serverGames = games;
     this.refreshImportOffer();
-    this.renderHome();
+    this.renderPlay();
+    if (this.currentScreen === "games") void this.renderGames();
+    if (this.currentScreen === "more") this.renderMore();
+    if (this.currentScreen === "learn") this.renderLearn();
   }
 
   /** Save settings locally; when signed in, also sync them (brief A4).
@@ -940,17 +1114,17 @@ export class App {
     // Hide while in flight; mark only after success so an offline
     // attempt can be retried when the account service returns.
     this.importOfferCount = 0;
-    this.renderHome();
+    this.renderPlay();
     if (await postImport(records, this.csrfToken)) {
       markImportHandled();
       this.serverGameCount = records.length;
       this.serverGames = records;
       const stats = await fetchStats();
       if (stats) this.statsSums = stats;
-      this.renderHome();
+      this.renderPlay();
     } else {
       this.refreshImportOffer();
-      this.renderHome();
+      this.renderPlay();
     }
   }
 
@@ -994,8 +1168,8 @@ export class App {
   private async signOutFlow(): Promise<void> {
     if (!(await signOut(this.csrfToken))) return;
     this.clearAccountState();
-    this.renderHome();
-    if (this.screens.get("settings")!.classList.contains("active")) this.renderSettings();
+    this.renderPlay();
+    if (this.screens.get("more")!.classList.contains("active")) this.renderMore();
   }
 
   private async deleteAccountFlow(): Promise<void> {
@@ -1006,8 +1180,8 @@ export class App {
       }
     }
     this.clearAccountState();
-    this.renderHome();
-    if (this.screens.get("settings")!.classList.contains("active")) this.renderSettings();
+    this.renderPlay();
+    if (this.screens.get("more")!.classList.contains("active")) this.renderMore();
   }
 
   // -- text screens ----------------------------------------------------------
@@ -1024,7 +1198,7 @@ export class App {
     const bar = h("header", { class: "bar" });
     const back = h("button", { class: "iconbtn", "aria-label": "Back" });
     back.innerHTML = `<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>`;
-    back.addEventListener("click", () => this.showScreen(this.runner && !this.runner.result ? "table" : "home"));
+    back.addEventListener("click", () => this.showScreen(this.runner && !this.runner.result ? "table" : this.lastRoot));
     bar.append(back, h("span", { class: "word" }, "OPEN MAHJONG"), h("span", { class: "iconbtn" }));
     screen.append(bar);
     const page = this.buildPage(title);
@@ -1107,7 +1281,7 @@ export class App {
         h("h3", {}, "Sharing"),
         h("p", {}, "We do not sell personal information. Your information is processed by Google (sign-in and advertising) and Railway (hosting) only to operate the service."),
         h("h3", {}, "Deletion"),
-        h("p", {}, "Settings, then Delete account, permanently deletes your account and everything stored with it. Guest data can be removed by clearing your browser's site data."),
+        h("p", {}, "More, then Delete account, permanently deletes your account and everything stored with it. Guest data can be removed by clearing your browser's site data."),
         h("h3", {}, "Children"),
         h("p", {}, "Open Mahjong is not directed to children under 13."),
         h("h3", {}, "Changes"),
@@ -1118,123 +1292,212 @@ export class App {
     });
   }
 
-  private renderSettings(): void {
-    this.textScreen("settings", "Settings", (page) => {
-      const row = (label: string, note: string, control: HTMLElement) => {
-        const wrap = h("div", { class: "setrow" });
-        const lab = h("div", {});
-        lab.append(h("div", { class: "lab" }, label), h("div", { class: "note" }, note));
-        wrap.append(lab, control);
-        control.querySelector("input")?.setAttribute("aria-label", label);
-        return wrap;
-      };
-      const toggle = (on: boolean, disabled: boolean, onChange: (v: boolean) => void) => {
-        const sw = h("label", { class: "switch" });
-        const input = h("input", { type: "checkbox" });
-        input.checked = on;
-        input.disabled = disabled;
-        input.addEventListener("change", () => onChange(input.checked));
-        sw.append(input, h("span", { class: "tr" }));
-        return sw;
-      };
+  // -- More tab --------------------------------------------------------------
 
-      // Account section (slice 2, rendering 08).
-      page.append(h("div", { class: "sec-label" }, "ACCOUNT"));
-      if (this.user) {
-        const idRow = h("div", { class: "setrow" });
-        const acct = h("div", { class: "acctid" });
-        acct.append(this.avatarEl(this.user, true));
-        const who = h("div", {});
-        who.append(
-          h("div", { class: "lab" }, this.user.name),
-          h("div", { class: "note" }, "Signed in with Google"),
-        );
-        acct.append(who);
-        const outBtn = h("button", { class: "pillbtn ghost" }, "Sign out");
-        outBtn.addEventListener("click", () => void this.signOutFlow());
-        idRow.append(acct, outBtn);
-        page.append(idRow);
+  /**
+   * The More tab (renderings 05/06): the account block, every
+   * existing setting as a functional row, the About section, and
+   * the AGPL footer. This is the old Settings screen re-homed as a
+   * tab root — its guest History/Stats rows are gone because the
+   * Games tab absorbed them.
+   */
+  private renderMore(): void {
+    const el = this.screens.get("more")!;
+    el.innerHTML = "";
+    const page = h("div", { class: "tabpage" });
+    el.append(page);
+    page.append(h("h2", {}, "More"));
+    const row = (label: string, note: string, control: HTMLElement) => {
+      const wrap = h("div", { class: "setrow" });
+      const lab = h("div", {});
+      lab.append(h("div", { class: "lab" }, label), h("div", { class: "note" }, note));
+      wrap.append(lab, control);
+      control.querySelector("input")?.setAttribute("aria-label", label);
+      return wrap;
+    };
+    const toggle = (on: boolean, disabled: boolean, onChange: (v: boolean) => void) => {
+      const sw = h("label", { class: "switch" });
+      const input = h("input", { type: "checkbox" });
+      input.checked = on;
+      input.disabled = disabled;
+      input.addEventListener("change", () => onChange(input.checked));
+      sw.append(input, h("span", { class: "tr" }));
+      return sw;
+    };
 
-        const delRow = h("div", { class: "setrow" });
-        const delLab = h("div", {});
-        delLab.append(
-          h("div", { class: "lab" }, "Delete account"),
-          h("div", { class: "note" }, "Removes your profile, game history, and stats. This cannot be undone."),
-        );
-        const delBtn = h("button", { class: "pillbtn ghost" }, "Delete");
-        delBtn.addEventListener("click", () => {
-          // Two-step confirm in place: the first tap arms the button.
-          if (delBtn.dataset["confirm"] === "1") {
-            void this.deleteAccountFlow();
-            return;
-          }
-          delBtn.dataset["confirm"] = "1";
-          delBtn.textContent = "Confirm delete";
-        });
-        delRow.append(delLab, delBtn);
-        page.append(delRow);
-      } else {
-        const signInBtn = h("button", { class: "pillbtn ghost" }, "Sign in with Google");
-        signInBtn.addEventListener("click", () => {
-          window.location.href = GOOGLE_START_URL;
-        });
-        page.append(row("Account", "Not signed in.", signInBtn));
-        // The guest landing carries no History/Stats entries
-        // (rendering 01), so the local ones live here.
-        const histBtn = h("button", { class: "pillbtn ghost" }, "Open");
-        histBtn.addEventListener("click", () => this.showScreen("history"));
-        page.append(row("History", "Games recorded on this device.", histBtn));
-        const statsBtn = h("button", { class: "pillbtn ghost" }, "Open");
-        statsBtn.addEventListener("click", () => this.showScreen("stats"));
-        page.append(row("Stats", "Your numbers from games on this device.", statsBtn));
-      }
-
-      page.append(
-        row("Sound", "Quiet tile clicks only. No music, no voices.", toggle(this.settings.sound, false, (v) => {
-          this.settings = { ...this.settings, sound: v };
-          this.sound.enabled = v;
-          this.persistSettings();
-        })),
-        row("Reduced motion", "Collapses animation to near-instant. Your operating system's reduced-motion setting is always respected too.", toggle(this.settings.motion === "reduced", false, (v) => {
-          this.settings = { ...this.settings, motion: v ? "reduced" : "standard" };
-          this.persistSettings();
-        })),
-        row("Large tiles", "Hand tiles step up to 28px in two rows of seven; ponds step down to 22px; the panel type grows. The approved large layout (table-large-v1).", toggle(this.settings.largeTiles, false, (v) => {
-          this.settings = { ...this.settings, largeTiles: v };
-          this.persistSettings();
-          this.applyTheme();
-          if (this.runner) this.renderTable();
-        })),
-        row("Guided mode", "Hints and explanations on the table during CPU games. The same switch is on the home screen and in the in-game menu.", toggle(this.settings.guided, false, (v) => {
-          this.settings = { ...this.settings, guided: v };
-          this.persistSettings();
-          if (this.runner) this.renderTable();
-        })),
+    page.append(h("div", { class: "sec-label" }, "ACCOUNT"));
+    if (this.user) {
+      const idRow = h("div", { class: "setrow" });
+      const acct = h("div", { class: "acctid" });
+      acct.append(this.avatarEl(this.user, true));
+      const who = h("div", {});
+      who.append(
+        h("div", { class: "lab" }, this.user.name),
+        h("div", { class: "note" }, "Signed in with Google"),
       );
-    });
+      acct.append(who);
+      const outBtn = h("button", { class: "pillbtn ghost" }, "Sign out");
+      outBtn.addEventListener("click", () => void this.signOutFlow());
+      idRow.append(acct, outBtn);
+      page.append(idRow);
+
+      const delRow = h("div", { class: "setrow" });
+      const delLab = h("div", {});
+      delLab.append(
+        h("div", { class: "lab" }, "Delete account"),
+        h("div", { class: "note" }, "Removes your profile, game history, and stats. This cannot be undone."),
+      );
+      const delBtn = h("button", { class: "pillbtn ghost" }, "Delete");
+      delBtn.addEventListener("click", () => {
+        // Two-step confirm in place: the first tap arms the button.
+        if (delBtn.dataset["confirm"] === "1") {
+          void this.deleteAccountFlow();
+          return;
+        }
+        delBtn.dataset["confirm"] = "1";
+        delBtn.textContent = "Confirm delete";
+      });
+      delRow.append(delLab, delBtn);
+      page.append(delRow);
+    } else {
+      const signInBtn = h("button", { class: "pillbtn ghost" }, "Sign in with Google");
+      signInBtn.addEventListener("click", () => {
+        window.location.href = GOOGLE_START_URL;
+      });
+      page.append(row("Account", "Not signed in.", signInBtn));
+    }
+
+    page.append(h("div", { class: "sec-label" }, "SETTINGS"));
+    page.append(
+      row("Sound", "Quiet tile clicks only. No music, no voices.", toggle(this.settings.sound, false, (v) => {
+        this.settings = { ...this.settings, sound: v };
+        this.sound.enabled = v;
+        this.persistSettings();
+      })),
+      row("Reduced motion", "Collapses animation to near-instant. Your operating system's reduced-motion setting is always respected too.", toggle(this.settings.motion === "reduced", false, (v) => {
+        this.settings = { ...this.settings, motion: v ? "reduced" : "standard" };
+        this.persistSettings();
+      })),
+      row("Large tiles", "Hand tiles step up to 28px in two rows of seven; ponds step down to 22px; the panel type grows. The approved large layout (table-large-v1).", toggle(this.settings.largeTiles, false, (v) => {
+        this.settings = { ...this.settings, largeTiles: v };
+        this.persistSettings();
+        this.applyTheme();
+        if (this.runner) this.renderTable();
+      })),
+      row("Guided mode", "Hints and explanations on the table during CPU games. The same switch is on the Play tab and in the in-game menu.", toggle(this.settings.guided, false, (v) => {
+        this.settings = { ...this.settings, guided: v };
+        this.persistSettings();
+        if (this.runner) this.renderTable();
+      })),
+    );
+
+    page.append(h("div", { class: "sec-label" }, "ABOUT"));
+    for (const [label, screen] of [["Rules", "rules"], ["About", "about"], ["Privacy", "privacy"]] as [string, ScreenName][]) {
+      const b = h("button", { class: "hrow" });
+      b.append(h("span", { class: "ttl2" }, label));
+      b.insertAdjacentHTML(
+        "beforeend",
+        `<svg class="chev" style="margin-left:auto" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
+      );
+      b.addEventListener("click", () => this.showScreen(screen));
+      page.append(b);
+    }
+    page.append(
+      h("div", { class: "footer" }, "Open source under AGPLv3 · github.com/michaelhmiv/OpenMahjong"),
+    );
   }
 
   // -- history & stats (slice 2, renderings 03/04) ---------------------------
 
-  private async renderHistory(): Promise<void> {
+  /**
+   * The Games tab (rendering 04): the stats header — placement
+   * distribution plus the six shipped stat blocks, labels and
+   * formulas unchanged — over the finished-games list, with the
+   * in-progress game listed first when one exists. This merges the
+   * old History and Stats screens into one tab root.
+   */
+  private async renderGames(): Promise<void> {
     let rows: (GameSummary | GameRecord)[];
+    let sums: StatsSums;
+    let handStats: boolean;
     if (this.user) {
-      rows = (await fetchGames()) ?? [];
+      const [games, fresh] = await Promise.all([fetchGames(), fetchStats()]);
+      rows = games ?? [];
       this.serverGameCount = rows.length;
+      this.serverGames = rows;
+      if (fresh) this.statsSums = fresh;
+      sums = this.statsSums ?? {
+        games: 0, wins: 0, placementSum: 0,
+        hands: 0, riichi: 0, dealIns: 0, handsWon: 0, winPoints: 0, since: null,
+      };
+      handStats = true;
     } else {
-      rows = this.localGameRecords();
+      const local = this.localGameRecords();
+      rows = local;
+      // Guest: game-level sums over every local record; hand-level
+      // sums only over records that actually carry them — rates are
+      // never invented from records that lack the data (brief T3).
+      const base = sumRecords(local);
+      const hand = sumRecords(loadRecords());
+      sums = {
+        ...base,
+        hands: hand.hands,
+        riichi: hand.riichi,
+        dealIns: hand.dealIns,
+        handsWon: hand.handsWon,
+        winPoints: hand.winPoints,
+      };
+      handStats = loadRecords().length > 0;
     }
     rows = [...rows].sort((a, b) => (a.finishedAt < b.finishedAt ? 1 : -1));
-    if (!this.screens.get("history")!.classList.contains("active")) return;
-    this.textScreen("history", "History", (page) => {
-      page.append(
-        h("p", { class: "count" }, `${rows.length} recorded game${rows.length === 1 ? "" : "s"}`),
-      );
-      if (rows.length === 0) {
-        page.append(h("p", { class: "dim" }, "No games recorded yet."));
-      }
-      for (const r of rows) page.append(this.historyRowEl(r));
+    if (!this.screens.get("games")!.classList.contains("active")) return;
+    const el = this.screens.get("games")!;
+    el.innerHTML = "";
+    const page = h("div", { class: "tabpage" });
+    el.append(page);
+    page.append(h("h2", {}, "Games"));
+    const east = rows.filter((r) => r.length === "east").length;
+    page.append(
+      h("p", { class: "count" }, `${rows.length} recorded game${rows.length === 1 ? "" : "s"} — ${east} East, ${rows.length - east} East + South`),
+    );
+    const saved = loadGame();
+    const summary = saved ? this.savedGameSummary(saved) : null;
+    if (summary) page.append(this.inProgressRowEl(summary));
+    if (rows.length > 0) page.append(this.distCardEl(rows));
+    const grid = h("div", { class: "statgrid" });
+    for (const b of formatStatsView(sums, { handStats })) {
+      const st = h("div", { class: "stat" });
+      st.append(h("div", { class: "v" }, b.value), h("div", { class: "l" }, b.label));
+      if (b.sample) st.append(h("div", { class: "s" }, b.sample));
+      grid.append(st);
+    }
+    page.append(grid);
+    if (rows.length === 0) {
+      page.append(h("p", { class: "dim" }, "No games recorded yet."));
+    }
+    for (const r of rows) page.append(this.historyRowEl(r));
+  }
+
+  /** The placement distribution card (rendering 04): one segment
+   *  per placement, sized by its share of the recorded games. */
+  private distCardEl(rows: (GameSummary | GameRecord)[]): HTMLElement {
+    const counts = [0, 0, 0, 0];
+    for (const r of rows) counts[r.placement - 1] = (counts[r.placement - 1] ?? 0) + 1;
+    const card = h("div", { class: "distcard" });
+    card.append(h("div", { class: "l" }, "Placements"));
+    const bar = h("div", { class: "distbar" });
+    const labs = h("div", { class: "distlab" });
+    const names = ["1st", "2nd", "3rd", "4th"];
+    const colors = ["var(--state)", "var(--dim)", "var(--line)", "var(--panel-hi)"];
+    counts.forEach((c, i) => {
+      const seg = h("i", { style: `flex:${c};background:${colors[i]}` });
+      bar.append(seg);
+      const lab = h("span", { style: `flex:${c}` }, `${names[i]} · `);
+      lab.append(h("b", {}, String(c)));
+      labs.append(lab);
     });
+    card.append(bar, labs);
+    return card;
   }
 
   private historyRowEl(r: GameSummary | GameRecord): HTMLElement {
@@ -1257,7 +1520,7 @@ export class App {
         const generation = this.generation;
         const record = await fetchGame(r.id);
         row.disabled = false;
-        if (record && generation === this.generation && this.currentScreen === "history") this.openRecord(record);
+        if (record && generation === this.generation && this.currentScreen === "games") this.openRecord(record);
       });
     } else if (r.log) {
       row.addEventListener("click", () => this.openRecord(r));
@@ -1294,55 +1557,6 @@ export class App {
     this.cursor = this.runner.events.length;
     this.renderResults();
     this.showScreen("results");
-  }
-
-  private async renderStats(): Promise<void> {
-    let sums: StatsSums;
-    let handStats: boolean;
-    if (this.user) {
-      const fresh = await fetchStats();
-      if (fresh) this.statsSums = fresh;
-      sums = this.statsSums ?? {
-        games: 0, wins: 0, placementSum: 0,
-        hands: 0, riichi: 0, dealIns: 0, handsWon: 0, winPoints: 0, since: null,
-      };
-      handStats = true;
-    } else {
-      // Guest: game-level sums over every local record; hand-level
-      // sums only over records that actually carry them — rates are
-      // never invented from records that lack the data (brief T3).
-      const base = sumRecords(this.localGameRecords());
-      const hand = sumRecords(loadRecords());
-      sums = {
-        ...base,
-        hands: hand.hands,
-        riichi: hand.riichi,
-        dealIns: hand.dealIns,
-        handsWon: hand.handsWon,
-        winPoints: hand.winPoints,
-      };
-      handStats = loadRecords().length > 0;
-    }
-    if (!this.screens.get("stats")!.classList.contains("active")) return;
-    this.textScreen("stats", "Stats", (page) => {
-      page.append(
-        h(
-          "p",
-          { class: "count" },
-          sums.games > 0
-            ? `From your ${sums.games} recorded game${sums.games === 1 ? "" : "s"}`
-            : "No recorded games yet",
-        ),
-      );
-      const grid = h("div", { class: "statgrid" });
-      for (const b of formatStatsView(sums, { handStats })) {
-        const st = h("div", { class: "stat" });
-        st.append(h("div", { class: "v" }, b.value), h("div", { class: "l" }, b.label));
-        if (b.sample) st.append(h("div", { class: "s" }, b.sample));
-        grid.append(st);
-      }
-      page.append(grid);
-    });
   }
 
   // -- game lifecycle --------------------------------------------------------
@@ -2667,7 +2881,7 @@ export class App {
     }
     this.reviewUI = mountReview(screen, { review: this.reviewData,
       renderTile: (tile) => this.learningTile(tile),
-      onBack: () => this.showScreen(this.runner?.result ? "results" : "history"),
+      onBack: () => this.showScreen(this.runner?.result ? "results" : "games"),
       onPractice: (position, skills) => this.practiceFromReview(position, skills),
     });
     const resume = this.reviewData.positions.findIndex((position) => position.decisionIndex === this.reviewResumeDecision);
@@ -2700,49 +2914,88 @@ export class App {
     if (index >= 0) { this.reviewResumeDecision = decisionIndex; this.reviewUI?.goToDecision(index); }
   }
 
+  /**
+   * The Learn tab (rendering 03 + Michael's build requirement,
+   * 2026-11-16): Practice and the guided row sit above collapsible
+   * per-variant sections — today only Riichi — each with its own
+   * progress. Future variant sections append to LEARN_SECTIONS.
+   */
   private renderLearn(): void {
-    this.textScreen("learn", "Learn", (page) => {
-      const doneCount = this.tutorial.done.length;
-      page.append(
-        h("p", { class: "count" }, `${doneCount} of ${MODULES.length} lessons done`),
-      );
-      const practice = h("button", { class: "pillbtn", "aria-label": "Practice" }, "Practice");
-      practice.addEventListener("click", () => { this.practiceInitialSkill = undefined; this.showScreen("practice"); });
-      page.append(practice);
-      const bar = h("div", { class: "progbar" });
-      const fill = h("i");
-      fill.style.width = `${Math.round((doneCount / MODULES.length) * 100)}%`;
-      bar.append(fill);
-      page.append(bar);
-      const activeId = this.tutorial.active?.module;
-      const firstOpen = MODULES.find((m) => !this.tutorial.done.includes(m.id))?.id;
-      MODULES.forEach((mod, i) => {
-        const isDone = this.tutorial.done.includes(mod.id);
-        const isActive = activeId === mod.id;
-        const isCurrent = isActive || (!activeId && firstOpen === mod.id);
-        const row = h("button", { class: `hrow lrow${isCurrent ? " current" : "" }` });
-        row.dataset["module"] = mod.id;
-        row.append(h("span", { class: "n" }, String(i + 1)));
-        row.append(h("span", { class: "ttl" }, mod.title));
-        if (mod.optional) row.append(h("span", { class: "lenbadge" }, "OPTIONAL"));
-        if (isDone) {
-          const st = h("span", { class: "st" });
-          st.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>`;
-          st.append(document.createTextNode("Done"));
-          row.append(st);
-        } else if (isActive) {
-          row.append(h("span", { class: "st now" }, "In progress"));
-        } else {
-          row.append(h("span", { class: "st" }, `${mod.minutes} min`));
-        }
-        row.insertAdjacentHTML(
-          "beforeend",
-          `<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
-        );
-        row.addEventListener("click", () => this.startLesson(mod.id));
-        page.append(row);
-      });
+    const el = this.screens.get("learn")!;
+    el.innerHTML = "";
+    const page = h("div", { class: "tabpage" });
+    el.append(page);
+    page.append(h("h2", {}, "Learn"));
+    const practice = h("button", { class: "pillbtn", "aria-label": "Practice" }, "Practice");
+    practice.addEventListener("click", () => { this.practiceInitialSkill = undefined; this.showScreen("practice"); });
+    const prow = h("div", { class: "practicerow" });
+    prow.append(practice);
+    page.append(prow);
+    page.append(this.guidedRowEl());
+    for (const section of LEARN_SECTIONS) page.append(this.learnSectionEl(section));
+  }
+
+  private learnSectionEl(section: (typeof LEARN_SECTIONS)[number]): HTMLElement {
+    const doneCount = section.modules.filter((m) => this.tutorial.done.includes(m.id)).length;
+    const collapsed = this.collapsedSections.has(section.id);
+    const wrap = h("div", { class: "learnsec" });
+    const head = h("button", {
+      class: "sechead",
+      "aria-expanded": String(!collapsed),
+      "data-section": section.id,
     });
+    head.append(
+      h("span", { class: "secttl" }, section.title),
+      h("span", { class: "seccount" }, `${doneCount} of ${section.modules.length} lessons done`),
+    );
+    head.insertAdjacentHTML(
+      "beforeend",
+      `<svg class="chev${collapsed ? " closed" : ""}" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
+    );
+    head.addEventListener("click", () => {
+      if (this.collapsedSections.has(section.id)) this.collapsedSections.delete(section.id);
+      else this.collapsedSections.add(section.id);
+      try {
+        localStorage.setItem(LEARN_COLLAPSED_KEY, JSON.stringify([...this.collapsedSections]));
+      } catch { /* A display preference; losing it is harmless. */ }
+      this.renderLearn();
+    });
+    wrap.append(head);
+    if (collapsed) return wrap;
+    const bar = h("div", { class: "progbar" });
+    const fill = h("i");
+    fill.style.width = `${Math.round((doneCount / section.modules.length) * 100)}%`;
+    bar.append(fill);
+    wrap.append(bar);
+    const activeId = this.tutorial.active?.module;
+    const firstOpen = section.modules.find((m) => !this.tutorial.done.includes(m.id))?.id;
+    section.modules.forEach((mod, i) => {
+      const isDone = this.tutorial.done.includes(mod.id);
+      const isActive = activeId === mod.id;
+      const isCurrent = isActive || (!activeId && firstOpen === mod.id);
+      const row = h("button", { class: `hrow lrow${isCurrent ? " current" : "" }` });
+      row.dataset["module"] = mod.id;
+      row.append(h("span", { class: "n" }, String(i + 1)));
+      row.append(h("span", { class: "ttl" }, mod.title));
+      if (mod.optional) row.append(h("span", { class: "lenbadge" }, "OPTIONAL"));
+      if (isDone) {
+        const st = h("span", { class: "st" });
+        st.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>`;
+        st.append(document.createTextNode("Done"));
+        row.append(st);
+      } else if (isActive) {
+        row.append(h("span", { class: "st now" }, "In progress"));
+      } else {
+        row.append(h("span", { class: "st" }, `${mod.minutes} min`));
+      }
+      row.insertAdjacentHTML(
+        "beforeend",
+        `<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
+      );
+      row.addEventListener("click", () => this.startLesson(mod.id));
+      wrap.append(row);
+    });
+    return wrap;
   }
 
   private startLesson(id: ModuleId): void {

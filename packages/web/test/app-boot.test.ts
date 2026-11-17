@@ -42,23 +42,21 @@ describe("App boot", () => {
     await settle();
     const play = root.querySelector("#screen-home .play");
     expect(play?.textContent).toBe("Play");
-    // Signed-out chrome: Google button present, no account surfaces.
-    expect(root.querySelector("#screen-home .gbtn")?.textContent).toContain(
-      "Sign in with Google",
-    );
-    expect(root.querySelector("#screen-home .idchip")).toBeNull();
+    // App shell: four tab roots, Play active; sign-in lives on the
+    // More tab only (never on Play), and the wordmark stands alone —
+    // the companion tagline line was removed by ruling (2026-11-16).
+    const tabs = [...root.querySelectorAll(".tabbtn")].map((b) => b.textContent);
+    expect(tabs).toEqual(["Play", "Learn", "Games", "More"]);
+    expect(root.querySelector('.tabbtn[data-tab="home"]')?.getAttribute("aria-current")).toBe("page");
     expect(root.querySelector("#screen-home .recstrip")).toBeNull();
-    // The tutorial's Learn entry is on the landing for guests too
-    // (brief §9: no account required) — under theme v6 it is the
-    // Learn card; guests get no secondary row at all.
-    expect(root.querySelector("#screen-home .secrow")).toBeNull();
-    const learnCard = root.querySelector("#screen-home .infocard.learncard");
-    expect(learnCard?.textContent).toContain("Learn");
-    expect(learnCard?.textContent).toContain("Start ›");
-    expect(learnCard?.textContent).toContain("11 lessons. Start with the tiles.");
-    expect(root.querySelector("#screen-home .wordmark .sub")?.textContent).toBe(
-      "Free forever. Open source mahjong.",
-    );
+    expect(root.querySelector("#screen-home")?.textContent).not.toContain("Sign in with Google");
+    expect(root.querySelector("#screen-home .wordmark")?.textContent).toBe("OPEN MAHJONG");
+    expect(root.querySelector("#screen-home .wordmark .sub")).toBeNull();
+    expect(document.body.textContent).not.toContain("Free forever. Open source mahjong.");
+    root.querySelector<HTMLButtonElement>('.tabbtn[data-tab="more"]')?.click();
+    await settle();
+    expect(root.querySelector("#screen-more")?.textContent).toContain("Sign in with Google");
+    expect(root.querySelector("#screen-more")?.textContent).toContain("Not signed in.");
   });
 
   it("shows the identity chip and record strip when signed in", async () => {
@@ -80,19 +78,17 @@ describe("App boot", () => {
     );
     new App(root);
     await settle();
-    expect(root.querySelector("#screen-home .idchip")?.textContent).toContain("Michael M");
     const strip = root.querySelector("#screen-home .recstrip")?.textContent ?? "";
     expect(strip).toContain("Games 12");
     expect(strip).toContain("Won 3");
     expect(strip).toContain("Avg place 2.4");
-    expect(root.querySelector("#screen-home .gbtn")).toBeNull();
-    // No games and no lessons started: neither info card renders, and
-    // Learn stays reachable as the fallback pill (theme v6 grammar).
+    // No game in progress: no Continue card on Play.
     expect(root.querySelector("#screen-home .infocard")).toBeNull();
-    const secButtons = [...root.querySelectorAll("#screen-home .secrow .pillbtn")].map(
-      (b) => b.textContent,
-    );
-    expect(secButtons).toEqual(["History", "Stats", "Learn"]);
+    // The identity lives on the More tab now.
+    root.querySelector<HTMLButtonElement>('.tabbtn[data-tab="more"]')?.click();
+    await settle();
+    expect(root.querySelector("#screen-more .acctid")?.textContent).toContain("Michael M");
+    expect(root.querySelector("#screen-more")?.textContent).toContain("Signed in with Google");
   });
 
   it("offers the one-time import when the account is empty and local games exist", async () => {

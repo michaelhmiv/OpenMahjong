@@ -146,15 +146,20 @@ describe("dark Home (shipped config)", () => {
     expect(root.querySelector("#screen-home .adlab")).toBeNull();
     // The rest of Home is intact.
     expect(root.querySelector("#screen-home .play")?.textContent).toBe("Play");
-    expect(root.querySelector("#screen-home .footer")?.textContent).toContain("AGPLv3");
+    // The AGPL footer moved to the More tab with the shell.
+    root.querySelector<HTMLButtonElement>('.tabbtn[data-tab="more"]')?.click();
+    await settle();
+    expect(root.querySelector("#screen-more .footer")?.textContent).toContain("AGPLv3");
   });
 
   it("the in-app Privacy screen shows the Advertising section", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => jsonResponse({}, false)));
     new App(root);
     await settle();
-    const btn = [...root.querySelectorAll<HTMLButtonElement>("#screen-home .quietrow .linkbtn")]
-      .find((b) => b.textContent === "Privacy");
+    root.querySelector<HTMLButtonElement>('.tabbtn[data-tab="more"]')?.click();
+    await settle();
+    const btn = [...root.querySelectorAll<HTMLButtonElement>("#screen-more .hrow")]
+      .find((b) => b.textContent?.includes("Privacy"));
     btn?.click();
     await settle();
     const page = root.querySelector("#screen-privacy .page");
