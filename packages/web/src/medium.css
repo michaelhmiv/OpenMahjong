@@ -1,0 +1,434 @@
+/* The medium surface system (design rules section 15; locked
+   2026-11-17 from the calc-v6 scorekeeper iteration and carried
+   across all non-table screens in calc-v7, approved by Michael
+   2026-11-17). This file is the calc-v7 layer that produced the
+   approved review frames, ported verbatim in selector and value;
+   it loads AFTER styles.css, learning.css and tools.css (main.ts)
+   — the same cascade position the approved frames were rendered
+   with. Rules from that layer aimed at the compact calculator
+   concept (.v2b-*, .v2c-*) are not ported: that DOM does not
+   exist in the app (the compact redesign is tracked separately);
+   the same flows in the shipped layout are covered below.
+   The one scoping change from the layer: the header-glyph rule
+   excludes .variant-table — the in-game table is out of scope
+   for this system (standing carve-out), and its header is table
+   chrome. */
+
+:root {
+  /* Tints: the app's own palette only — state green #5e9273 mixed
+     toward the tile face #f6f1e4 in sRGB (design rules section 15). */
+  --sheet: #d8decd; /* 20% state + 80% face */
+  --tint: #c2d1be; /* 34% state + 66% face (the tile-object face) */
+  --deep: #a7c0a9; /* 52% state + 48% face */
+  --on-tint: #1c2a20; /* primary ink on tints (= --on-gold) */
+  --tint-sub: #33503f; /* secondary ink on tints (= tile back) */
+  --chun: #bf3b34; /* sprite red: dealer graphics only */
+  /* Text-grade chun: the sprite red is 3.38:1 on the face tint —
+     too light for small text. This deeper print of the same red
+     measures 4.66:1 on the face tint, 5.40:1 on the sheet tint.
+     Graphics (the dealer ring) keep the sprite red (above the
+     3:1 graphic floor). Design rules section 2. */
+  --chun-text: #9e2b25;
+  --tint-shadow: 0 2px 6px rgba(13, 24, 18, 0.5);
+  --tint-lit: inset 0 1px 0 rgba(246, 241, 228, 0.3);
+}
+
+/* ---------- R14: screen titles take the brand face ---------- */
+.tabpage h2,
+.table-tools header h1,
+.game-detail header h1,
+.board-review header h1,
+.practice-view .learning-content h1 {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+}
+
+/* ---------- R13/R5: headers — bare glyph, one optical line ------
+   The back control is a bare 30px/600 glyph with no fill on a
+   44x44 tap box; title and glyph centers agree within 1px
+   (measured in the approved set: delta <= 0.3px). */
+.learning-shell:not(.variant-table) header > button:first-child {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  color: var(--ink);
+  border-radius: 0;
+}
+.table-tools header h1,
+.game-detail header h1,
+.board-review header h1 {
+  line-height: 1.2;
+}
+
+/* ---------- Tab bar: selected tab is a quiet tile ---------- */
+.tabbtn.on {
+  background: var(--tint);
+  color: var(--on-tint);
+  border-radius: 10px;
+}
+
+/* ---------- Home / Play tab ---------- */
+.playbody .seg {
+  background: var(--panel);
+  border-radius: 10px;
+  padding: 4px;
+  gap: 4px;
+}
+.playbody .seg button {
+  border-radius: 6px;
+  min-height: 40px;
+}
+.playbody .seg button[aria-checked="true"],
+.playbody .seg button.on {
+  background: var(--tint);
+  color: var(--on-tint);
+  box-shadow: var(--tint-lit), var(--tint-shadow);
+}
+#screen-home .pillbtn.play {
+  border-radius: 8px;
+  box-shadow: var(--tint-lit), var(--tint-shadow);
+}
+.pillbtn.table-tools-entry {
+  background: var(--tint);
+  color: var(--on-tint);
+  border-radius: 6px;
+  box-shadow: var(--tint-lit), var(--tint-shadow);
+  font-weight: 600;
+}
+
+/* ---------- Learn tab: the next lesson is the one tile ---------- */
+.hrow.lrow.current {
+  background: var(--sheet);
+  color: var(--on-tint);
+  border-radius: 8px;
+  box-shadow: var(--tint-lit), var(--tint-shadow);
+  border-bottom-color: transparent;
+}
+.hrow.lrow.current .n,
+.hrow.lrow.current .st {
+  color: var(--tint-sub);
+}
+.hrow.lrow.current .chev {
+  stroke: var(--tint-sub);
+}
+
+/* ---------- Games tab: summary earns a sheet, stats de-box ---------- */
+.distcard {
+  background: var(--sheet);
+  color: var(--on-tint);
+  border-radius: 8px;
+  box-shadow: var(--tint-lit), var(--tint-shadow);
+}
+.distcard .l {
+  color: var(--on-tint);
+}
+.distcard .distlab {
+  color: var(--tint-sub);
+}
+.distcard .distlab b {
+  color: var(--on-tint);
+}
+/* The label spans carry their own --dim color in styles.css, which
+   beats the inherited .distlab color — recolor them explicitly
+   (calc-v7 QC F1: #a9bda9 on the sheet tint measured 1.45:1;
+   this rule is the 6.46:1 fix). */
+.distcard .distlab span {
+  color: var(--tint-sub);
+}
+.statgrid {
+  gap: 0 20px;
+}
+.stat {
+  background: transparent;
+  border-radius: 0;
+  padding: 12px 2px;
+  border-bottom: 1px solid var(--line);
+}
+.tabpage select.play-variant {
+  border-radius: 6px;
+}
+
+/* ---------- More tab: slim sharp ghost action ---------- */
+.pillbtn.ghost {
+  position: relative;
+  /* styles.css fixes .pillbtn height at 48px; height must be set,
+     not just min-height, for the slim ghost to render
+     (calc-v7 QC Check 6). */
+  height: 40px;
+  min-height: 40px;
+  border-radius: 6px;
+}
+.pillbtn.ghost::after {
+  content: "";
+  position: absolute;
+  inset: -4px 0;
+}
+
+/* ---------- Lesson runner: the step card is a sheet ---------- */
+.lstage .revpanel {
+  background: var(--sheet);
+  color: var(--on-tint);
+  border-radius: 8px;
+  box-shadow: var(--tint-lit), var(--tint-shadow);
+}
+.lstage .revpanel .lab {
+  color: var(--tint-sub);
+}
+.lstage .revpanel p {
+  color: var(--on-tint);
+}
+.lstage .revctl .pillbtn {
+  border-radius: 6px;
+  min-height: 44px;
+}
+.lstage .revctl .pillbtn.primary {
+  background: var(--sheet);
+  color: var(--on-tint);
+}
+
+/* ---------- Game detail: standings and hands de-box to rows ---------- */
+.game-detail .detail-standing {
+  background: transparent;
+  border-radius: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 12px 2px;
+  margin-bottom: 0;
+}
+.game-detail .detail-hand {
+  background: transparent;
+  border-radius: 0;
+  border-bottom: 1px solid var(--line);
+  min-height: 48px;
+  padding: 0 2px;
+  margin: 0;
+}
+
+/* ---------- Board review: seats are tile objects ---------- */
+.review-board {
+  background: transparent;
+  padding: 0;
+}
+.board-seat {
+  background: var(--tint);
+  color: var(--on-tint);
+  border-radius: 6px;
+  box-shadow: var(--tint-lit), var(--tint-shadow);
+  padding: 10px;
+}
+.board-seat h2 {
+  color: var(--on-tint);
+}
+/* The dealer mark is the one color job (R2): a full sprite-red
+   ring on the dealer's seat tile plus a text-grade suffix.
+   board-review-ui.ts sets data-dealer from the model's dealer. */
+.board-seat[data-dealer="true"] {
+  box-shadow:
+    inset 0 0 0 2px var(--chun),
+    var(--tint-lit),
+    var(--tint-shadow);
+}
+.board-seat[data-dealer="true"] h2::after {
+  content: " · Dealer";
+  color: var(--chun-text);
+  font-weight: 700;
+}
+.board-center {
+  color: var(--dim);
+}
+.board-review .timeline-controls button {
+  border-radius: 6px;
+  background: var(--panel);
+  min-height: 44px;
+}
+.board-review select {
+  border-radius: 6px;
+}
+
+/* ---------- Practice: tile choices are tile objects ---------- */
+.practice-selectors select {
+  border-radius: 6px;
+}
+.learning-shell .answer {
+  background: var(--tint);
+  color: var(--on-tint);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  box-shadow: var(--tint-lit), var(--tint-shadow);
+}
+.learning-shell .answer[aria-pressed="false"] {
+  background: var(--tint);
+  color: var(--on-tint);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  box-shadow: var(--tint-lit), var(--tint-shadow);
+}
+.learning-shell .answer span:not(.tile) {
+  color: var(--on-tint);
+}
+.learning-shell .answer[aria-pressed="true"] {
+  background: var(--deep);
+  box-shadow:
+    inset 0 0 0 2px var(--on-tint),
+    var(--tint-shadow);
+}
+.practice-view button.primary {
+  background: var(--sheet);
+  color: var(--on-tint);
+  border-radius: 6px;
+  min-height: 44px;
+}
+
+/* ---------- In-person tools: the medium action system ---------- */
+.table-tools select,
+.table-tools input {
+  border-radius: 6px;
+}
+/* Slim sharp actions (R6): 36px visual, 6px corners, an invisible
+   expansion to a 48px tap area. Text size never shrinks. */
+.learning-shell.table-tools .tools-content button {
+  background: var(--panel);
+  color: var(--ink);
+  border-radius: 6px;
+  min-height: 36px;
+  padding: 8px 14px;
+  position: relative;
+  white-space: normal;
+}
+.learning-shell.table-tools .tools-content button::after {
+  content: "";
+  position: absolute;
+  inset: -6px 0;
+}
+/* A screen's commit verb wears the sheet tint (R7). */
+.learning-shell.table-tools .tools-content button.primary {
+  background: var(--sheet);
+  color: var(--on-tint);
+}
+/* Scorekeeper action stack (the buttons that follow the scores
+   sheet): flat by default; the first verb is the sheet, the
+   settlement action is the deep block (R8). */
+.learning-shell.table-tools .tool-scores ~ button.primary {
+  background: var(--panel);
+  color: var(--ink);
+}
+.learning-shell.table-tools .tools-content .tool-scores + button.primary {
+  background: var(--sheet);
+  color: var(--on-tint);
+}
+/* Sub-panel verbs (e.g. Add declared meld) stay flat panel. */
+.learning-shell.table-tools form section button.primary {
+  background: var(--panel);
+  color: var(--ink);
+}
+/* The calculator's return is quiet navigation, not a commit. */
+.learning-shell.table-tools .tools-content .calculator-output ~ button.primary {
+  background: var(--panel);
+  color: var(--ink);
+}
+.learning-shell.table-tools .tool-scores ~ button.primary:last-of-type {
+  background: var(--deep);
+  color: var(--on-tint);
+}
+/* The finish screen's single action follows the transfers block. */
+.learning-shell.table-tools .payment-lines ~ button.primary {
+  background: var(--sheet);
+  color: var(--on-tint);
+}
+/* The calculator's final confirm keeps its gold exactly as
+   shipped (design rules section 2 flag: a calculator confirm is
+   not an enumerated gold role; it is Michael's separate,
+   still-open call — do not restyle it). */
+.learning-shell.table-tools .calculator-output button.primary:last-of-type {
+  background: var(--gold);
+  color: #1c2a20;
+}
+/* Disabled still reads as dimmed, but the shipped --dim on gold
+   measured 1.01:1 (calc-v7 QC E1); a muted dark olive keeps the
+   disabled read and clears 4.5:1 on the gold fill (4.76:1). */
+.learning-shell.table-tools .calculator-output button.primary:last-of-type:disabled {
+  color: #4d4630;
+}
+/* Ledger correction is a quiet outlined action, never a fill (R7). */
+.learning-shell.table-tools .ledger-row button.primary {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+/* Session rows and ledger entries de-box to divider rows (R4). */
+.learning-shell.table-tools .tools-content button.tool-session {
+  background: transparent;
+  border-radius: 0;
+  border-bottom: 1px solid var(--line);
+  min-height: 48px;
+  width: 100%;
+}
+.learning-shell.table-tools p.card {
+  background: transparent;
+  border-radius: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 12px 2px;
+  margin: 0;
+}
+.table-tools .card.ledger-row {
+  background: transparent;
+  border-radius: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 12px 2px;
+}
+/* The standings sheet and the money block (R7/R8). */
+.table-tools .card.tool-scores {
+  background: var(--sheet);
+  color: var(--on-tint);
+  border-radius: 8px;
+  box-shadow: var(--tint-lit), var(--tint-shadow);
+}
+.tool-scores p {
+  color: var(--on-tint);
+}
+.tool-scores p.dim {
+  color: var(--tint-sub);
+}
+.payment-lines {
+  background: var(--deep);
+  color: var(--on-tint);
+  border-radius: 8px;
+  box-shadow: var(--tint-lit), var(--tint-shadow);
+}
+.payment-lines p {
+  color: var(--on-tint);
+}
+/* Path toggle pair: flat by default; the chosen path is a tile. */
+.learning-shell.table-tools .tool-grid button.primary {
+  background: var(--panel);
+  color: var(--ink);
+}
+.learning-shell.table-tools .tool-grid button[aria-pressed="true"] {
+  background: var(--tint);
+  color: var(--on-tint);
+  outline: none;
+  box-shadow: var(--tint-lit), var(--tint-shadow);
+}
+
+/* ---------- Focus stays visible on tint surfaces (R11) ----------
+   The state-green ring measures 2.25:1 on the face tint — below
+   the 3:1 indicator floor — so focus on tint surfaces reads in
+   ink (9.39:1). */
+.playbody .seg button:focus-visible,
+.pillbtn.table-tools-entry:focus-visible,
+.hrow.lrow.current:focus-visible,
+.learning-shell .answer:focus-visible,
+.board-seat:focus-visible {
+  outline: 2px solid var(--on-tint);
+  outline-offset: 2px;
+}
