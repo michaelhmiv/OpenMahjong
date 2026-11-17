@@ -15,3 +15,4 @@ export * from "./records.js";
 export * from "./replay.js";
 export * from "./review.js";
 export * from "./ads.js";
+export * from "./analytics.js";

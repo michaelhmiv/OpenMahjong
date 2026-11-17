@@ -17,6 +17,7 @@ import {
   lessonStep,
   type VariantLearningProgress,
 } from "./education/variant-progress.js";
+import { trackLessonCompleted, trackLessonStarted } from "./analytics.js";
 function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
   text = "",
@@ -54,6 +55,7 @@ export function mountVariantEducation(
   if (!resolvedLesson)
     throw new Error("Compatible variant content is unavailable");
   const lesson: VariantLesson = resolvedLesson;
+  if (!options.practice) trackLessonStarted(lesson.id);
   let progress = options.progress,
     step = progress.active[lesson.id]?.step ?? 0,
     chosen: number | undefined,
@@ -358,7 +360,7 @@ export function mountVariantEducation(
       }
       return;
     }
-    if (!progress.completed.some((c) => c.lessonId === lesson.id))
+    if (!progress.completed.some((c) => c.lessonId === lesson.id)) {
       persist({
         ...progress,
         completed: [
@@ -371,6 +373,8 @@ export function mountVariantEducation(
           },
         ],
       });
+      trackLessonCompleted(lesson.id);
+    }
     main.append(
       el("h2", "Lesson complete"),
       el("p", `You finished “${lesson.title}”.`),

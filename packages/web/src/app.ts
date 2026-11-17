@@ -112,6 +112,14 @@ function suitedWaitRun(counts: readonly number[], type: TileType): boolean {
 import { tileInfo } from "./tile-info.js";
 import { adSlotEl } from "./ads.js";
 import {
+  trackGameFinished,
+  trackGameStarted,
+  trackLessonCompleted,
+  trackLessonStarted,
+  trackReviewOpened,
+  trackSignInCompleted,
+} from "./analytics.js";
+import {
   LessonController,
   MODULES,
   TUTORIAL_SETTINGS_KEY,
@@ -124,6 +132,11 @@ import {
   type ModuleId,
   type TutorialProgress,
 } from "./tutorial.js";
+
+/** sessionStorage flag set when the user leaves for Google sign-in,
+ *  so the returning boot can tell a just-completed sign-in from an
+ *  already-signed-in one (analytics sign_in_completed). */
+const SIGN_IN_PENDING_KEY = "om.signin.pending";
 
 // ---------------------------------------------------------------------------
 // Presentation data (names only — all values come from the engine)
@@ -1118,6 +1131,14 @@ export class App {
     const me = await initAuth();
     if (!me.user) return; // signed out or API down: guest landing stands
     this.user = me.user;
+    try {
+      if (sessionStorage.getItem(SIGN_IN_PENDING_KEY)) {
+        sessionStorage.removeItem(SIGN_IN_PENDING_KEY);
+        trackSignInCompleted();
+      }
+    } catch {
+      // Storage unavailable: nothing to count.
+    }
     this.csrfToken = me.csrfToken;
     this.accountLoaded = false;
     const accountId = me.user.id ?? null;
@@ -1514,6 +1535,12 @@ export class App {
     } else {
       const signInBtn = h("button", { class: "pillbtn ghost" }, "Sign in with Google");
       signInBtn.addEventListener("click", () => {
+        try {
+          sessionStorage.setItem(SIGN_IN_PENDING_KEY, "1");
+        } catch {
+          // Storage unavailable: the sign-in still proceeds; the
+          // completion is simply not counted.
+        }
         window.location.href = GOOGLE_START_URL;
       });
       page.append(row("Account", "Not signed in.", signInBtn));
@@ -1710,12 +1737,14 @@ export class App {
       this.reviewRecordId = record.id;
       this.reviewResumeDecision = undefined;
       this.showScreen("details");
+      trackReviewOpened();
     } catch { /* Corrupt history leaves the active game and stored bytes intact. */ }
   }
 
   private startVariantGame(variant: VariantId, seed = `om-${Date.now().toString(36)}`): void {
     this.generation++;this.playing=false;this.runner=null;
     this.variantRunner=new VariantRunner({seed,variant,length:this.variantLength,humanSeat:0});
+    trackGameStarted(variant, this.variantLength, this.settings.guided);
     this.variantRunner.advance();this.saveVariantGame();this.showScreen("variant-table");
   }
 
@@ -1730,7 +1759,9 @@ export class App {
     const existing=loadRecords().find(record=>record.id===r.id);if(existing){clearGame();this.resumeSync.noteClear();return existing;}
     const mine=r.result.settlement.find(s=>s.seat===r.humanSeat)!;
     const record=buildGameRecord({id:r.id,variant:r.variant,length:r.length,placement:mine.rank,score:mine.score,finishedAt:new Date().toISOString(),log:r.serialize(),events:r.events,humanSeat:r.humanSeat});
-    appendRecord(record);clearGame();this.resumeSync.noteClear();if(this.user)void this.postRecord(record);return record;
+    appendRecord(record);clearGame();this.resumeSync.noteClear();if(this.user)void this.postRecord(record);
+    trackGameFinished(r.variant, r.length, this.settings.guided);
+    return record;
   }
 
   private renderVariantTable(): void {
@@ -1780,6 +1811,7 @@ export class App {
     const seed = opts.seed ?? `om-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}`;
     this.variantRunner = null;
     this.runner = new GameRunner({ seed, length, humanSeat: 0, aiDriver: new AiDriver() });
+    trackGameStarted("riichi", length, this.settings.guided);
     this.resetDisplay();
     this.historyRecorded = false;
     this.hintShownThisGame = false;
@@ -1833,6 +1865,7 @@ export class App {
         if (!this.tutorial.done.includes("tu11")) {
           this.tutorial = { done: [...this.tutorial.done, "tu11"], active: null };
           this.persistTutorial();
+          trackLessonCompleted("tu11");
         }
       }
       if (!this.historyRecorded) {
@@ -1854,6 +1887,7 @@ export class App {
         });
         appendRecord(record);
         if (this.user) void this.postRecord(record);
+        trackGameFinished("riichi", this.runner.length, this.settings.guided);
       }
     } else {
       const state = this.runner.serialize();
@@ -3418,6 +3452,7 @@ export class App {
   }
 
   private startLesson(id: ModuleId): void {
+    trackLessonStarted(id);
     if (id === "tu11") {
       this.startTu11();
       return;
@@ -3467,12 +3502,12 @@ export class App {
     if (!this.lesson) return;
     if (this.lesson.done) {
       const id = this.lesson.moduleId;
+      const isNew = !this.tutorial.done.includes(id);
       this.tutorial = {
-        done: this.tutorial.done.includes(id)
-          ? this.tutorial.done
-          : [...this.tutorial.done, id],
+        done: isNew ? [...this.tutorial.done, id] : this.tutorial.done,
         active: null,
       };
+      if (isNew) trackLessonCompleted(id);
     } else {
       this.tutorial = { ...this.tutorial, active: this.lesson.serialize() };
     }
