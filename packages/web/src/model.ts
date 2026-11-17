@@ -53,6 +53,7 @@ export interface MeldModel {
 
 export interface PlayerModel {
   readonly seat: Seat;
+  flowers: Tile[];
   score: number;
   riichi: boolean;
   doubleRiichi: boolean;
@@ -66,6 +67,7 @@ export interface PlayerModel {
 }
 
 export interface WinInfo {
+  readonly patterns?: readonly { readonly id:string; readonly name:string; readonly units:number }[];
   readonly seat: Seat;
   readonly winType: "ron" | "tsumo";
   readonly fromSeat?: Seat;
@@ -113,6 +115,8 @@ const WINDS = [27, 28, 29, 30] as const;
 
 export class TableModel {
   players: PlayerModel[] = [];
+  variant = "riichi";
+  simulationVersion = 1;
   roundWind = 27;
   kyoku = 1;
   honba = 0;
@@ -137,10 +141,17 @@ export class TableModel {
     this.resetPlayers([25000, 25000, 25000, 25000], 0);
   }
 
+  resolveTile(id: number): Tile {
+    if (this.variant !== "riichi" && id >= 136 && id < 144) return { id, type: 34 + id - 136, red: false };
+    const value = tileById(id);
+    return this.variant === "riichi" ? value : { ...value, red: false };
+  }
+
   private resetPlayers(scores: readonly number[], dealer: Seat): void {
     this.dealer = dealer;
     this.players = scores.map((score, seat) => ({
       seat,
+      flowers: [],
       score,
       riichi: false,
       doubleRiichi: false,
@@ -156,6 +167,9 @@ export class TableModel {
   apply(ev: GameEvent, chiHint?: ChiHint): void {
     switch (ev.type) {
       case "game-start": {
+        this.variant = typeof ev["variant"] === "string" ? ev["variant"] : "riichi";
+        this.simulationVersion = this.variant !== "riichi" ? 3 : ev["ruleset"] ? 2 : 1;
+        if (Array.isArray(ev["scores"])) this.resetPlayers(ev["scores"] as number[], 0);
         this.gameLength = String(ev["length"]);
         this.seed = String(ev["seed"]);
         this.settlement = null;
@@ -172,7 +186,7 @@ export class TableModel {
         const dealer = Number(ev["dealer"]) as Seat;
         const scores = this.players.map((p) => p.score);
         this.resetPlayers(scores, dealer);
-        this.wallRemaining = 70;
+        this.wallRemaining = Number(ev["wallRemaining"] ?? 70);
         this.doraIndicators = [];
         this.lastWin = null;
         this.lastDrawnHand = null;
@@ -189,8 +203,20 @@ export class TableModel {
       case "draw": {
         const p = this.players[Number(ev["seat"])]!;
         p.handIds.push(Number(ev["tile"]));
-        if (ev["rinshan"] !== true) this.wallRemaining--;
+        if (typeof ev["wallRemaining"] === "number") this.wallRemaining = ev["wallRemaining"];
+        else if (ev["rinshan"] !== true || this.simulationVersion >= 2) this.wallRemaining--;
         this.currentTurn = p.seat;
+        break;
+      }
+      case "flower": {
+        const seat = Number(ev["seat"]), id = Number(ev["tile"]);
+        this.removeFromHand(this.players[seat]!, id);
+        this.players[seat]!.flowers.push(this.resolveTile(id));
+        if (typeof ev["wallRemaining"] === "number") this.wallRemaining = ev["wallRemaining"];
+        break;
+      }
+      case "robbed-kong": {
+        this.removeFromHand(this.players[Number(ev["seat"])]!, Number(ev["tile"]));
         break;
       }
       case "discard": {
@@ -198,7 +224,7 @@ export class TableModel {
         const id = Number(ev["tile"]);
         this.removeFromHand(p, id);
         p.pond.push({
-          tile: tileById(id),
+          tile: this.resolveTile(id),
           riichiDeclaration: ev["riichi"] === true,
           tsumogiri: ev["tsumogiri"] === true,
           called: false,
@@ -223,22 +249,22 @@ export class TableModel {
           .reverse()
           .find((e) => !e.called && e.tile.type === tileType);
         if (pondEntry) pondEntry.called = true;
-        const calledTile = pondEntry?.tile ?? tileByIdOfType(tileType, caller);
+        const calledTile = pondEntry?.tile ?? tileByIdOfType(tileType, caller, id => this.resolveTile(id));
         if (kind === "pon") {
-          const taken = takeFromHand(caller, tileType, 2);
+          const taken = takeFromHand(caller, tileType, 2, id => this.resolveTile(id));
           caller.melds.push({ kind, tiles: [calledTile, ...taken], calledFrom: fromSeat, calledTile });
         } else if (kind === "daiminkan") {
-          const taken = takeFromHand(caller, tileType, 3);
+          const taken = takeFromHand(caller, tileType, 3, id => this.resolveTile(id));
           caller.melds.push({ kind, tiles: [calledTile, ...taken], calledFrom: fromSeat, calledTile });
         } else if (kind === "chi") {
           let taken: Tile[];
           if (chiHint) {
             taken = chiHint.tileIds.map((id) => {
               this.removeFromHand(caller, id);
-              return tileById(id);
+              return this.resolveTile(id);
             });
           } else {
-            taken = firstChiPair(caller, tileType);
+            taken = firstChiPair(caller, tileType, id => this.resolveTile(id));
           }
           const tiles = [calledTile, ...taken].sort((a, b) => a.type - b.type || a.id - b.id);
           caller.melds.push({ kind, tiles, calledFrom: fromSeat, calledTile });
@@ -252,14 +278,14 @@ export class TableModel {
         const tileType = Number(ev["tileType"]);
         const p = this.players[seat]!;
         if (kind === "ankan") {
-          const taken = takeFromHand(p, tileType, 4);
+          const taken = takeFromHand(p, tileType, 4, id => this.resolveTile(id));
           p.melds.push({ kind: "ankan", tiles: taken });
         } else if (kind === "shouminkan") {
           const idx = p.melds.findIndex(
             (m) => m.kind === "pon" && m.tiles[0]!.type === tileType,
           );
           if (idx >= 0) {
-            const added = takeFromHand(p, tileType, 1);
+            const added = takeFromHand(p, tileType, 1, id => this.resolveTile(id));
             const pon = p.melds[idx]!;
             p.melds[idx] = {
               kind: "shouminkan",
@@ -275,7 +301,7 @@ export class TableModel {
         break;
       }
       case "indicator": {
-        this.doraIndicators = (ev["indicators"] as readonly number[]).map(tileById);
+        this.doraIndicators = (ev["indicators"] as readonly number[]).map(id => this.resolveTile(id));
         break;
       }
       case "win": {
@@ -284,7 +310,7 @@ export class TableModel {
         const winType = String(ev["winType"]) as "ron" | "tsumo";
         let winningTile: Tile;
         if (winType === "tsumo") {
-          winningTile = tileById(Number(ev["winningTile"]));
+          winningTile = this.resolveTile(Number(ev["winningTile"]));
           this.removeFromHand(winner, winningTile.id);
         } else {
           const fromSeat = Number(ev["fromSeat"]) as Seat;
@@ -293,9 +319,10 @@ export class TableModel {
             .find((e) => e.tile.type === Number(ev["winningTileType"]));
           winningTile = typeof ev["winningTile"] === "number"
             ? tileById(ev["winningTile"])
-            : last?.tile ?? tileByIdOfType(Number(ev["winningTileType"]), winner);
+            : last?.tile ?? tileByIdOfType(Number(ev["winningTileType"]), winner, id => this.resolveTile(id));
         }
         this.lastWin = {
+          ...(Array.isArray(ev["patterns"]) ? { patterns: (ev["patterns"] as {id:string;name:string;units:number}[]).map(p=>({...p})) } : {}),
           seat,
           winType,
           ...(winType === "ron" ? { fromSeat: Number(ev["fromSeat"]) as Seat } : {}),
@@ -310,7 +337,7 @@ export class TableModel {
             (p) => ({ ...p }),
           ),
           stickPoints: Number(ev["stickPoints"] ?? 0),
-          handTiles: winner.handIds.map(tileById),
+          handTiles: winner.handIds.map(id => this.resolveTile(id)),
           winnerMelds: [...winner.melds],
         };
         this.sticks = 0;
@@ -322,7 +349,7 @@ export class TableModel {
           const tenpai = [...(ev["tenpai"] as readonly Seat[])];
           const revealed = new Map<Seat, readonly Tile[]>();
           for (const seat of tenpai) {
-            revealed.set(seat, this.players[seat]!.handIds.map(tileById));
+            revealed.set(seat, this.players[seat]!.handIds.map(id => this.resolveTile(id)));
           }
           this.lastDrawnHand = {
             kind: "exhaustive",
@@ -420,21 +447,21 @@ export function foldEvents(
   return model;
 }
 
-function tileByIdOfType(type: number, preferNotInHandOf?: PlayerModel): Tile {
+function tileByIdOfType(type: number, preferNotInHandOf?: PlayerModel, resolve: (id:number)=>Tile = tileById): Tile {
   // Fallback resolution when the exact instance is not tracked (should not
   // happen in normal play): pick the copy not present in the given hand.
   const inHand = new Set(preferNotInHandOf?.handIds ?? []);
   for (let copy = 0; copy < 4; copy++) {
-    const t = TILES[type * 4 + copy]!;
+    const t = resolve(type * 4 + copy);
     if (!inHand.has(t.id)) return t;
   }
-  return TILES[type * 4]!;
+  return resolve(type * 4);
 }
 
-function takeFromHand(p: PlayerModel, type: number, n: number): Tile[] {
+function takeFromHand(p: PlayerModel, type: number, n: number, resolve: (id:number)=>Tile = tileById): Tile[] {
   const taken: Tile[] = [];
   for (let i = 0; i < p.handIds.length && taken.length < n; ) {
-    const t = tileById(p.handIds[i]!);
+    const t = resolve(p.handIds[i]!);
     if (t.type === type) {
       taken.push(t);
       p.handIds.splice(i, 1);
@@ -446,7 +473,7 @@ function takeFromHand(p: PlayerModel, type: number, n: number): Tile[] {
   return taken;
 }
 
-function firstChiPair(p: PlayerModel, discardType: number): Tile[] {
+function firstChiPair(p: PlayerModel, discardType: number, resolve: (id:number)=>Tile = tileById): Tile[] {
   const rank = (discardType % 9) + 1;
   const base = Math.floor(discardType / 9) * 9;
   const patterns: [number, number][] = [
@@ -456,8 +483,8 @@ function firstChiPair(p: PlayerModel, discardType: number): Tile[] {
   ];
   for (const [r1, r2] of patterns) {
     if (r1 < 1 || r2 > 9) continue;
-    const t1 = p.handIds.map(tileById).find((t) => t.type === base + r1 - 1);
-    const t2 = p.handIds.map(tileById).find((t) => t.type === base + r2 - 1);
+    const t1 = p.handIds.map(resolve).find((t) => t.type === base + r1 - 1);
+    const t2 = p.handIds.map(resolve).find((t) => t.type === base + r2 - 1);
     if (t1 && t2) {
       p.handIds = p.handIds.filter((id) => id !== t1.id && id !== t2.id);
       return [t1, t2];

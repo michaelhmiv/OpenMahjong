@@ -7,7 +7,7 @@
  * same sums the client computes here; it never re-derives them.
  */
 
-import type { GameEvent, GameLength, Seat } from "@openmahjong/engine";
+import type { GameEvent, VariantLength as GameLength, VariantId, Seat } from "@openmahjong/engine";
 import type { GameRecord, HandStats, StatsSums } from "./api.js";
 import type { SavedGame } from "./runner.js";
 import type { HistoryLine } from "./settings.js";
@@ -84,6 +84,7 @@ export function mergeLocalGameRecords(
     let nearest = -1;
     let nearestDelay = Infinity;
     records.forEach((record, index) => {
+      if (record.variant && record.variant !== "riichi") return;
       if (matched.has(index) || record.length !== line.length ||
         record.placement !== line.humanRank || record.score !== line.scores[record.log?.humanSeat ?? 0]) return;
       const delay = Date.parse(record.finishedAt) - time;
@@ -150,6 +151,7 @@ export function computeHandStats(
 
 export function buildGameRecord(args: {
   id: string;
+  variant?: VariantId;
   length: GameLength;
   placement: number;
   score: number;
@@ -160,6 +162,7 @@ export function buildGameRecord(args: {
 }): GameRecord {
   return {
     id: args.id,
+    ...(args.variant ? { variant: args.variant } : {}),
     length: args.length,
     placement: args.placement,
     score: args.score,
