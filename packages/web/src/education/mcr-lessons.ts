@@ -72,7 +72,7 @@ export const MCR_LESSONS: VariantLesson[] = [
         "How many patterns belong to this frozen profile?",
         ["34", "81", "82"],
         1,
-        "The WMO 2006 table has 81. The later mixed-kong extension is not part of this profile.",
+        "The WMO 2006 table has 81 named patterns. Its six-point concealed-plus-melded kong combination is specified under Two Melded Kongs, not listed as another named pattern.",
       ),
     ],
   ),

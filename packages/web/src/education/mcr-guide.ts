@@ -293,7 +293,7 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Two Melded Kongs": [
     "Triplets and quads",
     "Declare two exposed quads, whether directly claimed or upgraded.",
-    "Replaces the two individual Melded Kong awards; larger quad combinations may replace it.",
+    "Replaces the two individual Melded Kong awards; larger quad combinations may replace it. In this 2006 edition, one concealed plus one melded kong scores six together instead of the individual awards; that combination is not another catalog pattern.",
   ],
   "Last Tile": [
     "Concealment and winning",
