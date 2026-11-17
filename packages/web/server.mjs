@@ -3,14 +3,22 @@
 // made /privacy unreachable. Behavior:
 //   - real files are served with their content type;
 //   - a directory serves its index.html;
-//   - any other path serves the app shell (the client is a single-page
-//     app with internal screens; it owns no URL routes);
 //   - /privacy is a real directory with its own index.html, so the
-//     privacy policy is served as static HTML.
+//     privacy policy is served as static HTML;
+//   - any other path is a real 404: the client is a single-page app
+//     with internal screens and owns no URL routes, so there is no
+//     legitimate SPA fallback (unknown URLs used to return the shell
+//     with a 200, which search engines report as soft 404s);
+//   - text responses of at least 1 KB are gzip-compressed when the
+//     client sends `Accept-Encoding: gzip`.
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
+import { gzip } from "node:zlib";
+import { promisify } from "node:util";
+
+const gzipAsync = promisify(gzip);
 
 const root = fileURLToPath(new URL("./dist", import.meta.url));
 const port = Number(process.env.PORT || 8080);
@@ -29,13 +37,45 @@ const TYPES = {
   ".txt": "text/plain; charset=utf-8",
 };
 
-async function sendFile(res, path) {
+// MIME types worth compressing (binary formats like png/woff2 already are).
+const COMPRESSIBLE = new Set([
+  "text/html",
+  "application/javascript",
+  "text/css",
+  "application/json",
+  "application/xml",
+  "application/manifest+json",
+  "image/svg+xml",
+  "text/plain",
+]);
+const GZIP_MIN_BYTES = 1024;
+
+const NOT_FOUND_BODY =
+  '<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8" />' +
+  "<title>Not found — Open Mahjong</title></head><body>" +
+  "<h1>Not found</h1><p>There is no page at this address. " +
+  '<a href="/">Open Mahjong</a></p></body></html>\n';
+
+async function sendFile(req, res, path) {
   const data = await readFile(path);
-  res.writeHead(200, {
-    "Content-Type": TYPES[extname(path)] || "application/octet-stream",
+  const type = TYPES[extname(path)] || "application/octet-stream";
+  const headers = {
+    "Content-Type": type,
     "Cache-Control": path.includes(`${join(root, "assets")}/`) ? "public, max-age=31536000, immutable" : "no-cache",
-  });
-  res.end(data);
+  };
+  let body = data;
+  const mime = type.split(";")[0];
+  if (COMPRESSIBLE.has(mime)) {
+    headers["Vary"] = "Accept-Encoding";
+    const accept = req.headers["accept-encoding"] || "";
+    if (data.length >= GZIP_MIN_BYTES && /\bgzip\b/.test(accept)) {
+      body = await gzipAsync(data);
+      headers["Content-Encoding"] = "gzip";
+    }
+  }
+  headers["Content-Length"] = body.length;
+  res.writeHead(200, headers);
+  res.end(body);
 }
 
 const server = createServer(async (req, res) => {
@@ -54,13 +94,9 @@ const server = createServer(async (req, res) => {
       path = join(path, "index.html");
       info = await stat(path).catch(() => null);
     }
-    if (info?.isFile()) return await sendFile(res, path);
-    if (url.pathname.startsWith("/assets/") || extname(url.pathname)) {
-      res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" });
-      return res.end("not found");
-    }
-    // SPA fallback: the app shell.
-    return await sendFile(res, join(root, "index.html"));
+    if (info?.isFile()) return await sendFile(req, res, path);
+    res.writeHead(404, { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" });
+    return res.end(NOT_FOUND_BODY);
   } catch {
     res.writeHead(500);
     res.end("error");
