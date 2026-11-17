@@ -11,12 +11,15 @@
  * idea, no slogans. Progress persists locally for guests and rides
  * the account settings blob (namespaced key) when signed in.
  *
- * Content version 3 (tutorial rebuild brief v1, 2026-11-16): the
- * lessons are written for a player who has never seen a mahjong
- * tile. Every thing is shown, named in plain words, and read aloud
- * before any step asks for it, and no term is used before the step
- * that teaches it — the term order is audited by
- * test/tutorial-terms.test.ts.
+ * Content version 4 (lesson rebuild brief v2, PR E, 2026-11-17):
+ * the riichi repairs from the beginner panel — completed tile
+ * reading in TU-1, the table tour in TU-3, signalled scene changes,
+ * stated riichi stakes, TU-8's worked score breakdown, and TU-9's
+ * single furiten statement. The lessons are written for a player
+ * who has never seen a mahjong tile. Every thing is shown, named
+ * in plain words, and read aloud before any step asks for it, and
+ * no term is used before the step that teaches it — the term
+ * order is audited by test/tutorial-terms.test.ts.
  */
 
 import {
@@ -390,7 +393,7 @@ export interface LessonView {
 type StepDef =
   | {
       readonly kind: "info";
-      readonly text: string;
+      readonly text: string | ((c: LessonController) => string);
       readonly strip?: readonly number[];
     }
   | {
@@ -409,6 +412,10 @@ type StepDef =
         | ((c: LessonController) => readonly LessonChoice[]);
       readonly correct: number | ((c: LessonController) => number);
       readonly wrongNote: string | ((c: LessonController, i: number) => string);
+      /** When set, a correct pick is confirmed visibly — this note
+       * is shown and the step waits for Continue — instead of the
+       * lesson silently moving on (TU-10, PR E item 8). */
+      readonly correctNote?: string;
     }
   | {
       readonly kind: "scene";
@@ -440,8 +447,12 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
         { kind: "info", text: "The second suit is bamboo, numbered 1 to 9. Read a bamboo tile by counting its green sticks: the number of sticks is the tile's number. One exception: the 1 of bamboo, first in this row, is a picture of a bird — it has no sticks to count.", strip: [18, 19, 20, 21, 22, 23, 24, 25, 26] },
         { kind: "drill", text: "Tap every bamboo tile — the tiles with the green sticks.", tiles: [2, 15, 19, 8, 22, 27, 21, 9, 25, 20, 31, 5], targets: [2, 4, 6, 8, 9], wrongNote: "Not that one — bamboo tiles are the green sticks." },
         { kind: "info", text: "The third suit is characters, numbered 1 to 9. A characters tile has a two-part face: the dark character on top is the number, and the red character below is the suit's mark — it means ten thousand, and it is the same on every characters tile. The top characters are numbers written in Chinese: one line is 1, two lines are 2, three lines are 3. This row runs 1 to 9, left to right.", strip: [0, 1, 2, 3, 4, 5, 6, 7, 8] },
+        { kind: "info", text: "Here are all nine characters tiles again, labelled in order: 1, 2, 3, 4, 5, 6, 7, 8, 9, left to right. To read a characters tile, look only at the small dark character on top — that character is the number. The red mark below is the same on all nine, so it never tells you the number. For 1, 2, and 3 you can count the lines; for the rest, match the top character against this labelled row until the faces are familiar.", strip: [0, 1, 2, 3, 4, 5, 6, 7, 8] },
+        { kind: "info", text: "Two characters faces are easy to mix up: the 6 and the 9. Here they are side by side — the 6 on the left, the 9 on the right. Compare only the top characters: the 6's top character ends in two separate short legs at the bottom, while the 9's top character is one long stroke that bends down and ends in a hook, with nothing separate below it. No drill in this lesson uses a 6 or a 9 until you have seen them side by side like this.", strip: [5, 8] },
         { kind: "drill", text: "Tap every characters tile — the two-part faces with the red mark at the bottom.", tiles: [10, 4, 16, 30, 1, 24, 8, 27, 6, 20, 14, 3], targets: [1, 4, 6, 8, 11], wrongNote: "Not that one — a characters tile has two parts: a dark number character on top and the red mark below it." },
-        { kind: "info", text: "Seven tiles belong to no suit. They are honors, and they have no numbers. Four of them are winds, named for the compass points: East, South, West, and North. Each wind's face is a single dark character.", strip: [27, 28, 29, 30] },
+        { kind: "info", text: "Seven tiles belong to no suit. They are honors, and they have no numbers. Four of them are winds, named for the compass points: East, South, West, and North. Each wind's face is a single dark character. This row shows them in that order: East, South, West, North.", strip: [27, 28, 29, 30] },
+        { kind: "drill", text: "Tap the East wind — the first of the four wind faces in the row you were just shown, in the order East, South, West, North.", tiles: [29, 27, 31, 28, 13, 30], targets: [1], wrongNote: "Not that one — the winds in order are East, South, West, North, and East is the first face in that row." },
+        { kind: "drill", text: "Tap the North wind — the last of the four wind faces in that row.", tiles: [28, 33, 30, 27, 29], targets: [2], wrongNote: "Not that one — the winds in order are East, South, West, North, and North is the last face in that row." },
         { kind: "info", text: "The other three honors are dragons. The red dragon's face is a red character. The green dragon's face is a green character. The white dragon's face is blank, inside a frame.", strip: [31, 32, 33] },
         { kind: "drill", text: "Tap every honor tile — the winds and the dragons.", tiles: [27, 3, 28, 15, 29, 19, 33, 23, 8, 11, 7, 22], targets: [0, 2, 4, 6], wrongNote: "Not that one — honors are the winds and the dragons. They have no numbers." },
         { kind: "info", text: "The 1 and the 9 of each suit have a name: terminals. They are the tiles at the two ends of a suit. This row shows all six: the 1 and the 9 of characters, of dots, and of bamboo.", strip: [0, 8, 9, 17, 18, 26] },
@@ -449,6 +460,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
         { kind: "drill", text: "Tap every terminal tile — the 1s and the 9s.", tiles: [0, 13, 26, 2, 8, 24, 9, 21, 5, 10, 25, 27], targets: [0, 2, 4, 6], wrongNote: "Not that one — a terminal is only the 1 or the 9 of a suit." },
         { kind: "info", text: "There are four copies of every tile: 34 kinds of tile, four copies each, 136 tiles in all. The four copies of a kind are identical, so any copy can stand in for another." },
         { kind: "info", text: "One 5 in each suit is printed on a red-tinted tile instead of a plain one. It is still a 5 of its suit in every way, but it is worth a bonus when it ends up in a winning hand. That bonus is explained in 'Ways to win'." },
+        { kind: "info", text: "Tiles also have short written codes. You will see them wherever the app names a tile in text — in tile labels for screen readers, and in Practice. A suited tile's code is its number plus a suit letter: m for characters, p for dots, s for bamboo. So 3m is the 3 of characters, 3p is the 3 of dots, and 3s is the 3 of bamboo. The winds are E, S, W, and N, for East, South, West, and North. The dragons are Wh for the white dragon, Gr for the green dragon, and Rd for the red dragon. A red five's code adds the letter r: 5pr is the red 5 of dots." },
       ];
     case "tu2":
       return [
@@ -489,14 +501,14 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
       ];
     case "tu3":
       return [
-        { kind: "info", text: "Your hand is at the bottom of the table, and the other three players sit around it. A turn works like this: you draw one tile — take it from the face-down tiles — and then you discard one tile: tap a tile in your hand to throw it away. Drawing and then discarding keeps your hand at 13 tiles while you build toward four sets and a pair." },
+        { kind: "info", text: "Your hand is at the bottom of the table, and the other three players sit around it. A turn works like this: you draw one tile — take it from the face-down tiles — and then you discard one tile: tap a tile in your hand to throw it away. Drawing and then discarding keeps your hand at 13 tiles while you build toward four sets and a pair. The table itself is in front of you as you read. Each player has a name chip showing a wind — East, South, West, or North: that wind is the player's seat wind, the wind of the seat they are sitting in. Your chip reads 'East · You', so your seat wind is East for this hand. The label in the middle of the table, 'East 1', names the round and the hand: the East round, hand 1. The face-down tiles are the wall, the tiles everyone draws from, and the number beside 'Wall' is how many tiles are left in it. In the middle sits one face-up tile under the label DORA: that tile is the dora indicator — it marks a bonus tile, and a later lesson explains how it works. Beside it, the honba counter ('0 honba') is a bonus counter explained in 'Points and rounds'. The open area in front of each player is their pond, where their discards will lie face up. Every player starts a game with 25,000 points, shown on their chip." },
         {
           kind: "scene",
           seed: "om-tu3",
           text: (c) => {
             const stop = c.scene?.stop;
             if ((c.counters["discards"] ?? 0) === 0) {
-              return "This is a real hand, on the real table. The other players take their turns by themselves. You have drawn a tile: tap any tile in your hand to discard it. Discarding a tile you do not need makes room for the next draw. Make six discards.";
+              return "This is a real hand, on the real table. The other players take their turns by themselves. You have drawn a tile: tap any tile in your hand to discard it. Any tile in your hand is accepted here — there is no wrong discard in this step. Watch two things as you play: your pond, the face-up discards piling up in front of you, and the wall count in the middle of the table, which falls as tiles are drawn. Make six discards.";
             }
             if (stop?.kind === "turn" && stop.ctx.drawnTile) {
               return `You drew the ${tileName(stop.ctx.drawnTile.type)}. Tap a tile in your hand to discard it.`;
@@ -514,7 +526,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return false;
           },
         },
-        { kind: "info", text: "Draw, discard, repeat — that is the whole turn. Your discarded tiles stay face up in front of you, in the order you discarded them: that area is your pond. All four ponds are face up for everyone to see, and later lessons will read them." },
+        { kind: "info", text: "Draw, discard, repeat — that is the whole turn, and it is what just happened: you drew and discarded six times. Each time, your pond grew by one tile and the wall count in the middle fell as the four players drew. Your discarded tiles stay face up in front of you, in the order you discarded them: that area is your pond. All four ponds are face up for everyone to see, and later lessons will read them." },
       ];
     case "tu4":
       return [
@@ -526,9 +538,9 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           text: (c) => {
             const stop = c.scene?.stop;
             if (stop?.kind === "call") {
-              return `The player on your left has discarded the ${tileName(stop.ctx.tile.type)}. It completes a sequence with two tiles in your hand. Tap Chi to claim it and finish the sequence now, instead of waiting to draw that tile yourself. In a real game you could also tap Pass and let it go by.`;
+              return `New example — this scene starts a new position on purpose: a different hand and a different wall count from the step before. The player on your left has discarded the ${tileName(stop.ctx.tile.type)}. It completes a sequence with two tiles in your hand. Tap Chi to claim it and finish the sequence now, instead of waiting to draw that tile yourself. In a real game you could also tap Pass and let it go by.`;
             }
-            return "Watch the player on your left — a discard you can use is coming.";
+            return "New example — this scene starts a new position on purpose. Watch the player on your left — a discard you can use is coming.";
           },
           enter: (c) =>
             c.autoTo(
@@ -573,9 +585,9 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           text: (c) => {
             const stop = c.scene?.stop;
             if (stop?.kind === "call") {
-              return `Another player has discarded the ${tileName(stop.ctx.tile.type)}, and you hold two copies of it. Tap Pon to claim it and complete the triplet now, instead of waiting to draw the third copy yourself. In a real game you could also tap Pass.`;
+              return `New example — this scene starts a new position on purpose: a different hand from the chi scene, and the set you made there is gone. Another player has discarded the ${tileName(stop.ctx.tile.type)}, and you hold two copies of it. Tap Pon to claim it and complete the triplet now, instead of waiting to draw the third copy yourself. In a real game you could also tap Pass.`;
             }
-            return "Watch the discards — a tile you hold two copies of is coming.";
+            return "New example — this scene starts a new position on purpose. Watch the discards — a tile you hold two copies of is coming.";
           },
           enter: (c) =>
             c.autoTo((s) => s.kind === "call" && s.ponDecidable && s.ctx.canPon),
@@ -603,9 +615,9 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           text: (c) => {
             const stop = c.scene?.stop;
             if (stop?.kind === "call") {
-              return `Another player has discarded the ${tileName(stop.ctx.tile.type)}, and you hold the other three copies. Tap Kan to claim it and complete the set of four. You then draw an extra tile, because a set of four leaves your hand one tile short. In a real game you could also tap Pass.`;
+              return `New example — this scene starts a new position on purpose: a different hand from the pon scene. Another player has discarded the ${tileName(stop.ctx.tile.type)}, and you hold the other three copies. Tap Kan to claim it and complete the set of four. You then draw an extra tile, because a set of four leaves your hand one tile short. In a real game you could also tap Pass.`;
             }
-            return "Watch the discards — a tile you hold three copies of is coming.";
+            return "New example — this scene starts a new position on purpose. Watch the discards — a tile you hold three copies of is coming.";
           },
           enter: (c) =>
             c.autoTo((s) => s.kind === "call" && s.ponDecidable && s.ctx.canKan),
@@ -631,7 +643,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           },
         },
         { kind: "info", text: "A kan also turns a new tile face up on the table: a dora indicator. It marks a bonus tile, a dora. For a suited tile, the dora is the next number up in the same suit — an indicator showing the 3 of dots makes the 4 of dots a dora. Each dora in a winning hand adds to the hand's score. The red-tinted 5s from the first lesson are always dora, indicator or not." },
-        { kind: "info", text: "Chi, pon, and a kan called on a discard all open your hand: the set sits face up where everyone can see it. An open hand cannot use every scoring pattern — some patterns need a closed hand. A kan declared from four copies in your own hand is the exception: it keeps your hand closed." },
+        { kind: "info", text: "Chi, pon, and a kan called on a discard all open your hand: the set sits face up where everyone can see it. An open hand cannot use every way of winning — some of the winning patterns taught in 'Ways to win' need a closed hand. A kan declared from four copies in your own hand is the exception: it keeps your hand closed." },
       ];
     case "tu5":
       return [
@@ -643,7 +655,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           text: (c) => {
             const stop = c.scene?.stop;
             if (stop?.kind === "turn" && stop.ctx.canTsumo) {
-              return `You drew the ${tileName(stop.ctx.drawnTile!.type)} — it is one of your waits, and your hand is complete. Tap Tsumo to win the hand.`;
+              return `You drew the ${tileName(stop.ctx.drawnTile!.type)} — it is one of your waits, and your hand is complete. Tap Tsumo to win the hand. One thing has already happened in this hand: you declared riichi. Riichi is a declaration you make on a ready, closed hand: you pay a 1,000-point stake at the moment you declare, and your hand is locked from then on — the next lesson, 'Riichi', teaches it in full. That payment is why your score is 24,000, and the stake stick sits in the middle of the table. Winning collects the stake back.`;
             }
             return "Your hand is tenpai. The other players take their turns; watch what you draw.";
           },
@@ -662,7 +674,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return false;
           },
         },
-        { kind: "info", text: "That was tsumo: a win on a tile you drew yourself. When you win by tsumo, all three opponents pay you." },
+        { kind: "info", text: "That was tsumo: a win on a tile you drew yourself. When you win by tsumo, all three opponents pay you — here, each paid 6,000 — and your 1,000-point riichi stake came back to you on top, so you gained 19,000 points in all. The table has already set up the next hand, which is why the tiles in front of you are different." },
         { kind: "info", text: "One rule limits ron: furiten. If one of your waits is a tile you discarded earlier yourself — a tile now sitting in your own pond — then you are in furiten, and you cannot ron at all, not even on a different wait. You can still win by tsumo. Furiten ends when your waits change." },
         {
           kind: "scene",
@@ -671,9 +683,9 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             const stop = c.scene?.stop;
             if (stop?.kind === "call") {
               const waits = waitNames(stop.view);
-              return `You are tenpai, waiting on ${joinTileNames(waits)}. Another player has just discarded one of your waits. Tap Ron to claim it and win the hand — only the player who discarded it pays you. In a real game you could tap Pass, but not here.`;
+              return `New example — the hand has changed on purpose: this is a different hand, set up to show a ron win. You are tenpai, waiting on ${joinTileNames(waits)}. Another player has just discarded one of your waits. Tap Ron to claim it and win the hand — only the player who discarded it pays you. In a real game you could tap Pass, but not here. As in the tsumo example, you declared riichi earlier in this hand and paid the 1,000-point stake then — that is why your score is 24,000, and the stake stick sits in the middle of the table. Winning collects the stake back.`;
             }
-            return "You are tenpai. Watch the discards — one of your waits is coming.";
+            return "New example — the hand has changed on purpose. You are tenpai. Watch the discards — one of your waits is coming.";
           },
           enter: (c) => c.autoTo((s) => s.kind === "call" && s.ctx.canRon),
           buttons: () => [
@@ -693,15 +705,15 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return false;
           },
         },
-        { kind: "info", text: "That was ron: a win on another player's discard. Only the player who discarded the winning tile pays you — the other two pay nothing." },
+        { kind: "info", text: "That was ron: a win on another player's discard. Only the player who discarded the winning tile pays you — here South paid 2,900 — and your 1,000-point riichi stake came back to you on top, so you gained 3,900 points in all. The other two players paid nothing. The table has already set up the next hand, which is why the tiles in front of you are different." },
       ];
     case "tu6":
       return [
-        { kind: "info", text: "Riichi is a declaration you make while discarding, when your hand is tenpai and still closed — you have made no calls. Declaring riichi pays a stake of 1,000 points at once. After that, your hand is locked: on each of your turns you discard the tile you drew, unless that tile wins the hand or can form a kan with copies already in your hand. In exchange, riichi itself is a scoring pattern, so a hand that has declared riichi can always win, by tsumo or by ron. You need at least 1,000 points to declare, and at least four tiles left to draw." },
+        { kind: "info", text: "Riichi is a declaration you make while discarding, when your hand is tenpai and still closed — you have made no calls. Declaring riichi pays a stake of 1,000 points at once: the points leave your score and sit on the table as a stake stick, and the next player to win a hand collects every stake on the table. After that, your hand is locked: on each of your turns you discard the tile you drew, unless that tile wins the hand or can form a kan with copies already in your hand. In exchange, riichi itself counts as a way to score — a pattern in its own right, taught in 'Ways to win' — so a hand that has declared riichi can always win, by tsumo or by ron. You need at least 1,000 points to declare, and at least four tiles left to draw." },
         {
           kind: "scene",
           seed: "om-tu6-1420",
-          text: "This hand is tenpai and closed, and it is your turn. The tiles that keep the hand tenpai are marked. Tap one of the marked tiles: tapping it discards the tile and declares riichi with that discard, and the 1,000-point stake is paid. Any other discard would leave the hand more than one tile from complete, and riichi needs a tenpai hand.",
+          text: "This hand is tenpai and closed, and it is your turn. One tile in your hand is marked: it is the discard that keeps the hand tenpai. Tap the marked tile: tapping it discards the tile and declares riichi with that discard, and the 1,000-point stake is paid at that moment — your score drops by 1,000 and the stake stick appears in the middle of the table. Any other discard would leave the hand more than one tile from complete, and riichi needs a tenpai hand.",
           acceptsTiles: true,
           highlightRiichi: true,
           gate: (c, a) => {
@@ -724,8 +736,21 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             const evs = c.scene?.events ?? [];
             const from = c.counters["eventsAtRiichi"] ?? 0;
             const won = evs.slice(from).some((ev) => ev.type === "win" && Number(ev["seat"]) === 0);
+            const drawEnd = evs.slice(from).find((ev) => ev.type === "hand-end" && ev["reason"] === "exhaustive-draw");
             const ended = evs.slice(from).some((ev) => ev.type === "hand-end");
             if (won) return "You won the hand. Your 1,000-point stake comes back to you, on top of the winnings.";
+            if (drawEnd) {
+              // Reconciled against the scene's actual events (seed
+              // om-tu6-1420, driven 2026-11-17): after your riichi,
+              // one other player declared riichi too; the wall ran
+              // out with seats 0, 2, 3 tenpai, so the one player who
+              // was not tenpai paid 1,000 to each of them.
+              const tenpai = (drawEnd["tenpai"] as readonly number[] | undefined) ?? [];
+              const youTenpai = tenpai.includes(0);
+              const othersRiichi = evs.slice(from).filter((ev) => ev.type === "riichi").length;
+              const stakes = 1 + othersRiichi;
+              return `The rest of the hand played out by itself, and the table has moved on to the next hand — the hand in front of you is a new one. Nobody won that hand: the wall ran out, so it ended in a draw. ${othersRiichi === 1 ? "One other player also declared riichi after you" : `${othersRiichi} other players also declared riichi after you`}, so ${stakes} riichi stakes of 1,000 points sit on the table; they stay there, and the next player to win a hand collects them. At a drawn hand, the players who were tenpai share 3,000 points paid by the players who were not tenpai. ${youTenpai ? "You were tenpai, so you received 1,000 of it — that is why your score is back at 25,000 even though you paid the 1,000 stake." : "You were not tenpai, so you received none of it."} The player in the East seat was tenpai too, so the East seat stays with the same player for the next hand and the honba counter rose by one.`;
+            }
             if (ended) return "The hand ended without your win. The stake stays on the table: the next player to win a hand collects it.";
             return "After riichi, you discard each tile you draw, unless it wins the hand. The rest of this hand plays out by itself — watch how it ends.";
           },
@@ -786,9 +811,9 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           text: (c) => {
             const stop = c.scene?.stop;
             if (stop?.kind === "turn" && stop.ctx.canTsumo) {
-              return "You drew a winning tile. Tap Tsumo to win the hand, and watch what it pays.";
+              return "New example — the hand has changed on purpose: a different hand from the last lesson. You have already declared riichi in this hand and paid the 1,000-point stake at that moment — that is why your score is 24,000, and the stake stick sits in the middle of the table. You drew a winning tile. Tap Tsumo to win the hand, and watch what it pays.";
             }
-            return "This hand is one tile from complete. Watch your draws: a winning tile is coming, and the questions after it are about what the win pays.";
+            return "New example — the hand has changed on purpose. This hand is one tile from complete. Watch your draws: a winning tile is coming, and the questions after it are about what the win pays.";
           },
           enter: (c) => c.autoTo((s) => s.kind === "turn" && s.ctx.canTsumo),
           acceptsTiles: true,
@@ -806,6 +831,10 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           },
         },
         {
+          kind: "info",
+          text: (c) => c.winBreakdown(),
+        },
+        {
           kind: "choice",
           text: "How many han was your hand?",
           options: (c) => {
@@ -813,7 +842,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return distinctQuizValues(han, 1, 1).map((v) => ({ label: `${v} han` }));
           },
           correct: 1,
-          wrongNote: "Count again from the winning hand: each yaku gives han, and dora add more.",
+          wrongNote: "Use the breakdown on the step before this one — tap Back to see it again. It lists every part of this same win's han, line by line, and gives the total.",
         },
         {
           kind: "choice",
@@ -823,7 +852,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return distinctQuizValues(fu, 10, 0).map((v) => ({ label: `${v} fu` }));
           },
           correct: 1,
-          wrongNote: "Fu come from the shape: triplets, the pair, the wait, and how the hand was won.",
+          wrongNote: "Use the breakdown two steps back — tap Back twice to see it again. It states this same win's fu and where the number comes from.",
         },
         {
           kind: "choice",
@@ -835,7 +864,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             }));
           },
           correct: 1,
-          wrongNote: "Add up the payments on the win: a tsumo collects from all three opponents.",
+          wrongNote: "Use the breakdown three steps back — tap Back to return to it. It adds up this same win: what each opponent paid, plus the riichi stake that came back to you.",
         },
         { kind: "info", text: "One player in each hand is the dealer: the player sitting in the East seat for that hand. A dealer's win pays more — on a dealer tsumo, all three opponents pay the dealer rate — and a dealer also pays more when another player wins by tsumo. All payments round up to the next 100 points." },
         { kind: "info", text: "If the dealer wins a hand, or a hand is drawn with the dealer tenpai, the same dealer deals the next hand, and the honba count rises by one. Honba are a bonus counter: each honba adds 300 points to the next winning hand. An East-only game runs from East 1 to East 4; an East/South game continues through South 4. A game ends early if any player's score falls below zero." },
@@ -852,7 +881,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             const threat = stop.view.players.find((p) => p.seat !== 0 && p.riichi);
             if (!threat) return "Watch the table — a riichi is coming.";
             const wind = WIND_WORD[threat.seatWind] ?? "";
-            const base = `${wind} has declared riichi, so ${wind}'s hand is tenpai. Discard a tile from ${wind}'s pond — the tiles ${wind} has already thrown away, face up in front of them. ${wind} cannot win on a tile in their own pond, so those tiles are safe against ${wind}. Another opponent might still be waiting on them.`;
+            const base = `${wind} has declared riichi, so ${wind}'s hand is tenpai. Discard a tile from ${wind}'s pond — the tiles ${wind} has already thrown away, face up in front of them. Those tiles are safe against ${wind}: if any tile ${wind} is waiting for is in ${wind}'s own pond, ${wind} cannot win by ron at all — and a tile sitting in their own pond can never be the tile they take from you. Another opponent might still be waiting on them.`;
             if ((c.counters["misses"] ?? 0) >= 2) {
               const pond = new Set(threat.discards.map((d) => d.tile.type));
               const safe = [...new Set(stop.view.hand.map((t) => t.type))]
@@ -887,7 +916,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             return false;
           },
         },
-        { kind: "info", text: "The tiles in a riichi player's own pond are genbutsu, and they are safe against that player. The reason is furiten: a player whose waits include a tile in their own pond cannot ron at all. Genbutsu are safe only against that one player — another opponent could still win on the same tile, and the riichi player can still win by drawing their wait. Staying safe can mean discarding tiles your own hand needed; whether defense is worth it depends on the score, the round, and how close your own hand is." },
+        { kind: "info", text: "The tiles in a riichi player's own pond are genbutsu, and they are safe against that player. The reason is furiten, the rule from 'Ready and winning', stated one way everywhere: if any tile a player is waiting for is in their own pond, that player cannot win by ron at all — on any discard, from any player. A tile from their pond is therefore never a tile they can take from you. Sometimes none of your tiles are in the riichi player's pond: then no discard is completely safe. You choose between discarding the tile that seems least likely to be their wait and accepting the risk, or breaking up your own hand — discarding tiles it needed — to reach a safer tile on a later turn. And the guarantee has a limit: genbutsu safety covers only that one riichi player. Another opponent could still be waiting on the same tile, and the riichi player can still win by drawing their wait. Whether defense is worth it depends on the score, the round, and how close your own hand is." },
       ];
     case "tu10":
       return [
@@ -905,6 +934,7 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           ],
           correct: 1,
           wrongNote: "There is no card at all. The yaku are the patterns, and they do not change.",
+          correctNote: "Correct — that is the right answer. There is no card at all: riichi's scoring patterns are the yaku, built from any tiles, and they do not change from year to year.",
         },
         { kind: "info", text: "When the American variant arrives it will have its own lessons. Everything before this lesson was riichi." },
       ];
@@ -942,6 +972,9 @@ export class LessonController {
   counters: Record<string, number> = {};
   found: number[] = [];
   note: string | null = null;
+  /** A choice step with a correctNote waits here after a correct
+   * pick, showing the confirmation until Continue. */
+  choiceConfirmed = false;
   done = false;
   private snapshots = new Map<number, StepSnapshot>();
 
@@ -1014,6 +1047,7 @@ export class LessonController {
     this.stepIndex++;
     this.found = [];
     this.note = null;
+    this.choiceConfirmed = false;
     if (this.stepIndex >= this.steps.length) {
       this.done = true;
       return;
@@ -1059,6 +1093,7 @@ export class LessonController {
     this.counters = { ...snap.counters };
     this.found = [];
     this.note = null;
+    this.choiceConfirmed = false;
     this.scene = snap.scene
       ? LessonScene.restore(snap.scene.seed, snap.scene.decisions, snap.scene.length)
       : null;
@@ -1111,6 +1146,63 @@ export class LessonController {
     );
   }
 
+  /**
+   * TU-8's worked breakdown (PR E item 5): the seeded win counted
+   * out in full — every yaku line, the dora line, the han total,
+   * the fu, the payments, and the riichi stake coming back — read
+   * off the real win event, so the numbers the questions ask for
+   * are the numbers this step shows.
+   */
+  winBreakdown(): string {
+    const ev = this.winEvent();
+    if (!ev) throw new Error("No recorded win for the score breakdown");
+    const glosses: Record<string, string> = {
+      riichi: "Riichi — the declaration made with a discard in this hand",
+      ippatsu: "Ippatsu — winning within one turn of declaring riichi",
+      "menzen-tsumo": "Menzen tsumo — winning on your own draw with a closed hand",
+      chiitoitsu: "Chiitoitsu — seven pairs",
+      pinfu: "Pinfu — an all-sequence closed hand",
+      tanyao: "Tanyao — every tile a simple",
+    };
+    const details = (ev["yakuDetails"] as readonly { id: string; name: string; han: number }[] | undefined) ?? [];
+    const lines = details.map((y) => `${glosses[y.id] ?? y.name} — ${y.han} han.`);
+    const dora = Number(ev["dora"] ?? 0);
+    if (dora > 0) lines.push(`Dora — ${dora} han: each dora in the hand adds 1 han.`);
+    const han = Number(ev["han"]);
+    const fu = Number(ev["fu"]);
+    const fuLine = details.some((y) => y.id === "chiitoitsu")
+      ? `The fu are ${fu}: a seven-pairs hand is always counted as ${fu} fu.`
+      : `The hand's shape — its sets, its pair, its wait, and how it was won — gives ${fu} fu.`;
+    // Was the winner the dealer of the hand this win ended?
+    const events = this.scene?.events ?? [];
+    const winIndex = events.lastIndexOf(ev);
+    let dealerLine = "";
+    for (let i = winIndex - 1; i >= 0; i--) {
+      if (events[i]!.type === "hand-start") {
+        if (Number(events[i]!["dealer"]) === Number(ev["seat"])) {
+          dealerLine = "You sat in the East seat for this hand, so the win pays the higher rate for that seat — the steps after these questions explain that rate. ";
+        }
+        break;
+      }
+    }
+    const payments = (ev["payments"] as readonly { amount: number }[] | undefined) ?? [];
+    const paidTotal = payments.reduce((sum, p) => sum + p.amount, 0);
+    const paymentsLine =
+      ev["winType"] === "tsumo" && payments.length === 3 && payments.every((p) => p.amount === payments[0]!.amount)
+        ? `On a tsumo win every opponent pays: each of the three paid you ${payments[0]!.amount.toLocaleString("en-US")} points, ${paidTotal.toLocaleString("en-US")} in all.`
+        : ev["winType"] === "tsumo"
+          ? `On a tsumo win every opponent pays: the three payments add to ${paidTotal.toLocaleString("en-US")} points.`
+          : `The player who discarded the winning tile paid you ${paidTotal.toLocaleString("en-US")} points.`;
+    const sticks = Number(ev["stickPoints"] ?? 0);
+    const stakeLine =
+      sticks === 1000
+        ? "Your 1,000-point riichi stake came back to you on top of the payments."
+        : sticks > 0
+          ? `${sticks.toLocaleString("en-US")} points of riichi stakes sitting on the table came to you on top of the payments.`
+          : "";
+    return `Here is that win, counted out in full. ${lines.join(" ")} That makes ${han} han in all. ${fuLine} ${dealerLine}${paymentsLine}${stakeLine ? ` ${stakeLine}` : ""} You gained ${this.winGained().toLocaleString("en-US")} points in all. The table has already set up the next hand, so count from this breakdown rather than from the tiles in front of you — the questions that follow ask for these same numbers.`;
+  }
+
   // -- view -------------------------------------------------------------
 
   view(): LessonView {
@@ -1140,7 +1232,7 @@ export class LessonController {
       case "info":
         return {
           ...base,
-          text: step.text,
+          text: typeof step.text === "function" ? step.text(this) : step.text,
           strip: step.strip ?? null,
           drill: null,
           choices: null,
@@ -1167,6 +1259,18 @@ export class LessonController {
         };
       }
       case "choice":
+        if (this.choiceConfirmed) {
+          return {
+            ...base,
+            text: typeof step.text === "function" ? step.text(this) : step.text,
+            strip: step.strip ?? null,
+            drill: null,
+            choices: null,
+            buttons: this.canBack ? [BACK, CONTINUE] : [CONTINUE],
+            highlightRiichi: false,
+            acceptsTiles: false,
+          };
+        }
         return {
           ...base,
           text: typeof step.text === "function" ? step.text(this) : step.text,
@@ -1226,11 +1330,22 @@ export class LessonController {
         return;
       }
       case "choice": {
+        if (this.choiceConfirmed) {
+          if (action.kind === "continue" || (action.kind === "button" && action.id === "continue")) {
+            this.advance();
+          }
+          return;
+        }
         if (action.kind !== "choice") return;
         const correct =
           typeof step.correct === "function" ? step.correct(this) : step.correct;
         if (action.index === correct) {
-          this.advance();
+          if (step.correctNote) {
+            this.choiceConfirmed = true;
+            this.note = step.correctNote;
+          } else {
+            this.advance();
+          }
         } else {
           this.note =
             typeof step.wrongNote === "function"
