@@ -627,8 +627,8 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "The winds have two large patterns of their own. Little Four Winds is three wind triplets plus a pair of the fourth wind, worth ten fan. Big Four Winds is all four wind triplets, worth fifteen fan before the payment cap of Lesson 9. A hand in which every tile is an honor is All Honors, worth ten fan. The pictured hand is Big Four Winds with an East pair: four wind triplets and the pair, all honors.",
-      hand: "111z222z333z444z11z",
+      text: "The winds have two large patterns of their own. Little Four Winds is three wind triplets plus a pair of the fourth wind, worth ten fan. Big Four Winds is all four wind triplets, worth fifteen fan before the payment cap of Lesson 9. A hand in which every tile is an honor is All Honors, worth ten fan. The pictured hand is Big Four Winds with a pair of white dragons: four wind triplets and the pair, all honors.",
+      hand: "111z222z333z444z55z",
     },
     {
       question: choice(

@@ -113,12 +113,14 @@ export function mountVariantEducation(
     if (!notation) return row;
     const inventory = variantAdapter(options.variant).inventory();
     parseCounts(notation).forEach((count, type) => {
-      for (let c = 0; c < count; c++)
-        row.append(
-          options.renderTile(
-            inventory.find((t) => t.type === type && t.id % 4 === c)!,
-          ),
-        );
+      for (let c = 0; c < count; c++) {
+        // A notation naming a copy the inventory cannot supply (more
+        // than four of a kind) must never dead-end the lesson: skip
+        // the unresolvable copy. Content is audited against this same
+        // lookup in test/lesson-notation.test.ts.
+        const face = inventory.find((t) => t.type === type && t.id % 4 === c);
+        if (face) row.append(options.renderTile(face));
+      }
     });
     return row;
   }
@@ -127,8 +129,10 @@ export function mountVariantEducation(
     const inventory = variantAdapter(options.variant).inventory();
     const faces: Tile[] = [];
     parseCounts(notation).forEach((count, type) => {
-      for (let c = 0; c < count; c++)
-        faces.push(inventory.find((t) => t.type === type && t.id % 4 === c)!);
+      for (let c = 0; c < count; c++) {
+        const face = inventory.find((t) => t.type === type && t.id % 4 === c);
+        if (face) faces.push(face);
+      }
     });
     return faces;
   }
