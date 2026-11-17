@@ -2941,7 +2941,7 @@ export class App {
       for (const t of view.hand) if (t.id !== rec.tileId) tally(t, t.red);
       for (const m of view.melds) for (const t of m.tiles) tally(t, t.red);
       if (advice.riichi?.recommended && advice.riichi.tileId === rec.tileId) {
-        body("Riichi — an optional declaration made when your hand is ready — raises the score here. It also locks your hand to discarding only what you draw.");
+        body("Riichi — an optional declaration made when your hand is ready — raises the score here. Declaring it costs 1,000 points, paid as a stake at once. It also locks your hand to discarding only what you draw.");
       } else if (dora >= 2) {
         // The approved paragraph (rendering C, final): riichi and
         // dora defined at first use, the dora named group by group
@@ -2978,7 +2978,7 @@ export class App {
           );
         }
         body(
-          `Already valuable, the hand needs no riichi — an optional declaration made when your hand is ready — with ${numWord[dora] ?? dora} dora — bonus tiles worth extra score.${partsSentence ? ` ${partsSentence}.` : ""}${indSentences.length ? ` ${indSentences.join(" ")}` : ""} Riichi can raise the score, but it locks your hand to discarding only what you draw.`,
+          `Already valuable, the hand needs no riichi — an optional declaration made when your hand is ready — with ${numWord[dora] ?? dora} dora — bonus tiles worth extra score.${partsSentence ? ` ${partsSentence}.` : ""}${indSentences.length ? ` ${indSentences.join(" ")}` : ""} Riichi can raise the score, but declaring it costs 1,000 points, and it locks your hand to discarding only what you draw.`,
         );
       }
     }
