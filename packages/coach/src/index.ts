@@ -27,3 +27,4 @@ export {
   type WinReasonCode,
   type WinValue,
 } from "./moments.js";
+export * from "./variant-advice.js";

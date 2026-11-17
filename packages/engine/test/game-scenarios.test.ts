@@ -368,7 +368,7 @@ describe("abortive draws (A4)", () => {
     expect(drawn).toHaveLength(1);
     expect(drawn[0]).toMatchObject({ kind: "abortive", abortive: "suufon-renda" });
     expect(handStarts(result.events)[1]).toMatchObject({ dealer: 0, honba: 1 });
-  });
+  }, 30000);
 
   it("suucha riichi: four riichi declarations abort the hand, sticks carry over", () => {
     const wall = buildScriptedWall({
@@ -412,7 +412,7 @@ describe("abortive draws (A4)", () => {
     expect(drawn).toHaveLength(1);
     expect(drawn[0]).toMatchObject({ kind: "abortive", abortive: "kyuushu-kyuuhai" });
     expect(handStarts(result.events)[1]).toMatchObject({ dealer: 0, honba: 1 });
-  });
+  }, 30000);
 
   it("suukaikan: four kans by two players abort after the rinshan discard", () => {
     const wall = buildScriptedWall({
@@ -442,6 +442,8 @@ describe("abortive draws (A4)", () => {
   });
 });
 
+// These rule fixtures run a full wall of engine DFS analysis. Give them a
+// bounded 30s under two-worker CI contention; retain every result assertion.
 describe("exhaustive draws (A4)", () => {
   it("tenpai/noten payments of 3,000, dealer tenpai renchan", () => {
     const wall = buildScriptedWall({
@@ -459,7 +461,7 @@ describe("exhaustive draws (A4)", () => {
     expect(drawn[0]).toMatchObject({ kind: "exhaustive", tenpai: [0, 1], nagashi: [] });
     expect(scoresAtHandStart(result.events, 2)).toEqual([26500, 26500, 23500, 23500]);
     expect(handStarts(result.events)[1]).toMatchObject({ dealer: 0, honba: 1 });
-  });
+  }, 30000);
 
   it("nagashi mangan replaces the tenpai exchange", () => {
     // Seat 1's 18 draws (turn positions 1, 5, 9, …, 69) are all terminals
@@ -499,7 +501,7 @@ describe("exhaustive draws (A4)", () => {
     expect(drawn[0]).toMatchObject({ kind: "exhaustive", nagashi: [1] });
     // Non-dealer nagashi mangan: dealer pays 4000, others 2000 (honba 0).
     expect(scoresAtHandStart(game.events, 2)).toEqual([21000, 33000, 23000, 23000]);
-  });
+  }, 30000);
 });
 
 describe("calls, chankan, rinshan", () => {
