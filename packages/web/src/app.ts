@@ -238,6 +238,26 @@ function tileEl(tile: Tile, cls: string, opts: { flip?: boolean } = {}): HTMLSpa
   return wrap;
 }
 
+/** The faces of a call option's resulting set, in display order: the
+ *  call word's tiles as the app draws them everywhere else, with the
+ *  called tile sideways — the same grammar a meld uses on the table.
+ *  Decorative beside the button's aria-label, which names the tiles. */
+function chiFacesEl(faces: readonly { readonly tile: Tile; readonly side?: boolean }[]): HTMLElement {
+  const strip = h("span", { class: "callfaces", "aria-hidden": "true" });
+  for (const f of faces) {
+    strip.append(tileEl(f.tile, `t-meld${f.side ? " side" : ""}`, { flip: false }));
+  }
+  return strip;
+}
+
+/** A chi option's faces: the called tile plus the hand tiles it
+ *  pairs with, sorted into sequence order. */
+function chiOptionFaces(called: Tile, handTiles: readonly Tile[]): { tile: Tile; side?: boolean }[] {
+  return [called, ...handTiles]
+    .sort((a, b) => a.type - b.type)
+    .map((t) => (t.id === called.id ? { tile: t, side: true } : { tile: t }));
+}
+
 /** Preserve the approved tile geometry while exposing the same action
  * to keyboard and assistive-technology users. Repainting must not lose
  * focus between selecting a tile and discarding it. */
@@ -2751,11 +2771,23 @@ export class App {
     };
     if (mode === "chi" && pending?.kind === "call") {
       for (const option of pending.ctx.chiOptions) {
-        const names = option.map((id) => tileTypeName(tileById(id).type)).join(" · ");
-        act.append(hbtn(`Chi ${names}`, "primary", () => {
+        // The option as tile faces, not a text label (issue #35):
+        // the resulting set, called tile sideways.
+        const faces = chiOptionFaces(
+          pending.ctx.tile,
+          option.map((id) => tileById(id)),
+        );
+        const b = h("button", {
+          class: "hbtn primary",
+          "aria-label": `Chi — ${faces.map((f) => tileLabel(f.tile)).join(", ")}`,
+        });
+        b.append(h("span", {}, "Chi"), chiFacesEl(faces));
+        b.addEventListener("click", () => {
+          this.sound.unlock();
           this.closeFrame();
           this.humanAct({ type: "chi", tileIds: option });
-        }));
+        });
+        act.append(b);
       }
     } else if (mode === "kan" && pending?.kind === "turn") {
       for (const t of pending.ctx.ankanOptions) {
@@ -3126,7 +3158,16 @@ export class App {
       h("span", { class: "step" }, `Step ${view.stepIndex + 1} of ${view.stepCount}`),
     );
     for (const b of view.buttons) {
-      const btn = h("button", { class: `pillbtn ${b.cls}` }, b.label);
+      const btn = h("button", { class: `pillbtn ${b.cls}` });
+      btn.append(h("span", {}, b.label));
+      if (b.faces) {
+        btn.classList.add("callopt");
+        btn.append(chiFacesEl(b.faces.map((f) => ({ tile: tileById(f.id), ...(f.side ? { side: true as const } : {}) }))));
+        btn.setAttribute(
+          "aria-label",
+          `${b.label} — ${b.faces.map((f) => tileLabel(tileById(f.id))).join(", ")}`,
+        );
+      }
       btn.addEventListener("click", () => this.lessonAct({ kind: "button", id: b.id }));
       ctl.append(btn);
     }

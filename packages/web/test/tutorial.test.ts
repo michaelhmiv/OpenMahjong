@@ -21,9 +21,11 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { scoreHand, type TileType } from "@openmahjong/engine";
+import { scoreHand, type PlayerView, type Seat, type TileType } from "@openmahjong/engine";
 import { createAiPolicy } from "@openmahjong/ai";
 import { App } from "../src/app.js";
+import { tileById } from "../src/model.js";
+import type { PendingDecision } from "../src/runner.js";
 import {
   LessonController,
   MODULES,
@@ -391,5 +393,153 @@ describe("TU-11 and the guided overlay", () => {
     // hand controls ~38 + Large Tiles two-row hand 86 (28px tiles at
     // 1.4 ratio, two rows + gap) + prompt row ~58 = 198px.
     expect(bottom).toBeGreaterThanOrEqual(198);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Issue #35: call options render as tile faces, never prose labels —
+// "Chi — 2 of characters + 3 of characters" burst out of its pill at
+// phone width, and the seat/score chips sat under the side tile
+// columns. Covered at the controller (view model), in the lesson DOM,
+// in the live call prompt's hand frame, and in the chip CSS.
+// ---------------------------------------------------------------------------
+
+describe("issue #35: call-option rendering", () => {
+  it("TU-4's chi options carry the resulting set as faces, not a prose label", () => {
+    const c = new LessonController("tu4");
+    while (c.view().stepIndex < 1 && !c.done) {
+      c.handle({ kind: "button", id: "continue" });
+    }
+    const view = c.view();
+    expect(view.stepIndex).toBe(1);
+    const chi = view.buttons.filter((b) => b.id.startsWith("chi:"));
+    expect(chi.length).toBe(2);
+    const sets: string[] = [];
+    for (const b of chi) {
+      expect(b.label).toBe("Chi");
+      expect(b.faces).toHaveLength(3);
+      // Exactly one face is the called tile, marked sideways.
+      expect(b.faces!.filter((f) => f.side)).toHaveLength(1);
+      const types = b.faces!.map((f) => tileById(f.id).type);
+      // A sequence: three consecutive ranks (same suit by construction).
+      expect(types[1]! - types[0]!).toBe(1);
+      expect(types[2]! - types[1]!).toBe(1);
+      sets.push(types.join(","));
+    }
+    // The two options are different sets — distinguishable at a glance.
+    expect(new Set(sets).size).toBe(2);
+    // No button anywhere in the view carries a prose tile-name label.
+    for (const b of view.buttons) expect(b.label).not.toMatch(/of (characters|dots|bamboo)/);
+  });
+
+  it("the TU-4 lesson panel renders chi buttons with tile faces", async () => {
+    localStorage.setItem(
+      "openmahjong.settings.v1",
+      JSON.stringify({ sound: false, motion: "reduced", largeTiles: false, lastLength: "east", guided: false }),
+    );
+    new App(root);
+    await settle();
+    click(root.querySelector('.tabbtn[data-tab="learn"]'));
+    await settle();
+    click(root.querySelector('[data-module="tu4"]'));
+    await settle();
+    expect(root.querySelector("#screen-table")?.classList.contains("active")).toBe(true);
+    click(
+      [...root.querySelectorAll<HTMLElement>("#table .revctl .pillbtn")].find(
+        (b) => b.textContent === "Continue",
+      ),
+    );
+    // The scene auto-plays to the chi call stop; poll for the buttons.
+    let btns: HTMLElement[] = [];
+    for (let i = 0; i < 200 && btns.length < 2; i++) {
+      await settle(2);
+      btns = [...root.querySelectorAll<HTMLElement>("#table .lessonpanel .revctl .pillbtn.callopt")];
+    }
+    expect(btns.length).toBe(2);
+    for (const b of btns) {
+      expect(b.textContent).toBe("Chi");
+      expect(b.querySelectorAll(".callfaces .tile").length).toBe(3);
+      expect(b.querySelectorAll(".callfaces .tile.side").length).toBe(1);
+      expect(b.getAttribute("aria-label")).toMatch(/^Chi — /);
+    }
+    const allText = [...root.querySelectorAll("#table .lessonpanel .pillbtn")]
+      .map((b) => b.textContent)
+      .join(" ");
+    expect(allText).not.toMatch(/of characters \+/);
+  });
+
+  it("the live call prompt's chi options render as tile faces", async () => {
+    interface TurnPending {
+      kind: "turn";
+      seat: Seat;
+      view: PlayerView;
+      ctx: unknown;
+    }
+    localStorage.setItem(
+      "openmahjong.settings.v1",
+      JSON.stringify({ sound: false, motion: "reduced", largeTiles: false, lastLength: "east", guided: false }),
+    );
+    const app2 = new App(root) as unknown as {
+      startGame(length: "east", opts?: { seed?: string }): void;
+      runner: { pending: TurnPending | PendingDecision | null; events: readonly unknown[] } | null;
+      renderTable(): void;
+    };
+    app2.startGame("east", { seed: "om-scan-47" });
+    let turn: TurnPending | null = null;
+    for (let i = 0; i < 400 && !turn; i++) {
+      await settle(2);
+      const p = app2.runner?.pending;
+      if (p?.kind === "turn") turn = p;
+    }
+    expect(turn).not.toBeNull();
+    // Fabricate the call window: the player on the left discards the
+    // 4 of characters; two chi pairs are on offer (2m+3m and 3m+5m).
+    const t = (type: number, copy: number) => tileById(type * 4 + copy);
+    const fabricated: PendingDecision = {
+      kind: "call",
+      seat: turn!.seat,
+      view: turn!.view,
+      ctx: {
+        phase: "call",
+        tile: t(3, 1),
+        fromSeat: (((turn!.seat + 3) % 4) as Seat),
+        canRon: false,
+        canPon: false,
+        canKan: false,
+        chiOptions: [
+          [t(1, 0).id, t(2, 0).id],
+          [t(2, 1).id, t(4, 0).id],
+        ],
+      },
+      ponDecidable: false,
+      chiDecidable: true,
+    };
+    app2.runner!.pending = fabricated;
+    app2.renderTable();
+    await settle();
+    const chiBtn = [...root.querySelectorAll<HTMLElement>("#table .promptrow .cbtn")].find(
+      (b) => b.textContent === "Chi",
+    );
+    expect(chiBtn).toBeDefined();
+    click(chiBtn);
+    await settle();
+    const opts = [...root.querySelectorAll<HTMLElement>(".hact .hbtn")];
+    expect(opts.length).toBe(2);
+    expect(opts[0]!.getAttribute("aria-label")).toContain("2 of characters");
+    expect(opts[1]!.getAttribute("aria-label")).toContain("5 of characters");
+    for (const b of opts) {
+      expect(b.textContent).toBe("Chi");
+      expect(b.querySelectorAll(".callfaces .tile").length).toBe(3);
+      expect(b.querySelectorAll(".callfaces .tile.side").length).toBe(1);
+    }
+  });
+
+  it("seat chips paint above the side tile columns (CSS)", () => {
+    const css = readFileSync(resolve(process.cwd(), "packages/web/src/styles.css"), "utf8");
+    const rule = css.match(/\.bandtop\s*\{([^}]*)\}/);
+    expect(rule).not.toBeNull();
+    // A full side hand column overflows the stage-mid band into the
+    // chip row; the chips' layer must win so labels are never covered.
+    expect(rule![1]).toMatch(/z-index:\s*[1-9]/);
   });
 });

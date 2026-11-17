@@ -350,6 +350,12 @@ export interface LessonButton {
   readonly label: string;
   readonly cls: string;
   readonly id: string;
+  /** Tile faces shown beside the label, in display order — a chi
+   *  option's resulting set (issue #35: prose labels like "Chi — 2 of
+   *  characters + 3 of characters" burst out of the pill at phone
+   *  width). `side` marks the called tile, which sits sideways in the
+   *  meld. Faces carry tile ids so a red five renders as itself. */
+  readonly faces?: readonly { readonly id: number; readonly side?: boolean }[];
 }
 
 export interface LessonChoice {
@@ -504,11 +510,16 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           buttons: (c) => {
             const stop = c.scene?.stop;
             if (stop?.kind !== "call") return [];
-            const btns: LessonButton[] = stop.ctx.chiOptions.map((opt, i) => ({
-              label: `Chi — ${opt.map((id) => tileName(stop.view.hand.find((t) => t.id === id)!.type)).join(" + ")}`,
-              cls: "primary",
-              id: `chi:${i}`,
-            }));
+            const btns: LessonButton[] = stop.ctx.chiOptions.map((opt, i) => {
+              // The option is the resulting set as tile faces: the
+              // called tile plus the two hand tiles, in sequence
+              // order, the called tile sideways (issue #35).
+              const called = stop.ctx.tile;
+              const faces = [called, ...opt.map((id) => stop.view.hand.find((t) => t.id === id)!)]
+                .sort((a, b) => a.type - b.type)
+                .map((t) => ({ id: t.id, ...(t.id === called.id ? { side: true } : {}) }));
+              return { label: "Chi", cls: "primary", id: `chi:${i}`, faces };
+            });
             btns.push({ label: "Pass", cls: "ghost", id: "pass" });
             return btns;
           },
