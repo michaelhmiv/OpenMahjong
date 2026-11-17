@@ -519,7 +519,7 @@ export const MCR_LESSONS: VariantLesson[] = [
     },
     {
       hand: "19m19p19s12345677z",
-      text: "Read this pictured hand: the 1 and 9 of characters, the 1 and 9 of circles, the 1 and 9 of bamboo, all four winds, all three dragons — and one of those thirteen kinds twice, here a second East wind. That is Thirteen Orphans, worth 88 fan: one of every terminal and honor kind, plus a duplicate of any one of them. It is a hidden hand with no sets, no sequences and no triplets.",
+      text: "Read this pictured hand: the 1 and 9 of characters, the 1 and 9 of circles, the 1 and 9 of bamboo, all four winds, all three dragons — and one of those thirteen kinds twice, here a second red dragon. That is Thirteen Orphans, worth 88 fan: one of every terminal and honor kind, plus a duplicate of any one of them. It is a hidden hand with no sets, no sequences and no triplets.",
     },
     {
       tiles: "147m258p369s",
