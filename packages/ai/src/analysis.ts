@@ -346,3 +346,36 @@ export function waitsFast(
 export function analysisCacheSizes(): { segments: number; ukeire: number } {
   return { segments: suitedCache.size + honorCache.size, ukeire: ukeireCache.size };
 }
+
+/** Five-set distance using the proven independent suit primitives. The
+ * original four-set/Riichi implementation and policy remain unchanged. */
+export function shantenTaiwaneseFast(counts: readonly number[], melds = 0): number {
+  validateCounts(counts);
+  if(!Number.isInteger(melds)||melds<0||melds>5)throw new Error("Taiwanese sets must be 0–5");
+  const total=countTiles(counts)+3*melds;if(total!==16&&total!==17)throw new Error("Taiwanese analysis requires 16/17 structural tiles");
+  const segments: Outcome[][] = [
+    suitedOutcomesCached(counts.slice(0, 9)),
+    suitedOutcomesCached(counts.slice(9, 18)),
+    suitedOutcomesCached(counts.slice(18, 27)),
+    honorOutcomesCached(counts.slice(27, 34)),
+  ];
+  let combined: Outcome[] = [{ m: 0, t: 0, p: 0 }];
+  for (const outcomes of segments) {
+    const next: Outcome[] = [];
+    for (const a of combined) {
+      for (const b of outcomes) {
+        if (a.p + b.p > 1) continue; // only one pair counts as the pair
+        next.push({ m: a.m + b.m, t: a.t + b.t, p: a.p + b.p });
+      }
+    }
+    combined = prune(next);
+  }
+  let best = 10;
+  for (const o of combined) {
+    const mentsu = melds + o.m;
+    const effectiveTaatsu = Math.min(o.t, Math.max(0, 5 - mentsu));
+    const s = 10 - 2 * mentsu - effectiveTaatsu - o.p;
+    if (s < best) best = s;
+  }
+  return best;
+}

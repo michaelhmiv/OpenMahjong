@@ -2,7 +2,7 @@
   "name": "@openmahjong/engine",
   "version": "0.1.0",
   "license": "AGPL-3.0-only",
-  "description": "Open Mahjong rules engine: tiles, wall, hand analysis, scoring. Pure TypeScript, deterministic, no runtime dependencies.",
+  "description": "Deterministic mahjong rules, scoring, payments and variant adapters; no runtime dependencies.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,6 +23,7 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "vendor"
   ]
 }
