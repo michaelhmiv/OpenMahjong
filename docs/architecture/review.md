@@ -1,5 +1,21 @@
 # Decision review core
 
+The expanded #39 entry is now `board-review.ts` / `board-review-ui.ts`.
+`reconstructReview` consumes a recorded game once and returns two separate
+envelopes: immutable public decision snapshots for the coach, and full recorded
+events/exact chi hints for the board. `buildDecisionReview` retains its original
+public-only return contract. BoardTimeline indexes all hands (including repeats
+and hands without human actions), significant events, and a TableModel checkpoint
+every 16 events. Seeking clones a checkpoint and folds at most 15 more events.
+No engine replay or AI policy executes while moving the slider. Full board data
+is never added to ReviewDecision or accepted by coach evaluators.
+
+History opens this reconstruction without assigning to the live runner, resetting
+its model, or writing the resume slot. Saved-decision and Review-to-Practice paths
+select the original decision on return. Historical v1 stays display-only. The
+decision comparison is embedded in board review; drilled-in screens carry no
+bottom navigation. The older focused-review component remains an analysis view.
+
 `packages/web/src/review.ts` is the headless reconstruction and analysis
 boundary. `packages/web/src/review-ui.ts` presents it through the approved
 Review layout in [`docs/design/proposals`](../design/proposals/index.html).

@@ -1,6 +1,8 @@
 # Rulesets and simulation versions
 
-The only implemented active profile is **`openmahjong-riichi@1`**, exported as
+Current extension (2026-11-17): this descriptor continues to identify **Riichi only**. Executable Hong Kong, MCR and Taiwanese adapters live in `engine/src/variants/` with schema-three records; see [variants](variants.md) and the [rule briefs](../rules/). Calculator house settings live with in-person ledger entries and never mutate CPU defaults.
+
+The active profile in the Riichi descriptor is **`openmahjong-riichi@1`**, exported as
 `DEFAULT_RULESET` from `packages/engine/src/ruleset.ts`. It names the project's
 existing intended house rules. It is neither WRC nor EMA certification, and
 there are no selectable WRC/EMA/Tenhou presets or non-riichi variants yet.
