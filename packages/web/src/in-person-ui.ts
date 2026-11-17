@@ -20,6 +20,10 @@ import {
   type Tile,
 } from "@openmahjong/engine";
 import { formatStandingsPoints } from "./records.js";
+import {
+  trackCalculatorUsed,
+  trackScorekeeperSessionFinished,
+} from "./analytics.js";
 import { mountVariantCalculator } from "./variant-calculator-ui.js";
 import {
   appendTableEvent,
@@ -736,6 +740,7 @@ export function mountInPerson(
                 updatedAt: new Date().toISOString(),
               },
             });
+            trackScorekeeperSessionFinished();
             showSession();
           }),
         ),
@@ -746,6 +751,7 @@ export function mountInPerson(
     existing: readonly CalculationDraft[] = [],
   ): void {
     if (!current) return;
+    trackCalculatorUsed();
     start(recordId ? "Correct winning hand" : "Hand calculator");
     if (
       current.session.variant !== "riichi" &&
