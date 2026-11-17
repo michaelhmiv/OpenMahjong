@@ -24,7 +24,8 @@ export interface Session {
   createdAt: Date;
 }
 
-export type GameLength = "east" | "south";
+export type GameLength = "east" | "south" | "full";
+export type GameVariant = "riichi" | "hong-kong" | "mcr" | "taiwanese";
 
 /** Per-game counters the client computes at game end (brief §4 T3). */
 export interface GameStats {
@@ -36,6 +37,7 @@ export interface GameStats {
 }
 
 export interface GameRecord {
+  variant?: GameVariant;
   /** Client-generated uuid; uploads are idempotent on (user, id). */
   id: string;
   length: GameLength;
@@ -48,6 +50,7 @@ export interface GameRecord {
 }
 
 export interface GameSummary {
+  variant?: GameVariant;
   id: string;
   finishedAt: Date;
   length: GameLength;
@@ -79,6 +82,9 @@ export const EMPTY_STATS: StatsSums = {
 };
 
 export interface Store {
+  listTables(userId: string): Promise<StoredTable[]>;
+  getTable(userId: string, id: string): Promise<StoredTable | null>;
+  writeTable(userId: string, id: string, expectedRevision: number, mutationId: string, digest: string, state: unknown): Promise<TableWriteResult>;
   /** Insert or refresh the user for a Google subject id. */
   upsertUser(input: {
     googleSub: string;
@@ -102,7 +108,7 @@ export interface Store {
   insertGame(userId: string, game: GameRecord): Promise<boolean>;
   getGame(userId: string, gameId: string): Promise<GameRecord | null>;
   listGames(userId: string, limit: number): Promise<GameSummary[]>;
-  getStats(userId: string): Promise<StatsSums>;
+  getStats(userId: string, variant?: GameVariant): Promise<StatsSums>;
 
   /** The stored settings JSON, or null when the user never synced. */
   getSettings(userId: string): Promise<unknown>;
@@ -114,6 +120,9 @@ export interface Store {
   /** Idempotent: clearing a user with nothing stored is a no-op. */
   deleteResume(userId: string): Promise<void>;
 }
+
+export interface StoredTable { id: string; revision: number; state: unknown }
+export type TableWriteResult = { status: "saved" | "duplicate" | "conflict" | "key-reused"; entry: StoredTable | null };
 
 /** A signed-in player's unfinished game (ruling, 2026-11-16). */
 export interface ResumeEntry {

@@ -10,11 +10,13 @@ import type { Pool } from "pg";
 import {
   EMPTY_STATS,
   type GameRecord,
+  type GameVariant,
   type GameSummary,
   type ResumeEntry,
   type Session,
   type StatsSums,
   type Store,
+  type StoredTable, type TableWriteResult,
   type User,
 } from "./store.js";
 
@@ -36,7 +38,8 @@ interface SessionRow {
 
 interface GameRow {
   id: string;
-  length: "east" | "south";
+  length: "east" | "south" | "full";
+  variant?: GameVariant;
   placement: number;
   score: number;
   finished_at: Date;
@@ -50,6 +53,33 @@ interface GameRow {
 }
 
 export class PgStore implements Store {
+  async listTables(userId: string): Promise<StoredTable[]> {
+    const { rows } = await this.pool.query<StoredTable>(`SELECT id, revision, state FROM in_person_sessions WHERE user_id=$1 ORDER BY updated_at DESC LIMIT 100`, [userId]);
+    return rows;
+  }
+  async getTable(userId: string, id: string): Promise<StoredTable | null> {
+    const { rows } = await this.pool.query<StoredTable>(`SELECT id, revision, state FROM in_person_sessions WHERE user_id=$1 AND id=$2`, [userId, id]);
+    return rows[0] ?? null;
+  }
+  async writeTable(userId: string, id: string, expectedRevision: number, mutationId: string, digest: string, state: unknown): Promise<TableWriteResult> {
+    const client = await this.pool.connect();
+    try {
+      await client.query("BEGIN");
+      // Lock the owner for atomic creation limits and compare-and-swap,
+      // including two devices concurrently creating the same session.
+      await client.query(`SELECT id FROM users WHERE id=$1 FOR UPDATE`, [userId]);
+      const current = (await client.query<StoredTable>(`SELECT id, revision, state FROM in_person_sessions WHERE user_id=$1 AND id=$2`, [userId, id])).rows[0] ?? null;
+      const previous = (await client.query<{ digest: string }>(`SELECT digest FROM in_person_writes WHERE user_id=$1 AND session_id=$2 AND mutation_id=$3`, [userId, id, mutationId])).rows[0];
+      if (previous) { await client.query("COMMIT"); return { status: previous.digest === digest ? "duplicate" : "key-reused", entry: current }; }
+      const count = (await client.query<{ count: number }>(`SELECT count(*)::int AS count FROM in_person_sessions WHERE user_id=$1`, [userId])).rows[0]!.count;
+      const writes = (await client.query<{ count: number }>(`SELECT count(*)::int AS count FROM in_person_writes WHERE user_id=$1 AND session_id=$2`, [userId, id])).rows[0]!.count;
+      if ((current?.revision ?? 0) !== expectedRevision || !current && count >= 100 || writes >= 10000) { await client.query("COMMIT"); return { status: "conflict", entry: current }; }
+      const entry: StoredTable = { id, revision: expectedRevision + 1, state };
+      await client.query(`INSERT INTO in_person_sessions(user_id,id,revision,state) VALUES($1,$2,$3,$4) ON CONFLICT(user_id,id) DO UPDATE SET revision=EXCLUDED.revision,state=EXCLUDED.state,updated_at=now()`, [userId, id, entry.revision, JSON.stringify(state)]);
+      await client.query(`INSERT INTO in_person_writes(user_id,session_id,mutation_id,digest,revision) VALUES($1,$2,$3,$4,$5)`, [userId, id, mutationId, digest, entry.revision]);
+      await client.query("COMMIT"); return { status: "saved", entry };
+    } catch (error) { await client.query("ROLLBACK"); throw error; } finally { client.release(); }
+  }
   constructor(private readonly pool: Pool) {}
 
   async upsertUser(input: {
@@ -138,8 +168,8 @@ export class PgStore implements Store {
     const { rowCount } = await this.pool.query(
       `INSERT INTO games
          (user_id, id, length, placement, score, finished_at, log,
-          hands, riichi, deal_ins, hands_won, win_points)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+          hands, riichi, deal_ins, hands_won, win_points, variant)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
        ON CONFLICT (user_id, id) DO NOTHING`,
       [
         userId,
@@ -154,6 +184,7 @@ export class PgStore implements Store {
         game.stats.dealIns,
         game.stats.handsWon,
         game.stats.winPoints,
+        game.variant ?? "riichi",
       ],
     );
     return (rowCount ?? 0) > 0;
@@ -161,7 +192,7 @@ export class PgStore implements Store {
 
   async getGame(userId: string, gameId: string): Promise<GameRecord | null> {
     const { rows } = await this.pool.query<GameRow>(
-      `SELECT id, length, placement, score, finished_at, log,
+      `SELECT id, variant, length, placement, score, finished_at, log,
               hands, riichi, deal_ins, hands_won, win_points
          FROM games WHERE user_id = $1 AND id = $2`,
       [userId, gameId],
@@ -170,6 +201,7 @@ export class PgStore implements Store {
     if (!row) return null;
     return {
       id: row.id,
+      ...(row.variant && row.variant !== "riichi" ? { variant: row.variant } : {}),
       length: row.length,
       placement: row.placement,
       score: row.score,
@@ -189,11 +221,12 @@ export class PgStore implements Store {
     const { rows } = await this.pool.query<{
       id: string;
       finished_at: Date;
-      length: "east" | "south";
+      length: "east" | "south" | "full";
+  variant?: GameVariant;
       placement: number;
       score: number;
     }>(
-      `SELECT id, finished_at, length, placement, score
+      `SELECT id, variant, finished_at, length, placement, score
          FROM games WHERE user_id = $1
         ORDER BY finished_at DESC
         LIMIT $2`,
@@ -201,6 +234,7 @@ export class PgStore implements Store {
     );
     return rows.map((row) => ({
       id: row.id,
+      ...(row.variant && row.variant !== "riichi" ? { variant: row.variant } : {}),
       finishedAt: row.finished_at,
       length: row.length,
       placement: row.placement,
@@ -208,7 +242,7 @@ export class PgStore implements Store {
     }));
   }
 
-  async getStats(userId: string): Promise<StatsSums> {
+  async getStats(userId: string, variant: GameVariant = "riichi"): Promise<StatsSums> {
     const { rows } = await this.pool.query<StatsSums>(
       `SELECT
          COUNT(*)::float8                                AS games,
@@ -220,8 +254,8 @@ export class PgStore implements Store {
          COALESCE(SUM(deal_ins), 0)::float8              AS "dealIns",
          COALESCE(SUM(hands_won), 0)::float8             AS "handsWon",
          COALESCE(SUM(win_points), 0)::float8            AS "winPoints"
-       FROM games WHERE user_id = $1`,
-      [userId],
+       FROM games WHERE user_id = $1 AND variant = $2`,
+      [userId, variant],
     );
     return rows[0] ?? { ...EMPTY_STATS };
   }

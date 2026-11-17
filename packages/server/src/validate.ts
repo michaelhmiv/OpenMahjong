@@ -5,6 +5,7 @@
  */
 
 import type { GameRecord, GameStats } from "./store.js";
+import { validateVariantReplay, variantAdapter } from "@openmahjong/engine";
 
 export class ValidationError extends Error {
   constructor(message: string, readonly status = 400) {
@@ -108,7 +109,7 @@ export function validateGame(input: unknown): GameRecord {
   }
 
   const length = input["length"];
-  if (length !== "east" && length !== "south") {
+  if (length !== "east" && length !== "south" && length !== "full") {
     throw new ValidationError('length must be "east" or "south"');
   }
 
@@ -143,6 +144,20 @@ export function validateGame(input: unknown): GameRecord {
   if (Buffer.byteLength(JSON.stringify(input["log"]), "utf8") > MAX_GAME_LOG_BYTES) {
     throw new ValidationError("game log too large", 413);
   }
+  let log = input["log"], variant = input["variant"] ?? "riichi";
+  if (variant !== "riichi") { try { variantAdapter(String(variant)); } catch { throw new ValidationError("unsupported game variant"); } }
+  if (isRecord(log) && log["v"] === 3) {
+    try {
+      const parsed = validateVariantReplay(log);
+      if (input["variant"] !== undefined && input["variant"] !== parsed.variant || parsed.length !== length || parsed.id !== undefined && parsed.id !== id) throw new Error("identity mismatch");
+      log = parsed; variant = parsed.variant;
+    } catch { throw new ValidationError("invalid variant replay"); }
+  } else {
+    if (variant !== "riichi" || length === "full") throw new ValidationError("variant games require a schema-3 replay");
+    if (isRecord(log) && (log["variant"] !== undefined && log["variant"] !== "riichi" || typeof log["v"] === "number" && log["v"] !== 1 && log["v"] !== 2 || log["engineVersion"] !== undefined && log["engineVersion"] !== 2 || isRecord(log["ruleset"]) && (log["ruleset"]["id"] !== "openmahjong-riichi" || log["ruleset"]["version"] !== 1))) throw new ValidationError("unsupported replay combination");
+  }
+  const stats = validateGameStats(input["stats"]);
+  if (variant !== "riichi" && stats.riichi !== 0) throw new ValidationError("riichi metrics are not available for this variant");
 
   return {
     id,
@@ -150,8 +165,9 @@ export function validateGame(input: unknown): GameRecord {
     placement,
     score,
     finishedAt,
-    log: input["log"],
-    stats: validateGameStats(input["stats"]),
+    log,
+    ...(variant !== "riichi" ? { variant: variant as "hong-kong" | "mcr" | "taiwanese" } : {}),
+    stats,
   };
 }
 
@@ -177,8 +193,15 @@ export function validateResume(input: unknown): ResumeUpload {
   }
   const state = input["state"];
   if (!isRecord(state)) throw new ValidationError("state must be an object");
+  if (state["v"] === 3) {
+    validateJsonDepth(state);
+    let parsed; try { parsed = validateVariantReplay(state); } catch { throw new ValidationError("unsupported variant resume"); }
+    if (!isIsoInstant(input["savedAt"])) throw new ValidationError("savedAt must be an ISO string");
+    return { state: parsed as unknown as Record<string, unknown>, clientSavedAt: new Date(input["savedAt"]) };
+  }
+  if (state["variant"] !== undefined && state["variant"] !== "riichi") throw new ValidationError("old replay schemas support Riichi only");
   if (state["v"] !== 1 && state["v"] !== 2) {
-    throw new ValidationError("state.v must be 1 or 2");
+    throw new ValidationError("unsupported resume schema");
   }
   if (typeof state["seed"] !== "string" || state["seed"].length > 256) {
     throw new ValidationError("state.seed must be a string of at most 256 characters");
