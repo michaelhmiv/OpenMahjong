@@ -156,7 +156,10 @@ describe("approved player-perspective review UI", () => {
     expect(callIndex).toBeGreaterThanOrEqual(0);
     controller.goToDecision(callIndex);
     expect(root.querySelector(".review-action-facts")?.textContent).toContain("Legal opportunities in this window");
-    expect(root.querySelector(".review-action-facts")?.textContent).toContain("It does not grade calling");
+    // The fixture game predates moment capture: the window is shown
+    // as recorded-but-ungraded, with the reason named (coaching
+    // remainder brief — pre-capture games grade discards only).
+    expect(root.querySelector(".review-action-facts")?.textContent).toContain("recorded before moment capture");
     expect(root.querySelector(".compare")).toBeNull();
     click("Practice hand building"); expect(onPractice).toHaveBeenCalledWith(review.positions[callIndex], expect.arrayContaining(["hand-construction"]));
   });

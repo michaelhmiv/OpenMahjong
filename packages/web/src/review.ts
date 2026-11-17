@@ -180,7 +180,9 @@ function positionHasOffer(position: ReviewDecision): boolean {
  * only the view and context of the moment itself. */
 export function analyzeReviewMoments(review: DecisionReview, position: ReviewDecision): ReviewMomentAnalysis {
   if (position.engineVersion === 1) return { available: false, reason: "legacy-rules" };
-  const record = review.moments.find((m) => m.decisionIndex === position.decisionIndex);
+  // Hand-built reviews (older fixtures) may omit the moments field;
+  // treat that as a game with no recorded moments.
+  const record = (review.moments ?? []).find((m) => m.decisionIndex === position.decisionIndex);
   if (!record) {
     return { available: false, reason: positionHasOffer(position) ? "not-recorded" : "no-moment" };
   }
