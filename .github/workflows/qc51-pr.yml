@@ -30,6 +30,8 @@ jobs:
         run: node qc51/qc.mjs > /tmp/qc51-a.log 2>&1; echo "exit=$?" >> /tmp/qc51-a.log; tail -5 /tmp/qc51-a.log
       - name: QC part A2 (variant lesson, more)
         run: node qc51/qc-a2.mjs > /tmp/qc51-a2.log 2>&1; echo "exit=$?" >> /tmp/qc51-a2.log; tail -5 /tmp/qc51-a2.log
+      - name: QC part C (riichi deepest sweep)
+        run: node qc51/qc-c.mjs > /tmp/qc51-c.log 2>&1; echo "exit=$?" >> /tmp/qc51-c.log; tail -5 /tmp/qc51-c.log
       - name: QC part B (tables)
         run: node qc51/qc-b.mjs > /tmp/qc51-b.log 2>&1; echo "exit=$?" >> /tmp/qc51-b.log; tail -5 /tmp/qc51-b.log
       - uses: actions/upload-artifact@v4
@@ -41,4 +43,5 @@ jobs:
             /tmp/qc51-a.log
             /tmp/qc51-a2.log
             /tmp/qc51-b.log
+            /tmp/qc51-c.log
             /tmp/qc51-web.log
