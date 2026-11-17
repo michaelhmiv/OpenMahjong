@@ -30,7 +30,7 @@ describe("saved review references", () => {
   it("drops malformed references while retaining valid siblings and bounds before traversal", () => {
     const invalid: unknown[] = [null, [], {}, { ...entry(), recordId: "" }, { ...entry(), recordId: "  " },
       { ...entry(), recordId: "x".repeat(129) }, { ...entry(), decisionIndex: -1 },
-      { ...entry(), decisionIndex: 20_000 }, { ...entry(), decisionIndex: 0.5 },
+      { ...entry(), decisionIndex: 50_000 }, { ...entry(), decisionIndex: 0.5 },
       { ...entry(), decisionIndex: Infinity }, { ...entry(), addedAt: NaN },
       { ...entry(), addedAt: -1 }, { ...entry(), addedAt: 8_000_000_000_000_001 },
       { ...entry(), skills: ["unknown"] }, { ...entry(), skills: "shanten" },
@@ -43,6 +43,8 @@ describe("saved review references", () => {
     expect(parseReviewCollection(collection(entry("x".repeat(128), 19_999, 8_000_000_000_000_000)))).toEqual(
       collection(entry("x".repeat(128), 19_999, 8_000_000_000_000_000)),
     );
+    expect(parseReviewCollection(collection(entry("long-variant-record", 49_999))))
+      .toEqual(collection(entry("long-variant-record", 49_999)));
   });
 
   it("merges duplicates with deterministic timestamp/skill conflicts and is idempotent", () => {
