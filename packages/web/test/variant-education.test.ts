@@ -60,11 +60,13 @@ describe("original versioned variant teaching", () => {
       lessons.map(lessonText).join(" ").split(/\s+/).length,
     ).toBeGreaterThan(1800);
     const questions = lessons.flatMap(variantLessonQuestions);
-    expect(questions).toHaveLength(20);
+    expect(questions).toHaveLength(38);
     expect(questions.every((q) => q.hint.trim().length > 0)).toBe(true);
-    expect(questions.find((q) => q.id === "hk-two-fan")!.verify()).toBe("No");
+    expect(questions.find((q) => q.id === "hk-two-fan")!.verify()).toBe(
+      "No — it has only two fan, below the minimum of three",
+    );
     expect(questions.find((q) => q.id === "hk-three-fan")!.verify()).toBe(
-      "Yes",
+      "Three fan — it may win",
     );
     expect(questions.find((q) => q.id === "hk-discard-payment")!.verify()).toBe(
       "16",
@@ -108,7 +110,8 @@ describe("original versioned variant teaching", () => {
     const lesson = VARIANT_LESSONS[0]!;
     const questions = variantLessonQuestions(lesson);
     const first = mount({ lessonId: lesson.id });
-    // Three text steps precede the first question step.
+    // Four text steps precede the first question step.
+    click("Continue");
     click("Continue");
     click("Continue");
     click("Continue");
@@ -126,7 +129,7 @@ describe("original versioned variant teaching", () => {
         (b) => b.textContent === "136",
       )!.disabled,
     ).toBe(true);
-    expect(progress.active[lesson.id]!.step).toBe(3);
+    expect(progress.active[lesson.id]!.step).toBe(4);
     expect(root.querySelector(".learning-nav")).toBeNull();
     first.destroy();
     mount({ lessonId: lesson.id });
@@ -135,9 +138,28 @@ describe("original versioned variant teaching", () => {
     click("Check answer");
     expect(root.textContent).toContain(questions[0]!.explanation);
     click("Continue");
-    click("No");
-    click("Check answer");
-    click("Continue");
+    // Drive the rest of the lesson from its own authored answers:
+    // text steps advance, question steps are answered correctly.
+    for (
+      let guard = 0;
+      guard < 40 && !root.textContent!.includes("Lesson complete");
+      guard++
+    ) {
+      if (
+        ![...root.querySelectorAll("button")].some(
+          (b) => b.textContent === "Check answer",
+        )
+      ) {
+        click("Continue");
+        continue;
+      }
+      const prompt = root.querySelector("h2")?.textContent;
+      const q = questions.find((x) => x.prompt === prompt)!;
+      if (q.kind === "choice") click(q.choices[q.answer]!);
+      else for (const p of q.picks) buttonByLabel(`Tile ${p + 1}`).click();
+      click("Check answer");
+      click("Continue");
+    }
     expect(root.textContent).toContain("Lesson complete");
     expect(root.textContent).toContain(`You finished “${lesson.title}”.`);
     expect(root.textContent).not.toContain("learning record");

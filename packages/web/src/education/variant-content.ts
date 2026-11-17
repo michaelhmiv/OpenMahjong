@@ -91,26 +91,27 @@ export function variantLessonQuestions(
 ): VariantQuestion[] {
   return lesson.steps.flatMap((s) => (s.question ? [s.question] : []));
 }
-const hk = (
+const hkSteps = (
   id: string,
   title: string,
-  paragraphs: string[],
-  questions: VariantQuestion[],
+  steps: VariantStep[],
 ): VariantLesson => ({
   id: `hk-${id}`,
   variant: "hong-kong",
   profileId: "openmahjong-hkos",
   version: 2,
   title,
-  steps: stepsFromParagraphs(paragraphs, questions),
+  steps,
 });
-const fact = (
+const choice = (
   id: string,
   prompt: string,
   choices: string[],
   answer: number,
   explanation: string,
   hint: string,
+  verify?: () => string,
+  tiles?: string,
 ): VariantQuestion => ({
   kind: "choice",
   id,
@@ -119,14 +120,36 @@ const fact = (
   answer,
   explanation,
   hint,
-  verify: () => choices[answer]!,
+  ...(tiles ? { tiles } : {}),
+  verify: verify ?? (() => choices[answer]!),
 });
-const scored = (notation: string, selfDraw = false) =>
+const pick = (
+  id: string,
+  prompt: string,
+  tiles: string,
+  picks: number[],
+  explanation: string,
+  hint: string,
+): VariantQuestion => ({
+  kind: "tile-pick",
+  id,
+  prompt,
+  tiles,
+  picks,
+  explanation,
+  hint,
+  verify: () => picks.join(","),
+});
+const scoredAs = (
+  notation: string,
+  winningTile: number,
+  extra: Partial<Parameters<typeof scoreHongKong>[0]> = {},
+) =>
   scoreHongKong({
     counts: parseCounts(notation),
     melds: [],
-    winningTile: 27,
-    selfDraw,
+    winningTile,
+    selfDraw: false,
     seatWind: 27,
     roundWind: 27,
     flowers: [],
@@ -135,298 +158,845 @@ const scored = (notation: string, selfDraw = false) =>
     lastWall: false,
     initial: false,
     lastCopy: false,
+    ...extra,
   });
+const HK_SEQ_HAND = "123456m123p789s11z";
+const HK_WORKED_HAND = "222m333p444s555z11z";
 export const VARIANT_LESSONS: VariantLesson[] = [
-  hk(
-    "tiles",
-    "Tiles, suits and flowers",
-    [
-      "Hong Kong Old Style uses three numbered suits: characters, circles and bamboo. Each suit runs from 1 to 9. Four physical copies exist of each ordinary tile. The four winds—East, South, West and North—and the white, green and red dragons are honors. Honors have no neighboring numbers: East cannot join South and West to make a numbered sequence.",
-      "This table adds eight unique bonus tiles: four plants and four seasons. A flower is displayed beside your sets and replaced immediately; it does not occupy a place in the winning hand. There are 136 ordinary tiles plus eight bonus tiles, so the complete inventory is 144. Unlike the Riichi table, no five has a red bonus version here. A red dragon is an ordinary honor, not a red five.",
-      "Your seat wind changes as the dealer moves. It tells you which plant and season are your own-seat bonuses: number 1 belongs to East, 2 to South, 3 to West and 4 to North. The wind printed on an ordinary tile and the seat you hold are different things. Keep that distinction when reading a scoring breakdown. In the table view, opponents’ standing tiles stay face-down; their flowers, declared sets and discarded tiles are public.",
-    ],
-    [
-      fact(
+  hkSteps("tiles", "Tiles, suits and flowers", [
+    {
+      text: "Mahjong is a game for four players, played with tiles. The tiles below are the characters suit, shown in order from 1 to 9. Each face shows its number written as a character, with a second red character below it. A suit is a family of numbered tiles that belong together.",
+      tiles: "123456789m",
+    },
+    {
+      text: "The tiles below are the circles suit, also shown from 1 to 9. Each face shows its number as a pattern of circles, so you can read the number by counting the circles on the face.",
+      tiles: "123456789p",
+    },
+    {
+      text: "The tiles below are the bamboo suit, shown from 1 to 9. Each face shows its number as a pattern of bamboo sticks, which you can count the same way. The 1 of bamboo is the exception: it shows one large design instead of a single stick.",
+      tiles: "123456789s",
+    },
+    {
+      text: "Eight extra tiles are bonus tiles: four plants and four seasons. The plants are plum, orchid, chrysanthemum and bamboo plant, numbered 1 to 4. The seasons are spring, summer, autumn and winter, also numbered 1 to 4. Each bonus face shows its number in the corner and a picture of its plant or season. A bonus tile is never kept as part of your hand: when one appears, it is placed face-up beside your hand and you take another tile instead. Lesson 4 teaches that procedure in full.",
+    },
+    {
+      question: choice(
         "hk-inventory",
         "How many physical tiles are in this table’s inventory?",
-        ["136", "144", "152"],
+        ["136", "144", "148", "152"],
         1,
-        "Four copies of 34 ordinary kinds make 136, plus eight unique bonus tiles.", "Count the ordinary tiles first: four copies of each of the 34 kinds. Then add the unique bonus tiles.",
+        "Four copies of each of the 34 ordinary kinds make 136, plus the eight unique bonus tiles gives 144.",
+        "Count the ordinary tiles first: four copies of each kind, and there are 34 kinds. Then add the unique bonus tiles.",
       ),
-      fact(
-        "hk-flower-kind",
-        "Does a season fill a place in a numbered sequence?",
-        ["Yes", "No"],
+    },
+    {
+      text: "The seven tiles below are the honors. The first four are the winds: East, South, West and North. The last three are the dragons: the white dragon has a plain bordered face, the green dragon is green, and the red dragon is red. An honor has no number, so it can only ever match copies of itself.",
+      tiles: "1234567z",
+    },
+    {
+      question: pick(
+        "hk-winds-pick",
+        "Tap every wind tile in this row.",
+        "1234567z",
+        [0, 1, 2, 3],
+        "The first four tiles are the winds: East, South, West and North. The last three are dragons.",
+        "Read the row in the order it was taught: the four direction tiles come before the three dragons.",
+      ),
+    },
+    {
+      question: pick(
+        "hk-dragons-pick",
+        "Tap every dragon tile in this row.",
+        "1234567z",
+        [4, 5, 6],
+        "The last three tiles are the dragons: white, green and red.",
+        "The dragons are the three honor faces that are not named for a direction: a plain bordered face, a green face and a red face.",
+      ),
+    },
+    {
+      text: "The 1 and the 9 of a numbered suit are its end tiles. They are called terminals. The row below shows the terminals of all three suits: the 1 and 9 of characters, of circles and of bamboo.",
+      tiles: "19m19p19s",
+    },
+    {
+      question: choice(
+        "hk-terminal-count",
+        "How many terminal kinds are there in the three numbered suits?",
+        ["Three", "Six", "Nine", "Twelve"],
         1,
-        "A season is exposed and replaced. It never belongs to a sequence, triplet or pair.", "Think about what a season does when you draw it: it is set aside and replaced, not kept as part of the hand.",
+        "Each suit has two terminals, its 1 and its 9, and there are three suits: two times three is six.",
+        "Count the ends suit by suit: each numbered suit contributes its 1 and its 9.",
       ),
-    ],
-  ),
-  hk(
-    "shape",
-    "Four sets and a pair",
-    [
-      "A standard winning shape contains four sets and one pair. A sequence, also called a chow, is three consecutive numbers in one suit, such as 3–4–5 circles. A triplet, also called a pung, is three identical tiles, such as three South winds. A pair is two identical tiles. Numbered suits cannot be mixed inside a sequence, even if their numbers are consecutive.",
-      "Between turns you normally hold thirteen ordinary tiles, counting the three structural places in each declared set. Draw one ordinary tile and you have fourteen to consider. If you do not win or make a quad, discard one and return to thirteen. A quad is four identical tiles declared as one set. Its extra physical tile is balanced by a replacement draw, so a winning hand with one quad contains fifteen physical tiles while still having four sets and a pair.",
-      "Recognizing the shape is only the first check. Hong Kong also requires a minimum score before you can win. An exposed set is fixed: once you claim a discard and display its set, you cannot later move those tiles into another arrangement. The scorer considers different arrangements of the concealed portion and chooses the highest valid score. Thirteen Orphans is a separate closed-hand shape, taught later; Seven Pairs is not enabled in this Clear Chapter profile.",
-    ],
-    [
-      {
-        ...fact(
-          "hk-complete-shape",
-          "How many sets does the displayed standard hand contain?",
-          ["Three", "Four", "Five"],
-          1,
-          "123m, 456m, 123p and 789s are four sequences. The two East tiles form the pair.", "Break the shown hand into groups of three and one pair, suit by suit.",
-        ),
-        tiles: "123456m123p789s11z",
-        verify: () =>
-          String(
-            standardShapes(parseCounts("123456m123p789s11z"), [], 4)[0]!.groups
-              .length === 4
-              ? "Four"
-              : "invalid",
-          ),
-      },
-      fact(
+    },
+    {
+      text: "Your place at the table is your seat. The four seats are named East, South, West and North, and the bonus tile numbers belong to seats: number 1 belongs to East, 2 to South, 3 to West and 4 to North. A plant and a season with the same number belong to the same seat.",
+    },
+    {
+      question: choice(
+        "hk-seat-number",
+        "You sit in the West seat. Which numbered plant belongs to your seat?",
+        ["Plant 1", "Plant 2", "Plant 3", "Plant 4"],
+        2,
+        "The numbers run in seat order: East is 1, South is 2, West is 3 and North is 4, so West takes plant 3.",
+        "Run through the seats in order — East, South, West, North — and count 1, 2, 3, 4 as you go.",
+      ),
+    },
+    {
+      text: "That is the full collection of tiles: three numbered suits, seven honors and eight bonus tiles, 144 tiles in all. The next lesson builds a winning hand out of these faces.",
+    },
+  ]),
+  hkSteps("shape", "Four sets and a pair", [
+    {
+      text: "A set is a group of tiles that belongs together in a hand. One kind of set is a sequence: three tiles of the same suit whose numbers run in a row. The three tiles below form a sequence: the 3, 4 and 5 of circles.",
+      tiles: "345p",
+    },
+    {
+      text: "A second kind of set is a triplet: three identical tiles. The three tiles below form a triplet of South winds. Any three matching faces make a triplet, numbered tiles and honors alike.",
+      tiles: "222z",
+    },
+    {
+      text: "A pair is two identical tiles. The two tiles below form a pair of East winds. A winning hand contains exactly one pair, alongside its sets.",
+      tiles: "11z",
+    },
+    {
+      text: "A standard winning hand is four sets and a pair. Read the pictured hand aloud: 1-2-3 of characters and 4-5-6 of characters are two sequences; 1-2-3 of circles is a sequence; 7-8-9 of bamboo is a sequence; and the two East winds are the pair. Four sequences and a pair make the complete shape.",
+      hand: HK_SEQ_HAND,
+    },
+    {
+      hand: HK_SEQ_HAND,
+      question: choice(
+        "hk-complete-shape",
+        "How many sets does the displayed standard hand contain?",
+        ["Three sets", "Four sets", "Five sets", "Six sets"],
+        1,
+        "The hand breaks into 1-2-3 characters, 4-5-6 characters, 1-2-3 circles and 7-8-9 bamboo: four sequences. The two East winds are the pair, not a set.",
+        "Break the shown hand into groups suit by suit, and keep the pair separate: a pair is not a set.",
+        () =>
+          standardShapes(parseCounts(HK_SEQ_HAND), [], 4)[0]!.groups
+            .length === 4
+            ? "Four sets"
+            : "invalid",
+      ),
+    },
+    {
+      text: "The tiles you hold in your hand are concealed: only you can see their faces. A set you show face-up to the table is open, and once a set is open it is fixed — its tiles cannot later be moved into a different grouping.",
+    },
+    {
+      text: "Between turns you hold thirteen tiles, counting each open set as three places. On your turn you hold fourteen tiles for a moment, while you decide what to do, and then you return to thirteen. A winning hand is the fourteen-tile shape: four sets and a pair.",
+    },
+    {
+      text: "A third kind of set is a quad: four identical tiles declared together as one set. The four tiles below form a quad of the 1 of characters. Because a quad puts four physical tiles into one set, a winning hand containing one quad has fifteen physical tiles, while still being four sets and a pair. How quads are declared is taught in Lesson 8.",
+      tiles: "1111m",
+    },
+    {
+      question: choice(
         "hk-quad-count",
-        "How many physical tiles are in a standard winning hand with one declared quad?",
-        ["Fourteen", "Fifteen", "Seventeen"],
+        "A winning hand contains one quad. How many physical tiles does it contain in total?",
+        ["Fourteen", "Fifteen", "Sixteen", "Seventeen"],
         1,
-        "Four sets and a pair use fourteen structural places. A quad contributes one extra physical tile.", "Start from the fourteen places of four sets and a pair, then add the quad's one extra physical tile.",
+        "Four sets and a pair use fourteen places. The quad contributes one extra physical tile beyond its three places, giving fifteen.",
+        "Start from the fourteen places of four sets and a pair, then add the one extra physical tile a quad carries.",
       ),
-    ],
-  ),
-  hk(
-    "turns",
-    "Draws, discards and claims",
-    [
-      "The dealer is East and takes the first turn. Turns proceed from East to South, West and North. On an ordinary turn, draw a tile and then discard one tile face-up. A discard remains public even after a later player takes it. The display marks a claimed discard so it is not counted twice as both a discard and part of an exposed set.",
-      "You may claim the newest discard to complete a triplet or quad from any other player. A sequence claim is narrower: only the player immediately after the discarder may make it. To form a sequence, you must already hold the other two numbers in the same suit. After claiming a sequence or triplet you discard without taking an ordinary draw. After a quad you take its replacement first.",
-      "A legal win outranks every set claim. A triplet or quad outranks a sequence. This table resolves competing wins in favor of the player nearest the discarder in turn order. A passed opportunity does not create Riichi-style furiten: there is no special ban merely because the same winning kind appeared in your own discards. The engine still checks the complete shape and minimum fan every time. Never assume that a claim button means the whole hand already qualifies to win; set claims and win claims are separate legal actions.",
-    ],
-    [
-      fact(
+    },
+    {
+      question: pick(
+        "hk-find-triplet",
+        "Tap the three tiles that form a triplet in this row.",
+        "3m4m5m7p7p7p9s",
+        [3, 4, 5],
+        "The three 7 of circles tiles are identical faces, so they form the triplet. The 3, 4 and 5 of characters are three different faces, not copies of one face.",
+        "A triplet is three copies of one face. Look for the face that appears three times.",
+      ),
+    },
+    {
+      text: "Two sequence rules close this lesson. A sequence must stay inside one suit: the 3 of characters, 4 of circles and 5 of bamboo is not a sequence, even though the numbers run. And a sequence cannot wrap around the end: 8, 9 and 1 is not a sequence. Honors never form sequences, because they have no numbers.",
+    },
+    {
+      question: choice(
+        "hk-mixed-sequence",
+        "Which of these groups is a sequence?",
+        [
+          "3 of characters, 4 of circles, 5 of bamboo",
+          "8 of bamboo, 9 of bamboo, 1 of bamboo",
+          "4 of circles, 5 of circles, 6 of circles",
+          "East wind, South wind, West wind",
+        ],
+        2,
+        "The 4, 5 and 6 of circles are three consecutive numbers in one suit. The first group mixes suits, the second wraps past 9, and winds have no numbers.",
+        "Test each group against both rules: one suit only, and numbers running in a row without wrapping past an end.",
+      ),
+    },
+    {
+      text: "You can now read the shape of a hand: four sets and a pair. Shape alone is not enough to win at this table — a hand must also reach a minimum score, which Lesson 5 teaches. First, the next two lessons cover how tiles move during play.",
+    },
+  ]),
+  hkSteps("turns", "Draws, discards and claims", [
+    {
+      text: "Before play, all 144 tiles are shuffled face-down and stacked in rows in the middle of the table. That stack is the wall: every tile in the game is drawn from the wall. To start a hand, each player takes thirteen tiles from the wall. One player is the dealer, who sits in the East seat and takes the first turn.",
+    },
+    {
+      text: "Turns pass in seat order: East, then South, then West, then North, and back to East. On your turn you draw one tile from the wall, and then you discard one tile: you place it face-up in front of you, where everyone can see it. Your discards stay on the table for the rest of the hand. The hand pictured below is the kind of fourteen-tile hand you hold just after drawing, before you choose a discard.",
+      hand: "234m567p345s888s55p",
+    },
+    {
+      text: "Two words name how a hand is won. The player who threw a discard is its discarder. If you win on a tile you drew from the wall yourself, that is a self-draw win. If you win on another player's discard, that is a discard win, and that player is the discarder of your winning tile.",
+    },
+    {
+      text: "A discard does not have to stay on the table. Before the next player draws, another player may claim the newest discard to complete a set, and show that set face-up. Claiming is how open sets are made.",
+    },
+    {
+      text: "A sequence claim is the narrowest claim. Only the player whose turn comes immediately after the discarder may claim a discard for a sequence, and only if they already hold the other two numbers of that sequence in the same suit.",
+    },
+    {
+      question: choice(
         "hk-chow-seat",
-        "South discards. Which seat may claim that tile for a sequence?",
-        ["East", "West", "North"],
+        "South discards a tile. Which player may claim it to complete a sequence?",
+        ["East", "West", "North", "Any of the other players"],
         1,
-        "West is immediately after South in turn order. A triplet could be claimed by any opponent.", "A sequence claim belongs only to the player whose turn comes immediately after the discarder.",
+        "Turn order runs East, South, West, North, so West is the player immediately after South. Only that next player may claim for a sequence.",
+        "Follow the turn order around the table and find whose turn comes immediately after the discarder.",
       ),
-      fact(
+    },
+    {
+      text: "A triplet or a quad may be claimed from any player's discard, not just by the next player. After claiming a sequence or a triplet, you discard without drawing. After claiming or declaring a quad, you first draw one extra tile from the end of the wall — Lesson 8 covers quads in full — and then discard.",
+    },
+    {
+      text: "When two claims want the same discard, a win claim comes first: a player whose hand the tile completes beats every set claim. Between set claims, a triplet or quad beats a sequence. If two players can both win on one discard, the player nearest after the discarder in turn order wins it.",
+    },
+    {
+      question: choice(
         "hk-priority",
-        "East can win and North can claim a triplet on the same discard. Which has priority?",
-        ["The win", "The triplet"],
-        0,
-        "A legal win takes priority over triplets, quads and sequences.", "Compare the claim kinds: a completed winning hand outranks any set claim.",
+        "On one discard, East can win and North can complete a triplet. Which claim is resolved first?",
+        [
+          "The triplet, because a set claim is made aloud first",
+          "The win, because a completed hand outranks a set claim",
+          "The triplet, because North sits before East",
+          "Neither — the discard is returned to the wall",
+        ],
+        1,
+        "A legal win outranks every set claim, so East's win is resolved before North's triplet claim.",
+        "Compare the two claim kinds: one completes a whole winning hand, the other completes a single set.",
       ),
-    ],
-  ),
-  hk(
-    "flowers",
-    "Replacing and scoring flowers",
-    [
-      "Expose a flower or season as soon as it is found, including during the initial deal. Replace it from the wall’s tail. If that replacement is another bonus tile, expose and replace again. Your ordinary hand keeps its required size. This profile keeps a sixteen-tile reserve, replenished as replacements use the tail. The remaining-live-tile counter reflects that boundary; the hidden reserve is never part of a coach input.",
-      "A winner with no bonus tiles receives one fan. Otherwise, an own-seat plant earns one fan and an own-seat season earns one fan. A complete set of all four plants adds two fan, and all four seasons adds two fan. The own-seat tile within a complete quartet still earns its one, making that quartet worth three in this profile. A flower belonging to another seat earns nothing by itself.",
-      "Collecting all eight replaces the individual flower and quartet awards with eight fan. It does not end the hand by itself at this table: you still need a winning structure. Some Hong Kong tables allow robbing an eighth flower or end immediately on all eight; those local rules are not part of this preset. If your in-person table uses another scoring practice, confirm the supported house settings before recording a result. A flower replacement and a quad replacement are different events; only the latter earns this profile’s quad-replacement win bonus.",
-    ],
-    [
-      fact(
+    },
+    {
+      text: "A hand can also end with no winner. The end section of the wall is kept back for replacement draws, and when the rest of the wall has been drawn and nobody has won, the hand ends as a drawn hand — this is called an exhaustive draw. Nobody pays or receives any points for a drawn hand, the scores stay exactly as they were, and the deal passes to the next player in turn order.",
+    },
+    {
+      question: choice(
+        "hk-drawn-hand",
+        "The drawable wall runs out and no one has won. What happens?",
+        [
+          "The players closest to winning are paid by the others",
+          "Nobody pays or receives points, and the deal passes to the next player",
+          "The dealer pays every other player",
+          "The same dealer deals the hand again",
+        ],
+        1,
+        "An exhaustive draw changes no scores at all. Because the dealer did not win, the deal passes on to the next player.",
+        "Recall what a drawn hand does to the scores, and what happens to the deal when the dealer has not won.",
+      ),
+    },
+    {
+      text: "Turns, then, are simple: draw from the wall, discard face-up, and watch each new discard in case you can claim it or win on it. The next lesson returns to the bonus tiles from Lesson 1 and teaches what happens when one appears.",
+    },
+  ]),
+  hkSteps("flowers", "Replacing and scoring flowers", [
+    {
+      text: "Bonus tiles — the plants and seasons from Lesson 1 — can appear at any time: in your starting thirteen tiles, on a draw, or on a replacement draw. The moment you find one, place it face-up beside your hand, as the pictured hand's owner would. A bonus tile never takes a place inside your hand, and it is never one of your sets or your pair.",
+      hand: HK_SEQ_HAND,
+    },
+    {
+      text: "Straight after placing a bonus tile beside your hand, draw a replacement tile from the end of the wall — the opposite end from the one ordinary draws come from. If that replacement is itself a bonus tile, place it beside your hand too and draw again, until you hold an ordinary tile. Your hand keeps its proper size throughout.",
+    },
+    {
+      text: "Each bonus number belongs to a seat, as Lesson 1 taught: 1 to East, 2 to South, 3 to West and 4 to North. The plant and the season carrying your seat's number are your own-seat bonus tiles. There are two of them for every seat: for West, plant 3 and season 3.",
+    },
+    {
+      question: choice(
         "hk-own-flower",
-        "Which plant number belongs to West?",
-        ["1", "2", "3", "4"],
+        "You sit in the West seat. Which of these bonus tiles is one of your own-seat bonus tiles?",
+        ["Plant 1", "Season 2", "Plant 3", "Season 4"],
         2,
-        "East is 1, South 2, West 3 and North 4.", "Seat numbers run in turn order: East is 1, then South, West and North.",
+        "West is seat 3, so the plant and the season numbered 3 belong to West. Plant 3 is one of them.",
+        "Run through the seats in order — East, South, West, North — counting 1, 2, 3, 4, and match the number to both the plant and the season.",
       ),
-      fact(
-        "hk-quartet",
-        "At this table, how much is one complete plant quartet worth, including its own-seat plant?",
-        ["One fan", "Two fan", "Three fan"],
+    },
+    {
+      question: choice(
+        "hk-flower-replace",
+        "You draw a season tile during your turn. What do you do first?",
+        [
+          "Keep it in your hand and discard it on a later turn",
+          "Place it face-up beside your hand and draw a replacement from the end of the wall",
+          "Push it back into the middle of the wall",
+          "Hand it to the player whose seat number it carries",
+        ],
+        1,
+        "A bonus tile is exposed beside your hand as soon as it is found, and replaced from the end of the wall, so your hand keeps its size.",
+        "Recall the two parts of the procedure: where the bonus tile goes, and where its replacement comes from.",
+      ),
+    },
+    {
+      text: "Your exposed bonus tiles stay beside your hand, face-up where every player can see them, until the hand ends. A bonus tile whose number belongs to another seat adds nothing to your score on its own. Collecting all four plants, or all four seasons, is worth more than the tiles would be separately, and holding all eight is worth the most of all. The exact score values are counted in the next lesson, where the scoring unit is defined.",
+    },
+    {
+      question: choice(
+        "hk-flower-other-seat",
+        "You hold one bonus tile whose number belongs to another seat, and no other bonus tiles. On its own, how much does it add to your score?",
+        ["Nothing", "One scoring point", "Two scoring points", "It ends the hand in your favour"],
+        0,
+        "Only your own-seat bonus tiles score on their own. A single bonus tile of another seat adds nothing by itself.",
+        "Ask whose seat number the tile carries, and whether it completes a full group of four plants or four seasons.",
+      ),
+    },
+    {
+      text: "So the flower procedure is: expose the bonus tile beside your hand, replace it from the end of the wall, and repeat if the replacement is another bonus tile. What those tiles are worth is part of scoring — and scoring starts in the next lesson.",
+    },
+  ]),
+  hkSteps("minimum", "Shape, fan and eligibility", [
+    {
+      text: "This lesson joins shape to score. Look again at the pictured hand and read it aloud: 1-2-3 and 4-5-6 of characters, 1-2-3 of circles, and 7-8-9 of bamboo are four sequences, and the two East winds are the pair. The shape is complete. Whether it may win depends on its score.",
+      hand: HK_SEQ_HAND,
+    },
+    {
+      text: "The score of a winning hand is counted in fan. A fan is one scoring point. Each pattern a hand contains, and each circumstance of how it was won, earns a stated number of fan, and the fan are added together. A hand's fan total decides whether it is allowed to win at all, and — as Lesson 7 shows — how many points it is paid.",
+    },
+    {
+      text: "Count the pictured hand's fan one item at a time. A hand whose four sets are all sequences earns one fan. A winner holding no bonus tiles at all earns one fan. Nothing else in this hand scores: a pair of East winds is only a pair, and pairs earn no wind fan. The total is two fan.",
+    },
+    {
+      hand: HK_SEQ_HAND,
+      question: choice(
+        "hk-two-fan",
+        "Can the displayed hand win on a discard, holding no bonus tiles?",
+        [
+          "Yes — a complete shape may always win",
+          "No — it has only two fan, below the minimum of three",
+          "Yes — the pair of East winds supplies the missing fan",
+          "No — a hand of sequences can never win",
+        ],
+        1,
+        "All sequences earns one fan and holding no bonus tiles earns one more, for two fan. This table requires at least three fan to win, so the hand must keep playing.",
+        "Add up the fan counted in the previous step, item by item, and compare the total with the three-fan minimum.",
+        () =>
+          scoredAs(HK_SEQ_HAND, 27).eligible ? "invalid" : "No — it has only two fan, below the minimum of three",
+      ),
+    },
+    {
+      text: "Now win the same hand the other way. Winning on a tile you drew yourself — a self-draw win, from Lesson 3 — earns one extra fan. Two fan plus one for the self-draw makes three fan, exactly the minimum.",
+    },
+    {
+      hand: HK_SEQ_HAND,
+      question: choice(
+        "hk-three-fan",
+        "That same hand now wins by self-draw. What is its fan total, and may it win?",
+        [
+          "Two fan — it still may not win",
+          "Three fan — it may win",
+          "Four fan — it may win",
+          "Three fan — but self-draw wins are not allowed",
+        ],
+        1,
+        "The self-draw adds one fan to the two the hand already had, reaching three fan, which meets the minimum.",
+        "Start from the total counted for the discard win, then add what winning on your own draw earns.",
+        () => {
+          const r = scoredAs(HK_SEQ_HAND, 27, { selfDraw: true });
+          return r.units === 3 && r.eligible
+            ? "Three fan — it may win"
+            : "invalid";
+        },
+      ),
+    },
+    {
+      text: "The minimum, stated plainly: a hand at this table needs at least three fan to win. A complete shape below three fan cannot be declared a win and must keep playing. Bonus tiles count toward the minimum, with these values: each of your own-seat bonus tiles earns one fan; holding all four plants earns two more fan, and all four seasons earns two more; holding all eight bonus tiles earns eight fan instead of the separate plant, season and group values; and holding none earns the one fan you have already seen.",
+    },
+    {
+      hand: HK_SEQ_HAND,
+      question: choice(
+        "hk-flower-fan",
+        "East holds all four plants alongside the pictured hand, and wins on a discard. How many fan does the hand score?",
+        ["Two fan", "Three fan", "Four fan", "Six fan"],
         2,
-        "The complete quartet adds two fan and its own-seat plant adds one.", "Add the quartet bonus to what the quartet's own-seat member already earns on its own.",
+        "All sequences earns one fan. The four plants earn two for the complete group plus one for East's own-seat plant among them: one plus two plus one is four fan. There is no no-bonus-tile fan, because bonus tiles are held.",
+        "Count in parts: the hand's own fan first, then the plants — the complete-group value plus the own-seat plant inside the group.",
+        () => {
+          const r = scoredAs(HK_SEQ_HAND, 27, {
+            flowers: [34, 35, 36, 37],
+          });
+          return r.units === 4 ? "Four fan" : "invalid";
+        },
       ),
-    ],
-  ),
-  hk(
-    "minimum",
-    "Shape, fan and eligibility",
-    [
-      "Fan are scoring units awarded for patterns and circumstances. The table requires at least three fan to win. A complete shape below that threshold must continue playing. Flowers count toward this Hong Kong minimum. A self-draw can supply an extra fan that a discard win would not have, so the same tile arrangement may qualify by one method and fail by the other.",
-      "Four sequences and a pair earn one fan. With no flowers, the no-flower award adds one more. That arrangement has only two fan on a discard. If the winner draws the final needed tile themself, self-draw adds one and reaches three. The example below deliberately uses several suits and no scoring honor triplet, so nothing else raises its value. A pair of East tiles does not earn a wind-triplet award.",
-      "Other accessible routes include all triplets, worth three fan, or one numbered suit together with honors, also worth three. The latter is a half flush. One suit with no honors is a full flush, worth seven. A minimum-score check is an exact rule; choosing how to develop the hand is a strategic judgment. Guided advice reports shape progress and unseen improving copies, while the shared scorer determines whether a completed hand really qualifies.",
-    ],
-    [
-      {
-        kind: "choice",
-        id: "hk-two-fan",
-        prompt: "Can the displayed hand win on a discard with no flowers?",
-        choices: ["Yes", "No"],
-        answer: 1,
-        explanation:
-          "All sequences gives one fan and no flowers gives one. Two is below the three-fan minimum.",
-        hint: "Count this hand's fan from the lesson — its sequences and the no-flower award — and compare the total with the three-fan minimum.",
-        tiles: "123456m123p789s11z",
-        verify: () => (scored("123456m123p789s11z").eligible ? "Yes" : "No"),
-      },
-      {
-        kind: "choice",
-        id: "hk-three-fan",
-        prompt: "Can that same arrangement win by self-draw?",
-        choices: ["Yes", "No"],
-        answer: 0,
-        explanation: "Self-draw adds the third fan, making the hand eligible.",
-        hint: "Compare the two ways of winning: winning on your own draw adds a fan that a discard win does not.",
-        tiles: "123456m123p789s11z",
-        verify: () =>
-          scored("123456m123p789s11z", true).eligible ? "Yes" : "No",
-      },
-    ],
-  ),
-  hk(
-    "honors",
-    "Wind and dragon patterns",
-    [
-      "A triplet or quad of your seat wind earns one fan. A triplet or quad of the round wind earns one fan. The same East triplet earns both awards when you are East during the East round. A pair does not earn either award. A wind that is neither yours nor the round wind gives no ordinary wind fan in this profile, although it may help build a larger pattern.",
-      "Each dragon triplet normally earns one fan. Two dragon triplets plus a pair of the third dragon form Little Three Dragons, worth five. Three dragon triplets form Big Three Dragons, worth eight. Those larger dragon patterns replace the individual dragon awards. Adding both would count the same required feature twice. The calculator and game use the same exclusion so the breakdown stays consistent.",
-      "Three wind triplets and the fourth wind as the pair form Little Four Winds, worth ten. All four wind triplets form Big Four Winds, worth fifteen before the cap. A hand made entirely of honors is worth ten. Rare high-scoring patterns may overlap, but the ten-fan cap limits payments. When reviewing a hand, identify its sets first, then check the seat and round winds held during that hand. A player's final-game seat wind cannot be used to score an earlier hand.",
-    ],
-    [
-      fact(
+    },
+    {
+      text: "One skill remains before scoring patterns: knowing what your hand still needs. The pictured hand holds thirteen tiles: 1-2-3, 4-5-6 and 7-8-9 are three complete sequences — circles, circles and bamboo — the two red dragons are a pair, and the 3 and 4 of characters stand loose. This hand needs exactly one more tile to complete. A hand that needs exactly one tile is waiting, and each tile that completes it is one of its waits.",
+      hand: "34m123p456p789s77z",
+    },
+    {
+      hand: "34m123p456p789s77z",
+      question: pick(
+        "hk-waits-pick",
+        "Tap every characters tile that is a wait for this hand.",
+        "123456789m",
+        [1, 4],
+        "The 2 of characters makes 2-3-4 with the loose tiles, and the 5 of characters makes 3-4-5. Either tile completes the fourth set, so both are waits.",
+        "Work with the two loose characters tiles: a wait must join them into a sequence so the hand becomes four sets and the pair it already has.",
+      ),
+    },
+    {
+      text: "Finding your waits is the skill every turn depends on: you can only win on a tile that is one of your waits, whether you draw it yourself or another player discards it. And a win needs both halves at once — a complete shape, found through your waits, and at least three fan.",
+    },
+    {
+      question: choice(
+        "hk-eligibility",
+        "A player completes four sets and a pair, and the hand counts two fan in total. What happens?",
+        [
+          "They win, because the shape is complete",
+          "They cannot win yet — the hand is below the three-fan minimum, and play continues",
+          "They win, but are paid nothing",
+          "The hand is declared a drawn hand",
+        ],
+        1,
+        "Shape and score are separate checks. Two fan is below the three-fan minimum, so the hand cannot be declared a win and its owner keeps playing.",
+        "Check the two winning conditions separately: the shape is complete, so test the fan total against the minimum.",
+      ),
+    },
+    {
+      text: "You now hold the whole eligibility rule: complete shape, at least three fan, and a winning tile that is one of your waits. The next lesson teaches the wind and dragon patterns that supply fan, and Lesson 7 turns fan into payments.",
+    },
+  ]),
+  hkSteps("honors", "Wind and dragon patterns", [
+    {
+      text: "Play is divided into rounds. A round is a run of hands that shares one named wind: the East round comes first, then the South round, then the West round, then the North round. The wind a round is named for is the round wind, and it stays the same for every hand in that round. Your own wind for a hand is your seat wind: the wind of the seat you hold for that hand, which changes as the deal moves around the table. The dealer always holds the East seat, so the dealer's seat wind is East.",
+    },
+    {
+      text: "Wind fan is counted like this. A triplet or quad of your seat wind earns one fan. A triplet or quad of the round wind earns one fan. When the two are the same wind — an East triplet held by East during the East round — the triplet earns both, for two fan. A pair of a wind earns nothing. The pictured hand holds a triplet of East alongside three sequences and a pair of the 2 of characters.",
+      hand: "111z123m456p789s22m",
+    },
+    {
+      hand: "111z123m456p789s22m",
+      question: choice(
         "hk-double-wind",
-        "You hold East in the East round. How much does an East triplet earn from wind awards?",
-        ["One fan", "Two fan", "No fan"],
-        1,
-        "The seat-wind and round-wind awards each contribute one.", "Check the two wind awards separately: one for your seat wind, one for the round wind.",
+        "You are East in the East round and hold the pictured triplet of East. How many fan do its wind awards give it?",
+        ["No fan", "One fan", "Two fan", "Three fan"],
+        2,
+        "The East triplet matches your seat wind for one fan and the round wind for another, so the two wind awards give two fan in total.",
+        "Score the two wind awards one at a time: first the triplet against your seat wind, then against the round wind.",
+        () => {
+          const r = scoredAs("111z123m456p789s22m", 27);
+          const windFan = r.patterns
+            .filter((p) => p.id === "seat-wind" || p.id === "round-wind")
+            .reduce((n, p) => n + p.units, 0);
+          return windFan === 2 ? "Two fan" : "invalid";
+        },
       ),
-      fact(
+    },
+    {
+      text: "Dragon fan is simpler. Each triplet or quad of a dragon earns one fan. The three tiles below are a triplet of the white dragon, worth one fan; a triplet of green dragons or of red dragons earns the same.",
+      tiles: "555z",
+    },
+    {
+      text: "Two dragon patterns are worth more than their parts. Little Three Dragons is two dragon triplets plus a pair of the third dragon, and it earns five fan. The pictured hand shows it: triplets of the white and green dragons, a pair of red dragons, and two sequences. Its five fan replaces the two single dragon fan its triplets would otherwise earn — the same tiles are never counted twice.",
+      hand: "555z666z123m456p77z",
+    },
+    {
+      text: "Big Three Dragons is all three dragon triplets in one hand, and it earns eight fan, again replacing the single dragon awards. The pictured hand shows it: triplets of white, green and red dragons, one sequence, and a pair of the 4 of circles.",
+      hand: "555z666z777z123m44p",
+    },
+    {
+      question: choice(
         "hk-dragon-exclusion",
-        "Does Big Three Dragons also add three separate dragon-triplet awards?",
-        ["Yes", "No"],
-        1,
-        "Its eight-fan award replaces the individual dragon awards.", "Larger patterns replace the smaller awards they contain instead of stacking with them.",
+        "A hand has Big Three Dragons. How is its dragon fan counted?",
+        [
+          "Eight fan for the pattern, with no extra single dragon fan added",
+          "Eight fan, plus one more for each dragon triplet",
+          "Five fan, the same as Little Three Dragons",
+          "One fan, for one dragon triplet only",
+        ],
+        0,
+        "Big Three Dragons earns eight fan as one pattern. The single dragon awards it contains are replaced, not added, so the dragon fan stays at eight.",
+        "Larger patterns replace the smaller awards they are built from, instead of stacking on top of them.",
+        () => {
+          const r = scoredAs("555z666z777z123m44p", 12);
+          const big = r.patterns.find((p) => p.id === "big-three-dragons");
+          const singles = r.patterns.filter((p) =>
+            p.id.startsWith("dragon-"),
+          );
+          return big?.units === 8 && singles.length === 0
+            ? "Eight fan for the pattern, with no extra single dragon fan added"
+            : "invalid";
+        },
       ),
-    ],
-  ),
-  hk(
-    "payments",
-    "From fan to payer amounts",
-    [
-      "Count the fan first, then apply the agreed conversion table. This preset uses half-spicy scoring: three fan converts to eight base points, four to sixteen, five to twenty-four, six to thirty-two, and higher levels continue up to the ten-fan cap of 128. Half-spicy is a conversion rule, not another pattern added to the hand. A different conversion scale changes payments without changing which tile patterns were detected.",
-      "On a discard win in this Clear Chapter preset, the discarder pays twice the base and the other two opponents each pay the base once. At three fan, that means 16 from the discarder and 8 from each other opponent, for 32 received. On self-draw, all three opponents pay twice the base. A three-fan self-draw therefore receives 16 from each opponent, for 48 total. East pays and receives on the same basis as the other seats; there is no dealer multiplier.",
-      "The calculator leads with these individual payment lines so players can check their own amount before recording. The scorekeeper transfers points between the named players and recomputes every later total after a correction. It does not silently turn points into money. Agree any stake separately. At the end of a session, raw point gains and losses determine the settlement. This Hong Kong profile has no Riichi deposits, rank bonuses or return-score adjustment.",
-    ],
-    [
-      {
-        kind: "choice",
-        id: "hk-discard-payment",
-        prompt: "At three fan, how many points does the discarder pay?",
-        choices: ["8", "16", "32"],
-        answer: 1,
-        explanation:
-          "Three fan converts to base 8. The discarder pays twice the base, or 16.",
-        hint: "Convert three fan to base points first; the discarder pays double the base.",
-        verify: () =>
+    },
+    {
+      text: "The winds have two large patterns of their own. Little Four Winds is three wind triplets plus a pair of the fourth wind, worth ten fan. Big Four Winds is all four wind triplets, worth fifteen fan before the payment cap of Lesson 9. A hand in which every tile is an honor is All Honors, worth ten fan. The pictured hand is Big Four Winds with an East pair: four wind triplets and the pair, all honors.",
+      hand: "111z222z333z444z11z",
+    },
+    {
+      question: choice(
+        "hk-little-winds",
+        "Three wind triplets plus a pair of the fourth wind form which pattern, and how many fan is it worth?",
+        [
+          "Big Four Winds — fifteen fan",
+          "Little Four Winds — ten fan",
+          "All Honors — ten fan",
+          "A seat-wind triplet only — one fan",
+        ],
+        1,
+        "Three wind triplets with the fourth wind as the pair is Little Four Winds, worth ten fan. Big Four Winds needs the fourth wind as a triplet too.",
+        "Count the wind groups: how many are triplets, and what is the fourth wind doing in the hand?",
+      ),
+    },
+    {
+      text: "When you score a hand with honors, work in this order: name its sets first, then check each wind triplet against the seat wind and the round wind held during that hand, then the dragons. Winds are always judged by the hand being scored, never by a seat held in a later hand.",
+    },
+  ]),
+  hkSteps("payments", "From fan to payer amounts", [
+    {
+      text: "This lesson scores one hand from its tiles to its payments. Here is the hand, read aloud: a triplet of the 2 of characters, a triplet of the 3 of circles, a triplet of the 4 of bamboo, a triplet of white dragons, and a pair of East winds. Four triplets and a pair.",
+      hand: HK_WORKED_HAND,
+    },
+    {
+      text: "Count its fan one item at a time, for a win on another player's discard. All four sets are triplets, and All Triplets earns three fan. The white dragon triplet earns one fan. The winner holds no bonus tiles, which earns one fan. Three plus one plus one makes five fan.",
+    },
+    {
+      hand: HK_WORKED_HAND,
+      question: choice(
+        "hk-worked-fan",
+        "How many fan does the worked hand score on a discard win?",
+        ["Three fan", "Four fan", "Five fan", "Six fan"],
+        2,
+        "All Triplets gives three fan, the white dragon triplet one fan, and holding no bonus tiles one fan: five fan in total.",
+        "Add the items from the counting step one at a time: the all-triplets award, the dragon triplet, and the award for holding no bonus tiles.",
+        () =>
+          scoredAs(HK_WORKED_HAND, 1).units === 5 ? "Five fan" : "invalid",
+      ),
+    },
+    {
+      text: "Fan are turned into points with a fixed scale. The scale gives base points for each fan total: three fan is 8 base points, four is 16, five is 24, six is 32, seven is 48, eight is 64, nine is 96, and ten fan — the most that is ever paid on, as Lesson 9 explains — is 128. Below the minimum the scale would give two fan 4 base points and one fan 2, but hands below three fan cannot win, so payments in practice start at three fan.",
+    },
+    {
+      text: "The base points are then shared out as payments. On a discard win, the discarder pays twice the base points, and each of the other two opponents pays the base points once. So at three fan, with a base of 8, the discarder pays 16 and the others pay 8 each, and the winner receives 32 in total.",
+    },
+    {
+      question: choice(
+        "hk-discard-payment",
+        "At three fan, how many points does the discarder pay?",
+        ["8", "16", "24", "32"],
+        1,
+        "Three fan converts to a base of 8 points, and the discarder pays twice the base: 16. The 32 in the lesson is what the winner receives from all three opponents together.",
+        "Convert three fan to base points using the scale first; the discarder's share is double that base.",
+        () =>
           String(
             hongKongPayments(3, { winner: 0, payer: 1, selfDraw: false }).find(
               (p) => p.seat === 1,
             )!.amount,
           ),
-      },
-      {
-        kind: "choice",
-        id: "hk-self-payment",
-        prompt: "At three fan by self-draw, how much does each opponent pay?",
-        choices: ["8", "16", "48"],
-        answer: 1,
-        explanation:
-          "Every opponent pays twice base 8. Forty-eight is the combined gain, not one player's payment.",
-        hint: "On a self-draw every opponent pays the same doubled amount; the total received is three times one payment.",
-        verify: () =>
+      ),
+    },
+    {
+      text: "Apply the same split to the worked hand. Five fan gives a base of 24 points. On a discard win the discarder pays twice 24, which is 48; each other opponent pays 24; and the winner receives 48 plus 24 plus 24, which is 96 points.",
+    },
+    {
+      question: choice(
+        "hk-worked-payment",
+        "The worked hand wins on a discard at five fan. How many points does the discarder pay?",
+        ["24", "48", "72", "96"],
+        1,
+        "Five fan converts to a base of 24, and the discarder pays twice the base: 48. The winner's total of 96 is all three payments added together.",
+        "Convert the hand's five fan to base points with the scale, then double the base for the discarder's share.",
+        () =>
           String(
-            hongKongPayments(3, { winner: 0, payer: 1, selfDraw: true })[0]!
-              .amount,
+            hongKongPayments(5, { winner: 0, payer: 1, selfDraw: false }).find(
+              (p) => p.seat === 1,
+            )!.amount,
           ),
-      },
-    ],
-  ),
-  hk(
-    "quads",
-    "Quads and replacement wins",
-    [
-      "A quad, also called a kong, is four identical tiles declared as one set. If all four are in your concealed hand, declare a concealed quad. If you hold three and claim the fourth from a discard, it is an open quad. If you previously exposed a triplet and later draw its fourth copy, you may add that tile to make an added quad. All three forms require a replacement draw and enough wall capacity.",
-      "An added quad creates a win-claim opportunity before the fourth tile joins the set. An opponent whose eligible hand is completed by that tile may rob the quad. If they win, the original exposed triplet remains a triplet and the fourth tile goes to the winner. A concealed quad is not robbed at this table. A win on the ordinary replacement after a quad receives the quad-replacement fan; a flower replacement does not automatically receive it.",
-      "Four completed quads plus the pair form a rare high-scoring hand, with eighteen physical tiles. It is still scored under the cap. Declaring quads can expose information and consume replacement capacity; an available quad is not proof that declaring it is strategically best. Live controls show legal options, and review leaves unsupported strategic judgments ungraded. No Riichi indicator is flipped after a quad, and no dora bonus exists in this variant.",
-    ],
-    [
-      fact(
+      ),
+    },
+    {
+      text: "A self-draw win is split differently: there is no discarder, so every opponent pays twice the base points. Watch what that does to the worked hand. Won by self-draw, the hand gains the one self-draw fan from Lesson 5, so it scores six fan, not five. Six fan gives a base of 32, every opponent pays twice 32, which is 64, and the winner receives 192 in total.",
+    },
+    {
+      question: choice(
+        "hk-worked-selfdraw",
+        "The worked hand wins by self-draw. How many points does each opponent pay?",
+        ["48", "64", "96", "192"],
+        1,
+        "The self-draw fan raises the hand to six fan, a base of 32, and on a self-draw every opponent pays twice the base: 64 each. The 192 is the winner's combined total.",
+        "Do this in order: add the self-draw fan to the hand's total, convert with the scale, then double the base, because a self-draw charges every opponent the doubled amount.",
+        () => {
+          const units = scoredAs(HK_WORKED_HAND, 1, { selfDraw: true }).units;
+          const perOpponent = hongKongPayments(units, {
+            winner: 0,
+            payer: 1,
+            selfDraw: true,
+          })[0]!.amount;
+          return String(perOpponent);
+        },
+      ),
+    },
+    {
+      question: choice(
+        "hk-nine-fan",
+        "How many base points does a nine-fan hand convert to?",
+        ["48", "64", "96", "128"],
+        2,
+        "The scale runs 48 at seven fan, 64 at eight and 96 at nine. On a discard win a nine-fan hand's ordinary opponents each pay the base once, which is 96.",
+        "Read the scale in order from three fan upward and stop at nine.",
+        () =>
+          String(
+            hongKongPayments(9, { winner: 0, payer: 1, selfDraw: false }).find(
+              (p) => p.seat === 2,
+            )!.amount,
+          ),
+      ),
+    },
+    {
+      text: "Two closing facts about payments. There is no dealer bonus at this table: East pays and receives on exactly the same basis as every other seat. And payments only move points between players — the winner's gain is the other players' loss, point for point. Points are the score of the game; whether a group also plays for money is a separate agreement, and nothing in these lessons assumes one.",
+    },
+    {
+      text: "The worked hand is now scored end to end: tiles read aloud, sets named, fan counted item by item to five, base points read from the scale, and payments split two ways — 48 from the discarder and 24 from each other opponent on a discard win, or 64 from every opponent on a self-draw win at six fan. Every scored hand in this game follows those same steps.",
+    },
+  ]),
+  hkSteps("quads", "Quads and replacement wins", [
+    {
+      text: "Lesson 2 introduced the quad: four identical tiles declared together as one set, like the four 1 of characters below. This lesson teaches how quads are declared and what they set in motion. A quad is always declared on your own turn, and the set is shown to the table.",
+      tiles: "1111m",
+    },
+    {
+      text: "There are three ways to declare a quad. A concealed quad is made from four matching tiles already in your hand. An open quad is made by claiming another player's discard as the fourth tile of a triplet you hold. An added quad is made when you already show a triplet and you draw its fourth tile yourself: you add that tile to the shown triplet.",
+    },
+    {
+      question: choice(
+        "hk-quad-forms",
+        "You already show a triplet, and you draw its fourth matching tile yourself. If you add it to the shown triplet, what have you formed?",
+        [
+          "A concealed quad",
+          "An open quad",
+          "An added quad",
+          "A second triplet",
+        ],
+        2,
+        "Adding a self-drawn fourth tile to a triplet you already show forms an added quad. A concealed quad starts from four tiles in hand, and an open quad claims a discard.",
+        "Match the story to the three forms: where did the fourth tile come from, and was the triplet already showing?",
+      ),
+    },
+    {
+      text: "Every quad declaration is followed by a replacement draw: you draw one tile from the end of the wall before you discard. The replacement keeps your hand at its proper size, because the quad holds four physical tiles in a single set. A flower replacement from Lesson 4 is a different event — it follows a bonus tile, not a quad.",
+    },
+    {
+      text: "If the replacement tile drawn after a quad completes your hand, you win on that tile, and the circumstance earns one extra fan: the quad-replacement fan is worth one fan. It counts toward the three-fan minimum like any other fan. Winning on a flower replacement earns no such fan — the award belongs to quad replacements only.",
+    },
+    {
+      question: choice(
+        "hk-replacement-value",
+        "A player wins on the replacement tile drawn after declaring a quad. How much extra fan does that circumstance earn?",
+        ["No extra fan", "One fan", "Two fan", "Three fan"],
+        1,
+        "A win on a quad replacement tile earns one extra fan. A win on a flower replacement earns none.",
+        "Recall which replacement carries the award — the one that follows a quad — and the value stated for it.",
+        () => {
+          const r = scoreHongKong({
+            counts: parseCounts("1111s123m456p789s11z"),
+            melds: [{ kind: "ankan", tiles: [18, 18, 18, 18] }],
+            winningTile: 27,
+            selfDraw: true,
+            seatWind: 27,
+            roundWind: 27,
+            flowers: [],
+            replacement: true,
+            robbingQuad: false,
+            lastWall: false,
+            initial: false,
+            lastCopy: false,
+          });
+          const units =
+            r.patterns.find((p) => p.id === "replacement")?.units ?? 0;
+          return units === 1 ? "One fan" : "invalid";
+        },
+      ),
+    },
+    {
+      text: "An added quad has one risk the other forms do not. In the moment before the fourth tile joins the shown triplet, another player whose hand that tile completes may claim it to win. That is robbing the quad. If the rob succeeds, the fourth tile goes to the winner and the original set stays a triplet. A concealed quad cannot be robbed, and an open quad's fourth tile is a discard, where the ordinary win priority of Lesson 3 already applies.",
+    },
+    {
+      question: choice(
         "hk-robbing",
         "Which quad can be robbed at this table?",
-        ["An added quad", "Every concealed quad"],
-        0,
-        "The exposed triplet's fourth tile is offered for a win claim before the upgrade completes.", "Robbing applies to the fourth tile being added to an exposed triplet, before the upgrade completes.",
+        [
+          "A concealed quad",
+          "An open quad",
+          "An added quad",
+          "Every quad",
+        ],
+        2,
+        "Only an added quad offers a tile to rob: its fourth tile is claimed for a win in the moment before it joins the shown triplet.",
+        "Robbing needs a fourth tile that is on its way into a set but not yet part of it. Which form has that moment?",
       ),
-      fact(
-        "hk-no-dora",
-        "Does a quad reveal a dora indicator in Hong Kong Old Style?",
-        ["Yes", "No"],
-        1,
-        "Dora is a Riichi rule. This variant awards its own scoring patterns instead.", "Dora belongs to a different game; check which scoring features this table actually has.",
+    },
+    {
+      question: pick(
+        "hk-find-quad",
+        "Tap the four tiles that form a quad in this row.",
+        "2m2m2m2m5p9s",
+        [0, 1, 2, 3],
+        "The four 2 of characters tiles are identical faces, so they form the quad. The circles and bamboo tiles appear once each.",
+        "A quad is four copies of one face. Find the face that appears four times.",
       ),
-    ],
-  ),
-  hk(
-    "specials",
-    "Special hands and the cap",
-    [
-      "Thirteen Orphans is a closed hand made from one of every terminal and honor kind, plus a duplicate of one of those thirteen kinds. Terminals are the 1 and 9 of each numbered suit. Add the four winds and three dragons to get thirteen required kinds. It is not four ordinary sets and a pair, so the shape checker treats it separately. At this table its thirteen fan exceed the ten-fan payment cap.",
-      "Nine Gates uses one numbered suit and a concealed arrangement containing three 1s, one each of 2 through 8, and three 9s, plus one additional tile in that suit. Its fifteen fan also exceed the cap. A dealer who wins on the initial uninterrupted draw receives the Heavenly Hand award. A nondealer's first uninterrupted self-draw can receive Earthly Hand. These initial wins are ten-fan hands in this profile; do not add an ordinary result's fan to invent a larger payment.",
-      "Optional patterns vary sharply across Hong Kong tables. Seven Pairs, concealed-hand fan and flower robbery are not enabled in this Clear Chapter preset. Other apps may offer them under a different profile. The name and version recorded with the game identify which rules apply. Historical records are replayed with their recorded implementation; opening a past game never converts its rules or changes the active game on your device.",
-    ],
-    [
-      fact(
+    },
+    {
+      text: "The extreme case is a hand of four quads and a pair, pictured below: the 1 of characters, the 1 of circles, the 1 of bamboo and East, each four times, with a pair of South. That is eighteen physical tiles forming four sets and a pair. It is a rare named pattern, and like every hand it is paid under the ten-fan cap of the next lesson.",
+      hand: "1111m1111p1111s1111z22z",
+    },
+    {
+      text: "Declaring a quad is always a choice, never a duty. A quad shows the table four tiles it can count, and it spends replacement tiles from the end of the wall. Declare one when its set and its replacement draw help your hand — the declaration itself scores nothing until a hand is won.",
+    },
+  ]),
+  hkSteps("specials", "Special hands and the cap", [
+    {
+      text: "Two winning shapes at this table are not four sets and a pair. The first is Thirteen Orphans, pictured below. It holds one of every terminal and every honor — the 1 and 9 of each suit, all four winds and all three dragons, thirteen kinds in all — plus one extra tile matching any of those kinds. The pictured hand's extra tile is a second 1 of characters. It is built entirely from tiles you hold, with no shown sets.",
+      hand: "19m19p19s1234567z1m",
+    },
+    {
+      question: choice(
         "hk-orphans-shape",
-        "How many different kinds are required for Thirteen Orphans before its duplicate?",
-        ["Twelve", "Thirteen", "Fourteen"],
-        1,
-        "Six terminal kinds plus four winds and three dragons make thirteen.", "Count the required kinds: the 1 and 9 of each suit, plus every wind and dragon.",
+        "How many different tile kinds does Thirteen Orphans require, before its one duplicate?",
+        ["Eleven kinds", "Twelve kinds", "Thirteen kinds", "Fourteen kinds"],
+        2,
+        "Six terminal kinds — the 1 and 9 of three suits — plus four winds and three dragons make thirteen kinds, and one of them is then duplicated.",
+        "Count the required kinds in groups: terminals first, then winds, then dragons.",
+        () =>
+          scoredAs("19m19p19s1234567z1m", 0).units === 13
+            ? "Thirteen kinds"
+            : "invalid",
       ),
-      fact(
+    },
+    {
+      text: "The second special shape is Nine Gates, pictured below, and it uses one numbered suit only: three 1s, one each of 2, 3, 4, 5, 6, 7 and 8, three 9s, and one more tile of that suit — here, an extra 2 of characters. Nine Gates is worth fifteen fan as a pattern. Thirteen Orphans is worth thirteen fan.",
+      hand: "1112345678999m2m",
+    },
+    {
+      text: "Neither of those totals is paid in full, because payments are capped at ten fan. The cap works like this: whatever a hand counts above ten fan, it is converted to payments as a ten-fan hand, at the top of the scale — a base of 128 points. A thirteen-fan hand and a fifteen-fan hand are paid exactly like a ten-fan hand.",
+    },
+    {
+      question: choice(
         "hk-cap",
-        "Does a fifteen-fan hand pay more than a ten-fan hand under this preset?",
-        ["Yes", "No"],
-        1,
-        "Both use the ten-fan cap when converting to payments.", "Payments are converted after applying the ten-fan cap, whatever the hand's counted fan.",
+        "A hand counts fifteen fan. How many fan are used when it is converted to payments?",
+        ["Fifteen fan", "Thirteen fan", "Ten fan", "Nine fan"],
+        2,
+        "The payment cap is ten fan, so a fifteen-fan hand is converted as a ten-fan hand, at a base of 128 points.",
+        "Recall the cap: counted fan above the cap does not raise the payment any further.",
+        () => {
+          const at15 = hongKongPayments(15, {
+            winner: 0,
+            payer: 1,
+            selfDraw: false,
+          });
+          const at10 = hongKongPayments(10, {
+            winner: 0,
+            payer: 1,
+            selfDraw: false,
+          });
+          return JSON.stringify(at15) === JSON.stringify(at10)
+            ? "Ten fan"
+            : "invalid";
+        },
       ),
-    ],
-  ),
-  hk(
-    "match",
-    "Match progression and review",
-    [
-      "A full match covers East, South, West and North rounds. Each round advances through four dealer positions. East keeps the deal after winning, so repeated hands can make a round longer than four actual deals. A nondealer win or a hand without a winner advances the deal in this profile. The app labels repeats separately; two rows called East 2 can refer to different recorded hands.",
-      "Each player starts with 1,000 points. Payments always transfer points rather than create them, so the four scores still total 4,000 throughout the game. Scores may fall below zero without immediately ending this profile's match. Final standings rank the scores, and settlement reports each player's change from the starting score. Short East-only or East–South sessions use the same hand rules with a shorter recorded match length.",
-      "Game details show the final context and every hand. In board review, the slider visits all players' recorded moves, while decision jumps reach your own useful moments. Opponents’ concealed tiles remain face-down. A coach comparison uses only the information available before your choice, never the later winner or a tile you eventually lost to. Its strategic preference is a heuristic, an explained estimate rather than a calibrated grade. Related Practice uses separate, validated examples; a saved game decision does not become a quiz answer just because the coach preferred another move.",
-    ],
-    [
-      fact(
+    },
+    {
+      text: "Two more patterns reward winning at the very start of a hand. If the dealer wins with the hand as dealt, completed by the first uninterrupted draw, that is a Heavenly Hand. If another player wins on their own first uninterrupted draw, that is an Earthly Hand. Each is scored as a ten-fan hand in its own right: the pattern's ten fan is the hand's score, with no ordinary pattern fan added on top.",
+    },
+    {
+      question: choice(
+        "hk-heavenly",
+        "The dealer wins on the very first draw of the hand, with nothing interrupting the start. What is this called, and how is it scored?",
+        [
+          "Earthly Hand — scored at three fan",
+          "Heavenly Hand — scored as a ten-fan hand",
+          "Nine Gates — scored at fifteen fan",
+          "A drawn hand — nobody scores",
+        ],
+        1,
+        "A dealer's uninterrupted first-draw win is a Heavenly Hand, and it is scored as a ten-fan hand in its own right. Earthly Hand is the same start for a player who is not the dealer.",
+        "Two facts decide this: who won — the dealer or another player — and what the pattern is scored as on its own.",
+        () => {
+          const r = scoredAs(HK_SEQ_HAND, 27, {
+            selfDraw: true,
+            initial: true,
+          });
+          return r.units === 10
+            ? "Heavenly Hand — scored as a ten-fan hand"
+            : "invalid";
+        },
+      ),
+    },
+    {
+      text: "One shape you may know from other games is not a winning shape at this table: seven pairs. Four sets and a pair, Thirteen Orphans and Nine Gates are the winning shapes here, and a hand of seven pairs must be played on toward one of them.",
+    },
+    {
+      text: "Special hands, then: Thirteen Orphans at thirteen fan, Nine Gates at fifteen, the two first-draw hands at ten — and every one of them paid at the ten-fan cap. The final lesson puts the whole game together: how hands follow one another inside a match.",
+    },
+  ]),
+  hkSteps("match", "How a match runs", [
+    {
+      text: "A match is a series of hands, grouped into the rounds you met in Lesson 6. A full match runs four rounds in order: the East round, the South round, the West round and the North round. The wind tiles below stand for those four rounds, in the order they are played.",
+      tiles: "1234z",
+    },
+    {
+      text: "Inside a round, the deal moves around the table. The dealer holds the East seat for that hand. When a hand ends, the deal passes to the next player in turn order — unless the dealer won the hand, in which case the same dealer deals again and the hand is a repeat. A drawn hand does not repeat the deal: as Lesson 3 taught, the deal passes on.",
+    },
+    {
+      question: choice(
         "hk-repeat",
-        "East wins. Who deals the next hand?",
-        ["East again", "South"],
-        0,
-        "East repeats after its win in this profile.", "The match lesson states what happens to the deal after East wins; look for that rule.",
-      ),
-      fact(
-        "hk-public-review",
-        "May a later winning hand be used to judge an earlier discard?",
-        ["Yes", "No"],
+        "East deals a hand and wins it. Who deals the next hand?",
+        [
+          "South, because the deal always moves on",
+          "East again, because the dealer repeats after a win",
+          "West, the player before East in turn order",
+          "The player with the lowest score",
+        ],
         1,
-        "Review is outcome-blind and uses the immutable public information from the original decision.", "Review judges a decision only by the information public at the moment it was made.",
+        "A dealer's win keeps the deal with the same player, so East deals again. The deal passes on only when the dealer does not win.",
+        "Recall the one result that holds the deal in place instead of passing it to the next player.",
       ),
-    ],
-  ),
+    },
+    {
+      text: "Every player starts a match with 1,000 points. Hand payments move points from the losing players to the winner, so the four scores always add up to 4,000, at the start and after every hand. A score may fall below zero; at this table the match still continues to its end.",
+    },
+    {
+      question: choice(
+        "hk-total-points",
+        "During a match the four scores are 1,240, 960, 880 and one score you cannot see. What must all four scores add up to?",
+        ["3,000", "4,000", "4,240", "The total changes as points are won and lost"],
+        1,
+        "Payments only transfer points between the four players, so the total never changes: four starting scores of 1,000 make 4,000 throughout the match.",
+        "Ask whether a payment ever creates or destroys points, or only moves them between players.",
+      ),
+    },
+    {
+      text: "When the last round ends, the match is over. The final standings rank the four players by their scores, and each player's result for the match is the change from their starting 1,000 points. A shorter match — only the East round, or East and South — uses exactly the same hand rules and simply stops after fewer rounds.",
+    },
+    {
+      question: choice(
+        "hk-match-length",
+        "A full match at this table covers which rounds, in order?",
+        [
+          "The East round only",
+          "East, then South",
+          "East, South, West, then North",
+          "North, West, South, then East",
+        ],
+        2,
+        "A full match runs all four rounds in turn order: East, South, West and North. Shorter matches stop after the East round, or after East and South.",
+        "A full match covers every round, in the same order the turns and seats run.",
+      ),
+    },
+    {
+      text: "That completes the game. Tiles are stacked into a wall; thirteen tiles are dealt; players draw, discard and claim in turn; bonus tiles are exposed and replaced from the end of the wall; a hand is won with four sets and a pair — or a special shape — at three fan or more, found through its waits; fan are counted item by item and converted through the scale into payments; the dealer repeats after a win and passes the deal on otherwise; and the rounds advance East, South, West and North until the match ends. You have every rule this table plays by.",
+    },
+  ]),
   ...MCR_LESSONS,
   ...TAIWANESE_LESSONS,
 ];
+
 export function variantLessons(variant: VariantId): VariantLesson[] {
   return VARIANT_LESSONS.filter((l) => l.variant === variant);
 }
