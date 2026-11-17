@@ -1,4 +1,4 @@
-/** Original summaries of the frozen WMO 2006 table. The executable catalog
+/** Original summaries of the 81 patterns. The executable catalog
  * supplies values; this reference explains recognition and common exclusions. */
 import { mcrPatterns } from "@openmahjong/engine";
 type Family =
@@ -13,12 +13,12 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Big Four Winds": [
     "Honors",
     "Make a triplet or quad of each of the four winds, plus a pair.",
-    "Replaces Little Four Winds, Big Three Winds, All Pungs, wind awards and terminal/honor-triplet awards.",
+    "Replaces Little Four Winds, Big Three Winds, the all-triplets pattern, wind awards and terminal/honor-triplet awards.",
   ],
   "Big Three Dragons": [
     "Honors",
     "Make a triplet or quad of white, green and red dragons.",
-    "Replaces Little Three Dragons, Two Dragons Pungs and the individual Dragon Pung awards.",
+    "Replaces Little Three Dragons, the two-dragon-triplets pattern and the individual dragon triplet awards.",
   ],
   "All Green": [
     "Tile composition",
@@ -28,12 +28,12 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Nine Gates": [
     "Special structures",
     "Hold a concealed single-suit 1112345678999 structure completed by one extra tile of that suit.",
-    "Requires the concealed nine-way base before winning; replaces Full Flush, Concealed Hand and the implied terminal-pung award.",
+    "Requires the concealed nine-way base before winning; replaces Full Flush, Concealed Hand and the implied terminal-triplet award.",
   ],
   "Four Kongs": [
     "Triplets and quads",
     "Declare four quads and complete the pair.",
-    "Eighteen physical tiles are required. Replaces lesser kong combinations, All Pungs and Single Wait.",
+    "Eighteen physical tiles are required. Replaces lesser quad combinations, the all-triplets pattern and Single Wait.",
   ],
   "Seven Shifted Pairs": [
     "Special structures",
@@ -48,27 +48,27 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "All Terminals": [
     "Tile composition",
     "Every tile is a suited 1 or 9.",
-    "Excludes All Pungs, Outside Hand, terminal-pung awards and No Honors.",
+    "Excludes the all-triplets pattern, Outside Hand, terminal-triplet awards and No Honors.",
   ],
   "Little Four Winds": [
     "Honors",
     "Use three wind triplets or quads and the fourth wind as the pair.",
-    "Excludes Big Three Winds and terminal/honor-pung awards for the required winds.",
+    "Excludes Big Three Winds and terminal/honor-triplet awards for the required winds.",
   ],
   "Little Three Dragons": [
     "Honors",
     "Use two dragon triplets or quads and a pair of the third dragon.",
-    "Excludes Two Dragons Pungs and the individual required Dragon Pung awards.",
+    "Excludes the two-dragon-triplets pattern and the individual required dragon triplet awards.",
   ],
   "All Honors": [
     "Tile composition",
     "Every tile is a wind or dragon.",
-    "Excludes All Pungs, Outside Hand and terminal/honor-pung awards.",
+    "Excludes the all-triplets pattern, Outside Hand and terminal/honor-triplet awards.",
   ],
   "Four Concealed Pungs": [
     "Triplets and quads",
     "Complete four triplets or quads without taking their completing tile from another player.",
-    "A discard completing a triplet makes that triplet exposed for this count. Excludes All Pungs and Concealed Hand.",
+    "A discard completing a triplet makes that triplet exposed for this count. Excludes the all-triplets pattern and Concealed Hand.",
   ],
   "Pure Terminal Chows": [
     "Sequences",
@@ -83,7 +83,7 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Four Pure Shifted Pungs": [
     "Triplets and quads",
     "Use four triplets in one suit whose numbers advance by one each time.",
-    "Excludes Pure Shifted Pungs and All Pungs.",
+    "Excludes the shifted-triplets pattern and the all-triplets pattern.",
   ],
   "Four Pure Shifted Chows": [
     "Sequences",
@@ -93,12 +93,12 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Three Kongs": [
     "Triplets and quads",
     "Declare three quads, concealed or exposed.",
-    "Replaces the lesser three-kong constituent combinations; concealment may contribute where the rules permit.",
+    "Replaces the lesser three-quad constituent combinations; concealment may contribute where the rules permit.",
   ],
   "All Terminals and Honors": [
     "Tile composition",
     "Use only suited 1s, suited 9s, winds and dragons, with both suited and honor tiles present.",
-    "Excludes All Pungs, Outside Hand and terminal/honor-pung awards.",
+    "Excludes the all-triplets pattern, Outside Hand and terminal/honor-triplet awards.",
   ],
   "Seven Pairs": [
     "Special structures",
@@ -113,7 +113,7 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "All Even Pungs": [
     "Triplets and quads",
     "Every set is a triplet or quad and every number, including the pair, is even.",
-    "Only 2, 4, 6 and 8 suited tiles may appear. Excludes All Pungs and All Simples.",
+    "Only 2, 4, 6 and 8 suited tiles may appear. Excludes the all-triplets pattern and All Simples.",
   ],
   "Full Flush": [
     "Tile composition",
@@ -123,12 +123,12 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Pure Triple Chow": [
     "Sequences",
     "Use three identical sequences in the same suit.",
-    "Excludes Pure Double Chow and cannot also treat those same tiles as Pure Shifted Pungs.",
+    "Excludes Pure Double Chow and cannot also treat those same tiles as shifted triplets.",
   ],
   "Pure Shifted Pungs": [
     "Triplets and quads",
     "Use three triplets in one suit with consecutive numbers.",
-    "Do not reinterpret the same tiles as Pure Triple Chow in the same scoring arrangement.",
+    "Do not reinterpret the same tiles as a triple sequence in the same scoring arrangement.",
   ],
   "Upper Tiles": [
     "Tile composition",
@@ -168,12 +168,12 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Triple Pung": [
     "Triplets and quads",
     "Use triplets or quads of the same number in all three suits.",
-    "Excludes Double Pung for pairs drawn from the required three sets.",
+    "Excludes the double-triplet combination for pairs drawn from the required three sets.",
   ],
   "Three Concealed Pungs": [
     "Triplets and quads",
     "Have three triplets or quads completed without claiming their final tile.",
-    "A discard completing one of these triplets makes that triplet exposed for this count. Excludes Two Concealed Pungs.",
+    "A discard completing one of these triplets makes that triplet exposed for this count. Excludes the two-concealed-triplets pattern.",
   ],
   "Lesser Honors and Knitted Tiles": [
     "Special structures",
@@ -198,7 +198,7 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Big Three Winds": [
     "Honors",
     "Have three different wind triplets or quads.",
-    "Excludes terminal/honor-pung awards for those winds; applicable seat and round wind awards can still contribute.",
+    "Excludes terminal/honor-triplet awards for those winds; applicable seat and round wind awards can still contribute.",
   ],
   "Mixed Straight": [
     "Sequences",
@@ -238,17 +238,17 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Out with Replacement Tile": [
     "Concealment and winning",
     "Win immediately on the ordinary replacement taken for a declared quad.",
-    "Excludes Self-Drawn. If that replacement is a flower, the later flower replacement does not receive this award in this edition.",
+    "Excludes Self-Drawn. If that replacement is a flower, the later flower replacement does not receive this award.",
   ],
   "Robbing The Kong": [
     "Concealment and winning",
     "Win on the tile used to upgrade an exposed triplet into a quad.",
-    "Excludes Last Tile. A concealed quad is not robbable in this profile.",
+    "Excludes Last Tile. A concealed quad cannot be robbed.",
   ],
   "All Pungs": [
     "Triplets and quads",
     "The four sets are all triplets or quads, with one pair.",
-    "A higher pattern that necessarily requires All Pungs replaces this award where specified.",
+    "A higher pattern that necessarily requires all triplets replaces this award where specified.",
   ],
   "Half Flush": [
     "Tile composition",
@@ -273,12 +273,12 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Two Concealed Kongs": [
     "Triplets and quads",
     "Declare two concealed quads.",
-    "This frozen 2006 profile awards eight, rather than the six used in later tables. Do not also count the two individual Concealed Kong awards.",
+    "Worth eight fan together. Do not also count the two individual concealed quad awards.",
   ],
   "Two Dragons Pungs": [
     "Honors",
     "Have triplets or quads of two different dragons.",
-    "Replaces the two individual Dragon Pung awards. Little or Big Three Dragons replaces this combination.",
+    "Replaces the two individual dragon triplet awards. Little or Big Three Dragons replaces this combination.",
   ],
   "Outside Hand": [
     "Tile composition",
@@ -293,12 +293,12 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Two Melded Kongs": [
     "Triplets and quads",
     "Declare two exposed quads, whether directly claimed or upgraded.",
-    "Replaces the two individual Melded Kong awards; larger quad combinations may replace it. In this 2006 edition, one concealed plus one melded kong scores six together instead of the individual awards; that combination is not another catalog pattern.",
+    "Replaces the two individual melded quad awards; larger quad combinations may replace it. One concealed quad together with one melded quad scores six fan together instead of the two individual awards; that combination is not a separate named pattern.",
   ],
   "Last Tile": [
     "Concealment and winning",
     "Win with the fourth copy when the other three copies are already visible before the win.",
-    "Visibility comes from public tiles, not hidden hands or the actual wall. Robbing The Kong excludes it.",
+    "Visibility comes from public tiles, not hidden hands or the actual wall. Robbing a quad excludes it.",
   ],
   "Dragon Pung": [
     "Honors",
@@ -308,7 +308,7 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Prevalent Wind": [
     "Honors",
     "Have a triplet or quad matching the current round wind.",
-    "Can combine with Seat Wind for the same set when both winds match. Do not add a terminal/honor-pung point for that same award.",
+    "Can combine with Seat Wind for the same set when both winds are the same. Do not add a terminal/honor-triplet point for that same award.",
   ],
   "Seat Wind": [
     "Honors",
@@ -333,22 +333,22 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Double Pung": [
     "Small combinations",
     "Have two triplets or quads of the same number in two different suits.",
-    "Triple Pung replaces its constituent Double Pung combinations.",
+    "The triple-triplet pattern replaces its constituent double-triplet combinations.",
   ],
   "Two Concealed Pungs": [
     "Triplets and quads",
     "Complete two triplets or quads without taking their completing tile from another player.",
-    "A discard-completed triplet is exposed for this count. Three or Four Concealed Pungs replaces it.",
+    "A discard-completed triplet is exposed for this count. The three- and four-concealed-triplets patterns replace it.",
   ],
   "Concealed Kong": [
     "Triplets and quads",
     "Declare four identical concealed tiles as a quad and take a replacement.",
-    "Two Concealed Kongs replaces two individual awards. The fourth tile is not counted again as Tile Hog.",
+    "The two-concealed-quads pattern replaces two individual awards. The fourth tile is not counted again as Tile Hog.",
   ],
   "All Simples": [
     "Tile composition",
     "Every tile is a suited number from 2 through 8.",
-    "Excludes No Honors. Middle Tiles, All Five and All Even Pungs already include this condition and replace it.",
+    "Excludes No Honors. Middle Tiles, All Five and the all-even-triplets pattern already include this condition and replace it.",
   ],
   "Pure Double Chow": [
     "Small combinations",
@@ -368,7 +368,7 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Two Terminal Chows": [
     "Small combinations",
     "Have 123 and 789 sequences in the same suit.",
-    "Pure Straight or a terminal-chow special pattern can replace this implied combination.",
+    "Pure Straight or a terminal-sequence special pattern can replace this implied combination.",
   ],
   "Pung of Terminals or Honors": [
     "Small combinations",
