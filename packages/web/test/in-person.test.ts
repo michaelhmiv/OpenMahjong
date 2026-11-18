@@ -21,11 +21,19 @@ beforeEach(() => {
   document.body.append(root);
 });
 function click(text: string) {
-  const b = [...root.querySelectorAll<HTMLButtonElement>("button")].find(
-    (b) => b.textContent === text || b.getAttribute("aria-label") === text,
-  );
+  const b =
+    [...root.querySelectorAll<HTMLButtonElement>("button")].find(
+      (b) => b.textContent === text || b.getAttribute("aria-label") === text,
+    ) ?? seatButtonByLabel(text);
   if (!b) throw new Error(`Missing ${text}`);
   b.click();
+}
+function seatButtonByLabel(label: string): HTMLButtonElement | null {
+  // Seat taps are addressed by their old label form
+  // ("Player 2 · 25,000 points"); seats carry no aria-label any
+  // more, so resolve through the tile's visible name/score.
+  const tile = seatTile(label);
+  return tile instanceof HTMLButtonElement ? tile : null;
 }
 function buttonByText(text: string): HTMLButtonElement {
   const b = [...root.querySelectorAll<HTMLButtonElement>("button")].find(
@@ -34,10 +42,12 @@ function buttonByText(text: string): HTMLButtonElement {
   if (!b) throw new Error(`Missing button ${text}`);
   return b;
 }
-function seatTile(label: string): HTMLButtonElement | null {
-  return root.querySelector<HTMLButtonElement>(
-    `button.cx-seat[aria-label="${label}"]`,
-  );
+function seatTile(label: string): HTMLElement | null {
+  // Label form: "Name · SCORE points". The tile's accessible
+  // name is its visible text now, so match the name/score spans.
+  const m = /^(.*) · (.*)$/.exec(label);
+  if (!m) return null;
+  return seatWith(m[1]!, m[2]!);
 }
 function dealerTile(): HTMLElement | null {
   return root.querySelector('[data-dealer="true"]');
