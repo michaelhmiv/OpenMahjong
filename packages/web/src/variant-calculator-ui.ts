@@ -293,7 +293,7 @@ export function mountVariantCalculator(
       screen.append(
         el(
           "p",
-          "MCR (Mahjong Competition Rules) · Eight fan from patterns are required, not counting flowers. Every player who did not win pays eight base points; the discarder — the player who threw the winning tile — also pays the hand value, which is the hand’s fan plus its flower points. On a self-draw win, every opponent pays the hand value plus eight.",
+          "MCR (Mahjong Competition Rules) · Eight fan from patterns are required, not counting flowers. Every player who did not win pays eight base points; the discarder — the player who threw the winning tile — also pays the hand value, which is the hand's fan plus its flower points. On a self-draw win, every opponent pays the hand value plus eight.",
           "cx-note",
         ),
       );

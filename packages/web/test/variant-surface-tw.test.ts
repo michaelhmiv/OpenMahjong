@@ -82,6 +82,9 @@ describe("TW calculator surface vocabulary", () => {
       onBack: () => {},
       onRecord: () => {},
     });
+    // The compact calculator lands on fast entry; the tiles
+    // screen (meld kinds, circumstances) is one tap in.
+    click("Score it from the tiles");
     const kind = root.querySelector<HTMLSelectElement>(
       '[aria-label="Meld type"]',
     )!;
@@ -106,6 +109,7 @@ describe("TW calculator surface vocabulary", () => {
       onBack: () => {},
       onRecord: () => {},
     });
+    click("Score it from the tiles");
     fill("Add tiles to", "meld");
     for (const t of ["1m", "2m", "3m"]) click(`Add ${t}`);
     click("Add declared meld");
