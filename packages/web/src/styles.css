@@ -605,6 +605,38 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 .revctl .tut-back { flex: 0 1 auto; }
 
 .lstage { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+
+/* Lesson runner scroll + control-row fit (fix round, 2026-11-17,
+   owner's Pixel report). Two root causes:
+   (1) Neither lesson surface had a scroll region. A panel lesson's
+   .revpanel is sized by its content, so a long step pushed the dots
+   and control row past the stage bottom, where .screen's
+   overflow:hidden clipped them; a scene lesson's .lessonpanel did
+   the same inside .zone-player (every #table flex item keeps
+   min-height:auto, so nothing ever shrank). The text area is now
+   the shrinkable, scrollable region in both surfaces; the scene
+   panel's choices and control row stay pinned below its text.
+   (2) The control row could not fit the 390px floor: .pillbtn's
+   flex items keep min-width:auto, i.e. min-content = label +
+   2x26px padding, so Leave + step + Back + Continue summed to
+   404px against 370px available and Continue ran off the right
+   edge. Lesson-row buttons now shrink (min-width:0, tighter
+   padding) and the step indicator — never a button — is the
+   compressible element. */
+.lstage .revpanel { flex: 0 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.zone-player:has(> .lessonpanel) { display: flex; flex-direction: column; min-height: 0; }
+.zone-player .lessonpanel { display: flex; flex-direction: column; flex: 0 1 auto; min-height: 0; }
+.lessonpanel .lessonscroll { flex: 0 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.lessonpanel .lchoices, .lessonpanel .revctl { flex: none; }
+.lstage .revctl { gap: 8px; }
+.lstage .revctl .pillbtn, .lessonpanel .revctl .pillbtn { min-width: 0; padding: 0 12px; }
+/* The medium layer fixes .pillbtn.ghost at 40px tall (its hit area
+   is expanded by a pseudo-element); the stage row already carries a
+   44px min-height guard in that layer, the panel row did not — the
+   panel's Back button rendered 40px. The 44px tap floor applies to
+   the button itself. */
+.lessonpanel .revctl .pillbtn { min-height: 44px; }
+.lstage .revctl .step, .lessonpanel .revctl .step { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .drillpanel { background: var(--panel); border-radius: 20px; padding: 18px 16px; margin: 14px 2px 0; }
 .dgrid { display: grid; grid-template-columns: repeat(6, 46px); gap: 10px 5px; justify-content: center; }
 .dgrid .cell { position: relative; width: 46px; height: 64px; cursor: pointer; }

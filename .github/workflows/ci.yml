@@ -197,6 +197,7 @@ jobs:
             sleep 1
           done
           npm run test:browser -- http://127.0.0.1:4173 work/browser-smoke
+          node scripts/browser-lesson-layout.mjs http://127.0.0.1:4173 work/program-evidence/lesson-layout
           node scripts/browser-in-person.mjs http://127.0.0.1:4173 work/program-evidence/riichi-tools
           for variant in hong-kong mcr taiwanese; do
             node scripts/browser-variants.mjs http://127.0.0.1:4173 work/program-evidence/variants "$variant"

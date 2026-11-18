@@ -3615,9 +3615,16 @@ export class App {
   private lessonPanelEl(): HTMLElement {
     const view = this.lesson!.view();
     const panel = h("div", { class: "revpanel lessonpanel" });
-    panel.append(h("div", { class: "lab" }, view.lab), h("p", {}, view.text));
-    if (view.note) panel.append(h("p", { class: "dim" }, view.note));
-    if (view.strip) panel.append(this.lessonStripEl(view.strip));
+    // The text block is the panel's scroll region (fix round,
+    // 2026-11-17): choices and the control row stay pinned below it
+    // while long step text — TU-8's worked breakdown is the floor
+    // case — scrolls inside the panel instead of pushing the panel
+    // past the bottom of the table.
+    const scroll = h("div", { class: "lessonscroll" });
+    scroll.append(h("div", { class: "lab" }, view.lab), h("p", {}, view.text));
+    if (view.note) scroll.append(h("p", { class: "dim" }, view.note));
+    if (view.strip) scroll.append(this.lessonStripEl(view.strip));
+    panel.append(scroll);
     const choices = this.lessonChoicesEl();
     if (choices) panel.append(choices);
     panel.append(this.lessonCtlEl(true));
