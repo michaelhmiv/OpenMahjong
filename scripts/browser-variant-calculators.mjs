@@ -52,7 +52,27 @@ try {
         .getByLabel("Named preset", { exact: true })
         .selectOption(preset);
       await click("Start scorekeeper");
+      // Compact flow: the win context is chosen on the scorekeeper —
+      // tap the winner's seat, pick the win type, name the discarder.
+      const seat = (n) =>
+        page
+          .getByRole("button", {
+            name: new RegExp(`Player ${n} · .* points`),
+          })
+          .click();
+      const discarder = (n) =>
+        page.locator(".cx-seatchip", { hasText: `Player ${n}` }).click();
+      const clickTimes = async (name, times) => {
+        for (let i = 0; i < times; i++) await click(name);
+      };
       if (variant !== "american") {
+        await seat(1);
+        if (variant === "hong-kong") await click("Self-draw");
+        else {
+          await click("On a discard");
+          await discarder(2);
+        }
+        await click("Score it from the tiles");
         await snap("tiles");
         const values =
           variant === "mcr"
@@ -95,53 +115,40 @@ try {
           .selectOption(
             variant === "mcr" ? "6" : variant === "taiwanese" ? "31" : "27",
           );
-        if (variant === "hong-kong")
-          await page
-            .getByLabel("Win type", { exact: true })
-            .selectOption("tsumo");
-        await click("Calculate payments");
+        await click("Show payments");
         await page.locator(".calculator-output").scrollIntoViewIfNeeded();
         await snap("tile-payments");
-        assert.ok(await page.getByText("Who pays", { exact: true }).count());
-        await page
-          .getByLabel("I confirm the payment breakdown", { exact: true })
-          .check();
+        assert.ok(await page.locator(".cx-payline").count());
+        // The Check payments screen is the confirmation step.
         await click("Confirm and add to table");
-        await click("Calculate a hand");
       }
       if (variant === "american") {
+        await seat(1);
+        await click("On a discard");
+        await discarder(2);
         await page.getByLabel("Printed value", { exact: true }).fill("25");
         await page.getByLabel("Jokerless at the win", { exact: true }).check();
         await snap("entered-value");
       } else {
-        await click(
-          variant === "taiwanese" ? "Fast tai entry" : "Fast fan entry",
-        );
-        await page
-          .getByLabel(
-            variant === "taiwanese"
-              ? "Tai excluding dealer bonus"
-              : variant === "mcr"
-                ? "Fan excluding flowers"
-                : "Fan · Scoring units",
-            { exact: true },
-          )
-          .fill(variant === "mcr" ? "8" : "3");
+        // Fast entry: a fresh seat tap per hand; values by stepper.
+        await seat(variant === "taiwanese" ? 2 : 1);
         if (variant === "taiwanese") {
-          // Dealer repeats are derived from the ledger (the tile hand
-          // above was a dealer win, so the counter already reads 1).
-          await page.getByLabel("Winner", { exact: true }).selectOption("1");
-          await page
-            .getByLabel("Win type", { exact: true })
-            .selectOption("tsumo");
+          // A non-dealer self-draw. Dealer repeats are derived from
+          // the ledger (the tile hand above was a dealer win, so the
+          // counter already reads 1).
+          await click("Self-draw");
+          await clickTimes("Increase Tai excluding dealer bonus", 3);
+        } else {
+          await click("On a discard");
+          await discarder(2);
+          if (variant === "mcr")
+            // Fan starts at the 8 minimum; add two flowers.
+            await clickTimes("Increase Flowers", 2);
+          else await click("3");
         }
-        if (variant === "mcr")
-          await page
-            .getByLabel("Number of flowers (0–8)", { exact: true })
-            .fill("2");
         await snap("fast");
       }
-      await click("Calculate payments");
+      await click("Show payments");
       await page.locator(".calculator-output").scrollIntoViewIfNeeded();
       await snap("fast-payments");
       const axe = await new AxeBuilder({ page })
@@ -154,15 +161,13 @@ try {
         })),
         [],
       );
-      await page
-        .getByLabel("I confirm the payment breakdown", { exact: true })
-        .check();
       await click("Confirm and add to table");
       await snap("ledger");
       await page
         .getByRole("button", { name: "Correct this entry", exact: true })
         .last()
         .click();
+      await click("Correct the breakdown");
       const fact =
         variant === "american"
           ? "Value entered from your physical card · Original 25"
@@ -189,12 +194,9 @@ try {
       );
       await page.locator(".calculator-output").scrollIntoViewIfNeeded();
       await snap("correction");
-      await page
-        .getByLabel("I confirm the payment breakdown", { exact: true })
-        .check();
       await click("Confirm correction");
       await click("Undo last entry");
-      await click("Final standings and settlement");
+      await click("Settlement");
       await snap("settlement");
       await page.evaluate(() => navigator.serviceWorker.ready);
       const cdp = await ctx.newCDPSession(page);

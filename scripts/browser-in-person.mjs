@@ -40,6 +40,18 @@ for (const viewport of [
   await page
     .getByRole("button", { name: "Start scorekeeper", exact: true })
     .click();
+  // Compact flow: tap the winner's seat, name the discarder, then
+  // score the hand from its tiles.
+  await page
+    .getByRole("button", { name: /Player 1 · .* points/ })
+    .click();
+  await page
+    .getByRole("button", { name: "On a discard", exact: true })
+    .click();
+  await page.locator(".cx-seatchip", { hasText: "Player 2" }).click();
+  await page
+    .getByRole("button", { name: "Score it from the tiles", exact: true })
+    .click();
   await page.screenshot({ path: `${out}/tile-entry-${viewport.width}.png` });
   for (const t of [
     "1m",
@@ -60,37 +72,30 @@ for (const viewport of [
     await page.getByRole("button", { name: `Add ${t}`, exact: true }).click();
   await page.getByLabel("Winning tile", { exact: true }).selectOption("33");
   await page
-    .getByRole("button", { name: "Calculate payments", exact: true })
+    .getByRole("button", { name: "Show payments", exact: true })
     .click();
   await page.locator(".calculator-output").scrollIntoViewIfNeeded();
   await page.screenshot({ path: `${out}/tile-payments-${viewport.width}.png` });
-  await page
-    .getByLabel("I confirm the payment breakdown", { exact: true })
-    .check();
+  // The Check payments screen is the confirmation step (no checkbox).
   await page
     .getByRole("button", { name: "Confirm and add to table", exact: true })
     .click();
+  // Fast entry: same seat-first flow, value by stepper quick chips.
   await page
-    .getByRole("button", { name: "Calculate a hand", exact: true })
+    .getByRole("button", { name: /Player 1 · .* points/ })
     .click();
   await page
-    .getByRole("button", { name: "Fast han / fu", exact: true })
+    .getByRole("button", { name: "On a discard", exact: true })
     .click();
-  await page
-    .getByLabel("Han · Scoring doubles, including bonus tiles", { exact: true })
-    .fill("3");
-  await page
-    .getByLabel("Fu · Hand points before the han multipliers", { exact: true })
-    .selectOption("40");
+  await page.locator(".cx-seatchip", { hasText: "Player 2" }).click();
+  await page.getByRole("button", { name: "3", exact: true }).click();
+  await page.getByRole("button", { name: "40", exact: true }).click();
   await page.screenshot({ path: `${out}/fast-entry-${viewport.width}.png` });
   await page
-    .getByRole("button", { name: "Calculate payments", exact: true })
+    .getByRole("button", { name: "Show payments", exact: true })
     .click();
   await page.locator(".calculator-output").scrollIntoViewIfNeeded();
   await page.screenshot({ path: `${out}/fast-payments-${viewport.width}.png` });
-  await page
-    .getByLabel("I confirm the payment breakdown", { exact: true })
-    .check();
   await page
     .getByRole("button", { name: "Confirm and add to table", exact: true })
     .click();
@@ -101,6 +106,9 @@ for (const viewport of [
   await page
     .getByRole("button", { name: "Correct this entry", exact: true })
     .last()
+    .click();
+  await page
+    .getByRole("button", { name: "Correct the breakdown", exact: true })
     .click();
   await page.getByLabel("Entered han · Original 3", { exact: true }).fill("4");
   await page
@@ -115,9 +123,6 @@ for (const viewport of [
   await page.locator(".calculator-output").scrollIntoViewIfNeeded();
   await page.screenshot({ path: `${out}/correction-${viewport.width}.png` });
   await page
-    .getByLabel("I confirm the payment breakdown", { exact: true })
-    .check();
-  await page
     .getByRole("button", { name: "Confirm correction", exact: true })
     .click();
   await page
@@ -125,7 +130,7 @@ for (const viewport of [
     .click();
   await page
     .getByRole("button", {
-      name: "Final standings and settlement",
+      name: "Settlement",
       exact: true,
     })
     .click();
