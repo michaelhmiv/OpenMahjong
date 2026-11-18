@@ -19,6 +19,10 @@
  *   heuristic/learning-record talk, no untaught jargon (chow, ting,
  *   fu), no cross-variant comparisons (riichi, dora), and no
  *   tile-code notation in teaching text.
+ * - Definition audit (Nov 17, 2026): the term list above also covers
+ *   the surface names a player can meet before finishing the track
+ *   (meld, live wall, exposed, the win-list award names) — each is
+ *   first used at the step that defines it in plain words.
  */
 import { describe, expect, it } from "vitest";
 import {
@@ -109,6 +113,23 @@ const TERMS: readonly {
   { term: "reserve", pattern: /\breserve\b/i, lesson: "tw-flowers", step: 2 },
   { term: "wait", pattern: /\bwaits?\b|\bwaiting\b/i, lesson: "tw-structure", step: 0 },
   { term: "ready", pattern: /\bready\b/i, lesson: "tw-structure", step: 0 },
+  // Definition audit (Nov 17, 2026): names a Taiwanese player meets
+  // on the win list, the table and the calculator must be defined at
+  // their first use inside this track — a definition in another
+  // track does not count.
+  { term: "exposed", pattern: /\bexposed\b/i, lesson: "tw-tiles", step: 16 },
+  { term: "meld", pattern: /\bmelds?\b/i, lesson: "tw-turns", step: 3 },
+  { term: "live wall", pattern: /\blive wall\b/i, lesson: "tw-flowers", step: 0 },
+  { term: "quartet", pattern: /\bquartets?\b/i, lesson: "tw-flowers", step: 3 },
+  { term: "Eight Immortals", pattern: /\beight immortals\b/i, lesson: "tw-flowers", step: 3 },
+  { term: "closed wait", pattern: /\bclosed wait\b/i, lesson: "tw-structure", step: 1 },
+  { term: "flush", pattern: /\bflush\b/i, lesson: "tw-structure", step: 6 },
+  { term: "All Honors", pattern: /\ball honors\b/i, lesson: "tw-structure", step: 6 },
+  { term: "Little Four Winds", pattern: /\blittle four winds\b/i, lesson: "tw-structure", step: 7 },
+  { term: "Big Four Winds", pattern: /\bbig four winds\b/i, lesson: "tw-structure", step: 7 },
+  { term: "unique", pattern: /\bunique\b/i, lesson: "tw-waits", step: 0 },
+  { term: "Heavenly hand", pattern: /\bheavenly\b/i, lesson: "tw-quads", step: 5 },
+  { term: "Earthly hand", pattern: /\bearthly\b/i, lesson: "tw-quads", step: 5 },
 ];
 
 describe("TW term order: no term is used before the step that teaches it", () => {

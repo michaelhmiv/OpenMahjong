@@ -119,7 +119,7 @@ export function mountVariantCalculator(
         ? "Fan are scoring units awarded for hand patterns. This profile requires three fan by default, then converts fan into base points and applies the payer split."
         : variant === "mcr"
           ? "Fan are additive pattern points in MCR (Mahjong Competition Rules). Flowers are separate points and cannot meet the eight-fan minimum."
-          : "Tai are additive pattern points. Each payment is base points plus tai times the agreed unit, with the dealer bonus added only to a payment involving the dealer.",
+          : "Tai are scoring points added together. Each payment is base points plus tai times the points per tai, with the dealer bonus added only to a payment involving the dealer.",
       "dim",
     ),
   );
@@ -184,7 +184,7 @@ export function mountVariantCalculator(
       field("Points per tai", unit),
       el(
         "p",
-        "Every-flower · No Ting · Five sets and a pair. Enter tai without dealer bonuses; the payer lines add 1 + 2 × dealer repeats only to payments involving the dealer.",
+        "Every flower earns one tai, whichever plant or season it is. You do not need to announce a ready hand before you may win. Five sets and a pair. Enter tai without dealer bonuses; the payer lines add 1 + 2 × dealer repeats only to payments involving the dealer.",
         "dim",
       ),
     );
@@ -265,8 +265,18 @@ export function mountVariantCalculator(
     ),
     kind = select(
       [
-        ["chi", "Open sequence (chow)"],
-        ["pon", "Open triplet (pung)"],
+        [
+          "chi",
+          variant === "taiwanese"
+            ? "Open sequence — a run of three in one suit"
+            : "Open sequence (chow)",
+        ],
+        [
+          "pon",
+          variant === "taiwanese"
+            ? "Open triplet — three of a kind"
+            : "Open triplet (pung)",
+        ],
         ["ankan", "Concealed quad"],
         ["daiminkan", "Open quad"],
         ["shouminkan", "Added quad"],
@@ -315,7 +325,24 @@ export function mountVariantCalculator(
     melds.forEach((m, i) => {
       const row = el("div", "", "tool-meld");
       row.append(
-        el("span", m.kind),
+        el(
+          "span",
+          (
+            {
+              chi:
+                variant === "taiwanese"
+                  ? "Open sequence"
+                  : "Open sequence (chow)",
+              pon:
+                variant === "taiwanese"
+                  ? "Open triplet"
+                  : "Open triplet (pung)",
+              ankan: "Concealed quad",
+              daiminkan: "Open quad",
+              shouminkan: "Added quad",
+            } as Record<string, string>
+          )[m.kind] ?? m.kind,
+        ),
         ...m.tiles.map(options.renderTile),
         button("Remove meld", () => {
           melds.splice(i, 1);
@@ -396,9 +423,24 @@ export function mountVariantCalculator(
         : "Win on a quad replacement",
     ],
     ["robbingQuad", "Win by robbing an added quad"],
-    ["lastWall", "Win on the last live tile or final discard"],
-    ["initial", "Initial uninterrupted self-draw"],
-    ["lastCopy", "Winning tile is the last unexposed copy"],
+    [
+      "lastWall",
+      variant === "taiwanese"
+        ? "Win by drawing the last tile of the live wall"
+        : "Win on the last live tile or final discard",
+    ],
+    [
+      "initial",
+      variant === "taiwanese"
+        ? "Win on the very first draw of the hand"
+        : "Initial uninterrupted self-draw",
+    ],
+    [
+      "lastCopy",
+      variant === "taiwanese"
+        ? "Winning tile is the last copy that is not showing"
+        : "Winning tile is the last unexposed copy",
+    ],
   ]) {
     const i = input("", "checkbox");
     i.checked =
