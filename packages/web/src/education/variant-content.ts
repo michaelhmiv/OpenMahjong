@@ -52,9 +52,11 @@ export interface VariantChoiceQuestion extends VariantQuestionBase {
 }
 export interface VariantTilePickQuestion extends VariantQuestionBase {
   readonly kind: "tile-pick";
-  /** Notation for the shown tile row; tiles are tapped by position. */
+  /** Notation for the shown tile row; tiles are tapped by position.
+   * The row renders in exactly the order this notation names the
+   * tiles (education/notation.ts), never in canonical type order. */
   readonly tiles: string;
-  /** Indices into the expanded tile row that must be picked. */
+  /** Indices into the tile row, in notation order, that must be picked. */
   readonly picks: readonly number[];
 }
 export type VariantQuestion = VariantChoiceQuestion | VariantTilePickQuestion;

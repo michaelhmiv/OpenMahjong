@@ -85,15 +85,22 @@ export function tileName(tile: Tile): string {
 }
 
 /**
- * Parse compact hand notation into per-type counts.
+ * Parse compact hand notation into the sequence of tile types, in the
+ * order the notation names them.
  *
  * Notation: runs of digits followed by a suit letter — `m` (man), `p` (pin),
  * `s` (sou), `z` (honors 1–7 = E S W N Wh Gr Rd). A `0` in a suited run is
- * the red five; it counts toward its type (red-ness is an instance property,
- * counts are type-level). Examples: "234m55p", "19m19p19s1234567z".
+ * the red five; it names its type (red-ness is an instance property,
+ * sequences are type-level). Examples: "234m55p", "19m19p19s1234567z".
+ *
+ * This is the one notation parser: parseCounts tallies this sequence, so
+ * the counted view and the ordered view can never disagree about the
+ * grammar. Callers that display or grade a row by position must use this
+ * sequence — never a counts array, whose iteration order is canonical
+ * type order, not the order the notation was written in.
  */
-export function parseCounts(notation: string): number[] {
-  const counts = new Array<number>(TILE_TYPE_COUNT).fill(0);
+export function parseSequence(notation: string): number[] {
+  const types: number[] = [];
   let digits: number[] = [];
   for (const ch of notation.trim()) {
     if (ch >= "0" && ch <= "9") {
@@ -106,15 +113,25 @@ export function parseCounts(notation: string): number[] {
     for (const d of digits) {
       if (ch === "z") {
         if (d < 1 || d > 7) throw new Error(`Invalid honor digit: ${d}`);
-        counts[suitBase + d - 1]!++;
+        types.push(suitBase + d - 1);
       } else {
-        if (d === 0) counts[suitBase + 4]!++;
-        else counts[suitBase + d - 1]!++;
+        if (d === 0) types.push(suitBase + 4);
+        else types.push(suitBase + d - 1);
       }
     }
     digits = [];
   }
   if (digits.length > 0) throw new Error(`Trailing digits in notation: ${notation}`);
+  return types;
+}
+
+/**
+ * Parse compact hand notation into per-type counts. Derived from
+ * parseSequence so both views always agree.
+ */
+export function parseCounts(notation: string): number[] {
+  const counts = new Array<number>(TILE_TYPE_COUNT).fill(0);
+  for (const type of parseSequence(notation)) counts[type]!++;
   return counts;
 }
 
