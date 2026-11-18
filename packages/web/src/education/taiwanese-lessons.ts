@@ -19,6 +19,18 @@
  * lessons 5, 6, 7, 8 and 9 count NEW pictured hands the teaching never
  * used, verified against the scorer; lessons 1 and 2 drill the wind
  * faces and characters numbers by face, shuffled, not by row position.
+ *
+ * Definition audit (Nov 17, 2026): every term's first use in this
+ * track carries its own plain-words definition — claim and discard
+ * are glossed where lesson 2 first spends them, the dealer bonus is
+ * named only where the payments lesson prices it, and the names a
+ * player meets on the win list and the calculator (meld, live wall,
+ * exposed, closed wait, unique wait, Full flush, All Honors, Little
+ * and Big Four Winds, quartet, Eight Immortals, Heavenly and Earthly
+ * hand) are each defined at the step that teaches their value. Seat
+ * wind and round wind are taught on a pictured table order in
+ * lesson 2: what each names, how a player knows theirs, and what a
+ * wind triplet is worth in tai (one, whichever wind it is).
  */
 import {
   parseCounts,
@@ -155,7 +167,7 @@ const TRANSFER_TWO = "123456789m111z222z33z";
 export const TAIWANESE_LESSONS: VariantLesson[] = [
   lesson("tiles", "Tiles, suits and the sixteen-tile hand", [
     {
-      text: "Taiwanese mahjong is played with tiles. The tiles come in three suits — three groups that share one kind of face. The first suit is characters, numbered 1 to 9 and shown here in order. A characters tile has a two-part face: the dark character on top is the number, and the red mark below is the same on every characters tile. Read the row left to right: 1, 2, 3, and so on to 9.",
+      text: "Taiwanese mahjong is played with tiles. The printed side of a tile is its face. The tiles come in three suits — three groups that share one kind of face. The first suit is characters, numbered 1 to 9 and shown here in order. A characters tile has a two-part face: the dark character on top is the number, and the red mark below is the same on every characters tile. Read the row left to right: 1, 2, 3, and so on to 9.",
       tiles: "123456789m",
     },
     {
@@ -261,15 +273,15 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "A hand is built from sets and a pair. A sequence is three tiles in a row in one suit, like the 3, 4 and 5 of circles shown first here. A triplet is three copies of the same tile, like the three copies of the 9 of bamboo. A pair is two copies of the same tile, like the two East winds at the end. A sequence can only use one suit — numbers from different suits cannot be mixed in one sequence.",
+      text: "A hand is built from sets and a pair. A set is a small group of tiles that go together, in one of the shapes in this step. A sequence is three tiles in a row in one suit, like the 3, 4 and 5 of circles shown first here. A triplet is three copies of the same tile, like the three copies of the 9 of bamboo. A pair is two copies of the same tile, like the two East winds at the end. A sequence can only use one suit — numbers from different suits cannot be mixed in one sequence.",
       tiles: "345p999s11z",
     },
     {
-      text: "One more kind of set: a quad is four copies of the same tile, like the four copies of the 2 of bamboo shown here. A quad counts as one set, even though it holds four tiles. Because the fourth tile is extra, you draw one more tile to make up for it when you declare a quad. Quads are covered in full in the quad lesson.",
+      text: "One more kind of set: a quad is four copies of the same tile, like the four copies of the 2 of bamboo shown here. A quad counts as one set, even though it holds four tiles. Because the fourth tile is extra, you draw one more tile to make up for it when you declare a quad — declare means announce that you have it — and that extra draw is a replacement tile, a tile drawn to make up the number. Quads are covered in full in the quad lesson.",
       tiles: "2222s",
     },
     {
-      text: "There are also eight tiles that never join a set or the pair: four plants — plum, orchid, chrysanthemum and the bamboo plant — and four seasons — spring, summer, autumn and winter. Together they are called flowers. When a flower comes to you, you set it aside face-up beside your hand and draw another tile in its place, so your hand keeps its proper size. There are four copies of each of the 34 ordinary kinds — 136 tiles — plus the eight flowers: 144 tiles in all.",
+      text: "There are also eight tiles that never join a set or the pair: four plants — plum, orchid, chrysanthemum and the bamboo plant — and four seasons — spring, summer, autumn and winter. Together they are called flowers. When a flower comes to you, you set it aside face-up beside your hand and draw another tile in its place, so your hand keeps its proper size. A tile sitting face-up beside a hand like that is exposed — exposed means shown where every player can see it. There are four copies of each of the 34 ordinary kinds — 136 tiles — plus the eight flowers: 144 tiles in all.",
     },
     {
       text: "In Taiwanese mahjong you hold sixteen tiles between turns, and you win with seventeen: five sets and a pair. The pictured hand is a complete one. Read it group by group: 1, 2, 3 of characters and 4, 5, 6 of characters; 1, 2, 3 of circles; 7, 8, 9 of bamboo; three East winds; and a pair of white dragons — two white dragons. That is five sets and a pair, seventeen tiles.",
@@ -304,7 +316,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       tiles: "111z",
     },
     {
-      text: "Now count one small hand all the way to a payment. The pictured hand holds: 1, 2, 3 of characters and 4, 5, 6 of characters; 1, 2, 3 of circles, a pair of the 2 of circles, and the 4 and 5 of circles; and three East winds, which were claimed from another player's discard and are shown with the hand. Another player then discarded the 6 of circles, completing the 4, 5 and 6 of circles. The hand's only tai is its East triplet: one tai. A hand's payment is a base of 30 points plus 10 points for each tai, so the player who discarded the winning tile pays 30 plus 10 — 40 points.",
+      text: "Now count one small hand all the way to a payment. The pictured hand holds: 1, 2, 3 of characters and 4, 5, 6 of characters; 1, 2, 3 of circles, a pair of the 2 of circles, and the 4 and 5 of circles; and three East winds, which were claimed — taken by this player from a tile another player had put out, to complete the triplet — and are shown with the hand. Another player then discarded the 6 of circles — put it out face-up on their turn — completing the 4, 5 and 6 of circles. The hand's only tai is its East triplet: one tai. A hand's payment is a base of 30 points plus 10 points for each tai, so the player who discarded the winning tile pays 30 plus 10 — 40 points.",
       hand: MINI,
     },
     {
@@ -332,11 +344,11 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "Four players sit around the table, and each player holds a seat wind for the hand being played. The player who deals the hand — the dealer — holds East. Going around the table in the order play passes, the other players hold South, then West, then North. The four faces shown here are the seat winds in that table order: East, South, West, North. Your seat wind changes as the deal passes from player to player.",
+      text: "Four players sit around the table, and each player holds a seat wind for the hand being played. The player who deals the hand — the dealer — holds East. Going around the table in the order play passes, the other players hold South, then West, then North. The four faces shown here are the seat winds in that table order: East, South, West, North. Your seat wind changes as the deal passes from player to player. Picture the four seats around a square table in the order the pictured winds run: the dealer sits at East, the player whose turn comes next sits at South, the player across from the dealer sits at West, and the last player sits at North. That is how you know your own seat wind: find the dealer, then count seats in turn order from East. If you dealt, you are East; if the player just before you in turn order dealt, you are North. Your seat wind is yours for one deal only — when the deal passes, every seat wind moves with it. One deal of play is called a hand, as well as the tiles a player holds.",
       tiles: "1234z",
     },
     {
-      text: "A game is played in rounds, and each round is named by a wind: the round wind. The game begins with the East round, then comes the South round, then West, then North. During the East round, every hand is an East-round hand, whoever deals it. At this table the seat wind and the round wind do not change what a wind triplet earns: every wind triplet earns one tai, as the everyday awards said.",
+      text: "A game is played in rounds, and each round is named by a wind: the round wind. The game begins with the East round, then comes the South round, then West, then North. During the East round, every hand is an East-round hand, whoever deals it. At this table the seat wind and the round wind do not change what a wind triplet earns: every wind triplet earns one tai, as the everyday awards said. The round wind stays the same while each of the four players deals once — four deals in a row share one round wind — and then the next round begins. A hand label like East 1 names the round wind first and then which deal of the round it is: East 1 is the first deal of the East round. And the worth of a wind triplet in tai, concretely: if you are the dealer — East seat — in the South round, a triplet of East (your seat wind), a triplet of South (the round wind) and a triplet of any other wind each earn exactly one tai. No wind triplet earns two tai for matching your seat or the round, and a pair of any wind earns nothing.",
       tiles: "1234z",
     },
     {
@@ -395,7 +407,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       tiles: "222p",
     },
     {
-      text: "A set you claim is shown face-up beside your hand, like the 3, 4 and 5 of characters shown here, and it cannot be changed later. Tiles that stay in your hand, where only you can see them, are concealed tiles. A hand with no claimed sets at all is a concealed hand. A hand with one or more claimed sets is an open hand. Claiming is what opens a hand — drawing and discarding never do.",
+      text: "A set you claim is shown face-up beside your hand, like the 3, 4 and 5 of characters shown here, and it cannot be changed later. A claimed set shown like that is also called a meld, or a declared set — the same set under another name — and a quad you declare is a meld too. Tiles that stay in your hand, where only you can see them, are concealed tiles. A hand with no claimed sets at all is a concealed hand. A hand with one or more claimed sets is an open hand. Claiming is what opens a hand — drawing and discarding never do.",
       tiles: "345m",
     },
     {
@@ -455,7 +467,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
   ]),
   lesson("flowers", "The deal, flowers and replacements", [
     {
-      text: "A game starts with the setup. All the tiles are shuffled face-down and built into a wall: long rows of tiles standing in front of the players. Each player draws sixteen tiles from the wall, and the dealer draws one more, so the dealer starts with seventeen and discards first. The pictured sixteen tiles are one player's dealt hand: 1 to 6 of characters, 1 to 5 of circles, 7, 8 and 9 of bamboo, and a pair of East winds. Ordinary draws during play come from one end of the wall.",
+      text: "A game starts with the setup. All the tiles are shuffled face-down and built into a wall: long rows of tiles standing in front of the players. Each player draws sixteen tiles from the wall, and the dealer draws one more, so the dealer starts with seventeen and discards first. The pictured sixteen tiles are one player's dealt hand: 1 to 6 of characters, 1 to 5 of circles, 7, 8 and 9 of bamboo, and a pair of East winds. Ordinary draws during play come from one end of the wall. The tiles still left to draw during a hand are called the live wall: when a game shows a count of tiles left, it is counting the live wall.",
       hand: WORKED_READY,
     },
     {
@@ -465,7 +477,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       text: "The far end of the wall has a name: the last sixteen tiles there are the reserve. Ordinary draws never touch the reserve. The reserve exists only to supply replacement draws — the extra tiles drawn for flowers and for quads. When the ordinary tiles run out, no more replacements can be made, because the reserve is not a supply of ordinary draws.",
     },
     {
-      text: "Flowers earn tai, as the table lesson said: every flower or season you set aside earns one tai, whichever plant or season it is. If you set aside all four plants, or all four seasons, that adds two more tai on top of the four single ones. If you set aside all eight flowers, they earn eight tai in total instead of the separate amounts — and, as the house rules said, you still need five sets and a pair to win.",
+      text: "Flowers earn tai, as the table lesson said: every flower or season you set aside earns one tai, whichever plant or season it is. If you set aside all four plants, or all four seasons, that adds two more tai on top of the four single ones. If you set aside all eight flowers, they earn eight tai in total instead of the separate amounts — and, as the house rules said, you still need five sets and a pair to win. On a win's list of awards, a complete set of four like the four plants is named a complete flower or season quartet — a quartet is a complete set of four — and the all-eight award is named Eight Immortals.",
     },
     {
       question: choice(
@@ -484,7 +496,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "A hand can also end with no winner: the ordinary tiles run out and nobody has completed a hand. That is a drawn hand. In a drawn hand nobody is paid anything. The same dealer then deals the next hand — the dealer repeats, in the sense the table lesson defined: a hand with no winner is one of the two results that keep the same dealer on.",
+      text: "A hand can also end with no winner: the live wall runs out and nobody has completed a hand. That is a drawn hand. In a drawn hand nobody is paid anything. The same dealer then deals the next hand — the dealer repeats, in the sense the table lesson defined: a hand with no winner is one of the two results that keep the same dealer on.",
     },
     {
       question: choice(
@@ -603,7 +615,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       hand: WORKED_READY,
     },
     {
-      text: "Waits come in kinds, named by what is unfinished. A two-sided wait is an open-ended pair of numbers like the 4 and 5 of circles: two different tiles complete it, one at each end. An edge wait sits at the end of a suit — the 1 and 2 shown here can only be completed by the 3, and an 8 and 9 only by the 7 — so only one tile completes it. A middle wait is the two ends of a sequence with the middle missing, like a 2 and a 4 waiting only for the 3. A pair wait is a single tile waiting for its matching tile to make the pair.",
+      text: "Waits come in kinds, named by what is unfinished. A two-sided wait is an open-ended pair of numbers like the 4 and 5 of circles: two different tiles complete it, one at each end. An edge wait sits at the end of a suit — the 1 and 2 shown here can only be completed by the 3, and an 8 and 9 only by the 7 — so only one tile completes it. A middle wait (also called a closed wait) is the two ends of a sequence with the middle missing, like a 2 and a 4 waiting only for the 3. A pair wait is a single tile waiting for its matching tile to make the pair.",
       tiles: "12p",
     },
     {
@@ -618,7 +630,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "Some awards turn on how a hand was waiting. The pictured hand is five sequences and a pair: 1, 2, 3 and 4, 5, 6 of characters; 2, 3, 4 of circles; 5, 6, 7 and 7, 8, 9 of bamboo; and a pair of the 2 of circles. It was won on a discard of the 9 of bamboo, which completed the 7, 8 and 9 of bamboo — a two-sided wait, since the 6 of bamboo would also have completed it. Five sequences with a pair from a suit, no honors, no flowers set aside, and a two-sided discard win like this earn the All Sequences award: two tai. A self-draw, completing the pair, or a one-tile wait would not have earned it.",
+      text: "Some awards turn on how a hand was waiting. The pictured hand is five sequences and a pair: 1, 2, 3 and 4, 5, 6 of characters; 2, 3, 4 of circles; 5, 6, 7 and 7, 8, 9 of bamboo; and a pair of the 2 of circles. It was won on a discard of the 9 of bamboo, which completed the 7, 8 and 9 of bamboo — a two-sided wait, since the 6 of bamboo would also have completed it. Five sequences with a pair from a suit, no honors, no flowers set aside, and a two-sided discard win like this earn the All Sequences award: two tai. A self-draw, completing the pair, or a wait on only one kind of tile would not have earned it.",
       hand: "123456m234p567789s22p",
     },
     {
@@ -640,11 +652,11 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "Suit patterns pay more for narrower hands. The pictured hand uses one numbered suit with honors: 1, 2, 3, 4, 5, 6, 7, 8 and 9 of characters; three East winds; three South winds; and a pair of North winds. One numbered suit together with honors earns four tai. The same shape with no honors at all — one suit only — earns eight tai. A hand of honors only, with no numbered suit, also earns eight tai. These three are alternatives: a hand earns only the one that matches it, never two of them added together.",
+      text: "Suit patterns pay more for narrower hands. The pictured hand uses one numbered suit with honors: 1, 2, 3, 4, 5, 6, 7, 8 and 9 of characters; three East winds; three South winds; and a pair of North winds. One numbered suit together with honors earns four tai. The same shape with no honors at all — one suit only — earns eight tai. A hand of honors only, with no numbered suit, also earns eight tai. These three are alternatives: a hand earns only the one that matches it, never two of them added together. On a win's list of awards, the one-suit-only award is named Full flush — flush is the list's word for a hand built from a single suit — and the honors-only award is named All Honors.",
       hand: "123456789m11122233z",
     },
     {
-      text: "The largest honor patterns follow the same replacement rule. The pictured hand holds three white dragons, three green dragons, and a pair of red dragons, with three sequences: that is Little Three Dragons — two dragon triplets with the third dragon as the pair — earning four tai, which replaces the two separate dragon-triplet tai inside it. Three dragon triplets earn Big Three Dragons, eight tai, replacing all three separate awards. Three wind triplets with the fourth wind as the pair earn eight tai, and four wind triplets earn sixteen tai — each replacing the separate wind-triplet tai inside it.",
+      text: "The largest honor patterns follow the same replacement rule. The pictured hand holds three white dragons, three green dragons, and a pair of red dragons, with three sequences: that is Little Three Dragons — two dragon triplets with the third dragon as the pair — earning four tai, which replaces the two separate dragon-triplet tai inside it. Three dragon triplets earn Big Three Dragons, eight tai, replacing all three separate awards. Three wind triplets with the fourth wind as the pair earn eight tai, named Little Four Winds on the awards list, and four wind triplets earn sixteen tai, named Big Four Winds — each replacing the separate wind-triplet tai inside it.",
       hand: "555666z123m456p789s77z",
     },
     {
@@ -688,7 +700,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
   ]),
   lesson("waits", "Waits that pay, and passed wins", [
     {
-      text: "A one-kind wait pays. If only one kind of tile could complete a ready hand, winning earns one extra tai. The pictured hand shows why: 1, 2, 3 and 4, 5, 6 of characters; 1, 2, 3 of circles; 7, 8, 9 of bamboo; three East winds; and a single white dragon. Only a second white dragon completes this hand — a pair wait with one possible kind. Edge waits and middle waits can also be one-kind waits. A two-sided wait can never be one, because two kinds of tile complete it.",
+      text: "A one-kind wait pays. If only one kind of tile could complete a ready hand, winning earns one extra tai. The pictured hand shows why: 1, 2, 3 and 4, 5, 6 of characters; 1, 2, 3 of circles; 7, 8, 9 of bamboo; three East winds; and a single white dragon. Only a second white dragon completes this hand — a pair wait with one possible kind. Edge waits and middle waits can also be one-kind waits. A two-sided wait can never be one, because two kinds of tile complete it. On a win's list of awards, this one-kind award is named Unique edge, closed or pair wait: unique because only one kind of tile could complete the hand.",
       hand: "123456m123p789s111z5z",
     },
     {
@@ -753,7 +765,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       tiles: "2222s",
     },
     {
-      text: "Quads earn tai: a claimed quad or an added quad earns one tai, and a concealed quad earns two tai — the two replace the one for that set; they are not added to it. After declaring any quad you draw a replacement tile from the reserve, to make up for the fourth tile. Winning on a replacement draw earns one more tai. One house rule limits that: if you claimed a quad from another player's discard, you cannot win on the replacement draw that follows it.",
+      text: "Quads earn tai: a claimed quad or an added quad earns one tai, and a concealed quad earns two tai — the two replace the one for that set; they are not added to it. A claimed quad or an added quad is shown where every player can see it, and a win's list of awards calls such a quad an exposed quad; a concealed quad's faces stay hidden. After declaring any quad you draw a replacement tile from the reserve, to make up for the fourth tile. Winning on a replacement draw earns one more tai. One house rule limits that: if you claimed a quad from another player's discard, you cannot win on the replacement draw that follows it.",
     },
     {
       question: choice(
@@ -789,7 +801,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "Two timing awards end the scoring list. Winning by self-draw on the very last ordinary tile earns one tai. And a win on the very first draw of a hand, before anything else has happened, earns the largest everyday awards in the game: if the dealer does it, the hand earns twenty-four tai; if any other player does it on their first draw, sixteen tai. Those first-draw awards are tai, like every award in this track, and they replace the concealed, self-draw and one-kind-wait awards rather than adding to them.",
+      text: "Two timing awards end the scoring list. Winning by self-draw on the very last tile of the live wall earns one tai. And a win on the very first draw of a hand, before anything else has happened, earns the largest everyday awards in the game: if the dealer does it, the hand earns twenty-four tai and the award is named Heavenly hand; if any other player does it on their first draw, sixteen tai, and the award is named Earthly hand. Those first-draw awards are tai, like every award in this track, and they replace the concealed, self-draw and one-kind-wait awards rather than adding to them.",
     },
     {
       text: "Count a replacement win on a new hand. The pictured hand holds: the 1, 2, 3 and the 4, 5, 6 of characters; the 1, 2 and 3 of circles; a quad of the 2 of bamboo; a triplet of West winds; and a pair of white dragons. The bamboo triplet had already been claimed and shown when the player drew the fourth 2 of bamboo and added it, making the quad an added quad. The replacement tile drawn for that quad was the 3 of circles, and it completed the hand.",
@@ -811,7 +823,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "Count the last-tile award on a new hand. The pictured hand holds: the 1, 2, 3 and the 4, 5, 6 of characters; the 1, 2, 3 and the 4, 5, 6 of circles; three East winds, which were claimed; and a pair of the 9 of bamboo. The player drew the very last ordinary tile — the 6 of circles — and it completed the hand.",
+      text: "Count the last-tile award on a new hand. The pictured hand holds: the 1, 2, 3 and the 4, 5, 6 of characters; the 1, 2, 3 and the 4, 5, 6 of circles; three East winds, which were claimed; and a pair of the 9 of bamboo. The player drew the very last tile of the live wall — the 6 of circles — and it completed the hand.",
       hand: LAST_DRAW_NEW,
     },
     {
@@ -821,7 +833,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
         "How many tai does this hand earn in all?",
         ["1 tai", "2 tai", "3 tai", "4 tai"],
         2,
-        "Three tai: one for the East wind triplet, one for winning by self-draw, and one for winning on the very last ordinary tile.",
+        "Three tai: one for the East wind triplet, one for winning by self-draw, and one for winning on the very last tile of the live wall.",
         "Three separate one-tai awards meet here: an honor triplet, the way the hand was won, and which tile it was won on.",
         {
           verify: () =>
@@ -864,7 +876,7 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       text: "Then check the hand for every other award, one family at a time. Honor triplets: the East winds are only a pair, and a pair is not a triplet, so no wind tai. Suit patterns: the hand uses all three suits, so no suit award. The award for having no honors: the East pair is an honor, so that award does not apply. Flowers: none were set aside. Quads: none was declared. Concealed triplets: the hand has none — every set is a sequence. The total is three tai, all of it from the combined award.",
     },
     {
-      text: "Turn the tai into a payment. Each payer owes the base of 30 points plus 10 points for each tai: at three tai, that is 30 plus 30 — 60 points. A self-draw is paid by all three opponents, so before any dealer bonus each opponent would pay 60 points. A discard win is different: only the player who discarded the winning tile pays.",
+      text: "Turn the tai into a payment. Each payer owes the base of 30 points plus 10 points for each tai: at three tai, that is 30 plus 30 — 60 points. A self-draw is paid by all three opponents, so each opponent would pay 60 points, before the extra amount for a payment involving the dealer is added — that extra amount is the dealer bonus, worked out in the next step. A discard win is different: only the player who discarded the winning tile pays.",
     },
     {
       text: "Now add the dealer. Say the dealer is on the second repeat — the dealer has stayed on for two extra hands, in the sense the table lesson defined. A payment that involves the dealer — the dealer paying, or the dealer winning — adds a dealer bonus to that one payment: one extra tai, plus two more for each repeat. On the second repeat that is one plus two times two: five extra tai. The winner of our hand is not the dealer, so only the dealer's own payment carries the bonus: the dealer pays 30 plus eight times ten — 110 points. The other two opponents pay the plain 60 points each. The winner receives 230 points in all.",

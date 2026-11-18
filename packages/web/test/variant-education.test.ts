@@ -60,7 +60,7 @@ describe("original versioned variant teaching", () => {
       lessons.map(lessonText).join(" ").split(/\s+/).length,
     ).toBeGreaterThan(1800);
     const questions = lessons.flatMap(variantLessonQuestions);
-    expect(questions).toHaveLength(38);
+    expect(questions).toHaveLength(58);
     expect(questions.every((q) => q.hint.trim().length > 0)).toBe(true);
     expect(questions.find((q) => q.id === "hk-two-fan")!.verify()).toBe(
       "No — it has only two fan, below the minimum of three",
@@ -78,7 +78,7 @@ describe("original versioned variant teaching", () => {
     expect(
       lessons.map(lessonText).join(" ").split(/\s+/).length,
     ).toBeGreaterThan(1800);
-    expect(lessons.flatMap(variantLessonQuestions)).toHaveLength(20);
+    expect(lessons.flatMap(variantLessonQuestions)).toHaveLength(38);
     mount({ variant: "mcr", lessonId: "mcr-families" });
     // The 81-pattern reference is reachable after the families
     // lesson's final step.
@@ -110,7 +110,8 @@ describe("original versioned variant teaching", () => {
     const lesson = VARIANT_LESSONS[0]!;
     const questions = variantLessonQuestions(lesson);
     const first = mount({ lessonId: lesson.id });
-    // Four text steps precede the first question step.
+    // Five text steps precede the first question step.
+    click("Continue");
     click("Continue");
     click("Continue");
     click("Continue");
@@ -129,7 +130,7 @@ describe("original versioned variant teaching", () => {
         (b) => b.textContent === "136",
       )!.disabled,
     ).toBe(true);
-    expect(progress.active[lesson.id]!.step).toBe(4);
+    expect(progress.active[lesson.id]!.step).toBe(5);
     expect(root.querySelector(".learning-nav")).toBeNull();
     first.destroy();
     mount({ lessonId: lesson.id });

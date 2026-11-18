@@ -226,15 +226,15 @@ export function mountVariantTable(
       dialog.append(
         el(
           "p",
-          `${WINDS[model.roundWind - 27]} round · Hand ${model.kyoku} · ${model.wallRemaining} live tiles`,
+          `${WINDS[model.roundWind - 27]} round · Hand ${model.kyoku} · ${model.wallRemaining} tiles left to draw`,
         ),
         el(
           "p",
           runner.variant === "hong-kong"
-            ? "Clear Chapter · At least three fan; fan are scoring units converted into payer amounts."
+            ? "Hong Kong Old Style · At least three fan to win; fan are scoring units converted into payer amounts. The number after the round wind is the hand number within the round. Live tiles are the tiles still left to draw from the wall. Repeat counts extra hands the same dealer deals again after winning a hand."
             : runner.variant === "mcr"
-              ? "WMO 2006 · At least eight fan before flowers. Every loser pays eight base points."
-              : "Every-flower · No Ting · Five sets and a pair, no minimum tai. Base 30 plus 10 per tai; dealer bonuses apply per payer.",
+              ? "MCR (Mahjong Competition Rules) · A winning hand needs at least eight fan from its patterns before flower points are added. Every player who did not win pays eight base points."
+              : "Every flower earns one tai, whichever plant or season it is. You do not need to announce a ready hand before you may win. Five sets and a pair, no minimum tai. Base 30 plus 10 per tai; dealer bonuses apply per payer.",
         ),
       );
     else {
@@ -365,6 +365,21 @@ export function mountVariantTable(
         );
         for (const p of win.patterns ?? [])
           breakdown.append(el("p", `${p.name} · ${p.units}`));
+        if (runner.variant === "hong-kong")
+          breakdown.append(
+            el(
+              "p",
+              "Each line above names a scoring pattern taught in the Hong Kong lessons and the fan it earns; the lines below show who pays the winner.",
+            ),
+          );
+        if (runner.variant === "mcr")
+          breakdown.append(
+            el(
+              "p",
+              "Each pattern line above is a named feature of the winning hand and the fan it is worth. Each payment line below is what that player pays the winner.",
+              "dim",
+            ),
+          );
         for (const p of win.payments)
           breakdown.append(
             el(
@@ -375,7 +390,7 @@ export function mountVariantTable(
       } else
         breakdown.append(
           el("h2", "No winner"),
-          el("p", "The live wall is exhausted. No win payment is made."),
+          el("p", "The wall is exhausted — no tiles are left to draw. No win payment is made."),
         );
       breakdown.append(
         button(
@@ -404,7 +419,7 @@ export function mountVariantTable(
         controls.append(
           el(
             "p",
-            `${s.rank}. ${s.seat === runner.humanSeat ? "You" : `Player ${s.seat + 1}`} · ${s.score} points · ${s.points > 0 ? "+" : ""}${s.points} net`,
+            `${s.rank}. ${s.seat === runner.humanSeat ? "You" : `Player ${s.seat + 1}`} · ${s.score} points · ${s.points > 0 ? "+" : ""}${s.points} across the whole match`,
           ),
         );
       controls.append(
@@ -418,10 +433,12 @@ export function mountVariantTable(
       return;
     }
     status.textContent =
-      pending?.view.winRestriction ??
-      (pending?.kind === "call"
-        ? "A discarded tile is available for a legal claim."
-        : "Select a tile, then discard.");
+      pending?.view.winRestriction && runner.variant === "taiwanese"
+        ? "You may not win on this draw: a passed win is standing against you, or this draw is the replacement for a quad you claimed. A passed win clears when you discard a tile that could not complete your hand, or declare a quad from a drawn tile."
+        : (pending?.view.winRestriction ??
+          (pending?.kind === "call"
+            ? "A discarded tile is available for a legal claim."
+            : "Select a tile, then discard."));
     if (pending?.kind === "turn") {
       const c = pending.context,
         discard = button(
@@ -497,14 +514,29 @@ export function mountVariantTable(
           ),
         );
       if (c.canPon)
-        controls.append(button("Triplet (pung)", () => act({ type: "pon" })));
+        controls.append(
+          button(
+            runner.variant === "taiwanese"
+              ? "Triplet — claim for three of a kind"
+              : "Triplet (pung)",
+            () => act({ type: "pon" }),
+          ),
+        );
       if (c.canKan)
         controls.append(
-          button("Open quad (kong)", () => act({ type: "daiminkan" })),
+          button(
+            runner.variant === "taiwanese"
+              ? "Open quad — claim for four of a kind"
+              : "Open quad (kong)",
+            () => act({ type: "daiminkan" }),
+          ),
         );
       for (const ids of c.chiOptions) {
-        const b = button("Sequence (chow)", () =>
-          act({ type: "chi", tileIds: ids }),
+        const b = button(
+          runner.variant === "taiwanese"
+            ? "Sequence — claim for a run of three in one suit"
+            : "Sequence (chow)",
+          () => act({ type: "chi", tileIds: ids }),
         );
         for (const id of ids) b.append(tile(model.resolveTile(id)));
         controls.append(b);
@@ -513,7 +545,9 @@ export function mountVariantTable(
       coach.append(
         el(
           "p",
-          "A win takes priority over a triplet or quad. Only the next seat may claim a sequence. Claim strategy is heuristic; these controls show exact legal opportunities.",
+          runner.variant === "taiwanese"
+            ? "A win takes priority over a triplet or quad. Only the next player in turn may claim a sequence. These buttons show only the claims the rules allow right now: a triplet is three of a kind, a quad is four of a kind, and a sequence is a run of three numbers in one suit."
+            : "A win takes priority over a triplet or quad. Only the next seat may claim a sequence. The claim buttons use short names: pung is another word for a triplet — a triplet (pung) is a claim to make three matching tiles; kong is another word for a quad — an open quad (kong) is a claim to make four matching tiles; chow is another word for a sequence — a sequence (chow) is a claim to make three numbers in a row in one suit. These buttons show only the claims the rules allow for this discard.",
           "dim",
         ),
       );
