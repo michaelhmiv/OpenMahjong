@@ -4,6 +4,8 @@ Status: design proposal for phases9–10. The current server stores private
 client-submitted records; it is not an authoritative online game service. No
 multiplayer, rating or tournament capability is claimed by this document.
 
+The [multiplayer implementation brief](multiplayer-implementation.md) specifies the four supported profiles, Friendly and Ranked Open Play, custom rooms, live protocol, recovery, and delivery tests. Its room and queue scope expands the original private-room milestone below.
+
 ## Authority and information
 
 A match coordinator must own wall generation, hidden hands, turn/call windows,
