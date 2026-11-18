@@ -350,7 +350,7 @@ describe("Taiwanese course compatibility", () => {
     expect(
       lessons.map(lessonText).join(" ").split(/\s+/).length,
     ).toBeGreaterThan(1800);
-    expect(lessons.flatMap(variantLessonQuestions)).toHaveLength(20);
+    expect(lessons.flatMap(variantLessonQuestions)).toHaveLength(42);
     expect(
       lessons.every(
         (l) => l.profileId === "openmahjong-taiwanese-every-flower",
