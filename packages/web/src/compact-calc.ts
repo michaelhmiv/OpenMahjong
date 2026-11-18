@@ -86,10 +86,10 @@ export function cxSeatTile(
   if (opts.interactive) {
     const b = node as HTMLButtonElement;
     b.type = "button";
-    b.setAttribute(
-      "aria-label",
-      `${info.name} · ${info.score.toLocaleString("en-US")} points`,
-    );
+    // No aria-label override: the accessible name comes from the
+    // tile's own text (wind · dealer, name, score), which keeps
+    // the visible text inside the name (axe label-content-name-
+    // mismatch, WCAG 2.5.3).
     b.setAttribute("aria-pressed", String(Boolean(opts.selected)));
     b.addEventListener("click", () => opts.onTap?.(info.seat));
   }

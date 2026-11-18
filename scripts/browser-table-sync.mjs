@@ -130,7 +130,7 @@ try {
   // Compact flow: seat tap, discarder chip, stepper quick chips,
   // then Confirm on the Check payments screen (no checkbox).
   await a.page
-    .getByRole("button", { name: /Player 1 · .* points/ })
+    .getByRole("button", { name: /Player 1 [\d,]+ points/ })
     .click();
   await click(a.page, "On a discard");
   await a.page.locator(".cx-seatchip", { hasText: "Player 2" }).click();

@@ -57,7 +57,7 @@ try {
       const seat = (n) =>
         page
           .getByRole("button", {
-            name: new RegExp(`Player ${n} · .* points`),
+            name: new RegExp(`Player ${n} [\\d,]+ points`),
           })
           .click();
       const discarder = (n) =>

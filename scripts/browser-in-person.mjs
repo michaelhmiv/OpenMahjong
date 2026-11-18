@@ -43,7 +43,7 @@ for (const viewport of [
   // Compact flow: tap the winner's seat, name the discarder, then
   // score the hand from its tiles.
   await page
-    .getByRole("button", { name: /Player 1 · .* points/ })
+    .getByRole("button", { name: /Player 1 [\d,]+ points/ })
     .click();
   await page
     .getByRole("button", { name: "On a discard", exact: true })
@@ -82,7 +82,7 @@ for (const viewport of [
     .click();
   // Fast entry: same seat-first flow, value by stepper quick chips.
   await page
-    .getByRole("button", { name: /Player 1 · .* points/ })
+    .getByRole("button", { name: /Player 1 [\d,]+ points/ })
     .click();
   await page
     .getByRole("button", { name: "On a discard", exact: true })
