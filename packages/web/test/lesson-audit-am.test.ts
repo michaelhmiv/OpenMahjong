@@ -455,6 +455,93 @@ describe("American hardening regressions", () => {
 });
 
 // ---------------------------------------------------------------------------
+// Hardening round 2 regressions (Nov 18, 2026 re-panel, verdict
+// NOT MET by three material items): Consecutive Runs hands were
+// never printed in the track (M2), the pass rule's wording
+// contradicted itself (M1), and one drills premise fought the
+// track's own tile law (M3).
+// ---------------------------------------------------------------------------
+
+describe("American hardening round 2 regressions", () => {
+  const lessonById = (id: string) => AMERICAN_LESSONS.find((l) => l.id === id)!;
+  const questionById = (id: string) => {
+    for (const l of AMERICAN_LESSONS)
+      for (const q of variantLessonQuestions(l)) if (q.id === id) return q;
+    throw new Error(`no question ${id}`);
+  };
+  const teachingTexts = (l: VariantLesson): string[] =>
+    l.steps.map((s) => s.text ?? "");
+
+  it("Consecutive Runs lines are printed with their descriptions before lesson 6", () => {
+    // M2: no RN line appeared anywhere in the track, so the
+    // closest-hand skill could not be practised against that
+    // section (re-panel P2: 4 PASS / 1 PARTIAL / 1 FAIL, the one
+    // FAIL an invented hand). Lines are quoted in the track's
+    // spelled-out number style, as in round 1.
+    const card = teachingTexts(lessonById("am-card")).join("\n");
+    expect(card).toContain(practiceCardHand("RN-1").notation);
+    expect(card).toContain("pungs of ones and twos");
+    const practice = teachingTexts(lessonById("am-practice-card")).join("\n");
+    expect(practice).toContain(practiceCardHand("RN-2").notation);
+    expect(practice).toContain("kongs of sevens and eights");
+  });
+
+  it("lesson 6 works a Consecutive Runs comparison and drills a second one", () => {
+    const picking = lessonById("am-picking");
+    const drillAt = picking.steps.findIndex(
+      (s) => s.question?.id === "am-runs-compare-drill",
+    );
+    expect(drillAt).toBeGreaterThan(-1);
+    const taughtBefore = teachingTexts(picking).slice(0, drillAt).join("\n");
+    // The worked comparison prints both RN lines it counts against.
+    expect(taughtBefore).toContain(practiceCardHand("RN-4").notation);
+    expect(taughtBefore).toContain(practiceCardHand("RN-3").notation);
+    const drill = questionById("am-runs-compare-drill");
+    expect(drill.kind).toBe("choice");
+    if (drill.kind === "choice")
+      expect(drill.verify()).toBe(drill.choices[drill.answer]);
+  });
+
+  it("pass-rule absolutes keep their qualifiers in the same sentence", () => {
+    // M1: "never break a pair" was taught as an absolute in
+    // am-charleston, then contradicted by correct-answer feedback
+    // ("a tile from a pair is sometimes the right pass"), and
+    // restated in hints without the taught "when you can" — while
+    // a drills answer is a one-suit pass. The rule as graded: pass
+    // off-pattern singles, spread one in each suit when you can,
+    // and do not break a pair when you have a better pass.
+    const sentences = collected.flatMap((c) =>
+      c.texts.flatMap((t) => t.split(/(?<=[.!?])\s+/)),
+    );
+    for (const s of sentences) {
+      if (/never break a pair/i.test(s))
+        expect(
+          /\b(when|while|if|unless)\b/i.test(s),
+          `unqualified absolute: ${s}`,
+        ).toBe(true);
+      if (/\bone (tile )?in each suit\b/i.test(s))
+        expect(s, `unqualified spread: ${s}`).toContain("when you can");
+    }
+    // The teaching step itself states the exception.
+    const charleston = teachingTexts(lessonById("am-charleston")).join("\n");
+    expect(charleston).toContain(
+      "a tile from a pair is sometimes the right pass",
+    );
+  });
+
+  it("the West-wind drills premise matches the taught tile law", () => {
+    // M3: the check framed a complete 14-tile line as "one tile
+    // from complete" with its single "waiting to be paired" — but
+    // the track teaches that every hand uses fourteen tiles and a
+    // single is a complete group of one.
+    const q = questionById("am-wd2-single");
+    expect(q.prompt).not.toContain("one tile from complete");
+    expect(q.prompt).not.toContain("waiting to be paired");
+    expect(q.explanation).toContain("complete group of one");
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Practice Card data integrity (acceptance check 1, in-repo form)
 // ---------------------------------------------------------------------------
 

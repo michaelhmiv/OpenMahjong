@@ -40,6 +40,13 @@
  * (before any drill grades by it); choosing between two hands in one
  * section worked and drilled in lesson 6; the double-quint hand's
  * line printed with its value in lesson 8, before lesson 11 asks it.
+ * Hardening round 2 (Nov 18, 2026, after the re-panel): Consecutive
+ * Runs lines printed with their descriptions in lessons 2 and 3, and
+ * a worked runs comparison with a transfer drill in lesson 6; the
+ * pass rule's qualifier made part of the rule as first taught in
+ * lesson 5, and every restatement swept to match; lesson 11's
+ * West-wind check reframed so its premise matches the tile law —
+ * a single is a complete group of one.
  * Registration: this track is registered in VARIANT_LESSONS
  * (variant-content.ts), so the shared runner and progress parser
  * handle it like any other track, and the Learn section's mounter
@@ -227,7 +234,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
         ],
         1,
         "A joker is wild only as one of three or more matching tiles. It can never stand alone and never be half of a pair — that rule shapes the whole game, and lesson 8 returns to it.",
-        "Go back to the step that met the jokers: it stated the one arrangement a joker is allowed, and the two it is not. The answer is the allowed one.",
+        "Go back to the step that met the jokers: it stated the one arrangement a joker is allowed, and the two it is not.",
       ),
     },
   ]),
@@ -251,6 +258,9 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
     },
     {
       text: "After the X or C comes the hand's value: the number of points the hand scores when someone makes it. Bigger hands — harder to build, or built without calling — carry bigger values. How a value turns into payments is lesson 10's work; for now, read the value as the hand's price tag.",
+    },
+    {
+      text: "One more line before the checks, from a different family: Consecutive Runs, whose hands climb neighbouring numbers like a staircase. Its first line reads 111 222 3333 4444, marked X, worth 25 points, and its description reads: “The bottom stair in one suit: pungs of ones and twos climbing to kongs of threes and fours.” Read it the way you read the even hand: group by group — a pung of ones, a pung of twos, a kong of threes, a kong of fours — then the letter, then the value. Every line on the card reads the same way, whatever family it sits in.",
     },
     {
       question: choice(
@@ -328,6 +338,9 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
     },
     {
       text: "The card's hands are gathered into nine sections — families of hands built on one idea. Even Numbers uses only twos, fours, sixes and eights; Odd Numbers only ones, threes, fives, sevens and nines. Consecutive Runs climbs neighbouring numbers like a staircase. Like Numbers repeats one number in suit after suit. Winds & Dragons leans on the winds and dragons. Quints holds the hands with a quint in them. Singles & Pairs has no group larger than a pair. In Bloom spends the flowers in earnest, and Bookends builds only from ones and nines, the two ends of the suits.",
+    },
+    {
+      text: "One family's lines deserve a look of their own, because they climb. From Consecutive Runs: 555 666 7777 8888, marked X, worth 25 points. Its description reads: “The same stair near the top of the suit: pungs of fives and sixes, kongs of sevens and eights, one suit throughout.” Each group stands one number above the group before it — fives, sixes, sevens, eights — and the whole staircase stands in a single suit. A later lesson counts a dealt hand against two of this family's hands and lets the count choose between them.",
     },
     {
       text: "Values rise with difficulty, on a ladder of the card's own. Open hands of plain pungs and kongs sit at the bottom, worth 25 to 40 points. Hands that add quints, heavy flowers or tighter structure sit in the middle. Concealed hands — built with no calls at all — pay more, 50 to 60. And the concealed Singles & Pairs hands top the card at 65 to 85, because no joker can ever help them: every group is a pair or a single, and a joker can stand in neither.",
@@ -474,7 +487,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       text: "The second Charleston passes left, then over, then right — the first half run backwards. After the first Charleston's three passes, the table may agree to stop and skip the second half entirely. But it takes the whole table to stop: if even one player wants the second Charleston, it is played. Most new tables simply dance both halves while they learn.",
     },
     {
-      text: "What should you pass? There is a rule for it — the pass rule — and the drills in this lesson and lesson 11 grade by it. Pass tiles that are off-pattern: they fit no hand you are considering, stray tiles in suits and numbers your clusters do not touch. Pass tiles that stand alone: no pair, and no neighbours among the tiles you are keeping. Spread the pass one tile in each suit when you can, so no single neighbour receives a ready-made cluster. And never break a pair to make a pass: a pair is halfway to a pung and the hardest part of many hands to rebuild. Keep tiles that sit near your clusters. And one rule stands above all strategy: a joker is never passed. Not in any pass, not ever — if your three pass tiles would include a joker, choose a different tile, however little it fits.",
+      text: "What should you pass? There is a rule for it — the pass rule — and the drills in this lesson and lesson 11 grade by it. Pass tiles that are off-pattern: they fit no hand you are considering, stray tiles in suits and numbers your clusters do not touch. Pass tiles that stand alone: no pair, and no neighbours among the tiles you are keeping. Spread the pass one tile in each suit when you can, so no single neighbour receives a ready-made cluster. And never break a pair to make a pass when you have a better pass: a pair is halfway to a pung and the hardest part of many hands to rebuild. When nothing else is free — when every tile you could spare is paired — a tile from a pair is sometimes the right pass: break your least useful pair and pass from it. Keep tiles that sit near your clusters. And one rule stands above all strategy: a joker is never passed. Not in any pass, not ever — if your three pass tiles would include a joker, choose a different tile, however little it fits.",
     },
     {
       text: "Once in a while you hold fewer than three tiles you can spare. Then you may make a blind pass: taking one, two or three of the tiles about to be passed to you and passing them onward without looking at them. A blind pass is a pass made blind — you give away unknown tiles rather than break the tiles you are keeping. It is most often used on the first pass of the second Charleston, when hands have tightened around a plan. Two limits keep it honest. You may take only from the tiles coming to you — never from your own rack. And a blind pass can never break the never-pass-a-joker rule: that rule governs tiles you hold and can see. Tiles passed blind are face-down and unknown to you — forwarding them sight unseen is exactly what the blind pass is for, and a joker on your own rack is never among them.",
@@ -503,7 +516,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
         "Which tile may never be passed in the Charleston?",
         ["A flower", "A wind", "A joker", "A tile from a pair"],
         2,
-        "A joker — never, in any pass. Flowers and winds are passed whenever they fit nothing; a tile from a pair is sometimes the right pass. The joker alone is untouchable.",
+        "A joker — never, in any pass. Flowers and winds are passed whenever they fit nothing; a tile from a pair is sometimes the right pass, when nothing else is free. The joker alone is untouchable.",
         "One tile in this list is governed by a rule, not by strategy. Which tile did the lesson call untouchable?",
       ),
     },
@@ -529,7 +542,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
         "1235m3459p169s11z",
         [1, 5, 9],
         "The three even singletons: the 2 of Craks, the 4 of Dots and the 6 of Bams — each sits alone in its suit while the hand's other tiles run odd. The pair of East winds stays: a pair is an asset in many hands, and these three strays fit no odd hand at all.",
-        "Use the pass rule from this lesson's fourth step: off-pattern, standing alone, one in each suit, and never break a pair. This rack is building toward odd numbers.",
+        "Use the pass rule from this lesson's fourth step: off-pattern, standing alone, one in each suit when you can, and never break a pair when you have a better pass. This rack is building toward odd numbers.",
       ),
     },
     {
@@ -580,6 +593,47 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
         "The second hand, and not by a little. Counted with its split respected — twos, sixes and the closing pair of eights in Craks; fours and the kong of eights in Dots — the rack already holds thirteen of its fourteen tiles: only one more 8 of Craks is missing. The one-suit hand can count only one suit at a time: its best suit, Dots, holds seven tiles (the pung of fours and the kong of eights), leaving seven to go. When two hands in a section compete, count both in full and let the smaller tiles-to-go win.",
         "Count the rack against each hand separately. For the split hand, each group counts only in its own suit: some of its groups are Craks here, the others Dots.",
         { tiles: "22444p666m8888p8m" },
+      ),
+    },
+    {
+      text: "The same counting chooses inside Consecutive Runs, the family whose hands climb neighbouring numbers. Take the pictured rack: thirteen tiles, all Craks — a pung of threes, a pair of fours, a pung of fives, a pung of sixes and a pair of sevens. Count it first against the family's fourth hand: 33 44 555 666 7777, marked X, worth 35 points. Its description reads: “A five-rank run, 3 up to 7, that grows as it climbs: pairs of threes and fours, pungs of fives and sixes, a kong of sevens — all one suit.” In Craks the rack holds both pairs in full, both pungs in full, and two of the kong's four sevens: twelve of the fourteen tiles, with two tiles to go — both of them sevens. Now count the same rack against the family's third hand: 222 333 444 555 66, marked X, worth 30 points, described as: “A run of 2 through 6 that changes suits halfway: pungs of twos and threes in one suit, pungs of fours and fives plus a pair of sixes in another.” The rack holds no twos at all, and all its tiles stand in one suit, so it can fill only one side of that split. The far side counts best: two of the three fours, all three fives, and both sixes of the pair — seven held, seven tiles to go. Twelve against seven: inside a runs family as inside an even one, count both hands in full and let the smaller number win.",
+      hand: "3334455566677m",
+    },
+    {
+      question: choice(
+        "runs-compare-drill",
+        "A fresh rack: pungs of ones, twos and threes of Craks, a pair of fours of Craks, and a pair of fives of Dots. Two hands from Consecutive Runs are candidates — the first, 111 222 3333 4444, a stair in one suit; and the second, 555 666 7777 8888, the same stair near the top of the suit. Which hand is this rack closer to?",
+        [
+          "The first hand — the low stair, fewer tiles to go",
+          "The second hand — the high stair, fewer tiles to go",
+          "Both hands are equally close",
+          "Neither hand — this rack points at a different section",
+        ],
+        0,
+        "The first hand, by a distance. Counted in Craks it already holds eleven of its fourteen tiles: the pungs of ones, twos and threes in full, and two of the kong of fours — three tiles to go. The high stair can count only the pair of fives of Dots toward its pung of fives: two held, twelve tiles to go. Count both stairs in full, in the suit where each counts most, and let the smaller number win.",
+        "Both candidates are one-suit stairs. Count the rack against each stair in the single suit where it counts most.",
+        {
+          tiles: "11122233344m55p",
+          verify: () => {
+            const heldToward = (
+              id: string,
+              held: Readonly<Record<number, number>>,
+            ): number =>
+              practiceCardHand(id).groups.reduce(
+                (sum, g) => sum + Math.min(held[g.rank!] ?? 0, g.count),
+                0,
+              );
+            const lowToGo =
+              cardTiles(practiceCardHand("RN-1")) -
+              heldToward("RN-1", { 1: 3, 2: 3, 3: 3, 4: 2 });
+            const highToGo =
+              cardTiles(practiceCardHand("RN-2")) -
+              heldToward("RN-2", { 5: 2 });
+            return lowToGo < highToGo
+              ? "The first hand — the low stair, fewer tiles to go"
+              : "The second hand — the high stair, fewer tiles to go";
+          },
+        },
       ),
     },
     {
@@ -900,7 +954,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
         "8m8p3s1z",
         [0, 1],
         "The 8 of Craks and the 8 of Dots are the dangerous discards — both even, both able to feed the exposed pattern. The 3 of Bams is odd and the East wind is no number at all.",
-        "Ask of each tile: is it a numbered suit tile, and is its number even?",
+        "Work through the row tile by tile, holding each one against the pictured exposure: it is collecting one family of tiles, and the discards that belong to that family are the dangerous ones.",
       ),
     },
   ]),
@@ -1031,8 +1085,8 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
         "The pictured rack is building toward even numbers. Tap the three tiles you would pass first.",
         "5679m2468p224s33z",
         [0, 2, 3],
-        "The three odd singletons in Craks: the 5, the 7 and the 9. Everything else either is even, pairs up (the pair of twos of Bams, the pair of West winds), or feeds the plan. The 6 of Craks is even — it stays.",
-        "Use the pass rule from the Charleston lesson: off-pattern, standing alone, spread one in each suit, and never break a pair. This rack is building toward even numbers.",
+        "The three odd singletons in Craks: the 5, the 7 and the 9. They all sit in one suit because they are the tiles that are free — the spread is one in each suit only when you can. Everything else either is even, pairs up (the pair of twos of Bams, the pair of West winds), or feeds the plan. The 6 of Craks is even — it stays.",
+        "Use the pass rule from the Charleston lesson: off-pattern, standing alone, spread one in each suit when you can, and never break a pair when you have a better pass. This rack is building toward even numbers.",
       ),
     },
     {
@@ -1085,10 +1139,10 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
     {
       question: choice(
         "wd2-single",
-        "Read this line: NNNN SSSS DDD DD W. The hand is one tile from complete as printed. Which tile is still standing single, waiting to be paired?",
+        "Read this line: NNNN SSSS DDD DD W. The hand is complete as printed — fourteen tiles — and one of its groups is a single. Which tile stands alone as that single?",
         ["The North wind", "The South wind", "A dragon", "The West wind"],
         3,
-        "The West wind: it is the line's only single — the kongs of Norths and Souths and the dragon groups are complete, and the lone W needs a second West, which only a draw can bring (a single can never be called for, and no joker can stand in it).",
+        "The West wind: it is the line's only single — and a single is a complete group of one, so the hand stands complete at fourteen tiles with the W unpaired. The kongs of Norths and Souths and the dragon groups are full-size beside it. The lone W is still the hand's most fragile point: a single can never be called for, and no joker can stand in it, so its match could only ever come from a draw.",
         "Walk the line group by group and find the group of one. Whose name does it carry?",
         {
           verify: () => {
@@ -1103,7 +1157,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "That is the whole track: the set, the card, this app's Practice Card, setup, the Charleston, choosing, playing, jokers, defense, scoring, and now the drills at table speed. At a real table the card will be a different one — that is expected, and the label on ours says so. What you carry there is the skill: read any line group by group, pass with a plan, count what you hold and what you still need, call and exchange inside the rules, watch what the exposures confess, and know what a hand is worth and who pays it. Sit down, build your wall, and play.",
+      text: "That is the whole track: the set, the card, this app's Practice Card, setup, the Charleston, choosing, playing, jokers, defense, scoring, and now the drills. At a real table the card will be a different one — that is expected, and the label on ours says so. What you carry there is the skill: read any line group by group, pass with a plan, count what you hold and what you still need, call and exchange inside the rules, watch what the exposures confess, and know what a hand is worth and who pays it. Sit down, build your wall, and play.",
     },
   ]),
 ];
