@@ -238,6 +238,68 @@ and the inspect readout.
   legacy (v1) replays keep the plain label rather than attributing
   current facts to historical rules.
 
+### The guided-play package (approved 2026-11-17)
+
+Approved 2026-11-17 (renderings `guided-play-v1`, QC-passed after a
+measured verification round; the corner-index placement was amended
+by the owner's ruling the same evening — indices live on inspect
+surfaces only, never on the board). Four additions to the guided
+family and the hand:
+
+- **Hand grouping and labels (guided mode only).** The hand is laid
+  out in group order — completed sets first, then the pair, then
+  partial shapes ("Waiting"), then loose tiles — with a plain-words
+  label centred under each group (Sequence / Triplet / Pair /
+  Waiting / Loose, 11px Figtree 600 in dim sage). Seven pairs reads
+  as one "Seven pairs" segment. The grouped row adds **zero width**:
+  every tile keeps its shipped size and margin, so face extents are
+  identical to the ungrouped row; tap targets are untouched and
+  tiles stay individually tappable to discard. Labels belong to the
+  guided overlay family: they hide while a call prompt or a Focus
+  Frame is open (the order stays grouped) and return with the hint.
+  Grouping is itself a sort. If the player rearranges the hand by
+  shifting tiles, labels recompute on drop when the new order still
+  decomposes into the same groups, and otherwise hide until the
+  next draw re-sorts.
+- **Discard-safety badges (guided mode, discard decision pending
+  only).** A tile carries a state-green disc with a cream check at
+  the face's top-right corner **only** when it is safe against
+  every player currently in riichi — present in each riichi
+  player's pond. Certainty only: suji, kabe, and every other
+  likelihood are never badged. Badges are recomputed from the live
+  ponds every turn and hide with the hint. Selecting a badged tile
+  adds the reason as a full-width row in the hint bubble, naming
+  each riichi player ("Safe against North — North has discarded
+  this tile, so North cannot win on it"); the badge is never colour
+  alone, and the tile's accessible name carries the same fact.
+- **Manual tile shifting.** Press-and-hold grabs a hand tile: it
+  lifts with a shadow, a dashed ghost marks the vacated slot, and
+  neighbours part as it slides; release drops it into its new
+  place. A grab never discards, and a call window opening cancels
+  it. Auto-sort reconciles as follows: the hand sorts on the deal;
+  on a draw, the drawn tile arrives apart at the right and the
+  player's arrangement of the other tiles is left untouched; a
+  **Sort** control appears in the hand-control row whenever the
+  hand is out of its resting order and restores the full sort in
+  one tap; grabbing is disabled after the player declares riichi;
+  the arrangement resets each new hand.
+- **Corner indices — inspect surfaces only.** Board tiles (hand,
+  ponds, melds, dora indicators) never carry an index, and there
+  is no setting for one. The index appears where a tile is
+  magnified or inspected: the Inspect hand sheet (grid and selected
+  preview), the Focus Frames (ponds, melds, the your-hand anchor,
+  the dora pairs), and the guided explanation sheet. The glyph sits
+  at the face's top-left corner in the face's own ink family —
+  suits carry their rank digit and winds E/S/W/N in dark ink
+  (#22252b); the White dragon carries W in slate (#7a8699), the
+  Green dragon G (#22763d), the Red dragon R (#bf3b34); a red five
+  carries its plain rank digit. Size steps up with the magnified
+  face so the glyph sits clear of the art. In lessons, tapping a
+  pictured tile on a teaching step reveals its index; on a check
+  step the index appears only after the learner has answered (a
+  found drill tile, a correctly answered question) — a check is
+  never tappable into revealing its answer.
+
 ## 13. App shell and navigation
 
 (Approved renderings app-shell-v1, ruled 2026-11-16; this section

@@ -535,7 +535,7 @@ try {
       await full.getByRole("button", { name: "East only", exact: true }).click();
       await full.getByRole("checkbox", { name: "Guided mode", exact: true }).check({ force: true });
       await full.locator("#screen-home .play").click();
-      await full.locator('.handrow > .twrap[role="button"]').first().waitFor();
+      await full.locator('.handrow .twrap[role="button"]').first().waitFor();
       const seed = process.env.BROWSER_FULL_GAME_SEED || "browser-smoke-east-v2";
       // Public guest-save schema is a legitimate scenario input. Start
       // at a deterministic real wall, with no invented game state.
@@ -555,11 +555,17 @@ try {
       }, "full-match browser evidence must exercise the current engine and policy");
       await full.reload({ waitUntil: "networkidle" });
       await full.getByRole("button", { name: "Resume game", exact: true }).click();
-      await full.locator('.handrow > .twrap[role="button"]').first().waitFor();
+      await full.locator('.handrow .twrap[role="button"]').first().waitFor();
       await full.locator(".guidehint").waitFor({ state: "visible" });
       assert.ok((await full.locator(".guidehint").innerText()).trim().length > 0, "guided play must explain the first settled human decision");
       await capture(full, "guided-first-decision");
-      firstVisibleHand = (await full.locator(".handrow > .twrap > .tile").evaluateAll((tiles) => tiles.map((tile) => tile.getAttribute("aria-label")))).map(shortTileLabel).sort();
+      // The guided-play package: the hand is grouped under
+      // plain-words labels, and no board tile carries a corner
+      // index (indices live on inspect surfaces only).
+      assert.ok(await full.locator(".handrow .hseg-label").count() > 0, "guided play must group the hand under labels");
+      assert.equal(await full.locator(".handrow .tindex").count(), 0, "board tiles never carry a corner index");
+      await capture(full, "guided-grouping");
+      firstVisibleHand = (await full.locator(".handrow .twrap > .tile").evaluateAll((tiles) => tiles.map((tile) => tile.getAttribute("aria-label")))).map(shortTileLabel).sort();
       assert.equal(firstVisibleHand.length, 14);
       const deadline = Date.now() + 12 * 60 * 1000;
       let actions = 0;
@@ -583,7 +589,7 @@ try {
           }
         }
         if (await full.locator("#screen-results.active").count()) break;
-        const hand = full.locator('.handrow > .twrap[role="button"]');
+        const hand = full.locator('.handrow .twrap[role="button"]');
         if (!prompted && await hand.count()) {
           try { await hand.last().click({ timeout: 500 }); await hand.last().click({ timeout: 500 }); actions++; }
           catch { /* The event player may replace this frame between clicks. */ }

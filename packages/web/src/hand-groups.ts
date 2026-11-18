@@ -85,10 +85,14 @@ function extractSets(counts: readonly number[]): SetsResult {
     consider([{ kind: "sequence", types: [t, t + 1, t + 2] }, ...sub.sets], sub.rest);
   }
   {
+    // Leave a copy behind: it is not part of any set, so it stays
+    // in the remainder for the partials pass.
     const next = [...counts];
     next[t]!--;
     const sub = extractSets(next);
-    consider(sub.sets, sub.rest);
+    const rest = [...sub.rest];
+    rest[t]! += 1;
+    consider(sub.sets, rest);
   }
   return best!;
 }
@@ -131,10 +135,14 @@ function extractPartials(counts: readonly number[]): PartialsResult {
     consider([{ kind: "waiting", types: [t, t + 2] }, ...sub.partials], sub.rest);
   }
   {
+    // Leave a copy behind: it stays in the remainder — it is one
+    // of the loose tiles.
     const next = [...counts];
     next[t]!--;
     const sub = extractPartials(next);
-    consider(sub.partials, sub.rest);
+    const rest = [...sub.rest];
+    rest[t]! += 1;
+    consider(sub.partials, rest);
   }
   return best!;
 }
