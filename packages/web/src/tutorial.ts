@@ -20,6 +20,18 @@
  * in plain words, and read aloud before any step asks for it, and
  * no term is used before the step that teaches it — the term
  * order is audited by test/tutorial-terms.test.ts.
+ *
+ * Lesson fix round (2026-11-17): wrong-answer feedback is hint-only
+ * in every lesson — it points at what to look at and never states
+ * the correct answer while the question is open, at any attempt
+ * count (guarded by test/tutorial-leaks.test.ts). TU-1 gains
+ * shuffled face-mastery drills for all nine characters and all
+ * four winds; TU-7 teaches that yaku stack; TU-8 gains a second
+ * worked hand (fu itemised part by part) and transfer checks on
+ * pictured hands never used in teaching, their answers verified
+ * against the engine scorer by test/tutorial-transfer.test.ts.
+ * New steps are appended at the ends of their lessons, so existing
+ * step indices — and saved mid-lesson progress — are unchanged.
  */
 
 import {
@@ -461,6 +473,21 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
         { kind: "info", text: "There are four copies of every tile: 34 kinds of tile, four copies each, 136 tiles in all. The four copies of a kind are identical, so any copy can stand in for another." },
         { kind: "info", text: "One 5 in each suit is printed on a red-tinted tile instead of a plain one. It is still a 5 of its suit in every way, but it is worth a bonus when it ends up in a winning hand. That bonus is explained in 'Ways to win'." },
         { kind: "info", text: "Tiles also have short written codes. You will see them wherever the app names a tile in text — in tile labels for screen readers, and in Practice. A suited tile's code is its number plus a suit letter: m for characters, p for dots, s for bamboo. So 3m is the 3 of characters, 3p is the 3 of dots, and 3s is the 3 of bamboo. The winds are E, S, W, and N, for East, South, West, and North. The dragons are Wh for the white dragon, Gr for the green dragon, and Rd for the red dragon. A red five's code adds the letter r: 5pr is the red 5 of dots." },
+        { kind: "info", text: "The rest of this lesson practises reading faces one at a time, out of order. Each row below shows all nine characters tiles in a shuffled order — not the taught row order — and each drill asks for one number. Read each face by its top character alone." },
+        { kind: "drill", text: "Tap the 7 of characters.", tiles: [3, 6, 0, 8, 5, 2, 7, 1, 4], targets: [1], wrongNote: "Not that one — look only at the dark character on top and compare it with the labelled row from earlier in this lesson. The red mark below is the same on every characters tile." },
+        { kind: "drill", text: "Tap the 4 of characters.", tiles: [8, 2, 5, 3, 0, 7, 4, 6, 1], targets: [3], wrongNote: "Not that one — look only at the dark character on top and compare it with the labelled row from earlier in this lesson. The red mark below is the same on every characters tile." },
+        { kind: "drill", text: "Tap the 9 of characters.", tiles: [1, 4, 7, 0, 3, 8, 6, 2, 5], targets: [5], wrongNote: "Not that one — look only at the dark character on top and compare it with the labelled row from earlier in this lesson. The red mark below is the same on every characters tile. Remember the side-by-side step: compare the bottom of the top character." },
+        { kind: "drill", text: "Tap the 5 of characters.", tiles: [6, 1, 8, 3, 4, 0, 7, 2, 5], targets: [4], wrongNote: "Not that one — look only at the dark character on top and compare it with the labelled row from earlier in this lesson. The red mark below is the same on every characters tile." },
+        { kind: "drill", text: "Tap the 8 of characters.", tiles: [2, 7, 4, 1, 6, 0, 5, 3, 8], targets: [1], wrongNote: "Not that one — look only at the dark character on top and compare it with the labelled row from earlier in this lesson. The red mark below is the same on every characters tile." },
+        { kind: "drill", text: "Tap the 3 of characters.", tiles: [7, 5, 1, 8, 2, 4, 0, 6, 3], targets: [4], wrongNote: "Not that one — for the smallest numbers you can count the lines in the top character. Compare the face with the labelled row from earlier in this lesson." },
+        { kind: "drill", text: "Tap the 6 of characters.", tiles: [4, 0, 6, 2, 8, 5, 1, 7, 3], targets: [5], wrongNote: "Not that one — look only at the dark character on top and compare it with the labelled row from earlier in this lesson. Remember the side-by-side step: compare the bottom of the top character." },
+        { kind: "drill", text: "Tap the 2 of characters.", tiles: [5, 3, 7, 1, 0, 8, 4, 2, 6], targets: [3], wrongNote: "Not that one — for the smallest numbers you can count the lines in the top character. Compare the face with the labelled row from earlier in this lesson." },
+        { kind: "drill", text: "Tap the 1 of characters.", tiles: [8, 6, 3, 5, 1, 7, 2, 0, 4], targets: [7], wrongNote: "Not that one — for the smallest numbers you can count the lines in the top character. Compare the face with the labelled row from earlier in this lesson." },
+        { kind: "info", text: "The same practice for the winds: each row shows the wind faces in a shuffled order, and each drill names one wind. Match the name to the face." },
+        { kind: "drill", text: "Tap the South wind.", tiles: [29, 31, 28, 30, 27], targets: [2], wrongNote: "Not that one — picture the row of the four wind faces from earlier in this lesson, in the order they were taught, and match the face against it." },
+        { kind: "drill", text: "Tap the West wind.", tiles: [27, 30, 33, 29, 28], targets: [3], wrongNote: "Not that one — picture the row of the four wind faces from earlier in this lesson, in the order they were taught, and match the face against it." },
+        { kind: "drill", text: "Tap the North wind.", tiles: [28, 30, 27, 29], targets: [1], wrongNote: "Not that one — picture the row of the four wind faces from earlier in this lesson, in the order they were taught, and match the face against it." },
+        { kind: "drill", text: "Tap the East wind.", tiles: [30, 28, 27, 29], targets: [2], wrongNote: "Not that one — picture the row of the four wind faces from earlier in this lesson, in the order they were taught, and match the face against it." },
       ];
     case "tu2":
       return [
@@ -476,12 +503,15 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             { label: "3 · 4 · 5 of dots", tiles: [11, 12, 13] },
             { label: "3 · 5 · 7 of dots", tiles: [11, 13, 15] },
             { label: "9 · 9 of characters", tiles: [8, 8] },
+            { label: "4 · 5 of dots", tiles: [12, 13] },
           ],
           correct: 0,
           wrongNote: (_c, i) =>
             i === 1
               ? "Those skip a number — a sequence is three in a row, with no gaps."
-              : "That is a pair — two copies of the same tile. A pair is part of the shape, but it is not a set.",
+              : i === 2
+                ? "That is a pair — two copies of the same tile. A pair is part of the shape, but it is not a set."
+                : "That is only two tiles — a set has three tiles.",
         },
         {
           kind: "choice",
@@ -490,12 +520,15 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             { label: "Four sets and a pair", tiles: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 26, 13, 13] },
             { label: "Four sets and a single", tiles: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 26, 13] },
             { label: "Five sets, no pair", tiles: [1, 2, 3, 12, 13, 14, 23, 24, 25, 26, 26, 26, 4, 5, 6] },
+            { label: "Three sets and two pairs", tiles: [1, 2, 3, 12, 13, 14, 23, 24, 25, 13, 13, 5, 5] },
           ],
           correct: 0,
           wrongNote: (_c, i) =>
             i === 1
-              ? "That is 13 tiles — one short. A complete hand has 14."
-              : "Five sets leave no room for the pair. The shape is four sets and a pair.",
+              ? "Count the tiles in that row — a complete hand has one more tile than that."
+              : i === 2
+                ? "Count the groups in that row, then count its tiles: a complete hand needs one part that this row leaves no room for."
+                : "Count the groups and count the tiles in that row — compare both counts with the shape taught at the start of this lesson.",
         },
         { kind: "info", text: "Two more shapes also win. Seven pairs: seven different pairs and nothing else. Thirteen orphans: one of every terminal and every honor, with one of them twice, as the pair. Most winning hands use the standard shape — four sets and a pair — so that shape comes first." },
       ];
@@ -780,27 +813,40 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
           kind: "choice",
           text: "Which yaku does this hand have?",
           strip: [33, 33, 33, 1, 2, 3, 12, 13, 14, 23, 24, 25, 13, 13],
-          options: [{ label: "Yakuhai" }, { label: "Tanyao" }, { label: "Riichi" }],
+          options: [{ label: "Yakuhai" }, { label: "Tanyao" }, { label: "Riichi" }, { label: "Pinfu" }],
           correct: 0,
           wrongNote: (_c, i) =>
             i === 1
               ? "The red dragons are honors — tanyao allows none."
-              : "Riichi is a declaration, not a pattern in the tiles. The yaku here is the dragon triplet: yakuhai.",
+              : i === 2
+                ? "Riichi is a declaration made during play, not a pattern you can see in these tiles. Look at the triplet in this hand, and at what kind of tile it is made of."
+                : "Pinfu is all sequences — this hand contains a triplet, so look again at what that triplet is made of.",
         },
         { kind: "info", text: "Pinfu — 1 han, closed hands only. All four sets are sequences, the pair is not a dragon or a scoring wind, and the hand waits on a tile that completes a sequence from either end.", strip: [1, 2, 3, 12, 13, 14, 21, 22, 23, 24, 25, 26, 19, 19] },
         {
           kind: "choice",
           text: "Which yaku does this hand have?",
           strip: [2, 3, 4, 13, 13, 13, 20, 21, 22, 23, 24, 25, 1, 1],
-          options: [{ label: "Pinfu" }, { label: "Tanyao" }, { label: "Yakuhai" }],
+          options: [{ label: "Pinfu" }, { label: "Tanyao" }, { label: "Yakuhai" }, { label: "Toitoi" }],
           correct: 1,
           wrongNote: (_c, i) =>
             i === 0
               ? "Pinfu is all sequences — this hand has a triplet of the 5 of dots."
-              : "No dragon or wind triplet here — no yakuhai. Every tile is a simple, so the yaku is tanyao.",
+              : i === 2
+                ? "Look for a triplet of dragons or of a scoring wind in this hand — then check what kinds of tiles make up the rest of the hand."
+                : "That pattern needs every set to be a triplet — this hand is mostly sequences. Check what kinds of tiles make up the whole hand instead.",
         },
         { kind: "info", text: "Toitoi — 2 han. All four sets are triplets or kans, plus the pair. No sequences anywhere.", strip: [2, 2, 2, 13, 13, 13, 22, 22, 22, 31, 31, 31, 7, 7] },
         { kind: "info", text: "Chiitoitsu — 2 han, closed hands only. Seven different pairs instead of the standard shape. Four identical tiles count as one pair, not two.", strip: [1, 1, 4, 4, 11, 11, 15, 15, 20, 20, 24, 24, 28, 28] },
+        { kind: "info", text: "A hand can hold more than one yaku at once, and then the han add up — the yaku stack. This hand is closed and all sequences, and every tile is a simple: it is read aloud as 2, 3, 4 of characters; 3, 4, 5 of dots; 6, 7, 8 of dots; 2, 3, 4 of bamboo; and a pair of 5s of characters. Counted out: pinfu — 1 han, for the all-sequence closed hand with a two-sided wait — and tanyao — 1 han, because every tile is a simple. Stacked, the hand is worth 2 han.", strip: [1, 2, 3, 11, 12, 13, 14, 15, 16, 19, 20, 21, 4, 4] },
+        {
+          kind: "choice",
+          text: "How many han is this hand worth in all? One triplet in it was called with pon, so the hand is open. It is read aloud as: three 2s of dots, three 4s of bamboo, three 6s of characters, three 8s of bamboo, and a pair of 3s of dots.",
+          strip: [10, 10, 10, 21, 21, 21, 5, 5, 5, 25, 25, 25, 11, 11],
+          options: [{ label: "1 han" }, { label: "2 han" }, { label: "3 han" }, { label: "5 han" }],
+          correct: 2,
+          wrongNote: "Count the patterns one at a time and add their values together. First check what kinds of tiles the hand is made of, then check the shape of its sets — an open hand can still hold both of those patterns.",
+        },
       ];
     case "tu8":
       return [
@@ -868,6 +914,118 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
         },
         { kind: "info", text: "One player in each hand is the dealer: the player sitting in the East seat for that hand. A dealer's win pays more — on a dealer tsumo, all three opponents pay the dealer rate — and a dealer also pays more when another player wins by tsumo. All payments round up to the next 100 points." },
         { kind: "info", text: "If the dealer wins a hand, or a hand is drawn with the dealer tenpai, the same dealer deals the next hand, and the honba count rises by one. Honba are a bonus counter: each honba adds 300 points to the next winning hand. An East-only game runs from East 1 to East 4; an East/South game continues through South 4. A game ends early if any player's score falls below zero." },
+        { kind: "info", text: "New example — a second worked hand, counted in full on the next step. This hand is closed, and it had declared riichi. It is read aloud as: three 2s of characters; 3, 4, 5 of characters; 6, 7, 8 of dots; three 9s of bamboo; and a pair of white dragons. It won by ron — on a discard — when the white dragon arrived: the hand had been waiting on that one tile alone to complete its pair. You sit in the South seat, so you are not the dealer. There are no dora in the hand and no honba.", strip: [1, 1, 1, 2, 3, 4, 14, 15, 16, 26, 26, 26, 31, 31] },
+        { kind: "info", text: "Here is that hand counted out in full. Han first: riichi — 1 han, for the declaration. No other pattern is in the hand, and there are no dora, so the hand is 1 han in all. Now the fu, part by part. Every hand starts with a base of 20 fu. Winning by ron with a closed hand adds 10 fu. A closed triplet of simples adds 4 fu: the three 2s of characters. A closed triplet of terminals adds 8 fu: the three 9s of bamboo. A pair of dragons adds 2 fu. Waiting on one tile alone — the pair tile — adds 2 fu. The sequences add nothing. The parts add to 46 fu, and fu always round up to the next ten, so the hand counts as 50 fu. At 1 han and 50 fu, a win by ron for a player who is not the dealer pays 1,600 points, and the player who discarded the winning tile pays all of it." },
+        {
+          kind: "choice",
+          text: "How many han was the worked hand?",
+          options: [{ label: "1 han" }, { label: "2 han" }, { label: "3 han" }, { label: "4 han" }],
+          correct: 0,
+          wrongNote: "Use the breakdown on the step before this one — tap Back to see it again. It lists every part of this same hand's han, line by line, and gives the total.",
+        },
+        {
+          kind: "choice",
+          text: "How many fu did the worked hand have, after rounding?",
+          options: [{ label: "30 fu" }, { label: "40 fu" }, { label: "50 fu" }, { label: "60 fu" }],
+          correct: 2,
+          wrongNote: "Use the breakdown two steps back — tap Back to see it again. It adds this same hand's fu part by part, then rounds the total up.",
+        },
+        {
+          kind: "choice",
+          text: "What does the worked hand pay, and who pays it?",
+          options: [
+            { label: "800 points from the discarder" },
+            { label: "1,600 points from the discarder" },
+            { label: "1,600 points split among all three opponents" },
+            { label: "3,200 points from the discarder" },
+          ],
+          correct: 1,
+          wrongNote: "Use the breakdown three steps back — tap Back to return to it. It ends with this same hand's payment and who pays it. Remember also how a win by ron is paid, from earlier in this lesson.",
+        },
+        { kind: "info", text: "New example — now count a hand yourself, one that has not been counted for you. This hand is closed, and it had declared riichi. You sit in the East seat, so you are the dealer. It is read aloud as: 2, 3, 4 of characters; 3, 4, 5 of dots; 6, 7, 8 of dots; 2, 3, 4 of bamboo; and a pair of 5s of characters. It won by ron when the 2 of characters arrived, completing the first sequence; the hand had also been waiting on the 5 of characters at the other end of that sequence. There are no dora in the hand and no honba.", strip: [1, 2, 3, 11, 12, 13, 14, 15, 16, 19, 20, 21, 4, 4] },
+        {
+          kind: "choice",
+          text: "How many han is this hand? Count every pattern in it, and add them together.",
+          options: [{ label: "1 han" }, { label: "2 han" }, { label: "3 han" }, { label: "4 han" }],
+          correct: 2,
+          wrongNote: "Count the patterns in the pictured hand one at a time, using the values taught in 'Ways to win'. Check the declaration described above, the shape of the sets and the wait, and what kinds of tiles the hand is made of — then add the values together, because patterns stack.",
+        },
+        {
+          kind: "choice",
+          text: "How many fu does this hand have?",
+          options: [{ label: "20 fu" }, { label: "40 fu" }, { label: "30 fu" }, { label: "50 fu" }],
+          correct: 2,
+          wrongNote: "Build the fu from the parts, as the worked hand showed: start with the base, then add for how the hand was won, its triplets, its pair, and its wait — a hand of sequences with none of those additions stays low. Then round up to the nearest ten.",
+        },
+        {
+          kind: "choice",
+          text: "What does this hand pay, and who pays it?",
+          options: [
+            { label: "2,900 points from the discarder" },
+            { label: "11,600 points from the discarder" },
+            { label: "5,800 points from the discarder" },
+            { label: "5,800 points split among all three opponents" },
+          ],
+          correct: 2,
+          wrongNote: "Use your han and fu counts for this hand, and the payment rules from earlier in this lesson: on a win by ron one player pays the whole amount, and a dealer's win pays at the higher rate.",
+        },
+        { kind: "info", text: "That hand, counted out: riichi — 1 han; pinfu — 1 han, for the all-sequence closed hand with a wait at either end of a sequence; and tanyao — 1 han, because every tile is a simple. Stacked, 3 han. The fu are 30 fu: the base 20, plus 10 for winning by ron with a closed hand, with no triplet, pair, or wait additions — and a closed all-sequence hand won by ron is counted at 30 fu. At 3 han and 30 fu, a dealer's win by ron pays 5,800 points, all from the player who discarded the winning tile." },
+        { kind: "info", text: "New example — another hand to count yourself. This hand is closed, and it had not declared riichi. You sit in the South seat, so you are not the dealer; the round wind is East. It is read aloud as: 2, 3, 4 of characters; 3, 4, 5 of dots; three 6s of bamboo; three South winds; and a pair of 4s of bamboo. It won by tsumo — you drew the 4 of bamboo yourself, completing the pair; the hand had been waiting on that one tile alone. There are no dora in the hand and no honba.", strip: [1, 2, 3, 11, 12, 13, 23, 23, 23, 28, 28, 28, 21, 21] },
+        {
+          kind: "choice",
+          text: "How many han is this hand? Count every pattern in it, and add them together.",
+          options: [{ label: "1 han" }, { label: "2 han" }, { label: "3 han" }, { label: "4 han" }],
+          correct: 1,
+          wrongNote: "Count the patterns in the pictured hand one at a time. Check how the hand was won and whether the hand is closed, and look at the triplet of winds: compare it with your own seat wind and with the round wind, using the values taught in 'Ways to win'. Then add the values together.",
+        },
+        {
+          kind: "choice",
+          text: "How many fu does this hand have?",
+          options: [{ label: "30 fu" }, { label: "50 fu" }, { label: "40 fu" }, { label: "60 fu" }],
+          correct: 2,
+          wrongNote: "Build the fu from the parts, as the worked hand showed: start with the base, then add for how the hand was won, each triplet — noting whether its tiles are simples or honors — the pair, and the wait. Then round the total up to the nearest ten.",
+        },
+        {
+          kind: "choice",
+          text: "What does this hand pay, and who pays it?",
+          options: [
+            { label: "700 points from every opponent" },
+            { label: "1,300 points from every opponent" },
+            { label: "1,300 points from the dealer and 700 points from each of the other two opponents" },
+            { label: "700 points from the dealer and 1,300 points from each of the other two opponents" },
+          ],
+          correct: 2,
+          wrongNote: "Use your han and fu counts for this hand: on a win by tsumo every opponent pays, and the share paid by the dealer follows the dealer rate explained earlier in this lesson.",
+        },
+        { kind: "info", text: "That hand, counted out: winning on your own draw with a closed hand — 1 han; and a triplet of your own seat wind — 1 han, because the three South winds match the South seat you are sitting in. Stacked, 2 han. The fu, part by part: base 20; winning by tsumo adds 2; a closed triplet of simples adds 4 — the three 6s of bamboo; a closed triplet of honors adds 8 — the three South winds; waiting on one tile alone adds 2. The parts add to 36 fu, rounded up to 40 fu. At 2 han and 40 fu, a win by tsumo for a player who is not the dealer pays 1,300 points from the dealer and 700 points from each of the other two opponents." },
+        { kind: "info", text: "New example — one more hand to count yourself. This hand is closed, and it had not declared riichi. You sit in the East seat, so you are the dealer. It is read aloud as: 3, 4, 5 of characters; three 8s of characters; 5, 6, 7 of dots; 6, 7, 8 of bamboo; and a pair of 5s of dots. It won by tsumo — you drew the 5 of dots yourself, completing the pair; the hand had been waiting on that one tile alone. There are no dora in the hand and no honba.", strip: [2, 3, 4, 7, 7, 7, 13, 14, 15, 23, 24, 25, 13, 13] },
+        {
+          kind: "choice",
+          text: "How many han is this hand? Count every pattern in it, and add them together.",
+          options: [{ label: "1 han" }, { label: "2 han" }, { label: "3 han" }, { label: "5 han" }],
+          correct: 1,
+          wrongNote: "Count the patterns in the pictured hand one at a time. Check what kinds of tiles the hand is made of, and how the hand was won with a closed hand — then add the values together, because patterns stack.",
+        },
+        {
+          kind: "choice",
+          text: "How many fu does this hand have?",
+          options: [{ label: "20 fu" }, { label: "30 fu" }, { label: "40 fu" }, { label: "50 fu" }],
+          correct: 1,
+          wrongNote: "Build the fu from the parts, as the worked hand showed: start with the base, then add for how the hand was won, its triplet, its pair, and its wait. Then round the total up to the nearest ten.",
+        },
+        {
+          kind: "choice",
+          text: "What does this hand pay, and who pays it?",
+          options: [
+            { label: "500 points from each opponent" },
+            { label: "1,000 points from each opponent" },
+            { label: "2,000 points from each opponent" },
+            { label: "3,000 points from each opponent" },
+          ],
+          correct: 1,
+          wrongNote: "Use your han and fu counts for this hand: on a win by tsumo every opponent pays, and a dealer's win is paid at the higher rate by all three.",
+        },
+        { kind: "info", text: "That hand, counted out: every tile is a simple — 1 han; and winning on your own draw with a closed hand — 1 han. Stacked, 2 han. The fu, part by part: base 20; winning by tsumo adds 2; a closed triplet of simples adds 4 — the three 8s of characters; waiting on one tile alone adds 2. The parts add to 28 fu, rounded up to 30 fu. At 2 han and 30 fu, a dealer's win by tsumo pays 1,000 points from each opponent. Counting a new hand is the whole skill of this lesson: read the tiles, count the patterns and add them, build the fu part by part and round up, then turn the two numbers into who pays what." },
       ];
     case "tu9":
       return [
@@ -881,15 +1039,14 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             const threat = stop.view.players.find((p) => p.seat !== 0 && p.riichi);
             if (!threat) return "Watch the table — a riichi is coming.";
             const wind = WIND_WORD[threat.seatWind] ?? "";
-            const base = `${wind} has declared riichi, so ${wind}'s hand is tenpai. ${wind} paid the 1,000-point stake to declare, which is why ${wind}'s score stands at ${threat.score.toLocaleString("en-US")}. Discard a tile from ${wind}'s pond — the tiles ${wind} has already thrown away, face up in front of them. Those tiles are safe against ${wind}: if any tile ${wind} is waiting for is in ${wind}'s own pond, ${wind} cannot win by ron at all — and a tile sitting in their own pond can never be the tile they take from you. Another opponent might still be waiting on them.`;
-            if ((c.counters["misses"] ?? 0) >= 2) {
-              const pond = new Set(threat.discards.map((d) => d.tile.type));
-              const safe = [...new Set(stop.view.hand.map((t) => t.type))]
-                .filter((ty) => pond.has(ty))
-                .map((ty) => tileName(ty as TileType));
-              return `${base} Safe in your hand: ${safe.join(", ")}.`;
-            }
-            return base;
+            // Hint-only at every attempt count (fix round, 2026-11-17):
+            // an earlier version listed the safe tiles in the learner's
+            // hand after two misses, printing the answer while the
+            // question was still open. The text points at the pond and
+            // the rule; it never names which hand tiles match it. The
+            // no-leak guard in test/tutorial-leaks.test.ts drives two
+            // misses here and asserts no safe tile is named.
+            return `${wind} has declared riichi, so ${wind}'s hand is tenpai. ${wind} paid the 1,000-point stake to declare, which is why ${wind}'s score stands at ${threat.score.toLocaleString("en-US")}. Discard a tile from ${wind}'s pond — the tiles ${wind} has already thrown away, face up in front of them. Those tiles are safe against ${wind}: if any tile ${wind} is waiting for is in ${wind}'s own pond, ${wind} cannot win by ron at all — and a tile sitting in their own pond can never be the tile they take from you. Another opponent might still be waiting on them.`;
           },
           enter: (c) =>
             c.autoTo((s) => {
@@ -931,9 +1088,10 @@ function stepsFor(id: ModuleId): readonly StepDef[] {
             { label: "A different card each season" },
             { label: "Scoring patterns — yaku — built from any tiles" },
             { label: "Jokers" },
+            { label: "The dealer's choice each hand" },
           ],
           correct: 1,
-          wrongNote: "There is no card at all. The yaku are the patterns, and they do not change.",
+          wrongNote: "There is no card at all here, and nothing about what a winning hand must contain changes from year to year or from hand to hand. Think back to the 'Ways to win' lesson: what must every winning hand contain?",
           correctNote: "Correct — that is the right answer. There is no card at all: riichi's scoring patterns are the yaku, built from any tiles, and they do not change from year to year.",
         },
         { kind: "info", text: "When the American variant arrives it will have its own lessons. Everything before this lesson was riichi." },
