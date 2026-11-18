@@ -2,6 +2,7 @@
  * use independent worked examples; review heuristics never become quiz keys. */
 import { TAIWANESE_LESSONS } from "./taiwanese-lessons.js";
 import { MCR_LESSONS } from "./mcr-lessons.js";
+import { AMERICAN_LESSONS } from "./american-lessons.js";
 import { validateMcrGuide } from "./mcr-guide.js";
 import {
   parseCounts,
@@ -1376,6 +1377,16 @@ export const VARIANT_LESSONS: VariantLesson[] = [
   ]),
   ...MCR_LESSONS,
   ...TAIWANESE_LESSONS,
+  // American training (brief-american-training-v1): registered here
+  // so the shared lesson runner and the progress parser
+  // (variant-progress.ts validates every entry against this list)
+  // handle the track like any other. Registration is not a game:
+  // the track has no VARIANT_RELEASES entry (no Learn section of its
+  // own — the American section is separate), no engine adapter, and
+  // no Play surface. Its lessons carry variant "american" through
+  // the one cast in american-lessons.ts; the VariantId union stays
+  // the three playable variants.
+  ...AMERICAN_LESSONS,
 ];
 
 export function variantLessons(variant: VariantId): VariantLesson[] {

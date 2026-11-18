@@ -29,10 +29,14 @@
  *
  * Scoring and counting checks verify against the Practice Card data
  * (practice-card.ts) or the payment rules the scoring lesson states.
- * Registration seam: the engine's VariantId union and the runner's
- * adapter gain "american" with the Learn-section work; until then
- * this track is exported standalone and the lesson factory carries
- * the one cast.
+ * Registration: this track is registered in VARIANT_LESSONS
+ * (variant-content.ts), so the shared runner and progress parser
+ * handle it like any other track, and the Learn section's mounter
+ * (american-lesson-ui.ts) runs it. The VariantId union deliberately
+ * does not gain "american" — the union names playable variants and
+ * this track has no game and no engine adapter — so the lesson
+ * factory carries the one cast, and the mounter supplies the tile
+ * inventory (AMERICAN_TILE_INVENTORY in education/american.ts).
  */
 import type { VariantId } from "@openmahjong/engine";
 import type {
@@ -53,9 +57,10 @@ const lesson = (
   steps: VariantStep[],
 ): VariantLesson => ({
   id: `am-${id}`,
-  // Seam: "american" joins the engine VariantId union with the
-  // Learn-section/runner work (see header). Content is format-v2
-  // identical to the other tracks.
+  // Seam (see header): "american" is lesson content only — the
+  // VariantId union names the playable variants and this track has
+  // no engine adapter — so the tag is cast, here and in the
+  // mounter. Content is format-v2 identical to the other tracks.
   variant: "american" as VariantId,
   profileId: PROFILE_ID,
   version: 2,
@@ -1022,7 +1027,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       question: pick(
         "winds-drill",
         "At speed: tap every wind in this row.",
-        "5m1z9p3z7s",
+        "5m9p7s1z3z",
         [3, 4],
         "The last two tiles are winds: the East wind and the West wind. The row runs a 5 of Craks, a 9 of Dots and a 7 of Bams first — numbered tiles all, and the winds sit after them.",
         "Winds are honor tiles: no suit, no number. Which tiles in this row have no number?",

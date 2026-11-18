@@ -35,6 +35,8 @@ import {
   tileTypeName,
 } from "@openmahjong/engine";
 import { AMERICAN_LESSONS } from "../src/education/american-lessons.js";
+import { AMERICAN_TILE_INVENTORY } from "../src/education/american.js";
+import { expandNotation } from "../src/education/notation.js";
 import {
   validateVariantQuestion,
   variantLessonQuestions,
@@ -187,7 +189,9 @@ describe("American lesson notations resolve in the inventory", () => {
 
 // ---------------------------------------------------------------------------
 // Drill grading: picks must land on the faces the prompt names,
-// under the runner's own expansion (ascending tile type).
+// under the runner's own expansion (education/notation.ts: the
+// authored notation order, resolved against the inventory the
+// American mounter supplies).
 // ---------------------------------------------------------------------------
 
 describe("American tile-pick drills grade the row they render", () => {
@@ -205,13 +209,10 @@ describe("American tile-pick drills grade the row they render", () => {
     "am-charleston-drill": ["5m", "7m", "9m"],
     "am-winds-drill": ["E", "W"],
   };
-  const expand = (notation: string): string[] => {
-    const names: string[] = [];
-    parseCounts(notation).forEach((count, type) => {
-      for (let c = 0; c < count; c++) names.push(tileTypeName(type));
-    });
-    return names;
-  };
+  const expand = (notation: string): string[] =>
+    expandNotation(notation, AMERICAN_TILE_INVENTORY).map((f) =>
+      tileTypeName(f.type),
+    );
   for (const l of AMERICAN_LESSONS) {
     for (const q of variantLessonQuestions(l)) {
       if (q.kind !== "tile-pick") continue;

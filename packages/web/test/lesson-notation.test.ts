@@ -15,6 +15,7 @@
 import { describe, expect, it } from "vitest";
 import { parseCounts, variantAdapter } from "@openmahjong/engine";
 import { VARIANT_LESSONS } from "../src/education/variant-content.js";
+import { AMERICAN_TILE_INVENTORY } from "../src/education/american.js";
 
 function notationsOf(lesson: (typeof VARIANT_LESSONS)[number]): string[] {
   const out: string[] = [];
@@ -28,15 +29,22 @@ function notationsOf(lesson: (typeof VARIANT_LESSONS)[number]): string[] {
 }
 
 describe("variant lesson notations resolve in the inventory", () => {
-  it("covers all three variant tracks", () => {
+  it("covers all four lesson tracks", () => {
     const variants = new Set(VARIANT_LESSONS.map((l) => l.variant));
-    expect(variants.size).toBe(3);
-    expect(VARIANT_LESSONS.length).toBe(30);
+    expect(variants.size).toBe(4);
+    expect(VARIANT_LESSONS.length).toBe(41);
   });
 
   for (const lesson of VARIANT_LESSONS) {
     it(`${lesson.id}: every shown notation is a possible set of tiles`, () => {
-      const inventory = variantAdapter(lesson.variant).inventory();
+      // The inventory the runner resolves this lesson's faces
+      // against: the variant adapter's for the playable tracks;
+      // American is training-only, has no adapter, and its mounter
+      // supplies AMERICAN_TILE_INVENTORY instead.
+      const inventory =
+        (lesson.variant as string) === "american"
+          ? AMERICAN_TILE_INVENTORY
+          : variantAdapter(lesson.variant).inventory();
       for (const notation of notationsOf(lesson)) {
         const counts = parseCounts(notation);
         counts.forEach((count, type) => {

@@ -46,9 +46,22 @@ export function mountVariantEducation(
     onProgress: (p: VariantLearningProgress) => void;
     renderTile: (tile: Tile) => HTMLElement;
     onBack: () => void;
-    onPlay: () => void;
+    /** Starts guided play for the track. Optional: a training-only
+     *  track (American) has no game to start, and its completion
+     *  screen omits the button when no handler is given. */
+    onPlay?: () => void;
+    /** The tile inventory pictured faces resolve against. Defaults
+     *  to the variant adapter's inventory; a track with no engine
+     *  adapter (American, training only) supplies its own. */
+    inventory?: readonly Tile[];
+    /** The track name shown over the lesson. Defaults to the
+     *  variant release name; a track with no release entry supplies
+     *  its own. */
+    displayName?: string;
   },
 ): { destroy(): void } {
+  const inventory: readonly Tile[] =
+    options.inventory ?? variantAdapter(options.variant).inventory();
   const resolvedLesson =
     VARIANT_LESSONS.find(
       (l) => l.id === options.lessonId && l.variant === options.variant,
@@ -148,10 +161,7 @@ export function mountVariantEducation(
    * notation names them — the order every row renders in and every
    * tile-pick key indexes. */
   function tileFaces(notation: string): Tile[] {
-    return expandNotation(
-      notation,
-      variantAdapter(options.variant).inventory(),
-    );
+    return expandNotation(notation, inventory);
   }
   function advance(continueLabel: string, next: () => void): void {
     main.append(button(continueLabel, () => {
@@ -302,7 +312,8 @@ export function mountVariantEducation(
     main.append(
       el(
         "p",
-        VARIANT_RELEASES.find((v) => v.id === options.variant)?.name ??
+        options.displayName ??
+          VARIANT_RELEASES.find((v) => v.id === options.variant)?.name ??
           options.variant,
         "dim",
       ),
@@ -412,9 +423,11 @@ export function mountVariantEducation(
       el("p", `You finished “${lesson.title}”.`),
     );
     if (lesson.id === "mcr-families") main.append(mcrReference());
+    main.append(button("Back to Learn", options.onBack));
+    // A training-only track has no guided play to start; the button
+    // exists only when the caller wires one.
+    if (options.onPlay) main.append(button("Start guided play", options.onPlay));
     main.append(
-      button("Back to Learn", options.onBack),
-      button("Start guided play", options.onPlay),
       button("Restart lesson", () => {
         step = 0;
         resetAnswer();
