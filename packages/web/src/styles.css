@@ -674,6 +674,65 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 }
 .guidehint .tile { width: 22px; height: 31px; flex: 0 0 auto; }
 .guidehint .gtext { flex: 1 1 auto; line-height: 1.35; }
+.guidehint { flex-wrap: wrap; }
+/* The safety reason, stated in words under the headline when the
+   selected tile carries the badge (guided-play package). */
+.guidehint .gsafe {
+  flex: 1 1 100%; border-top: 1px solid var(--line); margin-top: 2px;
+  padding-top: 7px; font-size: 11.5px; font-weight: 600; line-height: 1.4;
+}
+
+/* -- guided-play package: grouping, safety badges, shifting,
+      corner indices (design-rules section 12) -------------------- */
+
+/* Grouping labels: one column per group, tiles in a row, the
+   plain-words label centred under them. The columns add no width —
+   every tile keeps its shipped size and its 1px margin, so the
+   grouped row spans exactly what the ungrouped row spans. */
+.hseg { display: flex; flex-direction: column; }
+.hseg-tiles { display: flex; align-items: flex-end; }
+.hseg-label {
+  font-size: 11px; font-weight: 600; color: var(--sage);
+  text-align: center; line-height: 1.3; margin-top: 2px; white-space: nowrap;
+}
+
+/* The discard-safety badge: a state-green disc with a cream check
+   at the face's top-right corner, inside the face's own box. */
+.safebadge {
+  position: absolute; top: 1px; right: 1px; width: 12px; height: 12px;
+  border-radius: 50%; background: var(--state); z-index: 3;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.safebadge svg {
+  width: 8px; height: 8px; fill: none; stroke: var(--ink);
+  stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* Tile shifting: the dashed ghost marks the vacated slot while the
+   grabbed tile rides lifted under the finger. */
+.hshift-ghost {
+  flex: 0 0 auto; box-sizing: border-box; border: 1.5px dashed var(--line);
+  border-radius: 3px;
+}
+.handrow .twrap.grabbing { flex: 0 0 auto; }
+.handrow .twrap.grabbing .tile { box-shadow: 0 10px 22px rgba(0, 0, 0, 0.5); }
+
+/* The corner index: inspect surfaces only — the Inspect hand
+   sheet, Focus Frames, the explanation sheet, and lesson surfaces
+   under the no-leak law. Board tiles never carry one. The size
+   steps up with the magnified face so it sits clear of the art. */
+.tindex {
+  position: absolute; top: 1px; left: 2px; z-index: 2;
+  font-family: var(--font-body); font-weight: 700; font-size: 8px;
+  line-height: 1; pointer-events: none;
+}
+.selpreview .tindex { font-size: 17px; top: 3px; left: 4px; }
+.hgrid .tindex { font-size: 12px; top: 2px; left: 3px; }
+.fpond .tindex, .dpair .tindex, .dgrid .tindex { font-size: 12px; top: 2px; left: 3px; }
+.fmelds .tindex { font-size: 12px; top: 2px; left: 3px; }
+.lstrip .tindex { font-size: 7px; }
+.stripinspect { cursor: pointer; }
 
 /* Coach recommendation ring on the hand tile (rendering A): a flat
    state-green ring at hand size — deliberately not the player's own

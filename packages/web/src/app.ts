@@ -96,6 +96,8 @@ import { ResumeSync } from "./resume-sync.js";
 import { ClickSound } from "./sound.js";
 import { TILE_SPRITE_SVG } from "./tiles-sprite.js";
 import { adviseCall, adviseDiscard, adviseKan, adviseRiichi, adviseWin, tileName, type TurnAdvice } from "@openmahjong/coach";
+import { tileIndexEl } from "./tile-index.js";
+import { decomposeHand, segmentTileIds, type HandSegment } from "./hand-groups.js";
 
 /** Does adding tile `type` to the counts complete a run through it? */
 function suitedWaitRun(counts: readonly number[], type: TileType): boolean {
@@ -258,14 +260,52 @@ function h<K extends keyof HTMLElementTagNameMap>(
 }
 
 /** A tile element: FLIP wrapper (never transformed by layout classes)
- *  around the visual tile (which may rotate/lift). */
-function tileEl(tile: Tile, cls: string, opts: { flip?: boolean } = {}): HTMLSpanElement {
+ *  around the visual tile (which may rotate/lift). `index` lays the
+ *  corner index over the face — inspect surfaces only (the Inspect
+ *  hand sheet, Focus Frames, the explanation sheet, lesson surfaces
+ *  under the no-leak law); board tiles never pass it. */
+function tileEl(tile: Tile, cls: string, opts: { flip?: boolean; index?: boolean } = {}): HTMLSpanElement {
   const inner = h("span", { class: `tile ${cls}`, role: "img", "aria-label": tileLabel(tile) });
   inner.innerHTML = `<svg viewBox="0 0 40 56"><use href="#${tileSymbol(tile)}"/></svg>`;
+  if (opts.index) {
+    const index = tileIndexEl(tile);
+    if (index) inner.append(index);
+  }
   const wrap = h("span", { class: "twrap" });
   wrap.append(inner);
   if (opts.flip !== false) wrap.dataset["flip"] = `tile-${tile.id}`;
   return wrap;
+}
+
+const ICON_CHECK = `<svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7"/></svg>`;
+
+/** The discard-safety badge (guided-play package): a state-green
+ *  disc with a cream check, riding the top-right corner of a tile
+ *  that cannot deal in — safe against every riichi player, a
+ *  certainty, never a likelihood. */
+function safetyBadgeEl(): HTMLSpanElement {
+  const badge = h("span", { class: "safebadge", "aria-hidden": "true" });
+  badge.innerHTML = ICON_CHECK;
+  return badge;
+}
+
+/**
+ * The safety reason the hint bubble states when a badged tile is
+ * selected — the fact in words, naming each riichi player the tile
+ * is safe against (the badge is never colour alone).
+ */
+export function safetyLineText(names: readonly string[]): string {
+  if (names.length === 0) return "";
+  if (names.length === 1) {
+    return `Safe against ${names[0]} — ${names[0]} has discarded this tile, so ${names[0]} cannot win on it.`;
+  }
+  const list =
+    names.length === 2
+      ? `${names[0]} and ${names[1]}`
+      : `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`;
+  return names.length === 2
+    ? `Safe against ${list} — both have discarded this tile, so neither can win on it.`
+    : `Safe against ${list} — all of them have discarded this tile, so none of them can win on it.`;
 }
 
 /** The faces of a call option's resulting set, in display order: the
@@ -357,6 +397,7 @@ const ICON_SOUND_ON = `<svg viewBox="0 0 24 24"><path d="M4 10v4h3l5 4V6l-5 4H4z
 const ICON_SOUND_OFF = `<svg viewBox="0 0 24 24"><path d="M4 10v4h3l5 4V6l-5 4H4z"/><path d="M16.5 9.5l5 5m0-5l-5 5"/></svg>`;
 const ICON_CLOSE = `<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
 const ICON_EXPAND = `<svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/></svg>`;
+const ICON_SORT = `<svg viewBox="0 0 24 24"><path d="M7 5v13M7 18l-3.5-3.5M7 18l3.5-3.5M17 19V6M17 6L13.5 9.5M17 6l3.5 3.5"/></svg>`;
 
 // ---------------------------------------------------------------------------
 // App
@@ -514,6 +555,39 @@ export class App {
    *  evaluation per decision. */
   private guideMomentFor: unknown = null;
   private guideMomentGrade: MomentGrade | null = null;
+  /** Manual hand arrangement (guided-play package): the player's own
+   *  tile order from a press-and-hold shift, as tile ids. Validity is
+   *  scoped by the runner identity plus a stamp — the cursor in
+   *  guided mode (a manual order there lasts until the next event,
+   *  when grouping re-sorts) or the hand-start index otherwise (the
+   *  arrangement persists across draws within the hand). */
+  private handOrder: number[] | null = null;
+  private handOrderRunner: GameRunner | null = null;
+  private handOrderStamp = "";
+  /** The drawn tile at the moment the arrangement was made — that
+   *  tile is part of the arrangement; a later draw is not. */
+  private handOrderDrawnId: number | null = null;
+  /** An in-progress press-and-hold tile grab, or null. */
+  private tileDrag: {
+    tileId: number;
+    wrap: HTMLElement;
+    inner: HTMLElement;
+    ghost: HTMLElement | null;
+    startX: number;
+    dx: number;
+    grabbed: boolean;
+    moved: boolean;
+    order: number[];
+    timer: ReturnType<typeof setTimeout> | null;
+    onMove: (ev: PointerEvent) => void;
+    onUp: (ev: PointerEvent) => void;
+  } | null = null;
+  /** Hand-tile taps are ignored until this time — a grab's release
+   *  (or a drag that never armed) must not read as a tap. */
+  private suppressHandTapUntil = 0;
+  /** Lesson strip tiles whose corner index the learner has tapped
+   *  into view, keyed `${moduleId}:${stepIndex}:${position}`. */
+  private lessonIndexRevealed = new Set<string>();
   private currentScreen: ScreenName = "home";
   private practice: PracticeProgress = loadPracticeProgress();
   private practiceInitialSkill: SkillId | undefined;
@@ -2141,6 +2215,9 @@ export class App {
   }
 
   private renderTable(): void {
+    // A re-render replaces the hand's DOM; a grab whose tile left
+    // with it is over (its commit never lands).
+    if (this.tileDrag && !this.tileDrag.wrap.isConnected) this.endTileDrag();
     const m = this.model;
     const t = this.tableEl;
     t.innerHTML = "";
@@ -2224,6 +2301,19 @@ export class App {
     zonePlayer.append(this.promptRowEl());
     zonePlayer.append(this.handRowEl());
     const handctl = h("div", { class: "handctl" });
+    if (this.handOutOfOrderNow()) {
+      // The player's own arrangement is showing; one tap restores
+      // the resting order (the sort, or group order in guided mode).
+      const sortBtn = h("button", { "data-control-key": "hand-sort" }, "Sort");
+      sortBtn.innerHTML = `${ICON_SORT}<span>Sort</span>`;
+      sortBtn.addEventListener("click", () => {
+        this.sound.unlock();
+        this.handOrder = null;
+        this.handOrderDrawnId = null;
+        this.renderTable();
+      });
+      handctl.append(sortBtn);
+    }
     const expandBtn = h("button", { "data-control-key": "inspect-open" }, "Inspect hand");
     expandBtn.innerHTML = `${ICON_EXPAND}<span>Inspect hand</span>`;
     expandBtn.addEventListener("click", () => this.openFrame({ kind: "hand", mode: "inspect" }));
@@ -2344,6 +2434,18 @@ export class App {
       tileEl(tileById(advice.recommendation.tileId), "gface", { flip: false }),
       h("span", { class: "gtext" }, advice.headline),
     );
+    // When the player's selected tile carries the safety badge, the
+    // bubble states the reason in words — the badge is never colour
+    // alone (guided-play package).
+    if (this.selectedTileId !== null) {
+      const selected = advice.options.find((o) => o.tileId === this.selectedTileId);
+      if (selected?.genbutsu) {
+        const names = selected.genbutsuAgainst.map(
+          (seat) => WIND_NAMES[this.model.players[seat]!.seatWind]!,
+        );
+        el.append(h("div", { class: "gsafe" }, safetyLineText(names)));
+      }
+    }
     el.addEventListener("click", () => {
       this.sound.unlock();
       this.openFrame({ kind: "guide" });
@@ -2401,6 +2503,284 @@ export class App {
     return { tiles, drawnId: null };
   }
 
+  /** Index of the most recent hand-start event at or before the
+   *  cursor — the epoch a non-guided manual arrangement lives in. */
+  private handEpoch(): number {
+    if (!this.runner) return -1;
+    let epoch = -1;
+    for (let i = 0; i < this.cursor && i < this.runner.events.length; i++) {
+      if (this.runner.events[i]!.type === "hand-start") epoch = i;
+    }
+    return epoch;
+  }
+
+  /** Guided grouping regime: a live, non-lesson game with guided on. */
+  private groupingLive(): boolean {
+    return !!this.runner && !this.playing && !this.lesson && this.settings.guided;
+  }
+
+  /** The stamp the stored manual order must carry to still apply. */
+  private manualOrderStampNow(): string {
+    return this.groupingLive() ? `cur:${this.cursor}` : `hand:${this.handEpoch()}`;
+  }
+
+  private manualOrderApplies(): boolean {
+    return (
+      !!this.handOrder &&
+      !!this.runner &&
+      this.handOrderRunner === this.runner &&
+      this.handOrderStamp === this.manualOrderStampNow()
+    );
+  }
+
+  /**
+   * The hand as it is displayed (guided-play package): in the guided
+   * grouping regime, group order from the decomposition — grouping
+   * is itself a sort — with the decomposition attached for the label
+   * strip; a manual arrangement the player made by shifting tiles
+   * wins over both, within its stamp's lifetime; otherwise the
+   * shipped sorted order with the drawn tile apart. `segments` is
+   * null whenever the display order is not the decomposition's —
+   * labels then stay hidden until grouping re-sorts.
+   */
+  private handDisplayTiles(): {
+    tiles: Tile[];
+    drawnId: number | null;
+    drawnApart: boolean;
+    grouped: boolean;
+    segments: HandSegment[] | null;
+  } {
+    const sorted = this.handTilesSorted();
+    const live = !!this.runner && !this.playing && !this.lesson;
+    if (!live) {
+      return {
+        tiles: sorted.tiles,
+        drawnId: sorted.drawnId,
+        drawnApart: sorted.drawnId !== null,
+        grouped: false,
+        segments: null,
+      };
+    }
+    const me = this.model.players[this.humanSeat]!;
+    const byId = new Map(sorted.tiles.map((t) => [t.id, t]));
+    const grouped = this.settings.guided;
+
+    if (grouped) {
+      const segments = decomposeHand(sorted.tiles, me.melds.length);
+      const groupOrder = segmentTileIds(segments);
+      if (this.manualOrderApplies()) {
+        const arranged = this.handOrder!.filter((id) => byId.has(id));
+        const rest = sorted.tiles.filter((t) => !arranged.includes(t.id));
+        const tiles = [...arranged, ...rest.map((t) => t.id)].map((id) => byId.get(id)!);
+        const matches =
+          tiles.length === groupOrder.length &&
+          tiles.every((t, i) => groupOrder[i] === t.id);
+        return {
+          tiles,
+          drawnId: sorted.drawnId,
+          drawnApart: false,
+          grouped: true,
+          segments: matches ? segments : null,
+        };
+      }
+      return {
+        tiles: groupOrder.map((id) => byId.get(id)!),
+        drawnId: sorted.drawnId,
+        drawnApart: false,
+        grouped: true,
+        segments,
+      };
+    }
+
+    if (this.manualOrderApplies()) {
+      // A tile drawn after the arrangement was made is not part of
+      // it: it arrives apart at the right, and the arranged tiles
+      // keep exactly the order the player left them in.
+      const drawnArranged =
+        sorted.drawnId !== null && sorted.drawnId === this.handOrderDrawnId;
+      const pool =
+        drawnArranged || sorted.drawnId === null
+          ? sorted.tiles
+          : sorted.tiles.filter((t) => t.id !== sorted.drawnId);
+      const arranged = this.handOrder!.filter((id) => pool.some((t) => t.id === id));
+      const rest = pool.filter((t) => !arranged.includes(t.id));
+      const tiles = [...arranged, ...rest.map((t) => t.id)].map((id) => byId.get(id)!);
+      let drawnApart = false;
+      if (!drawnArranged && sorted.drawnId !== null) {
+        tiles.push(byId.get(sorted.drawnId)!);
+        drawnApart = true;
+      }
+      return { tiles, drawnId: sorted.drawnId, drawnApart, grouped: false, segments: null };
+    }
+    return {
+      tiles: sorted.tiles,
+      drawnId: sorted.drawnId,
+      drawnApart: sorted.drawnId !== null,
+      grouped: false,
+      segments: null,
+    };
+  }
+
+  /** Whether the hand currently sits out of its resting order and
+   *  the Sort control should offer to restore it. */
+  private handOutOfOrderNow(): boolean {
+    if (!this.handOrder || !this.manualOrderApplies()) return false;
+    if (!this.runner || this.playing || this.lesson) return false;
+    const display = this.handDisplayTiles();
+    if (display.grouped) return display.segments === null;
+    const sorted = this.handTilesSorted();
+    const dispBase =
+      display.drawnApart && display.tiles.length > 0
+        ? display.tiles.slice(0, -1)
+        : display.tiles;
+    const sortBase = sorted.drawnId !== null ? sorted.tiles.slice(0, -1) : sorted.tiles;
+    if (dispBase.length !== sortBase.length) return true;
+    return dispBase.some((t, i) => t.id !== sortBase[i]!.id);
+  }
+
+  /** Tiles may be shifted by press-and-hold whenever the player's
+   *  own hand is live and unlocked: never during playback, lessons,
+   *  an open frame, a finished game, or after the player's own
+   *  riichi declaration (the rules lock the hand). */
+  private canShiftTiles(): boolean {
+    if (!this.runner || this.playing || this.lesson || this.frame) return false;
+    if (this.runner.result) return false;
+    const me = this.model.players[this.humanSeat];
+    if (!me || me.riichi) return false;
+    return true;
+  }
+
+  // -- tile shifting (press-and-hold) ------------------------------------------
+  //
+  // A quick tap stays a tap (select/discard, untouched). Holding a
+  // tile for a beat grabs it: the tile lifts, a dashed ghost marks
+  // the slot it came from, and sliding sideways walks it through the
+  // row — neighbours part as it passes. Release drops it and the
+  // order is committed as the manual arrangement. A grab never
+  // discards, and any pointer travel that was really a swipe
+  // suppresses the tap that would otherwise follow it.
+
+  private onTilePointerDown(ev: PointerEvent, tile: Tile, wrap: HTMLElement, inner: HTMLElement): void {
+    if (ev.pointerType === "mouse" && ev.button !== 0) return;
+    if (!this.canShiftTiles() || this.tileDrag) return;
+    const drag: NonNullable<App["tileDrag"]> = {
+      tileId: tile.id,
+      wrap,
+      inner,
+      ghost: null,
+      startX: ev.clientX,
+      dx: 0,
+      grabbed: false,
+      moved: false,
+      order: this.handDisplayTiles().tiles.map((t) => t.id),
+      timer: null,
+      onMove: (e: PointerEvent) => this.onTilePointerMove(e),
+      onUp: (e: PointerEvent) => this.onTilePointerUp(e),
+    };
+    drag.timer = setTimeout(() => this.beginTileGrab(), 260);
+    this.tileDrag = drag;
+    window.addEventListener("pointermove", drag.onMove);
+    window.addEventListener("pointerup", drag.onUp);
+    window.addEventListener("pointercancel", drag.onUp);
+  }
+
+  private beginTileGrab(): void {
+    const drag = this.tileDrag;
+    if (!drag || drag.grabbed) return;
+    drag.grabbed = true;
+    const rect = drag.inner.getBoundingClientRect();
+    const ghost = h("span", { class: "hshift-ghost" });
+    ghost.style.width = `${rect.width / this.scale}px`;
+    ghost.style.height = `${rect.height / this.scale}px`;
+    drag.wrap.before(ghost);
+    drag.ghost = ghost;
+    drag.wrap.classList.add("grabbing");
+    drag.wrap.style.width = "0px";
+    this.applyDragTransform(0);
+  }
+
+  private applyDragTransform(dx: number): void {
+    const drag = this.tileDrag;
+    if (!drag) return;
+    drag.inner.style.transform = `translate(${dx}px, -6px) scale(1.12)`;
+    drag.inner.style.zIndex = "6";
+    drag.inner.style.position = "relative";
+  }
+
+  private onTilePointerMove(ev: PointerEvent): void {
+    const drag = this.tileDrag;
+    if (!drag) return;
+    const totalDx = (ev.clientX - drag.startX) / this.scale;
+    if (!drag.grabbed) {
+      // Travel before the hold arms means a swipe, not a grab: the
+      // arm is cancelled and the release will not read as a tap.
+      if (Math.abs(totalDx) > 10) {
+        drag.moved = true;
+        if (drag.timer) clearTimeout(drag.timer);
+      }
+      return;
+    }
+    drag.moved = true;
+    const ghost = drag.ghost!;
+    const gr = ghost.getBoundingClientRect();
+    const visualCenter = (gr.left + gr.width / 2) / this.scale + totalDx;
+    const row = drag.wrap.closest(".handrow");
+    if (!row) return;
+    // Only the concealed hand's own wraps take part — meld tiles
+    // share the row but are never part of the arrangement.
+    const orderSet = new Set(drag.order);
+    const others = [...row.querySelectorAll<HTMLElement>(".twrap")].filter(
+      (w) => w !== drag.wrap && orderSet.has(Number((w.dataset["flip"] ?? "").slice(5))),
+    );
+    let insertAt = others.length;
+    for (let i = 0; i < others.length; i++) {
+      const r = others[i]!.getBoundingClientRect();
+      if (visualCenter < (r.left + r.width / 2) / this.scale) {
+        insertAt = i;
+        break;
+      }
+    }
+    const currentIdx = drag.order.indexOf(drag.tileId);
+    if (insertAt !== currentIdx && others.length > 0) {
+      if (insertAt >= others.length) others[others.length - 1]!.after(drag.wrap);
+      else others[insertAt]!.before(drag.wrap);
+      const rest = drag.order.filter((id) => id !== drag.tileId);
+      rest.splice(insertAt, 0, drag.tileId);
+      drag.order = rest;
+      drag.dx += (insertAt - currentIdx) * (gr.width / this.scale + 1);
+    }
+    this.applyDragTransform(totalDx - drag.dx);
+  }
+
+  private onTilePointerUp(_ev: PointerEvent): void {
+    const drag = this.tileDrag;
+    if (!drag) return;
+    const wasGrabbed = drag.grabbed;
+    const order = drag.order;
+    const wasMoved = drag.moved;
+    this.endTileDrag();
+    if (wasGrabbed) {
+      this.suppressHandTapUntil = Date.now() + 400;
+      this.handOrder = [...order];
+      this.handOrderRunner = this.runner;
+      this.handOrderStamp = this.manualOrderStampNow();
+      this.handOrderDrawnId = this.handTilesSorted().drawnId;
+      this.renderTable();
+    } else if (wasMoved) {
+      this.suppressHandTapUntil = Date.now() + 400;
+    }
+  }
+
+  private endTileDrag(): void {
+    const drag = this.tileDrag;
+    if (!drag) return;
+    if (drag.timer) clearTimeout(drag.timer);
+    window.removeEventListener("pointermove", drag.onMove);
+    window.removeEventListener("pointerup", drag.onUp);
+    window.removeEventListener("pointercancel", drag.onUp);
+    this.tileDrag = null;
+  }
+
   private handTileSize(): number {
     // Large mode (table-large-v1): the size is fixed at 28 — the §8 meld
     // dividend is capped there; stability outranks maximal size.
@@ -2416,16 +2796,29 @@ export class App {
   private handRowEl(): HTMLElement {
     const me = this.model.players[this.humanSeat]!;
     const row = h("div", { class: "handrow" });
-    const { tiles, drawnId } = this.handTilesSorted();
+    const display = this.handDisplayTiles();
+    const { tiles, drawnId } = display;
     const size = this.handTileSize();
     const pending = this.runner?.pending;
     const myTurn = pending?.kind === "turn" && !this.playing;
+    const advice = this.guideAdvice();
     // The coach's recommended discard instance carries the ring
     // (rendering A) for exactly as long as the hint speaks for this
     // decision; a fresh render for a new decision recomputes it.
-    const recId = this.guideAdvice()?.recommendation.tileId ?? null;
+    const recId = advice?.recommendation.tileId ?? null;
+    // Safety badges and the grouping labels belong to the guided
+    // overlay family: they speak only while the hint does, and hide
+    // with it during call prompts and Focus Frames.
+    const guidedFamily = advice !== null && !this.frame;
+    const badgedIds = new Set<number>(
+      guidedFamily
+        ? advice!.options.filter((o) => o.genbutsu).map((o) => o.tileId)
+        : [],
+    );
+    const wraps = new Map<number, HTMLElement>();
     tiles.forEach((tile, idx) => {
-      const isDrawn = drawnId !== null && tile.id === drawnId && idx === tiles.length - 1;
+      const isDrawn =
+        display.drawnApart && drawnId !== null && tile.id === drawnId && idx === tiles.length - 1;
       const wrap = tileEl(tile, "t-hand");
       const inner = wrap.firstElementChild as HTMLElement;
       if (size !== 25) {
@@ -2435,6 +2828,7 @@ export class App {
       if (isDrawn) wrap.classList.add("drawn-host");
       if (isDrawn) inner.classList.add("drawn");
       if (recId !== null && tile.id === recId) inner.classList.add("coach-rec");
+      if (badgedIds.has(tile.id)) inner.append(safetyBadgeEl());
       if (this.selectedTileId === tile.id) inner.classList.add("sel");
       if (this.riichiArmed && pending?.kind === "turn" && pending.ctx.riichiDiscardIds.includes(tile.id)) {
         inner.classList.add("riichi-ok");
@@ -2446,15 +2840,38 @@ export class App {
         }
       }
       if (myTurn || this.lesson?.view().acceptsTiles) {
-        tileControl(wrap, `hand-${tile.id}`, `${tileLabel(tile)}${this.selectedTileId === tile.id ? ", selected; activate to discard" : "; activate to select"}`, () => this.onHandTileTap(tile), this.selectedTileId === tile.id);
+        tileControl(wrap, `hand-${tile.id}`, `${tileLabel(tile)}${badgedIds.has(tile.id) ? ", safe against every riichi player" : ""}${this.selectedTileId === tile.id ? ", selected; activate to discard" : "; activate to select"}`, () => this.onHandTileTap(tile), this.selectedTileId === tile.id);
       }
-      row.append(wrap);
+      if (this.canShiftTiles()) {
+        wrap.addEventListener("pointerdown", (ev) =>
+          this.onTilePointerDown(ev, tile, wrap, inner),
+        );
+      }
+      wraps.set(tile.id, wrap);
     });
+    if (display.segments && guidedFamily) {
+      // Group order with a plain-words label under each group. The
+      // segments add no width: every tile keeps its shipped size
+      // and margin, so the grouped row spans exactly what the
+      // ungrouped row spans.
+      for (const segment of display.segments) {
+        const seg = h("div", { class: "hseg" });
+        const segTiles = h("div", { class: "hseg-tiles" });
+        for (const tile of segment.tiles) segTiles.append(wraps.get(tile.id)!);
+        seg.append(segTiles, h("div", { class: "hseg-label" }, segment.label));
+        row.append(seg);
+      }
+    } else {
+      for (const tile of tiles) row.append(wraps.get(tile.id)!);
+    }
     for (const meld of me.melds) row.append(this.meldEl(meld, "t-meld", me.seat));
     return row;
   }
 
   private onHandTileTap(tile: Tile): void {
+    // The release of a grab (or of a swipe that never armed) fires
+    // a click on the tile — it is not a tap.
+    if (Date.now() < this.suppressHandTapUntil) return;
     if (this.lesson) {
       // Lesson gates read hand tiles directly (§9): a tap is the
       // discard/gate action the current step is waiting for.
@@ -2668,7 +3085,7 @@ export class App {
       const cell = h("span", { class: `cell ${e.tsumogiri ? "tg" : ""}` });
       if (e.riichiDeclaration) cell.classList.add("riichi");
       if (i === entries.length - 1) cell.classList.add("latest");
-      cell.append(tileEl(e.tile, "", { flip: false }));
+      cell.append(tileEl(e.tile, "", { flip: false, index: true }));
       fpond.append(cell);
     });
     if (entries.length === 0) fpond.append(h("span", { class: "fsub" }, "No discards yet"));
@@ -2686,14 +3103,24 @@ export class App {
       frame.append(h("div", { class: "fsub" }, "None — closed hand"));
     } else {
       const row = h("div", { class: "fmelds" });
-      for (const meld of p.melds) row.append(this.meldEl(meld, "fmeld", seat));
+      for (const meld of p.melds) {
+        const meldNode = this.meldEl(meld, "fmeld", seat);
+        // A Focus Frame is an inspect surface: corner indices ride
+        // its magnified faces (the board's melds never carry them).
+        const inners = meldNode.querySelectorAll(".tile");
+        meld.tiles.forEach((t, i) => {
+          const index = tileIndexEl(t);
+          if (index && inners[i]) inners[i]!.append(index);
+        });
+        row.append(meldNode);
+      }
       frame.append(row);
     }
 
     frame.append(h("div", { class: "fsec" }, "YOUR HAND"));
     const anchor = h("div", { class: "anchor" });
-    const { tiles } = this.handTilesSorted();
-    for (const tile of tiles) anchor.append(tileEl(tile, "t-meld", { flip: false }));
+    const { tiles } = this.handDisplayTiles();
+    for (const tile of tiles) anchor.append(tileEl(tile, "t-meld", { flip: false, index: true }));
     frame.append(anchor);
 
     if (this.runner?.pending?.kind === "turn" && !this.playing) {
@@ -2720,9 +3147,9 @@ export class App {
       const row = h("div", { class: "dpair" });
       const doraTile = tileById(doraTypes[i]! * 4 + 1);
       row.append(
-        tileEl(ind, "ind", { flip: false }),
+        tileEl(ind, "ind", { flip: false, index: true }),
         h("span", { class: "arr" }, "→"),
-        tileEl(doraTile, "dor", { flip: false }),
+        tileEl(doraTile, "dor", { flip: false, index: true }),
         h("span", { class: "dlab" }, tileLabel(doraTile)),
       );
       frame.append(row);
@@ -2861,7 +3288,7 @@ export class App {
     sec("The move");
     const recTile = tileById(rec.tileId);
     const moveRow = h("div", { class: "xmove" });
-    if (recTile) moveRow.append(tileEl(recTile, "", { flip: false }));
+    if (recTile) moveRow.append(tileEl(recTile, "", { flip: false, index: true }));
     const drawn = ctx.drawnTile !== null && ctx.drawnTile.id === rec.tileId;
     const tenpaiDiscards = evaluateDiscards(view, ctx).filter(
       (c) => c.shantenAfter === rec.shantenAfter,
@@ -3008,7 +3435,7 @@ export class App {
       after[type] = (after[type] ?? 0) - 1;
       for (const w of rec.waits) {
         const row = h("div", { class: "xwait" });
-        row.append(tileEl({ id: -1, type: w.type, red: false }, "", { flip: false }));
+        row.append(tileEl({ id: -1, type: w.type, red: false }, "", { flip: false, index: true }));
         const held = after[w.type] ?? 0;
         let fact: string;
         if (suitedWaitRun(after, w.type)) {
@@ -3045,12 +3472,12 @@ export class App {
   private handSheetEl(mode: "inspect" | "chi" | "kan"): HTMLElement {
     const sheet = h("div", { class: "sheet" });
     const pending = this.runner?.pending;
-    const { tiles, drawnId } = this.handTilesSorted();
+    const { tiles, drawnId } = this.handDisplayTiles();
     const selected = this.selectedTileId !== null ? tileById(this.selectedTileId) : null;
 
     if (selected && mode === "inspect") {
       const preview = h("div", { class: "selpreview" });
-      preview.append(tileEl(selected, "", { flip: false }));
+      preview.append(tileEl(selected, "", { flip: false, index: true }));
       const readout = h("div", { class: "readout" });
       // The approved readout (rendering B): the plain name first,
       // then the tile's facts — each line only when it is true of
@@ -3088,11 +3515,11 @@ export class App {
     }
 
     const grid = h("div", { class: "hgrid" });
-    tiles.forEach((tile, idx) => {
+    tiles.forEach((tile) => {
       const cell = h("span", { class: "cell" });
-      if (drawnId === tile.id && idx === tiles.length - 1) cell.classList.add("drawn");
+      if (drawnId === tile.id) cell.classList.add("drawn");
       if (this.selectedTileId === tile.id) cell.classList.add("sel");
-      cell.append(tileEl(tile, "", { flip: false }));
+      cell.append(tileEl(tile, "", { flip: false, index: true }));
       tileControl(cell, `inspect-${tile.id}`, tileLabel(tile), () => {
         this.sound.unlock();
         this.selectedTileId = tile.id;
@@ -3562,9 +3989,35 @@ export class App {
     this.mountOverlay(overlay);
   }
 
-  private lessonStripEl(types: readonly number[]): HTMLElement {
+  /**
+   * A lesson's pictured tiles. On teaching steps (`inspectable`)
+   * each tile can be tapped to inspect it — the corner index fades
+   * in over the face, the lesson's magnifier. On check steps the
+   * strip is never inspectable: a check must not be tappable into
+   * revealing its answer (the standing no-leak law).
+   */
+  private lessonStripEl(types: readonly number[], inspectable = false): HTMLElement {
     const strip = h("div", { class: "lstrip" });
-    for (const type of types) strip.append(tileEl(tileById(type * 4 + 1), "t-meld", { flip: false }));
+    const stepKey = `${this.lesson?.moduleId ?? ""}:${this.lesson?.stepIndex ?? 0}`;
+    types.forEach((type, i) => {
+      const key = `${stepKey}:${i}`;
+      const tile = tileById(type * 4 + 1);
+      const w = tileEl(tile, "t-meld", {
+        flip: false,
+        index: inspectable && this.lessonIndexRevealed.has(key),
+      });
+      if (inspectable) {
+        w.classList.add("stripinspect");
+        w.setAttribute("role", "button");
+        w.setAttribute("aria-label", `Inspect the ${tileLabel(tile)}`);
+        w.addEventListener("click", () => {
+          if (this.lessonIndexRevealed.has(key)) this.lessonIndexRevealed.delete(key);
+          else this.lessonIndexRevealed.add(key);
+          this.renderTable();
+        });
+      }
+      strip.append(w);
+    });
     return strip;
   }
 
@@ -3623,7 +4076,9 @@ export class App {
     const scroll = h("div", { class: "lessonscroll" });
     scroll.append(h("div", { class: "lab" }, view.lab), h("p", {}, view.text));
     if (view.note) scroll.append(h("p", { class: "dim" }, view.note));
-    if (view.strip) scroll.append(this.lessonStripEl(view.strip));
+    if (view.strip) {
+      scroll.append(this.lessonStripEl(view.strip, view.choices === null && view.drill === null));
+    }
     panel.append(scroll);
     const choices = this.lessonChoicesEl();
     if (choices) panel.append(choices);
@@ -3639,17 +4094,23 @@ export class App {
     const panel = h("div", { class: "revpanel" });
     panel.append(h("div", { class: "lab" }, view.lab), h("p", {}, view.text));
     if (view.note && !view.drill) panel.append(h("p", { class: "dim" }, view.note));
-    if (view.strip) panel.append(this.lessonStripEl(view.strip));
+    if (view.strip) {
+      panel.append(this.lessonStripEl(view.strip, view.choices === null && view.drill === null));
+    }
     wrap.append(panel);
     if (view.drill) {
       const drill = h("div", { class: "drillpanel" });
       const grid = h("div", { class: "dgrid" });
       view.drill.tiles.forEach((type, i) => {
+        const found = view.drill!.found.includes(i);
         const cell = h("span", {
-          class: `cell${view.drill!.found.includes(i) ? " sel" : ""}`,
+          class: `cell${found ? " sel" : ""}`,
         });
-        cell.append(tileEl(tileById(type * 4 + 1), "", { flip: false }));
-        tileControl(cell, `drill-${i}`, tileTypeName(type), () => this.lessonAct({ kind: "drill", index: i }), view.drill!.found.includes(i));
+        // A found tile is an answered tile: its corner index may
+        // show. Unfound tiles never carry one — the drill's answer
+        // must not be tappable into view (the no-leak law).
+        cell.append(tileEl(tileById(type * 4 + 1), "", { flip: false, index: found }));
+        tileControl(cell, `drill-${i}`, tileTypeName(type), () => this.lessonAct({ kind: "drill", index: i }), found);
         grid.append(cell);
       });
       drill.append(grid);
