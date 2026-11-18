@@ -1,0 +1,197 @@
+/* Open Mahjong — static content pages (design rules section 18).
+   Tokens and type mirrored from packages/web/src/styles.css :root and
+   the shipped public/privacy/index.html pattern. One shared sheet for
+   every static document page: /riichi/, /learn/, /hong-kong/, /mcr/,
+   /taiwanese/, /calculator/. */
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Figtree";
+  src: url("/fonts/figtree-var.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --bg: #152620;
+  --panel: #1f352b;
+  --panel-hi: #2e4a3a;
+  --line: #3a5a47;
+  --ink: #f3efe3;
+  --dim: #a9bda9;
+  --gold: #d9b45c;
+  --on-gold: #1c2a20;
+  --state: #5e9273;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scrollbar-color: var(--panel-hi) var(--bg); }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--panel-hi); color: var(--ink); }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: var(--panel-hi); border-radius: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+
+a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--dim); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--ink); }
+a:focus-visible { outline: 2px solid var(--state); outline-offset: 2px; border-radius: 2px; }
+
+.col { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+
+/* ---- site chrome -------------------------------------------------- */
+
+.sitebar { border-bottom: 1px solid var(--line); }
+.sitebar .col {
+  display: flex; align-items: baseline; flex-wrap: wrap;
+  gap: 6px 22px; padding-top: 16px; padding-bottom: 14px;
+}
+.wordmark {
+  font-family: "Fraunces", Georgia, serif; font-weight: 600;
+  font-size: 17px; letter-spacing: 0.045em; color: var(--gold);
+  text-decoration: none; white-space: nowrap;
+}
+.wordmark:hover { text-decoration: none; }
+.sitenav { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-left: auto; }
+.sitenav a {
+  font-size: 13.5px; font-weight: 600; color: var(--dim);
+  text-decoration: none; padding: 4px 0;
+}
+.sitenav a:hover { color: var(--ink); }
+.sitenav a[aria-current="page"] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--state); }
+
+/* ---- document type ------------------------------------------------ */
+
+main { padding: 30px 0 8px; }
+
+h1 {
+  font-family: "Fraunces", Georgia, serif; font-weight: 600;
+  font-size: 32px; line-height: 1.12; letter-spacing: -0.01em;
+  text-wrap: balance; margin: 6px 0 12px;
+}
+
+.standfirst { font-size: 17px; line-height: 1.55; }
+
+p { font-size: 16px; line-height: 1.62; margin: 0 0 12px; }
+.dim { color: var(--dim); }
+
+h2 {
+  font-size: 19px; font-weight: 700; line-height: 1.3;
+  margin: 36px 0 10px; text-wrap: balance;
+}
+
+ul.rules { list-style: none; margin: 0 0 6px; }
+ul.rules li {
+  position: relative; font-size: 16px; line-height: 1.62;
+  padding-left: 20px; margin: 0 0 7px;
+}
+ul.rules li::before {
+  content: ""; position: absolute; left: 1px; top: 0.62em;
+  width: 5px; height: 5px; background: var(--dim);
+}
+
+/* ---- contents list ------------------------------------------------- */
+
+.contents { margin: 22px 0 4px; }
+.contents .clabel {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.07em;
+  color: var(--dim); margin: 0 0 8px;
+}
+.contents ul { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.contents li { font-size: 15px; font-weight: 600; }
+
+/* ---- divider rows (lessons, tools, more-links) --------------------- */
+
+.rows { margin-top: 6px; }
+.rows.lead { margin-top: 26px; }
+.row {
+  display: flex; gap: 14px; align-items: baseline;
+  padding: 12px 0; border-top: 1px solid var(--line);
+}
+.row .n {
+  flex: 0 0 26px; font-size: 13px; font-weight: 700; color: var(--dim);
+}
+.row .body { flex: 1 1 auto; min-width: 0; }
+.row .ttl { display: block; font-size: 16px; font-weight: 600; line-height: 1.35; }
+.row .dsc { display: block; font-size: 14px; line-height: 1.5; color: var(--dim); margin-top: 2px; }
+.row .meta {
+  flex: 0 0 auto; font-size: 13px; color: var(--dim); white-space: nowrap;
+}
+.row .chev { flex: 0 0 18px; align-self: center; }
+.row .chev svg {
+  display: block; width: 18px; height: 18px; stroke: var(--dim);
+  fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+a.row { text-decoration: none; }
+a.row .ttl { text-decoration: underline; text-decoration-color: var(--dim); text-underline-offset: 3px; }
+a.row:hover .ttl { text-decoration-color: var(--ink); }
+
+/* ---- track heads (learn index) ------------------------------------- */
+
+.trackhead {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 10px;
+  margin: 38px 0 2px;
+}
+.trackhead:first-of-type { margin-top: 26px; }
+.trackhead .tname { font-size: 19px; font-weight: 700; }
+.trackhead .tmeta { font-size: 13px; color: var(--dim); margin-left: auto; }
+.badge {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--dim); background: var(--panel); border-radius: 999px;
+  padding: 3px 9px; white-space: nowrap;
+}
+.trackline { font-size: 14.5px; line-height: 1.55; color: var(--dim); margin: 6px 0 4px; }
+
+/* ---- app-entry panel ------------------------------------------------ */
+
+.appcta {
+  background: var(--panel); border-radius: 20px;
+  padding: 22px 20px; margin: 42px 0 6px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px;
+}
+.appcta .ctatext { flex: 1 1 240px; font-size: 16px; line-height: 1.55; }
+.appcta .ctatext strong { font-weight: 700; }
+.playbtn {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  height: 48px; padding: 0 26px; border-radius: 24px;
+  background: var(--gold); color: var(--on-gold);
+  font-size: 15px; font-weight: 600; text-decoration: none;
+}
+.playbtn:hover { text-decoration: none; }
+
+/* ---- footer ---------------------------------------------------------- */
+
+.sitefoot { margin-top: 46px; border-top: 1px solid var(--line); }
+.sitefoot .col { padding-top: 20px; padding-bottom: 42px; }
+.sitefoot p { font-size: 13px; line-height: 1.6; color: var(--dim); margin: 0 0 6px; }
+.sitefoot .flinks { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 10px; }
+.sitefoot .flinks a { font-size: 13px; font-weight: 600; color: var(--dim); text-decoration: none; }
+.sitefoot .flinks a:hover { color: var(--ink); }
+
+/* ---- wider screens --------------------------------------------------- */
+
+@media (min-width: 720px) {
+  .col { padding: 0 24px; }
+  main { padding-top: 44px; }
+  h1 { font-size: 38px; }
+  .standfirst { font-size: 18px; }
+  .appcta { padding: 26px 28px; }
+}

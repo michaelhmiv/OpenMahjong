@@ -2,10 +2,16 @@
 
 > Open Mahjong is a free, open source web app for playing Riichi, Hong Kong, MCR, and Taiwanese mahjong against the CPU. No account is needed to play.
 
-Open Mahjong runs in a web browser. Players play Riichi, Hong Kong, MCR, or Taiwanese mahjong against the CPU, each variant with its own real scoring. The app includes 41 interactive tutorial lessons played on the real table — 11 for riichi and 10 for each other variant — and a guided mode that offers hints with explanations during CPU games. It also includes score calculators and a scorekeeper for in-person games in all four variants. Signing in with Google is optional and saves game history and settings to the account. Open Mahjong is free and open source under the AGPLv3 license.
+Open Mahjong runs in a web browser. Players play Riichi, Hong Kong, MCR, or Taiwanese mahjong against the CPU, each variant with its own real scoring. The app includes 52 interactive tutorial lessons played on the real table — 11 for riichi, 10 for each other variant, and an 11-lesson American training track (training only: lessons and a practice card; there is no American game to play) — and a guided mode that offers hints with explanations during CPU games. It also includes score calculators and a scorekeeper for in-person games in all four variants. Signing in with Google is optional and saves game history and settings to the account. Open Mahjong is free and open source under the AGPLv3 license.
 
 ## Links
 
 - [Open Mahjong](https://openmahjong.app/): Play Riichi, Hong Kong, MCR, and Taiwanese mahjong against the CPU in the browser.
+- [Riichi rules](https://openmahjong.app/riichi/): The riichi rules Open Mahjong plays, in full.
+- [Mahjong lessons](https://openmahjong.app/learn/): The 52 interactive lessons across the four variants and American training.
+- [Hong Kong Old Style rules](https://openmahjong.app/hong-kong/): Fan scoring, the three-fan minimum, flowers, and payments.
+- [MCR rules](https://openmahjong.app/mcr/): The 81 scoring patterns, the eight-fan minimum, flowers, and payments.
+- [Taiwanese rules](https://openmahjong.app/taiwanese/): Sixteen-tile hands, tai scoring, flowers, and the dealer bonus.
+- [Score calculators](https://openmahjong.app/calculator/): Scorekeepers and hand calculators for in-person mahjong.
 - [Privacy policy](https://openmahjong.app/privacy): How Open Mahjong handles data.
 - [GitHub repository](https://github.com/michaelhmiv/OpenMahjong): Source code, licensed AGPLv3.

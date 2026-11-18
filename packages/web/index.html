@@ -37,14 +37,71 @@
 <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2708638041809482"
      crossorigin="anonymous"></script>
+<style>
+/* Static home-shell content (design rules section 18): real HTML in the
+   initial document for crawlers and pre-mount readers. The app replaces
+   it when it mounts into #app. Every selector is scoped under .om-shell
+   so nothing here can reach the running app. */
+.om-shell { position: absolute; inset: 0; overflow-y: auto; background: #152620; color: #f3efe3; font-family: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif; }
+.om-shell main { padding: 30px 0 42px; }
+.om-shell .om-col { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+.om-shell h1 { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 32px; line-height: 1.12; margin: 6px 0 12px; }
+.om-shell p { font-size: 16px; line-height: 1.62; margin: 0 0 12px; }
+.om-shell .om-lead { font-size: 17px; line-height: 1.55; }
+.om-shell a { color: #f3efe3; text-decoration: underline; text-decoration-color: #a9bda9; text-underline-offset: 3px; }
+.om-shell .om-rows { margin-top: 26px; }
+.om-shell .om-row { display: flex; gap: 14px; align-items: baseline; padding: 12px 0; border-top: 1px solid #3a5a47; text-decoration: none; }
+.om-shell .om-row .om-body { flex: 1 1 auto; min-width: 0; }
+.om-shell .om-row .om-ttl { display: block; font-size: 16px; font-weight: 600; line-height: 1.35; text-decoration: underline; text-decoration-color: #a9bda9; text-underline-offset: 3px; }
+.om-shell .om-row .om-dsc { display: block; font-size: 14px; line-height: 1.5; color: #a9bda9; margin-top: 2px; }
+.om-shell .om-row .om-chev { flex: 0 0 18px; align-self: center; }
+.om-shell .om-row .om-chev svg { display: block; width: 18px; height: 18px; stroke: #a9bda9; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+</style>
 </head>
 <body>
-<div id="app"></div>
+<div id="app">
+<div class="om-shell">
+<main>
+  <div class="om-col">
+    <h1>Open Mahjong</h1>
+    <p class="om-lead">Free forever. Open source mahjong.</p>
+    <p>Open Mahjong is a web app for playing Riichi, Hong Kong, MCR, and Taiwanese mahjong against the CPU, each variant with its own real scoring. No account is needed to play.</p>
+    <p>The app includes 52 interactive tutorial lessons played on the real table — 11 for riichi, 10 for each other variant, and an 11-lesson American training track — and a guided mode that offers hints with explanations during CPU games. It also includes score calculators and a scorekeeper for in-person games in all four variants.</p>
+    <p>Signing in with Google is optional. Signed-in players can save their game history and settings to their account.</p>
+    <p>Open Mahjong is free and open source under the AGPLv3 license. The source code is on <a href="https://github.com/michaelhmiv/OpenMahjong">GitHub</a>.</p>
+
+    <div class="om-rows">
+      <a class="om-row" href="/riichi/">
+        <span class="om-body"><span class="om-ttl">Riichi rules</span><span class="om-dsc">Stakes, calls, riichi, dora, and draws, in full.</span></span>
+        <span class="om-chev"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+      </a>
+      <a class="om-row" href="/learn/">
+        <span class="om-body"><span class="om-ttl">Mahjong lessons</span><span class="om-dsc">52 interactive lessons across the four variants and American training.</span></span>
+        <span class="om-chev"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+      </a>
+      <a class="om-row" href="/calculator/">
+        <span class="om-body"><span class="om-ttl">Score calculators</span><span class="om-dsc">Scorekeepers and a hand calculator for games played in person.</span></span>
+        <span class="om-chev"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+      </a>
+      <a class="om-row" href="/privacy">
+        <span class="om-body"><span class="om-ttl">Privacy policy</span><span class="om-dsc">What is stored, where, and how to delete it.</span></span>
+        <span class="om-chev"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+      </a>
+      <a class="om-row" href="https://github.com/michaelhmiv/OpenMahjong">
+        <span class="om-body"><span class="om-ttl">Source code on GitHub</span><span class="om-dsc">The app and the rules engine, under AGPLv3.</span></span>
+        <span class="om-chev"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></span>
+      </a>
+    </div>
+  </div>
+</main>
+</div>
+</div>
 <noscript>
+<style>.om-shell { display: none; }</style>
 <h1>Open Mahjong</h1>
 <p>Free forever. Open source mahjong.</p>
 <p>Open Mahjong is a web app for playing Riichi, Hong Kong, MCR, and Taiwanese mahjong against the CPU, each variant with its own real scoring. No account is needed to play.</p>
-<p>The app includes 41 interactive tutorial lessons played on the real table — 11 for riichi and 10 for each other variant — and a guided mode that offers hints with explanations during CPU games. It also includes score calculators and a scorekeeper for in-person games in all four variants.</p>
+<p>The app includes 52 interactive tutorial lessons played on the real table — 11 for riichi, 10 for each other variant, and an 11-lesson American training track — and a guided mode that offers hints with explanations during CPU games. It also includes score calculators and a scorekeeper for in-person games in all four variants.</p>
 <p>Signing in with Google is optional. Signed-in players can save their game history and settings to their account.</p>
 <p>Open Mahjong is free and open source under the AGPLv3 license. The source code is on <a href="https://github.com/michaelhmiv/OpenMahjong">GitHub</a>. See the <a href="/privacy">privacy policy</a>.</p>
 </noscript>

@@ -53,6 +53,9 @@ Gold may appear ONLY on:
 - the "Start ›" / "Continue ›" card CTAs
 - the signed-in identity avatar fill
 - the table's dealer-wind label ("East · You")
+- a static content page's single app-entry button fill (the Play
+  role extended to document pages; §18 — one per page, label in
+  on-gold `#1c2a20`)
 
 Gold must NEVER appear on: body text, stats, scores, labels, pills,
 history rows, settings rows, or state styles. State styles — selection
@@ -527,3 +530,46 @@ text-grade chun `#9e2b25` (§2), flowers in the tint secondary
 tint or hue" rule: it licenses these three inks for Practice
 Card notation glyphs only, and introduces no tint, surface, or
 general-purpose colour.
+
+## 18. Static content pages
+
+Approved 2026-11-18 (renderings `content-pages-v1`, QC-passed;
+owner approval the same day). The site carries real static
+documents beside the app — the rules and lesson-index pages built
+after the AdSense review found "ads on screens without
+publisher-content". They are documents, not app screens (§6 does
+not govern them), and they follow the shipped `/privacy` pattern:
+
+- **Form.** Each page is a real directory + `index.html` under
+  `packages/web/public/` (`/riichi/`, `/learn/`, `/hong-kong/`,
+  `/mcr/`, `/taiwanese/`, `/calculator/`), served as its own
+  document by `server.mjs`; unknown paths stay real 404s. One
+  shared sheet, `public/pages.css`, carries the v6 tokens and type
+  roles: Fraunces for the wordmark and the H1 only, Figtree for
+  everything else, a 680px reading column on the felt ground.
+- **Per-page head.** Every page carries its own title, meta
+  description, canonical, Open Graph / Twitter tags, and JSON-LD
+  (`WebPage` + `BreadcrumbList`), and is listed in `sitemap.xml`.
+  Page content is drawn from the app's own text (the Rules screen,
+  the lesson data, the in-app guides) and guarded by drift tests
+  in `packages/web/test/content-pages.test.ts`: if the app's
+  lessons or riichi rules change, the pages must change with them
+  or the tests fail.
+- **Gold on static pages.** Gold appears only as the wordmark and
+  as the fill of the page's single app-entry button — the §2 Play
+  role extended to a document page's one app-entry action
+  (ratified with this section). Body links are cream with a
+  dim-sage underline decoration, never gold; the current-page nav
+  state is a state-green inset underline. State green is never a
+  text colour on these pages (it measures 4.39:1 on felt — above
+  the 3:1 non-text threshold, below the §9 text floor).
+- **Home shell.** The initial HTML for `/` carries the factual
+  home content (H1, intro, link rows) inside `#app`; the app
+  replaces it on mount. Its styles are scoped under `.om-shell`
+  so no shell rule can reach the running app, and the noscript
+  fallback carries the same facts.
+- **/privacy link correction.** The shipped privacy page coloured
+  its links gold (`a { color: #d9b45c; }`) — not an enumerated §2
+  role, and unrecorded until this section. Corrected to the
+  cream-link treatment above in the same PR that shipped these
+  pages; gold links on any static page are drift.

@@ -57,7 +57,16 @@ describe("sitemap.xml", () => {
 
   it("lists exactly the real served URLs", () => {
     const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]).sort();
-    expect(locs).toEqual(["https://openmahjong.app/", "https://openmahjong.app/privacy"]);
+    expect(locs).toEqual([
+      "https://openmahjong.app/",
+      "https://openmahjong.app/calculator/",
+      "https://openmahjong.app/hong-kong/",
+      "https://openmahjong.app/learn/",
+      "https://openmahjong.app/mcr/",
+      "https://openmahjong.app/privacy",
+      "https://openmahjong.app/riichi/",
+      "https://openmahjong.app/taiwanese/",
+    ]);
   });
 
   it("is a urlset document", () => {
@@ -136,7 +145,7 @@ describe("index.html noscript", () => {
     expect(body).toContain("<h1>Open Mahjong</h1>");
     expect(body).toContain("Free forever. Open source mahjong.");
     expect(body).toContain("mahjong against the CPU");
-    expect(body).toContain("41 interactive tutorial lessons");
+    expect(body).toContain("52 interactive tutorial lessons");
     expect(body).toContain('href="https://github.com/michaelhmiv/OpenMahjong"');
     expect(body).toContain('href="/privacy"');
     expect(body.toLowerCase()).not.toContain("no ads");
