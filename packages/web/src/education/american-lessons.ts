@@ -548,16 +548,16 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
     {
       question: choice(
         "joker-pass-scenario",
-        "Mid-Charleston you hold two jokers and exactly one tile you do not need. The pass requires three tiles. What do you do?",
+        "Mid-Charleston you hold two jokers and exactly one tile you can spare — every other tile on your rack belongs to the hand you are building. The pass requires three tiles. What do you do?",
         [
-          "Pass the joker — a pass is a pass",
-          "Pass the tile you do not need and two other ordinary tiles; a joker is never passed",
-          "Refuse to pass until you draw better tiles",
-          "Pass both jokers and keep the tile you do not need",
+          "Pass one of the jokers — a pass is a pass",
+          "Make a blind pass: pass the tile you can spare, and make up the three with two tiles from the pass coming to you, forwarded sight unseen",
+          "Break up the hand you are building and pass two of its tiles",
+          "Pass both jokers and keep the tile you can spare",
         ],
         1,
-        "A joker is never passed, even when the pass is uncomfortable. You give the tile you do not need plus two ordinary tiles you can best spare, and the jokers stay on your rack.",
-        "The never-pass rule does not bend when the pass is hard. Which answer keeps both jokers on your rack?",
+        "A blind pass is the taught remedy for exactly this spot: you hold fewer than three tiles you can spare. You pass the one tile you can spare and forward two of the tiles coming to you without looking at them — your building tiles stay unbroken, and the jokers stay on your rack, because a blind pass takes only from the tiles coming to you, never from your own rack.",
+        "This lesson taught a remedy for holding fewer than three tiles you can spare. Where do that remedy's extra tiles come from — and whose rack do they never come from?",
       ),
     },
   ]),
@@ -610,7 +610,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
           "Neither hand — this rack points at a different section",
         ],
         0,
-        "The first hand, by a distance. Counted in Craks it already holds eleven of its fourteen tiles: the pungs of ones, twos and threes in full, and two of the kong of fours — three tiles to go. The high stair can count only the pair of fives of Dots toward its pung of fives: two held, twelve tiles to go. Count both stairs in full, in the suit where each counts most, and let the smaller number win.",
+        "The first hand, by a distance. Counted in Craks it already holds eleven of its fourteen tiles: the pungs of ones and twos in full, three of the kong of threes, and two of the kong of fours — three tiles to go. The high stair can count only the pair of fives of Dots toward its pung of fives: two held, twelve tiles to go. Count both stairs in full, in the suit where each counts most, and let the smaller number win.",
         "Both candidates are one-suit stairs. Count the rack against each stair in the single suit where it counts most.",
         {
           tiles: "11122233344m55p",
@@ -989,10 +989,10 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
     {
       question: choice(
         "rn5-selfpick-pay",
-        "You make a 40-point hand on a tile you drew yourself — a self-pick. What does each other player pay you?",
+        "You make a 40-point hand on a tile you drew yourself — a self-pick. Jokers were used in the hand, so no jokerless bonus applies. What does each other player pay you?",
         ["40", "60", "80", "120"],
         2,
-        "Eighty each: on a self-pick, every other player pays double the value. Three players paying 80 makes 240 points in all — the best-paid ordinary win.",
+        "Eighty each: a joker was used in the hand, so no jokerless bonus doubles its value — the value stays 40, and on a self-pick every other player pays double it. Three players paying 80 makes 240 points in all — the best-paid ordinary win.",
         "With no discarder, the double share does not disappear. Who pays it instead?",
         { verify: counted(() => practiceCardHand("RN-5").value * 2) },
       ),
