@@ -135,6 +135,23 @@ async function completeIntroLesson(page) {
   await cont(); // four copies of every tile
   await cont(); // the red-tinted 5s
   await cont(); // the tile shorthand codes
+  await cont(); // face-mastery practice introduction (fix round)
+  // Characters glyph-to-number drills, shuffled rows (fix round):
+  // 7, 4, 9, 5, 8, 3, 6, 2, 1 of characters.
+  await drill([1]); // 7 of characters
+  await drill([3]); // 4 of characters
+  await drill([5]); // 9 of characters
+  await drill([4]); // 5 of characters
+  await drill([1]); // 8 of characters
+  await drill([4]); // 3 of characters
+  await drill([5]); // 6 of characters
+  await drill([3]); // 2 of characters
+  await drill([7]); // 1 of characters
+  await cont(); // wind face-mastery introduction (fix round)
+  await drill([2]); // South wind, name to face
+  await drill([3]); // West wind, name to face
+  await drill([1]); // North wind, name to face
+  await drill([2]); // East wind, name to face
   await page.getByText("LESSON COMPLETE", { exact: true }).waitFor();
   await capture(page, "intro-lesson-complete");
   await page.getByRole("button", { name: "All lessons", exact: true }).click();
