@@ -1,20 +1,14 @@
 import {
   TABLE_PRESETS,
   activeTableEvents,
-  buildTileSet,
   calculateDraft,
   computeRiichiPoints,
   derivedSessionState,
-  doraFromIndicator,
   recomputeSession,
   riichiBust,
   sessionSettlement,
-  tileTypeName,
   validateScoringSession,
   type CalculationDraft,
-  type CalculationContext,
-  type CalculatorInput,
-  type Meld,
   type ScoringSession,
   type TableEvent,
   type Tile,
@@ -25,6 +19,13 @@ import {
   trackScorekeeperSessionFinished,
 } from "./analytics.js";
 import { mountVariantCalculator } from "./variant-calculator-ui.js";
+import { mountRiichiCalculator } from "./riichi-calculator-ui.js";
+import {
+  WIND_NAMES,
+  cxSeatGrid,
+  cxStrip,
+  windIndex,
+} from "./compact-calc.js";
 import {
   appendTableEvent,
   nextUndoTarget,
@@ -108,19 +109,33 @@ export interface TableUIOptions {
   getAuth?: () => { accountId: string; csrfToken: string } | undefined;
 }
 
+interface WinFlow {
+  winner?: number;
+  winType?: "ron" | "tsumo";
+  payer?: number;
+  staged: CalculationDraft[];
+  stagedPayer?: number;
+}
+
 export function mountInPerson(
   container: HTMLElement,
   options: TableUIOptions,
 ): { destroy(): void } {
   let alive = true,
     current: TableCopy | undefined,
-    pageTitle = "At the table";
+    pageTitle = "At the table",
+    subBack: (() => void) | undefined,
+    flow: WinFlow | undefined;
   const shell = el("div", "", "learning-shell table-tools"),
     header = el("header"),
     main = el("main", "", "tools-content");
   const status = el("p", "", "tool-status");
   status.setAttribute("role", "status");
-  const back = button("‹", () => (current ? list() : options.onBack()));
+  const back = button("‹", () => {
+    if (subBack) subBack();
+    else if (current) list();
+    else options.onBack();
+  });
   back.setAttribute("aria-label", "Back");
   const title = el("h1", pageTitle);
   header.append(back, title);
@@ -152,6 +167,8 @@ export function mountInPerson(
     `Player ${seat + 1}`;
   function list(): void {
     current = undefined;
+    flow = undefined;
+    subBack = undefined;
     start("At the table");
     if (options.savedAccountCopy)
       main.append(
@@ -168,6 +185,7 @@ export function mountInPerson(
         "dim",
       ),
       button("New table session", setup),
+      button("One-off hand calculator", showStandalone),
     );
     if (options.accountId) {
       main.append(
@@ -219,6 +237,7 @@ export function mountInPerson(
           `${copy.session.variant === "american" ? "American payment helper" : copy.session.variant === "hong-kong" ? "Hong Kong Old Style" : copy.session.variant === "mcr" ? "MCR" : copy.session.variant === "taiwanese" ? "Taiwanese" : "Riichi"} · ${copy.session.names.join(", ")} · ${copy.session.finished || riichiBust(copy.session) ? "Finished" : "In progress"}`,
           () => {
             current = copy;
+            flow = undefined;
             showSession();
           },
           "tool-session",
@@ -226,6 +245,7 @@ export function mountInPerson(
       );
   }
   function setup(): void {
+    subBack = () => list();
     start("New table session");
     const form = el("form"),
       preset = select(
@@ -324,7 +344,8 @@ export function mountInPerson(
           ledger: [],
         });
         save({ session, baseRevision: 0, syncedLocalRevision: -1 });
-        showCalculator();
+        flow = undefined;
+        showSession();
       });
     });
     main.append(form);
@@ -344,52 +365,103 @@ export function mountInPerson(
   }
   function record(event: TableEvent, recordId?: string): void {
     if (!current) return;
+    flow = undefined;
     save(appendTableEvent(current, event, recordId));
     showSession();
   }
+  /** Seats holding the outstanding deposits, in declaration order. */
+  function depositors(session: ScoringSession): number[] {
+    const seats: number[] = [];
+    for (const { event } of activeTableEvents(session)) {
+      if (event.kind === "win") seats.length = 0;
+      else if (event.kind === "deposit" && !seats.includes(event.seat))
+        seats.push(event.seat);
+    }
+    return seats;
+  }
+  function joinNames(seats: readonly number[]): string {
+    const ns = seats.map((s) => name(s));
+    if (ns.length <= 1) return ns[0] ?? "";
+    if (ns.length === 2) return `${ns[0]} and ${ns[1]}`;
+    return `${ns.slice(0, -1).join(", ")} and ${ns[ns.length - 1]}`;
+  }
   function showSession(): void {
     if (!current) return;
+    subBack = undefined;
+    const session = current.session;
     start(
-      current.session.variant === "american"
+      session.variant === "american"
         ? "American scorekeeper"
-        : current.session.variant === "hong-kong"
+        : session.variant === "hong-kong"
           ? "Hong Kong scorekeeper"
-          : current.session.variant === "mcr"
+          : session.variant === "mcr"
             ? "MCR scorekeeper"
-            : current.session.variant === "taiwanese"
+            : session.variant === "taiwanese"
               ? "Taiwanese scorekeeper"
               : "Riichi scorekeeper",
     );
-    const totals = recomputeSession(current.session);
-    const busted = riichiBust(current.session);
-    const sealed = current.session.finished;
-    const scores = el("section", "", "card tool-scores");
-    totals.scores.forEach((score, i) =>
-      scores.append(
-        el("p", `${name(i)} · ${score.toLocaleString("en-US")} points`),
-      ),
-    );
-    if (current.session.variant === "riichi")
-      scores.append(
-        el(
-          "p",
-          `${totals.pot.toLocaleString("en-US")} points in outstanding deposits`,
-          "dim",
-        ),
-      );
-    if (!sealed && !busted) {
-      const state = derivedSessionState(current.session);
-      scores.append(
-        el(
-          "p",
-          current.session.variant === "american"
-            ? `${name(state.dealer)} deals next`
-            : `${SEATS[state.roundWind - 27]} round · ${name(state.dealer)} deals next${current.session.variant === "riichi" ? ` · Repeat counter (honba) ${state.honba}` : current.session.variant === "taiwanese" ? ` · Dealer repeats ${state.honba}` : ""}`,
-          "dim",
-        ),
-      );
+    const totals = recomputeSession(session);
+    const busted = riichiBust(session);
+    const sealed = session.finished;
+    const active = !sealed && !busted;
+    const state = derivedSessionState(session);
+    if (!sealed) {
+      const stripMain =
+        session.variant === "american"
+          ? `Hand ${totals.rows.length + 1}`
+          : `${WIND_NAMES[state.roundWind - 27]} ${state.dealer + 1}${
+              session.variant === "riichi"
+                ? ` · Repeat ${state.honba}`
+                : session.variant === "taiwanese" && state.honba > 0
+                  ? ` · Dealer repeats ${state.honba}`
+                  : ""
+            }`;
+      let stripSub: string;
+      if (session.variant === "riichi") {
+        if (totals.pot <= 0) stripSub = "No riichi sticks";
+        else {
+          const deps = depositors(session),
+            sticks = totals.pot / 1000;
+          stripSub =
+            deps.length && Number.isInteger(sticks)
+              ? `${sticks} riichi stick${sticks > 1 ? "s" : ""} · declared by ${joinNames(deps)}`
+              : `${totals.pot.toLocaleString("en-US")} points in outstanding deposits`;
+        }
+      } else stripSub = `${name(state.dealer)} deals`;
+      main.append(cxStrip(stripMain, stripSub));
     }
-    main.append(scores);
+    const seatInfos = [0, 1, 2, 3].map((i) => ({
+      seat: i,
+      name: name(i),
+      score: totals.scores[i]!,
+      wind: windIndex(i, state.dealer),
+      dealer: i === state.dealer,
+    }));
+    if (active) {
+      main.append(
+        el("p", "Tap a seat to record that player’s win.", "cx-instruct"),
+      );
+      main.append(
+        cxSeatGrid(seatInfos, {
+          interactive: true,
+          ...(flow?.winner !== undefined
+            ? { selectedSeat: flow.winner }
+            : {}),
+          onTap: tapSeat,
+        }),
+      );
+      if (flow?.staged.length)
+        main.append(
+          el(
+            "p",
+            `${flow.staged.length} winner${flow.staged.length > 1 ? "s" : ""} staged on ${name(flow.stagedPayer!)}’s discard. Tap the next winner’s seat, or confirm from the staged winner’s payments.`,
+            "cx-staged",
+          ),
+        );
+      if (flow?.winner !== undefined) main.append(winnerPanel(state.dealer));
+    } else {
+      main.append(cxSeatGrid(seatInfos, { interactive: false }));
+    }
     if (busted)
       main.append(
         el(
@@ -406,27 +478,50 @@ export function mountInPerson(
           "dim",
         ),
       );
-    if (!sealed && !busted)
-      main.append(
-        button("Calculate a hand", () => showCalculator()),
-        button("Hand without a winner", () => eventForm("draw")),
-        button("Penalty", () => eventForm("penalty")),
+    const undoBtn = button("Undo last", () =>
+      safe(() => {
+        save(undoTable(current!));
+        showSession();
+      }),
+    );
+    undoBtn.setAttribute("aria-label", "Undo last entry");
+    undoBtn.disabled = !nextUndoTarget(session);
+    if (active) {
+      const row = el("div", "", "cx-actions");
+      const settleBtn = button("Settlement", finish);
+      settleBtn.className = "cx-action cx-action-settle";
+      row.append(
+        actionBtn("Drawn hand", () => eventForm("draw")),
+        actionBtn("Penalty", () => eventForm("penalty")),
+        undoBtn,
+        settleBtn,
       );
-    if (!sealed && !busted && current.session.variant === "riichi")
-      main.append(button("Record riichi deposit", () => eventForm("deposit")));
-    if (!sealed) {
-      const undo = button("Undo last entry", () =>
-        safe(() => {
-          save(undoTable(current!));
-          showSession();
-        }),
-      );
-      undo.disabled = !nextUndoTarget(current.session);
-      main.append(undo);
+      undoBtn.className = "cx-action";
+      main.append(row);
+      if (session.variant === "riichi")
+        main.append(
+          button(
+            "Record riichi deposit",
+            () => eventForm("deposit"),
+            "cx-deposit",
+          ),
+        );
+    } else {
+      const row = el("div", "", "cx-actions cx-actions-2");
+      const settleBtn = button("Settlement", finish);
+      settleBtn.className = "cx-action cx-action-settle";
+      if (!sealed) {
+        undoBtn.className = "cx-action";
+        row.append(undoBtn);
+      }
+      row.append(settleBtn);
+      if (sealed) {
+        const reopen = button("Reopen session", () => safe(reopenSession));
+        reopen.className = "cx-action";
+        row.append(reopen);
+      }
+      main.append(row);
     }
-    main.append(button("Final standings and settlement", finish));
-    if (sealed)
-      main.append(button("Reopen session", () => safe(reopenSession)));
     if (busted) {
       main.append(el("h2", "Final standings and settlement"));
       renderSettlement(main);
@@ -516,12 +611,160 @@ export function mountInPerson(
       main.append(card);
     }
   }
+  function actionBtn(text: string, action: () => void): HTMLButtonElement {
+    const b = button(text, action, "");
+    b.className = "cx-action";
+    return b;
+  }
+  function tapSeat(seat: number): void {
+    if (flow?.winner === seat && !flow.winType && !flow.staged.length) {
+      flow = undefined;
+      showSession();
+      return;
+    }
+    if (flow?.staged.length) {
+      flow = {
+        staged: flow.staged,
+        ...(flow.stagedPayer !== undefined
+          ? { stagedPayer: flow.stagedPayer }
+          : {}),
+        winner: seat,
+        winType: "ron",
+        payer: flow.stagedPayer!,
+      };
+    } else {
+      flow = { staged: flow?.staged ?? [], winner: seat };
+    }
+    showSession();
+  }
+  function winnerPanel(dealer: number): HTMLElement {
+    const f = flow!;
+    const winner = f.winner!;
+    const panel = el("section", "", "cx-panel cx-winner-panel");
+    const wind = WIND_NAMES[windIndex(winner, dealer)]!;
+    panel.append(
+      el(
+        "p",
+        `${f.staged.length ? "Next winner" : "Winner"} · ${name(winner)} — ${wind}`,
+        "cx-label",
+      ),
+    );
+    if (f.staged.length) {
+      panel.append(
+        el(
+          "p",
+          `On a discard from ${name(f.stagedPayer!)} · the same discard as the staged winner${f.staged.length > 1 ? "s" : ""}.`,
+          "cx-note",
+        ),
+        (() => {
+          const cont = button(
+            "Continue to hand value",
+            () =>
+              showCalculator(undefined, [], {
+                winner,
+                winType: "ron",
+                payer: f.stagedPayer!,
+              }),
+            "",
+          );
+          cont.className = "cx-choice on";
+          return cont;
+        })(),
+      );
+      return panel;
+    }
+    const choices = el("div", "", "cx-choices");
+    const tsumoBtn = button(
+      current!.session.variant === "american"
+        ? "Self-pick / Joker exchange"
+        : "Self-draw",
+      () =>
+        showCalculator(undefined, [], { winner, winType: "tsumo" }),
+      "",
+    );
+    tsumoBtn.className = "cx-choice";
+    const ronBtn = button(
+      "On a discard",
+      () => {
+        flow = { ...f, winType: "ron" };
+        showSession();
+      },
+      "",
+    );
+    ronBtn.className = `cx-choice${f.winType === "ron" ? " on" : ""}`;
+    ronBtn.setAttribute("aria-pressed", String(f.winType === "ron"));
+    choices.append(tsumoBtn, ronBtn);
+    panel.append(choices);
+    if (f.winType === "ron") {
+      panel.append(el("p", "Discarded by", "cx-label"));
+      const others = [0, 1, 2, 3]
+        .filter((s) => s !== winner)
+        .sort(
+          (a, b) => windIndex(a, dealer) - windIndex(b, dealer),
+        );
+      const chips = el("div", "", "cx-seatchips c3");
+      for (const s of others) {
+        const chip = button(
+          `${name(s)} · ${WIND_NAMES[windIndex(s, dealer)]}`,
+          () =>
+            showCalculator(undefined, [], {
+              winner,
+              winType: "ron",
+              payer: s,
+            }),
+          "",
+        );
+        chip.className = "cx-seatchip";
+        chips.append(chip);
+      }
+      panel.append(chips);
+    }
+    return panel;
+  }
+  function sessionDeltas(
+    drafts: readonly CalculationDraft[],
+    recordId?: string,
+  ): number[] {
+    const totals = recomputeSession(current!.session);
+    const proposed = appendTableEvent(
+      current!,
+      { kind: "win", wins: drafts },
+      recordId,
+    );
+    const next = recomputeSession(proposed.session);
+    return next.scores.map((s, i) => s - totals.scores[i]!);
+  }
+  function showStandalone(): void {
+    subBack = () => list();
+    trackCalculatorUsed();
+    start("Hand calculator");
+    const root = el("div");
+    main.append(root);
+    mountRiichiCalculator(root, {
+      variant: "riichi",
+      names: [...WIND_NAMES],
+      dealer: 0,
+      honba: 0,
+      roundWind: 27,
+      pot: 0,
+      initialContext: { winner: 0, winType: "tsumo", payer: 1 },
+      multipleRon: false,
+      standalone: true,
+      renderTile: options.renderTile,
+      safe,
+      setTitle: (t) => {
+        start(t);
+        main.append(root);
+      },
+    });
+  }
   function eventForm(
     kind: "draw" | "deposit" | "penalty",
     recordId?: string,
     previous?: TableEvent,
   ): void {
     if (!current) return;
+    subBack = () => showSession();
     start(
       recordId
         ? "Correct entry"
@@ -713,6 +956,7 @@ export function mountInPerson(
   }
   function finish(): void {
     if (!current) return;
+    subBack = () => showSession();
     start("Settlement");
     renderSettlement(main);
     if (riichiBust(current.session))
@@ -749,591 +993,100 @@ export function mountInPerson(
   function showCalculator(
     recordId?: string,
     existing: readonly CalculationDraft[] = [],
+    ctx?: { winner: number; winType: "ron" | "tsumo"; payer?: number },
   ): void {
     if (!current) return;
     trackCalculatorUsed();
-    start(recordId ? "Correct winning hand" : "Hand calculator");
+    subBack = () => showSession();
+    const session = current.session;
+    const root = el("div");
+    const setTitle = (t: string) => {
+      start(t);
+      main.append(root);
+    };
     if (
-      current.session.variant !== "riichi" &&
-      current.session.variant !== "american"
+      session.variant !== "riichi" &&
+      session.variant !== "american"
     ) {
-      mountVariantCalculator(main, {
-        session: current.session,
+      start(recordId ? "Correct winning hand" : "Hand calculator");
+      main.append(root);
+      mountVariantCalculator(root, {
+        session,
         ...(existing[0] ? { existing: existing[0] } : {}),
+        ...(ctx
+          ? {
+              context: {
+                winner: ctx.winner,
+                winType: ctx.winType,
+                payer: ctx.payer ?? (ctx.winner === 1 ? 2 : 1),
+              },
+            }
+          : {}),
         renderTile: options.renderTile,
         onBack: showSession,
+        setTitle,
+        previewDeltas: (draft) => sessionDeltas([draft], recordId),
         onRecord: (draft) =>
           safe(() => record({ kind: "win", wins: [draft] }, recordId)),
       });
       return;
     }
-    const variant = current.session.variant,
-      first = existing[0];
-    let path = first?.input.path ?? "tiles";
-    if (variant === "american") path = "fast";
+    const variant = session.variant;
     // Dealer, round wind and honba are derived from the ledger, never
     // asked. A correction keeps the context its entry was recorded in.
-    const derived = derivedSessionState(current.session, recordId);
-    const context = first?.input.context ?? {
-      winner: 0,
-      dealer: derived.dealer,
-      payer: 1,
-      winType: "ron",
-      honba: derived.honba,
-    };
-    const roundWind =
-      first?.input.variant === "riichi" && first.input.path === "tiles"
-        ? first.input.hand.roundWind
-        : derived.roundWind;
-    const form = el("form"),
-      ctxBox = el("div", "", "tool-grid"),
-      choices = current.session.names.map((n, i) => [String(i), n] as const);
-    const winner = select(choices, String(context.winner)),
-      payer = select(choices, String(context.payer)),
-      win = select(
-        [
-          ["ron", "Win on a discard"],
-          [
-            "tsumo",
-            variant === "american" ? "Self-pick / Joker exchange" : "Self-draw",
-          ],
-        ],
-        context.winType,
-      );
-    ctxBox.append(
-      field("Winner", winner),
-      field("Win type", win),
-      field("Discarding player", payer),
-      el(
-        "p",
-        variant === "american"
-          ? `Dealer (East): ${name(context.dealer)}`
-          : `${SEATS[roundWind - 27]} round · Dealer (East): ${name(context.dealer)} · Repeat counter (honba): ${context.honba}`,
-        "dim",
-      ),
-    );
-    form.append(ctxBox);
-    const paths = el("div", "", "tool-grid"),
-      tilePath = button("Enter actual tiles", () => switchPath("tiles")),
-      fastPath = button(
-        variant === "american" ? "Entered card value" : "Fast han / fu",
-        () => switchPath("fast"),
-      );
-    if (variant !== "american") paths.append(tilePath, fastPath);
-    form.append(paths);
-    const tilePanel = el("section"),
-      fastPanel = el("section");
-    const han = input(
-        first?.input.variant === "riichi" && first.input.path === "fast"
-          ? first.input.han
-          : 1,
-      ),
-      fu = select(
-        [20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 110].map((n) => [
-          String(n),
-          String(n),
-        ]),
-        String(
-          first?.input.variant === "riichi" && first.input.path === "fast"
-            ? first.input.fu
-            : 30,
-        ),
-      ),
-      yakuman = input(
-        first?.input.variant === "riichi" && first.input.path === "fast"
-          ? first.input.yakuman
-          : 0,
-      );
-    const value = input(
-        first?.input.variant === "american" ? first.input.value : 25,
-      ),
-      jokerless = check(
-        "Jokerless at the win",
-        first?.input.variant === "american" && first.input.jokerless,
-      ),
-      singles = check(
-        "Singles and Pairs hand (no jokerless double)",
-        first?.input.variant === "american" && first.input.singlesPairs,
-      );
-    const bettor = select(
-      [
-        ["none", "No bettor"],
-        ["wall", "Bettor chose the wall"],
-        ...choices.map(([id, n]) => [id, `Bettor chose ${n}`] as const),
-      ],
-      first?.input.variant === "american"
-        ? String(first.input.bettor ?? "none")
-        : "none",
-    );
-    if (variant === "american")
-      fastPanel.append(
-        el(
-          "p",
-          "Enter the printed value from your own physical card. Card hands and patterns are not included.",
-          "dim",
-        ),
-        field("Printed value", value),
-        jokerless.node,
-        singles.node,
-        ...(current.session.bettorName
-          ? [field("Bettor’s choice", bettor)]
-          : []),
-      );
-    else
-      fastPanel.append(
-        field("Han · Scoring doubles, including bonus tiles", han),
-        field("Fu · Hand points before the han multipliers", fu),
-        field("True yakuman multiple (0 for ordinary hands)", yakuman),
-        el(
-          "p",
-          "Fast entry uses the scoring units you enter. Confirm that the hand has a scoring pattern beyond bonus tiles.",
-          "dim",
-        ),
-      );
-    const concealed: Tile[] = [],
-      melds: { kind: Meld["kind"]; tiles: Tile[] }[] = [],
-      indicators: Tile[] = [],
-      ura: Tile[] = [],
-      meldDraft: Tile[] = [];
-    const all = buildTileSet();
-    if (first?.input.variant === "riichi" && first.input.path === "tiles") {
-      if (first.input.evidence) {
-        const e = first.input.evidence;
-        concealed.push(...e.concealedIds.map((id) => all[id]!));
-        e.meldIds.forEach((ids, i) =>
-          melds.push({
-            kind:
-              first.input.variant === "riichi" && first.input.path === "tiles"
-                ? first.input.hand.melds[i]!.kind
-                : "chi",
-            tiles: ids.map((id) => all[id]!),
-          }),
-        );
-        indicators.push(...e.indicatorIds.map((id) => all[id]!));
-        ura.push(...e.uraIds.map((id) => all[id]!));
-      } else {
-        const used = new Set<number>();
-        const take = (type: number) => {
-          const tile = all.find((t) => t.type === type && !used.has(t.id))!;
-          used.add(tile.id);
-          return tile;
-        };
-        const counts = [...first.input.hand.handCounts];
-        for (const m of first.input.hand.melds) {
-          melds.push({ kind: m.kind, tiles: m.tiles.map(take) });
-          m.tiles.forEach((t) => counts[t]!--);
-        }
-        counts.forEach((n, t) => {
-          for (let i = 0; i < n; i++) concealed.push(take(t));
-        });
-      }
-    }
-    const target = select(
-        [
-          ["hand", "Concealed tiles (include winning tile)"],
-          ["meld", "Declared meld"],
-          ["indicator", "Dora indicator"],
-          ["ura", "Uradora indicator (riichi wins only)"],
-        ],
-        "hand",
-      ),
-      meldKind = select(
-        [
-          ["chi", "Open sequence (chow / chi)"],
-          ["pon", "Open triplet (pung / pon)"],
-          ["ankan", "Concealed quad"],
-          ["daiminkan", "Open quad"],
-          ["shouminkan", "Added quad"],
-        ],
-        "chi",
-      );
-    const handDisplay = el("div", "", "tool-entered-tiles"),
-      meldDisplay = el("div"),
-      bonusDisplay = el("div"),
-      picker = el("div", "", "tool-tile-picker");
-    const winning = select(
-      all
-        .filter((t) => t.id % 4 === 0)
-        .map((t) => [String(t.type), tileTypeName(t.type)]),
-      String(
-        first?.input.variant === "riichi" && first.input.path === "tiles"
-          ? first.input.hand.winningTileType
-          : 0,
-      ),
-    );
-    const flags: Record<string, ReturnType<typeof check>> = {};
-    for (const [key, label] of [
-      ["riichi", "Riichi · Declared ready with a closed hand"],
-      [
-        "doubleRiichi",
-        "Double riichi · Declared on the first uninterrupted turn",
-      ],
-      ["ippatsu", "One-shot · Win before the next uninterrupted turn"],
-      ["haitei", "Self-draw of the last wall tile"],
-      ["houtei", "Win on the final discard"],
-      ["rinshan", "Win on a quad replacement draw"],
-      ["chankan", "Win by robbing an added quad"],
-      ["firstDrawTsumo", "Win on the first uninterrupted draw"],
-    ]) {
-      const checked =
-        first?.input.variant === "riichi" && first.input.path === "tiles"
-          ? Boolean(
-              (first.input.hand as unknown as Record<string, unknown>)[key!],
-            )
-          : false;
-      flags[key!] = check(label!, checked);
-    }
-    const targetTiles = () =>
-      target.value === "hand"
-        ? concealed
-        : target.value === "meld"
-          ? meldDraft
-          : target.value === "indicator"
-            ? indicators
-            : ura;
-    function drawTiles(): void {
-      handDisplay.replaceChildren(
-        el(
-          "p",
-          `${concealed.length} concealed tiles · Tap an entered tile to remove it`,
-        ),
-      );
-      function row(values: Tile[], host: HTMLElement): void {
-        const r = el("div", "", "tool-tile-row");
-        values.forEach((t, i) => {
-          const b = button(
-            "",
-            () => {
-              values.splice(i, 1);
-              drawTiles();
-              output.replaceChildren();
-            },
-            "tile-choice",
-          );
-          b.setAttribute("aria-label", `Remove ${tileTypeName(t.type)}`);
-          b.append(options.renderTile(t));
-          r.append(b);
-        });
-        host.append(r);
-      }
-      row(concealed, handDisplay);
-      meldDisplay.replaceChildren(el("h3", "Declared melds"));
-      melds.forEach((m, i) => {
-        const r = el("div", "", "tool-meld");
-        r.append(
-          el("span", m.kind),
-          ...m.tiles.map(options.renderTile),
-          button("Remove meld", () => {
-            melds.splice(i, 1);
-            drawTiles();
-            output.replaceChildren();
-          }),
-        );
-        meldDisplay.append(r);
-      });
-      row(meldDraft, meldDisplay);
-      bonusDisplay.replaceChildren(el("p", "Dora indicators"));
-      row(indicators, bonusDisplay);
-      bonusDisplay.append(el("p", "Uradora indicators"));
-      row(ura, bonusDisplay);
-    }
-    for (const representative of [
-      ...all.filter((t) => t.id % 4 === 1),
-      ...all.filter((t) => t.red),
-    ]) {
-      const b = button(
-        "",
-        () =>
-          safe(() => {
-            const dest = targetTiles();
-            if (dest.length >= 18) throw new Error("This tile group is full");
-            const used = [
-              ...concealed,
-              ...melds.flatMap((m) => m.tiles),
-              ...meldDraft,
-              ...indicators,
-              ...ura,
-            ];
-            const t = all.find(
-              (t) =>
-                t.type === representative.type &&
-                t.red === representative.red &&
-                !used.some((u) => u.id === t.id),
-            );
-            if (!t)
-              throw new Error(
-                "All physical copies of that tile have been entered",
-              );
-            dest.push(t);
-            drawTiles();
-            output.replaceChildren();
-          }),
-        "tile-choice",
-      );
-      b.setAttribute(
-        "aria-label",
-        `Add ${representative.red ? "red " : ""}${tileTypeName(representative.type)}`,
-      );
-      b.append(options.renderTile(representative));
-      picker.append(b);
-    }
-    const addMeld = button("Add declared meld", () =>
-      safe(() => {
-        const kind = meldKind.value as Meld["kind"];
-        if (melds.length >= 4) throw new Error("At most four melds");
-        const n = kind === "chi" || kind === "pon" ? 3 : 4;
-        if (meldDraft.length !== n)
-          throw new Error(`Enter ${n} tiles for this meld`);
-        melds.push({ kind, tiles: [...meldDraft] });
-        meldDraft.length = 0;
-        drawTiles();
-        output.replaceChildren();
-      }),
-    );
-    tilePanel.append(
-      el(
-        "p",
-        "Enter your concealed tiles including the winning tile. Add each declared meld separately. Select the winning tile and enter the visible indicators.",
-        "dim",
-      ),
-      field("Add tiles to", target),
-      field("Declared meld type", meldKind),
-      handDisplay,
-      meldDisplay,
-      addMeld,
-      bonusDisplay,
-      picker,
-      field("Winning tile", winning),
-      ...Object.values(flags).map((c) => c.node),
-    );
-    form.append(tilePanel, fastPanel);
-    const submit = el("button", "Calculate payments", "primary");
-    submit.type = "submit";
-    form.append(submit);
-    const output = el("section", "", "calculator-output");
-    let pending: CalculationDraft[] = [...existing.slice(1)];
-    function switchPath(next: "tiles" | "fast"): void {
-      path = next;
-      tilePanel.hidden = path !== "tiles";
-      fastPanel.hidden = path !== "fast";
-      tilePath.setAttribute("aria-pressed", String(path === "tiles"));
-      fastPath.setAttribute("aria-pressed", String(path === "fast"));
-      output.replaceChildren();
-    }
-    function makeDraft(): CalculationDraft {
-      const ctx: CalculationContext = {
-        winner: Number(winner.value),
-        dealer: context.dealer,
-        payer: Number(payer.value),
-        winType: win.value as "ron" | "tsumo",
-        honba: context.honba,
-      };
-      let entered: CalculatorInput;
-      if (variant === "american")
-        entered = {
-          variant,
-          path: "fast",
-          context: ctx,
-          value: Number(value.value),
-          jokerless: jokerless.control.checked,
-          singlesPairs: singles.control.checked,
-          ...(bettor.value !== "none"
-            ? {
-                bettor: bettor.value === "wall" ? "wall" : Number(bettor.value),
-              }
-            : {}),
-        };
-      else if (path === "fast")
-        entered = {
-          variant,
-          path: "fast",
-          context: ctx,
-          han: Number(han.value),
-          fu: Number(fu.value),
-          yakuman: Number(yakuman.value),
-        };
-      else {
-        if (meldDraft.length)
-          throw new Error("Add or remove the unfinished meld first");
-        const tiles = [...concealed, ...melds.flatMap((m) => m.tiles)],
-          counts = new Array<number>(34).fill(0);
-        tiles.forEach((t) => counts[t.type]!++);
-        const declared = Object.fromEntries(
-          Object.entries(flags).map(([k, c]) => [k, c.control.checked]),
-        );
-        const bonus = [
-          ...indicators,
-          ...(flags["riichi"]!.control.checked ? ura : []),
-        ].map((t) => doraFromIndicator(t.type));
-        const dora =
-          tiles.filter((t) => t.red).length +
-          tiles.reduce(
-            (n, t) => n + bonus.filter((d) => d === t.type).length,
-            0,
-          );
-        entered = {
-          variant,
-          path: "tiles",
-          context: ctx,
-          evidence: {
-            concealedIds: concealed.map((t) => t.id),
-            meldIds: melds.map((m) => m.tiles.map((t) => t.id)),
-            indicatorIds: indicators.map((t) => t.id),
-            uraIds: ura.map((t) => t.id),
-          },
-          hand: {
-            handCounts: counts,
-            melds: melds.map((m) => ({
-              kind: m.kind,
-              tiles: m.tiles.map((t) => t.type),
-            })),
-            winningTileType: Number(winning.value),
+    const derived = derivedSessionState(session, recordId);
+    const totals = recomputeSession(session);
+    const first = existing[0];
+    const winnerCtx = first?.input.context ??
+      (ctx
+        ? {
+            winner: ctx.winner,
             winType: ctx.winType,
-            seatWind: 27 + ((ctx.winner - ctx.dealer + 4) % 4),
-            roundWind: roundWind,
-            riichi: flags["riichi"]!.control.checked,
-            ...declared,
-            dora,
-            honba: ctx.honba,
-            riichiSticks: 0,
-          },
-        };
-      }
-      return { input: entered, corrections: [] };
-    }
-    function renderResult(draft: CalculationDraft): void {
-      const result = calculateDraft(draft);
-      output.replaceChildren(el("h2", "Who pays"), payments(result.payments));
-      output.append(
-        el(
-          "h3",
-          `${result.units} ${variant === "american" ? "entered value" : "han"}${result.fu ? ` · ${result.fu} fu` : ""}`,
-        ),
-        el(
-          "p",
-          `${draft.input.path === "tiles" ? "Detected from entered tiles and context" : "Entered by the player"}${result.manual ? " · Manual entry or correction" : ""}`,
-          "dim",
-        ),
-      );
-      const correctionFields = result.detected.map((f) => {
-        const v = input(
-          result.corrected.find((c) => c.id === f.id)?.units ?? f.units,
-        );
-        output.append(field(`${f.label} · Original ${f.units}`, v));
-        return { id: f.id, control: v, original: f.units };
-      });
-      const adjustment = input(
-          draft.corrections.find((c) => c.id === "table-adjustment")?.units ??
-            0,
-        ),
-        correctedFu = input(result.fu),
-        reason = input(draft.corrections[0]?.reason ?? "", "text");
-      reason.maxLength = 240;
-      output.append(field("Additional manual scoring units", adjustment));
-      if (variant === "riichi")
-        output.append(field("Corrected fu", correctedFu));
-      output.append(
-        field("Reason for manual correction", reason),
-        button("Apply corrections and recalculate", () =>
-          safe(() => {
-            const corrections = correctionFields
-              .filter((f) => Number(f.control.value) !== f.original)
-              .map((f) => ({
-                id: f.id,
-                units: Number(f.control.value),
-                reason: reason.value,
-              }));
-            if (Number(adjustment.value))
-              corrections.push({
-                id: "table-adjustment",
-                units: Number(adjustment.value),
-                reason: reason.value,
-              });
-            if (Number(correctedFu.value) !== result.fu && !reason.value.trim())
-              throw new Error("Enter a correction reason");
-            renderResult({
-              input: draft.input,
-              corrections,
-              ...(variant === "riichi" &&
-              (draft.fuCorrection !== undefined ||
-                Number(correctedFu.value) !== result.fu)
-                ? {
-                    fuCorrection: Number(correctedFu.value),
-                    correctionNote: reason.value,
-                  }
-                : {}),
-            });
-          }),
-        ),
-      );
-      const confirm = check("I confirm the payment breakdown");
-      output.append(confirm.node);
-      let dirty = false;
-      const recordButton = button(
-        recordId ? "Confirm correction" : "Confirm and add to table",
-        () =>
-          safe(() => {
-            if (!confirm.control.checked)
-              throw new Error("Confirm the breakdown before recording");
-            record({ kind: "win", wins: [draft, ...pending] }, recordId);
-          }),
-      );
-      recordButton.disabled = true;
-      confirm.control.addEventListener(
-        "change",
-        () => (recordButton.disabled = !confirm.control.checked),
-      );
-      output.append(recordButton);
-      output.addEventListener(
-        "input",
-        (e) => {
-          if (e.target !== confirm.control) {
-            dirty = true;
-            confirm.control.checked = false;
-            recordButton.disabled = true;
+            payer: ctx.payer ?? (ctx.winner === 1 ? 2 : 1),
           }
-        },
-        { once: false },
-      );
-      confirm.control.addEventListener("change", () => {
-        recordButton.disabled = dirty || !confirm.control.checked;
-        if (dirty)
-          status.textContent =
-            "Apply corrections and recalculate before confirming.";
-      });
-      if (
-        variant === "riichi" &&
-        current!.session.settings.multipleRon === "all"
-      )
-        output.append(
-          button(
-            `Add another simultaneous winner (${pending.length + 1} entered)`,
-            () =>
-              safe(() => {
-                if (!confirm.control.checked)
-                  throw new Error("Confirm this winner first");
-                if (pending.length >= 2)
-                  throw new Error("At most three winners");
-                pending.push(draft);
-                output.replaceChildren(
-                  el(
-                    "p",
-                    "Winner staged. Enter the next winner with the same discard context.",
-                  ),
-                );
-              }),
-          ),
-        );
-    }
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      safe(() => renderResult(makeDraft()));
+        : { winner: 0, winType: "ron" as const, payer: 1 });
+    start("Hand value");
+    main.append(root);
+    mountRiichiCalculator(root, {
+      variant,
+      names: session.names,
+      dealer: first?.input.context.dealer ?? derived.dealer,
+      honba: first?.input.context.honba ?? derived.honba,
+      roundWind: derived.roundWind,
+      pot: recordId ? 0 : totals.pot,
+      ...(!recordId && variant === "riichi" && totals.pot > 0
+        ? {
+            riichiLine: (() => {
+              const deps = depositors(session);
+              return deps.length === 1 && totals.pot === 1000
+                ? `Declared by ${name(deps[0]!)} · the 1,000-point deposit settles with this hand`
+                : `Declared by ${joinNames(deps)} · the ${totals.pot.toLocaleString("en-US")} points in deposits settle with this hand`;
+            })(),
+            depositors: depositors(session),
+          }
+        : {}),
+      initialContext: winnerCtx,
+      ...(first ? { existing: first } : {}),
+      ...(existing.length > 1 ? { partners: existing.slice(1) } : {}),
+      ...(flow?.staged.length ? { staged: flow.staged } : {}),
+      multipleRon:
+        variant === "riichi" && session.settings.multipleRon === "all",
+      ...(session.bettorName ? { bettorName: session.bettorName } : {}),
+      renderTile: options.renderTile,
+      safe,
+      setTitle,
+      deltasFor: (drafts) => sessionDeltas(drafts, recordId),
+      onRecord: (drafts) =>
+        safe(() => record({ kind: "win", wins: drafts }, recordId)),
+      onStage: (draft) => {
+        if (!flow) flow = { staged: [] };
+        flow = {
+          staged: [...flow.staged, draft],
+          stagedPayer: draft.input.context.payer,
+        };
+        showSession();
+      },
     });
-    form.addEventListener("input", () => output.replaceChildren());
-    main.append(form, output, button("Return to scorekeeper", showSession));
-    drawTiles();
-    switchPath(path);
-    if (first) safe(() => renderResult(first));
   }
   if (options.initialId)
     current = readTables(options.accountId).find(

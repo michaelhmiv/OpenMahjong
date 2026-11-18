@@ -292,12 +292,17 @@ remain backs. The coach comparison appears at the original decision, using the
 existing explained heuristic analysis. Game details and review have no bottom nav.
 
 Play includes an in-person calculator/scorekeeper entry. Its drilled-in screens
-use the medium surface system (§15), self-hosted fonts and
-native-width scrolling shell. Both tile and fast input keep context controls
-visible in the form. Payment lines lead each result; original facts and editable
-corrections follow. Recording requires confirmation. Session history, correction,
-undo, pot disposition and settlement are explicit controls. No account is needed
-for manual use. Games labels these sessions separately from CPU statistics.
+use the medium surface system (§15) in the compact calculator form (§16),
+self-hosted fonts and native-width scrolling shell. The entry flow is
+seat-first: win context (winner, win type, discarder) is chosen on the
+scorekeeper, and the value screens show the derived context — dealer,
+round, repeat counter, deposits — read-only; it is never asked. A
+dedicated check-payments screen leads with every player's score change,
+then the payment lines; original facts and editable corrections follow
+behind "Correct the breakdown", and its Confirm is the recording gate.
+Session history, correction, undo, pot disposition and settlement are
+explicit controls. No account is needed for manual use. Games labels
+these sessions separately from CPU statistics.
 
 Variant table implementation retains the v4 top/side ponds, per-side13th-discard condensation and absolute-sized Focus Frames. Native44px selection targets use two rows of seven for13/14-tile hands and a third row for Taiwanese16/17-tile hands, including Large Tiles. Selected faces stay in a fixed preview slot. Guided hints float above the hand and disappear during calls, playback or an open frame. The additional row is the required five-set extension; existing Riichi table geometry remains untouched. Table settings use the same accessible sheet grammar. All four Learn sections remain collapsible and profile-specific.
 
@@ -352,3 +357,76 @@ line-height 1.2.
 **Density and type.** The shipped screens' information density
 is kept. Type sizes do not change under this system; §3's
 typeface roles are the only typographic change.
+
+## 16. The compact calculator
+
+Locked Nov 17, 2026 (owner ruling: "i like this compact form for
+the entire calculator"; approved set: calc-v2 compact frames
+01b/02c–07c under the §15 medium treatment, calc-v7 frames
+00/15–17). Applies to every in-person calculator screen — the
+scorekeeper, the hand-value entry, check payments, and the
+standalone one-off calculator — for all variants. The in-game
+table is out of scope.
+
+**Scorekeeper layout.** One line of state as text (round wind +
+hand number + repeat counter on the left; the riichi pot as
+"N riichi sticks · declared by …" or "No riichi sticks" on the
+right — status is text, not a panel, per §15 R9). Below it the
+instruction "Tap a seat to record that player's win." and the
+four seat tiles in table order — North, West across the top;
+East, South across the bottom — then one action row (Drawn
+hand / Penalty / Undo last / Settlement; Settlement wears the
+deep tint), then the hand ledger as the §15 divider list.
+
+**Seat tiles.** A seat is a tile object in the face tint (§15):
+a 34×46 wind chip in the tile face with the wind glyph, the
+wind label in 11px caps (the dealer's in text-grade chun, and
+the dealer's chip glyph in sprite chun — the one color job),
+the player name at 17px and the score at 16px tabular. Tapping
+a seat selects it (state-green ring) and opens the winner panel
+in place: win-type choices, then discarder chips for a discard
+win; choosing the discarder (or Self-draw) advances to hand
+value with that context preselected.
+
+**Value entry.** Context is a read-only sheet panel of
+label/value rows (winner, win, discarder, dealer, repeat
+counter, table minimum and the riichi line where they apply).
+Values are entered with a 48px stepper (− / value / +) over
+quick chips at 46px: riichi han chips 1–5 with fu chips
+20–60 over the full fu sequence; Hong Kong fan chips
+3,4,5,6,7,8,10 in a 4-wide grid. The live hand value (riichi)
+or live payment block (variants) updates on the same screen.
+"Score it from the tiles" escalates to tile entry with the
+context carried over. Hong Kong table settings and Taiwanese
+base/unit stay editable on the value screen and are recorded
+with the hand.
+
+**Check payments.** A dedicated screen: a one-line summary,
+then the score-changes panel (sheet; deltas at 22px in ink —
+the sign carries direction, state green is not used for text
+on the sheet), then the payment block in the deep tint with
+its explanation lines (hand value, repeat-counter and deposit
+accounting). Edit returns to value entry; Confirm records.
+Corrections live behind "Correct the breakdown" on this
+screen; editing them without applying disables Confirm, as
+before. Simultaneous winners are staged from this screen and
+recorded as one entry.
+
+**Deposits stay ledger events.** A riichi deposit is recorded
+from the scorekeeper ("Record riichi deposit", a slim row
+under the action row) as its own ledger entry, deducted when
+declared and settled with the next win — the shipped ledger
+model. The compact frames show deposits as strip state only;
+folding them into win entries was not adopted, as it would
+rewrite recorded sessions' ledgers.
+
+**Standalone calculator.** The one-off hand calculator (07c)
+needs no session: winner and win type are wind chips on the
+screen, East is the dealer, payments update live, and nothing
+is recorded. Riichi only.
+
+**Geometry.** Seat tiles ≈70px tall in a 2×2 grid with 8px
+gaps; action row buttons follow §15 R6 (36px visual / 48px
+tap); steppers 48px; chips 46px; seat chips and choices carry
+no invisible tap expansion (their real size clears the 44px
+floor). Type sizes are the shipped scale (§15 R12).
