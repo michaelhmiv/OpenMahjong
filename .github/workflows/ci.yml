@@ -306,5 +306,6 @@ jobs:
           OPENMAHJONG_TEST_DB: postgresql://postgres@127.0.0.1:5432/openmahjong_test
           POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
         run: |
+          node scripts/multiplayer-restart.mjs
           node scripts/multiplayer-ratings.mjs
           node scripts/multiplayer-restore.mjs "$POSTGRES_CONTAINER"
