@@ -52,6 +52,14 @@ function seatTile(label: string): HTMLElement | null {
 function dealerTile(): HTMLElement | null {
   return root.querySelector('[data-dealer="true"]');
 }
+function seatLabelOf(tile: Element | null | undefined): string | null {
+  // The tile's label as the player sees it (and as its accessible
+  // name): "Name · SCORE points", composed from the text spans.
+  if (!tile) return null;
+  const name = tile.querySelector(".cx-seat-name")?.textContent;
+  const score = tile.querySelector(".cx-seat-score")?.textContent;
+  return name && score ? `${name} · ${score}` : null;
+}
 function seatWith(name: string, score: string): HTMLElement | null {
   // Seats are buttons while the session is active and plain tiles
   // once it ends; either way the tile shows name and score.
@@ -183,9 +191,7 @@ describe("offline in-person workflows", () => {
     expect(root.textContent).toContain("Player 4 pays Player 1 7,700 points");
     click("Confirm and add to table");
     expect(root.textContent).toContain("East 1 · Repeat 1");
-    expect(dealerTile()?.getAttribute("aria-label")).toBe(
-      "Player 1 · 32,700 points",
-    );
+    expect(seatLabelOf(dealerTile())).toBe("Player 1 · 32,700 points");
     // Hand 2: a non-dealer wins — the deal passes and honba resets.
     click("Player 2 · 25,000 points");
     click("On a discard");
@@ -197,9 +203,7 @@ describe("offline in-person workflows", () => {
     click("Confirm and add to table");
     expect(root.textContent).toContain("East 2 · Repeat 0");
     // The dealer mark moved to Player 2's tile with the deal.
-    expect(dealerTile()?.getAttribute("aria-label")).toBe(
-      "Player 2 · 30,500 points",
-    );
+    expect(seatLabelOf(dealerTile())).toBe("Player 2 · 30,500 points");
   });
   it("ends a riichi session when a player falls below zero (tobi)", () => {
     mount();
@@ -294,14 +298,10 @@ describe("compact scorekeeper", () => {
     mount();
     click("New table session");
     click("Start scorekeeper");
-    expect(dealerTile()?.getAttribute("aria-label")).toBe(
-      "Player 1 · 25,000 points",
-    );
+    expect(seatLabelOf(dealerTile())).toBe("Player 1 · 25,000 points");
     click("Player 3 · 25,000 points");
     const selected = root.querySelector("button.cx-seat.sel");
-    expect(selected?.getAttribute("aria-label")).toBe(
-      "Player 3 · 25,000 points",
-    );
+    expect(seatLabelOf(selected)).toBe("Player 3 · 25,000 points");
     expect(selected?.getAttribute("aria-pressed")).toBe("true");
     expect(root.textContent).toContain("Winner · Player 3 — West");
     click("Self-draw");
