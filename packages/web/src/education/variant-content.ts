@@ -177,7 +177,10 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       tiles: "123456789s",
     },
     {
-      text: "Eight extra tiles are bonus tiles: four plants and four seasons. The plants are plum, orchid, chrysanthemum and bamboo plant, numbered 1 to 4. The seasons are spring, summer, autumn and winter, also numbered 1 to 4. Each bonus face shows its number in the corner and a picture of its plant or season. A bonus tile is never kept as part of your hand: when one appears, it is placed face-up beside your hand and you take another tile instead. Lesson 4 teaches that procedure in full.",
+      text: "Eight extra tiles are bonus tiles, also called flowers: four plants and four seasons. On this table the word flower means any of these eight bonus tiles — a plant or a season — not only a tile whose picture is a flower. The plants are plum, orchid, chrysanthemum and bamboo plant, numbered 1 to 4. The seasons are spring, summer, autumn and winter, also numbered 1 to 4. Each bonus face shows its number in the corner and a picture of its plant or season. A bonus tile is never kept as part of your hand: when one appears, it is placed face-up beside your hand and you take another tile instead. Lesson 4 teaches that procedure in full.",
+    },
+    {
+      text: "Tiles are counted by kind and by copy. A kind is one distinct face, such as the 5 of circles or the East wind. A copy is one physical tile of that kind, and the game holds four copies of every ordinary kind. There are 34 ordinary kinds in all: 27 numbered kinds (nine numbers in each of three suits) and seven kinds for the tiles with no numbers, the winds and dragons you meet next. Four copies of each of the 34 kinds make 136 tiles, and the eight bonus tiles bring the total to 144. The full collection of tiles a table plays with is its inventory.",
     },
     {
       question: choice(
@@ -370,7 +373,7 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "The tiles you hold in your hand are concealed: only you can see their faces. A set you show face-up to the table is open, and once a set is open it is fixed — its tiles cannot later be moved into a different grouping.",
+      text: "The tiles you hold in your hand are concealed: only you can see their faces. A set you show face-up to the table is open — on the game screens a shown set is also called a meld — and once a set is open it is fixed — its tiles cannot later be moved into a different grouping.",
     },
     {
       text: "Between turns you hold thirteen tiles, counting each open set as three places. On your turn you hold fourteen tiles for a moment, while you decide what to do, and then you return to thirteen. A winning hand is the fourteen-tile shape: four sets and a pair.",
@@ -433,7 +436,7 @@ export const VARIANT_LESSONS: VariantLesson[] = [
   ]),
   hkSteps("turns", "Draws, discards and claims", [
     {
-      text: "Before play, all 144 tiles are shuffled face-down and stacked in rows in the middle of the table. That stack is the wall: every tile in the game is drawn from the wall. To start a hand, each player takes thirteen tiles from the wall. One player is the dealer, who sits in the East seat and takes the first turn.",
+      text: "Before play, all 144 tiles are shuffled face-down and stacked in rows in the middle of the table. That stack is the wall: every tile in the game is drawn from the wall. To start a hand, each player takes thirteen tiles from the wall. One player is the dealer: the player in charge of this hand, who sits in the East seat, is dealt to first and takes the first turn. The deal moves around the table from hand to hand, as Lesson 10 teaches.",
     },
     {
       text: "Turns pass in seat order: East, then South, then West, then North, and back to East. On your turn you draw one tile from the wall, and then you discard one tile: you place it face-up in front of you, where everyone can see it. Your discards stay on the table for the rest of the hand. The hand pictured below is the kind of fourteen-tile hand you hold just after drawing, before you choose a discard.",
@@ -480,7 +483,7 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "A hand can also end with no winner. The end section of the wall is kept back for replacement draws, and when the rest of the wall has been drawn and nobody has won, the hand ends as a drawn hand — this is called an exhaustive draw. Nobody pays or receives any points for a drawn hand, the scores stay exactly as they were, and the deal passes to the next player in turn order.",
+      text: "A hand can also end with no winner. The end section of the wall is kept back for replacement draws — the extra draws a player takes after showing a bonus tile or declaring a quad, taught in Lessons 4 and 8 — and when the rest of the wall has been drawn and nobody has won, the hand ends as a drawn hand — this is called an exhaustive draw. Nobody pays or receives any points for a drawn hand, the scores stay exactly as they were, and the deal passes to the next player in turn order.",
     },
     {
       question: choice(
@@ -503,7 +506,7 @@ export const VARIANT_LESSONS: VariantLesson[] = [
   ]),
   hkSteps("flowers", "Replacing and scoring flowers", [
     {
-      text: "Bonus tiles — the plants and seasons from Lesson 1 — can appear at any time: in your starting thirteen tiles, on a draw, or on a replacement draw. The moment you find one, place it face-up beside your hand, as the pictured hand's owner would. A bonus tile never takes a place inside your hand, and it is never one of your sets or your pair.",
+      text: "Bonus tiles — the plants and seasons from Lesson 1, also called flowers — can appear at any time: in your starting thirteen tiles, on a draw, or on a replacement draw. The moment you find one, place it face-up beside your hand, as the pictured hand's owner would. A bonus tile never takes a place inside your hand, and it is never one of your sets or your pair.",
       hand: HK_SEQ_HAND,
     },
     {
@@ -538,7 +541,7 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "Your exposed bonus tiles stay beside your hand, face-up where every player can see them, until the hand ends. A bonus tile whose number belongs to another seat adds nothing to your score on its own. Collecting all four plants, or all four seasons, is worth more than the tiles would be separately, and holding all eight is worth the most of all. The exact score values are counted in the next lesson, where the scoring unit is defined.",
+      text: "Your exposed bonus tiles stay beside your hand until the hand ends. Exposed means placed face-up beside your hand, where every player can see them. A bonus tile whose number belongs to another seat adds nothing to your score on its own. Collecting all four plants, or all four seasons, is worth more than the tiles would be separately, and holding all eight is worth the most of all. The exact score values are counted in the next lesson, where the scoring unit is defined.",
     },
     {
       question: choice(
@@ -551,7 +554,7 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "So the flower procedure is: expose the bonus tile beside your hand, replace it from the end of the wall, and repeat if the replacement is another bonus tile. What those tiles are worth is part of scoring — and scoring starts in the next lesson.",
+      text: "So the flower procedure — flower is the short name for a bonus tile — is: expose the bonus tile beside your hand, replace it from the end of the wall, and repeat if the replacement is another bonus tile. What those tiles are worth is part of scoring — and scoring starts in the next lesson.",
     },
   ]),
   hkSteps("minimum", "Shape, fan and eligibility", [
@@ -560,7 +563,7 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       hand: HK_SEQ_HAND,
     },
     {
-      text: "The score of a winning hand is counted in fan. A fan is one scoring point. Each pattern a hand contains, and each circumstance of how it was won, earns a stated number of fan, and the fan are added together. A hand's fan total decides whether it is allowed to win at all, and — as Lesson 7 shows — how many points it is paid.",
+      text: "The score of a winning hand is counted in fan. A fan is one scoring point. A pattern is a named feature of a hand, such as having all four sets as sequences. Each pattern a hand contains, and each circumstance of how it was won, earns a stated number of fan, and the fan are added together. A hand's fan total decides whether it is allowed to win at all, and — as Lesson 7 shows — how many points it is paid.",
     },
     {
       text: "Count the pictured hand's fan one item at a time. A hand whose four sets are all sequences earns one fan. A winner holding no bonus tiles at all earns one fan. Nothing else in this hand scores: a pair of East winds is only a pair, and pairs earn no wind fan. The total is two fan.",
@@ -644,7 +647,7 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "Finding your waits is the skill every turn depends on: you can only win on a tile that is one of your waits, whether you draw it yourself or another player discards it. And a win needs both halves at once — a complete shape, found through your waits, and at least three fan.",
+      text: "Finding your waits is the skill every turn depends on: you can only win on a tile that is one of your waits, whether you draw it yourself or another player discards it. And a win needs both halves at once — a complete shape, found through your waits, and at least three fan. A hand that has both halves is eligible: eligible means allowed to be declared a win.",
     },
     {
       question: choice(
@@ -715,6 +718,10 @@ export const VARIANT_LESSONS: VariantLesson[] = [
   hkSteps("honors", "Wind and dragon patterns", [
     {
       text: "Play is divided into rounds. A round is a run of hands that shares one named wind: the East round comes first, then the South round, then the West round, then the North round. The wind a round is named for is the round wind, and it stays the same for every hand in that round. Your own wind for a hand is your seat wind: the wind of the seat you hold for that hand, which changes as the deal moves around the table. The dealer always holds the East seat, so the dealer's seat wind is East.",
+    },
+    {
+      text: "Picture the centre of the table for one concrete hand. The centre shows the East round, hand 1, so the round wind is East: East names the whole run of hands, and it stays East for every hand of that run. You sit in the South seat for this hand, so your seat wind is South: your seat wind names your own place at the table for this hand only, and it changes when the deal moves you to a new seat. The dealer sits in the East seat, so the dealer's seat wind is East — the same wind as the round wind for this hand. The pictured tiles are the four winds in seat order: East, South, West and North.",
+      tiles: "1234z",
     },
     {
       text: "Wind fan is counted like this. A triplet or quad of your seat wind earns one fan. A triplet or quad of the round wind earns one fan. When the two are the same wind — an East triplet held by East during the East round — the triplet earns both, for two fan. A pair of a wind earns nothing. The pictured hand holds a triplet of East alongside three sequences and a pair of the 2 of characters.",
@@ -841,6 +848,10 @@ export const VARIANT_LESSONS: VariantLesson[] = [
             : "invalid";
         },
       ),
+    },
+    {
+      text: "Two patterns are about suits rather than honors. A hand in which every tile belongs to one numbered suit, with no honors at all, is a Full Flush, worth seven fan. A hand in which every numbered tile belongs to one suit and the rest are honors is One Suit With Honors, worth three fan. The pictured hand is One Suit With Honors: sequences and a triplet all in circles, with a pair of East winds.",
+      hand: "123p456p789p111p11z",
     },
     {
       text: "When you score a hand with honors, work in this order: name its sets first, then check each wind triplet against the seat wind and the round wind held during that hand, then the dragons. Winds are always judged by the hand being scored, never by a seat held in a later hand.",
@@ -1055,10 +1066,10 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "Every quad declaration is followed by a replacement draw: you draw one tile from the end of the wall before you discard. The replacement keeps your hand at its proper size, because the quad holds four physical tiles in a single set. A flower replacement from Lesson 4 is a different event — it follows a bonus tile, not a quad.",
+      text: "Every quad declaration is followed by a replacement draw: you draw one tile from the end of the wall before you discard. The replacement keeps your hand at its proper size, because the quad holds four physical tiles in a single set. A flower replacement from Lesson 4 — a replacement after a bonus tile, which is what flower means on this table — is a different event: it follows a bonus tile, not a quad.",
     },
     {
-      text: "If the replacement tile drawn after a quad completes your hand, you win on that tile, and the circumstance earns one extra fan: the quad-replacement fan is worth one fan. It counts toward the three-fan minimum like any other fan. Winning on a flower replacement earns no such fan — the award belongs to quad replacements only.",
+      text: "If the replacement tile drawn after a quad completes your hand, you win on that tile, and the circumstance earns one extra fan: the quad-replacement fan is worth one fan. It counts toward the three-fan minimum like any other fan. Winning on a flower replacement — a win on the tile drawn after showing a bonus tile — earns no such fan: the award belongs to quad replacements only.",
     },
     {
       question: choice(
@@ -1090,7 +1101,7 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "An added quad has one risk the other forms do not. In the moment before the fourth tile joins the shown triplet, another player whose hand that tile completes may claim it to win. That is robbing the quad. If the rob succeeds, the fourth tile goes to the winner and the original set stays a triplet. A concealed quad cannot be robbed, and an open quad's fourth tile is a discard, where the ordinary win priority of Lesson 3 already applies.",
+      text: "An added quad has one risk the other forms do not. In the moment before the fourth tile joins the shown triplet, another player whose hand that tile completes may claim it to win. That is robbing the quad, and winning by robbing an added quad earns one fan for that circumstance. If the rob succeeds, the fourth tile goes to the winner and the original set stays a triplet. A concealed quad cannot be robbed, and an open quad's fourth tile is a discard, where the ordinary win priority of Lesson 3 already applies.",
     },
     {
       question: choice(
@@ -1118,7 +1129,7 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "The extreme case is a hand of four quads and a pair, pictured below: the 1 of characters, the 1 of circles, the 1 of bamboo and East, each four times, with a pair of South. That is eighteen physical tiles forming four sets and a pair. It is a rare named pattern, and like every hand it is paid under the ten-fan cap of the next lesson.",
+      text: "The extreme case is a hand of four quads and a pair, pictured below: the 1 of characters, the 1 of circles, the 1 of bamboo and East, each four times, with a pair of South. That is eighteen physical tiles forming four sets and a pair. It is a rare named pattern, Four Quads, worth eighteen fan before the cap, and like every hand it is paid under the ten-fan cap of the next lesson.",
       hand: "1111m1111p1111s1111z22z",
     },
     {
@@ -1177,7 +1188,7 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "Two more patterns reward winning at the very start of a hand. If the dealer wins with the hand as dealt, completed by the first uninterrupted draw, that is a Heavenly Hand. If another player wins on their own first uninterrupted draw, that is an Earthly Hand. Each is scored as a ten-fan hand in its own right: the pattern's ten fan is the hand's score, with no ordinary pattern fan added on top.",
+      text: "Two more patterns reward winning at the very start of a hand. If the dealer wins with the hand as dealt, completed by the first uninterrupted draw, that is a Heavenly Hand. If another player wins on their own first uninterrupted draw, that is an Earthly Hand. Each is scored as a ten-fan hand in its own right: the pattern's ten fan is the hand's score, with no ordinary pattern fan added on top. One more circumstance earns fan: winning on the very last tile that can be drawn from the live wall — the part of the wall still left to draw from — is a Last Wall Tile win when you draw it yourself, and winning on the discard that follows it is a Final Discard win. Each earns one fan.",
     },
     {
       question: choice(

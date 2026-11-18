@@ -110,7 +110,8 @@ describe("original versioned variant teaching", () => {
     const lesson = VARIANT_LESSONS[0]!;
     const questions = variantLessonQuestions(lesson);
     const first = mount({ lessonId: lesson.id });
-    // Four text steps precede the first question step.
+    // Five text steps precede the first question step.
+    click("Continue");
     click("Continue");
     click("Continue");
     click("Continue");
@@ -129,7 +130,7 @@ describe("original versioned variant teaching", () => {
         (b) => b.textContent === "136",
       )!.disabled,
     ).toBe(true);
-    expect(progress.active[lesson.id]!.step).toBe(4);
+    expect(progress.active[lesson.id]!.step).toBe(5);
     expect(root.querySelector(".learning-nav")).toBeNull();
     first.destroy();
     mount({ lessonId: lesson.id });

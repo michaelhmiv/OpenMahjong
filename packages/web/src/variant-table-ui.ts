@@ -231,7 +231,7 @@ export function mountVariantTable(
         el(
           "p",
           runner.variant === "hong-kong"
-            ? "Clear Chapter · At least three fan; fan are scoring units converted into payer amounts."
+            ? "Hong Kong Old Style · At least three fan to win; fan are scoring units converted into payer amounts. The number after the round wind is the hand number within the round. Live tiles are the tiles still left to draw from the wall. Repeat counts extra hands the same dealer deals again after winning a hand."
             : runner.variant === "mcr"
               ? "WMO 2006 · At least eight fan before flowers. Every loser pays eight base points."
               : "Every-flower · No Ting · Five sets and a pair, no minimum tai. Base 30 plus 10 per tai; dealer bonuses apply per payer.",
@@ -365,6 +365,13 @@ export function mountVariantTable(
         );
         for (const p of win.patterns ?? [])
           breakdown.append(el("p", `${p.name} · ${p.units}`));
+        if (runner.variant === "hong-kong")
+          breakdown.append(
+            el(
+              "p",
+              "Each line above names a scoring pattern taught in the Hong Kong lessons and the fan it earns; the lines below show who pays the winner.",
+            ),
+          );
         for (const p of win.payments)
           breakdown.append(
             el(
@@ -513,7 +520,7 @@ export function mountVariantTable(
       coach.append(
         el(
           "p",
-          "A win takes priority over a triplet or quad. Only the next seat may claim a sequence. Claim strategy is heuristic; these controls show exact legal opportunities.",
+          "A win takes priority over a triplet or quad. Only the next seat may claim a sequence. The claim buttons use short names in brackets: a triplet (pung) is a claim to make three matching tiles, an open quad (kong) is a claim to make four matching tiles, and a sequence (chow) is a claim to make three numbers in a row in one suit. These buttons show only the claims the rules allow for this discard.",
           "dim",
         ),
       );

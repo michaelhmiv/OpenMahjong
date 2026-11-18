@@ -78,8 +78,8 @@ const TERMS: {
   teachStep: number;
 }[] = [
   { label: "flower / bonus tile", pattern: /\bflowers?\b|\bbonus tiles?\b/i, teachLesson: "hk-tiles", teachStep: 3 },
-  { label: "honor", pattern: /\bhonors?\b/i, teachLesson: "hk-tiles", teachStep: 5 },
-  { label: "terminal", pattern: /\bterminals?\b/i, teachLesson: "hk-tiles", teachStep: 8 },
+  { label: "honor", pattern: /\bhonors?\b/i, teachLesson: "hk-tiles", teachStep: 6 },
+  { label: "terminal", pattern: /\bterminals?\b/i, teachLesson: "hk-tiles", teachStep: 9 },
   { label: "set", pattern: /\bsets?\b/i, teachLesson: "hk-shape", teachStep: 0 },
   { label: "sequence", pattern: /\bsequences?\b/i, teachLesson: "hk-shape", teachStep: 0 },
   { label: "triplet", pattern: /\btriplets?\b/i, teachLesson: "hk-shape", teachStep: 1 },

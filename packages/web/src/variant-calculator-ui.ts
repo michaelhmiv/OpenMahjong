@@ -162,6 +162,11 @@ export function mountVariantCalculator(
     field("Discard payment split", split),
     el(
       "p",
+      "Half-spicy is the fan conversion taught in the lessons: three fan is 8 base points, rising through 16, 24, 32, 48, 64 and 96 to 128 at ten fan. Full-spicy doubles the base points at each fan step instead: three fan is 8, four is 16, five is 32, six is 64, and so on. Under the discard payment split, Discarder pays twice means the player who discarded the winning tile pays two shares and each other opponent pays one; Discarder pays three base shares means that player pays all three shares and the other opponents pay nothing on a discard win.",
+      "dim",
+    ),
+    el(
+      "p",
       "These in-person settings are recorded with this hand and do not change CPU rules.",
       "dim",
     ),
@@ -427,6 +432,15 @@ export function mountVariantCalculator(
     ),
     picker,
     field("Winning tile", winning),
+    ...(variant === "hong-kong"
+      ? [
+          el(
+            "p",
+            "A meld is a set you have shown or declared, such as an open triplet or a quad. Flowers and seasons are the eight bonus tiles: set them apart here, as at the table. The circumstance boxes record how the hand was won: a quad replacement is the extra tile drawn after declaring a quad; robbing an added quad is winning on the fourth tile another player adds to a shown triplet; the last live tile is the last tile left to draw from the wall, and a final discard is the discard that follows it; an initial uninterrupted self-draw is a first-draw win with nothing interrupting the start (a Heavenly Hand for the dealer, an Earthly Hand for another player); the last unexposed copy is the final copy of the winning tile that no player had shown.",
+            "dim",
+          ),
+        ]
+      : []),
     el("h3", "Flowers and seasons"),
     flowerPicker,
     circumstance,
