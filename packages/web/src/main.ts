@@ -22,11 +22,13 @@ if (!root) throw new Error("Missing #app root element");
 // exactly as before.
 initI18n();
 applyLocaleDocumentTags(getCurrentLocale());
+try {
 const returnRoute = sessionStorage.getItem("om-online-return");
 if (!location.hash && returnRoute && /^#\/(online$|join\/[\w-]+$|match\/[\w-]+$)/.test(returnRoute)) {
   history.replaceState(null, "", returnRoute);
 }
 sessionStorage.removeItem("om-online-return");
+} catch { /* Storage is optional for the offline app. */ }
 const onlineRoute = () => /^#\/(online$|join\/|match\/)/.test(location.hash);
 const startedOnline = onlineRoute();
 window.addEventListener("hashchange", () => { if (onlineRoute() !== startedOnline) location.reload(); });
@@ -36,7 +38,7 @@ else new App(root);
 // Google Analytics ships dark: with ANALYTICS_CONFIG empty this is
 // a no-op — no script, no network, nothing tracked. Go-live is a
 // separate one-value PR (see analytics.ts).
-initAnalytics();
+if (!startedOnline) initAnalytics();
 
 // PWA (brief §11): the service worker caches the app shell and assets so
 // the game is fully playable offline after the first load.

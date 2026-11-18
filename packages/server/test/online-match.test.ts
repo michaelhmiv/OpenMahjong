@@ -28,6 +28,16 @@ describe("authoritative matches", () => {
         f.variant === "riichi" ? createAiPolicy() : createVariantPolicy(),
       );
       while (!table.result) {
+        if (
+          j.checkpoint &&
+          j.checkpoint.step === j.steps.length &&
+          j.steps.length > 0
+        ) {
+          const fast = new TableEngine(f, structuredClone(j), false, true);
+          expect(fast.choices).toEqual(table.choices);
+          for (let seat = 0; seat < 4; seat++)
+            expect(fast.view(seat)).toEqual(table.view(seat));
+        }
         if (j.steps.length === 23)
           table = new TableEngine(f, structuredClone(j));
         table.attach(j);

@@ -13,6 +13,7 @@ import { validateSavedGame, type MomentRecord } from "./replay.js";
 import type { ChiHint } from "./model.js";
 
 interface DecisionPositionBase {
+  readonly controller?: "human" | "clock" | "bot";
   /** Index in the complete four-seat decision log, not just human actions. */
   readonly decisionIndex: number;
   /** Zero-based hand serial; repeated dealer hands have distinct indices. */

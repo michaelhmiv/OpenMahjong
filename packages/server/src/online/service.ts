@@ -11,6 +11,9 @@ type Seat = {
   seat: number;
   player: string | null;
   name: string;
+  controller: string | null;
+  generation: number;
+  end_requested: boolean;
   ready: boolean;
   covered: boolean;
   bot_played: boolean;
@@ -24,10 +27,16 @@ type Room = Format & {
   state: string;
   invite: string | null;
   listed: boolean;
+  rating_void_reason: string | null;
   journal: Journal | null;
   result: GameResult["settlement"] | null;
 };
 type Db = PoolClient;
+async function dbTime(db: Db): Promise<number> {
+  return (
+    await db.query<{ now: Date }>("SELECT clock_timestamp() AS now")
+  ).rows[0]!.now.getTime();
+}
 export const fail = (message: string, status = 400): never => {
   throw new ValidationError(message, status);
 };
@@ -43,10 +52,13 @@ export function uuid(value: unknown): string {
 }
 export function formatOf(b: Record<string, unknown>): Format {
   if (
-    !["riichi", "hong-kong", "mcr", "taiwanese"].includes(String(b.variant)) ||
-    !["east", "south", "full"].includes(String(b.length)) ||
+    typeof b.variant !== "string" ||
+    !["riichi", "hong-kong", "mcr", "taiwanese"].includes(b.variant) ||
+    typeof b.length !== "string" ||
+    !["east", "south", "full"].includes(b.length) ||
     (b.variant === "riichi" && b.length === "full") ||
-    !["live", "correspondence"].includes(String(b.pace))
+    typeof b.pace !== "string" ||
+    !["live", "correspondence"].includes(b.pace)
   )
     return fail("Invalid table settings");
   return { variant: b.variant, length: b.length, pace: b.pace } as Format;
@@ -54,7 +66,7 @@ export function formatOf(b: Record<string, unknown>): Format {
 function poolKey(f: Format) {
   return [f.variant, f.length, f.pace, "pl-v1"].join("/");
 }
-const seatQuery = `SELECT s.*,coalesce(p.name,'Bot') AS name FROM online_seats s LEFT JOIN online_players p ON p.id=s.player WHERE room=$1 ORDER BY seat`;
+const seatQuery = `SELECT s.seat,s.player,s.ready,s.covered,s.bot_played,s.seen_at,s.idle_at,s.controller,s.generation,s.end_requested,coalesce(p.name,'Bot') AS name FROM online_seats s LEFT JOIN online_players p ON p.id=s.player WHERE room=$1 ORDER BY seat`;
 function member(seats: Seat[], actor: string): Seat {
   return (
     seats.find((s) => s.player === actor) ?? fail("Table unavailable", 404)
@@ -70,6 +82,12 @@ async function lockRoom(db: Db, id: string): Promise<Room> {
     ).rows[0] ?? fail("Table unavailable", 404)
   );
 }
+async function lobbyLock(db: Db) {
+  await db.query(
+    "SELECT pg_advisory_xact_lock(hashtextextended('openmahjong:lobby',0))",
+  );
+}
+
 async function seatsOf(db: Db, id: string) {
   return (await db.query<Seat>(seatQuery, [id])).rows;
 }
@@ -106,7 +124,7 @@ export class OnlineTables {
       engine.tip !== (j.steps.at(-1)?.id ?? null) ||
       !j.walls.length
     ) {
-      engine = new TableEngine(room, j);
+      engine = new TableEngine(room, j, false, true);
       if (this.cache.size >= 64)
         this.cache.delete(this.cache.keys().next().value!);
       this.cache.set(room.id, engine);
@@ -117,7 +135,7 @@ export class OnlineTables {
   async list(actor: string) {
     const mine = await this.db.query(
       `SELECT r.id,r.variant,r.length,r.pace,r.origin,r.state,s.seat,s.ready,
-      coalesce((r.journal->'pending') @> to_jsonb(ARRAY[s.seat::int]),false) AS "yourMove"
+      coalesce(r.state='playing' AND NOT s.covered AND jsonb_array_length(s.projection->'choices')>0,false) AS "yourMove"
       FROM online_rooms r JOIN online_seats s ON r.id=s.room WHERE s.player=$1 AND r.state <> 'closed'
       ORDER BY (r.state='finished'),r.created_at DESC`,
       [actor],
@@ -155,6 +173,7 @@ export class OnlineTables {
     origin: Room["origin"],
     parent: string | null = null,
   ) {
+    await lobbyLock(db);
     if (!this.enabled[origin])
       return fail("New tables are currently paused", 503);
     if (origin === "ranked" && !actor.user_id)
@@ -180,14 +199,18 @@ export class OnlineTables {
     return { id };
   }
 
-  async queue(db: Db, actor: Player, f: Format, mode: string) {
+  async queue(
+    db: Db,
+    actor: Player,
+    f: Format,
+    mode: string,
+    acceptCustom = false,
+  ) {
     if (mode !== "friendly" && mode !== "ranked") return fail("Unknown queue");
     if (!this.enabled[mode]) return fail("Queue is paused", 503);
     if (mode === "ranked" && !actor.user_id)
       return fail("Sign in to play Ranked", 403);
-    await db.query("SELECT pg_advisory_xact_lock(hashtextextended($1,0))", [
-      "queue/" + mode + "/" + poolKey(f),
-    ]);
+    await lobbyLock(db);
     const found = await db.query<{ id: string }>(
       `SELECT r.id FROM online_rooms r
       WHERE r.origin=$1 AND r.variant=$2 AND r.length=$3 AND r.pace=$4 AND r.state='waiting'
@@ -199,15 +222,21 @@ export class OnlineTables {
       ORDER BY EXISTS(SELECT 1 FROM online_seats s WHERE s.room=r.id AND s.player=$5) DESC,r.created_at LIMIT 1 FOR UPDATE`,
       [mode, f.variant, f.length, f.pace, actor.id, poolKey(f)],
     );
-    if (!found.rows.length) return this.create(db, actor, f, mode);
-    const room = await lockRoom(db, found.rows[0]!.id);
+    const id = found.rows[0]?.id ?? (await this.create(db, actor, f, mode)).id;
+    const room = await lockRoom(db, id);
     await this.addSeat(db, room, actor.id, true);
+    if (mode === "friendly")
+      await db.query(
+        "UPDATE online_seats SET accept_custom=$3 WHERE room=$1 AND player=$2",
+        [room.id, actor.id, acceptCustom],
+      );
     const seats = await seatsOf(db, room.id);
     if (seats.length === 4) await this.start(db, room, seats);
     return { id: room.id };
   }
 
   async join(db: Db, actor: Player, id: unknown, invite: unknown) {
+    await lobbyLock(db);
     const row =
       typeof invite === "string" && invite.length <= 64
         ? (
@@ -248,7 +277,7 @@ export class OnlineTables {
     await db.query("UPDATE online_seats SET seen_at=now() WHERE room=$1", [
       room.id,
     ]);
-    await this.advance(db, room, await seatsOf(db, room.id), Date.now());
+    await this.advance(db, room, await seatsOf(db, room.id), await dbTime(db));
   }
 
   async roomAction(
@@ -258,6 +287,7 @@ export class OnlineTables {
     kind: unknown,
     index?: unknown,
   ) {
+    await lobbyLock(db);
     const room = await lockRoom(db, id);
     const seats = await seatsOf(db, id);
     const me = member(seats, actor.id);
@@ -276,24 +306,34 @@ export class OnlineTables {
       ]);
       return this.create(db, actor, room, "custom", id);
     }
-    if (room.state === "playing" && kind === "leave") {
-      if (room.pace === "correspondence" && room.origin !== "ranked") {
-        // A deliberate withdrawal ends the untimed table without awarding ratings.
+    if (
+      room.state === "playing" &&
+      kind === "end" &&
+      room.pace === "correspondence"
+    ) {
+      await db.query(
+        "UPDATE online_seats SET end_requested=true WHERE room=$1 AND player=$2",
+        [id, actor.id],
+      );
+      if (
+        seats.every(
+          (s) => !s.player || s.end_requested || s.player === actor.id,
+        )
+      ) {
         await db.query(
           "UPDATE online_rooms SET state='closed',due_at=NULL WHERE id=$1",
           [id],
         );
-        await db.query(
-          "UPDATE online_seats SET live_busy=false WHERE room=$1",
-          [id],
-        );
-      } else {
-        await db.query(
-          "UPDATE online_seats SET covered=true WHERE room=$1 AND seat=$2",
-          [id, me.seat],
-        );
-        await this.advance(db, room, await seatsOf(db, id), Date.now());
       }
+      return { id };
+    }
+    if (room.state === "playing" && kind === "leave") {
+      // A deliberate withdrawal keeps the other three seats playing, even at an untimed table.
+      await db.query(
+        "UPDATE online_seats SET covered=true,generation=generation+1 WHERE room=$1 AND seat=$2",
+        [id, me.seat],
+      );
+      await this.advance(db, room, await seatsOf(db, id), await dbTime(db));
       return { id };
     }
     if (kind === "start" && room.state === "playing") return { id };
@@ -340,9 +380,25 @@ export class OnlineTables {
     return { id };
   }
 
-  async snapshot(db: Db, actor: string, id: string) {
-    const room = await lockRoom(db, id);
+  async snapshot(db: Db, actor: string, id: string, client?: string) {
+    const room =
+      (
+        await db.query<Room>(
+          `SELECT id,variant,length,pace,origin,state,host,listed,invite,result,rating_void_reason
+      FROM online_rooms WHERE id=$1 FOR SHARE`,
+          [uuid(id)],
+        )
+      ).rows[0] ?? fail("Table unavailable", 404);
     const seats = await seatsOf(db, id);
+    if (!seats.some((s) => s.player === actor)) {
+      const moved = (
+        await db.query(
+          "SELECT destination FROM online_transfers WHERE source=$1 AND player=$2",
+          [id, actor],
+        )
+      ).rows[0];
+      if (moved) return { redirect: moved.destination };
+    }
     const me = member(seats, actor);
     const summary = {
       id,
@@ -355,34 +411,77 @@ export class OnlineTables {
       listed: room.listed,
       invite: room.host === actor ? room.invite : null,
       seat: me.seat,
+      generation: me.generation,
+      controlling: !me.controller || me.controller === client,
       seats: seats.map((s) => ({
         seat: s.seat,
         name: s.name,
         bot: s.player === null,
         covered: s.covered,
         ready: s.ready,
+        endRequested: s.end_requested,
+        coverAt:
+          room.state === "playing" &&
+          room.pace === "live" &&
+          s.player &&
+          !s.covered &&
+          Date.now() - s.seen_at.getTime() > 15000
+            ? s.seen_at.getTime() + 60000
+            : null,
       })),
     };
-    if (!room.journal || room.state === "closed") return summary;
+    if (room.state === "waiting" && room.origin === "friendly") {
+      const offer = (
+        await db.query(
+          `SELECT o.id,o.expires_at,r.variant,r.length,r.pace,count(s.seat)::int occupied,
+        count(s.seat) FILTER (WHERE s.player IS NULL)::int bots
+        FROM online_offers o JOIN online_rooms r ON r.id=o.room JOIN online_seats s ON s.room=r.id
+        WHERE o.player=$1 AND o.ticket=$2 AND o.expires_at>clock_timestamp() AND r.listed AND r.state='waiting'
+        GROUP BY o.id,r.id HAVING count(s.seat)<4 ORDER BY o.expires_at LIMIT 1`,
+          [actor, id],
+        )
+      ).rows[0];
+      return { ...summary, offer: offer ?? null };
+    }
+    if (room.state === "waiting" || room.state === "closed") return summary;
     if (room.state === "finished") {
       const ratings = await db.query(
         "SELECT s.seat,c.before_rating,c.after_rating FROM online_rating_changes c JOIN online_seats s ON s.room=c.room AND s.player=c.player WHERE c.room=$1 ORDER BY s.seat",
         [id],
       );
-      return { ...summary, result: room.result, ratings: ratings.rows };
+      return {
+        ...summary,
+        result: room.result,
+        ratings: ratings.rows,
+        ratingVoid: room.rating_void_reason,
+      };
     }
-    const engine = this.engine(room);
-    const choices =
-      room.journal.answers[me.seat] || me.covered
-        ? []
-        : engine.choices[me.seat]!;
+    const row = (
+      await db.query(
+        "SELECT projection FROM online_seats WHERE room=$1 AND player=$2",
+        [id, actor],
+      )
+    ).rows[0];
+    // Rows made by an earlier worker acquire a delivery projection on their next write.
+    const data = row?.projection ?? this.project(await lockRoom(db, id), me);
     return {
       ...summary,
-      view: engine.view(me.seat),
-      revision: room.journal.steps.length,
+      ...data,
+      choices: summary.controlling ? data.choices : [],
+    };
+  }
+
+  private project(room: Room, seat: Seat, engine = this.engine(room)) {
+    const j = room.journal!;
+    const choices =
+      j.answers[seat.seat] || seat.covered ? [] : engine.choices[seat.seat]!;
+    return {
+      view: engine.view(seat.seat),
+      revision: j.steps.length,
       choices,
       claimTile: choices.length ? engine.claimTile : null,
-      deadline: room.journal.deadline,
+      deadline: j.deadline,
+      handResult: j.handResult ?? null,
     };
   }
 
@@ -474,11 +573,13 @@ export class OnlineTables {
       room.state !== "playing" ||
       !j ||
       me.covered ||
+      (me.controller !== null &&
+        (body.client !== me.controller || body.generation !== me.generation)) ||
       j.steps.length !== body.revision ||
       j.answers[me.seat]
     )
       return fail("Decision has changed", 409);
-    const now = Date.now();
+    const now = await dbTime(db);
     if (j.deadline !== null && now >= j.deadline)
       return fail("Decision expired", 409);
     const action = this.engine(room).choices[me.seat]?.[body.choice as number];
@@ -500,22 +601,49 @@ export class OnlineTables {
     return { accepted: body.revision };
   }
 
-  async presence(db: Db, actor: string, id: string, reclaim: boolean) {
+  async presence(
+    db: Db,
+    actor: string,
+    id: string,
+    reclaim: boolean,
+    client?: string,
+    claimControl = false,
+  ) {
     const room = await lockRoom(db, id);
-    const me = member(await seatsOf(db, id), actor);
-    if (room.state === "playing" && room.pace === "live") {
+    const seats = await seatsOf(db, id);
+    if (!seats.some((s) => s.player === actor)) {
+      const transfer = (
+        await db.query(
+          "SELECT destination FROM online_transfers WHERE source=$1 AND player=$2",
+          [id, actor],
+        )
+      ).rows[0];
+      if (transfer) return { id: transfer.destination };
+    }
+    const me = member(seats, actor);
+    if (client) uuid(client);
+    if (claimControl && client && me.controller !== client) {
       await db.query(
-        "UPDATE online_seats SET seen_at=now(), covered=CASE WHEN $3 THEN false ELSE covered END, idle_at=CASE WHEN $3 THEN NULL ELSE idle_at END WHERE room=$1 AND player=$2",
+        "UPDATE online_seats SET controller=$3,generation=generation+1 WHERE room=$1 AND player=$2",
+        [id, actor, client],
+      );
+    } else if (me.controller && me.controller !== client) return { id };
+    if (
+      room.pace === "live" &&
+      (room.state === "playing" || room.state === "waiting")
+    ) {
+      await db.query(
+        "UPDATE online_seats SET seen_at=clock_timestamp(),covered=CASE WHEN $3 THEN false ELSE covered END,idle_at=CASE WHEN $3 THEN NULL ELSE idle_at END WHERE room=$1 AND player=$2",
         [id, actor, reclaim],
       );
       if (reclaim && me.covered)
-        await this.advance(db, room, await seatsOf(db, id), Date.now());
+        await this.advance(db, room, await seatsOf(db, id), await dbTime(db));
     }
     return { id };
   }
 
   private async finish(db: Db, room: Room, seats: Seat[], result: GameResult) {
-    if (room.origin === "ranked") {
+    if (room.origin === "ranked" && !room.rating_void_reason) {
       const pool = poolKey(room);
       const old = [];
       for (const s of [...seats].sort((a, b) =>
@@ -585,7 +713,7 @@ export class OnlineTables {
       ) {
         s.covered = true;
         await db.query(
-          "UPDATE online_seats SET covered=true WHERE room=$1 AND seat=$2",
+          "UPDATE online_seats SET covered=true,generation=generation+1 WHERE room=$1 AND seat=$2",
           [room.id, s.seat],
         );
       }
@@ -644,11 +772,140 @@ export class OnlineTables {
         : Number.isFinite(next)
           ? new Date(next)
           : null;
+    const delivery = seats.map((s) => this.project(room, s, engine));
+    await db.query(
+      `UPDATE online_seats SET projection = payload.value
+      FROM jsonb_array_elements($2::jsonb) WITH ORDINALITY AS payload(value,ord)
+      WHERE room=$1 AND seat=payload.ord-1`,
+      [room.id, JSON.stringify(delivery)],
+    );
     await db.query("UPDATE online_rooms SET journal=$2,due_at=$3 WHERE id=$1", [
       room.id,
       { ...j, pending: pending.map((s) => s.seat) },
       due,
     ]);
+  }
+
+  private async moveQueuedPlayer(db: Db, from: Room, to: Room, player: string) {
+    await db.query("DELETE FROM online_seats WHERE room=$1 AND player=$2", [
+      from.id,
+      player,
+    ]);
+    await this.addSeat(db, to, player, to.origin !== "custom");
+    await db.query(
+      `INSERT INTO online_transfers VALUES($1,$2,$3) ON CONFLICT(source,player)
+      DO UPDATE SET destination=EXCLUDED.destination`,
+      [from.id, player, to.id],
+    );
+    const remaining = (await seatsOf(db, from.id)).filter((s) => s.player);
+    await db.query("UPDATE online_rooms SET host=$2,state=$3 WHERE id=$1", [
+      from.id,
+      remaining[0]?.player ?? null,
+      remaining.length ? "waiting" : "closed",
+    ]);
+    const seats = await seatsOf(db, to.id);
+    if (to.origin !== "custom" && seats.length === 4)
+      await this.start(db, to, seats);
+  }
+
+  async answerOffer(db: Db, actor: string, id: string, accept: boolean) {
+    await lobbyLock(db);
+    const offer = (
+      await db.query(
+        "SELECT * FROM online_offers WHERE id=$1 AND player=$2 AND expires_at>clock_timestamp() FOR UPDATE",
+        [uuid(id), actor],
+      )
+    ).rows[0];
+    if (!offer) return fail("This offer has expired", 409);
+    const from = await lockRoom(db, offer.ticket),
+      to = await lockRoom(db, offer.room);
+    member(await seatsOf(db, from.id), actor);
+    if (from.state !== "waiting" || to.state !== "waiting" || !to.listed)
+      return fail("This offer has closed", 409);
+    if (accept) await this.moveQueuedPlayer(db, from, to, actor);
+    await db.query("UPDATE online_offers SET expires_at=now() WHERE id=$1", [
+      id,
+    ]);
+    return { id: accept ? to.id : from.id };
+  }
+
+  async matchWaiting() {
+    await this.transaction(async (db) => {
+      await lobbyLock(db);
+      // Remove stale live queue entries. Untimed memberships persist until explicit withdrawal.
+      const stale =
+        await db.query(`DELETE FROM online_seats s USING online_rooms r
+        WHERE r.id=s.room AND r.state='waiting' AND r.origin IN ('friendly','ranked') AND r.pace='live'
+        AND s.seen_at < clock_timestamp()-interval '2 minutes' RETURNING s.room`);
+      for (const id of new Set(stale.rows.map((r) => r.room))) {
+        const first = (await seatsOf(db, id))[0];
+        await db.query("UPDATE online_rooms SET host=$2,state=$3 WHERE id=$1", [
+          id,
+          first?.player ?? null,
+          first ? "waiting" : "closed",
+        ]);
+      }
+      if (this.enabled.friendly && this.enabled.custom) {
+        const offers =
+          await db.query(`SELECT DISTINCT ON(s.player) s.player,s.room AS ticket,r.id AS target
+          FROM online_seats s JOIN online_rooms q ON q.id=s.room JOIN online_rooms r
+          ON (q.variant,q.length,q.pace)=(r.variant,r.length,r.pace)
+          WHERE q.origin='friendly' AND q.state='waiting' AND s.accept_custom
+          AND r.origin='custom' AND r.listed AND r.state='waiting' AND (SELECT count(*) FROM online_seats x WHERE x.room=r.id)<4
+          AND NOT EXISTS(SELECT 1 FROM online_seats x WHERE x.room=r.id AND x.player=s.player)
+          AND NOT EXISTS(SELECT 1 FROM online_offers o WHERE o.ticket=s.room AND o.player=s.player AND (o.room=r.id OR o.expires_at>now()))
+          ORDER BY s.player,r.created_at LIMIT 32`);
+        for (const o of offers.rows)
+          await db.query(
+            "INSERT INTO online_offers VALUES($1,$2,$3,$4,clock_timestamp()+interval '45 seconds') ON CONFLICT DO NOTHING",
+            [randomUUID(), o.player, o.ticket, o.target],
+          );
+      }
+      if (!this.enabled.ranked) return;
+      // Revisit already-waiting players as their allowable skill range widens.
+      const pair = (
+        await db.query(`SELECT src.id AS source,dst.id AS dest,s.player
+        FROM online_rooms src JOIN online_seats s ON s.room=src.id JOIN online_rooms dst ON
+        (src.variant,src.length,src.pace)=(dst.variant,dst.length,dst.pace) AND (dst.created_at,dst.id)<(src.created_at,src.id)
+        WHERE src.origin='ranked' AND dst.origin='ranked' AND src.state='waiting' AND dst.state='waiting'
+        AND (SELECT count(*) FROM online_seats x WHERE x.room=dst.id)<4 AND NOT EXISTS (
+          SELECT 1 FROM online_seats x LEFT JOIN online_ratings a ON a.player=x.player AND a.pool=concat_ws('/',src.variant,src.length,src.pace,'pl-v1')
+          LEFT JOIN online_ratings b ON b.player=s.player AND b.pool=concat_ws('/',src.variant,src.length,src.pace,'pl-v1') WHERE x.room=dst.id
+          AND (x.player=s.player OR abs(coalesce(a.mu,25)-coalesce(b.mu,25))>5+extract(epoch FROM now()-dst.created_at)/30))
+        ORDER BY dst.created_at,src.created_at LIMIT 1`)
+      ).rows[0];
+      if (pair)
+        await this.moveQueuedPlayer(
+          db,
+          await lockRoom(db, pair.source),
+          await lockRoom(db, pair.dest),
+          pair.player,
+        );
+    });
+  }
+
+  /** A shared heartbeat distinguishes a platform outage from one absent player. */
+  async heartbeat() {
+    await this.transaction(async (db) => {
+      await db.query(
+        "INSERT INTO online_clock VALUES(true,clock_timestamp()) ON CONFLICT DO NOTHING",
+      );
+      const prior = (
+        await db.query(
+          "SELECT last_tick FROM online_clock WHERE singleton FOR UPDATE",
+        )
+      ).rows[0]!.last_tick as Date;
+      const now = await dbTime(db);
+      if (now - prior.getTime() > 15000)
+        await db.query(
+          `UPDATE online_rooms SET rating_void_reason='Service interruption'
+        WHERE state='playing' AND origin='ranked' AND pace='live' AND created_at<=$1 AND rating_void_reason IS NULL`,
+          [prior],
+        );
+      await db.query(
+        "UPDATE online_clock SET last_tick=clock_timestamp() WHERE singleton",
+      );
+    });
   }
 
   async tick() {
@@ -657,7 +914,12 @@ export class OnlineTables {
         "SELECT * FROM online_rooms WHERE state='playing' AND due_at<=clock_timestamp() ORDER BY due_at LIMIT 4 FOR UPDATE SKIP LOCKED",
       );
       for (const room of batch.rows)
-        await this.advance(db, room, await seatsOf(db, room.id), Date.now());
+        await this.advance(
+          db,
+          room,
+          await seatsOf(db, room.id),
+          await dbTime(db),
+        );
     });
   }
 }

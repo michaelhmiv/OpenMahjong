@@ -35,11 +35,16 @@ async function main(): Promise<void> {
       ranked: process.env.ONLINE_RANKED === "on",
     });
     online = new OnlineHttp(tables);
+    await tables.heartbeat();
+    let lastHeartbeat=Date.now();
     let ticking = false;
     setInterval(async () => {
       if (ticking) return;
       ticking = true;
-      try { await tables.tick(); }
+      try {
+        if (Date.now()-lastHeartbeat>=3000) { await tables.heartbeat(); await tables.matchWaiting(); lastHeartbeat=Date.now(); }
+        await tables.tick();
+      }
       catch { console.error("[online] match timer transaction failed"); }
       finally { ticking = false; }
     }, 500).unref();

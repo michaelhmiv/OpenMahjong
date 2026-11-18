@@ -278,6 +278,23 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npx vitest run packages/server/test/postgres-integration.test.ts
+      - run: npx vitest run packages/server/test/postgres-integration.test.ts packages/server/test/online-postgres.test.ts
         env:
           OPENMAHJONG_TEST_DB: postgresql://postgres@127.0.0.1:5432/openmahjong_test
+      - run: npm run build
+        env:
+          VITE_ONLINE_API_ORIGIN: http://localhost:4188
+      - run: npx playwright-core install --with-deps chromium
+      - name: Four independent seats through online results and rematch
+        env:
+          DATABASE_URL: postgresql://postgres@127.0.0.1:5432/openmahjong_test
+          APP_ORIGIN: http://localhost:4187
+          ONLINE_RANKED: "on"
+        run: |
+          PORT=4188 node packages/server/dist/index.js > /tmp/multiplayer-api.log 2>&1 &
+          PORT=4187 node packages/web/server.mjs > /tmp/multiplayer-web.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://localhost:4188/healthz && curl -fsS -o /dev/null http://localhost:4187/; then break; fi
+            sleep 1
+          done
+          node scripts/browser-multiplayer.mjs

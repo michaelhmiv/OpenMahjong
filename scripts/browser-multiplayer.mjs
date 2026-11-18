@@ -69,9 +69,16 @@ try {
     );
     assert.equal(early.status(), 409);
     await early.dispose();
+    const clients = await Promise.all(
+      pages.map((p) =>
+        p.evaluate(() => sessionStorage.getItem("om-online-client")),
+      ),
+    );
     let positions = 0;
     for (; positions < 15000; positions++) {
-      const views = await Promise.all(pages.map((_, i) => request(i, prefix)));
+      const views = await Promise.all(
+        pages.map((_, i) => request(i, prefix + "?client=" + clients[i])),
+      );
       if (views[0].state === "finished") {
         assert.ok(
           views.every(
@@ -96,6 +103,8 @@ try {
             actionId: randomUUID(),
             revision: v.revision,
             choice: pick,
+            client: clients[i],
+            generation: v.generation,
             version: 1,
           };
           // A higher priority claim can settle the discard before this optional reply.
@@ -113,10 +122,20 @@ try {
     }
     assert.ok(positions < 15000);
     await host.getByRole("button", { name: "Analyze", exact: true }).click();
+    // Start on a dealt board so the privacy assertion also detects an empty renderer.
+    const step = host.getByRole("button", { name: "Next event" });
+    for (
+      let i = 0;
+      i < 12 && !(await host.locator(".board-tile-back").count());
+      i++
+    )
+      await step.click();
+    assert.ok(await host.locator(".board-tile-back").count());
     await host.getByRole("button", { name: "Reveal all hands" }).click();
     assert.equal(await host.locator(".board-tile-back").count(), 0);
     await host.getByRole("button", { name: "Hide opponents’ hands" }).click();
-    await host.getByRole("button", { name: "Next event" }).click();
+    assert.ok(await host.locator(".board-tile-back").count());
+    await step.click();
     await host.getByRole("button", { name: "Game details" }).click();
     await host.getByRole("button", { name: "Friendly rematch" }).click();
     await host.getByRole("heading", { name: "Waiting room" }).waitFor();

@@ -246,6 +246,8 @@ export function mountBoardReview(
       timeline.decisionsByEvent.get(timeline.data.events[cursor]!.seq)?.[0] ??
       -1;
     selectedPosition = timeline.data.review.positions[positionIndex] ?? null;
+    if (selectedPosition?.controller==="bot") status.textContent += " · Bot decision";
+    if (selectedPosition?.controller==="clock") status.textContent += " · Clock default";
     adviceHost.hidden = !selectedPosition;
     if (selectedPosition) advice.goToDecision(positionIndex);
     prevDecision.disabled = !timeline.data.review.positions.some(

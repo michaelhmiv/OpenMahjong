@@ -313,6 +313,18 @@ interface PlayerState {
   waits: TileType[];
 }
 
+/** Durable state immediately before dealing a hand. Tile-level state is
+ * reconstructed by replaying the accepted decisions within that hand. */
+export interface HandBoundary {
+  serial: number;
+  scores: number[];
+  dealer: number;
+  roundWind: number;
+  kyoku: number;
+  repeats: number;
+  sticks: number;
+}
+
 export interface GameOptions {
   /** Explicit supported house-rule profile (default OpenMahjong riichi v1). */
   readonly ruleset?: RulesetReference;
@@ -527,9 +539,23 @@ export class Game {
     return next.value;
   }
 
-  *play(): Decisions<GameResult> {
+  handBoundary(): HandBoundary {
+    return {serial:this.handSerial,scores:[...this.scores],dealer:this.dealer,
+      roundWind:this.roundWind,kyoku:this.kyoku,repeats:this.honba,sticks:this.sticks};
+  }
+
+  *play(boundary?: HandBoundary): Decisions<GameResult> {
+    if (boundary) {
+      this.handSerial=boundary.serial;
+      this.scores=[...boundary.scores];
+      this.dealer=boundary.dealer;
+      this.roundIndex=boundary.roundWind-27;
+      this.kyoku=boundary.kyoku;
+      this.honba=boundary.repeats;
+      this.sticks=boundary.sticks;
+    }
     this.emit("game-start", { length: this.length, seed: String(this.seed), ruleset: { id: DEFAULT_RULESET.id, version: DEFAULT_RULESET.version } });
-    let handsPlayed = 0;
+    let handsPlayed = this.handSerial;
     while (!this.gameOver) {
       yield* this.playHand();
       handsPlayed++;

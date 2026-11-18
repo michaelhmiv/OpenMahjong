@@ -14,10 +14,17 @@ import {
   type CallAction,
   type CallContext,
   type GameResult,
+  type HandBoundary,
+  DEFAULT_RULESET,
+  ENGINE_VERSION,
   type VariantId,
   type VariantLength,
 } from "@openmahjong/engine";
-import { createAiPolicy, createVariantPolicy } from "@openmahjong/ai";
+import {
+  AI_POLICY_VERSION,
+  createAiPolicy,
+  createVariantPolicy,
+} from "@openmahjong/ai";
 
 export type Format = {
   variant: "riichi" | VariantId;
@@ -30,6 +37,19 @@ export type Answers = Record<number, Answer>;
 export type Step = { id: string; answers: Answers };
 export type Journal = {
   version: 1;
+  handResult?: {
+    kind: string;
+    seat?: number;
+    han?: number;
+    payments?: unknown;
+  };
+  versions?: {
+    engine: number;
+    rules: string;
+    rulesVersion: number;
+    bot: number;
+  };
+  checkpoint?: { step: number; state: HandBoundary };
   walls: number[][];
   steps: Step[];
   answers: Answers;
@@ -112,16 +132,25 @@ export class TableEngine {
     readonly format: Format,
     journal: Journal,
     private readonly review = false,
+    fromCheckpoint = false,
   ) {
     if (journal.version !== 1)
       throw new Error("Unsupported online match version");
     this.journal = journal;
     this.policy =
       format.variant === "riichi" ? createAiPolicy() : createVariantPolicy();
-    const inventory =
-      format.variant === "riichi"
-        ? buildTileSet()
-        : variantAdapter(format.variant).inventory();
+    const adapter =
+      format.variant === "riichi" ? null : variantAdapter(format.variant);
+    const versions = {
+      engine: adapter ? 3 : ENGINE_VERSION,
+      rules: adapter?.profileId ?? DEFAULT_RULESET.id,
+      rulesVersion: adapter?.version ?? DEFAULT_RULESET.version,
+      bot: adapter ? 1 : AI_POLICY_VERSION,
+    };
+    if (journal.versions && !isDeepStrictEqual(journal.versions, versions))
+      throw new Error("Unsupported online rules or bot version");
+    journal.versions = versions;
+    const inventory = adapter ? adapter.inventory() : buildTileSet();
     const tiles = new Map(inventory.map((t) => [t.id, t]));
     const wall = (hand: number): Tile[] => {
       let ids = this.journal.walls[hand];
@@ -134,6 +163,10 @@ export class TableEngine {
           [ids[k], ids[i]] = [ids[i]!, ids[k]!];
         }
         this.journal.walls.push(ids);
+        this.journal.checkpoint = {
+          step: hand === 0 ? 0 : this.journal.steps.length + 1,
+          state: this.game.handBoundary(),
+        };
       }
       return ids.map((id) => tiles.get(id)!);
     };
@@ -156,11 +189,18 @@ export class TableEngine {
             length: format.length,
             wallFactory: wall,
           });
-    this.iterator = this.game.play();
+    const checkpoint =
+      fromCheckpoint && !review ? journal.checkpoint : undefined;
+    this.iterator = this.game.play(checkpoint?.state);
+    this.tip =
+      checkpoint && checkpoint.step > 0
+        ? journal.steps[checkpoint.step - 1]!.id
+        : null;
     this.replaying = journal.steps.length > 0 || journal.walls.length > 0;
     this.next = this.iterator.next();
     this.collect();
-    for (const step of journal.steps) this.apply(step);
+    for (const step of journal.steps.slice(checkpoint?.step ?? 0))
+      this.apply(step);
     this.replaying = false;
   }
 
@@ -247,7 +287,19 @@ export class TableEngine {
 
   commit(journal: Journal) {
     const step = { id: randomUUID(), answers: journal.answers };
+    const before = this.game.events.length;
     this.apply(step);
+    for (const event of this.game.events.slice(before)) {
+      if (event.type === "win")
+        journal.handResult = {
+          kind: String(event["winType"]),
+          seat: Number(event["seat"]),
+          han: Number(event["han"]),
+          payments: event["payments"],
+        };
+      if (event.type === "drawn-hand")
+        journal.handResult = { kind: String(event["kind"]) };
+    }
     journal.steps.push(step);
     journal.answers = {};
   }

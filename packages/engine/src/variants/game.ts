@@ -5,6 +5,7 @@ import type {
   CallAction,
   CallContext,
   GameEvent,
+  HandBoundary,
   GameEventType,
   MeldState,
   Policy,
@@ -632,11 +633,24 @@ export class VariantGame implements VariantPublicState {
     }
     return null;
   }
-  *play(): Generator<
+  handBoundary(): HandBoundary {
+    return {serial:this.serial,scores:this.players.map(p=>p.score),dealer:this.dealer,
+      roundWind:this.roundWind,kyoku:this.kyoku,repeats:this.dealerRepeats,sticks:0};
+  }
+
+  *play(boundary?: HandBoundary): Generator<
     VariantRequest,
     VariantGameResult,
     TurnAction | CallAction
   > {
+    if (boundary) {
+      this.serial=boundary.serial;
+      this.players.forEach((p,i)=>{p.score=boundary.scores[i]!;});
+      this.dealer=boundary.dealer;
+      this.roundWind=boundary.roundWind;
+      this.kyoku=boundary.kyoku;
+      this.dealerRepeats=boundary.repeats;
+    }
     if (this.events.length)
       throw new Error("A variant game can only be started once");
     this.emit("game-start", {

@@ -2,7 +2,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import type { PoolClient } from "pg";
 import { hashToken, newToken, parseCookies } from "../auth.js";
 import { randomUUID } from "node:crypto";
-import { OnlineTables, fail, formatOf, type Player } from "./service.js";
+import { OnlineTables, fail, formatOf, uuid, type Player } from "./service.js";
 
 type Account = {
   user: { id: string; name: string };
@@ -44,6 +44,8 @@ export class OnlineHttp {
       if (this.creationRates.size >= 4096)
         for (const [k, v] of this.creationRates)
           if (v.since + 60000 < now) this.creationRates.delete(k);
+      if (!current && this.creationRates.size >= 4096)
+        return fail("Please try again shortly", 429);
       this.creationRates.set(key, { since: now, count: 1 });
     } else if (++current.count > 60)
       fail("Too many attempts. Try again in a minute.", 429);
@@ -169,6 +171,16 @@ export class OnlineHttp {
       json(res, await this.tables.list(p.id));
       return;
     }
+    if (route === "guest/recovery" && method === "POST" && !account) {
+      const recovery = newToken();
+      const updated = await this.tables.db.query(
+        "UPDATE online_players SET recovery_hash=$2 WHERE id=$1 AND guest_hash=$3 RETURNING id",
+        [p.id, hashToken(recovery), limitGuestCookie(req)],
+      );
+      if (!updated.rowCount) return fail("Session changed", 403);
+      json(res, { recovery });
+      return;
+    }
     if (route === "profile" && method === "POST") {
       await this.tables.db.query(
         "UPDATE online_players SET name=$2 WHERE id=$1",
@@ -205,6 +217,10 @@ export class OnlineHttp {
           p.id,
           guest.id,
         ]);
+        await db.query("DELETE FROM online_offers WHERE player=$1", [guest.id]);
+        await db.query("DELETE FROM online_transfers WHERE player=$1", [
+          guest.id,
+        ]);
         await db.query("DELETE FROM online_players WHERE id=$1", [guest.id]);
       });
       json(res, { ok: true });
@@ -228,11 +244,22 @@ export class OnlineHttp {
       );
       return;
     }
-    if (route === "queue" && method === "POST") {
+    if (route === "offers" && method === "POST") {
       json(
         res,
         await this.tables.transaction((db) =>
-          this.tables.queue(db, p, formatOf(b), String(b.mode)),
+          this.tables.answerOffer(db, p.id, uuid(b.id), b.accept === true),
+        ),
+      );
+      return;
+    }
+    if (route === "queue" && method === "POST") {
+      if (typeof b.mode !== "string") return fail("Unknown queue");
+      const mode = b.mode;
+      json(
+        res,
+        await this.tables.transaction((db) =>
+          this.tables.queue(db, p, formatOf(b), mode, b.acceptCustom === true),
         ),
       );
       return;
@@ -244,8 +271,14 @@ export class OnlineHttp {
     if (!match) return fail("Unknown online route", 404);
     const id = match[1]!,
       endpoint = match[2];
+    const client =
+      url.searchParams.get("client") ??
+      (typeof b.client === "string" ? b.client : undefined);
+    if (client) uuid(client);
     const snapshot = () =>
-      this.tables.transaction((db) => this.tables.snapshot(db, p.id, id));
+      this.tables.transaction((db) =>
+        this.tables.snapshot(db, p.id, id, client),
+      );
     if (method === "GET" && !endpoint) json(res, await snapshot());
     else if (method === "GET" && endpoint === "review")
       json(
@@ -270,7 +303,14 @@ export class OnlineHttp {
       json(
         res,
         await this.tables.transaction((db) =>
-          this.tables.presence(db, p.id, id, b.reclaim === true),
+          this.tables.presence(
+            db,
+            p.id,
+            id,
+            b.reclaim === true,
+            client,
+            b.claimControl === true,
+          ),
         ),
       );
     else if (method === "GET" && endpoint === "stream") {
@@ -295,7 +335,7 @@ export class OnlineHttp {
               return;
             }
             await this.tables.transaction((db) =>
-              this.tables.presence(db, p.id, id, false),
+              this.tables.presence(db, p.id, id, false, client),
             );
             checked = Date.now();
             if (!res.write(": heartbeat\n\n")) {
@@ -305,6 +345,11 @@ export class OnlineHttp {
           }
           const data = JSON.stringify(await snapshot());
           if (data !== last) {
+            const current = await this.identity(req, await auth());
+            if (current?.id !== p.id) {
+              res.end();
+              return;
+            }
             last = data;
             if (!res.write("data: " + data + "\n\n")) res.end();
           }

@@ -35,6 +35,17 @@ type Lobby = {
 };
 type Snapshot = Summary & {
   host: boolean;
+  generation: number;
+  controlling: boolean;
+  redirect?: string;
+  offer?: Format & {
+    id: string;
+    occupied: number;
+    bots: number;
+    expires_at: string;
+  };
+  ratingVoid?: string;
+  handResult?: { kind: string; seat?: number; han?: number };
   listed: boolean;
   invite: string | null;
   seat: number;
@@ -43,6 +54,8 @@ type Snapshot = Summary & {
     name: string;
     bot: boolean;
     covered: boolean;
+    endRequested: boolean;
+    coverAt: number | null;
     ready: boolean;
   }[];
   choices?: Action[];
@@ -104,6 +117,8 @@ function format(f: Format) {
 }
 
 export async function onlineApp(root: HTMLElement) {
+  const client = crypto.randomUUID();
+  sessionStorage.setItem("om-online-client", client);
   let me: Profile | null = null,
     source: EventSource | null = null,
     epoch = 0,
@@ -112,7 +127,9 @@ export async function onlineApp(root: HTMLElement) {
   let selected: Format = { variant: "riichi", length: "east", pace: "live" },
     filter = "all";
   let reviewing = false;
+  let acceptCustom = false;
   const sprite = el("div");
+  sprite.setAttribute("aria-hidden", "true");
   sprite.innerHTML = TILE_SPRITE_SVG;
   const shell = el("main", "", "online-shell"),
     top = el("header"),
@@ -151,6 +168,7 @@ export async function onlineApp(root: HTMLElement) {
       method: body === undefined ? "GET" : "POST",
       credentials: "include",
       cache: "no-store",
+      signal: AbortSignal.timeout(20000),
       ...(body === undefined
         ? {}
         : {
@@ -162,6 +180,7 @@ export async function onlineApp(root: HTMLElement) {
           }),
     });
     const data = await res.json();
+    if (res.status === 401) me = null;
     if (!res.ok) throw new Error(data.error ?? "Unable to reach this table");
     return data as T;
   }
@@ -274,8 +293,29 @@ export async function onlineApp(root: HTMLElement) {
       );
     };
     renderSettings();
+    const fill = el("input");
+    fill.type = "checkbox";
+    fill.checked = acceptCustom;
+    fill.onchange = () => {
+      acceptCustom = fill.checked;
+    };
+    form.append(
+      field("Offer me matching Friendly seats at custom tables", fill),
+    );
+    const policy = el("p");
+    const showPreset = () => {
+      policy.textContent =
+        selected.pace === "live"
+          ? "20 seconds to play · 5 seconds to claim · Bot cover after 60 seconds away."
+          : "Turns and claims wait until answered. You can close the browser between decisions.";
+    };
+    settings.addEventListener("change", showPreset);
+    showPreset();
     const enter = async (path: string, mode?: string) =>
-      toRoom((await api<{ id: string }>(path, { ...selected, mode })).id);
+      toRoom(
+        (await api<{ id: string }>(path, { ...selected, mode, acceptCustom }))
+          .id,
+      );
     if (data.enabled.friendly)
       actions.append(
         button("Find Friendly game", () => enter("queue", "friendly"), true),
@@ -288,7 +328,15 @@ export async function onlineApp(root: HTMLElement) {
       );
     if (data.enabled.custom)
       actions.append(button("Create custom room", () => enter("rooms")));
-    form.append(el("h2", "Open play"), settings, actions);
+    form.prepend(el("h2", "Open play"), settings, policy);
+    form.append(actions);
+    if (data.enabled.ranked)
+      form.append(
+        el(
+          "p",
+          "Ranked starts with four accounts. Once a bot plays for your seat, your rating can stay level or fall for that match.",
+        ),
+      );
     const mine = el("section", "", "online-card"),
       games = el("div");
     const showGames = () => {
@@ -359,7 +407,20 @@ export async function onlineApp(root: HTMLElement) {
       }),
     );
     if (!me!.account)
-      profile.append(button("Create or sign in to an account", signIn));
+      profile.append(
+        button("Create or sign in to an account", signIn),
+        button("Replace recovery code", async () => {
+          if (!window.confirm("Replace your previous guest recovery code?"))
+            return;
+          const code = await api<{ recovery: string }>("guest/recovery", {});
+          let display = profile.querySelector("code");
+          if (!display) {
+            display = el("code");
+            profile.append(display);
+          }
+          display.textContent = code.recovery;
+        }),
+      );
     content.replaceChildren(
       form,
       mine,
@@ -370,6 +431,17 @@ export async function onlineApp(root: HTMLElement) {
   }
 
   function drawTable(s: Snapshot, id: string) {
+    const move = async (index: number, actionId: string) => {
+      await api("matches/" + id + "/actions", {
+        actionId,
+        choice: index,
+        revision: s.revision,
+        version: 1,
+        client,
+        generation: s.generation,
+      });
+      await refreshRoom(id);
+    };
     const v = s.view!,
       table = el("section", "", "online-board");
     table.append(
@@ -383,6 +455,16 @@ export async function onlineApp(root: HTMLElement) {
           " tiles left",
       ),
     );
+    if (s.handResult) {
+      const last = s.handResult,
+        winner = s.seats.find((p) => p.seat === last.seat);
+      table.append(
+        el(
+          "p",
+          "Previous hand · " + (winner ? winner.name + " · " : "") + last.kind,
+        ),
+      );
+    }
     if (v.doraIndicators.length) {
       const indicators = el("div", "Dora ");
       indicators.append(...v.doraIndicators.map(tile));
@@ -412,9 +494,32 @@ export async function onlineApp(root: HTMLElement) {
             p.score,
         ),
       );
+      if (m.coverAt)
+        area.append(
+          el(
+            "small",
+            "Disconnected · bot cover at " +
+              new Date(m.coverAt).toLocaleTimeString(),
+          ),
+        );
       if (i === 0) {
         const hand = el("div", "", "online-hand");
-        hand.append(...[...v.hand].sort((a, b) => a.id - b.id).map(tile));
+        for (const t of [...v.hand].sort((a, b) => a.id - b.id)) {
+          const index =
+            s.choices?.findIndex(
+              (a) => a.type === "discard" && !a.riichi && a.tileId === t.id,
+            ) ?? -1;
+          if (index < 0) {
+            hand.append(tile(t));
+            continue;
+          }
+          const actionId = crypto.randomUUID();
+          const pick = button("", () => move(index, actionId));
+          pick.setAttribute("aria-label", "Discard " + tileName(t));
+          pick.className = "online-pick";
+          pick.append(tile(t));
+          hand.append(pick);
+        }
         area.append(hand);
       } else area.append(el("small", p.handCount + " concealed tiles"));
       for (const meld of p.melds) {
@@ -440,6 +545,9 @@ export async function onlineApp(root: HTMLElement) {
     const choices = el("section", "", "online-card");
     choices.append(
       el("h2", s.choices?.length ? "Your move" : "Waiting for table"),
+      ...(s.choices?.some((a) => a.type === "discard")
+        ? [el("p", "Select a tile in your hand to discard.")]
+        : []),
     );
     if (s.claimTile) {
       const offered = el("p", "Claim ");
@@ -458,6 +566,7 @@ export async function onlineApp(root: HTMLElement) {
       choices.append(clock);
     }
     for (const [index, a] of (s.choices ?? []).entries()) {
+      if (a.type === "discard" && !a.riichi) continue;
       const label =
         a.type === "discard"
           ? (a.riichi ? "Riichi · " : "Discard ") +
@@ -472,24 +581,18 @@ export async function onlineApp(root: HTMLElement) {
                 " " +
                 tileName({ id: -1, type: a.tileType, red: false })
               : a.type;
-      const command = {
-        actionId: crypto.randomUUID(),
-        choice: index,
-        revision: s.revision,
-        version: 1,
-      };
-      choices.append(
-        button(label, async () => {
-          await api("matches/" + id + "/actions", command);
-          await refreshRoom(id);
-        }),
-      );
+      const actionId = crypto.randomUUID();
+      choices.append(button(label, () => move(index, actionId)));
     }
     const own = s.seats.find((p) => p.seat === s.seat)!;
-    if (own.covered && s.pace === "live")
+    if (!s.controlling || (own.covered && s.pace === "live"))
       choices.append(
         button("Reclaim my seat", async () => {
-          await api("matches/" + id + "/presence", { reclaim: true });
+          await api("matches/" + id + "/presence", {
+            reclaim: true,
+            claimControl: true,
+            client,
+          });
           await refreshRoom(id);
         }),
       );
@@ -521,11 +624,15 @@ export async function onlineApp(root: HTMLElement) {
   }
   async function refreshRoom(id: string) {
     const current = epoch;
-    const data = await api<Snapshot>("matches/" + id);
+    const data = await api<Snapshot>("matches/" + id + "?client=" + client);
     if (current === epoch && !reviewing) renderRoom(data);
   }
   function renderRoom(s: Snapshot) {
     if (reviewing) return;
+    if (s.redirect) {
+      toRoom(s.redirect);
+      return;
+    }
     clearInterval(timer);
     const id = s.id,
       prefix = "matches/" + id + "/room";
@@ -549,10 +656,8 @@ export async function onlineApp(root: HTMLElement) {
       async () => {
         if (
           !window.confirm(
-            s.state === "playing" &&
-              s.pace === "correspondence" &&
-              s.origin !== "ranked"
-              ? "End this correspondence game for everyone?"
+            s.state === "playing"
+              ? "Withdraw from this table? A bot will finish in your seat."
               : "Leave your seat?",
           )
         )
@@ -604,11 +709,39 @@ export async function onlineApp(root: HTMLElement) {
         if (s.seats.length === 4 && s.seats.every((p) => p.ready))
           room.append(button("Start match", () => action("start"), true));
       }
+      if (s.offer) {
+        const o = s.offer;
+        room.append(
+          el("h3", "Friendly room offer"),
+          el(
+            "p",
+            format(o) +
+              " · " +
+              o.occupied +
+              "/4 seated · " +
+              o.bots +
+              " bots · Expires " +
+              new Date(o.expires_at).toLocaleTimeString(),
+          ),
+          button("Accept seat", async () =>
+            toRoom(
+              (await api<{ id: string }>("offers", { id: o.id, accept: true }))
+                .id,
+            ),
+          ),
+          button("Keep waiting", async () => {
+            await api("offers", { id: o.id, accept: false });
+            await refreshRoom(id);
+          }),
+        );
+      }
       room.append(leave);
       content.replaceChildren(h, room);
     } else if (s.state === "finished") {
       const result = el("section", "", "online-card");
       result.append(el("h2", "Final standings"));
+      if (s.ratingVoid)
+        result.append(el("p", "Unrated result · " + s.ratingVoid));
       for (const entry of [...s.result!].sort((a, b) => a.rank - b.rank)) {
         const score = s.ratings?.find((r) => r.seat === entry.seat);
         result.append(
@@ -654,6 +787,20 @@ export async function onlineApp(root: HTMLElement) {
       content.replaceChildren(h, result);
     } else if (s.state === "playing") {
       content.replaceChildren(h, ...drawTable(s, id), leave);
+      if (s.pace === "correspondence") {
+        const votes = s.seats.filter((p) => p.endRequested).length;
+        const mine = s.seats.find((p) => p.seat === s.seat)!;
+        content.append(
+          button(
+            mine.endRequested
+              ? "End requested (" + votes + ")"
+              : "Propose ending by agreement",
+            async () => {
+              if (!mine.endRequested) await action("end");
+            },
+          ),
+        );
+      }
     } else content.replaceChildren(h, el("p", "Table closed."));
   }
 
@@ -695,11 +842,19 @@ export async function onlineApp(root: HTMLElement) {
       }
       if (hash.startsWith("#/match/")) {
         const id = hash.slice(8);
+        await api("matches/" + id + "/presence", {
+          client,
+          claimControl: true,
+          reclaim: true,
+        });
         await refreshRoom(id);
         if (current !== epoch) return;
-        source = new EventSource(base + "matches/" + id + "/stream", {
-          withCredentials: true,
-        });
+        source = new EventSource(
+          base + "matches/" + id + "/stream?client=" + client,
+          {
+            withCredentials: true,
+          },
+        );
         source.onmessage = (e) => {
           if (current === epoch) renderRoom(JSON.parse(e.data));
         };
