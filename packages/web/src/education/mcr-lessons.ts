@@ -118,7 +118,7 @@ export const MCR_LESSONS: VariantLesson[] = [
       tiles: "1234567z",
     },
     {
-      text: "There are also eight special tiles: four flowers and four seasons, each different. When you draw a flower or a season, you show it beside your tiles and immediately draw a replacement, so it never takes a place among the tiles you are building with. Each one you show adds one point to a winning hand later — but only to a hand that was already good enough to win without it.",
+      text: "There are also eight special tiles: four flowers and four seasons, each different. When you draw a flower or a season, you show it beside your tiles and immediately draw a replacement, so it never takes a place among the tiles you are building with. Each one you show adds one point — one unit of score — to a winning hand later, but only to a hand that was already good enough to win without it.",
     },
     {
       text: "Tiles are joined into sets. A set is a small group of tiles that belongs together. The first kind of set is a sequence: three tiles of the same suit whose numbers count up in a row, such as the 3, 4 and 5 of circles shown here. A sequence can never mix suits, and honors can never be in one.",
@@ -234,13 +234,14 @@ export const MCR_LESSONS: VariantLesson[] = [
       text: "One player is the dealer for each hand. The dealer is dealt fourteen tiles while everyone else is dealt thirteen, takes the first turn, and starts the play. The pictured row is one possible group of fourteen tiles a dealer might hold: two sequences of characters, one of circles, one of bamboo, and a pair of East winds. When the hand ends, a different player becomes the dealer for the next hand — the last lesson explains exactly how the deal moves on.",
     },
     {
-      text: "Each player also has a seat wind for the hand: the dealer is East, the next player in turn order is South, then West, then North. A round is a run of four hands, one with each player as dealer in turn, and the round takes its name from the wind of its first dealer — that wind is the round wind, the same for all four hands of the round. Your seat wind and the round wind matter later, because a triplet of the wind that is the same as either of them can be worth fan.",
+      tiles: "1234z",
+      text: "Each player also has a seat wind for the hand — the wind of the seat they are sitting in for that hand. Picture the table: the dealer sits in the East seat, the next player in turn order (players take their turns one after another around the table) sits South, then West, then North — the four winds shown here in that order. You know your own seat wind because it follows from who is dealing: count around from the dealer, starting with East for the dealer. On the table in this app it is also written out for you: your wind appears beside your tiles, and each player's wind appears beside their score. A round is a run of four hands, one with each player as dealer in turn, and the round takes its name from the wind of its first dealer — that wind is the round wind, the same for all four hands of the round, and it is the wind shown in the centre of the table. Your seat wind and the round wind matter later, because a triplet of the wind that is the same as either of them can be worth fan.",
     },
     {
       text: "Here is exactly what a wind triplet is worth. A triplet of your own seat wind is the pattern Seat Wind, worth 2 fan. A triplet of the round wind is the pattern Prevalent Wind, worth 2 fan. If one wind is both your seat wind and the round wind, a triplet of it earns both patterns: 2 + 2 = 4 fan. A triplet of a wind that is neither your seat wind nor the round wind earns a smaller pattern, Pung of Terminals or Honors, worth 1 fan — the same one-point pattern a triplet of terminals earns (a terminal is a 1 or a 9 of a suit). A pair of a wind earns nothing.",
     },
     {
-      text: "On your turn you draw one tile from the wall, look at your fourteen tiles, and then throw one tile away face-up in front of you, unless you can win or declare a quad. Your thrown-away tiles, kept in the order you threw them, are your pond. Everyone can read everyone else's pond, and later lessons use ponds as evidence about which tiles are already gone.",
+      text: "On your turn you draw one tile from the wall, look at your fourteen tiles, and then throw one tile away face-up in front of you, unless you can win or declare a quad. Your thrown-away tiles, kept in the order you threw them, are your pond. A tile you throw away is also called a discard, and the player who threw a tile is called its discarder — later lessons use both words for the thrown tiles and the players who threw them. Everyone can read everyone else's pond, and later lessons use ponds as evidence about which tiles are already gone.",
     },
     {
       text: "When another player throws a tile away, you may be able to claim it. A sequence can only be claimed by the player whose turn comes immediately after the player who threw the tile, and only if you already hold the other two numbers of that sequence in the same suit. After claiming, you show the finished sequence beside your tiles and throw a tile away without drawing.",
@@ -373,7 +374,7 @@ export const MCR_LESSONS: VariantLesson[] = [
     },
     {
       hand: GATE_HAND,
-      text: "Count the pictured hand. Every set is a sequence and the pair is a suited tile, which is the pattern All Chows, worth 2 fan. The hand was kept hidden and won on a thrown tile, worth 2 more fan. Its two character sequences, 1-2-3 and 4-5-6, together cover six numbers in a row, worth 1 fan. The winning tile completed the pair and was the only wait the hand had, worth 1 fan. The patterns add to 2 + 2 + 1 + 1 = 6 fan.",
+      text: "Count the pictured hand. Every set is a sequence and the pair is a suited tile — suited means from one of the three suits: characters, circles or bamboo — which is the pattern All Chows, worth 2 fan. The hand was kept hidden and won on a thrown tile, worth 2 more fan. Its two character sequences, 1-2-3 and 4-5-6, together cover six numbers in a row, worth 1 fan. The winning tile completed the pair and was the only wait the hand had, worth 1 fan. The patterns add to 2 + 2 + 1 + 1 = 6 fan.",
     },
     {
       text: "Six fan is below the minimum of eight, so this hand cannot be declared a win yet — even if the player has also shown three flowers. The flowers would add three points, making nine points on paper, but flower points are only added after a hand is eligible, and six fan never becomes eligible. The player must keep playing and improve the hand's patterns.",
@@ -488,7 +489,7 @@ export const MCR_LESSONS: VariantLesson[] = [
     },
     {
       hand: "111222333m456p77s",
-      text: "Read this pictured hand two ways. Its character tiles — three 1s, three 2s and three 3s — can be grouped as three triplets, or as the sequence 1-2-3 three times over. With the sequence 4-5-6 of circles and the pair of 7s of bamboo, both groupings complete the hand. Counted as triplets, the hand is worth 45 fan: its three triplets step up in number in one suit for 24 fan, three concealed triplets add 16, and its hidden discard win, its triplet of 1s, its lack of honors and its single wait add the rest. The sequence grouping is worth less, so the triplet grouping is the one that counts — all 45 fan of it, and nothing from the other grouping.",
+      text: "Read this pictured hand two ways. Its character tiles — three 1s, three 2s and three 3s — can be grouped as three triplets, or as the sequence 1-2-3 three times over. With the sequence 4-5-6 of circles and the pair of 7s of bamboo, both groupings complete the hand. Counted as triplets, the hand is worth 45 fan: its three triplets step up in number in one suit for 24 fan, three concealed triplets add 16, and winning while hidden on a thrown tile, its triplet of 1s, having no honors at all, and having only one tile it could finish on add the rest. The sequence grouping is worth less, so the triplet grouping is the one that counts — all 45 fan of it, and nothing from the other grouping.",
     },
     {
       question: choice(
@@ -824,10 +825,10 @@ export const MCR_LESSONS: VariantLesson[] = [
     },
     {
       hand: WORKED,
-      text: "Now picture the same tiles won differently: the winning tile is drawn by the hand's own player from the wall, with the hand still completely hidden. That is the pattern Fully Concealed Hand, worth 4 fan. It replaces two smaller patterns instead of adding to them: the 2 fan for a hidden discard win, and the 1 fan of the pattern Self-Drawn, for winning on your own draw. Counted this way, the pictured hand's patterns are the 8 fan for its sequences across suits, 4 fan for the fully concealed self-draw win, and 2 fan for its dragon triplet — 14 fan in total.",
+      text: "Now picture the same tiles won differently: the winning tile is drawn by the hand's own player from the wall, with the hand still completely hidden. That is the pattern Fully Concealed Hand, worth 4 fan. It replaces two smaller patterns instead of adding to them: the 2 fan for a hidden discard win, and the 1 fan of the pattern Self-Drawn, for winning on your own draw. Counted this way, the pictured hand's patterns are the 8 fan for its sequences across suits, 4 fan for the fully concealed self-draw win, and 2 fan for its dragon triplet, the pattern Dragon Pung — 14 fan in total.",
     },
     {
-      text: "Melding changes this completely. If even one set of the hand was claimed from a thrown tile and melded, the hand is no longer concealed at all: it earns neither the hidden discard-win pattern nor the fully concealed pattern, however the winning tile arrives. A concealed quad is the one exception — declaring a quad from your own four copies does not open the hand.",
+      text: "Melding changes this completely. If even one set of the hand was claimed from a thrown tile and melded, the hand is no longer concealed at all: it earns neither the hidden discard-win pattern nor the fully concealed pattern, however the winning tile arrives. A concealed quad is the one exception — declaring a quad from your own four copies does not open the hand. The opposite extreme has its own pattern: a hand whose four sets were all claimed and melded, and which is won on a thrown tile that completes its pair, is the pattern Melded Hand, worth 6 fan.",
     },
     {
       hand: "123m345p678s234s99p",
@@ -948,7 +949,7 @@ export const MCR_LESSONS: VariantLesson[] = [
     },
     {
       hand: WORKED,
-      text: "The triplet of red dragons is a dragon triplet pattern, worth 2 fan — running total 10. The hand was kept hidden and won on a thrown tile: Concealed Hand, worth 2 fan — running total 12. No other pattern in the hand survives the exclusion rules, so its patterns add to exactly 12 fan.",
+      text: "The triplet of red dragons is the pattern Dragon Pung, worth 2 fan — running total 10. The hand was kept hidden and won on a thrown tile: Concealed Hand, worth 2 fan — running total 12. No other pattern in the hand survives the exclusion rules, so its patterns add to exactly 12 fan.",
     },
     {
       text: "Check the gate before any money moves: 12 fan is at least the minimum of eight, so the hand is eligible and the win stands. Fan decides whether a hand can win.",
@@ -1074,10 +1075,10 @@ export const MCR_LESSONS: VariantLesson[] = [
       text: "Every player starts a match with a score of zero. Payments move points from the players who lost a hand to the player who won it; points are never created or destroyed, so the four scores always add up to zero. A score can fall below zero during a match, and play simply continues. At the end, the four scores are ranked from highest to lowest to give the final standings.",
     },
     {
-      text: "Look back over the whole game you have learned. Four players sit at a wall of tiles. Each holds thirteen tiles, draws and throws one away in turn, and may claim thrown tiles to meld sequences, triplets and quads — or keep a hand concealed instead. Thrown tiles collect in ponds, where everyone can read them, and flowers are shown and replaced as they appear.",
+      text: "Look back over the whole game you have learned. Four players sit at a wall of tiles. Each holds thirteen tiles, draws and throws one away in turn, and may claim thrown tiles to meld sequences, triplets and quads — or keep a hand concealed, hidden in their own hand, instead. Thrown tiles collect in ponds, where everyone can read them, and flowers are shown and replaced as they appear.",
     },
     {
-      text: "A hand is won by completing four sets and a pair — or one of the special structures — and its patterns are then counted in a single arrangement, with exclusions applied: the fan of its patterns must reach at least eight before the points for its flowers are added. The discarder, or all three opponents on a self-draw, then pay 8 base points each plus the hand value where the split requires it, and the deal passes to the next player.",
+      text: "A hand is won by completing four sets and a pair — or one of the special structures, a hand built to a special shape such as seven pairs — and its patterns are then counted in a single arrangement, with exclusions applied, bigger patterns replacing the smaller ones they already include: the fan of its patterns must reach at least eight before the points for its flowers are added. The discarder, or all three opponents on a self-draw, then pay 8 base points each plus the hand value where the split requires it, and the deal passes to the next player.",
     },
     {
       text: "That is the complete game: read the tiles, build sets toward patterns worth eight fan or more, watch the ponds and the waits, and count every winning hand from its tiles before working out who pays what. The pattern reference from the families lesson stays available whenever you want to look a pattern up.",

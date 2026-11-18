@@ -15,11 +15,13 @@
  *   never state the correct choice, and no numeric answer appears
  *   in its lesson's title.
  */
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
   parseCounts,
   scoreMcr,
   mcrPayments,
+  mcrPatterns,
   type VariantScoreInput,
 } from "@openmahjong/engine";
 import {
@@ -74,6 +76,12 @@ const TERMS: readonly TermSpec[] = [
   { term: "voided suit", pattern: /\bvoided suit\b/i, lessonId: "mcr-families", step: 2 },
   { term: "exclusion", pattern: /\bexclusions?\b/i, lessonId: "mcr-exclusions", step: 0 },
   { term: "match", pattern: /\bmatch\b/i, lessonId: "mcr-match", step: 0 },
+  // Definition-audit round (owner rule: every new term is defined at
+  // its first mention in this track, in isolation).
+  { term: "discard", pattern: /\bdiscard/i, lessonId: "mcr-claims", step: 4 },
+  { term: "suited", pattern: /\bsuited\b/i, lessonId: "mcr-eligibility", step: 4 },
+  { term: "Dragon Pung", pattern: /\bDragon Pung\b/i, lessonId: "mcr-circumstances", step: 1 },
+  { term: "Melded Hand", pattern: /\bMelded Hand\b/i, lessonId: "mcr-circumstances", step: 2 },
 ];
 
 describe("MCR term order: no term is used before its teaching step", () => {
@@ -369,6 +377,67 @@ describe("MCR fix round: transfer checks count new hands against the engine", ()
       "All Chows",
       "Two Terminal Chows",
     ]);
+  });
+});
+
+// ---------------------------------------------------------------------
+// Definition-audit round: winds made concrete, guide vocabulary in
+// taught words, and game-surface glosses for land-and-play players.
+// ---------------------------------------------------------------------
+
+describe("MCR definition audit: winds, guide and surfaces", () => {
+  it("the seat/round wind step pictures the four winds and says how a player knows theirs", () => {
+    const claims = lessons.find((l) => l.id === "mcr-claims")!;
+    const step = claims.steps[2]!;
+    expect(step.tiles).toBe("1234z");
+    expect(step.text).toContain("count around from the dealer");
+    expect(step.text).toContain("appears beside your tiles");
+    expect(step.text).toContain("centre of the table");
+  });
+
+  it("patterns first spent as check answers are taught with their values", () => {
+    const t = lessons
+      .find((l) => l.id === "mcr-circumstances")!
+      .steps.map((s) => s.text ?? "")
+      .join("\n");
+    expect(t).toContain("Melded Hand, worth 6 fan");
+    expect(t).toContain("Dragon Pung");
+    const catalog = mcrPatterns();
+    expect(catalog.find((p) => p.name === "Melded Hand")!.units).toBe(6);
+    expect(catalog.find((p) => p.name === "Dragon Pung")!.units).toBe(2);
+  });
+
+  it("the 81-pattern reference uses only taught words for sets and the wall", () => {
+    for (const row of mcrPatternGuide()) {
+      const visible = `${row.description}\n${row.restrictions}`;
+      for (const word of ["exposed", "closed", "live-wall", "live wall", "upgrade", "constituent"])
+        expect(
+          new RegExp(`\\b${word}\\b`, "i").test(visible),
+          `reference "${row.name}" uses untaught word "${word}"`,
+        ).toBe(false);
+    }
+  });
+
+  it("MCR game surfaces gloss their terms in place and never use the undefined WMO label", () => {
+    const table = readFileSync(
+      "packages/web/src/variant-table-ui.ts",
+      "utf8",
+    );
+    const calculator = readFileSync(
+      "packages/web/src/variant-calculator-ui.ts",
+      "utf8",
+    );
+    for (const source of [table, calculator]) {
+      expect(source).not.toContain("WMO");
+      expect(source).toContain("Mahjong Competition Rules");
+    }
+    // Call buttons keep their older names only with an in-place gloss.
+    expect(table).toContain("pung is another word for a triplet");
+    expect(table).not.toContain("heuristic");
+    expect(table).not.toContain("live wall is exhausted");
+    // The calculator's payment line defines discarder and hand value.
+    expect(calculator).toContain("the player who threw the winning tile");
+    expect(calculator).toContain("the hand's fan plus its flower points");
   });
 });
 
