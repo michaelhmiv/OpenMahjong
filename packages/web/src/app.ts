@@ -71,6 +71,7 @@ import { variantHomeHand } from "./variant-motifs.js";
 import { mountVariantTable } from "./variant-table-ui.js";
 import { mountVariantEducation } from "./variant-education-ui.js";
 import { mountAmericanCard } from "./american-card-ui.js";
+import { registerAmericanLessons } from "./american-lesson-ui.js";
 import {
   AMERICAN_LESSONS,
   AMERICAN_SECTION_ID,
@@ -650,6 +651,10 @@ export class App {
   private tu11Active = false;
 
   constructor(private readonly root: HTMLElement) {
+    // American training: register the lesson mounter behind the
+    // Learn section's seam (education/american.ts), rendered with
+    // the app's own tile renderer.
+    registerAmericanLessons((tile) => this.learningTile(tile));
     this.sound.enabled = this.settings.sound;
     this.buildShell();
     this.fit();

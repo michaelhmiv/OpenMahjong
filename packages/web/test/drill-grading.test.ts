@@ -8,6 +8,7 @@ import {
   type VariantTilePickQuestion,
 } from "../src/education/variant-content.js";
 import { expandNotation } from "../src/education/notation.js";
+import { AMERICAN_TILE_INVENTORY } from "../src/education/american.js";
 import { mountVariantEducation } from "../src/variant-education-ui.js";
 import {
   emptyVariantProgress,
@@ -63,15 +64,22 @@ function faceTypeFromName(name: string): number | undefined {
   return undefined;
 }
 
+/** The inventory the runner resolves this lesson's faces against:
+ *  the variant adapter's for the playable tracks; American is
+ *  training-only, has no adapter, and its mounter supplies
+ *  AMERICAN_TILE_INVENTORY instead. */
+function lessonInventory(lesson: VariantLesson) {
+  return (lesson.variant as string) === "american"
+    ? AMERICAN_TILE_INVENTORY
+    : variantAdapter(lesson.variant).inventory();
+}
+
 /** The face types a tile-pick's key selects, in the rendered row. */
 function keyedTypes(
   lesson: VariantLesson,
   q: VariantTilePickQuestion,
 ): number[] {
-  const faces = expandNotation(
-    q.tiles,
-    variantAdapter(lesson.variant).inventory(),
-  );
+  const faces = expandNotation(q.tiles, lessonInventory(lesson));
   return q.picks.map((p) => faces[p]!.type);
 }
 
@@ -86,14 +94,44 @@ const WAITS_KEYS: Record<string, number[]> = {
   "mcr-edge-wait-pick": [20], // 3s
 };
 
+/** American drills (brief-american-training-v1): the track names its
+ *  suits Craks, Dots and Bams, and two of its drills are judgment
+ *  picks whose key is the plan the lesson states, taken from each
+ *  question's own explanation. Keyed by question id, like the waits
+ *  drills, so a new one fails here until it is audited and added. */
+const AM_SUIT_BASE: Record<string, number> = {
+  Craks: 0,
+  Dots: 9,
+  Bams: 18,
+};
+const AM_DRAGON_TYPES: Record<string, number> = {
+  white: 31,
+  green: 32,
+  red: 33,
+};
+const AM_WORD_NUMBERS: Record<string, number> = {
+  ones: 1,
+  twos: 2,
+  threes: 3,
+  fours: 4,
+  fives: 5,
+  sixes: 6,
+  sevens: 7,
+  eights: 8,
+  nines: 9,
+};
+const JUDGMENT_KEYS: Record<string, number[]> = {
+  "am-pass-evens": [1, 12, 23], // 2m, 4p, 6s — the even singletons
+  "am-charleston-drill": [4, 6, 8], // 5m, 7m, 9m — the odd Craks singletons
+};
+
 function expectedKeyedTypes(
   lesson: VariantLesson,
   q: VariantTilePickQuestion,
 ): number[] {
-  const row = expandNotation(
-    q.tiles,
-    variantAdapter(lesson.variant).inventory(),
-  ).map((f) => f.type);
+  const row = expandNotation(q.tiles, lessonInventory(lesson)).map(
+    (f) => f.type,
+  );
   const positionsOf = (pred: (t: number) => boolean) =>
     row.filter(pred).sort((a, b) => a - b);
   let m: RegExpExecArray | null;
@@ -120,8 +158,33 @@ function expectedKeyedTypes(
     const quad = [...counts].find(([, c]) => c === 4);
     if (quad) return [quad[0], quad[0], quad[0], quad[0]];
   }
+  // American track: its own suit names and drill phrasings.
+  if ((m = /Tap the pair of (East|South|West|North) winds/.exec(q.prompt)))
+    return positionsOf((t) => t === WIND_TYPES[m[1]!]!);
+  if ((m = /Tap the (white|green|red) dragon/.exec(q.prompt)))
+    return [AM_DRAGON_TYPES[m[1]!]!];
+  if ((m = /Tap the (\d) of (Craks|Dots|Bams)/.exec(q.prompt)))
+    return [AM_SUIT_BASE[m[2]!]! + Number(m[1]) - 1];
+  if ((m = /Tap every (\d) of (Craks|Dots|Bams)/.exec(q.prompt)))
+    return positionsOf((t) => t === AM_SUIT_BASE[m[2]!]! + Number(m[1]) - 1);
+  if (
+    (m = /Tap every tile of the kong of (\w+) of (Craks|Dots|Bams)/.exec(
+      q.prompt,
+    ))
+  )
+    return positionsOf(
+      (t) => t === AM_SUIT_BASE[m[2]!]! + AM_WORD_NUMBERS[m[1]!]! - 1,
+    );
+  if ((m = /A (\d) of (Craks|Dots|Bams) has been discarded/.exec(q.prompt)))
+    return positionsOf((t) => t === AM_SUIT_BASE[m[2]!]! + Number(m[1]) - 1);
+  if (q.prompt.includes("even number in a suit"))
+    return positionsOf((t) => t < 27 && (t % 9) % 2 === 1);
+  if (/tap every wind/i.test(q.prompt))
+    return positionsOf((t) => t >= 27 && t <= 30);
   const waits = WAITS_KEYS[q.id];
   if (waits) return [...waits].sort((a, b) => a - b);
+  const judgment = JUDGMENT_KEYS[q.id];
+  if (judgment) return [...judgment].sort((a, b) => a - b);
   throw new Error(
     `Unaudited tile-pick ${q.id} in ${lesson.id}: classify its key in drill-grading.test.ts`,
   );
@@ -130,7 +193,7 @@ function expectedKeyedTypes(
 describe("drill rows render in authored notation order", () => {
   it("expands every lesson row exactly as its notation names it", () => {
     for (const lesson of VARIANT_LESSONS) {
-      const inventory = variantAdapter(lesson.variant).inventory();
+      const inventory = lessonInventory(lesson);
       const notations = lesson.steps.flatMap((s) =>
         [s.tiles, s.hand, s.question?.tiles].filter(
           (n): n is string => typeof n === "string",
@@ -184,18 +247,19 @@ describe("every tile-pick key names the face its prompt asks for", () => {
         if (!m) continue;
         const face = faceTypeFromName(m[2]!.trim());
         if (face === undefined) continue;
-        const row = expandNotation(
-          q.tiles,
-          variantAdapter(lesson.variant).inventory(),
-        ).map((f) => f.type);
+        const row = expandNotation(q.tiles, lessonInventory(lesson)).map(
+          (f) => f.type,
+        );
         const pos = POSITION[m[1]!]!(row.length);
         checked++;
         expect(row[pos], `${q.id}: explanation position`).toBe(face);
         expect(q.picks, `${q.id}: key position`).toEqual([pos]);
       }
     }
-    // All twelve single-face drills carry a positional explanation.
-    expect(checked).toBe(12);
+    // All twelve single-face drills of the playable tracks carry a
+    // positional explanation, and registering the American track
+    // added a thirteenth (am-north-wind) that this guard now covers.
+    expect(checked).toBe(13);
   });
 });
 

@@ -401,11 +401,14 @@ describe("learn: the American section", () => {
 
   it("lesson rows call the registered mounter (the content seam)", async () => {
     const seen: string[] = [];
+    new App(root);
+    // The App registers the real lesson mounter at construction; a
+    // stub registered afterwards replaces it, which is what the
+    // seam promises the rows: they call whoever is registered.
     registerAmericanLessonMounter((_container, opts) => {
       seen.push(opts.lessonId);
       return { destroy() {} };
     });
-    new App(root);
     await settle();
     await openLearn();
     const rows = [...americanSection().querySelectorAll(".lrow")].slice(1);

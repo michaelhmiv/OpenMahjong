@@ -12,6 +12,7 @@
  * lands; tapping a row calls the registered mounter, if one is
  * registered, with the lesson id.
  */
+import { buildTileSet, type Tile } from "@openmahjong/engine";
 
 export const AMERICAN_SECTION_ID = "american";
 export const AMERICAN_SECTION_NAME = "American";
@@ -38,9 +39,25 @@ export const AMERICAN_LESSONS: readonly AmericanLessonRef[] = [
   { id: "am-playing", title: "Playing the hand" },
   { id: "am-jokers", title: "Jokers" },
   { id: "am-defense", title: "Defense" },
-  { id: "am-winning", title: "Winning and scoring" },
+  { id: "am-scoring", title: "Winning and scoring" },
   { id: "am-drills", title: "Table drills" },
 ];
+
+// ---------------------------------------------------------------------------
+// Tile inventory — the faces the lessons picture. American is a
+// training-only track: there is no engine adapter for it (an adapter
+// is a playable game's rules), so the lesson runner cannot resolve
+// pictured tiles through variantAdapter(). The lessons picture only
+// the standard 34 faces, so the inventory is the standard tile set
+// with the riichi red-five marking removed — American faces are
+// plain. The lesson mounter passes this to the runner, and the
+// notation audit (test/lesson-notation.test.ts) resolves American
+// notations against this same inventory, exactly as the runner does.
+// ---------------------------------------------------------------------------
+
+export const AMERICAN_TILE_INVENTORY: readonly Tile[] = buildTileSet().map(
+  (t) => ({ ...t, red: false }),
+);
 
 // ---------------------------------------------------------------------------
 // Progress — device-local, like the variant tracks' store. The
