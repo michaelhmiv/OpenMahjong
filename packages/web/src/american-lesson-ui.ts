@@ -95,9 +95,42 @@ function writeProgress(
   }
 }
 
+/** The name a screen reader speaks for a tile in this track: the
+ *  suit names the lessons teach (Craks, Dots, Bams). The app's
+ *  shared tile label uses the material names (characters, circles,
+ *  bamboo) — correct for the tracks that teach those words, wrong
+ *  here, where a learner meets every tile through this track's own
+ *  vocabulary (panel item U19). Honors already carry the taught
+ *  words in both namings. */
+const AMERICAN_SUIT_NAMES = ["Craks", "Dots", "Bams"] as const;
+const AMERICAN_HONOR_NAMES: Readonly<Record<number, string>> = {
+  27: "East wind",
+  28: "South wind",
+  29: "West wind",
+  30: "North wind",
+  31: "White dragon",
+  32: "Green dragon",
+  33: "Red dragon",
+};
+export function americanTileLabel(tile: Tile): string {
+  if (tile.type < 27) {
+    const suit = AMERICAN_SUIT_NAMES[Math.floor(tile.type / 9)]!;
+    return `${(tile.type % 9) + 1} of ${suit}`;
+  }
+  return AMERICAN_HONOR_NAMES[tile.type] ?? `tile ${tile.type}`;
+}
+
 export function createAmericanLessonMounter(
   renderTile: (tile: Tile) => HTMLElement,
 ): AmericanLessonMounter {
+  // The app's renderer labels tiles with the shared (material)
+  // names; relabel every tile this track renders with the names
+  // its lessons teach.
+  const renderAmericanTile = (tile: Tile): HTMLElement => {
+    const face = renderTile(tile);
+    face.setAttribute("aria-label", americanTileLabel(tile));
+    return face;
+  };
   return (container, options) => {
     let progress = seedProgress();
     // Mark the opened lesson in progress at once, so the Learn
@@ -127,7 +160,7 @@ export function createAmericanLessonMounter(
         progress = next;
         writeProgress(next, options.lessonId);
       },
-      renderTile,
+      renderTile: renderAmericanTile,
       onBack: options.onBack,
       inventory: AMERICAN_TILE_INVENTORY,
       displayName: "American",

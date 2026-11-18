@@ -14,14 +14,18 @@
  * (lesson 4); the Charleston, blind pass and courtesy pass
  * (lesson 5); backup and tiles to go (lesson 6); calling and dead
  * discards (lesson 7); joker exchange, dead hand and joker bait
- * (lesson 8); defense (lesson 9); mahjong, the jokerless bonus,
- * self-pick and the wall game (lesson 10).
+ * (lesson 8); defense, with joker bait weighed at the table
+ * (lesson 9); mahjong, the jokerless bonus, self-pick and the
+ * wall game (lesson 10).
  *
  * The Practice Card's hands are quoted as printed card lines (the
  * skill being taught is reading them); engine tile-code notation is
  * never used in teaching text. Pictured tile rows are written in
  * ascending tile order, so the row a learner sees is the row the
- * text reads aloud, left to right. In pictured rows the suits are:
+ * text reads aloud, left to right — one deliberate exception: the
+ * Crak reading drill in lesson 1, whose row is shuffled because
+ * reading faces, not positions, is the skill being drilled. In
+ * pictured rows the suits are:
  * the character suit is Craks, circles are Dots, bamboo is Bams;
  * honors run East, South, West, North, then the white, green and
  * red dragons. Flowers and jokers have no pictured face in this
@@ -29,6 +33,13 @@
  *
  * Scoring and counting checks verify against the Practice Card data
  * (practice-card.ts) or the payment rules the scoring lesson states.
+ * Hardening (Nov 18, 2026, after the acceptance panel): the Crak key
+ * and a shuffled Crak reading drill in lesson 1; card colours named
+ * in words and two lines shown with their printed descriptions in
+ * lesson 2; the Charleston pass rule stated as teaching in lesson 5
+ * (before any drill grades by it); choosing between two hands in one
+ * section worked and drilled in lesson 6; the double-quint hand's
+ * line printed with its value in lesson 8, before lesson 11 asks it.
  * Registration: this track is registered in VARIANT_LESSONS
  * (variant-content.ts), so the shared runner and progress parser
  * handle it like any other track, and the Learn section's mounter
@@ -122,8 +133,22 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       tiles: "123456789s",
     },
     {
-      text: "The second suit is Craks. A Crak face has two characters on it: the dark character on top is the tile's number, written as a character, and the red character below it is the same on every Crak. Read a Crak by its top character: this row runs 1 to 9. You do not need to know the characters by heart — the drills in this lesson teach you to read single faces one at a time.",
+      text: "The second suit is Craks. A Crak face has two characters on it: the dark character on top is the tile's number, written as a character, and the red character below it is the same on every Crak. Read a Crak by its top character: this row runs 1 to 9. You do not need to know the characters by heart — the next step gives you the key, and a drill right after it has you read faces one at a time.",
       tiles: "123456789m",
+    },
+    {
+      text: "Here is the key to the Craks. The top character on each face is the tile's number, written as a character: 一 is 1, 二 is 2, 三 is 3, 四 is 4, 五 is 5, 六 is 6, 七 is 7, 八 is 8, 九 is 9. Read the row below with the key, left to right: one, two, three, four, five, six, seven, eight, nine. The red character underneath is the same on every Crak — it is the suit's own mark, and never part of the number. From here on, a Crak is read by its top character alone.",
+      tiles: "123456789m",
+    },
+    {
+      question: pick(
+        "crak-seven",
+        "Tap the 7 of Craks.",
+        "294716m",
+        [3],
+        "The fourth tile is the 7 of Craks — its top character is 七, the character for seven. The row is deliberately out of order: tiles are never dealt sorted, and the key, not the position, is what reads the face.",
+        "Read each face's top character with the key: 一 is 1, 二 is 2, 三 is 3, 四 is 4, 五 is 5, 六 is 6, 七 is 7, 八 is 8, 九 is 9. You want the face whose top character is 七.",
+      ),
     },
     {
       text: "The third suit is Dots. A Dot face shows its number as a pattern of circles: count the circles and you have the number. This row runs 1 to 9, from one large circle to nine.",
@@ -150,7 +175,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "Seven tiles belong to no suit and carry no number. The first four are the winds: East, South, West and North, in the order shown. Each wind's face is a single character, and each wind has its own face. The last three are the dragons: the white dragon has a plain bordered face, the green dragon is green, and the red dragon is red. Winds and dragons together are the honor tiles of this set.",
+      text: "Seven tiles belong to no suit and carry no number. The first four are the winds: East, South, West and North, in the order shown. Each wind's face is a single character, and each wind has its own face. The last three are the dragons: the white dragon has a plain bordered face, the green dragon is green, and the red dragon is red. Winds and dragons together are the honor tiles of this set. A dragon stands on its own: it never has to match a suit in the hand — where a hand wants a dragon, its description names which dragon. And one overlap to warn you about now: the letter W in a printed line always means the West wind, but if you tap the white dragon to look closer, the small corner mark on its face is also a W, printed pale. Tell them apart by the face — the dragon's is plain and bordered, the wind's carries a character — and by the ink: pale for the dragon, dark for the wind.",
       tiles: "1234567z",
     },
     {
@@ -202,7 +227,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
         ],
         1,
         "A joker is wild only as one of three or more matching tiles. It can never stand alone and never be half of a pair — that rule shapes the whole game, and lesson 8 returns to it.",
-        "Think about the two places the lesson ruled out: standing alone, and in a pair. What arrangement is left?",
+        "Go back to the step that met the jokers: it stated the one arrangement a joker is allowed, and the two it is not. The answer is the allowed one.",
       ),
     },
   ]),
@@ -212,13 +237,14 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       hand: "22244466668888m",
     },
     {
-      text: "A hand on the card is printed as a line of groups. A group is a set of matching tiles written together, and the size of a group has a name: one tile is a single, two of a kind make a pair, three of a kind make a pung, four of a kind make a kong, and five of a kind make a quint. Of a kind means copies of the same tile. The line for the pictured hand reads: 222 444 6666 8888. Read it group by group: a pung of twos, a pung of fours, a kong of sixes and a kong of eights.",
+      text: "A hand on the card is printed as a line of groups. A group is a set of matching tiles written together, and the size of a group has a name: one tile is a single, two of a kind make a pair, three of a kind make a pung, four of a kind make a kong, and five of a kind make a quint. Of a kind means copies of the same tile. A quint needs five copies of a kind and only four exist, so a quint can only ever be built with a joker standing in it — lesson 8 returns to that. The line for the pictured hand reads: 222 444 6666 8888. Read it group by group: a pung of twos, a pung of fours, a kong of sixes and a kong of eights. Printed with the line, the hand's description reads: “Pungs of twos and fours with kongs of sixes and eights, all in a single suit of your choice.” A description is the line retold in words: it names the groups, and wherever it matters, the suits and the dragons. From here on, read the line and its description together.",
     },
     {
-      text: "In a card line, a change of color marks a change of suit. Which suits you use is your choice, unless a hand's description says otherwise — what matters is which groups share a suit and which do not. This line runs in two colors: 22 444 666 8888 88. Its pair of twos, pung of sixes and closing pair of eights share one suit; its pung of fours and kong of eights are in a second suit — so the eights are split across the two suits. The description printed with a hand always says how its suits run.",
+      text: "In a card line, a change of color marks a change of suit. On this card the first suit in a line prints in dark ink, the second in blue, and the third in red. The colors never name the suits — they only mark which groups match: which real suits the colors stand for is your choice, unless a hand's description says otherwise. This line runs in two colors: 22 444 666 8888 88. Its pair of twos, pung of sixes and closing pair of eights print in the dark ink and share one suit; its pung of fours and kong of eights print in blue, a second suit — so the eights are split across the two suits. The pictured tiles show the same split in faces: the dark-ink groups stand here as Craks, the blue groups as Dots. And the hand's description, printed with the line, tells the same story in words: “A pair of twos, pungs of fours and sixes, a kong of eights, and a second pair of eights — the eights are split across two suits, the rest follows them.” Line, colors and description are three tellings of one hand; read them together.",
+      hand: "22m444p666m8888p88m",
     },
     {
-      text: "Letters appear in lines too. F is a flower: FF is a pair of flowers, FFF a pung of flowers. D is a dragon of one kind — the hand's description names which dragon. The letters N, E, W and S are the four winds: North, East, West and South. A group of one letter, like the single W at the end of one Winds & Dragons hand, is a single tile that must be matched by drawing it — nothing can stand in for it, not even a joker.",
+      text: "Letters appear in lines too. F is a flower: FF is a pair of flowers, FFF a pung of flowers. D is a dragon of one kind — the hand's description names which dragon. When a line carries two D groups, they are two different dragon kinds, never the same kind twice: a line printed DDD DD holds a pung of one dragon and a pair of another, and its description names both kinds, in the line's order. The letters N, E, W and S are the four winds: North, East, West and South. A group of one letter, like the single W at the end of one Winds & Dragons hand, is a single tile that must be matched by drawing it — nothing can stand in for it, not even a joker.",
     },
     {
       text: "Every line ends with a letter of its own: X or C. An exposure is a group you complete by calling — claiming, out loud, another player's discard the moment it is thrown — and placing it face-up in front of you where everyone can see it. X means exposures are allowed: the hand may be built by calling tiles. C means concealed only: the whole hand must be built without calling a single tile — concealed means kept hidden and never shown. A C hand may still be finished by calling the very last tile, the one that wins; lesson 7 explains that call.",
@@ -356,7 +382,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
         "3334444m55p",
         [3, 4, 5, 6],
         "Tiles four to seven are the four fours of Craks — the kong. Before them sits a pung of threes of Craks, and after them a pair of fives of Dots.",
-        "Read the row group by group from the left: a pung of threes, then the group you are looking for, then a pair.",
+        "Read the row group by group from the left. A kong is a group of four, and only one group in this row has that size — find it by its size first, then check its face.",
       ),
     },
     {
@@ -384,10 +410,10 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       text: "Each player then builds a wall: their share of the tiles, stacked two high in a neat row in front of their rack. A wall holds 38 tiles — the whole set of 152 divided among the four players. The four walls together frame the middle of the table, where discards will go. Nothing in a wall is known to anyone: a wall is simply the supply the game will be dealt and drawn from.",
     },
     {
-      text: "One player is East, the dealer for the first hand. East begins the setup by breaking the wall: choosing a point in their own wall and pushing the tiles beyond it aside, so the deal starts from the break. Being East is a small advantage — East is dealt one extra tile and so makes the first discard. The deal passes to the next player after each hand; lesson 10 says when.",
+      text: "One player is East, the dealer for the first hand. At a brand-new table that player is chosen by the table itself — many tables roll dice for it, with the highest roll taking East; once the game is running, the deal simply passes around the table, as lesson 10 describes. East begins the setup by breaking the wall: choosing a point in their own wall and pushing the tiles beyond it aside, so the deal starts from the break. Being East is a small advantage — East is dealt one extra tile and so makes the first discard. The deal passes to the next player after each hand; lesson 10 says when.",
     },
     {
-      text: "East deals from the break, in blocks of four tiles at a time, going around the table three times — so every player receives twelve tiles. Then East takes two more tiles, and each other player takes one. East ends with fourteen tiles and everyone else with thirteen, as in the pictured rack: sequences of Craks, Dots and Bams with a pung of East winds and a pair of Souths. Stand your tiles on your rack as they come; you may arrange them in any order you like.",
+      text: "East deals from the break, in blocks of four tiles at a time, going around the table three times — so every player receives twelve tiles. Then East takes two more tiles, and each other player takes one. East ends with fourteen tiles and everyone else with thirteen, as in the pictured rack: runs of neighbouring numbers in Craks, Dots and Bams with a pung of East winds and a pair of Souths. Stand your tiles on your rack as they come; you may arrange them in any order you like.",
       hand: "123m456p789s11122z",
     },
     {
@@ -448,10 +474,10 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       text: "The second Charleston passes left, then over, then right — the first half run backwards. After the first Charleston's three passes, the table may agree to stop and skip the second half entirely. But it takes the whole table to stop: if even one player wants the second Charleston, it is played. Most new tables simply dance both halves while they learn.",
     },
     {
-      text: "What should you pass? Tiles that fit no hand you are considering: stray tiles in suits and numbers your clusters do not touch. Keep pairs — a pair is halfway to a pung and the hardest part of many hands to rebuild. Keep tiles that sit near your clusters. And one rule stands above all strategy: a joker is never passed. Not in any pass, not ever — if your three pass tiles would include a joker, choose a different tile, however little it fits.",
+      text: "What should you pass? There is a rule for it — the pass rule — and the drills in this lesson and lesson 11 grade by it. Pass tiles that are off-pattern: they fit no hand you are considering, stray tiles in suits and numbers your clusters do not touch. Pass tiles that stand alone: no pair, and no neighbours among the tiles you are keeping. Spread the pass one tile in each suit when you can, so no single neighbour receives a ready-made cluster. And never break a pair to make a pass: a pair is halfway to a pung and the hardest part of many hands to rebuild. Keep tiles that sit near your clusters. And one rule stands above all strategy: a joker is never passed. Not in any pass, not ever — if your three pass tiles would include a joker, choose a different tile, however little it fits.",
     },
     {
-      text: "Once in a while you hold fewer than three tiles you can spare. Then you may make a blind pass: taking one, two or three of the tiles about to be passed to you and passing them onward without looking at them. A blind pass is a pass made blind — you give away unknown tiles rather than break the tiles you are keeping. It is most often used on the first pass of the second Charleston, when hands have tightened around a plan.",
+      text: "Once in a while you hold fewer than three tiles you can spare. Then you may make a blind pass: taking one, two or three of the tiles about to be passed to you and passing them onward without looking at them. A blind pass is a pass made blind — you give away unknown tiles rather than break the tiles you are keeping. It is most often used on the first pass of the second Charleston, when hands have tightened around a plan. Two limits keep it honest. You may take only from the tiles coming to you — never from your own rack. And a blind pass can never break the never-pass-a-joker rule: that rule governs tiles you hold and can see. Tiles passed blind are face-down and unknown to you — forwarding them sight unseen is exactly what the blind pass is for, and a joker on your own rack is never among them.",
     },
     {
       text: "After the Charleston comes one last optional trade, the courtesy pass: you and the player across from you may agree to swap tiles — one, two or three, the same number each way. Both players must agree, and either may refuse. The courtesy pass is a courtesy, not a right: ask, accept the answer, and play on. With that, the Charleston is over and East makes the first discard.",
@@ -468,7 +494,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
         ],
         1,
         "Right, over, left. The second Charleston runs the same three passes in the reverse order: left, over, right.",
-        "The first pass goes to the player on your right. The last pass of the first Charleston goes to the player on your left.",
+        "Name the three directions in the order this lesson's second step taught them. The second Charleston runs the same three in reverse.",
       ),
     },
     {
@@ -503,7 +529,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
         "1235m3459p169s11z",
         [1, 5, 9],
         "The three even singletons: the 2 of Craks, the 4 of Dots and the 6 of Bams — each sits alone in its suit while the hand's other tiles run odd. The pair of East winds stays: a pair is an asset in many hands, and these three strays fit no odd hand at all.",
-        "Find the tiles that are even and stand alone — one in each suit. Pairs and odd tiles are not your pass.",
+        "Use the pass rule from this lesson's fourth step: off-pattern, standing alone, one in each suit, and never break a pair. This rack is building toward odd numbers.",
       ),
     },
     {
@@ -528,13 +554,33 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       hand: "22446666888m22p5z",
     },
     {
-      text: "Choose in two steps: first a section, then a hand inside it. The pictured rack points at Even Numbers, and inside that section one hand fits best — the first hand on the card, 222 444 6666 8888, worth 25. Count what the rack already holds toward it, in Craks: two of the three twos, two of the three fours, three of the four sixes and three of the four eights. Ten of the hand's fourteen tiles are already standing on the rack.",
+      text: "Choose in two steps: first a section, then a hand inside it. The pictured rack points at Even Numbers, and inside that section one hand fits best — the first hand on the card, 222 444 6666 8888, worth 25. Count what the rack already holds toward it, in Craks: two of the three twos, two of the three fours, three of the four sixes and three of the four eights. Ten of the hand's fourteen tiles are already standing on the rack. Count one thing carefully: the rack's pair of twos of Dots is not in that ten. A tile counts toward a hand only in the suit of the group it would fill — every group of this hand is being built in Craks here, so a Dot can never count toward it, however well its number matches. Off-suit tiles are not partial credit; they belong to a different plan, or to a pass.",
     },
     {
       text: "The count that matters next is tiles to go: how many tiles the hand still needs. This rack needs one more 2, one more 4, one more 6 and one more 8 — four tiles to go. Some of those may arrive as jokers standing inside the pungs and kongs, which is legal; lesson 8 covers that. A hand four tiles away after the Charleston is a strong hand. A hand eight tiles away is a hope, not a plan.",
     },
     {
       text: "Always keep a backup: a second hand your tiles also touch, in case the first one dies. A hand dies when the tiles it needs are seen leaving the game — every kind has only four copies, so if three of the eights you need for a kong are discarded by other players, that kong can now be finished only with jokers. When a hand dies, your backup's tiles — the ones you kept instead of passing — become the plan. Pick the backup before you need it: usually the hand that shares the most tiles with your first choice.",
+    },
+    {
+      text: "Often two hands in one section both touch your rack, and the section alone cannot choose between them — the count does. Take this rack: a pung of twos and a kong of fours in Dots, pairs of sixes and eights in Bams, and two flowers standing at the left end — flowers have no pictured face in this app, so they are named here rather than shown. Count it against the section's first hand, 222 444 6666 8888, all in one suit. In Dots the rack holds the twos in full and three of the fours — six tiles — and nothing else on the rack can count toward that hand, because every one of its groups must sit in the single suit. Six held is eight tiles to go: a hope, not a plan. Now count the same rack against the section's fifth hand: FF 222 4444 666 88 — a pair of flowers, then twos and fours in one suit, sixes and eights in a second. The flowers are its pair. The Dots are its twos and fours, complete. The Bams hold its pair of eights and two of its three sixes. Thirteen of its fourteen tiles are already standing on the rack — one tile to go: a third 6 of Bams, or a joker standing in the sixes' pung. Same rack, same section: counted honestly, one hand is eight away and the other is one away. Choosing between hands is counting each of them in full — suits, split and flowers included — and letting the smaller number win.",
+      hand: "2224444p6688s",
+    },
+    {
+      question: choice(
+        "compare-drill",
+        "A fresh rack: a pair of twos of Craks, a pung of fours of Dots, a pung of sixes of Craks, a kong of eights of Dots, and one more eight of Craks. Two hands from Even Numbers are candidates — the first, 222 444 6666 8888, all in one suit; and the second, 22 444 666 8888 88, split across two suits. Which hand is this rack closer to?",
+        [
+          "The first hand — one suit, fewer tiles to go",
+          "The second hand — the split one, fewer tiles to go",
+          "Both hands are equally close",
+          "Neither hand — this rack points at a different section",
+        ],
+        1,
+        "The second hand, and not by a little. Counted with its split respected — twos, sixes and the closing pair of eights in Craks; fours and the kong of eights in Dots — the rack already holds thirteen of its fourteen tiles: only one more 8 of Craks is missing. The one-suit hand can count only one suit at a time: its best suit, Dots, holds seven tiles (the pung of fours and the kong of eights), leaving seven to go. When two hands in a section compete, count both in full and let the smaller tiles-to-go win.",
+        "Count the rack against each hand separately. For the split hand, each group counts only in its own suit: some of its groups are Craks here, the others Dots.",
+        { tiles: "22444p666m8888p8m" },
+      ),
     },
     {
       question: choice(
@@ -562,7 +608,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
         ["2", "3", "4", "5"],
         2,
         "Four tiles to go: fourteen in the hand, ten already held. One more 2, one more 4, one more 6 and one more 8 — or jokers standing in their places inside the groups.",
-        "Tiles to go is what the hand needs minus what you hold. The hand's size was counted in lesson 2.",
+        "Tiles to go is what the hand needs minus what you hold. The hand uses fourteen tiles — the size you counted when you first read this very line, in the Reading the card lesson.",
         {
           verify: counted(
             () => cardTiles(practiceCardHand("EV-1")) - 10,
@@ -610,10 +656,10 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
   ]),
   lesson("playing", "Playing the hand", [
     {
-      text: "With the Charleston done, East opens the play. Turns pass to the right, around the table. On your turn you first draw: take the next tile from the wall the game is drawing from — play begins with East's wall and moves around the table as walls are used up — and rack it, standing it with your tiles where only you can see it. Drawing is sometimes called picking, and a tile you win with on your own draw has a name of its own in lesson 10. First, though, every turn ends the same way: with a discard.",
+      text: "With the Charleston done, East opens the play. Turns pass to the right, around the table. On your turn you first draw: take the next tile from the wall the game is drawing from — play begins with East's wall and moves around the table as walls are used up — and rack it, standing it with your tiles where only you can see it. A tile you win with on your own draw has a name of its own in lesson 10. First, though, every turn ends the same way: with a discard.",
     },
     {
-      text: "To discard, choose one tile from your rack, place it face-up in the middle of the table, and name it aloud as you do — say its name clearly: the number and suit, or the wind or dragon. Naming discards is how the whole table follows the game, and a discard is not final until it is named. The pictured rack is East's fourteen tiles from the setup lesson: sequences in the three suits, a pung of Easts and a pair of Souths. East will name one of these tiles and the game is under way.",
+      text: "To discard, choose one tile from your rack, place it face-up in the middle of the table, and name it aloud as you do — say its name clearly: the number and suit, or the wind or dragon. Naming discards is how the whole table follows the game, and a discard is not final until it is named. The pictured rack is East's fourteen tiles from the setup lesson: runs of neighbouring numbers in the three suits, a pung of Easts and a pair of Souths. East will name one of these tiles and the game is under way.",
       hand: "123m456p789s11122z",
     },
     {
@@ -702,13 +748,13 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       tiles: "777m8888p",
     },
     {
-      text: "Jokers and the card meet in the Quints section. Only four natural copies of any tile exist, so a quint — five of a kind — always needs at least one joker standing in it. The card's first quint hand needs one joker at minimum; its double-quint hand needs two, one in each quint, before its pairs are even considered. When you count tiles to go toward a quint hand, count its jokers as tiles you must find, exactly like natural tiles.",
+      text: "Jokers and the card meet in the Quints section. Only four natural copies of any tile exist, so a quint — five of a kind — always needs at least one joker standing in it. The card's first quint hand needs one joker at minimum; its double-quint hand needs two, one in each quint, before its pairs are even considered. That double-quint hand's line reads 11111 99999 66 FF — two quints, a pair of sixes and a pair of flowers — and its printed value is 55 points. When you count tiles to go toward a quint hand, count its jokers as tiles you must find, exactly like natural tiles.",
     },
     {
       text: "A joker standing in an exposure is not locked there forever. If you hold the natural tile that a joker is standing for — in your own exposure or in another player's — you may make a joker exchange: on your turn, after you draw and before you discard, hand the natural tile over to take the joker's place in that exposure, and take the joker onto your own rack. The exposure is unchanged — same group, same owner — except that a real tile now sits where the joker stood, and you hold the joker.",
     },
     {
-      text: "Sometimes a hand is declared dead: its exposures show it can no longer possibly win — for example, exposures placed toward a hand the card marks C, which may never be built with calls. A dead hand takes no more turns and its owner stops playing that hand. Its exposures stay face-up where they are, and a joker sitting in a dead hand's exposure is frozen with it: no one may exchange for that joker any more. What was exposed stays exposed; what was wild is wild no longer.",
+      text: "Sometimes a hand is declared dead — and any player at the table may declare it, because its exposures are face-up for everyone to read: the exposures show it can no longer possibly win — for example, exposures placed toward a hand the card marks C, which may never be built with calls. The table checks the exposures against the card before the ruling stands; a dead hand is a judgment the whole table can verify, not one player's say-so. A dead hand takes no more turns and its owner stops playing that hand. Its exposures stay face-up where they are, and a joker sitting in a dead hand's exposure is frozen with it: no one may exchange for that joker any more. What was exposed stays exposed; what was wild is wild no longer.",
     },
     {
       text: "One piece of table slang completes the joker picture: joker bait. Joker bait is a discard you make hoping another player will call it and expose — you are trading a tile for information, because their exposure tells the whole table what they are building. Bait is a gamble, not a rule: the tile you offer might be exactly the one that wins them the hand. Lesson 9 weighs that risk properly.",
@@ -796,7 +842,10 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       text: "Your second instrument is counting copies. Every kind has exactly four copies in the set. The copies you can see — in discards, in exposures, on your own rack — are accounted for. If three copies of a tile are visible, exactly one remains anywhere: in a wall or on a rack. If all four are accounted for, no one can draw or call that tile again — it can never complete anything for anybody, and a tile that completes nothing is the safest discard there is.",
     },
     {
-      text: "Defense matters more as the walls shrink. Early, your own hand comes first: almost any discard is safe enough. Late, when an opponent's exposures say they are one or two tiles away, the order reverses — if your hand is still many tiles from finishing, discard the safest tile you hold, even if it means breaking a group of your own. Breaking your hand on purpose feels wrong and is often right: a broken hand can still be rebuilt next hand; a discard that gives away mahjong ends this one.",
+      text: "Defense matters more as the walls shrink. Early, your own hand comes first: almost any discard is safe enough. Late, when an opponent's exposures say they are one or two tiles away, the order reverses — if your hand is still many tiles from finishing, discard the safest tile you hold, even if it means breaking a group of your own. Breaking your hand on purpose feels wrong and is often right: a broken hand can still be rebuilt next hand; a discard that hands another player the tile that wins them the hand ends this one.",
+    },
+    {
+      text: "One attacking idea belongs in this lesson, because it spends safety to buy information: joker bait, named in lesson 8. You discard a tile you believe another player needs, hoping they call it and expose. Their new exposure tells the whole table what they are building — and if a joker stands in it, that joker can later be exchanged away by whoever draws its natural tile. Weigh the trade honestly. Bait pays early, while the information can still change your own plan and the caller is far from finishing. Late it is a poor trade: against a player one or two tiles from winning, the tile you offer may be the very tile that wins them the hand, and no information is worth that. Bait is a gamble with a price — never pay it with a tile you cannot afford to see called.",
     },
     {
       question: choice(
@@ -861,10 +910,10 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       hand: "22244466668888m",
     },
     {
-      text: "A winning hand scores the value printed on its line — the pictured hand is the 25-point opener of Even Numbers. One bonus stands on top of the value: a winning hand that used no jokers at all scores double its value. This is the jokerless bonus. It does not apply to Singles & Pairs hands: they can never use jokers, and their high values already price that in.",
+      text: "A winning hand scores the value printed on its line — the pictured hand is the 25-point opener of Even Numbers. One bonus stands on top of the value: a winning hand that used no jokers at all scores double its value. This is the jokerless bonus. It does not apply to Singles & Pairs hands: they can never use jokers, and their high values already price that in. And one word on what points are: points are the score itself, not money. Some tables settle points afterward for small stakes, by house agreement; many play for points alone. The card prints points, and this track counts points.",
     },
     {
-      text: "Payments depend on how the winning tile arrived. If you win on another player's discard, that player pays double the hand's value, and each of the other two players pays the value once. The discarder pays for everyone else's relief: they threw the tile that ended the hand, and the table splits the cost with them at double share.",
+      text: "Payments depend on how the winning tile arrived. If you win on another player's discard, that player pays double the hand's value, and each of the other two players pays the value once. The discarder pays for everyone else's relief: they threw the tile that ended the hand, and the table splits the cost with them at double share. Work one stacked example now, before the checks: a player makes a 25-point hand with no jokers in it, on another player's discard. The jokerless bonus applies to the value first — 25 doubles to 50. Then the discard rule takes the discarder's share from the new value: the discarder pays double 50, which is 100, and each of the other two players pays 50. Bonuses always change the value first; shares are always taken from the changed value.",
     },
     {
       text: "If you win on a tile you drew yourself — a self-pick — there is no discarder to single out, so every other player pays double the hand's value. A self-picked win is the best-paid ordinary win at the table: three double payments instead of one double and two singles. It is also why a hand kept concealed and finished on a draw feels so strong — nobody fed it, and everybody pays for it.",
@@ -934,13 +983,13 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
   ]),
   lesson("drills", "Table drills", [
     {
-      text: "This lesson is the table in miniature: reading lines at speed, passing the Charleston with a plan, choosing sections from racks you have never seen, and paying out hands. There is no new teaching here — every drill uses rules the earlier lessons stated. Answer as if the table were waiting on you: in a real game the other three players are watching your hands, and a decision made cleanly beats a perfect decision made slowly. The pictured rack is your first drill's raw material.",
+      text: "This lesson is the table in miniature: reading lines, passing the Charleston with a plan, choosing sections from racks you have never seen, and paying out hands. There is no new teaching here — every drill uses rules the earlier lessons stated, and every value it asks was printed with its hand earlier in the track. Work the way you would at a table: read each line group by group, count before you answer, and let the rules do the work. The pictured rack is your first drill's raw material.",
       hand: "5679m2468p224s33z",
     },
     {
       question: choice(
         "lk2-tiles",
-        "Read this line at speed: 333 333 888 888 33. How many tiles does the hand use?",
+        "Read this line: 333 333 888 888 33. How many tiles does the hand use?",
         ["12", "13", "14", "15"],
         2,
         "Fourteen — four pungs and a pair: three, three, three, three and two. Every hand on the card uses fourteen tiles, and counting a line's groups is how you check a line you have never seen.",
@@ -951,18 +1000,18 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
     {
       question: choice(
         "qt3-value",
-        "Read this line at speed: 11111 99999 66 FF. What is the hand worth?",
+        "Read this line: 11111 99999 66 FF. What is the hand worth?",
         ["45", "50", "55", "60"],
         2,
         "55 points. The line is the double-quint hand from Quints — two quints, a pair of sixes and a pair of flowers — and its printed value is 55.",
-        "The value is a fact of this hand's line on the card: two quints put it in the ladder's upper-middle, with the concealed hands above it.",
+        "You met this hand in the jokers lesson, where its line was printed together with its value: two quints, a pair of sixes and a pair of flowers.",
         { verify: counted(() => practiceCardHand("QT-3").value) },
       ),
     },
     {
       question: choice(
         "ib2-flowers",
-        "Read this line at speed: FF FFF 555 666 77 8. How many flowers does the hand use?",
+        "Read this line: FF FFF 555 666 77 8. How many flowers does the hand use?",
         ["3", "4", "5", "8"],
         2,
         "Five flowers: a pair of flowers and a pung of flowers, two plus three. The hand is from In Bloom, the card's flower family — and five of the set's eight flowers in one hand is a serious commitment.",
@@ -983,7 +1032,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
         "5679m2468p224s33z",
         [0, 2, 3],
         "The three odd singletons in Craks: the 5, the 7 and the 9. Everything else either is even, pairs up (the pair of twos of Bams, the pair of West winds), or feeds the plan. The 6 of Craks is even — it stays.",
-        "Hunt the tiles that are odd, stand alone, and sit in a suit where the rest of the rack runs even.",
+        "Use the pass rule from the Charleston lesson: off-pattern, standing alone, spread one in each suit, and never break a pair. This rack is building toward even numbers.",
       ),
     },
     {
@@ -1026,7 +1075,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
     {
       question: pick(
         "winds-drill",
-        "At speed: tap every wind in this row.",
+        "Tap every wind in this row.",
         "5m9p7s1z3z",
         [3, 4],
         "The last two tiles are winds: the East wind and the West wind. The row runs a 5 of Craks, a 9 of Dots and a 7 of Bams first — numbered tiles all, and the winds sit after them.",
@@ -1036,7 +1085,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
     {
       question: choice(
         "wd2-single",
-        "Read this line at speed: NNNN SSSS DDD DD W. The hand is one tile from complete as printed. Which tile is still standing single, waiting to be paired?",
+        "Read this line: NNNN SSSS DDD DD W. The hand is one tile from complete as printed. Which tile is still standing single, waiting to be paired?",
         ["The North wind", "The South wind", "A dragon", "The West wind"],
         3,
         "The West wind: it is the line's only single — the kongs of Norths and Souths and the dragon groups are complete, and the lone W needs a second West, which only a draw can bring (a single can never be called for, and no joker can stand in it).",

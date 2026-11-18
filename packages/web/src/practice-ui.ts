@@ -240,14 +240,16 @@ export function createPracticeView(options: PracticeViewOptions): HTMLElement {
       if (feedback.correct) {
         // The explanation names the answer, so it renders only once
         // the exercise is answered correctly. While it is still open,
-        // feedback is the hint plus pick counts (never which picks).
+        // feedback is the hint alone — never pick counts: exact
+        // belong/missing counts are a membership oracle (submit one
+        // tile, read "0 picks do not belong", and that tile is
+        // certified), which let every multi-tile exercise be solved
+        // by elimination. The grading layer still computes the
+        // counts for its own records; they are not shown.
         box.append(el("p", "", feedback.explanation));
       } else {
         box.append(el("p", "", feedback.hint));
         if (typeof feedback.extraPicks === "number" && typeof feedback.missingPicks === "number") {
-          box.append(el("p", "dim",
-            `${feedback.extraPicks === 1 ? "1 pick does not belong" : `${feedback.extraPicks} picks do not belong`}; ` +
-            `${feedback.missingPicks === 1 ? "1 pick is missing" : `${feedback.missingPicks} picks are missing`}.`));
           if (exercise.kind === "recognition" || exercise.kind === "waits" ||
             exercise.kind === "ukeire" || exercise.kind === "defense") {
             box.append(el("p", "dim", "Tap a picked tile again to un-pick it."));

@@ -136,8 +136,14 @@ export function mountVariantEducation(
     if (!notation) return row;
     // Rows render in the order the notation names the tiles — the
     // same order tile-pick keys index (see education/notation.ts).
-    tileFaces(notation).forEach((face, pos) => {
+    const faces = tileFaces(notation);
+    faces.forEach((face, pos) => {
       const faceEl = options.renderTile(face);
+      // Group segmentation: a visible gap where the face changes, so
+      // a learner segments a row into its groups by eye instead of
+      // counting tiles off one unbroken string.
+      if (pos > 0 && face.type !== faces[pos - 1]!.type)
+        faceEl.classList.add("variant-group-start");
       const key = `${lesson.id}:${step}:${rowKey}:${pos}`;
       if (mode === "answered" || (mode === "teach" && indexRevealed.has(key))) {
         const ix = tileIndexEl(face);
@@ -176,9 +182,14 @@ export function mountVariantEducation(
       const row = el("div", "", "variant-example-tiles variant-tile-pick");
       row.setAttribute("role", "group");
       row.setAttribute("aria-label", "Tiles to pick from");
-      tileFaces(q.tiles).forEach((face, index) => {
+      const pickFaces = tileFaces(q.tiles);
+      pickFaces.forEach((face, index) => {
         const b = el("button", "", "variant-tile-choice");
         b.type = "button";
+        // Group segmentation, as in teaching rows: a gap where the
+        // face changes, so the row reads as groups, not a string.
+        if (index > 0 && face.type !== pickFaces[index - 1]!.type)
+          b.classList.add("variant-group-start");
         b.setAttribute("aria-pressed", String(picks.has(index)));
         b.setAttribute("aria-label", `Tile ${index + 1}`);
         const faceEl = options.renderTile(face);
@@ -254,12 +265,14 @@ export function mountVariantEducation(
       if (correct) {
         feedback.textContent = `Correct. ${q.explanation}`;
       } else if (q.kind === "tile-pick") {
-        const extra = [...picks].filter((p) => !q.picks.includes(p)).length;
-        const missing = q.picks.filter((p) => !picks.has(p)).length;
+        // No membership counts while the question is open (the
+        // no-leak law, Nov 18, 2026 hardening): exact belong/missing
+        // counts are a membership oracle — submitting one tile and
+        // reading "0 picks do not belong" certifies that tile, so
+        // every multi-tile pick was solvable by elimination with no
+        // understanding. A wrong set now earns the hint only.
         feedback.textContent =
           `Try again. ${q.hint} ` +
-          `${extra === 1 ? "1 pick does not belong" : `${extra} picks do not belong`}; ` +
-          `${missing === 1 ? "1 pick is missing" : `${missing} picks are missing`}. ` +
           "Tap a picked tile again to un-pick it.";
       } else {
         feedback.textContent = `Try again. ${q.hint}`;

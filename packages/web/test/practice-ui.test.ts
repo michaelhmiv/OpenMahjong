@@ -73,7 +73,10 @@ describe("approved Practice interactions", () => {
     expect(feedback.querySelector("h2")?.textContent).toBe("Try again");
     expect(feedback.textContent).not.toContain(exercise.explanation);
     expect(feedback.textContent).toContain(exercise.hint);
-    expect(feedback.textContent).toContain("1 pick does not belong");
+    // Hardening (Nov 18, 2026): no belong/missing counts — they were a
+    // membership oracle that certified tiles one at a time.
+    expect(feedback.textContent).not.toContain("does not belong");
+    expect(feedback.textContent).not.toContain("are missing");
     expect(feedback.textContent).toContain("Tap a picked tile again to un-pick it.");
     // Add exactly the correct set; the stale wrong pick still fails it.
     for (const index of exercise.expected) answerChoice(view, index);
@@ -81,8 +84,9 @@ describe("approved Practice interactions", () => {
     feedback = view.querySelector(".feedback")!;
     expect(feedback.querySelector("h2")?.textContent).toBe("Try again");
     expect(feedback.textContent).not.toContain(exercise.explanation);
-    expect(feedback.textContent).toContain("1 pick does not belong");
-    expect(feedback.textContent).toContain("0 picks are missing");
+    expect(feedback.textContent).not.toContain("does not belong");
+    expect(feedback.textContent).not.toContain("are missing");
+    expect(feedback.textContent).not.toContain("is missing");
     expect(feedback.textContent).toContain("Tap a picked tile again to un-pick it.");
     // Un-pick the wrong tile; now the answer is correct and the
     // explanation becomes visible.
