@@ -699,7 +699,7 @@ try {
         await full.getByRole("button", { name: "Back to Games", exact: true }).click();
         await full.locator('.tabbtn[data-tab="home"]').click();
         await full.locator("#screen-home").getByRole("button", { name: "Play", exact: true }).click();
-        await full.locator('.handrow > .twrap[role="button"]').first().waitFor();
+        await full.locator('.handrow .twrap[role="button"]').first().waitFor();
         const newId = await full.evaluate(() => JSON.parse(localStorage.getItem("openmahjong.game.v1")).id);
         assert.notEqual(newId, completedRecord.id, "returning to play starts a new real game without replacing the reviewed result");
         await capture(full, "learning-loop-return-play");
