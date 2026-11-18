@@ -1,9 +1,13 @@
 // Run against a built web client and a real local API with its own disposable database.
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
+import { evaluateVariantDiscards } from "@openmahjong/ai";
 import { chromium } from "playwright-core";
 import { browserLaunchOptions } from "./browser-harness.mjs";
 
+const length = process.env.ONLINE_BROWSER_LENGTH ?? "east",
+  pace = process.env.ONLINE_BROWSER_PACE ?? "correspondence";
+const samples = [];
 const web = process.argv[2] ?? "http://localhost:4187";
 const api = process.argv[3] ?? "http://localhost:4188";
 for (const host of [web, api])
@@ -21,11 +25,15 @@ const errors = [];
 for (const p of pages) p.on("pageerror", (e) => errors.push(e.message));
 const csrf = [];
 async function request(seat, path, body) {
+  const start = performance.now();
   const r = await contexts[seat].request.fetch(api + "/api/online/" + path, {
     method: body ? "POST" : "GET",
+    maxRetries: body ? 0 : 2,
     headers: { origin: web, "x-csrf-token": csrf[seat] ?? "" },
     ...(body ? { data: body } : {}),
   });
+  if (path.startsWith("matches/") && !body)
+    samples.push(performance.now() - start);
   const data = await r.json();
   await r.dispose();
   assert.ok(r.ok(), path + " " + JSON.stringify(data.error));
@@ -41,6 +49,7 @@ try {
     csrf[i] = (await request(i, "me")).csrf;
   }
   for (const variant of ["riichi", "hong-kong", "mcr", "taiwanese"]) {
+    if (variant === "riichi" && length === "full") continue;
     const host = pages[0];
     await host.goto(web + "/#/online");
     await host
@@ -48,7 +57,10 @@ try {
       .selectOption(variant);
     await host
       .getByRole("combobox", { name: "Pace", exact: true })
-      .selectOption("correspondence");
+      .selectOption(pace);
+    await host
+      .getByRole("combobox", { name: "Length", exact: true })
+      .selectOption(length);
     await host.getByRole("button", { name: "Create custom room" }).click();
     const invite = await host.getByLabel("Invite link").inputValue();
     const id = new URL(host.url()).hash.split("/").at(-1);
@@ -90,15 +102,24 @@ try {
       await Promise.all(
         views.map(async (v, i) => {
           assert.equal(v.seat, i);
-          assert.equal(v.deadline, null);
+          if (pace === "correspondence") assert.equal(v.deadline, null);
+          else assert.ok(Number.isFinite(v.deadline));
           assert.ok(!("journal" in v) && !("events" in v) && !("walls" in v));
           assert.ok(
             v.view.players.every((p) => !("tiles" in p) && !("hand" in p)),
           );
           if (!v.choices.length) return;
-          const pick = ["tsumo", "ron", "discard", "pass"]
+          let pick = ["tsumo", "ron", "discard", "pass"]
             .map((t) => v.choices.findIndex((a) => a.type === t))
             .find((n) => n >= 0);
+          if (variant !== "riichi" && v.choices[pick]?.type === "discard") {
+            const target = evaluateVariantDiscards(v.view).recommendation
+              .tileId;
+            const better = v.choices.findIndex(
+              (a) => a.type === "discard" && a.tileId === target,
+            );
+            if (better >= 0) pick = better;
+          }
           const body = {
             actionId: randomUUID(),
             revision: v.revision,
@@ -139,14 +160,28 @@ try {
     await host.getByRole("button", { name: "Game details" }).click();
     await host.getByRole("button", { name: "Friendly rematch" }).click();
     await host.getByRole("heading", { name: "Waiting room" }).waitFor();
-    assert.notEqual(host.url().split("/").at(-1), id);
+    const rematch = host.url().split("/").at(-1);
+    assert.notEqual(rematch, id);
+    host.once("dialog", (dialog) => dialog.accept());
+    await host.getByRole("button", { name: "Leave waiting room" }).click();
+    await host.getByRole("heading", { name: "My games" }).waitFor();
     console.log(
-      variant +
+      [variant, length, pace].join(" ") +
         " completed across four private browsers in " +
         positions +
         " decisions",
     );
   }
+  samples.sort((a, b) => a - b);
+  console.log(
+    "Seat snapshot latency across " +
+      samples.length +
+      " requests: p50 " +
+      samples[Math.floor(samples.length * 0.5)].toFixed(1) +
+      " ms, p95 " +
+      samples[Math.floor(samples.length * 0.95)].toFixed(1) +
+      " ms",
+  );
   assert.deepEqual(errors, []);
 } finally {
   await browser.close();

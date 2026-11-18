@@ -25,8 +25,9 @@ Profile-specific practice, public-information coaching, history, statistics and
 resume use the same scoring sources as gameplay and calculators. Strategic
 advice remains heuristic; no calibrated grading scale is claimed.
 
-Broader curricula, generated puzzles, demonstrated learning improvement and
-multiplayer remain phased work; see the [roadmap](docs/product/roadmap.md).
+Open online tables for live or unlimited correspondence in every playable variant. Guests and accounts can play Friendly or invite friends into custom rooms. Ranked matchmaking has a separate release flag. [Multiplayer setup and policies](docs/architecture/multiplayer-operations.md)
+
+Broader curricula, generated puzzles and demonstrated learning improvement are tracked in the [roadmap](docs/product/roadmap.md).
 
 ## Principles
 

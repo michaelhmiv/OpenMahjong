@@ -297,4 +297,14 @@ jobs:
             if curl -fsS http://localhost:4188/healthz && curl -fsS -o /dev/null http://localhost:4187/; then break; fi
             sleep 1
           done
-          node scripts/browser-multiplayer.mjs
+          for length in east south full; do
+            ONLINE_BROWSER_LENGTH="$length" ONLINE_BROWSER_PACE=correspondence node scripts/browser-multiplayer.mjs
+          done
+          ONLINE_BROWSER_PACE=live node scripts/browser-multiplayer.mjs
+      - name: Rating calibration and PostgreSQL backup rehearsal
+        env:
+          OPENMAHJONG_TEST_DB: postgresql://postgres@127.0.0.1:5432/openmahjong_test
+          POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: |
+          node scripts/multiplayer-ratings.mjs
+          node scripts/multiplayer-restore.mjs "$POSTGRES_CONTAINER"

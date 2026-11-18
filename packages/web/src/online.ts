@@ -69,12 +69,12 @@ type Snapshot = Summary & {
 const variants: Record<string, string> = {
   riichi: "Riichi",
   "hong-kong": "Hong Kong Old Style",
-  mcr: "MCR",
-  taiwanese: "Taiwanese",
+  mcr: "MCR (WMO 2006)",
+  taiwanese: "Taiwanese Every-flower",
 };
 const lengths: Record<string, string> = {
-  east: "East only",
-  south: "East + South",
+  east: "East only · 1 round",
+  south: "East + South · 2 rounds",
   full: "Four rounds",
 };
 const paces = {

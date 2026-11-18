@@ -1,7 +1,11 @@
 import { randomInt, randomUUID } from "node:crypto";
 import type { Pool, PoolClient } from "pg";
 import { rate, rating } from "openskill";
-import type { GameResult } from "@openmahjong/engine";
+import {
+  FIRST_INDICATOR_INDEX,
+  LIVE_WALL_SIZE,
+  type GameResult,
+} from "@openmahjong/engine";
 import { ValidationError } from "../validate.js";
 import { newToken } from "../auth.js";
 import { TableEngine, newJournal, type Format, type Journal } from "./match.js";
@@ -292,18 +296,21 @@ export class OnlineTables {
     const seats = await seatsOf(db, id);
     const me = member(seats, actor.id);
     if (kind === "rematch" && room.state === "finished") {
-      const next = await db.query<{ id: string }>(
-        "SELECT id FROM online_rooms WHERE parent=$1 AND state='waiting'",
-        [id],
-      );
-      if (next.rows.length) {
-        const r = await lockRoom(db, next.rows[0]!.id);
-        await this.addSeat(db, r, actor.id, true);
-        return { id: r.id };
+      const next = (
+        await db.query<{ id: string; state: string; open: boolean }>(
+          "SELECT id,state,created_at+interval '1 day'>clock_timestamp() AS open FROM online_rooms WHERE parent=$1 FOR UPDATE",
+          [id],
+        )
+      ).rows[0];
+      if (next) {
+        const seats = await seatsOf(db, next.id);
+        if (seats.some((s) => s.player === actor.id) && next.state !== "closed")
+          return { id: next.id };
+        if (!next.open || next.state !== "waiting")
+          return fail("This rematch invitation has closed", 409);
+        await this.addSeat(db, await lockRoom(db, next.id), actor.id, true);
+        return { id: next.id };
       }
-      await db.query("UPDATE online_rooms SET parent=NULL WHERE parent=$1", [
-        id,
-      ]);
       return this.create(db, actor, room, "custom", id);
     }
     if (
@@ -491,15 +498,23 @@ export class OnlineTables {
     if (room.state !== "finished")
       return fail("Review opens after final settlement", 409);
     const engine = new TableEngine(room, room.journal!, true);
-    const { events } = engine.game;
+    const recorded = engine.game.events;
     const version = room.variant === "riichi" ? 2 : 3;
     const extra = room.variant === "riichi" ? {} : { variant: room.variant };
     const hands: number[] = [];
     let hand = -1;
-    for (const event of events) {
+    const events = recorded.map((event) => {
       if (event.type === "hand-start") hand++;
       hands.push(hand);
-    }
+      if (event.type === "hand-start" && room.variant === "riichi") {
+        const offset = LIVE_WALL_SIZE + FIRST_INDICATOR_INDEX + 5;
+        return {
+          ...event,
+          uraIndicatorIds: room.journal!.walls[hand]!.slice(offset, offset + 5),
+        };
+      }
+      return event;
+    });
     const positions = engine.positions.flatMap((p, index) =>
       p.view.seat === me.seat
         ? [

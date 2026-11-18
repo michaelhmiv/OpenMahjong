@@ -31,24 +31,49 @@ function json(res: ServerResponse, body: unknown) {
 }
 
 export class OnlineHttp {
-  private readonly creationRates = new Map<
+  private readonly streams = new Map<string, number>();
+  private publishedBytes = 0;
+  private openedStreams = 0;
+  private actionCount = 0;
+  private actionMs = 0;
+  private readonly requestRates = new Map<
     string,
     { since: number; count: number }
   >();
   constructor(readonly tables: OnlineTables) {}
-  private limitCreation(req: IncomingMessage) {
-    const key = req.socket.remoteAddress ?? "local",
-      now = Date.now();
-    const current = this.creationRates.get(key);
-    if (!current || current.since + 60000 < now) {
-      if (this.creationRates.size >= 4096)
-        for (const [k, v] of this.creationRates)
-          if (v.since + 60000 < now) this.creationRates.delete(k);
-      if (!current && this.creationRates.size >= 4096)
+  private limit(key: string, maximum: number) {
+    const now = Date.now();
+    const current = this.requestRates.get(key);
+    if (current && current.since + 60000 >= now) {
+      if (++current.count > maximum)
+        return fail("Too many attempts. Try again in a minute.", 429);
+      return;
+    }
+    if (this.requestRates.size >= 8192) {
+      for (const [k, v] of this.requestRates)
+        if (v.since + 60000 < now) this.requestRates.delete(k);
+      if (this.requestRates.size >= 8192)
         return fail("Please try again shortly", 429);
-      this.creationRates.set(key, { since: now, count: 1 });
-    } else if (++current.count > 60)
-      fail("Too many attempts. Try again in a minute.", 429);
+    }
+    this.requestRates.set(key, { since: now, count: 1 });
+  }
+
+  takeMetrics() {
+    const metrics = {
+      activeStreams: [...this.streams.values()].reduce((a, b) => a + b, 0),
+      openedStreams: this.openedStreams,
+      projectionBytes: this.publishedBytes,
+      acceptedRequests: this.actionCount,
+      meanDecisionMs: this.actionCount
+        ? Math.round(this.actionMs / this.actionCount)
+        : null,
+    };
+    this.openedStreams =
+      this.publishedBytes =
+      this.actionCount =
+      this.actionMs =
+        0;
+    return metrics;
   }
   private async identity(
     req: IncomingMessage,
@@ -91,7 +116,7 @@ export class OnlineHttp {
     b: Payload,
     recover: boolean,
   ) {
-    this.limitCreation(req);
+    this.limit("guest/" + (req.socket.remoteAddress ?? "local"), 60);
     const token = newToken(),
       csrf = newToken(),
       recovery = newToken();
@@ -167,6 +192,7 @@ export class OnlineHttp {
     if (!p) return fail("Join as a guest or sign in", 401);
     if (mutation && req.headers["x-csrf-token"] !== p.csrf)
       return fail("Session changed", 403);
+    if (mutation) this.limit("write/" + p.id, 1800);
     if (route === "games" && method === "GET") {
       json(res, await this.tables.list(p.id));
       return;
@@ -280,19 +306,23 @@ export class OnlineHttp {
         this.tables.snapshot(db, p.id, id, client),
       );
     if (method === "GET" && !endpoint) json(res, await snapshot());
-    else if (method === "GET" && endpoint === "review")
+    else if (method === "GET" && endpoint === "review") {
+      this.limit("review/" + p.id, 30);
       json(
         res,
         await this.tables.transaction((db) => this.tables.review(db, p.id, id)),
       );
-    else if (method === "POST" && endpoint === "actions")
+    } else if (method === "POST" && endpoint === "actions") {
+      const start = performance.now();
       json(
         res,
         await this.tables.transaction((db) =>
           this.tables.action(db, p.id, id, b),
         ),
       );
-    else if (method === "POST" && endpoint === "room")
+      this.actionMs += performance.now() - start;
+      this.actionCount++;
+    } else if (method === "POST" && endpoint === "room")
       json(
         res,
         await this.tables.transaction((db) =>
@@ -315,6 +345,12 @@ export class OnlineHttp {
       );
     else if (method === "GET" && endpoint === "stream") {
       const first = await snapshot();
+      if (res.destroyed) return;
+      const count = this.streams.get(p.id) ?? 0;
+      if (count >= 8)
+        return fail("Too many open tables in this browser session", 429);
+      this.streams.set(p.id, count + 1);
+      this.openedStreams++;
       res.writeHead(200, {
         "content-type": "text/event-stream",
         "cache-control": "no-store",
@@ -323,6 +359,7 @@ export class OnlineHttp {
       let last = JSON.stringify(first),
         busy = false,
         checked = 0;
+      this.publishedBytes += Buffer.byteLength(last);
       res.write("retry: 1500\ndata: " + last + "\n\n");
       const timer = setInterval(async () => {
         if (busy || res.destroyed) return;
@@ -351,6 +388,7 @@ export class OnlineHttp {
               return;
             }
             last = data;
+            this.publishedBytes += Buffer.byteLength(data);
             if (!res.write("data: " + data + "\n\n")) res.end();
           }
         } catch {
@@ -359,7 +397,12 @@ export class OnlineHttp {
           busy = false;
         }
       }, 1000);
-      res.once("close", () => clearInterval(timer));
+      res.once("close", () => {
+        clearInterval(timer);
+        const count = (this.streams.get(p.id) ?? 1) - 1;
+        if (count) this.streams.set(p.id, count);
+        else this.streams.delete(p.id);
+      });
     } else return fail("Unknown online operation", 404);
   }
 }

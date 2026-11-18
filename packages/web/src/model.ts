@@ -135,6 +135,7 @@ export class TableModel {
   seed = "";
 
   private handSerial = -1;
+  private recordedUra: readonly number[] | null = null;
   private uraCache: Tile[] | null | undefined = undefined;
 
   constructor(readonly humanSeat: Seat = 0) {
@@ -178,6 +179,8 @@ export class TableModel {
       }
       case "hand-start": {
         this.handSerial++;
+        const ura = ev["uraIndicatorIds"];
+        this.recordedUra = Array.isArray(ura) && ura.length === 5 && ura.every(id => Number.isInteger(id) && id >= 0 && id < 136) ? ura : null;
         this.uraCache = undefined;
         this.roundWind = Number(ev["roundWind"]);
         this.kyoku = Number(ev["kyoku"]);
@@ -403,6 +406,7 @@ export class TableModel {
    * rather than showing tiles it cannot prove.
    */
   uraIndicators(): Tile[] | null {
+    if (this.recordedUra) return this.recordedUra.slice(0, this.doraIndicators.length).map(tileById);
     if (this.uraCache !== undefined) return this.uraCache;
     let result: Tile[] | null = null;
     try {

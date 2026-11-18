@@ -1,3 +1,10 @@
+import { createServer } from "node:http";
+import type { AddressInfo } from "node:net";
+import { createApp } from "../src/app.js";
+import { loadConfig } from "../src/config.js";
+import { hashToken } from "../src/auth.js";
+import { OnlineHttp } from "../src/online/http.js";
+import { PgStore } from "../src/pg-store.js";
 import { randomUUID } from "node:crypto";
 import { Pool } from "pg";
 import { beforeAll, afterAll, describe, it, expect } from "vitest";
@@ -67,6 +74,142 @@ describe.skipIf(!url)("online ownership and recovery in PostgreSQL", () => {
     await act(players[0]!, id, "start");
     return { players, id };
   }
+  it("keeps an unlimited seat through guest expiry, code rotation and account conversion over HTTP", async () => {
+    const store = new PgStore(db),
+      origin = "http://localhost:4187";
+    const server = createServer(
+      createApp({
+        store,
+        config: loadConfig({ APP_ORIGIN: origin }),
+        google: null,
+        online: new OnlineHttp(t),
+      }),
+    );
+    await new Promise<void>((resolve) =>
+      server.listen(0, "127.0.0.1", resolve),
+    );
+    const address = server.address() as AddressInfo;
+    const call = (
+      route: string,
+      body?: unknown,
+      cookie = "",
+      csrf = "",
+      from = origin,
+    ) =>
+      fetch("http://127.0.0.1:" + address.port + "/api/online/" + route, {
+        method: body === undefined ? "GET" : "POST",
+        headers: {
+          cookie,
+          origin: from,
+          "x-csrf-token": csrf,
+          "content-type": "application/json",
+        },
+        ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+      });
+    try {
+      const newGuest = await call("guests", { name: "Future account" });
+      expect(newGuest.status).toBe(200);
+      const guestCookie = newGuest.headers.get("set-cookie")!;
+      expect(guestCookie).toContain("HttpOnly");
+      expect(guestCookie).toContain("Secure");
+      const initial = guestCookie.split(";")[0]!,
+        g = (await newGuest.json()) as { csrf: string; recovery: string };
+      expect((await call("rooms", f, initial, "bad")).status).toBe(403);
+      expect(
+        (await call("rooms", f, initial, g.csrf, "http://unrelated.invalid"))
+          .status,
+      ).toBe(403);
+      expect(
+        (await call("rooms", { ...f, variant: ["riichi"] }, initial, g.csrf))
+          .status,
+      ).toBe(400);
+      const { id } = (await (
+        await call("rooms", f, initial, g.csrf)
+      ).json()) as { id: string };
+      const write = (kind: string) =>
+        call("matches/" + id + "/room", { kind }, initial, g.csrf);
+      for (let i = 1; i < 4; i++) expect((await write("bot")).status).toBe(200);
+      expect((await write("start")).status).toBe(200);
+      const first = (await (
+        await call("matches/" + id, undefined, initial)
+      ).json()) as { choices: unknown[]; view: unknown };
+      expect(first.choices.length).toBeGreaterThan(0);
+      const nextCode = (await (
+        await call("guest/recovery", {}, initial, g.csrf)
+      ).json()) as { recovery: string };
+      expect((await call("recover", { code: g.recovery })).status).toBe(403);
+      await db.query(
+        "UPDATE online_players SET expires_at=clock_timestamp()-interval '30 days' WHERE csrf=$1",
+        [g.csrf],
+      );
+      expect((await call("matches/" + id, undefined, initial)).status).toBe(
+        401,
+      );
+      const renewed = await call("recover", { code: nextCode.recovery });
+      expect(renewed.status).toBe(200);
+      const renewedCookie = renewed.headers.get("set-cookie")!.split(";")[0]!;
+      expect(
+        await (await call("matches/" + id, undefined, renewedCookie)).json(),
+      ).toEqual(first);
+      expect((await call("recover", { code: nextCode.recovery })).status).toBe(
+        403,
+      );
+      expect((await call("matches/" + id, undefined, initial)).status).toBe(
+        401,
+      );
+      const account = await store.upsertUser({
+        googleSub: "claim-" + id,
+        name: "Member",
+        avatarUrl: null,
+      });
+      const token = randomUUID(),
+        csrf = randomUUID();
+      await store.createSession({
+        userId: account.id,
+        tokenHash: hashToken(token),
+        csrfToken: csrf,
+        expiresAt: new Date(Date.now() + 60000),
+      });
+      const accountCookie = "om_session=" + token;
+      expect(
+        (await call("matches/" + id, undefined, accountCookie)).status,
+      ).toBe(404);
+      expect(
+        (
+          await call(
+            "claim-guest",
+            {},
+            accountCookie + "; " + renewedCookie,
+            csrf,
+          )
+        ).status,
+      ).toBe(200);
+      expect(
+        (await call("matches/" + id, undefined, renewedCookie)).status,
+      ).toBe(401);
+      const restored = (await (
+        await call("matches/" + id, undefined, accountCookie)
+      ).json()) as typeof first;
+      expect(restored.choices).toEqual(first.choices);
+      expect(restored.view).toEqual(first.view);
+      await store.deleteUser(account.id);
+      expect(
+        (await call("matches/" + id, undefined, accountCookie)).status,
+      ).toBe(401);
+      const seat = (
+        await db.query(
+          "SELECT s.covered,p.name FROM online_seats s JOIN online_players p ON p.id=s.player WHERE s.room=$1 AND s.seat=0",
+          [id],
+        )
+      ).rows[0];
+      expect(seat).toEqual({ covered: true, name: "Deleted player" });
+      await db.query("DELETE FROM online_rooms WHERE id=$1", [id]);
+    } finally {
+      await new Promise<void>((resolve, reject) =>
+        server.close((err) => (err ? reject(err) : resolve())),
+      );
+    }
+  });
   it("serializes the last seat, transfers the host and checks membership", async () => {
     const [host, b, c, d] = (await Promise.all([
       player(),
