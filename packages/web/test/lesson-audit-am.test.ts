@@ -542,6 +542,254 @@ describe("American hardening round 2 regressions", () => {
 });
 
 // ---------------------------------------------------------------------------
+// Hardening round 3 regressions (Nov 18, 2026 verification re-panel,
+// verdict NOT MET on criteria (d)/(e) by two corroborated defects):
+// am-picking's pictured racks contradicted their own counting text
+// (V1), and am-scoring step 6 contradicted step 3's worked example
+// (V2). The pictured-rack counts below are RECOMPUTED from the
+// notations as they stand in the lesson content, expanded through
+// the runner's own expandNotation and counted against the Practice
+// Card data over every assignment of the hand's card suits to real
+// suits — so if a future notation edit changes a pictured count,
+// the recomputed count stops matching the pinned number the prose
+// states, and this block fails.
+// ---------------------------------------------------------------------------
+
+describe("American hardening round 3 regressions", () => {
+  const lessonById = (id: string) => AMERICAN_LESSONS.find((l) => l.id === id)!;
+  const questionById = (id: string) => {
+    for (const l of AMERICAN_LESSONS)
+      for (const q of variantLessonQuestions(l)) if (q.id === id) return q;
+    throw new Error(`no question ${id}`);
+  };
+  const tilesOf = (q: ReturnType<typeof questionById>): string => {
+    if ("tiles" in q && q.tiles) return q.tiles;
+    throw new Error(`question ${q.id} pictures no tiles`);
+  };
+
+  const faceCounts = (notation: string): Map<string, number> => {
+    const counts = new Map<string, number>();
+    for (const face of expandNotation(notation, AMERICAN_TILE_INVENTORY)) {
+      const name = tileTypeName(face.type);
+      counts.set(name, (counts.get(name) ?? 0) + 1);
+    }
+    return counts;
+  };
+
+  interface Counted {
+    held: number;
+    toGo: number;
+    shortfalls: string[];
+  }
+  // Count a pictured rack toward a card hand under one assignment of
+  // the hand's card suits (0, 1, 2) to real suits. Flowers have no
+  // pictured face in this app; where a lesson's text names flowers
+  // standing on the rack, pass their count as namedFlowers.
+  const countToward = (
+    handId: string,
+    counts: Map<string, number>,
+    assign: readonly string[],
+    namedFlowers = 0,
+  ): Counted => {
+    const hand = practiceCardHand(handId);
+    let held = 0;
+    const shortfalls: string[] = [];
+    for (const g of hand.groups) {
+      if (g.kind === "flower") {
+        const got = Math.min(namedFlowers, g.count);
+        held += got;
+        for (let i = got; i < g.count; i++) shortfalls.push("F");
+        continue;
+      }
+      if (g.kind !== "number")
+        throw new Error(`${handId}: pictured-count helper covers number groups only`);
+      const face = `${g.rank}${assign[g.suit ?? 0]}`;
+      const got = Math.min(counts.get(face) ?? 0, g.count);
+      held += got;
+      for (let i = got; i < g.count; i++) shortfalls.push(face);
+    }
+    const total = hand.groups.reduce((n, g) => n + g.count, 0);
+    return { held, toGo: total - held, shortfalls };
+  };
+  // The lessons' own counting rule: count each hand in the suits
+  // where it counts most — the best over every assignment of
+  // distinct real suits to the hand's card suits.
+  const bestToward = (
+    handId: string,
+    counts: Map<string, number>,
+    namedFlowers = 0,
+  ): Counted => {
+    const { suitsUsed } = practiceCardHand(handId);
+    const suits = ["m", "p", "s"];
+    let best: Counted | undefined;
+    const build = (acc: string[]): void => {
+      if (acc.length === suitsUsed) {
+        const c = countToward(handId, counts, acc, namedFlowers);
+        if (!best || c.held > best.held) best = c;
+        return;
+      }
+      for (const s of suits) if (!acc.includes(s)) build([...acc, s]);
+    };
+    build([]);
+    return best!;
+  };
+
+  it("am-picking's opening rack pictures the counts its steps teach", () => {
+    // V1b: the rack pictured four 6s while steps 1–3 counted three
+    // (10 held / 4 to go toward EV-1, one more of each rank needed).
+    const picking = lessonById("am-picking");
+    const opening = picking.steps.find((s) => s.hand)?.hand;
+    expect(opening).toBeDefined();
+    expect(expandNotation(opening!, AMERICAN_TILE_INVENTORY)).toHaveLength(13);
+    const counts = faceCounts(opening!);
+    const inCraks = countToward("EV-1", counts, ["m"]);
+    expect(inCraks.held).toBe(10);
+    expect(inCraks.toGo).toBe(4);
+    expect(inCraks.shortfalls).toEqual(["2m", "4m", "6m", "8m"]);
+    expect(bestToward("EV-1", counts).held).toBe(10);
+    // The two graded checks key the same recomputed counts.
+    const held = questionById("am-ev1-held");
+    expect(held.kind).toBe("choice");
+    if (held.kind === "choice")
+      expect(held.choices[held.answer]).toBe(String(inCraks.held));
+    const toGo = questionById("am-ev1-to-go");
+    expect(toGo.kind).toBe("choice");
+    if (toGo.kind === "choice")
+      expect(toGo.choices[toGo.answer]).toBe(String(inCraks.toGo));
+  });
+
+  it("am-picking's worked comparison rack counts as its text counts it", () => {
+    // Step 5: EV-1 counts 6 in its best suit (Dots); EV-5 counts 13
+    // with one tile to go — a third 6 of Bams. The rack's two
+    // flowers are named in the text, not pictured (the track's
+    // stated convention for flowers), so they enter as named tiles.
+    const picking = lessonById("am-picking");
+    const pictured = picking.steps.filter((s) => s.hand).map((s) => s.hand!);
+    expect(pictured).toHaveLength(3);
+    const counts = faceCounts(pictured[1]!);
+    const ev1 = bestToward("EV-1", counts);
+    expect(ev1.held).toBe(6);
+    expect(ev1.toGo).toBe(8);
+    const ev5 = bestToward("EV-5", counts, 2);
+    expect(ev5.held).toBe(13);
+    expect(ev5.toGo).toBe(1);
+    expect(ev5.shortfalls).toEqual(["6s"]);
+  });
+
+  it("am-picking's compare-drill rack pictures the split its feedback counts", () => {
+    // V1a: the pictured pair of 2s sat in Dots while the question
+    // and feedback count it in Craks (13 held toward EV-2, only one
+    // more 8 of Craks missing; EV-1's best suit, Dots, holds 7).
+    const drill = questionById("am-compare-drill");
+    const counts = faceCounts(tilesOf(drill));
+    const split = countToward("EV-2", counts, ["m", "p"]);
+    expect(split.held).toBe(13);
+    expect(split.toGo).toBe(1);
+    expect(split.shortfalls).toEqual(["8m"]);
+    expect(bestToward("EV-2", counts).held).toBe(13);
+    const ev1 = bestToward("EV-1", counts);
+    expect(ev1.held).toBe(7);
+    expect(ev1.toGo).toBe(7);
+  });
+
+  it("am-picking's Consecutive Runs racks count as their text counts them", () => {
+    // The worked RN comparison: RN-4 counts 12 with both missing
+    // tiles 7s; RN-3 counts 7 on its far side. The transfer drill:
+    // RN-1 counts 11 (3 to go), RN-2 counts 2 (12 to go).
+    const picking = lessonById("am-picking");
+    const pictured = picking.steps.filter((s) => s.hand).map((s) => s.hand!);
+    const counts = faceCounts(pictured[2]!);
+    const rn4 = countToward("RN-4", counts, ["m"]);
+    expect(rn4.held).toBe(12);
+    expect(rn4.toGo).toBe(2);
+    expect(rn4.shortfalls).toEqual(["7m", "7m"]);
+    expect(bestToward("RN-3", counts).held).toBe(7);
+    expect(bestToward("RN-3", counts).toGo).toBe(7);
+    const drillCounts = faceCounts(tilesOf(questionById("am-runs-compare-drill")));
+    expect(bestToward("RN-1", drillCounts).held).toBe(11);
+    expect(bestToward("RN-1", drillCounts).toGo).toBe(3);
+    expect(bestToward("RN-2", drillCounts).held).toBe(2);
+    expect(bestToward("RN-2", drillCounts).toGo).toBe(12);
+  });
+
+  it("am-scoring's first discard check states its joker fact and keys the taught stacking", () => {
+    // V2: step 3's worked example pays 100 for a 25-point no-joker
+    // discard win; step 6 asked about the pictured (jokerless) hand
+    // with the key at 50 and no joker fact stated anywhere. Jokers
+    // have no pictured face in this app — the premise sentence is
+    // the hand's joker content, the same channel the track uses for
+    // flowers — so the pin is: the sentence is present, the
+    // feedback addresses the bonus, and the key equals the stacking
+    // computed from the stated fact (jokers used → no bonus →
+    // discarder pays double the plain value).
+    const scoring = lessonById("am-scoring");
+    const worked = scoring.steps[2]?.text ?? "";
+    expect(worked).toContain("with no jokers in it");
+    expect(worked).toContain("which is 100");
+    const pictured = scoring.steps.find((s) => s.hand)?.hand;
+    expect(pictured).toBeDefined();
+    expect(faceCounts(pictured!)).toEqual(
+      new Map([
+        ["2m", 3],
+        ["4m", 3],
+        ["6m", 4],
+        ["8m", 4],
+      ]),
+    );
+    const q = questionById("am-ev1-discard-pay");
+    expect(q.prompt).toContain(
+      "Jokers were used in the hand, so no jokerless bonus applies",
+    );
+    expect(q.explanation).toContain("no jokerless bonus doubles its value");
+    expect(q.kind).toBe("choice");
+    if (q.kind === "choice")
+      expect(q.choices[q.answer]).toBe(String(practiceCardHand("EV-1").value * 2));
+  });
+
+  it("am-scoring's total check shares the premise and qualifies its four-times claim", () => {
+    // Watch item (i): "always brings in four times the hand's
+    // value" is falsified by the bonus cases the same lesson
+    // teaches. The total check shares step 6's scenario and
+    // pictured hand, so it carries the same joker sentence.
+    const q = questionById("am-ev1-total");
+    expect(q.prompt).toContain(
+      "Jokers were used in the hand, so no jokerless bonus applies",
+    );
+    expect(q.explanation).not.toContain("always brings in four times");
+    expect(q.explanation).toContain("With no bonus in play");
+    expect(q.kind).toBe("choice");
+    if (q.kind === "choice")
+      expect(q.choices[q.answer]).toBe(String(practiceCardHand("EV-1").value * 4));
+  });
+
+  it("the pass rule's stand-alone clause matches what the drills grade", () => {
+    // Watch item (ii): the rule said stand-alone tiles have "no
+    // neighbours among the tiles you are keeping", but both graded
+    // pass drills pass tiles that neighbour kept tiles in number
+    // (the 2 of Craks beside kept odd Craks; the 5 and 7 of Craks
+    // beside the kept 6). Stand-alone means unpaired and no part in
+    // a kept cluster.
+    const charleston = lessonById("am-charleston");
+    const taught = charleston.steps.map((s) => s.text ?? "").join("\n");
+    expect(taught).not.toContain("no neighbours among the tiles you are keeping");
+    expect(taught).toContain("no part in the clusters you are keeping");
+    expect(taught).toContain("still stand alone");
+  });
+
+  it("EV-2's quoted description is glossed where the track quotes it", () => {
+    // Watch item (iii): "the rest follows them" was never explained.
+    // The card data keeps its canonical wording; the lesson glosses
+    // its own quote (the split the card data itself encodes: EV-2's
+    // groups sit in card suits 0,1,0,1,0).
+    const card = lessonById("am-card");
+    expect(card.steps[2]?.text ?? "").toContain(
+      "the rest follows them — means the twos, fours and sixes split across the same two suits as the eights",
+    );
+    expect(practiceCardHand("EV-2").groups.map((g) => g.suit)).toEqual([0, 1, 0, 1, 0]);
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Practice Card data integrity (acceptance check 1, in-repo form)
 // ---------------------------------------------------------------------------
 
