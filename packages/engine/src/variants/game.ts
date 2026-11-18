@@ -399,6 +399,23 @@ export class VariantGame implements VariantPublicState {
     this.adapter.onCall?.(this, seat, request.context, action as CallAction);
     return action as CallAction;
   }
+  viewFor(seat: number): VariantPublicView {
+    return this.adapter.publicView(this, seat);
+  }
+
+  claimContexts(current: CallContext, seat: number): CallContext[] {
+    const { tile, fromSeat } = current;
+    if (seat === fromSeat) return [];
+    const robbed = current.phase === "chankan";
+    const canWin = !!this.winning(seat, tile, false, false, robbed);
+    const contexts = [this.adapter.callContext(this, seat, fromSeat, tile, robbed ? "chankan" : "ron", canWin)];
+    if (!robbed) {
+      contexts.push(this.adapter.callContext(this, seat, fromSeat, tile, "pon-kan", false));
+      contexts.push(this.adapter.callContext(this, seat, fromSeat, tile, "chi", false));
+    }
+    return contexts;
+  }
+
   private settleWin(
     seat: number,
     from: number,

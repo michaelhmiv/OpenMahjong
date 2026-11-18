@@ -1133,6 +1133,8 @@ export class App {
       else this.startVariantGame(this.variantChoice);
     });
     body.append(play);
+    const online = h("a", { class: "pillbtn", href: "#/online" }, "Play online");
+    body.append(online);
     const tableTools = h("button", { class:"pillbtn table-tools-entry" }, tx("ui.app.in-person-calculator-and-scorekeeper", "In-person calculator and scorekeeper"));
     tableTools.addEventListener("click", () => { this.tableSessionId = undefined; this.showScreen("tables"); });
     body.append(tableTools);

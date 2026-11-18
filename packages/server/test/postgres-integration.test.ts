@@ -40,7 +40,7 @@ describe.skipIf(!connectionString)(
     it("migrates a clean schema and separates historical Riichi and new variant statistics", async () => {
       const { pool, store } = await isolated();
       const applied = await runMigrations(pool);
-      expect(applied).toHaveLength(7);
+      expect(applied).toHaveLength(8);
       expect(await runMigrations(pool)).toEqual([]);
       const user = await store.upsertUser({
         googleSub: "synthetic-pg",
@@ -118,7 +118,7 @@ describe.skipIf(!connectionString)(
         runMigrations(pool),
         runMigrations(pool),
       ]);
-      expect(results.map((r) => r.length).sort()).toEqual([0, 2]);
+      expect(results.map((r) => r.length).sort()).toEqual([0, 3]);
       const record = await store.getGame(user.id, id);
       expect(record!.score).toBe(30000);
       expect(record!.stats.winPoints).toBe(5200);

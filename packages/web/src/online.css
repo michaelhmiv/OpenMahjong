@@ -1,0 +1,125 @@
+#app.online-root {
+  height: 100dvh;
+  width: 100%;
+  max-width: none;
+  display: block;
+  overflow: auto;
+  color: #262a26;
+  background: #f5f1e6;
+}
+.online-shell {
+  max-width: 58rem;
+  margin: auto;
+  padding: 1rem clamp(0.85rem, 3vw, 2rem) 3rem;
+  font-family: inherit;
+}
+.online-shell header {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid #c9c8b7;
+}
+.online-shell h1,
+.online-shell h2,
+.online-shell h3 {
+  margin: 0.55rem 0;
+  line-height: 1.2;
+}
+.online-shell h1,
+.online-shell h2 {
+  font-family: Fraunces, Georgia, serif;
+}
+.online-shell a {
+  color: #25533f;
+  text-decoration: underline;
+}
+.online-card,
+.online-shell details,
+.online-board {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #c9c8b7;
+  border-radius: 0.8rem;
+  background: #fffdf6;
+}
+.online-shell button,
+.online-shell input,
+.online-shell select {
+  font: inherit;
+  color: inherit;
+  padding: 0.55rem 0.75rem;
+  margin: 0.2rem;
+  min-height: 44px;
+  border: 1px solid #a8aa98;
+  border-radius: 0.4rem;
+  background: #fffcf3;
+}
+.online-shell label {
+  display: inline-flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  margin: 0.4rem;
+}
+.online-shell button {
+  cursor: pointer;
+}
+.online-shell button.primary {
+  background: #224e3b;
+  border-color: #224e3b;
+  color: #fffdf6;
+}
+.online-error {
+  color: #903727;
+}
+.online-error:empty {
+  display: none;
+}
+.online-shell code {
+  display: block;
+  overflow-wrap: anywhere;
+  user-select: all;
+  padding: 0.75rem;
+}
+.online-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  color: #f7f5ea;
+  background: #274939;
+}
+.online-board > h2,
+.online-board > p,
+.online-board > div,
+.online-board > [data-own="true"] {
+  grid-column: 1/-1;
+}
+.online-seat {
+  border-top: 1px solid #829987;
+  padding: 0.5rem 0.15rem;
+  min-width: 0;
+}
+.online-seat h3 {
+  font-size: 1rem;
+}
+.online-tile {
+  display: inline-block;
+  vertical-align: middle;
+  width: clamp(1.1rem, 3vw, 1.8rem);
+}
+.online-tile svg {
+  display: block;
+  width: 100%;
+}
+.online-pond {
+  margin-top: 0.35rem;
+}
+.online-pond .called {
+  opacity: 0.5;
+}
+.online-hand .online-tile {
+  width: clamp(1.2rem, 4.3vw, 2.7rem);
+}
+.online-shell .review-board .online-tile {
+  width: 1.3rem;
+}

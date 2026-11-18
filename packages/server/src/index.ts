@@ -7,6 +7,8 @@
 
 import { createServer } from "node:http";
 import { Pool } from "pg";
+import { OnlineHttp } from "./online/http.js";
+import { OnlineTables } from "./online/service.js";
 import { createApp } from "./app.js";
 import { googleRedirectUri, loadConfig } from "./config.js";
 import { createGoogleClient } from "./google.js";
@@ -19,6 +21,7 @@ async function main(): Promise<void> {
   const config = loadConfig();
 
   let store: Store;
+  let online: OnlineHttp | undefined;
   if (config.databaseUrl) {
     const pool = new Pool({ connectionString: config.databaseUrl });
     const applied = await runMigrations(pool);
@@ -26,6 +29,20 @@ async function main(): Promise<void> {
       console.log(`[server] applied migrations: ${applied.join(", ")}`);
     }
     store = new PgStore(pool);
+    const tables = new OnlineTables(pool, {
+      custom: process.env.ONLINE_CUSTOM !== "off",
+      friendly: process.env.ONLINE_FRIENDLY !== "off",
+      ranked: process.env.ONLINE_RANKED === "on",
+    });
+    online = new OnlineHttp(tables);
+    let ticking = false;
+    setInterval(async () => {
+      if (ticking) return;
+      ticking = true;
+      try { await tables.tick(); }
+      catch { console.error("[online] match timer transaction failed"); }
+      finally { ticking = false; }
+    }, 500).unref();
   } else {
     console.warn(
       "[server] DATABASE_URL is not set — using the in-memory store; " +
@@ -49,7 +66,7 @@ async function main(): Promise<void> {
     );
   }
 
-  const server = createServer(createApp({ store, google, config }));
+  const server = createServer(createApp({ store, google, config, online }));
   server.listen(config.port, () => {
     console.log(`[server] listening on port ${config.port}`);
   });

@@ -38,7 +38,10 @@ import type {
 } from "./store.js";
 import { ValidationError, validateGame, validateGameList, validateResume, validateSettings, validatedGameId } from "./validate.js";
 
+import type { OnlineHttp } from "./online/http.js";
+
 export interface AppDeps {
+  online?: OnlineHttp | undefined;
   store: Store;
   google: GoogleClient | null;
   config: Config;
@@ -511,6 +514,11 @@ export function createApp(deps: AppDeps): (
         }
         if (path === "/auth/signout" && method === "POST") {
           await handleSignout(req, res);
+          return;
+        }
+        if (path.startsWith("/api/online/")) {
+          if (!deps.online) { sendError(res,503,"Online tables need a database connection"); return; }
+          await deps.online.handle(req,res,url,config.appOrigin,()=>authenticate(req),()=>readJsonBody(req,4096));
           return;
         }
         if (apiPath) {
