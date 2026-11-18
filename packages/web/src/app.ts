@@ -2545,6 +2545,12 @@ export class App {
         this.riichiArmed = false;
         this.renderTable();
       }));
+      // The declaration deducts the 1,000-point stake the moment the
+      // discard lands; the armed confirmation row states the cost
+      // before the player commits (panel rebuild finding, TU-11).
+      row.append(
+        h("span", { class: "pill" }, "Costs 1,000 points — paid as a stake"),
+      );
       return row;
     }
     if (ctx.canTsumo) {
@@ -2556,6 +2562,11 @@ export class App {
       row.append(btn("Riichi", "riichi", () =>
         this.humanAct({ type: "discard", tileId: selected!.id, riichi: true }),
       ));
+      // Same stake statement as the armed row: this button declares
+      // immediately, so the cost stands next to it before the tap.
+      row.append(
+        h("span", { class: "pill" }, "Costs 1,000 points — paid as a stake"),
+      );
     } else if (ctx.riichiDiscardIds.length > 0 && !this.riichiDismissed && !selected) {
       row.classList.add("show");
       row.append(btn("Riichi", "riichi", () => {
