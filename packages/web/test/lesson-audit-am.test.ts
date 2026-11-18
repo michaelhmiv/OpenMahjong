@@ -790,6 +790,72 @@ describe("American hardening round 3 regressions", () => {
 });
 
 // ---------------------------------------------------------------------------
+// Closure mop-up regressions (Nov 18, 2026 closure re-panel, verdict
+// LOOP MET): the panel's three non-blocking residuals — am-scoring
+// step 7 was the only payment check that omitted its joker
+// statement, am-charleston step 11's premise was the taught
+// blind-pass trigger with no blind-pass option offered, and
+// am-picking step 8's feedback called a kong a pung.
+// ---------------------------------------------------------------------------
+
+describe("American closure mop-up regressions", () => {
+  const questionById = (id: string) => {
+    for (const l of AMERICAN_LESSONS)
+      for (const q of variantLessonQuestions(l)) if (q.id === id) return q;
+    throw new Error(`no question ${id}`);
+  };
+
+  it("am-scoring's self-pick check states its joker fact and keys the taught stacking", () => {
+    // Residual 1: steps 6, 8 and 10 all state their joker status;
+    // step 7 (rn5-selfpick-pay) stated none, so a beginner had to
+    // guess that silence meant no bonus — which the stacking rule
+    // never says. The key (80) is the no-bonus stacking: jokers
+    // used → value stays 40 → self-pick doubles every share. (The
+    // jokerless stacking would be 160, which no option offered —
+    // the key was derivable, but the premise is now stated like
+    // every sibling check states it.)
+    const q = questionById("am-rn5-selfpick-pay");
+    expect(q.prompt).toContain(
+      "Jokers were used in the hand, so no jokerless bonus applies",
+    );
+    expect(q.explanation).toContain("no jokerless bonus doubles its value");
+    expect(q.kind).toBe("choice");
+    if (q.kind === "choice")
+      expect(q.choices[q.answer]).toBe(String(practiceCardHand("RN-5").value * 2));
+  });
+
+  it("am-charleston's joker-pass scenario keys the taught blind pass", () => {
+    // Residual 2: the scenario's premise — exactly one tile you
+    // can spare, every other tile part of the hand being built —
+    // is the blind-pass trigger taught at step 5 ("fewer than
+    // three tiles you can spare"), but the old option set offered
+    // no blind pass and its keyed feedback reframed the premise
+    // ("two ordinary tiles you can best spare"). The keyed answer
+    // is now the blind pass itself, which also keeps both jokers:
+    // it takes only from the tiles coming to you, never from your
+    // own rack.
+    const q = questionById("am-joker-pass-scenario");
+    expect(q.prompt).toContain("exactly one tile you can spare");
+    expect(q.kind).toBe("choice");
+    if (q.kind === "choice")
+      expect(q.choices[q.answer]).toContain("blind pass");
+    expect(q.explanation).toContain("blind pass");
+    expect(q.explanation).toContain("never from your own rack");
+  });
+
+  it("am-picking's runs-compare feedback names the kong of threes", () => {
+    // Residual 3: RN-1's threes group is a kong (3333) and the
+    // pictured rack holds three of its four tiles; the feedback
+    // called them a pung "in full". The counts were always right
+    // (11 held / 3 to go, pinned by the round-3 count audit) —
+    // only the group name was loose.
+    const q = questionById("am-runs-compare-drill");
+    expect(q.explanation).toContain("three of the kong of threes");
+    expect(q.explanation).not.toContain("twos and threes in full");
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Practice Card data integrity (acceptance check 1, in-repo form)
 // ---------------------------------------------------------------------------
 
