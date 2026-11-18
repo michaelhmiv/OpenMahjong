@@ -272,23 +272,28 @@ describe("tile-pick drill questions", () => {
       }),
     ).toThrow("Invalid exercise");
   });
-  it("runs a tile-pick step: wrong picks teach with counts, un-picking corrects", () => {
+  it("runs a tile-pick step: wrong picks teach without membership counts, un-picking corrects", () => {
+    // Hardening (Nov 18, 2026): belong/missing counts certified tiles
+    // one at a time — a membership oracle that solved every multi-tile
+    // drill by elimination. Wrong feedback is now hint-only.
     VARIANT_LESSONS.push(synthetic);
     try {
       mount({ lessonId: synthetic.id });
       buttonByLabel("Tile 1").click();
       click("Check answer");
       expect(root.textContent).toContain("Try again");
-      expect(root.textContent).toContain("1 pick does not belong");
-      expect(root.textContent).toContain("2 picks are missing");
+      expect(root.textContent).toContain(tilePickQuestion.hint);
       expect(root.textContent).toContain("Tap a picked tile again to un-pick it.");
+      expect(root.textContent).not.toContain("does not belong");
+      expect(root.textContent).not.toContain("are missing");
       expect(root.textContent).not.toContain(tilePickQuestion.explanation);
       buttonByLabel("Tile 2").click();
       buttonByLabel("Tile 3").click();
       click("Check answer");
       expect(root.textContent).toContain("Try again");
-      expect(root.textContent).toContain("1 pick does not belong");
-      expect(root.textContent).toContain("0 picks are missing");
+      expect(root.textContent).not.toContain("does not belong");
+      expect(root.textContent).not.toContain("are missing");
+      expect(root.textContent).not.toContain("is missing");
       buttonByLabel("Tile 1").click();
       click("Check answer");
       expect(root.textContent).toContain(tilePickQuestion.explanation);

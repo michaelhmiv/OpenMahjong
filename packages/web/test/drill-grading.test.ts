@@ -365,4 +365,67 @@ describe("drill grading in the mounted lesson UI", () => {
     tapFace("E");
     expect(check()).toMatch(/^Correct\. The last tile in the row is East/);
   });
+
+  // Hardening (Nov 18, 2026, gap items 2 and 6): partial tile-pick
+  // selections receive NO membership counts — the old belong/missing
+  // sentences certified tiles one at a time and solved every drill by
+  // elimination — and pick rows are segmented at group boundaries.
+  it("am-sixes-pick: a partial correct selection earns no counts, and the row is group-segmented", () => {
+    const lesson = VARIANT_LESSONS.find((l) => l.id === "am-card")!;
+    const stepIndex = lesson.steps.findIndex(
+      (s) => s.question?.id === "am-sixes-pick",
+    );
+    if (stepIndex < 0) throw new Error("No step carries am-sixes-pick");
+    const progress: VariantLearningProgress = {
+      ...emptyVariantProgress(),
+      active: {
+        [lesson.id]: {
+          step: stepIndex,
+          version: 2,
+          profileId: lesson.profileId,
+          at: 0,
+        },
+      },
+    };
+    mountVariantEducation(root, {
+      variant: "american" as Parameters<typeof mountVariantEducation>[1]["variant"],
+      lessonId: lesson.id,
+      progress,
+      onProgress: () => {},
+      renderTile: (tile) => {
+        const span = document.createElement("span");
+        span.textContent = tileTypeName(tile.type);
+        return span;
+      },
+      inventory: AMERICAN_TILE_INVENTORY,
+      displayName: "American",
+      onBack: () => {},
+      onPlay: () => {},
+    });
+    const buttons = () =>
+      [...root.querySelectorAll<HTMLButtonElement>(".variant-tile-choice")];
+    expect(renderedRow()).toEqual([
+      "2m", "2m", "2m", "4m", "4m", "4m", "6m", "6m", "6m", "6m", "8m", "8m", "8m", "8m",
+    ]);
+    // Group segmentation: a visible break where the face changes.
+    for (const i of [3, 6, 10])
+      expect(buttons()[i]!.classList.contains("variant-group-start"), `button ${i}`).toBe(true);
+    for (const i of [0, 1, 4, 7, 11])
+      expect(buttons()[i]!.classList.contains("variant-group-start"), `button ${i}`).toBe(false);
+    // One correct tile of four: the old runner answered "0 picks do
+    // not belong, 3 picks are missing" — certifying the pick. Now the
+    // feedback is the hint and the un-pick instruction only.
+    buttons()[6]!.click();
+    const partial = check();
+    expect(partial).toMatch(/^Try again\./);
+    expect(partial).not.toContain("does not belong");
+    expect(partial).not.toContain("are missing");
+    expect(partial).not.toContain("is missing");
+    expect(partial).not.toMatch(/^Correct/);
+    // Complete the set: grading still lands.
+    buttons()[7]!.click();
+    buttons()[8]!.click();
+    buttons()[9]!.click();
+    expect(check()).toMatch(/^Correct\./);
+  });
 });

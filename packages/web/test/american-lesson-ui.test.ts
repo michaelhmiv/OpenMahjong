@@ -13,7 +13,10 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Tile } from "@openmahjong/engine";
-import { createAmericanLessonMounter } from "../src/american-lesson-ui.js";
+import {
+  americanTileLabel,
+  createAmericanLessonMounter,
+} from "../src/american-lesson-ui.js";
 import {
   AMERICAN_PROGRESS_KEY,
   readAmericanProgress,
@@ -95,6 +98,27 @@ async function driveLesson(
   }
   throw new Error(`lesson ${lesson.id} did not complete`);
 }
+
+describe("american tile accessibility labels", () => {
+  // Panel U19: the shared app label names the suits by material
+  // (characters/circles/bamboo); the American track teaches Craks,
+  // Dots and Bams, so its lesson tiles are labelled with the taught
+  // names. Tile types: m = 0–8, p = 9–17, s = 18–26, winds 27–30,
+  // dragons 31 (white), 32 (green), 33 (red).
+  const tile = (type: number): Tile => ({ type }) as Tile;
+  it("names suited tiles with the taught suit names", () => {
+    expect(americanTileLabel(tile(6))).toBe("7 of Craks");
+    expect(americanTileLabel(tile(13))).toBe("5 of Dots");
+    expect(americanTileLabel(tile(20))).toBe("3 of Bams");
+  });
+  it("names honors in words", () => {
+    expect(americanTileLabel(tile(27))).toBe("East wind");
+    expect(americanTileLabel(tile(30))).toBe("North wind");
+    expect(americanTileLabel(tile(31))).toBe("White dragon");
+    expect(americanTileLabel(tile(32))).toBe("Green dragon");
+    expect(americanTileLabel(tile(33))).toBe("Red dragon");
+  });
+});
 
 describe("american lesson mounter", () => {
   let container: HTMLElement;

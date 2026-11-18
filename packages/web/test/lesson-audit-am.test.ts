@@ -45,6 +45,7 @@ import {
 import {
   PRACTICE_CARD_HANDS,
   PRACTICE_CARD_SECTIONS,
+  practiceCardHand,
 } from "../src/education/practice-card.js";
 
 // ---------------------------------------------------------------------------
@@ -197,6 +198,7 @@ describe("American lesson notations resolve in the inventory", () => {
 describe("American tile-pick drills grade the row they render", () => {
   const EXPECTED: Record<string, string[]> = {
     "am-bam-seven": ["7s"],
+    "am-crak-seven": ["7m"],
     "am-dot-five": ["5p"],
     "am-north-wind": ["N"],
     "am-red-dragon": ["Rd"],
@@ -247,13 +249,13 @@ const TERMS: readonly {
   definition: string;
 }[] = [
   { term: "suit", pattern: /\bsuits?\b/i, lesson: 0, step: 1, definition: "A suit is a family of numbered tiles" },
-  { term: "wind", pattern: /\bwinds?\b/i, lesson: 0, step: 6, definition: "The first four are the winds" },
-  { term: "dragon", pattern: /\bdragons?\b/i, lesson: 0, step: 6, definition: "The last three are the dragons" },
-  { term: "flower", pattern: /\bflowers?\b/i, lesson: 0, step: 9, definition: "eight flower tiles" },
-  { term: "joker", pattern: /\bjokers?\b/i, lesson: 0, step: 9, definition: "A joker is a wild tile" },
-  { term: "pair", pattern: /\bpairs?\b/i, lesson: 0, step: 9, definition: "a pair is two matching tiles" },
-  { term: "kind", pattern: /\bkinds?\b/i, lesson: 0, step: 10, definition: "A kind is one distinct face" },
-  { term: "copy", pattern: /\bcop(y|ies)\b/i, lesson: 0, step: 10, definition: "A copy is one physical tile" },
+  { term: "wind", pattern: /\bwinds?\b/i, lesson: 0, step: 8, definition: "The first four are the winds" },
+  { term: "dragon", pattern: /\bdragons?\b/i, lesson: 0, step: 8, definition: "The last three are the dragons" },
+  { term: "flower", pattern: /\bflowers?\b/i, lesson: 0, step: 11, definition: "eight flower tiles" },
+  { term: "joker", pattern: /\bjokers?\b/i, lesson: 0, step: 11, definition: "A joker is a wild tile" },
+  { term: "pair", pattern: /\bpairs?\b/i, lesson: 0, step: 11, definition: "a pair is two matching tiles" },
+  { term: "kind", pattern: /\bkinds?\b/i, lesson: 0, step: 12, definition: "A kind is one distinct face" },
+  { term: "copy", pattern: /\bcop(y|ies)\b/i, lesson: 0, step: 12, definition: "A copy is one physical tile" },
   { term: "card", pattern: /\bcard\b/i, lesson: 1, step: 0, definition: "played from a card: a printed list of hands" },
   { term: "group", pattern: /\bgroups?\b/i, lesson: 1, step: 1, definition: "A group is a set of matching tiles" },
   { term: "pung", pattern: /\bpungs?\b/i, lesson: 1, step: 1, definition: "three of a kind make a pung" },
@@ -345,6 +347,9 @@ describe("American visible text denylist", () => {
     ["yakuman", /\byakuman\b/i],
     ["profile/preset/schema", /\b(profile|preset|schema|adapter|heuristic)\b/i],
     ["tile-code notation", /\d+[mpsz]\b/],
+    // "Sequence" named a run without ever being defined (panel U11);
+    // runs are "runs of neighbouring numbers" in this track.
+    ["sequence", /\bsequences?\b/i],
   ];
   for (const l of AMERICAN_LESSONS) {
     it(`${l.id}: no denied text`, () => {
@@ -353,6 +358,100 @@ describe("American visible text denylist", () => {
         expect(pattern.test(text), `${l.id}: ${name}`).toBe(false);
     });
   }
+});
+
+// ---------------------------------------------------------------------------
+// Hardening regressions (Nov 18, 2026 acceptance panel, verdict NOT MET):
+// the fixes the panel's ranked gap list demanded, pinned so they cannot
+// silently regress.
+// ---------------------------------------------------------------------------
+
+describe("American hardening regressions", () => {
+  const lessonById = (id: string) => AMERICAN_LESSONS.find((l) => l.id === id)!;
+  const questionById = (id: string) => {
+    for (const l of AMERICAN_LESSONS)
+      for (const q of variantLessonQuestions(l)) if (q.id === id) return q;
+    throw new Error(`no question ${id}`);
+  };
+
+  it("every value am-drills asks was printed with its hand earlier in the track", () => {
+    // Gap item 1 / panel D1: am-drills step 3 asked the double-quint
+    // hand's value (55) that no earlier step had shown with the hand.
+    const drills = lessonById("am-drills");
+    const drillsAt = AMERICAN_LESSONS.indexOf(drills);
+    const earlierTexts = AMERICAN_LESSONS.slice(0, drillsAt).flatMap((l) =>
+      l.steps.map((s) => s.text ?? ""),
+    );
+    const qt3 = questionById("am-qt3-value");
+    expect(qt3.kind).toBe("choice");
+    if (qt3.kind !== "choice") return;
+    const asked = qt3.choices[qt3.answer]!;
+    expect(
+      earlierTexts.some(
+        (t) => t.includes("11111 99999 66 FF") && t.includes(asked),
+      ),
+      "the QT-3 line must appear with its printed value before am-drills asks it",
+    ).toBe(true);
+    expect(asked).toBe(String(practiceCardHand("QT-3").value));
+  });
+
+  it("the Charleston pass rule is taught before any drill grades by it", () => {
+    // Gap item 3 / panel D3: the rule existed only inside wrong-answer
+    // feedback. It must stand in am-charleston's teaching steps, ahead
+    // of the pass-evens question.
+    const charleston = lessonById("am-charleston");
+    const passStepAt = charleston.steps.findIndex(
+      (s) => s.question?.id === "am-pass-evens",
+    );
+    const taught = charleston.steps
+      .slice(0, passStepAt)
+      .map((s) => s.text ?? "")
+      .join("\n");
+    expect(taught).toContain("off-pattern");
+    expect(taught).toContain("never break a pair");
+  });
+
+  it("card lines are shown together with their printed descriptions", () => {
+    // Gap item 4 / panel U4: descriptions were referenced but never
+    // displayed. (Rendered in the track's spelled-out number style —
+    // the denylist above forbids digit-letter tokens in teaching text.)
+    const card = lessonById("am-card");
+    expect(card.steps[1]!.text).toContain("222 444 6666 8888");
+    expect(card.steps[1]!.text).toContain("all in a single suit of your choice");
+    expect(card.steps[2]!.text).toContain("22 444 666 8888 88");
+    expect(card.steps[2]!.text).toContain("the eights are split across two suits");
+    expect(practiceCardHand("EV-1").notation).toBe("222 444 6666 8888");
+    expect(practiceCardHand("EV-2").notation).toBe("22 444 666 8888 88");
+  });
+
+  it("two D groups in one line are taught as two different dragon kinds", () => {
+    // Panel U5.
+    const card = lessonById("am-card");
+    expect(card.steps[3]!.text).toContain("two different dragon kinds");
+  });
+
+  it("changed hints stay hint-only (no component enumeration, no answer words)", () => {
+    // Gap items 2–3: the kong-pick hint enumerated the row's groups;
+    // the Charleston-order hint fixed the answer's first and last words.
+    const kong = questionById("am-kong-pick");
+    expect(kong.hint).not.toContain("pung of threes");
+    const order = questionById("am-charleston-order");
+    expect(order.hint).not.toMatch(/\b(right|left|over)\b/i);
+  });
+
+  it('"mahjong" the win-call is not used before the lesson that defines it', () => {
+    // Panel U12: am-defense used "gives away mahjong" seven lessons
+    // before lesson 10 defines calling mahjong. The game's name in
+    // lesson 1's opener and the app's name are not the verb.
+    for (const l of AMERICAN_LESSONS.slice(0, 9)) {
+      const text = visibleText(l)
+        .replaceAll("Mahjong is a game", "")
+        .replaceAll("any other mahjong game uses", "")
+        .replaceAll("American mahjong", "")
+        .replaceAll("Open Mahjong", "");
+      expect(/mahjong/i.test(text), l.id).toBe(false);
+    }
+  });
 });
 
 // ---------------------------------------------------------------------------

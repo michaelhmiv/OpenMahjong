@@ -603,6 +603,12 @@
   width: 25px;
   height: 35px;
 }
+/* Group segmentation in lesson rows: where the face changes, a
+   wider gap opens, so a row reads as its groups (a pung, then a
+   kong) instead of one unbroken string of tiles. */
+.variant-example-tiles .variant-group-start {
+  margin-left: 12px;
+}
 .variant-answers {
   display: grid;
   gap: 8px;
