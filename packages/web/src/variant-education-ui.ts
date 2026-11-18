@@ -18,6 +18,7 @@ import {
   type VariantLearningProgress,
 } from "./education/variant-progress.js";
 import { trackLessonCompleted, trackLessonStarted } from "./analytics.js";
+import { tileIndexEl } from "./tile-index.js";
 function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
   text = "",
@@ -108,10 +109,20 @@ export function mountVariantEducation(
     checked = false;
     correct = false;
   }
-  function tilesRow(notation?: string): HTMLElement {
+  // Corner-index reveals on teaching rows (guided-play package),
+  // keyed per lesson, step, row and position. Check rows are never
+  // tappable into revealing an answer — the no-leak law: indices
+  // there appear only once the answer is in and correct.
+  const indexRevealed = new Set<string>();
+  function tilesRow(
+    notation?: string,
+    mode: "plain" | "teach" | "answered" = "plain",
+    rowKey = "",
+  ): HTMLElement {
     const row = el("div", "", "variant-example-tiles");
     if (!notation) return row;
     const inventory = variantAdapter(options.variant).inventory();
+    let pos = 0;
     parseCounts(notation).forEach((count, type) => {
       for (let c = 0; c < count; c++) {
         // A notation naming a copy the inventory cannot supply (more
@@ -119,7 +130,25 @@ export function mountVariantEducation(
         // the unresolvable copy. Content is audited against this same
         // lookup in test/lesson-notation.test.ts.
         const face = inventory.find((t) => t.type === type && t.id % 4 === c);
-        if (face) row.append(options.renderTile(face));
+        if (!face) continue;
+        const faceEl = options.renderTile(face);
+        const key = `${lesson.id}:${step}:${rowKey}:${pos}`;
+        if (mode === "answered" || (mode === "teach" && indexRevealed.has(key))) {
+          const ix = tileIndexEl(face);
+          if (ix) faceEl.append(ix);
+        }
+        if (mode === "teach") {
+          faceEl.classList.add("stripinspect");
+          faceEl.setAttribute("role", "button");
+          faceEl.setAttribute("aria-label", `Inspect tile ${pos + 1}`);
+          faceEl.addEventListener("click", () => {
+            if (indexRevealed.has(key)) indexRevealed.delete(key);
+            else indexRevealed.add(key);
+            render();
+          });
+        }
+        row.append(faceEl);
+        pos++;
       }
     });
     return row;
@@ -154,7 +183,14 @@ export function mountVariantEducation(
         b.type = "button";
         b.setAttribute("aria-pressed", String(picks.has(index)));
         b.setAttribute("aria-label", `Tile ${index + 1}`);
-        b.append(options.renderTile(face));
+        const faceEl = options.renderTile(face);
+        // Answered and correct: the faces may now carry their
+        // corner indices. Before that, never (the no-leak law).
+        if (checked && correct) {
+          const ix = tileIndexEl(face);
+          if (ix) faceEl.append(ix);
+        }
+        b.append(faceEl);
         b.addEventListener("click", () => {
           if (checked && correct) return;
           if (picks.has(index)) picks.delete(index);
@@ -166,7 +202,7 @@ export function mountVariantEducation(
       });
       main.append(row);
     } else {
-      main.append(tilesRow(q.tiles));
+      main.append(tilesRow(q.tiles, checked && correct ? "answered" : "plain", "q"));
       const group = el("div", "", "variant-answers");
       group.setAttribute("role", "group");
       group.setAttribute("aria-label", "Answer choices");
@@ -352,8 +388,12 @@ export function mountVariantEducation(
         el("p", `Step ${step + 1} of ${lesson.steps.length}`, "dim"),
       );
       if (current.text) main.append(el("p", current.text));
-      if (current.tiles) main.append(tilesRow(current.tiles));
-      if (current.hand) main.append(tilesRow(current.hand));
+      // A step carrying a question is a check: its pictured tiles
+      // stay plain until the answer is in. Teaching steps are
+      // tap-to-inspect.
+      const rowMode = current.question ? "plain" : "teach";
+      if (current.tiles) main.append(tilesRow(current.tiles, rowMode, "tiles"));
+      if (current.hand) main.append(tilesRow(current.hand, rowMode, "hand"));
       if (current.question) {
         quiz(current.question, lesson);
       } else {
