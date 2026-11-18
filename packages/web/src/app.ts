@@ -2592,6 +2592,9 @@ export class App {
     if (ctx.canKyuushu) {
       row.classList.add("show");
       row.append(btn("Kyuushu", "pass", () => this.humanAct({ type: "kyuushu" })));
+      row.append(
+        h("span", { class: "pill" }, "End the hand as a draw — nine different terminals or honors on your first draw"),
+      );
     }
     const turnHint = momentHint();
     if (turnHint) {
@@ -3795,6 +3798,14 @@ export class App {
       const from = this.model.players[win.fromSeat]!;
       card.append(h("div", { class: "sub" }, `On ${WIND_NAMES[from.seatWind]}'s discard`));
     }
+    // In-place glosses (definition audit, 2026-11-17): a player can
+    // reach this sheet from the land-and-play home before any
+    // lesson, so the win type is defined here, in the same plain
+    // words the lessons use. The wind in the title is the winner's
+    // seat wind — the wind of the seat the winner is sitting in.
+    card.append(h("p", { class: "dim" }, win.winType === "ron"
+      ? "Ron: winning on a tile another player discarded. Only the player who discarded it pays. The wind in the title is the winner's seat wind."
+      : "Tsumo: winning on a tile you drew yourself. All three opponents pay. The wind in the title is the winner's seat wind."));
     const handRow = h("div", { class: "bk-hand" });
     for (const meld of win.winnerMelds) handRow.append(this.meldEl(meld, "t-meld", win.seat));
     const sorted = [...win.handTiles].sort((a, b) => a.type - b.type || a.id - b.id);
@@ -3839,6 +3850,10 @@ export class App {
       yakuBox.append(total);
     }
     card.append(yakuBox);
+    card.append(h("p", { class: "dim" }, win.yakumanMultiple > 0
+      ? "A yakuman is the highest-value kind of hand. It pays a fixed large amount."
+      : "Han count the hand's scoring patterns and bonus dora. Fu are minipoints from the hand's shape. Han and fu together set the points."));
+    card.append(h("p", { class: "dim" }, `Honba — the repeat counter — stands at ${this.model.honba}. Each honba adds 300 points to a winning hand.`));
 
     const pay = h("div", { class: "bk-pay" });
     for (const p of win.payments) {
@@ -3849,11 +3864,15 @@ export class App {
       pay.append(h("div", {}, `Riichi sticks `, h("b", {}, `+${fmt(win.stickPoints)}`)));
     }
     card.append(pay);
+    if (win.stickPoints > 0) {
+      card.append(h("p", { class: "dim" }, "A riichi stick is a 1,000-point stake a player paid when declaring riichi. The winner collects the sticks on the table."));
+    }
 
     const doraRow = h("div", { class: "bk-dora" });
     doraRow.append(h("span", { class: "lbl" }, "Dora indicator"));
     for (const ind of this.model.doraIndicators) doraRow.append(tileEl(ind, "", { flip: false }));
     card.append(doraRow);
+    card.append(h("p", { class: "dim" }, "The dora indicator points to a bonus tile: the tile one step on from the indicator, in the same suit, is a dora, worth extra han in a winning hand."));
     if (winner.riichi) {
       const ura = this.model.uraIndicators();
       if (ura) {
@@ -3861,6 +3880,7 @@ export class App {
         uraRow.append(h("span", { class: "lbl" }, "Uradora indicator"));
         for (const ind of ura) uraRow.append(tileEl(ind, "", { flip: false }));
         card.append(uraRow);
+        card.append(h("p", { class: "dim" }, "Uradora indicators sit hidden under the dora indicators. They are revealed only when a riichi hand wins, and the tile one step on from each is also a bonus tile."));
       }
     }
   }
@@ -3870,17 +3890,17 @@ export class App {
       card.append(
         h("h2", {}, "Hand drawn"),
         h("div", { class: "sub" }, ABORTIVE_NAMES[drawn.abortive ?? ""] ?? "Abortive draw"),
-        h("p", { class: "dim" }, "The hand restarts with one more honba. The dealer repeats."),
+        h("p", { class: "dim" }, "The hand restarts with one more honba — the repeat counter rises by one. The dealer repeats."),
       );
       return;
     }
     card.append(h("h2", {}, "Exhaustive draw"));
     if (drawn.nagashi && drawn.nagashi.length > 0) {
       const names = drawn.nagashi.map((s) => WIND_NAMES[this.model.players[s]!.seatWind]).join(", ");
-      card.append(h("div", { class: "sub" }, `Nagashi mangan: ${names} — pays as a mangan tsumo.`));
+      card.append(h("div", { class: "sub" }, `Nagashi mangan: ${names} — that player's discards were all terminals or honors and none were claimed, so the drawn hand pays that player as a large fixed-value win.`));
     } else {
       const names = (drawn.tenpai ?? []).map((s) => WIND_NAMES[this.model.players[s]!.seatWind]).join(", ") || "None";
-      card.append(h("div", { class: "sub" }, `Tenpai: ${names}. Tenpai players split 3,000 from noten players.`));
+      card.append(h("div", { class: "sub" }, `Tenpai: ${names}. Tenpai players — players one tile from a complete hand — split 3,000 points paid by the players who were not tenpai.`));
     }
     for (const [seat, tiles] of drawn.revealedHands) {
       const p = this.model.players[seat]!;
@@ -3916,7 +3936,7 @@ export class App {
       table.append(row);
     }
     page.append(table);
-    page.append(h("p", { class: "dim" }, `${this.runner?.replayVersion === 1 ? "Historical rules v1; saved results preserved. " : ""}Points include uma (+15/+5/−5/−15) and the 20-point oka to first place.`));
+    page.append(h("p", { class: "dim" }, `${this.runner?.replayVersion === 1 ? "Historical rules v1; saved results preserved. " : ""}Points include uma — place bonuses of +15/+5/−5/−15 for finishing first to fourth — and the oka, a 20-point bonus to first place.`));
     const col = h("div", { class: "col" });
     col.style.display = "flex";
     col.style.flexDirection = "column";
