@@ -3998,7 +3998,7 @@ export class App {
    */
   private lessonStripEl(types: readonly number[], inspectable = false): HTMLElement {
     const strip = h("div", { class: "lstrip" });
-    const stepKey = `${this.lesson?.module.id ?? ""}:${this.lesson?.stepIndex ?? 0}`;
+    const stepKey = `${this.lesson?.moduleId ?? ""}:${this.lesson?.stepIndex ?? 0}`;
     types.forEach((type, i) => {
       const key = `${stepKey}:${i}`;
       const tile = tileById(type * 4 + 1);
@@ -4013,7 +4013,7 @@ export class App {
         w.addEventListener("click", () => {
           if (this.lessonIndexRevealed.has(key)) this.lessonIndexRevealed.delete(key);
           else this.lessonIndexRevealed.add(key);
-          this.renderLesson();
+          this.renderTable();
         });
       }
       strip.append(w);
