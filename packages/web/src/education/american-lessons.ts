@@ -247,7 +247,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       text: "A hand on the card is printed as a line of groups. A group is a set of matching tiles written together, and the size of a group has a name: one tile is a single, two of a kind make a pair, three of a kind make a pung, four of a kind make a kong, and five of a kind make a quint. Of a kind means copies of the same tile. A quint needs five copies of a kind and only four exist, so a quint can only ever be built with a joker standing in it — lesson 8 returns to that. The line for the pictured hand reads: 222 444 6666 8888. Read it group by group: a pung of twos, a pung of fours, a kong of sixes and a kong of eights. Printed with the line, the hand's description reads: “Pungs of twos and fours with kongs of sixes and eights, all in a single suit of your choice.” A description is the line retold in words: it names the groups, and wherever it matters, the suits and the dragons. From here on, read the line and its description together.",
     },
     {
-      text: "In a card line, a change of color marks a change of suit. On this card the first suit in a line prints in dark ink, the second in blue, and the third in red. The colors never name the suits — they only mark which groups match: which real suits the colors stand for is your choice, unless a hand's description says otherwise. This line runs in two colors: 22 444 666 8888 88. Its pair of twos, pung of sixes and closing pair of eights print in the dark ink and share one suit; its pung of fours and kong of eights print in blue, a second suit — so the eights are split across the two suits. The pictured tiles show the same split in faces: the dark-ink groups stand here as Craks, the blue groups as Dots. And the hand's description, printed with the line, tells the same story in words: “A pair of twos, pungs of fours and sixes, a kong of eights, and a second pair of eights — the eights are split across two suits, the rest follows them.” Line, colors and description are three tellings of one hand; read them together.",
+      text: "In a card line, a change of color marks a change of suit. On this card the first suit in a line prints in dark ink, the second in blue, and the third in red. The colors never name the suits — they only mark which groups match: which real suits the colors stand for is your choice, unless a hand's description says otherwise. This line runs in two colors: 22 444 666 8888 88. Its pair of twos, pung of sixes and closing pair of eights print in the dark ink and share one suit; its pung of fours and kong of eights print in blue, a second suit — so the eights are split across the two suits. The pictured tiles show the same split in faces: the dark-ink groups stand here as Craks, the blue groups as Dots. And the hand's description, printed with the line, tells the same story in words: “A pair of twos, pungs of fours and sixes, a kong of eights, and a second pair of eights — the eights are split across two suits, the rest follows them.” The last phrase — the rest follows them — means the twos, fours and sixes split across the same two suits as the eights, group by group as the colors show. Line, colors and description are three tellings of one hand; read them together.",
       hand: "22m444p666m8888p88m",
     },
     {
@@ -487,7 +487,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
       text: "The second Charleston passes left, then over, then right — the first half run backwards. After the first Charleston's three passes, the table may agree to stop and skip the second half entirely. But it takes the whole table to stop: if even one player wants the second Charleston, it is played. Most new tables simply dance both halves while they learn.",
     },
     {
-      text: "What should you pass? There is a rule for it — the pass rule — and the drills in this lesson and lesson 11 grade by it. Pass tiles that are off-pattern: they fit no hand you are considering, stray tiles in suits and numbers your clusters do not touch. Pass tiles that stand alone: no pair, and no neighbours among the tiles you are keeping. Spread the pass one tile in each suit when you can, so no single neighbour receives a ready-made cluster. And never break a pair to make a pass when you have a better pass: a pair is halfway to a pung and the hardest part of many hands to rebuild. When nothing else is free — when every tile you could spare is paired — a tile from a pair is sometimes the right pass: break your least useful pair and pass from it. Keep tiles that sit near your clusters. And one rule stands above all strategy: a joker is never passed. Not in any pass, not ever — if your three pass tiles would include a joker, choose a different tile, however little it fits.",
+      text: "What should you pass? There is a rule for it — the pass rule — and the drills in this lesson and lesson 11 grade by it. Pass tiles that are off-pattern: they fit no hand you are considering, stray tiles in suits and numbers your clusters do not touch. Pass tiles that stand alone: no pair, and no part in the clusters you are keeping — a tile may sit beside a kept tile in number and still stand alone, when it fits no hand you are building. Spread the pass one tile in each suit when you can, so no single neighbour receives a ready-made cluster. And never break a pair to make a pass when you have a better pass: a pair is halfway to a pung and the hardest part of many hands to rebuild. When nothing else is free — when every tile you could spare is paired — a tile from a pair is sometimes the right pass: break your least useful pair and pass from it. Keep tiles that sit near your clusters. And one rule stands above all strategy: a joker is never passed. Not in any pass, not ever — if your three pass tiles would include a joker, choose a different tile, however little it fits.",
     },
     {
       text: "Once in a while you hold fewer than three tiles you can spare. Then you may make a blind pass: taking one, two or three of the tiles about to be passed to you and passing them onward without looking at them. A blind pass is a pass made blind — you give away unknown tiles rather than break the tiles you are keeping. It is most often used on the first pass of the second Charleston, when hands have tightened around a plan. Two limits keep it honest. You may take only from the tiles coming to you — never from your own rack. And a blind pass can never break the never-pass-a-joker rule: that rule governs tiles you hold and can see. Tiles passed blind are face-down and unknown to you — forwarding them sight unseen is exactly what the blind pass is for, and a joker on your own rack is never among them.",
@@ -564,7 +564,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
   lesson("picking", "Picking a hand", [
     {
       text: "The Charleston ends and your rack holds thirteen tiles that are no longer random: the passes have clustered them. Picking a hand means reading those clusters against the card. Start with pairs and near-groups — a pair is halfway to a pung, and tiles of one number or one family gathered together are the skeleton of a hand. The pictured rack clusters hard toward even numbers in Craks: pairs of twos and fours, three sixes, three eights, with a stray pair of twos of Dots and a lone white dragon off to the side.",
-      hand: "22446666888m22p5z",
+      hand: "2244666888m22p5z",
     },
     {
       text: "Choose in two steps: first a section, then a hand inside it. The pictured rack points at Even Numbers, and inside that section one hand fits best — the first hand on the card, 222 444 6666 8888, worth 25. Count what the rack already holds toward it, in Craks: two of the three twos, two of the three fours, three of the four sixes and three of the four eights. Ten of the hand's fourteen tiles are already standing on the rack. Count one thing carefully: the rack's pair of twos of Dots is not in that ten. A tile counts toward a hand only in the suit of the group it would fill — every group of this hand is being built in Craks here, so a Dot can never count toward it, however well its number matches. Off-suit tiles are not partial credit; they belong to a different plan, or to a pass.",
@@ -592,7 +592,7 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
         1,
         "The second hand, and not by a little. Counted with its split respected — twos, sixes and the closing pair of eights in Craks; fours and the kong of eights in Dots — the rack already holds thirteen of its fourteen tiles: only one more 8 of Craks is missing. The one-suit hand can count only one suit at a time: its best suit, Dots, holds seven tiles (the pung of fours and the kong of eights), leaving seven to go. When two hands in a section compete, count both in full and let the smaller tiles-to-go win.",
         "Count the rack against each hand separately. For the split hand, each group counts only in its own suit: some of its groups are Craks here, the others Dots.",
-        { tiles: "22444p666m8888p8m" },
+        { tiles: "22m444p666m8888p8m" },
       ),
     },
     {
@@ -978,10 +978,10 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
     {
       question: choice(
         "ev1-discard-pay",
-        "You make the pictured hand — 25 points — on a tile another player discarded. What does the discarder pay you?",
+        "You make the pictured hand — 25 points — on a tile another player discarded. Jokers were used in the hand, so no jokerless bonus applies. What does the discarder pay you?",
         ["25", "50", "75", "100"],
         1,
-        "Fifty: the discarder pays double the hand's value. The other two players pay 25 each, so the hand brings in 100 points in all.",
+        "Fifty: a joker was used in the hand, so no jokerless bonus doubles its value — the value stays 25, and the discarder pays double it. The other two players pay 25 each, so the hand brings in 100 points in all.",
         "The discarder's share is not the plain value. What does the discard rule do to it?",
         { verify: counted(() => practiceCardHand("EV-1").value * 2) },
       ),
@@ -1026,10 +1026,10 @@ export const AMERICAN_LESSONS: VariantLesson[] = [
     {
       question: choice(
         "ev1-total",
-        "You make the 25-point hand on a discard. Counting every player's payment together, how many points do you receive in all?",
+        "You make the 25-point hand on a discard. Jokers were used in the hand, so no jokerless bonus applies. Counting every player's payment together, how many points do you receive in all?",
         ["75", "100", "125", "150"],
         1,
-        "100: the discarder pays double value, 50, and each of the other two pays the value, 25 — 50 and 25 and 25. A discard win always brings in four times the hand's value, split that way.",
+        "100: the discarder pays double value, 50, and each of the other two pays the value, 25 — 50 and 25 and 25. With no bonus in play, a discard win brings in four times the hand's value in all, split that way. A jokerless hand would first double its value — and every share would double with it.",
         "Add the three payments: one double share and two single shares of the same value.",
         { verify: counted(() => practiceCardHand("EV-1").value * 4) },
       ),
