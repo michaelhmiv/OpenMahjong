@@ -119,7 +119,7 @@ async function device(width) {
 const click = (page, name) =>
   page.getByRole("button", { name, exact: true }).click();
 async function draw(page) {
-  await click(page, "Hand without a winner");
+  await click(page, "Drawn hand");
   await click(page, "Review entry");
   await click(page, "Confirm and record");
 }
@@ -127,17 +127,16 @@ try {
   const a = await device(390);
   await click(a.page, "New table session");
   await click(a.page, "Start scorekeeper");
-  await click(a.page, "Fast han / fu");
+  // Compact flow: seat tap, discarder chip, stepper quick chips,
+  // then Confirm on the Check payments screen (no checkbox).
   await a.page
-    .getByLabel("Han · Scoring doubles, including bonus tiles", { exact: true })
-    .fill("3");
-  await a.page
-    .getByLabel("Fu · Hand points before the han multipliers", { exact: true })
-    .selectOption("40");
-  await click(a.page, "Calculate payments");
-  await a.page
-    .getByLabel("I confirm the payment breakdown", { exact: true })
-    .check();
+    .getByRole("button", { name: /Player 1 [\d,]+ points/ })
+    .click();
+  await click(a.page, "On a discard");
+  await a.page.locator(".cx-seatchip", { hasText: "Player 2" }).click();
+  await click(a.page, "3");
+  await click(a.page, "40");
+  await click(a.page, "Show payments");
   await click(a.page, "Confirm and add to table");
   await click(a.page, "Sync privately to account");
   await a.page

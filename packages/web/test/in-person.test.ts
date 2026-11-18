@@ -21,11 +21,55 @@ beforeEach(() => {
   document.body.append(root);
 });
 function click(text: string) {
-  const b = [...root.querySelectorAll<HTMLButtonElement>("button")].find(
-    (b) => b.textContent === text || b.getAttribute("aria-label") === text,
-  );
+  const b =
+    [...root.querySelectorAll<HTMLButtonElement>("button")].find(
+      (b) => b.textContent === text || b.getAttribute("aria-label") === text,
+    ) ?? seatButtonByLabel(text);
   if (!b) throw new Error(`Missing ${text}`);
   b.click();
+}
+function seatButtonByLabel(label: string): HTMLButtonElement | null {
+  // Seat taps are addressed by their old label form
+  // ("Player 2 · 25,000 points"); seats carry no aria-label any
+  // more, so resolve through the tile's visible name/score.
+  const tile = seatTile(label);
+  return tile instanceof HTMLButtonElement ? tile : null;
+}
+function buttonByText(text: string): HTMLButtonElement {
+  const b = [...root.querySelectorAll<HTMLButtonElement>("button")].find(
+    (b) => b.textContent === text,
+  );
+  if (!b) throw new Error(`Missing button ${text}`);
+  return b;
+}
+function seatTile(label: string): HTMLElement | null {
+  // Label form: "Name · SCORE points". The tile's accessible
+  // name is its visible text now, so match the name/score spans.
+  const m = /^(.*) · (.*)$/.exec(label);
+  if (!m) return null;
+  return seatWith(m[1]!, m[2]!);
+}
+function dealerTile(): HTMLElement | null {
+  return root.querySelector('[data-dealer="true"]');
+}
+function seatLabelOf(tile: Element | null | undefined): string | null {
+  // The tile's label as the player sees it (and as its accessible
+  // name): "Name · SCORE points", composed from the text spans.
+  if (!tile) return null;
+  const name = tile.querySelector(".cx-seat-name")?.textContent;
+  const score = tile.querySelector(".cx-seat-score")?.textContent;
+  return name && score ? `${name} · ${score}` : null;
+}
+function seatWith(name: string, score: string): HTMLElement | null {
+  // Seats are buttons while the session is active and plain tiles
+  // once it ends; either way the tile shows name and score.
+  return (
+    [...root.querySelectorAll<HTMLElement>(".cx-seat")].find(
+      (t) =>
+        t.querySelector(".cx-seat-name")?.textContent === name &&
+        t.querySelector(".cx-seat-score")?.textContent === score,
+    ) ?? null
+  );
 }
 function control(label: string): HTMLInputElement | HTMLSelectElement {
   const l = [...root.querySelectorAll("label")].find(
@@ -68,71 +112,58 @@ describe("offline in-person workflows", () => {
     const ui = mount();
     click("New table session");
     click("Start scorekeeper");
-    click("Fast han / fu");
-    fill("Winner", "1");
-    fill("Discarding player", "3");
-    fill("Han · Scoring doubles, including bonus tiles", "3");
-    fill("Fu · Hand points before the han multipliers", "40");
-    click("Calculate payments");
+    // Compact flow: tap the winner's seat, name the discarder, enter
+    // the value with steppers/chips, then confirm on Check payments.
+    click("Player 2 · 25,000 points");
+    click("On a discard");
+    click("Player 4 · North");
+    click("3");
+    click("40");
+    expect(root.textContent).toContain("Hand value 5,200 points");
+    click("Show payments");
     expect(root.textContent).toContain("Player 4 pays Player 2 5,200 points");
     expect(readTables()[0]!.session.ledger).toHaveLength(0);
-    expect(
-      [...root.querySelectorAll<HTMLButtonElement>("button")].find(
-        (b) => b.textContent === "Confirm and add to table",
-      )!.disabled,
-    ).toBe(true);
-    const confirm = control(
-      "I confirm the payment breakdown",
-    ) as HTMLInputElement;
-    confirm.checked = true;
-    confirm.dispatchEvent(new Event("change"));
+    // The Check payments screen is the recording gate: its Confirm is
+    // live as soon as the breakdown is eligible.
+    expect(buttonByText("Confirm and add to table").disabled).toBe(false);
     click("Confirm and add to table");
     const id = readTables()[0]!.session.id;
     ui.destroy();
     mount(id);
-    expect(root.textContent).toContain("Player 2 · 30,200 points");
+    expect(seatTile("Player 2 · 30,200 points")).not.toBeNull();
     // Dealer, round wind and honba are derived from the ledger: the
     // non-dealer win moved the deal to Player 2 with no manual entry.
-    expect(root.textContent).toContain(
-      "East round · Player 2 deals next · Repeat counter (honba) 0",
-    );
+    expect(root.textContent).toContain("East 2 · Repeat 0");
     expect(
       [...root.querySelectorAll("label")].some((l) =>
         l.textContent?.startsWith("Dealer (East)"),
       ),
     ).toBe(false);
     click("Correct this entry");
+    click("Correct the breakdown");
     fill("Entered han · Original 3", "4");
     fill("Reason for manual correction", "Table corrected han");
     click("Apply corrections and recalculate");
     expect(root.textContent).toContain("8,000 points");
-    const confirm2 = control(
-      "I confirm the payment breakdown",
-    ) as HTMLInputElement;
-    confirm2.checked = true;
-    confirm2.dispatchEvent(new Event("change"));
     click("Confirm correction");
     expect(readTables()[0]!.session.ledger).toHaveLength(2);
-    expect(root.textContent).toContain("Player 2 · 33,000 points");
+    expect(seatTile("Player 2 · 33,000 points")).not.toBeNull();
     // Undo last entry removes the ENTRY — original recording and its
     // correction — not just the correction: scores return to the
     // pre-entry state and the ledger row is gone.
     click("Undo last entry");
-    expect(root.textContent).toContain("Player 2 · 25,000 points");
+    expect(seatTile("Player 2 · 25,000 points")).not.toBeNull();
     expect(root.querySelectorAll(".ledger-row")).toHaveLength(0);
     expect(readTables()[0]!.session.ledger).toHaveLength(4);
-    click("Final standings and settlement");
+    click("Settlement");
     click("Finish session");
     expect(readTables()[0]!.session.finished).toBe(true);
-    // A finished session is sealed: no entry or edit controls remain.
+    // A finished session is sealed: seats are no longer buttons and
+    // no entry or undo controls remain.
+    expect(root.querySelectorAll("button.cx-seat")).toHaveLength(0);
     expect(
       [...root.querySelectorAll("button")].some(
-        (b) => b.textContent === "Calculate a hand",
-      ),
-    ).toBe(false);
-    expect(
-      [...root.querySelectorAll("button")].some(
-        (b) => b.textContent === "Undo last entry",
+        (b) => b.getAttribute("aria-label") === "Undo last entry",
       ),
     ).toBe(false);
     const sealedCopy = readTables()[0]!;
@@ -142,11 +173,7 @@ describe("offline in-person workflows", () => {
     expect(() => undoTable(sealedCopy)).toThrow(/finished/);
     // Reopening deliberately returns it to editable.
     click("Reopen session");
-    expect(
-      [...root.querySelectorAll("button")].some(
-        (b) => b.textContent === "Calculate a hand",
-      ),
-    ).toBe(true);
+    expect(root.querySelectorAll("button.cx-seat")).toHaveLength(4);
     expect(readTables()[0]!.session.finished).toBe(false);
   });
   it("derives dealer and honba across consecutive riichi hands", () => {
@@ -155,60 +182,47 @@ describe("offline in-person workflows", () => {
     click("Start scorekeeper");
     // Hand 1: the dealer (Player 1) wins on a discard — deal repeats,
     // honba rises, and the next hand's payments include the honba.
-    click("Fast han / fu");
-    fill("Discarding player", "3");
-    fill("Han · Scoring doubles, including bonus tiles", "3");
-    fill("Fu · Hand points before the han multipliers", "40");
-    click("Calculate payments");
+    click("Player 1 · 25,000 points");
+    click("On a discard");
+    click("Player 4 · North");
+    click("3");
+    click("40");
+    click("Show payments");
     expect(root.textContent).toContain("Player 4 pays Player 1 7,700 points");
-    let confirm = control(
-      "I confirm the payment breakdown",
-    ) as HTMLInputElement;
-    confirm.checked = true;
-    confirm.dispatchEvent(new Event("change"));
     click("Confirm and add to table");
-    expect(root.textContent).toContain(
-      "East round · Player 1 deals next · Repeat counter (honba) 1",
-    );
+    expect(root.textContent).toContain("East 1 · Repeat 1");
+    expect(seatLabelOf(dealerTile())).toBe("Player 1 · 32,700 points");
     // Hand 2: a non-dealer wins — the deal passes and honba resets.
-    click("Calculate a hand");
-    click("Fast han / fu");
-    fill("Winner", "1");
-    fill("Discarding player", "2");
-    fill("Han · Scoring doubles, including bonus tiles", "3");
-    fill("Fu · Hand points before the han multipliers", "40");
-    click("Calculate payments");
+    click("Player 2 · 25,000 points");
+    click("On a discard");
+    click("Player 3 · West");
+    click("3");
+    click("40");
+    click("Show payments");
     expect(root.textContent).toContain("Player 3 pays Player 2 5,500 points");
-    confirm = control("I confirm the payment breakdown") as HTMLInputElement;
-    confirm.checked = true;
-    confirm.dispatchEvent(new Event("change"));
     click("Confirm and add to table");
-    expect(root.textContent).toContain(
-      "East round · Player 2 deals next · Repeat counter (honba) 0",
-    );
+    expect(root.textContent).toContain("East 2 · Repeat 0");
+    // The dealer mark moved to Player 2's tile with the deal.
+    expect(seatLabelOf(dealerTile())).toBe("Player 2 · 30,500 points");
   });
   it("ends a riichi session when a player falls below zero (tobi)", () => {
     mount();
     click("New table session");
     click("Start scorekeeper");
-    click("Fast han / fu");
-    fill("True yakuman multiple (0 for ordinary hands)", "1");
-    click("Calculate payments");
+    click("Player 1 · 25,000 points");
+    click("On a discard");
+    click("Player 2 · South");
+    click("Increase Yakuman multiple");
+    click("Show payments");
     expect(root.textContent).toContain("Player 2 pays Player 1 48,000 points");
-    const confirm = control(
-      "I confirm the payment breakdown",
-    ) as HTMLInputElement;
-    confirm.checked = true;
-    confirm.dispatchEvent(new Event("change"));
     click("Confirm and add to table");
-    expect(root.textContent).toContain("Player 2 · -23,000 points");
+    expect(seatWith("Player 2", "-23,000 points")).not.toBeNull();
     expect(root.textContent).toContain("fell below zero points");
     // No further entries or deposits are offered; the settlement is
     // presented in place and still settles the negative player exactly.
     const buttons = [...root.querySelectorAll("button")].map(
       (b) => b.textContent,
     );
-    expect(buttons).not.toContain("Calculate a hand");
     expect(buttons).not.toContain("Record riichi deposit");
     expect(buttons).toContain("Correct this entry");
     expect(root.textContent).toContain("Player 2 pays Player 1 48,000 points");
@@ -231,17 +245,14 @@ describe("offline in-person workflows", () => {
     preset.value = "hong-kong-clear@1";
     preset.dispatchEvent(new Event("change", { bubbles: true }));
     click("Start scorekeeper");
-    click("Fast fan entry");
-    fill("Fan · Scoring units", "5");
-    click("Calculate payments");
+    click("Player 1 · 1,000 points");
+    click("On a discard");
+    click("Player 2 · South");
+    click("5");
     expect(root.textContent).toContain("Player 2 pays Player 1 48 points");
-    const confirm = control(
-      "I confirm the payment breakdown",
-    ) as HTMLInputElement;
-    confirm.checked = true;
-    confirm.dispatchEvent(new Event("change"));
+    click("Show payments");
     click("Confirm and add to table");
-    click("Final standings and settlement");
+    click("Settlement");
     expect(root.textContent).toContain("+96 net points");
     expect(root.textContent).not.toContain(".0 net points");
   });
@@ -249,6 +260,10 @@ describe("offline in-person workflows", () => {
     mount();
     click("New table session");
     click("Start scorekeeper");
+    click("Player 1 · 25,000 points");
+    click("On a discard");
+    click("Player 2 · South");
+    click("Score it from the tiles");
     for (const tile of [
       "1m",
       "1m",
@@ -267,21 +282,102 @@ describe("offline in-person workflows", () => {
     ])
       click(`Add ${tile}`);
     fill("Winning tile", "33");
-    click("Calculate payments");
+    click("Show payments");
     expect(root.textContent).toContain("2 han · 25 fu");
     expect(root.textContent).toContain("2,400 points");
-    const c = control("I confirm the payment breakdown") as HTMLInputElement;
-    c.checked = true;
-    c.dispatchEvent(new Event("change"));
+    // Editing the breakdown without applying the correction locks
+    // Confirm again until the recalculation happens.
+    click("Correct the breakdown");
     fill("Additional manual scoring units", "1");
-    c.checked = true;
-    c.dispatchEvent(new Event("change"));
-    expect(
-      [...root.querySelectorAll<HTMLButtonElement>("button")].find(
-        (b) => b.textContent === "Confirm and add to table",
-      )!.disabled,
-    ).toBe(true);
+    expect(buttonByText("Confirm and add to table").disabled).toBe(true);
     expect(readTables()[0]!.session.ledger).toHaveLength(0);
+  });
+});
+describe("compact scorekeeper", () => {
+  it("preselects the winner from the seat tap", () => {
+    mount();
+    click("New table session");
+    click("Start scorekeeper");
+    expect(seatLabelOf(dealerTile())).toBe("Player 1 · 25,000 points");
+    click("Player 3 · 25,000 points");
+    const selected = root.querySelector("button.cx-seat.sel");
+    expect(seatLabelOf(selected)).toBe("Player 3 · 25,000 points");
+    expect(selected?.getAttribute("aria-pressed")).toBe("true");
+    expect(root.textContent).toContain("Winner · Player 3 — West");
+    click("Self-draw");
+    // The value screen's context panel carries the tapped winner in.
+    expect(root.textContent).toContain("Player 3 · West");
+    expect(root.textContent).toContain("Self-draw");
+  });
+  it("records a Hong Kong fast hand after a dealer win", () => {
+    // Regression: Hong Kong tracks dealer repeats for rotation,
+    // but its scoring has no repeat-payment counter — a fast hand
+    // entered after a dealer win must still calculate (the engine
+    // rejects a nonzero counter in a Hong Kong context).
+    mount();
+    click("New table session");
+    const preset = control("Named preset");
+    preset.value = "hong-kong-clear@1";
+    preset.dispatchEvent(new Event("change", { bubbles: true }));
+    click("Start scorekeeper");
+    // Tiles hand: the dealer wins by self-draw, so the deal repeats.
+    click("Player 1 · 1,000 points");
+    click("Self-draw");
+    click("Score it from the tiles");
+    for (const t of [
+      "1m",
+      "2m",
+      "3m",
+      "4m",
+      "5m",
+      "6m",
+      "1p",
+      "2p",
+      "3p",
+      "7s",
+      "8s",
+      "9s",
+      "E",
+      "E",
+    ])
+      click(`Add ${t}`);
+    fill("Winning tile", "27");
+    click("Show payments");
+    click("Confirm and add to table");
+    expect(readTables()[0]!.session.ledger).toHaveLength(1);
+    // Fast hand: the dealer wins again, on a discard this time.
+    click("Player 1 · 1,048 points");
+    click("On a discard");
+    click("Player 2 · South");
+    click("3");
+    click("Show payments");
+    expect(root.querySelector(".calculator-output")).not.toBeNull();
+    click("Confirm and add to table");
+    expect(readTables()[0]!.session.ledger).toHaveLength(2);
+  });
+  it("lays out the compact scorekeeper for every variant", () => {
+    for (const presetKey of [
+      "openmahjong-riichi-table@1",
+      "hong-kong-clear@1",
+      "mcr-2006@1",
+      "taiwanese-every-flower@1",
+    ]) {
+      const ui = mount();
+      click("New table session");
+      const preset = control("Named preset");
+      preset.value = presetKey;
+      preset.dispatchEvent(new Event("change", { bubbles: true }));
+      click("Start scorekeeper");
+      expect(root.querySelector(".cx-strip")).not.toBeNull();
+      expect(root.querySelectorAll("button.cx-seat")).toHaveLength(4);
+      // Seat tiles sit in table order: North, West over East, South.
+      const winds = [...root.querySelectorAll(".cx-seat-wind")].map((n) =>
+        n.textContent!.replace(" · Dealer", ""),
+      );
+      expect(winds).toEqual(["North", "West", "East", "South"]);
+      expect(dealerTile()).not.toBeNull();
+      ui.destroy();
+    }
   });
 });
 describe("optional account sync", () => {
