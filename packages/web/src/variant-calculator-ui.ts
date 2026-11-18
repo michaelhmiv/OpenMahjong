@@ -192,7 +192,7 @@ export function mountVariantCalculator(
     form.append(
       el(
         "p",
-        "WMO 2006 · Eight fan excluding flowers are required. Every loser contributes eight base points; the discarder also pays the hand value. Self-draw collects hand value plus eight from each opponent.",
+        "MCR (Mahjong Competition Rules) · Eight fan from patterns are required, not counting flowers. Every player who did not win pays eight base points; the discarder — the player who threw the winning tile — also pays the hand value, which is the hand's fan plus its flower points. On a self-draw win, every opponent pays the hand value plus eight.",
         "dim",
       ),
     );

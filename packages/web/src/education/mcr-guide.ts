@@ -43,7 +43,7 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Thirteen Orphans": [
     "Special structures",
     "Collect every terminal and honor kind, then duplicate one of those thirteen kinds.",
-    "Closed special structure; excludes All Types, Concealed Hand and Single Wait.",
+    "Concealed special structure; excludes All Types, Concealed Hand and Single Wait.",
   ],
   "All Terminals": [
     "Tile composition",
@@ -68,7 +68,7 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Four Concealed Pungs": [
     "Triplets and quads",
     "Complete four triplets or quads without taking their completing tile from another player.",
-    "A discard completing a triplet makes that triplet exposed for this count. Excludes the all-triplets pattern and Concealed Hand.",
+    "A thrown tile completing a triplet makes that triplet melded for this count. Excludes the all-triplets pattern and Concealed Hand.",
   ],
   "Pure Terminal Chows": [
     "Sequences",
@@ -88,12 +88,12 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Four Pure Shifted Chows": [
     "Sequences",
     "Use four sequences in one suit with starting numbers separated consistently by one or by two.",
-    "Excludes Pure Shifted Chows, Short Straight and Two Terminal Chows implied by this structure.",
+    "Excludes Pure Shifted Chows, Short Straight and Two Terminal Chows included in this structure.",
   ],
   "Three Kongs": [
     "Triplets and quads",
-    "Declare three quads, concealed or exposed.",
-    "Replaces the lesser three-quad constituent combinations; concealment may contribute where the rules permit.",
+    "Declare three quads, concealed or melded.",
+    "Replaces the smaller three-quad combinations it is made from; concealment may contribute where the rules permit.",
   ],
   "All Terminals and Honors": [
     "Tile composition",
@@ -173,7 +173,7 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Three Concealed Pungs": [
     "Triplets and quads",
     "Have three triplets or quads completed without claiming their final tile.",
-    "A discard completing one of these triplets makes that triplet exposed for this count. Excludes the two-concealed-triplets pattern.",
+    "A thrown tile completing one of these triplets makes that triplet melded for this count. Excludes the two-concealed-triplets pattern.",
   ],
   "Lesser Honors and Knitted Tiles": [
     "Special structures",
@@ -218,7 +218,7 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Mixed Shifted Pungs": [
     "Triplets and quads",
     "Use three triplets in three different suits, with numbers stepping upward by one.",
-    "Suit assignment can be permuted; the numbered steps must remain consecutive.",
+    "The three suits can be assigned in any order; the numbered steps must remain consecutive.",
   ],
   "Chicken Hand": [
     "Concealment and winning",
@@ -227,13 +227,13 @@ const entries: Record<string, readonly [Family, string, string]> = {
   ],
   "Last Tile Draw": [
     "Concealment and winning",
-    "Self-draw the last ordinary live-wall tile.",
-    "Excludes Self-Drawn. A flower replacement is not the ordinary last-wall draw.",
+    "Draw the last tile of the wall yourself and win on it.",
+    "Excludes Self-Drawn. A flower replacement is not the last ordinary draw from the wall.",
   ],
   "Last Tile Claim": [
     "Concealment and winning",
-    "Win on the final discard after the last ordinary wall draw.",
-    "The discard must be the final live-wall discard, not merely the fourth visible copy.",
+    "Win on the last thrown tile of the hand, thrown after the last tile was drawn from the wall.",
+    "The thrown tile must be the last one thrown in the hand, not merely the fourth visible copy.",
   ],
   "Out with Replacement Tile": [
     "Concealment and winning",
@@ -242,7 +242,7 @@ const entries: Record<string, readonly [Family, string, string]> = {
   ],
   "Robbing The Kong": [
     "Concealment and winning",
-    "Win on the tile used to upgrade an exposed triplet into a quad.",
+    "Win on the tile another player adds to a melded triplet to make it a quad.",
     "Excludes Last Tile. A concealed quad cannot be robbed.",
   ],
   "All Pungs": [
@@ -267,8 +267,8 @@ const entries: Record<string, readonly [Family, string, string]> = {
   ],
   "Melded Hand": [
     "Concealment and winning",
-    "Declare all four sets using other players’ discards and win by discard on the pair.",
-    "Excludes Single Wait. Concealed quads prevent this fully exposed condition.",
+    "Claim all four sets from other players' thrown tiles and win on a thrown tile that completes the pair.",
+    "Excludes Single Wait. Concealed quads prevent this fully melded condition.",
   ],
   "Two Concealed Kongs": [
     "Triplets and quads",
@@ -287,18 +287,18 @@ const entries: Record<string, readonly [Family, string, string]> = {
   ],
   "Fully Concealed Hand": [
     "Concealment and winning",
-    "Keep the hand closed and win by self-draw; concealed quads are permitted.",
+    "Keep the hand concealed and win by self-draw; concealed quads are permitted.",
     "Excludes Concealed Hand and Self-Drawn. Certain special hands can add it when self-drawn.",
   ],
   "Two Melded Kongs": [
     "Triplets and quads",
-    "Declare two exposed quads, whether directly claimed or upgraded.",
+    "Declare two melded quads, whether claimed directly or made by adding a fourth tile to a melded triplet.",
     "Replaces the two individual melded quad awards; larger quad combinations may replace it. One concealed quad together with one melded quad scores six fan together instead of the two individual awards; that combination is not a separate named pattern.",
   ],
   "Last Tile": [
     "Concealment and winning",
     "Win with the fourth copy when the other three copies are already visible before the win.",
-    "Visibility comes from public tiles, not hidden hands or the actual wall. Robbing a quad excludes it.",
+    "Visibility comes from tiles everyone can see, not hidden hands or the wall. Robbing a quad excludes it.",
   ],
   "Dragon Pung": [
     "Honors",
@@ -317,8 +317,8 @@ const entries: Record<string, readonly [Family, string, string]> = {
   ],
   "Concealed Hand": [
     "Concealment and winning",
-    "Keep every ordinary set closed and win on a discard; concealed quads are permitted.",
-    "Fully Concealed Hand covers a closed self-draw. Some special structures already include this condition and exclude the award.",
+    "Keep every ordinary set concealed and win on a thrown tile; concealed quads are permitted.",
+    "Fully Concealed Hand covers a concealed self-draw. Some special structures already include this condition and exclude the award.",
   ],
   "All Chows": [
     "Sequences",
@@ -333,12 +333,12 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Double Pung": [
     "Small combinations",
     "Have two triplets or quads of the same number in two different suits.",
-    "The triple-triplet pattern replaces its constituent double-triplet combinations.",
+    "The triple-triplet pattern replaces the double-triplet combinations it is made from.",
   ],
   "Two Concealed Pungs": [
     "Triplets and quads",
     "Complete two triplets or quads without taking their completing tile from another player.",
-    "A discard-completed triplet is exposed for this count. The three- and four-concealed-triplets patterns replace it.",
+    "A triplet completed by a thrown tile counts as melded for this count. The three- and four-concealed-triplets patterns replace it.",
   ],
   "Concealed Kong": [
     "Triplets and quads",
@@ -368,7 +368,7 @@ const entries: Record<string, readonly [Family, string, string]> = {
   "Two Terminal Chows": [
     "Small combinations",
     "Have 123 and 789 sequences in the same suit.",
-    "Pure Straight or a terminal-sequence special pattern can replace this implied combination.",
+    "Pure Straight or a terminal-sequence special pattern can replace this included combination.",
   ],
   "Pung of Terminals or Honors": [
     "Small combinations",
@@ -377,8 +377,8 @@ const entries: Record<string, readonly [Family, string, string]> = {
   ],
   "Melded Kong": [
     "Triplets and quads",
-    "Declare an exposed quad by claiming a discard or adding to an exposed triplet.",
-    "Larger quad combinations replace their constituent individual awards. No separate immediate quad payment is made.",
+    "Declare a melded quad by claiming a thrown tile or adding a fourth tile to a melded triplet.",
+    "Larger quad combinations replace the individual awards they are made from. No separate immediate quad payment is made.",
   ],
   "One Voided Suit": [
     "Tile composition",
@@ -407,7 +407,7 @@ const entries: Record<string, readonly [Family, string, string]> = {
   ],
   "Self-Drawn": [
     "Concealment and winning",
-    "Win on your own ordinary draw.",
+    "Win on a tile you draw from the wall yourself.",
     "Fully Concealed Hand, Last Tile Draw and Out with Replacement Tile replace this one-point award when applicable.",
   ],
   "Flower Tiles": [
