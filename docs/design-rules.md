@@ -573,3 +573,15 @@ not govern them), and they follow the shipped `/privacy` pattern:
   role, and unrecorded until this section. Corrected to the
   cream-link treatment above in the same PR that shipped these
   pages; gold links on any static page are drift.
+
+## 19. The app icon
+
+The app icon (owner ruling, Nov 18, 2026) is the green-dragon tile from the
+app's own tile sprite at full scale: cream face, green dragon glyph, on a
+gold plate that reads as the tile's border, over the felt ground. Gold is
+licensed for the icon as that border — this is an icon-only license and does
+not extend the §2 quarantine inside the app. The master is
+`packages/web/public/icon-1024.png`; `icon.svg` is the same composition with
+the glyph as an embedded path (no font dependency). Exploration record:
+~/workspace/mahjong-prep/renderings/app-icon-v1/ (concepts 01–13, QC rounds
+1–6).
