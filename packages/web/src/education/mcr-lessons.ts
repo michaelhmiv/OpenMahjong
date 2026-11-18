@@ -170,7 +170,7 @@ export const MCR_LESSONS: VariantLesson[] = [
         "honor-pick",
         "Tap every honor tile in this row.",
         "3m1z5p7z2s",
-        [3, 4],
+        [1, 3],
         "East and the red dragon are honors. The other three tiles belong to the characters, circles and bamboo suits.",
         "Honors are the winds and the dragons — the tiles with no suit and no number from 1 to 9.",
       ),

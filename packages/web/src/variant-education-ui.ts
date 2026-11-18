@@ -1,9 +1,9 @@
 import {
-  parseCounts,
   variantAdapter,
   type Tile,
   type VariantId,
 } from "@openmahjong/engine";
+import { expandNotation } from "./education/notation.js";
 import {
   VARIANT_LESSONS,
   VARIANT_RELEASES,
@@ -121,49 +121,37 @@ export function mountVariantEducation(
   ): HTMLElement {
     const row = el("div", "", "variant-example-tiles");
     if (!notation) return row;
-    const inventory = variantAdapter(options.variant).inventory();
-    let pos = 0;
-    parseCounts(notation).forEach((count, type) => {
-      for (let c = 0; c < count; c++) {
-        // A notation naming a copy the inventory cannot supply (more
-        // than four of a kind) must never dead-end the lesson: skip
-        // the unresolvable copy. Content is audited against this same
-        // lookup in test/lesson-notation.test.ts.
-        const face = inventory.find((t) => t.type === type && t.id % 4 === c);
-        if (!face) continue;
-        const faceEl = options.renderTile(face);
-        const key = `${lesson.id}:${step}:${rowKey}:${pos}`;
-        if (mode === "answered" || (mode === "teach" && indexRevealed.has(key))) {
-          const ix = tileIndexEl(face);
-          if (ix) faceEl.append(ix);
-        }
-        if (mode === "teach") {
-          faceEl.classList.add("stripinspect");
-          faceEl.setAttribute("role", "button");
-          faceEl.setAttribute("aria-label", `Inspect tile ${pos + 1}`);
-          faceEl.addEventListener("click", () => {
-            if (indexRevealed.has(key)) indexRevealed.delete(key);
-            else indexRevealed.add(key);
-            render();
-          });
-        }
-        row.append(faceEl);
-        pos++;
+    // Rows render in the order the notation names the tiles — the
+    // same order tile-pick keys index (see education/notation.ts).
+    tileFaces(notation).forEach((face, pos) => {
+      const faceEl = options.renderTile(face);
+      const key = `${lesson.id}:${step}:${rowKey}:${pos}`;
+      if (mode === "answered" || (mode === "teach" && indexRevealed.has(key))) {
+        const ix = tileIndexEl(face);
+        if (ix) faceEl.append(ix);
       }
+      if (mode === "teach") {
+        faceEl.classList.add("stripinspect");
+        faceEl.setAttribute("role", "button");
+        faceEl.setAttribute("aria-label", `Inspect tile ${pos + 1}`);
+        faceEl.addEventListener("click", () => {
+          if (indexRevealed.has(key)) indexRevealed.delete(key);
+          else indexRevealed.add(key);
+          render();
+        });
+      }
+      row.append(faceEl);
     });
     return row;
   }
-  /** The expanded tile faces of a notation string, in row order. */
+  /** The expanded tile faces of a notation string, in the order the
+   * notation names them — the order every row renders in and every
+   * tile-pick key indexes. */
   function tileFaces(notation: string): Tile[] {
-    const inventory = variantAdapter(options.variant).inventory();
-    const faces: Tile[] = [];
-    parseCounts(notation).forEach((count, type) => {
-      for (let c = 0; c < count; c++) {
-        const face = inventory.find((t) => t.type === type && t.id % 4 === c);
-        if (face) faces.push(face);
-      }
-    });
-    return faces;
+    return expandNotation(
+      notation,
+      variantAdapter(options.variant).inventory(),
+    );
   }
   function advance(continueLabel: string, next: () => void): void {
     main.append(button(continueLabel, () => {
