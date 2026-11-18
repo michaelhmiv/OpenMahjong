@@ -182,15 +182,21 @@ const TERMS: readonly {
   // winds, the round label, the wall, the dora indicator and the
   // DORA label, the honba counter, the 25,000 starting scores.
   { term: "seat wind", pattern: /\bseat wind\b/i, module: "tu3", step: 0 },
+  { term: "round wind", pattern: /\bround wind\b/i, module: "tu3", step: 0 },
+  { term: "dealer", pattern: /\bdealers?\b/i, module: "tu3", step: 0 },
   { term: "wall", pattern: /\bwall\b/i, module: "tu3", step: 0 },
   { term: "dora", pattern: /\bdora\b/i, module: "tu3", step: 0 },
   { term: "dora indicator", pattern: /\bdora indicator\b/i, module: "tu3", step: 0 },
   { term: "honba", pattern: /\bhonba\b/i, module: "tu3", step: 0 },
   { term: "call", pattern: /\bcall(s|ed|ing)?\b/i, module: "tu4", step: 0 },
+  { term: "open hand", pattern: /\bopen hand\b/i, module: "tu4", step: 0 },
+  { term: "closed hand", pattern: /\bclosed hand\b/i, module: "tu4", step: 0 },
   { term: "chi", pattern: /\bchi\b/i, module: "tu4", step: 1 },
   { term: "pon", pattern: /\bpon\b/i, module: "tu4", step: 3 },
   { term: "kan", pattern: /\bkans?\b/i, module: "tu4", step: 5 },
   { term: "tenpai", pattern: /\btenpai\b/i, module: "tu5", step: 0 },
+  { term: "ron", pattern: /\bron\b/i, module: "tu5", step: 1 },
+  { term: "tsumo", pattern: /\btsumo\b/i, module: "tu5", step: 1 },
   { term: "furiten", pattern: /\bfuriten\b/i, module: "tu5", step: 4 },
   // Riichi's stake first moves in TU-5's scenes (the panel's
   // unexplained 25,000 → 24,000), so TU-5's tsumo scene defines
@@ -199,7 +205,10 @@ const TERMS: readonly {
   { term: "riichi", pattern: /\briichi\b/i, module: "tu5", step: 2 },
   { term: "yaku", pattern: /\byaku\b/i, module: "tu7", step: 0 },
   { term: "scoring pattern", pattern: /\bscoring pattern\b/i, module: "tu7", step: 0 },
-  { term: "dealer", pattern: /\bdealers?\b/i, module: "tu8", step: 6 },
+  { term: "han", pattern: /\bhan\b/i, module: "tu7", step: 0 },
+  { term: "scoring wind", pattern: /\bscoring winds?\b/i, module: "tu7", step: 3 },
+  { term: "fu", pattern: /\bfu\b/i, module: "tu8", step: 0 },
+  { term: "genbutsu", pattern: /\bgenbutsu\b/i, module: "tu9", step: 2 },
 ];
 
 describe("A1: no term is used before the step that teaches it", () => {
@@ -384,5 +393,57 @@ describe("A3: scene openers state what happens, what to tap, and why", () => {
     expect(text).toMatch(/has declared riichi, so .+'s hand is tenpai/);
     expect(text).toContain("Discard a tile from");
     expect(text).toContain("safe against");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// A4: definition at first use (definition audit, 2026-11-17).
+//
+// A1 checks a term is not USED before its teaching step. This audit
+// is stronger: the teaching step itself must carry a plain-words
+// definition a total beginner can use — the owner's ruling that
+// every new term is defined the first time it is mentioned. The
+// full term inventory for this audit is in the PR body; the terms
+// below are the ones whose definitions were missing or deferred
+// before this round (winds, dealer, honba, dora indicator, ron,
+// tsumo, open/closed hand, han, fu, genbutsu).
+// ---------------------------------------------------------------------------
+
+describe("A4: the teaching step defines the term in plain words", () => {
+  it("TU-3 defines the dealer and both winds on the pictured table", () => {
+    const tour = textsAt("tu3", 0);
+    expect(tour).toContain("the dealer: the player sitting in the East seat");
+    expect(tour).toContain("that wind is the player's seat wind, the wind of the seat they are sitting in, counted round from the dealer");
+    expect(tour).toContain("the round wind: the wind that names the whole round, the same for all four players at once");
+    // The worked contrast a beginner can repeat back: East round, you are South.
+    expect(tour).toContain("the round wind is East and your seat wind is South: you are not the dealer");
+    expect(tour).toContain("the round wind names the round, and your seat wind says where you sit in it");
+  });
+
+  it("TU-3 defines the dora indicator and honba instead of deferring them", () => {
+    const tour = textsAt("tu3", 0);
+    expect(tour).toContain("the dora is the next number up in the same suit");
+    expect(tour).toContain("each honba adds 300 points to the next winning hand");
+  });
+
+  it("TU-4 defines open hand and closed hand at the first call", () => {
+    expect(textsAt("tu4", 0)).toContain("An open hand is a hand with a set placed face up");
+    expect(textsAt("tu4", 0)).toContain("A closed hand is the opposite");
+  });
+
+  it("TU-5 defines ron and tsumo in plain words before either scene", () => {
+    expect(textsAt("tu5", 1)).toContain("Ron: winning on a tile another player discarded");
+    expect(textsAt("tu5", 1)).toContain("Tsumo: winning on a tile you drew yourself");
+    expect(textsAt("tu5", 1)).toContain("only the player who discarded it pays you");
+    expect(textsAt("tu5", 1)).toContain("all three opponents pay you");
+  });
+
+  it("TU-7 defines han and TU-8 defines fu where they are first spent", () => {
+    expect(textsAt("tu7", 0)).toContain("han, the units a hand's value is counted in");
+    expect(textsAt("tu8", 0)).toContain("Fu are minipoints from the hand's shape");
+  });
+
+  it("TU-9 defines genbutsu in the step that names it", () => {
+    expect(textsAt("tu9", 2)).toContain("are genbutsu, and they are safe against that player");
   });
 });
