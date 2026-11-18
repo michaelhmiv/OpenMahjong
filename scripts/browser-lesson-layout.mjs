@@ -132,7 +132,10 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 412, height: 915 }
   // -- TU-8 "Points and rounds" (scene lesson): the worked breakdown
   //    step's text panel must scroll inside a panel that fits.
   await check(`tu8 breakdown panel scrolls and fits (${tag})`, async () => {
-    await page.locator('.tabbtn[data-tab="learn"]').click();
+    // The TU-7 walk ends on the lesson-completion screen (table
+    // screen, no tab bar): return to the Learn list first.
+    await page.getByRole("button", { name: "All lessons", exact: true }).click();
+    await page.locator("#screen-learn.active").waitFor();
     await page.locator('[data-module="tu8"]').click();
     await page.locator(".lessonpanel").waitFor();
     await page.waitForTimeout(300);
@@ -177,7 +180,11 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 412, height: 915 }
   // -- Variant lesson runner: bounded scroll container, buttons in
   //    viewport on walked steps.
   await check(`variant lesson runner bounded and fitting (${tag})`, async () => {
-    await page.locator('.tabbtn[data-tab="learn"]').click();
+    // TU-8 ends mid-lesson on the table screen: leave via the lesson
+    // menu back to the Learn list.
+    await page.getByRole("button", { name: "Menu", exact: true }).click();
+    await page.getByRole("button", { name: "Leave lesson", exact: true }).click();
+    await page.locator("#screen-learn.active").waitFor();
     await page.locator("#screen-learn .lrow").nth(11).click();
     await page.locator(".variant-education-content").waitFor();
     await page.waitForTimeout(300);
