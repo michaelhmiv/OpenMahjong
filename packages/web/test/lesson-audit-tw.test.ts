@@ -94,13 +94,13 @@ const TERMS: readonly {
   readonly lesson: string;
   readonly step: number;
 }[] = [
-  { term: "flower", pattern: /\bflowers?\b/i, lesson: "tw-tiles", step: 7 },
-  { term: "quad", pattern: /\bquads?\b/i, lesson: "tw-tiles", step: 6 },
+  { term: "flower", pattern: /\bflowers?\b/i, lesson: "tw-tiles", step: 16 },
+  { term: "quad", pattern: /\bquads?\b/i, lesson: "tw-tiles", step: 15 },
   { term: "tai", pattern: /\btai\b/i, lesson: "tw-profile", step: 0 },
   { term: "dealer", pattern: /\bdealer\b/i, lesson: "tw-profile", step: 4 },
   { term: "seat wind", pattern: /\bseat wind\b/i, lesson: "tw-profile", step: 4 },
   { term: "round wind", pattern: /\bround wind\b/i, lesson: "tw-profile", step: 5 },
-  { term: "repeat", pattern: /\brepeats?\b/i, lesson: "tw-profile", step: 6 },
+  { term: "repeat", pattern: /\brepeats?\b/i, lesson: "tw-profile", step: 8 },
   { term: "discard win", pattern: /\bdiscard win\b/i, lesson: "tw-turns", step: 1 },
   { term: "self-draw", pattern: /self-draw/i, lesson: "tw-turns", step: 1 },
   { term: "concealed", pattern: /\bconcealed\b/i, lesson: "tw-turns", step: 3 },
@@ -179,15 +179,54 @@ describe("TW structure", () => {
 
   it("gives every choice question at least four choices, and uses tile-pick drills", () => {
     const questions = TAIWANESE_LESSONS.flatMap(variantLessonQuestions);
-    expect(questions).toHaveLength(20);
+    expect(questions).toHaveLength(42);
     for (const q of questions)
       if (q.kind === "choice")
         expect(
           q.choices.length,
           `${q.id} has fewer than four choices`,
         ).toBeGreaterThanOrEqual(4);
-    expect(questions.filter((q) => q.kind === "tile-pick")).toHaveLength(2);
+    expect(questions.filter((q) => q.kind === "tile-pick")).toHaveLength(8);
     expect(questions.every((q) => q.hint.trim().length > 0)).toBe(true);
+  });
+
+  it("drills every wind face by name and characters numbers by face in lessons 1-2", () => {
+    const firstTwo = TAIWANESE_LESSONS.slice(0, 2).flatMap(
+      variantLessonQuestions,
+    );
+    const byId = new Map(firstTwo.map((q) => [q.id, q]));
+    // Each wind is the target of at least one glyph drill: West by a
+    // name-the-face choice, North/East/South by shuffled tile-picks,
+    // East again as the dealer's seat wind in lesson 2.
+    const west = byId.get("tw-wind-name")!;
+    expect(west.kind).toBe("choice");
+    if (west.kind === "choice")
+      expect(west.choices[west.answer]).toBe("West");
+    const pickTarget = (id: string) => {
+      const q = byId.get(id)!;
+      expect(q.kind).toBe("tile-pick");
+      if (q.kind !== "tile-pick") throw new Error(id);
+      // Expand the row the way the runner does: each digit is one tile.
+      const row: string[] = [];
+      for (const m of q.tiles.matchAll(/(\d)([mpsz])/g))
+        row.push(`${m[1]}${m[2]}`);
+      return q.picks.map((p) => row[p]!);
+    };
+    expect(pickTarget("tw-wind-pick-north")).toEqual(["4z"]);
+    expect(pickTarget("tw-wind-pick-east")).toEqual(["1z"]);
+    expect(pickTarget("tw-wind-pick-south")).toEqual(["2z"]);
+    expect(pickTarget("tw-dealer-wind-pick")).toEqual(["1z"]);
+    // Characters numbers are drilled from the face, in shuffled rows.
+    const seven = byId.get("tw-char-number")!;
+    expect(seven.kind).toBe("choice");
+    if (seven.kind === "choice")
+      expect(seven.choices[seven.answer]).toBe("Seven");
+    expect(pickTarget("tw-char-pick-six")).toEqual(["6m"]);
+    expect(pickTarget("tw-char-pick-two")).toEqual(["2m"]);
+    const four = byId.get("tw-char-number-seat")!;
+    expect(four.kind).toBe("choice");
+    if (four.kind === "choice")
+      expect(four.choices[four.answer]).toBe("Four");
   });
 });
 
@@ -259,8 +298,7 @@ describe("TW worked hands verify against the engine scorer", () => {
     );
   });
 
-  it("lesson 2's counted hand earns exactly one tai on a discard, two on a self-draw", () => {
-    const melds = [{ kind: "pon", tiles: [27, 27, 27] }] as const;
+  it("lesson 2's counted hand earns exactly one tai on a discard, two on a self-draw", () => {    const melds = [{ kind: "pon", tiles: [27, 27, 27] }] as const;
     const discardWin = score(MINI, {
       winningTile: 14,
       melds: [...melds],
@@ -273,6 +311,55 @@ describe("TW worked hands verify against the engine scorer", () => {
       melds: [...melds],
     });
     expect(selfDrawn.units).toBe(2);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Fix-round counting and transfer checks: new pictured hands, never used
+// in teaching, whose answers verify against the engine scorer and the
+// payment function (the rebuild PR D oracle pattern, extended).
+// ---------------------------------------------------------------------------
+
+describe("TW fix-round counting checks verify against the engine scorer", () => {
+  const question = (id: string) =>
+    TAIWANESE_LESSONS.flatMap(variantLessonQuestions).find(
+      (q) => q.id === id,
+    )!;
+  const cases: readonly (readonly [string, string])[] = [
+    // Lesson 5: counting, not a price list — concealed triplets and the
+    // pictured all-triplets hand (all-triplets pictured and priced).
+    ["tw-count-triplets", "3 tai"],
+    ["tw-count-all-triplets", "11 tai"],
+    // Lesson 6: suit patterns exercised on new pictured hands.
+    ["tw-count-half-flush", "6 tai"],
+    ["tw-count-full-flush", "11 tai"],
+    // Lesson 7: all-claimed exercised on a new pictured hand.
+    ["tw-count-all-claimed", "4 tai"],
+    // Lesson 8: replacement-draw, last-tile and first-draw awards
+    // exercised on new pictured hands.
+    ["tw-count-replacement", "5 tai"],
+    ["tw-count-last-draw", "3 tai"],
+    ["tw-count-first-draw", "16 tai"],
+    // Lesson 9: transfer — two hands never used in teaching, counted
+    // award by award and priced end to end.
+    ["tw-transfer-one-count", "4 tai"],
+    ["tw-transfer-one-dealer", "100 points"],
+    ["tw-transfer-one-other", "70 points"],
+    ["tw-transfer-two-count", "7 tai"],
+    ["tw-transfer-two-pays", "110 points"],
+  ];
+  for (const [id, expected] of cases)
+    it(`${id} verifies as ${expected}`, () => {
+      expect(question(id).verify()).toBe(expected);
+    });
+
+  it("the transfer hands are pictured in the payments lesson and differ from the worked hand", () => {
+    const payments = TAIWANESE_LESSONS.find((l) => l.id === "tw-payments")!;
+    const hands = payments.steps.flatMap((s) => (s.hand ? [s.hand] : []));
+    expect(hands).toContain("111222333p789s222z55z");
+    expect(hands).toContain("123456789m111z222z33z");
+    expect("111222333p789s222z55z").not.toBe(WORKED);
+    expect("123456789m111z222z33z").not.toBe(WORKED);
   });
 });
 

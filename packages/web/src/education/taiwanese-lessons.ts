@@ -12,6 +12,13 @@
  * never used in teaching text. Scoring numbers that a check depends on
  * are verified against the engine's Taiwanese scorer or payment
  * function in the question's verify().
+ *
+ * Fix round (Nov 17, 2026): every award value spent in the payments
+ * lesson is taught and pictured at its home lesson first (honor
+ * triplets and all-triplets in lesson 5, suit patterns in lesson 6);
+ * lessons 5, 6, 7, 8 and 9 count NEW pictured hands the teaching never
+ * used, verified against the scorer; lessons 1 and 2 drill the wind
+ * faces and characters numbers by face, shuffled, not by row position.
  */
 import {
   parseCounts,
@@ -105,12 +112,55 @@ const MINI = "123456m12223456p111z";
 /** Lesson 7's hand: four sequences, an East triplet, and a single white
  * dragon that only a second white dragon can complete. */
 const UNIQUE_HAND = "123456m123p789s111z55z";
+/** Lesson 5's first counting check: three concealed triplets of
+ * characters, two sequences and a pair of white dragons, won on a
+ * discard of the 9 of bamboo. Earns three tai. */
+const COUNT_TRIPLETS = "111222333m456p789s55z";
+/** Lesson 5's all-triplets hand: five triplets and a pair of green
+ * dragons, won on a discard of the third South wind. Earns eleven tai. */
+const ALL_TRIPLETS = "333m555p777s999s222z66z";
+/** Lesson 6's suit-pattern counting check: circles with honors, won on
+ * a discard of the 9 of circles. Earns six tai. */
+const HALF_FLUSH_NEW = "111234567p789p222z33z";
+/** Lesson 6's one-suit counting check: bamboo only, won on a discard
+ * of the 9 of bamboo. Earns eleven tai. */
+const FULL_FLUSH_NEW = "123s234s456s789s111s55s";
+/** Lesson 7's all-claimed counting check: every set claimed, the pair
+ * of North winds completed by a discard. Earns four tai. */
+const ALL_CLAIMED_NEW = "345m234p678s555777z44z";
+const ALL_CLAIMED_MELDS = [
+  { kind: "chi", tiles: [2, 3, 4] },
+  { kind: "chi", tiles: [10, 11, 12] },
+  { kind: "chi", tiles: [23, 24, 25] },
+  { kind: "pon", tiles: [31, 31, 31] },
+  { kind: "pon", tiles: [33, 33, 33] },
+] as const;
+/** Lesson 8's replacement counting check: an added quad of the 2 of
+ * bamboo, won on the replacement draw. Earns five tai. */
+const REPLACEMENT_NEW = "123456m123p2222s333z55z";
+/** Lesson 8's last-tile counting check: an East triplet was claimed
+ * and the hand was won by drawing the last ordinary tile. Three tai. */
+const LAST_DRAW_NEW = "123456m123456p111z99s";
+/** Lesson 8's first-draw counting check: five sequences and a pair of
+ * East winds, completed by a non-dealer's very first draw. Sixteen tai. */
+const FIRST_DRAW_NEW = "123456m123p456p789s11z";
+/** Lesson 9's first transfer hand: three concealed triplets of
+ * circles, a claimed South triplet, won by self-draw. Four tai. */
+const TRANSFER_ONE = "111222333p789s222z55z";
+/** Lesson 9's second transfer hand: characters with honors, the East
+ * triplet claimed, the pair of West winds completed by a discard.
+ * Seven tai. */
+const TRANSFER_TWO = "123456789m111z222z33z";
 
 export const TAIWANESE_LESSONS: VariantLesson[] = [
   lesson("tiles", "Tiles, suits and the sixteen-tile hand", [
     {
       text: "Taiwanese mahjong is played with tiles. The tiles come in three suits — three groups that share one kind of face. The first suit is characters, numbered 1 to 9 and shown here in order. A characters tile has a two-part face: the dark character on top is the number, and the red mark below is the same on every characters tile. Read the row left to right: 1, 2, 3, and so on to 9.",
       tiles: "123456789m",
+    },
+    {
+      text: "The number is in the face itself, not in where the tile sits. Out of order, the four faces shown here read 7, 3, 9 and 5. The drills later in this lesson ask you to read single faces on their own, the way you will meet them in a hand.",
+      tiles: "7m3m9m5m",
     },
     {
       text: "The second suit is circles, numbered 1 to 9 and shown here in order. Read a circles tile by counting its circles: the number of circles is the tile's number. The first tile shows one large circle, the last shows nine.",
@@ -125,6 +175,10 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       tiles: "1234567z",
     },
     {
+      text: "Each wind has its own face, and the name belongs to the face, not to its place in a row. Out of order, the four wind faces shown here read West, East, North and South.",
+      tiles: "3z1z4z2z",
+    },
+    {
       question: pick(
         "honors-pick",
         "Tap every honor tile in this row.",
@@ -132,6 +186,78 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
         [2, 3],
         "The East wind and the red dragon are honors. The 5 of characters and the 3 of circles are suited tiles — each carries a suit and a number.",
         "Honors are the tiles with no suit and no number: the four winds and the three dragons. Suited tiles always show a number in one of the three suits.",
+      ),
+    },
+    {
+      question: choice(
+        "wind-name",
+        "Which wind does this face show?",
+        ["East", "South", "West", "North"],
+        2,
+        "That face is the West wind. Each of the four winds has its own face — they do not share one.",
+        "Compare this face with the four wind faces from the honors step, one at a time, until one matches it exactly.",
+        { tiles: "3z" },
+      ),
+    },
+    {
+      question: pick(
+        "wind-pick-north",
+        "Tap the North wind.",
+        "2z1z4z3z",
+        [2],
+        "The third tile in the row is the North wind. The row is shuffled, so the face itself — not its place — gives the name.",
+        "Hold the four wind faces from the honors step in mind and match each tile in this row against them, one at a time.",
+      ),
+    },
+    {
+      question: pick(
+        "wind-pick-east",
+        "Tap the East wind.",
+        "3z4z2z1z",
+        [3],
+        "The last tile in the row is the East wind — the first wind named in the honors step, here sitting at the end of a shuffled row.",
+        "Match faces, not places: find the tile whose face is the same as the East face from the honors step.",
+      ),
+    },
+    {
+      question: pick(
+        "wind-pick-south",
+        "Tap the South wind.",
+        "4z3z1z2z",
+        [3],
+        "The last tile in the row is the South wind. In a shuffled row each wind still carries its own name on its own face.",
+        "Work along the row comparing each face with the South face from the honors step.",
+      ),
+    },
+    {
+      question: choice(
+        "char-number",
+        "What number does this characters tile show?",
+        ["Five", "Six", "Seven", "Eight"],
+        2,
+        "The tile shows seven: the dark character at the top of the face is the number seven, written as a character.",
+        "The number is the dark character at the top of the face. Compare it with the characters row from the first step, where the faces run 1 to 9.",
+        { tiles: "7m" },
+      ),
+    },
+    {
+      question: pick(
+        "char-pick-six",
+        "Tap the 6 of characters.",
+        "8m3m6m5m1m",
+        [2],
+        "The middle tile is the 6 of characters. The row is shuffled — the number was read from the face, not from counting along the row.",
+        "Read the top character on each face in the row until one reads six. The red mark below is the same on every characters tile and carries no number.",
+      ),
+    },
+    {
+      question: pick(
+        "char-pick-two",
+        "Tap the 2 of characters.",
+        "4m9m2m7m",
+        [2],
+        "The third tile is the 2 of characters, read from its own face in a shuffled row.",
+        "Read each face's top character in turn. One of them is the number two written as a character.",
       ),
     },
     {
@@ -212,6 +338,27 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
     {
       text: "A game is played in rounds, and each round is named by a wind: the round wind. The game begins with the East round, then comes the South round, then West, then North. During the East round, every hand is an East-round hand, whoever deals it. At this table the seat wind and the round wind do not change what a wind triplet earns: every wind triplet earns one tai, as the everyday awards said.",
       tiles: "1234z",
+    },
+    {
+      question: pick(
+        "dealer-wind-pick",
+        "Tap the seat wind the dealer holds.",
+        "3z2z4z1z",
+        [3],
+        "The last tile in the row is East, and the dealer holds East as a seat wind in every round. The row is shuffled — the name was read from the face.",
+        "Two facts meet here: which wind the dealer always holds, and which face in this shuffled row carries that name. Match the faces one at a time.",
+      ),
+    },
+    {
+      question: choice(
+        "char-number-seat",
+        "What number does this characters tile show?",
+        ["Three", "Four", "Five", "Six"],
+        1,
+        "The tile shows four — the dark character at the top of the face is the number, read from the face itself.",
+        "Read the dark character at the top of the face and compare it with the characters faces from the tiles lesson.",
+        { tiles: "4m" },
+      ),
     },
     {
       text: "The dealer does not always pass the deal on. When the dealer wins a hand, or when a hand ends with no winner, the same player deals again. Each time the dealer deals again like this is one repeat, and the repeats are counted: first repeat, second repeat, and so on. When a player who is not the dealer wins, the deal passes to the next player and the repeat count starts again at zero. The repeat count matters later, when payments are worked out.",
@@ -371,6 +518,10 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       hand: MINI,
     },
     {
+      text: "Honor triplets carry their own everyday price, pictured here: three South winds and three red dragons. A triplet of any wind earns one tai — East, South, West or North, whichever wind it is and wherever you sit. A triplet of any dragon also earns one tai — white, green or red. Each of the two triplets pictured here therefore earns one tai. A pair of a wind or a dragon earns nothing: the price is for three of a kind.",
+      tiles: "222z777z",
+    },
+    {
       text: "When a hand is both concealed and won by self-draw, the two awards are replaced by one combined award: a concealed self-draw earns three tai in total. Take the hand from the first step of this lesson and change only how it was won — the player drew the 6 of circles themself. The hand earns three tai, all from the combined award. Do not add the separate concealed tai and the separate self-draw tai on top of the three: the combined award replaces them. This is the track's clearest counting rule — bigger awards replace the smaller ones inside them; they never stack.",
       hand: WORKED,
     },
@@ -408,7 +559,42 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "One more everyday award ties the triplet family together. If all five sets in a hand are triplets or quads, the hand earns four tai for being all triplets — on top of what its triplets earn in the other awards. Wind triplets and dragon triplets still earn their one tai each inside such a hand, and the concealed-triplet count still applies to the triplets that were never claimed.",
+      text: "Now count a hand you have not seen before. The pictured hand is: three triplets of characters — one each of the 1, the 2 and the 3; the 4, 5 and 6 of circles; the 7, 8 and 9 of bamboo; and a pair of white dragons. Nothing in it was claimed, and it was won on another player's discard of the 9 of bamboo, which completed the bamboo sequence.",
+      hand: COUNT_TRIPLETS,
+    },
+    {
+      hand: COUNT_TRIPLETS,
+      question: choice(
+        "count-triplets",
+        "How many tai does this hand earn in all?",
+        ["2 tai", "3 tai", "4 tai", "5 tai"],
+        1,
+        "Three tai: the three concealed triplets earn two tai, and the concealed hand won on a discard earns one tai. The white dragons are only a pair, so no dragon tai — and the hand holds an honor, so the award for having no honors does not apply.",
+        "Count in the order this lesson taught: first the concealed triplets and what their number earns, then how the hand was kept and won. A pair earns nothing by itself.",
+        {
+          verify: () =>
+            `${scored(COUNT_TRIPLETS, { winningTile: 26 }).units} tai`,
+        },
+      ),
+    },
+    {
+      text: "One more everyday award ties the triplet family together, and this time it is pictured in a hand. The pictured hand is: triplets of the 3 of characters, the 5 of circles, the 7 of bamboo and the 9 of bamboo; a triplet of South winds; and a pair of green dragons. All five sets are triplets. A hand whose five sets are all triplets or quads earns four tai for being all triplets — on top of what its triplets earn in the other awards. Wind triplets and dragon triplets still earn their one tai each inside such a hand, and the concealed-triplet count still applies to the triplets that were never claimed. The pair earns nothing.",
+      hand: ALL_TRIPLETS,
+    },
+    {
+      hand: ALL_TRIPLETS,
+      question: choice(
+        "count-all-triplets",
+        "That pictured hand was won on another player's discard of the third South wind, which completed the South triplet. Nothing in the hand was claimed. How many tai does it earn in all?",
+        ["8 tai", "9 tai", "11 tai", "13 tai"],
+        2,
+        "Eleven tai: four for being all triplets; five for the concealed triplets — the South triplet was completed by the winning discard, so it does not count as concealed, and the remaining four concealed triplets earn five tai; one for the South wind triplet; and one for the concealed hand won on a discard.",
+        "Work award by award: all triplets first, then the concealed-triplet count — remembering that a triplet completed by the winning discard is not concealed — then the wind triplet, then how the hand was kept and won.",
+        {
+          verify: () =>
+            `${scored(ALL_TRIPLETS, { winningTile: 28 }).units} tai`,
+        },
+      ),
     },
   ]),
   lesson("structure", "One tile away, and suit patterns", [
@@ -461,6 +647,44 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       text: "The largest honor patterns follow the same replacement rule. The pictured hand holds three white dragons, three green dragons, and a pair of red dragons, with three sequences: that is Little Three Dragons — two dragon triplets with the third dragon as the pair — earning four tai, which replaces the two separate dragon-triplet tai inside it. Three dragon triplets earn Big Three Dragons, eight tai, replacing all three separate awards. Three wind triplets with the fourth wind as the pair earn eight tai, and four wind triplets earn sixteen tai — each replacing the separate wind-triplet tai inside it.",
       hand: "555666z123m456p789s77z",
     },
+    {
+      text: "Count the suit patterns on a hand you have not seen before. The pictured hand is circles with honors: a triplet of the 1 of circles; the 2, 3, 4 of circles; the 5, 6, 7 of circles; the 7, 8, 9 of circles; a triplet of South winds; and a pair of West winds. Nothing in it was claimed, and it was won on another player's discard of the 9 of circles.",
+      hand: HALF_FLUSH_NEW,
+    },
+    {
+      hand: HALF_FLUSH_NEW,
+      question: choice(
+        "count-half-flush",
+        "How many tai does this hand earn in all?",
+        ["4 tai", "5 tai", "6 tai", "8 tai"],
+        2,
+        "Six tai: four for one numbered suit together with honors, one for the South wind triplet, and one for the concealed hand won on a discard. The West winds are only a pair, so they earn nothing.",
+        "Name each award this hand has, in the order the track taught them: the suit pattern first, then any honor triplet, then how the hand was kept and won.",
+        {
+          verify: () =>
+            `${scored(HALF_FLUSH_NEW, { winningTile: 17 }).units} tai`,
+        },
+      ),
+    },
+    {
+      text: "One suit narrower still, on another new hand. The pictured hand is bamboo only: the 1, 2, 3 of bamboo; the 2, 3, 4 of bamboo; the 4, 5, 6 of bamboo; the 7, 8, 9 of bamboo; a triplet of the 1 of bamboo; and a pair of the 5 of bamboo. Nothing in it was claimed, no flowers were set aside, and it was won on another player's discard of the 9 of bamboo.",
+      hand: FULL_FLUSH_NEW,
+    },
+    {
+      hand: FULL_FLUSH_NEW,
+      question: choice(
+        "count-full-flush",
+        "How many tai does this hand earn in all?",
+        ["8 tai", "9 tai", "11 tai", "13 tai"],
+        2,
+        "Eleven tai: eight for one suit only, two for having no honors and no flowers set aside, and one for the concealed hand won on a discard.",
+        "Three awards meet in this hand: the suit pattern at its narrowest, the award for what the hand does not contain, and the way it was kept and won.",
+        {
+          verify: () =>
+            `${scored(FULL_FLUSH_NEW, { winningTile: 26 }).units} tai`,
+        },
+      ),
+    },
   ]),
   lesson("waits", "Waits that pay, and passed wins", [
     {
@@ -484,6 +708,25 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
     {
       text: "The opposite shape also pays. If all five sets were claimed and shown, and the pair is then completed by another player's discard, the hand earns two tai for being all claimed. The pictured tiles show such a hand's shape: 1, 2, 3 of characters; 4, 5, 6 of circles; 7, 8, 9 of bamboo; three East winds; three South winds; and a pair of North winds — every set claimed, the pair finished by a discard. The two tai replace the one-kind-wait tai rather than adding to it, even when the pair was the hand's only wait.",
       hand: "123m456p789s111222z33z",
+    },
+    {
+      text: "Count that shape on a new hand. The pictured hand's five sets were all claimed and shown: the 3, 4, 5 of characters; the 2, 3, 4 of circles; the 6, 7, 8 of bamboo; three white dragons; and three red dragons. Its pair of North winds was then completed by another player's discard of a North wind.",
+      hand: ALL_CLAIMED_NEW,
+    },
+    {
+      hand: ALL_CLAIMED_NEW,
+      question: choice(
+        "count-all-claimed",
+        "How many tai does this hand earn in all?",
+        ["2 tai", "3 tai", "4 tai", "6 tai"],
+        2,
+        "Four tai: two for being all claimed — every set claimed and shown, the pair finished by a discard — and one each for the white dragon triplet and the red dragon triplet. The all-claimed award replaces the one-kind-wait tai, so the pair wait adds nothing more.",
+        "Count the award for how the sets were gathered first, then the honor triplets. Remember what the all-claimed award replaces.",
+        {
+          verify: () =>
+            `${scored(ALL_CLAIMED_NEW, { winningTile: 30, melds: [...ALL_CLAIMED_MELDS] }).units} tai`,
+        },
+      ),
     },
     {
       text: "One restriction guards winning itself. If you could have won — on a discard, or on a tile you drew — and you let the chance pass, that is a passed win. While a passed win stands against you, you may not win at all, on any tile, even one you draw yourself. Drawing again does not clear it. To clear a passed win you must either discard a tile that could not have completed your hand, or declare a quad using a tile you drew. A quad claimed from a discard does not clear it.",
@@ -548,6 +791,63 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
     {
       text: "Two timing awards end the scoring list. Winning by self-draw on the very last ordinary tile earns one tai. And a win on the very first draw of a hand, before anything else has happened, earns the largest everyday awards in the game: if the dealer does it, the hand earns twenty-four tai; if any other player does it on their first draw, sixteen tai. Those first-draw awards are tai, like every award in this track, and they replace the concealed, self-draw and one-kind-wait awards rather than adding to them.",
     },
+    {
+      text: "Count a replacement win on a new hand. The pictured hand holds: the 1, 2, 3 and the 4, 5, 6 of characters; the 1, 2 and 3 of circles; a quad of the 2 of bamboo; a triplet of West winds; and a pair of white dragons. The bamboo triplet had already been claimed and shown when the player drew the fourth 2 of bamboo and added it, making the quad an added quad. The replacement tile drawn for that quad was the 3 of circles, and it completed the hand.",
+      hand: REPLACEMENT_NEW,
+    },
+    {
+      hand: REPLACEMENT_NEW,
+      question: choice(
+        "count-replacement",
+        "How many tai does this hand earn in all?",
+        ["3 tai", "4 tai", "5 tai", "7 tai"],
+        2,
+        "Five tai: one for the West wind triplet, one for the added quad, one for winning by self-draw, one for the one-kind wait — only the 3 of circles could complete the hand — and one for winning on the replacement draw.",
+        "Count award by award: the honor triplet, the quad, the way the hand was won, the kind of wait it was sitting on, and the draw the winning tile came on.",
+        {
+          verify: () =>
+            `${scored(REPLACEMENT_NEW, { winningTile: 11, selfDraw: true, replacement: true, melds: [{ kind: "shouminkan", tiles: [19, 19, 19, 19] }] }).units} tai`,
+        },
+      ),
+    },
+    {
+      text: "Count the last-tile award on a new hand. The pictured hand holds: the 1, 2, 3 and the 4, 5, 6 of characters; the 1, 2, 3 and the 4, 5, 6 of circles; three East winds, which were claimed; and a pair of the 9 of bamboo. The player drew the very last ordinary tile — the 6 of circles — and it completed the hand.",
+      hand: LAST_DRAW_NEW,
+    },
+    {
+      hand: LAST_DRAW_NEW,
+      question: choice(
+        "count-last-draw",
+        "How many tai does this hand earn in all?",
+        ["1 tai", "2 tai", "3 tai", "4 tai"],
+        2,
+        "Three tai: one for the East wind triplet, one for winning by self-draw, and one for winning on the very last ordinary tile.",
+        "Three separate one-tai awards meet here: an honor triplet, the way the hand was won, and which tile it was won on.",
+        {
+          verify: () =>
+            `${scored(LAST_DRAW_NEW, { winningTile: 14, selfDraw: true, lastWall: true, melds: [{ kind: "pon", tiles: [27, 27, 27] }] }).units} tai`,
+        },
+      ),
+    },
+    {
+      text: "Count a first-draw win on a new hand. The pictured hand is: the 1, 2, 3 and the 4, 5, 6 of characters; the 1, 2, 3 and the 4, 5, 6 of circles; the 7, 8, 9 of bamboo; and a pair of East winds. A player who is not the dealer drew the 6 of circles as the very first draw of the hand, before anything else had happened, and it completed this hand.",
+      hand: FIRST_DRAW_NEW,
+    },
+    {
+      hand: FIRST_DRAW_NEW,
+      question: choice(
+        "count-first-draw",
+        "How many tai does that first-draw win earn in all?",
+        ["3 tai", "8 tai", "16 tai", "24 tai"],
+        2,
+        "Sixteen tai. A first-draw win by a player who is not the dealer earns sixteen tai, and that award replaces the concealed, self-draw and one-kind-wait awards rather than adding to them. The East winds are only a pair, so nothing else is added. Twenty-four tai would be the amount for the dealer's own first-draw win.",
+        "The first-draw award depends on who won: the dealer, or any other player. It replaces the everyday way-of-winning awards instead of stacking on them.",
+        {
+          verify: () =>
+            `${scored(FIRST_DRAW_NEW, { winningTile: 14, selfDraw: true, initial: true, seatWind: 30 }).units} tai`,
+        },
+      ),
+    },
   ]),
   lesson("payments", "Scoring a whole hand: tai, price and the dealer", [
     {
@@ -558,7 +858,10 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
       text: "How it was won: before the last draw, the hand was the ready hand from the waits lesson — four sets complete, the pair of East winds complete, and the 4 and 5 of circles unfinished, waiting on the 3 or the 6 of circles. The player drew the 6 of circles themself. So this is a self-draw, and nothing in the hand was ever claimed: the hand is concealed from start to finish.",
     },
     {
-      text: "Count the tai award by award. Concealed and self-drawn together earn the combined award: three tai, replacing the separate one-tai concealed award and the separate one-tai self-draw award — those are not added as well. Nothing else in the hand earns tai. The East winds are only a pair, and a pair is not a triplet, so no wind tai. The hand uses all three suits, so no suit award. The East pair is an honor, so the award for having no honors does not apply. No flowers were set aside and no quad was declared. The total is three tai.",
+      text: "Count the tai award by award, using the prices from the lessons where each award was taught. Start with how the hand was kept and won: it is concealed and self-drawn, and the everyday-tai lesson priced that combination as one combined award of three tai, replacing the separate one tai for a concealed hand and the separate one tai for a self-draw. Those two are not added as well.",
+    },
+    {
+      text: "Then check the hand for every other award, one family at a time. Honor triplets: the East winds are only a pair, and a pair is not a triplet, so no wind tai. Suit patterns: the hand uses all three suits, so no suit award. The award for having no honors: the East pair is an honor, so that award does not apply. Flowers: none were set aside. Quads: none was declared. Concealed triplets: the hand has none — every set is a sequence. The total is three tai, all of it from the combined award.",
     },
     {
       text: "Turn the tai into a payment. Each payer owes the base of 30 points plus 10 points for each tai: at three tai, that is 30 plus 30 — 60 points. A self-draw is paid by all three opponents, so before any dealer bonus each opponent would pay 60 points. A discard win is different: only the player who discarded the winning tile pays.",
@@ -596,6 +899,92 @@ export const TAIWANESE_LESSONS: VariantLesson[] = [
     },
     {
       text: "Two contrasts fix the method. If a three-tai hand is won on a discard instead, only the discarder pays: 60 points from an ordinary player, or 110 points when the discarder is the dealer on that second repeat — the bonus follows the payment, not the hand. And a complete hand with no tai at all still collects the base: on a discard win, the discarder pays 30 points. Count the tai, price each payment, and add the dealer bonus only where the dealer is part of that payment.",
+    },
+    {
+      text: "Now a hand you have never seen, scored the same way from its tiles. The pictured hand is: triplets of the 1, the 2 and the 3 of circles; the 7, 8, 9 of bamboo; a triplet of South winds; and a pair of white dragons. The South triplet was claimed from another player's discard; everything else stayed in the player's hand. The player then drew the 9 of bamboo themself, completing the bamboo sequence.",
+      hand: TRANSFER_ONE,
+    },
+    {
+      hand: TRANSFER_ONE,
+      question: choice(
+        "transfer-one-count",
+        "Count the tai award by award. How many tai does this hand earn in all?",
+        ["3 tai", "4 tai", "5 tai", "6 tai"],
+        1,
+        "Four tai: two for its three concealed triplets, one for the South wind triplet, and one for winning by self-draw. The claimed South triplet is not concealed, so the concealed-triplet count is three, not four — and the white dragons are only a pair.",
+        "Separate the triplets that were never claimed from the one that was: only the never-claimed ones feed the concealed-triplet count. Then add the wind triplet and the award for how the hand was won.",
+        {
+          verify: () =>
+            `${scored(TRANSFER_ONE, { winningTile: 26, selfDraw: true, melds: [{ kind: "pon", tiles: [28, 28, 28] }] }).units} tai`,
+        },
+      ),
+    },
+    {
+      text: "Price that hand. The winner is not the dealer. The dealer is on the first repeat — the dealer has dealt one extra hand — so the dealer's own payment carries the dealer bonus: one extra tai plus two more for the one repeat, three extra tai in all. The other two opponents' payments carry no bonus.",
+    },
+    {
+      question: choice(
+        "transfer-one-dealer",
+        "How much does the dealer pay for that hand?",
+        ["70 points", "90 points", "100 points", "240 points"],
+        2,
+        "The dealer pays 100 points: the base of 30 plus ten for each of the hand's four tai and the three bonus tai — seven tai priced in all. The 240 points is what the winner receives from all three opponents together.",
+        "Price the dealer's payment on its own: the hand's tai plus the dealer bonus for one repeat, charged at the base plus ten per tai.",
+        {
+          verify: () =>
+            `${taiwanesePayments(4, { winner: 1, payer: 1, selfDraw: true, dealer: 0, dealerRepeats: 1 })[0]!.amount} points`,
+        },
+      ),
+    },
+    {
+      question: choice(
+        "transfer-one-other",
+        "How much does each of the other two opponents pay for that hand?",
+        ["40 points", "70 points", "100 points", "240 points"],
+        1,
+        "Each pays 70 points: the base of 30 plus ten for each of the hand's four tai. Neither payment involves the dealer, so neither carries the dealer bonus.",
+        "A payment between two players who are not the dealer carries no dealer bonus, even in a hand where the dealer pays more. Price the hand's tai on its own for these two payments.",
+        {
+          verify: () =>
+            `${taiwanesePayments(4, { winner: 1, payer: 1, selfDraw: true, dealer: 0, dealerRepeats: 1 })[1]!.amount} points`,
+        },
+      ),
+    },
+    {
+      text: "A second new hand, won the other way. The pictured hand is characters with honors: the 1, 2, 3, the 4, 5, 6 and the 7, 8, 9 of characters; a triplet of East winds; a triplet of South winds; and a pair of West winds. The East triplet was claimed; everything else stayed in the player's hand. Another player then discarded a West wind, completing the pair.",
+      hand: TRANSFER_TWO,
+    },
+    {
+      hand: TRANSFER_TWO,
+      question: choice(
+        "transfer-two-count",
+        "Count the tai award by award. How many tai does this hand earn in all?",
+        ["5 tai", "6 tai", "7 tai", "8 tai"],
+        2,
+        "Seven tai: four for one numbered suit together with honors; one for the East wind triplet; one for the South wind triplet; and one for the one-kind wait — only a West wind could complete the hand. The hand is open, so there is no concealed award.",
+        "Work through the families: the suit pattern, each wind triplet, and the kind of wait the pair was finished from. The hand was opened by a claim, which rules one everyday award out.",
+        {
+          verify: () =>
+            `${scored(TRANSFER_TWO, { winningTile: 29, melds: [{ kind: "pon", tiles: [27, 27, 27] }] }).units} tai`,
+        },
+      ),
+    },
+    {
+      question: choice(
+        "transfer-two-pays",
+        "The player who discarded the West wind is the dealer, on no repeats. How much does the dealer pay?",
+        ["70 points", "80 points", "110 points", "140 points"],
+        2,
+        "The dealer pays 110 points. A discard win is paid by the discarder alone, and because that payment involves the dealer it carries the dealer bonus for no repeats — one extra tai: the base of 30 plus ten for each of eight tai in all.",
+        "Only one player pays on a discard win. Work out that one payment with the dealer bonus for zero repeats added to the hand's tai.",
+        {
+          verify: () =>
+            `${taiwanesePayments(7, { winner: 1, payer: 0, selfDraw: false, dealer: 0, dealerRepeats: 0 })[0]!.amount} points`,
+        },
+      ),
+    },
+    {
+      text: "That is the whole method, used on two hands you had never seen: read the tiles, name the sets, count the tai award by award from the prices taught in their own lessons, price each payment at the base of 30 plus 10 for each tai, and add the dealer bonus only to a payment the dealer takes part in.",
     },
   ]),
   lesson("match", "The whole game", [
