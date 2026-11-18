@@ -89,22 +89,32 @@ export function mountVariantCalculator(
   const initial =
       existing?.input.variant === variant ? existing.input : undefined,
     derived = derivedSessionState(options.session),
-    ctx: CalculationContext = initial?.context ??
-      (options.context
+    // The derived repeat count is a payment counter only in
+    // Taiwanese. Hong Kong tracks dealer repeats for rotation,
+    // but its scoring has no repeat payments and the engine
+    // rejects a nonzero counter in a Hong Kong context; MCR
+    // never repeats. Carry the counter only where it is paid.
+    liveHonba = variant === "taiwanese" ? derived.honba : 0,
+    ctx: CalculationContext = initial?.context
+      ? {
+          ...initial.context,
+          honba: variant === "taiwanese" ? initial.context.honba : 0,
+        }
+      : options.context
         ? {
             winner: options.context.winner,
             payer: options.context.payer,
             dealer: derived.dealer,
             winType: options.context.winType,
-            honba: derived.honba,
+            honba: liveHonba,
           }
         : {
             winner: 0,
             payer: 1,
             dealer: derived.dealer,
             winType: "ron",
-            honba: derived.honba,
-          }),
+            honba: liveHonba,
+          },
     roundWind =
       initial?.path === "tiles" ? initial.hand.roundWind : derived.roundWind;
   const status = el("p", "", "tool-status");

@@ -309,6 +309,52 @@ describe("compact scorekeeper", () => {
     expect(root.textContent).toContain("Player 3 · West");
     expect(root.textContent).toContain("Self-draw");
   });
+  it("records a Hong Kong fast hand after a dealer win", () => {
+    // Regression: Hong Kong tracks dealer repeats for rotation,
+    // but its scoring has no repeat-payment counter — a fast hand
+    // entered after a dealer win must still calculate (the engine
+    // rejects a nonzero counter in a Hong Kong context).
+    mount();
+    click("New table session");
+    const preset = control("Named preset");
+    preset.value = "hong-kong-clear@1";
+    preset.dispatchEvent(new Event("change", { bubbles: true }));
+    click("Start scorekeeper");
+    // Tiles hand: the dealer wins by self-draw, so the deal repeats.
+    click("Player 1 · 1,000 points");
+    click("Self-draw");
+    click("Score it from the tiles");
+    for (const t of [
+      "1m",
+      "2m",
+      "3m",
+      "4m",
+      "5m",
+      "6m",
+      "1p",
+      "2p",
+      "3p",
+      "7s",
+      "8s",
+      "9s",
+      "E",
+      "E",
+    ])
+      click(`Add ${t}`);
+    fill("Winning tile", "27");
+    click("Show payments");
+    click("Confirm and add to table");
+    expect(readTables()[0]!.session.ledger).toHaveLength(1);
+    // Fast hand: the dealer wins again, on a discard this time.
+    click("Player 1 · 1,048 points");
+    click("On a discard");
+    click("Player 2 · South");
+    click("3");
+    click("Show payments");
+    expect(root.querySelector(".calculator-output")).not.toBeNull();
+    click("Confirm and add to table");
+    expect(readTables()[0]!.session.ledger).toHaveLength(2);
+  });
   it("lays out the compact scorekeeper for every variant", () => {
     for (const presetKey of [
       "openmahjong-riichi-table@1",
