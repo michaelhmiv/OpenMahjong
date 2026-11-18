@@ -65,11 +65,11 @@ const TERMS: readonly TermSpec[] = [
   { term: "fan", pattern: /\bfan\b/i, lessonId: "mcr-foundation", step: 11 },
   { term: "dealer", pattern: /\bdealers?\b/i, lessonId: "mcr-claims", step: 1 },
   { term: "round", pattern: /\brounds?\b/i, lessonId: "mcr-claims", step: 2 },
-  { term: "pond", pattern: /\bponds?\b/i, lessonId: "mcr-claims", step: 3 },
-  { term: "melded", pattern: /\bmelded\b/i, lessonId: "mcr-claims", step: 6 },
-  { term: "concealed", pattern: /\bconceal/i, lessonId: "mcr-claims", step: 7 },
+  { term: "pond", pattern: /\bponds?\b/i, lessonId: "mcr-claims", step: 4 },
+  { term: "melded", pattern: /\bmelded\b/i, lessonId: "mcr-claims", step: 7 },
+  { term: "concealed", pattern: /\bconceal/i, lessonId: "mcr-claims", step: 8 },
   { term: "wait", pattern: /\bwaits?\b/i, lessonId: "mcr-eligibility", step: 0 },
-  { term: "terminal", pattern: /\bterminals?\b/i, lessonId: "mcr-families", step: 0 },
+  { term: "terminal", pattern: /\bterminals?\b/i, lessonId: "mcr-claims", step: 3 },
   { term: "simples", pattern: /\bsimples?\b/i, lessonId: "mcr-families", step: 1 },
   { term: "voided suit", pattern: /\bvoided suit\b/i, lessonId: "mcr-families", step: 2 },
   { term: "exclusion", pattern: /\bexclusions?\b/i, lessonId: "mcr-exclusions", step: 0 },
@@ -118,15 +118,17 @@ describe("MCR structure audit", () => {
     }
   });
 
-  it("every choice check has at least four choices and every lesson has two checks", () => {
+  it("every choice check has at least four choices and every lesson has at least two checks", () => {
     const questions = lessons.flatMap(variantLessonQuestions);
-    expect(questions).toHaveLength(20);
+    // 20 checks from the rebuild plus 18 added by the lesson fix
+    // round (face drills, vocabulary checks, transfer counts).
+    expect(questions).toHaveLength(38);
     for (const q of questions) {
       if (q.kind === "choice") expect(q.choices.length).toBeGreaterThanOrEqual(4);
     }
     expect(questions.filter((q) => q.kind === "tile-pick").length).toBeGreaterThanOrEqual(3);
     for (const lesson of lessons)
-      expect(variantLessonQuestions(lesson)).toHaveLength(2);
+      expect(variantLessonQuestions(lesson).length).toBeGreaterThanOrEqual(2);
   });
 
   it("hints never state the correct choice, and numeric answers stay out of lesson titles", () => {
@@ -216,7 +218,13 @@ describe("MCR worked hand (payments lesson), engine-verified end to end", () => 
     expect(flowerIdx).toBeGreaterThan(gateIdx);
     // Payment checks verify against the engine payment function.
     const questions = variantLessonQuestions(payments);
-    expect(questions.map((q) => q.verify())).toEqual(["22 points", "66 points"]);
+    expect(questions.map((q) => q.verify())).toEqual([
+      "22 points",
+      "66 points",
+      "12 fan",
+      "21 points",
+      "102 points",
+    ]);
   });
 
   it("the gate lesson's counted hand really is ineligible with three flowers", () => {
@@ -239,6 +247,128 @@ describe("MCR worked hand (payments lesson), engine-verified end to end", () => 
     expect(
       competing.patterns.some((p) => p.name.startsWith("Pure Shifted")),
     ).toBe(true);
+  });
+});
+
+// ---------------------------------------------------------------------
+// Lesson fix round (brief-lesson-fixround-v1): scoring vocabulary
+// completion, transfer checks on hands the lessons never scored, and
+// face-mastery drills. All numbers verified against the engine.
+// ---------------------------------------------------------------------
+
+describe("MCR fix round: vocabulary completion", () => {
+  const textsOf = (id: string) =>
+    lessons.find((l) => l.id === id)!.steps.map((s) => s.text ?? "").join("\n");
+  it("sequences lesson names and values every shifted/repeated pattern", () => {
+    const t = textsOf("mcr-sequences");
+    for (const named of [
+      "Pure Shifted Chows, worth 16 fan",
+      "Mixed Shifted Chows, worth 6 fan",
+      "Mixed Triple Chow, worth 8 fan",
+      "Pure Triple Chow, worth 24 fan",
+      "Pure Double Chow, worth 1 fan",
+      "Mixed Double Chow, worth 1 fan",
+      "Two Terminal Chows, worth 1 fan",
+      "Short Straight, worth 1 fan",
+    ])
+      expect(t, named).toContain(named);
+  });
+  it("specials lesson names and values the knitted structures", () => {
+    const t = textsOf("mcr-specials");
+    for (const named of [
+      "Lesser Honors and Knitted Tiles, worth 12 fan",
+      "Greater Honors and Knitted Tiles, worth 24 fan",
+      "Knitted Straight, worth 12 fan",
+    ])
+      expect(t, named).toContain(named);
+    // Scorer is the authority: the full-body lesser hand stacks both
+    // structure patterns; an incomplete body earns the lesser only.
+    expect(score("147m258p369s12345z", { winningTile: 27 }).qualifyingUnits).toBe(24);
+    expect(score("147m258p36s123456z", { winningTile: 27 }).qualifyingUnits).toBe(12);
+    expect(score("147m258p3s1234567z", { winningTile: 27 }).qualifyingUnits).toBe(24);
+  });
+  it("circumstances lesson names and values the last-tile and quad patterns", () => {
+    const t = textsOf("mcr-circumstances");
+    for (const named of [
+      "Last Tile, worth 4 fan",
+      "Out with Replacement Tile",
+      "Robbing The Kong, also worth 8 fan",
+    ])
+      expect(t, named).toContain(named);
+  });
+  it("claims lesson gives the wind-triplet values", () => {
+    const t = textsOf("mcr-claims");
+    expect(t).toContain("Seat Wind, worth 2 fan");
+    expect(t).toContain("Prevalent Wind, worth 2 fan");
+    expect(t).toContain("Pung of Terminals or Honors, worth 1 fan");
+    const hand = "111z123m456p789s55p";
+    const windFan = (seatWind: number, roundWind: number) =>
+      score(hand, { winningTile: 12, seatWind, roundWind }).patterns
+        .filter((p) =>
+          ["Seat Wind", "Prevalent Wind", "Pung of Terminals or Honors"].includes(p.name),
+        )
+        .reduce((a, p) => a + p.units, 0);
+    expect(windFan(27, 29)).toBe(2);
+    expect(windFan(28, 27)).toBe(2);
+    expect(windFan(27, 27)).toBe(4);
+    expect(windFan(28, 29)).toBe(1);
+  });
+});
+
+describe("MCR fix round: transfer checks count new hands against the engine", () => {
+  const question = (id: string) =>
+    lessons.flatMap(variantLessonQuestions).find((q) => q.id === id)!;
+  it("every new check's oracle agrees with its authored answer", () => {
+    for (const id of [
+      "mcr-char-seven-drill",
+      "mcr-char-four-drill",
+      "mcr-char-nine-drill",
+      "mcr-wind-east-drill",
+      "mcr-wind-west-drill",
+      "mcr-wind-south-drill",
+      "mcr-wind-north-drill",
+      "mcr-wind-triplet-value",
+      "mcr-pure-shifted-count",
+      "mcr-mixed-triple-value",
+      "mcr-double-chow-value",
+      "mcr-lesser-knitted-count",
+      "mcr-seven-pairs-count",
+      "mcr-replacement-tile-name",
+      "mcr-circumstances-transfer-count",
+      "mcr-transfer-count",
+      "mcr-transfer-discarder-pays",
+      "mcr-transfer-selfdraw-total",
+    ]) {
+      const q = question(id);
+      expect(q, id).toBeDefined();
+      if (q.kind === "choice")
+        expect(q.verify(), id).toBe(q.choices[q.answer]);
+    }
+  });
+  it("the payments transfer hand is a new hand, counted and paid by the engine", () => {
+    const s = score("789m123p456s666z55z", { winningTile: 32 });
+    expect(s.patterns.map((p) => [p.name, p.units])).toEqual([
+      ["Mixed Straight", 8],
+      ["Dragon Pung", 2],
+      ["Concealed Hand", 2],
+    ]);
+    expect(s.qualifyingUnits).toBe(12);
+    const discard = mcrPayments(12, { winner: 0, payer: 1, selfDraw: false }, 1);
+    expect(discard.map((p) => p.amount)).toEqual([21, 8, 8]);
+    const pairs = score("112233m445566p77s", { winningTile: 24, selfDraw: true });
+    expect(pairs.qualifyingUnits).toBe(26);
+    const self = mcrPayments(26, { winner: 0, payer: 0, selfDraw: true }, 0);
+    expect(self.reduce((a, p) => a + p.amount, 0)).toBe(102);
+  });
+  it("the circumstances transfer hand counts to 11 fan by the engine", () => {
+    const s = score("123m234p345s789m55p", { winningTile: 12 });
+    expect(s.qualifyingUnits).toBe(11);
+    expect(s.patterns.map((p) => p.name)).toEqual([
+      "Mixed Shifted Chows",
+      "Concealed Hand",
+      "All Chows",
+      "Two Terminal Chows",
+    ]);
   });
 });
 

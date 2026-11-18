@@ -78,7 +78,7 @@ describe("original versioned variant teaching", () => {
     expect(
       lessons.map(lessonText).join(" ").split(/\s+/).length,
     ).toBeGreaterThan(1800);
-    expect(lessons.flatMap(variantLessonQuestions)).toHaveLength(20);
+    expect(lessons.flatMap(variantLessonQuestions)).toHaveLength(38);
     mount({ variant: "mcr", lessonId: "mcr-families" });
     // The 81-pattern reference is reachable after the families
     // lesson's final step.
