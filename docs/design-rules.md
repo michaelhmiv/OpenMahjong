@@ -492,3 +492,38 @@ gaps; action row buttons follow §15 R6 (36px visual / 48px
 tap); steppers 48px; chips 46px; seat chips and choices carry
 no invisible tap expansion (their real size clears the 44px
 floor). Type sizes are the shipped scale (§15 R12).
+
+## 17. American training — Practice Card notation inks
+
+Approved 2026-11-18 (renderings `american-card-v1`, QC-passed;
+owner ruling the same day: "Ratify all three inks"). The Practice
+Card's hand notation is typeset in coloured inks because on a card
+a change of colour is a change of suit — colour is data there,
+not decoration. Three inks sit outside the shipped palette, and
+they are confined to notation glyphs on the Practice Card
+surfaces (the Learn card view, its section detail, and the
+printed card) and nowhere else:
+
+- **Suit blue `#1e4f7a`** — the second suit's ink. The palette's
+  two dark greens (ink `#1c2a20`, tile-back `#33503f`) cannot be
+  told apart as suit colours, so a third distinguishable suit ink
+  is unavoidable. 6.21:1 on the sheet, 8.56:1 on white.
+- **Dragon green `#27632f`** — the green dragon's ink on the
+  card. The system's green-dragon ink `#22763d` (§12) measures
+  4.09:1 on the sheet — below the §9 floor of 4.5:1 — while
+  `#27632f` measures 5.24:1 on the sheet and 7.21:1 on white.
+  §12's inspect-surface ink is unchanged; this substitution
+  applies to card notation only.
+- **Dragon white `#44554a`** — the white dragon's ink on the
+  card, a dark slate-green (a white dragon still has to print).
+  §12's inspect W is slate `#7a8699`, which computes to 2.68:1
+  on the sheet; `#44554a` measures 5.77:1 on the sheet and
+  7.94:1 on white.
+
+The remaining notation inks are palette colours: suit 0 and the
+winds in the card ink `#1c2a20`, suit 2 and the red dragon in
+text-grade chun `#9e2b25` (§2), flowers in the tint secondary
+`#33503f`. This section is a scoped exception to §15's "no other
+tint or hue" rule: it licenses these three inks for Practice
+Card notation glyphs only, and introduces no tint, surface, or
+general-purpose colour.

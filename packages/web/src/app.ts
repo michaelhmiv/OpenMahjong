@@ -70,6 +70,16 @@ import { VariantRunner } from "./variant-runner.js";
 import { variantHomeHand } from "./variant-motifs.js";
 import { mountVariantTable } from "./variant-table-ui.js";
 import { mountVariantEducation } from "./variant-education-ui.js";
+import { mountAmericanCard } from "./american-card-ui.js";
+import {
+  AMERICAN_LESSONS,
+  AMERICAN_SECTION_ID,
+  AMERICAN_SECTION_NAME,
+  AMERICAN_TRAINING_LINE,
+  americanLessonMounter,
+  readAmericanProgress,
+} from "./education/american.js";
+import { cardHandCount } from "./education/american-card.js";
 import { VARIANT_RELEASES, VARIANT_LEARNING_KEY, variantLessons } from "./education/variant-content.js";
 import { emptyVariantProgress, mergeVariantProgress, parseVariantProgress, type VariantLearningProgress } from "./education/variant-progress.js";
 import { createPracticeView } from "./practice-ui.js";
@@ -411,6 +421,8 @@ type ScreenName =
   | "privacy"
   | "variant-table"
   | "variant-learn"
+  | "american-card"
+  | "american-lesson"
   | "tables"
   | "details"
   | "results"
@@ -525,6 +537,9 @@ export class App {
   private variantRunner: VariantRunner | null = null;
   private variantUI: {destroy():void} | null = null;
   private variantEducationUI: {destroy():void} | null = null;
+  private americanCardUI: {destroy():void} | null = null;
+  private americanLessonUI: {destroy():void} | null = null;
+  private americanLessonId: string | undefined;
   private variantChoice: VariantId | "riichi" = "riichi";
   private variantLength: VariantLength = "full";
   private historyVariant: VariantId | "riichi" = "riichi";
@@ -693,7 +708,7 @@ export class App {
     this.root.append(this.stage);
     const screensWrap = h("div", { class: "screens" });
     this.stage.append(screensWrap);
-    for (const name of ["home", "table", "rules", "about", "privacy", "variant-table", "variant-learn", "tables", "details", "results", "games", "learn", "practice", "review", "more"] as ScreenName[]) {
+    for (const name of ["home", "table", "rules", "about", "privacy", "variant-table", "variant-learn", "american-card", "american-lesson", "tables", "details", "results", "games", "learn", "practice", "review", "more"] as ScreenName[]) {
       const s = h("section", { class: "screen", id: `screen-${name}` });
       this.screens.set(name, s);
       screensWrap.append(s);
@@ -718,7 +733,7 @@ export class App {
   }
 
   private fit(): void {
-    if (this.currentScreen === "practice" || this.currentScreen === "review" || this.currentScreen === "details" || this.currentScreen === "tables" || this.currentScreen === "variant-table" || this.currentScreen === "variant-learn") {
+    if (this.currentScreen === "practice" || this.currentScreen === "review" || this.currentScreen === "details" || this.currentScreen === "tables" || this.currentScreen === "variant-table" || this.currentScreen === "variant-learn" || this.currentScreen === "american-card" || this.currentScreen === "american-lesson") {
       // Approved learning layouts use physical pixels, so a 44px
       // control remains 44px even on a 360px-wide phone.
       this.scale = 1;
@@ -783,8 +798,12 @@ export class App {
     if (name === "tables") this.renderInPerson();
     if (name === "variant-table") this.renderVariantTable();
     if (name === "variant-learn") this.renderVariantEducation();
+    if (name === "american-card") this.renderAmericanCard();
+    if (name === "american-lesson") this.renderAmericanLesson();
     if (previous === "variant-table" && name !== "variant-table") { this.variantUI?.destroy(); this.variantUI = null; }
     if (previous === "variant-learn" && name !== "variant-learn") { this.variantEducationUI?.destroy(); this.variantEducationUI = null; }
+    if (previous === "american-card" && name !== "american-card") { this.americanCardUI?.destroy(); this.americanCardUI = null; }
+    if (previous === "american-lesson" && name !== "american-lesson") { this.americanLessonUI?.destroy(); this.americanLessonUI = null; }
     if (previous === "tables" && name !== "tables") { this.tableUI?.destroy(); this.tableUI = null; }
     if (previous !== name) this.screens.get(name)?.querySelector<HTMLElement>("button, input, [tabindex='0']")?.focus();
   }
@@ -838,6 +857,10 @@ export class App {
         break;
       case "variant-learn":
         this.showScreen(this.variantReturnReview ? "review" : "learn");
+        break;
+      case "american-card":
+      case "american-lesson":
+        this.showScreen("learn");
         break;
       case "tables":
         this.showScreen(this.lastRoot);
@@ -3744,6 +3767,119 @@ export class App {
     for (const release of VARIANT_RELEASES.filter((v) => v.released)) {
       page.append(this.variantLearnSectionEl(release));
     }
+    page.append(this.americanLearnSectionEl());
+  }
+
+  private renderAmericanCard(): void {
+    this.americanCardUI?.destroy();
+    this.americanCardUI = mountAmericanCard(this.screens.get("american-card")!, {
+      onBack: () => this.showScreen("learn"),
+    });
+  }
+
+  /** A tap on an American lesson row: the lesson runner registers
+   *  its mounter in education/american.ts; until it does, the row
+   *  is the list entry point and the tap goes nowhere. */
+  private openAmericanLesson(lessonId: string): void {
+    if (!americanLessonMounter()) return;
+    this.americanLessonId = lessonId;
+    this.showScreen("american-lesson");
+  }
+
+  private renderAmericanLesson(): void {
+    this.americanLessonUI?.destroy();
+    this.americanLessonUI = null;
+    const mounter = americanLessonMounter();
+    if (!mounter || !this.americanLessonId) return;
+    this.americanLessonUI = mounter(this.screens.get("american-lesson")!, {
+      lessonId: this.americanLessonId,
+      onBack: () => this.showScreen("learn"),
+    });
+  }
+
+  /** The American section (renderings american-card-v1 frames
+   *  01/06, approved 2026-11-18): the variant-section grammar —
+   *  sechead, state-green progbar, lrow rows — with the training-
+   *  only marking the brief requires: a TRAINING ONLY badge in the
+   *  head and one factual line under it. The Practice Card entry
+   *  leads the lesson rows (a card glyph in the number slot, the
+   *  hand count as its status). There is no Practice button and no
+   *  Play entry: this track is lessons and a card, never a game. */
+  private americanLearnSectionEl(): HTMLElement {
+    const progress = readAmericanProgress();
+    const isDone = (id: string) => progress.completed.includes(id);
+    const doneCount = AMERICAN_LESSONS.filter((l) => isDone(l.id)).length;
+    const collapsed = this.collapsedSections.has(AMERICAN_SECTION_ID);
+    const wrap = h("div", { class: "learnsec" });
+    const head = h("button", {
+      class: "sechead amc-head",
+      "aria-expanded": String(!collapsed),
+      "data-section": AMERICAN_SECTION_ID,
+    });
+    head.append(
+      h("span", { class: "secttl" }, AMERICAN_SECTION_NAME),
+      h("span", { class: "lenbadge" }, "TRAINING ONLY"),
+      h("span", { class: "seccount" }, `${doneCount} of ${AMERICAN_LESSONS.length} lessons done`),
+    );
+    head.insertAdjacentHTML(
+      "beforeend",
+      `<svg class="chev${collapsed ? " closed" : ""}" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
+    );
+    head.addEventListener("click", () => {
+      if (this.collapsedSections.has(AMERICAN_SECTION_ID)) this.collapsedSections.delete(AMERICAN_SECTION_ID);
+      else this.collapsedSections.add(AMERICAN_SECTION_ID);
+      try {
+        localStorage.setItem(LEARN_COLLAPSED_KEY, JSON.stringify([...this.collapsedSections]));
+      } catch { /* A display preference; losing it is harmless. */ }
+      this.renderLearn();
+    });
+    wrap.append(head);
+    if (collapsed) return wrap;
+    wrap.append(h("p", { class: "amc-trainline" }, AMERICAN_TRAINING_LINE));
+    const bar = h("div", { class: "progbar" });
+    const fill = h("i");
+    fill.style.width = `${Math.round((doneCount / AMERICAN_LESSONS.length) * 100)}%`;
+    bar.append(fill);
+    wrap.append(bar);
+    const cardRow = h("button", { class: "hrow lrow" });
+    const cardGlyph = h("span", { class: "n" });
+    cardGlyph.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" style="stroke:var(--dim);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M3.5 10h17"/></svg>`;
+    cardRow.append(
+      cardGlyph,
+      h("span", { class: "ttl" }, "Practice Card"),
+      h("span", { class: "st" }, `${cardHandCount()} hands`),
+    );
+    cardRow.insertAdjacentHTML(
+      "beforeend",
+      `<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
+    );
+    cardRow.addEventListener("click", () => this.showScreen("american-card"));
+    wrap.append(cardRow);
+    const activeId = progress.activeId;
+    const firstOpen = AMERICAN_LESSONS.find((l) => !isDone(l.id))?.id;
+    AMERICAN_LESSONS.forEach((lesson, i) => {
+      const done = isDone(lesson.id);
+      const isActive = activeId === lesson.id;
+      const isCurrent = isActive || (!activeId && firstOpen === lesson.id);
+      const row = h("button", { class: `hrow lrow${isCurrent ? " current" : ""}` });
+      row.append(h("span", { class: "n" }, String(i + 1)));
+      row.append(h("span", { class: "ttl" }, lesson.title));
+      if (done) {
+        const st = h("span", { class: "st" });
+        st.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>`;
+        st.append(document.createTextNode("Done"));
+        row.append(st);
+      } else if (isActive) {
+        row.append(h("span", { class: "st now" }, "In progress"));
+      }
+      row.insertAdjacentHTML(
+        "beforeend",
+        `<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
+      );
+      row.addEventListener("click", () => this.openAmericanLesson(lesson.id));
+      wrap.append(row);
+    });
+    return wrap;
   }
 
   /** A variant's Learn section, in the same grammar as the Riichi

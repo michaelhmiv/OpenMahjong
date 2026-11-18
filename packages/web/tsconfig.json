@@ -22,6 +22,7 @@
       ]
     },
     "sourceMap": false,
+    "resolveJsonModule": true,
     "types": []
   },
   "extends": "../../tsconfig.base.json",
