@@ -241,6 +241,98 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       ),
     },
     {
+      text: "Reading characters by face takes practice. Circles and bamboo are read by counting the marks on the face, but a characters tile is read by the character at the top of its face: each number from 1 to 9 has its own top character, while the red character below it is the same on every characters tile. The drills that follow show single faces and shuffled rows that are not in number order, so each face has to be read on its own, not by its place in a row.",
+    },
+    {
+      question: choice(
+        "hk-char-face-8",
+        "Which number is this characters tile?",
+        ["Six", "Seven", "Eight", "Nine"],
+        2,
+        "This face is the 8 of characters. Its top character is the one that stands for eight in the labelled row at the start of this lesson.",
+        "Ignore the red character below — it is the same on every characters tile. Read the top character and match it against the labelled row from the start of this lesson.",
+        undefined,
+        "8m",
+      ),
+    },
+    {
+      question: choice(
+        "hk-char-face-3",
+        "Read this face: which number is it?",
+        ["Two", "Three", "Four", "Five"],
+        1,
+        "This face is the 3 of characters, read from its top character.",
+        "Read the top character only, and match it against the labelled row from the start of this lesson — the red character below never changes.",
+        undefined,
+        "3m",
+      ),
+    },
+    {
+      question: choice(
+        "hk-char-face-6",
+        "Which number does this characters face show?",
+        ["Five", "Six", "Eight", "Nine"],
+        1,
+        "This face is the 6 of characters. The 6 and the 9 have different top characters, and this one is the six.",
+        "The 6 and the 9 are the two faces most often confused. Compare the top character with both faces in the labelled row at the start of this lesson.",
+        undefined,
+        "6m",
+      ),
+    },
+    {
+      question: pick(
+        "hk-char-row-9",
+        "Tap the 9 of characters in this shuffled row.",
+        "7m2m9m4m",
+        [2],
+        "The third tile is the 9 of characters. The row is shuffled, so the 9 is not in its taught place at the end of the row.",
+        "Read each face by its top character, one at a time, until you reach the character that stands for nine.",
+      ),
+    },
+    {
+      text: "The four wind faces need the same treatment. In the honors row they were shown in seat order — East, South, West, North — but at the table a wind face must be recognised on its own. The next four drills show shuffled rows: find the named wind by its face, not by its place in the row.",
+    },
+    {
+      question: pick(
+        "hk-wind-east-face",
+        "Tap the East wind in this shuffled row.",
+        "3z1z4z2z",
+        [1],
+        "The second tile is East. The row runs West, East, North, South — shuffled, not in seat order.",
+        "Picture the four wind faces in seat order — East, South, West, North — and look for the face that belongs to East, wherever it sits in this row.",
+      ),
+    },
+    {
+      question: pick(
+        "hk-wind-south-face",
+        "Tap the South wind in this shuffled row.",
+        "2z4z1z3z",
+        [0],
+        "The first tile is South. The row runs South, North, East, West.",
+        "Match the face, not the place: find the second wind face in seat order — East, South, West, North — among these shuffled faces.",
+      ),
+    },
+    {
+      question: pick(
+        "hk-wind-west-face",
+        "Tap the West wind in this shuffled row.",
+        "4z3z2z1z",
+        [1],
+        "The second tile is West. The row runs North, West, South, East — seat order reversed.",
+        "West is the third wind in seat order — East, South, West, North. Look for that face in this row.",
+      ),
+    },
+    {
+      question: pick(
+        "hk-wind-north-face",
+        "Tap the North wind in this shuffled row.",
+        "1z3z2z4z",
+        [3],
+        "The last tile is North. The row runs East, West, South, North.",
+        "North is the last wind in seat order — East, South, West, North. Look for that face in this row.",
+      ),
+    },
+    {
       text: "That is the full collection of tiles: three numbered suits, seven honors and eight bonus tiles, 144 tiles in all. The next lesson builds a winning hand out of these faces.",
     },
   ]),
@@ -323,6 +415,16 @@ export const VARIANT_LESSONS: VariantLesson[] = [
         2,
         "The 4, 5 and 6 of circles are three consecutive numbers in one suit. The first group mixes suits, the second wraps past 9, and winds have no numbers.",
         "Test each group against both rules: one suit only, and numbers running in a row without wrapping past an end.",
+      ),
+    },
+    {
+      question: pick(
+        "hk-char-row-8",
+        "One more face drill before the lesson ends. Tap the 8 of characters in this shuffled row.",
+        "5m8m1m6m",
+        [1],
+        "The second tile is the 8 of characters. The row is shuffled, so the face was read by its top character, not by its place.",
+        "Read each face by its top character, one at a time, until you reach the character that stands for eight.",
       ),
     },
     {
@@ -560,6 +662,53 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       ),
     },
     {
+      text: "Now try the same skills on a hand you have not seen before. The pictured hand holds thirteen tiles. Read its faces yourself and find what it still needs: nothing about this hand has been read aloud for you.",
+      hand: "56m123p456p789s111z",
+    },
+    {
+      hand: "56m123p456p789s111z",
+      question: pick(
+        "hk-transfer-waits",
+        "Tap every characters tile that is a wait for this pictured hand.",
+        "123456789m",
+        [3, 6],
+        "The 4 of characters makes 4-5-6 with the two loose characters tiles, and the 7 of characters makes 5-6-7. Either tile completes the fourth set alongside the three sequences and the triplet the hand already holds, so both are waits.",
+        "Set aside the groups the hand has already completed, then work with its two loose characters tiles: a wait must join them into a sequence.",
+      ),
+    },
+    {
+      text: "One more new hand. Read the pictured faces yourself: count its fan for a win on another player's discard first, holding no bonus tiles, then judge what changes when the same hand is won on the player's own draw.",
+      hand: "345s345s678p234m99p",
+    },
+    {
+      hand: "345s345s678p234m99p",
+      question: choice(
+        "hk-transfer-selfdraw",
+        "The pictured hand wins by self-draw, holding no bonus tiles. What is its fan total, and may it win?",
+        [
+          "Two fan — it still may not win",
+          "Three fan — it may win",
+          "Four fan — it may win",
+          "Three fan — but a pair of 9s blocks the win",
+        ],
+        1,
+        "The four sets are all sequences, worth one fan, and holding no bonus tiles earns one more. The self-draw adds one fan, making three — exactly the minimum, so the hand may win. On a discard it would have counted only two fan and could not have won.",
+        "Count the hand's own fan first — what its sets earn, and what holding no bonus tiles earns — then add what winning on your own draw earns, and compare with the minimum.",
+        () => {
+          const discard = scoredAs("345s345s678p234m99p", 17);
+          const drawn = scoredAs("345s345s678p234m99p", 17, {
+            selfDraw: true,
+          });
+          return discard.units === 2 &&
+            !discard.eligible &&
+            drawn.units === 3 &&
+            drawn.eligible
+            ? "Three fan — it may win"
+            : "invalid";
+        },
+      ),
+    },
+    {
       text: "You now hold the whole eligibility rule: complete shape, at least three fan, and a winning tile that is one of your waits. The next lesson teaches the wind and dragon patterns that supply fan, and Lesson 7 turns fan into payments.",
     },
   ]),
@@ -627,7 +776,31 @@ export const VARIANT_LESSONS: VariantLesson[] = [
       ),
     },
     {
-      text: "The winds have two large patterns of their own. Little Four Winds is three wind triplets plus a pair of the fourth wind, worth ten fan. Big Four Winds is all four wind triplets, worth fifteen fan before the payment cap of Lesson 9. A hand in which every tile is an honor is All Honors, worth ten fan. The pictured hand is Big Four Winds with a pair of white dragons: four wind triplets and the pair, all honors.",
+      text: "One pair needs its value stated plainly, because it is easy to assume a pair of dragons must be worth something. Read the pictured hand aloud: 1-2-3, 4-5-6 and 7-8-9 are sequences of characters, circles and bamboo, 2-3-4 of bamboo is a fourth sequence, and the two red dragons are the pair. A pair of dragons earns no fan on its own. Dragon fan needs a triplet or a quad; a dragon pair earns fan only as part of Little Three Dragons, where it stands alongside two dragon triplets and the five fan belongs to that whole pattern, not to the pair.",
+      hand: "123m456m789p234s77z",
+    },
+    {
+      hand: "123m456m789p234s77z",
+      question: choice(
+        "hk-red-pair-value",
+        "In the pictured hand, how much fan does the pair of red dragons earn on its own?",
+        ["No fan", "One fan", "Two fan", "Five fan"],
+        0,
+        "The red dragon pair earns nothing on its own: a pair is never a triplet, and this hand holds no dragon triplet for it to stand beside. The hand's fan comes from its sequences and its circumstances, not from its pair. Five fan would need Little Three Dragons — two dragon triplets plus this pair.",
+        "Ask what a dragon award is paid for: a triplet or a quad of dragons. Then check whether this hand's dragons form one.",
+        () => {
+          const r = scoredAs("123m456m789p234s77z", 33);
+          const dragonFan = r.patterns.filter(
+            (p) => p.id.startsWith("dragon-") || p.id.includes("dragons"),
+          );
+          return dragonFan.length === 0 && r.units === 2
+            ? "No fan"
+            : "invalid";
+        },
+      ),
+    },
+    {
+      text: "The winds have two large patterns of their own. Little Four Winds is three wind triplets plus a pair of the fourth wind, worth ten fan. Big Four Winds is all four wind triplets, worth fifteen fan before the payment cap of Lesson 9. A hand in which every tile is an honor is All Honors, worth ten fan. The pictured hand is Big Four Winds with a pair of white dragons: four wind triplets and the pair, all honors. Because every tile in a Big Four Winds hand is an honor, such a hand is always All Honors as well — and the two patterns both count. They do not replace each other the way the dragon patterns do, so this hand earns fifteen fan for Big Four Winds and ten more for All Honors, twenty-five fan from those two patterns alone, before any other award is counted. Lesson 9's payment cap is what keeps that total from raising the payment past a ten-fan hand.",
       hand: "111z222z333z444z55z",
     },
     {
@@ -643,6 +816,30 @@ export const VARIANT_LESSONS: VariantLesson[] = [
         1,
         "Three wind triplets with the fourth wind as the pair is Little Four Winds, worth ten fan. Big Four Winds needs the fourth wind as a triplet too.",
         "Count the wind groups: how many are triplets, and what is the fourth wind doing in the hand?",
+      ),
+    },
+    {
+      hand: "111z222z333z444z55z",
+      question: choice(
+        "hk-winds-honors-overlap",
+        "The pictured hand is Big Four Winds, and every tile in it is an honor. How are those two patterns counted?",
+        [
+          "Both count — fifteen fan for Big Four Winds plus ten for All Honors",
+          "Only Big Four Winds counts — the larger pattern replaces the smaller",
+          "Only All Honors counts — fifteen fan is the pattern's price, not an award",
+          "Neither counts until the hand also holds a dragon triplet",
+        ],
+        0,
+        "Both patterns count: Big Four Winds earns fifteen fan and All Honors earns ten more, twenty-five fan from the two patterns together. Unlike the dragon patterns, neither of these replaces the other. The hand earns further awards on top of that, and Lesson 9 caps what is actually paid at ten fan.",
+        "Check whether either pattern's statement says it replaces the other, the way Big Three Dragons replaces the single dragon awards. If neither says that, both awards stand.",
+        () => {
+          const r = scoredAs("111z222z333z444z55z", 31);
+          const big = r.patterns.find((p) => p.id === "big-four-winds");
+          const honors = r.patterns.find((p) => p.id === "all-honors");
+          return big?.units === 15 && honors?.units === 10
+            ? "Both count — fifteen fan for Big Four Winds plus ten for All Honors"
+            : "invalid";
+        },
       ),
     },
     {
@@ -747,6 +944,84 @@ export const VARIANT_LESSONS: VariantLesson[] = [
               (p) => p.seat === 2,
             )!.amount,
           ),
+      ),
+    },
+    {
+      text: "Now score two new hands end to end, from their faces to their payments. Nothing about them is read aloud: read the faces yourself, name the sets, count the fan, then use the scale and the split. The first pictured hand wins on another player's discard, and its holder holds no bonus tiles.",
+      hand: "888m999p111s222s55z",
+    },
+    {
+      hand: "888m999p111s222s55z",
+      question: choice(
+        "hk-transfer-triplets-fan",
+        "How many fan does the first pictured hand score on its discard win?",
+        ["Three fan", "Four fan", "Five fan", "Six fan"],
+        1,
+        "All four sets are triplets, worth three fan, and holding no bonus tiles earns one more: four fan. The pair of white dragons earns nothing on its own — a dragon pair is not a dragon triplet.",
+        "Work through the hand group by group: what the four sets earn together, what the pair earns on its own, and what holding no bonus tiles earns.",
+        () =>
+          scoredAs("888m999p111s222s55z", 31).units === 4
+            ? "Four fan"
+            : "invalid",
+      ),
+    },
+    {
+      hand: "888m999p111s222s55z",
+      question: choice(
+        "hk-transfer-triplets-pay",
+        "That hand wins on a discard at the fan total you just counted. How many points does the discarder pay?",
+        ["16", "32", "48", "64"],
+        1,
+        "Four fan converts to a base of 16 points, and the discarder pays twice the base: 32. Each other opponent pays 16, so the winner receives 64 in total.",
+        "Convert the fan total you counted to base points with the scale, then double the base for the discarder's share.",
+        () => {
+          const units = scoredAs("888m999p111s222s55z", 31).units;
+          const amount = hongKongPayments(units, {
+            winner: 0,
+            payer: 1,
+            selfDraw: false,
+          }).find((p) => p.seat === 1)!.amount;
+          return units === 4 && amount === 32 ? "32" : "invalid";
+        },
+      ),
+    },
+    {
+      text: "The second pictured hand also wins on another player's discard, and its holder also holds no bonus tiles. Read its faces yourself and score it the same way.",
+      hand: "666z777z55z234m789p",
+    },
+    {
+      hand: "666z777z55z234m789p",
+      question: choice(
+        "hk-transfer-dragons-fan",
+        "How many fan does the second pictured hand score on its discard win?",
+        ["Four fan", "Five fan", "Six fan", "Eight fan"],
+        2,
+        "Two dragon triplets plus a pair of the third dragon make Little Three Dragons, worth five fan, and holding no bonus tiles earns one more: six fan. The five fan replaces the two single dragon awards, so they are not added again.",
+        "Name the dragon groups first — two triplets and a pair of the third dragon form one named pattern — then add what holding no bonus tiles earns.",
+        () =>
+          scoredAs("666z777z55z234m789p", 31).units === 6
+            ? "Six fan"
+            : "invalid",
+      ),
+    },
+    {
+      hand: "666z777z55z234m789p",
+      question: choice(
+        "hk-transfer-dragons-pay",
+        "That hand wins on a discard at the fan total you just counted. How many points does the winner receive in total?",
+        ["64", "96", "128", "192"],
+        2,
+        "Six fan converts to a base of 32 points. On a discard win the discarder pays twice the base, 64, and each other opponent pays the base once, 32: 64 plus 32 plus 32 is 128 in total.",
+        "Convert the fan total to base points, then add the three payments together: the discarder's doubled share and one base from each other opponent.",
+        () => {
+          const units = scoredAs("666z777z55z234m789p", 31).units;
+          const total = hongKongPayments(units, {
+            winner: 0,
+            payer: 1,
+            selfDraw: false,
+          }).reduce((n, p) => n + p.amount, 0);
+          return units === 6 && total === 128 ? "128" : "invalid";
+        },
       ),
     },
     {
@@ -924,6 +1199,99 @@ export const VARIANT_LESSONS: VariantLesson[] = [
           });
           return r.units === 10
             ? "Heavenly Hand — scored as a ten-fan hand"
+            : "invalid";
+        },
+      ),
+    },
+    {
+      text: "Now apply the cap to new hands you have not seen scored before. Read the pictured faces yourself: the first hand wins on another player's discard, and its holder holds no bonus tiles. Name its shape, count its fan, apply the cap, and work out who pays what.",
+      hand: "19m19p19s1234567z7z",
+    },
+    {
+      hand: "19m19p19s1234567z7z",
+      question: choice(
+        "hk-transfer-orphans-cap",
+        "How many fan does the pictured hand count, and how many fan are used when it is converted to payments?",
+        [
+          "It counts thirteen fan and is paid as thirteen fan",
+          "It counts thirteen fan and is paid as ten fan",
+          "It counts ten fan and is paid as ten fan",
+          "It counts fifteen fan and is paid as ten fan",
+        ],
+        1,
+        "The hand holds one of every terminal and every honor, with the red dragon duplicated: Thirteen Orphans, counting thirteen fan. Payments are capped at ten fan, so it is converted as a ten-fan hand.",
+        "First name the shape from its faces — one of every terminal and honor, plus one duplicate — and recall its value. Then apply the payment cap to that counted total.",
+        () => {
+          const r = scoredAs("19m19p19s1234567z7z", 33);
+          const atCounted = hongKongPayments(13, {
+            winner: 0,
+            payer: 1,
+            selfDraw: false,
+          });
+          const atCap = hongKongPayments(10, {
+            winner: 0,
+            payer: 1,
+            selfDraw: false,
+          });
+          return r.units === 13 &&
+            JSON.stringify(atCounted) === JSON.stringify(atCap)
+            ? "It counts thirteen fan and is paid as ten fan"
+            : "invalid";
+        },
+      ),
+    },
+    {
+      hand: "19m19p19s1234567z7z",
+      question: choice(
+        "hk-transfer-orphans-pay",
+        "That hand wins on a discard. What does the discarder pay, what does each other opponent pay, and what does the winner receive in total?",
+        [
+          "Discarder 256, each other opponent 128, winner 512 in total",
+          "Discarder 256, each other opponent 128, winner 384 in total",
+          "Discarder 128, each other opponent 128, winner 384 in total",
+          "Discarder 512, each other opponent 256, winner 1,024 in total",
+        ],
+        0,
+        "Paid as a ten-fan hand, its base is 128 points. On a discard win the discarder pays twice the base, 256, each other opponent pays the base once, 128, and the winner receives 256 plus 128 plus 128: 512 in total.",
+        "Start from the capped conversion — a base of 128 — then split it the discard way: double for the discarder, single for each other opponent, and add the three payments for the winner's total.",
+        () => {
+          const payments = hongKongPayments(13, {
+            winner: 0,
+            payer: 1,
+            selfDraw: false,
+          });
+          const discarder = payments.find((p) => p.seat === 1)!.amount;
+          const other = payments.find((p) => p.seat === 2)!.amount;
+          const total = payments.reduce((n, p) => n + p.amount, 0);
+          return discarder === 256 && other === 128 && total === 512
+            ? "Discarder 256, each other opponent 128, winner 512 in total"
+            : "invalid";
+        },
+      ),
+    },
+    {
+      text: "The second pictured hand uses one numbered suit only, and also wins on a discard with no bonus tiles held. Read its faces yourself, count its total fan — the pattern's value plus anything else it earns — and judge what the cap does to it.",
+      hand: "1112345678999s7s",
+    },
+    {
+      hand: "1112345678999s7s",
+      question: choice(
+        "hk-transfer-gates-cap",
+        "How many fan does the second pictured hand count in total, and how is it paid?",
+        [
+          "Fifteen fan counted, paid as fifteen fan",
+          "Sixteen fan counted, paid as ten fan",
+          "Ten fan counted, paid as ten fan",
+          "Seven fan counted, paid as seven fan",
+        ],
+        1,
+        "The hand is Nine Gates in bamboo — three 1s, one each of 2 to 8, three 9s and one more bamboo tile — worth fifteen fan as a pattern. Holding no bonus tiles earns one more, so it counts sixteen fan in total, and the cap pays it as a ten-fan hand.",
+        "Name the shape from its faces and take its pattern value first. Then check whether the hand earns anything else on top — what does holding no bonus tiles earn? — and apply the cap to the full total.",
+        () => {
+          const r = scoredAs("1112345678999s7s", 24);
+          const gates = r.patterns.find((p) => p.id === "nine-gates");
+          return r.units === 16 && gates?.units === 15
+            ? "Sixteen fan counted, paid as ten fan"
             : "invalid";
         },
       ),

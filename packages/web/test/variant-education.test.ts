@@ -60,7 +60,7 @@ describe("original versioned variant teaching", () => {
       lessons.map(lessonText).join(" ").split(/\s+/).length,
     ).toBeGreaterThan(1800);
     const questions = lessons.flatMap(variantLessonQuestions);
-    expect(questions).toHaveLength(38);
+    expect(questions).toHaveLength(58);
     expect(questions.every((q) => q.hint.trim().length > 0)).toBe(true);
     expect(questions.find((q) => q.id === "hk-two-fan")!.verify()).toBe(
       "No — it has only two fan, below the minimum of three",
