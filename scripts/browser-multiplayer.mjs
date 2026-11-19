@@ -108,7 +108,13 @@ try {
       await p.getByRole("button", { name: "Ready up", exact: true }).click();
     }
     await host.getByRole("button", { name: "Start match" }).click();
-    await host.getByRole("heading", { name: "Your move" }).waitFor();
+    // The table's clock row names the mover only for timed paces; the
+    // approved correspondence table (frame 15) shows "Correspondence /
+    // No time limit" instead, so the post-start wait is pace-aware.
+    // The Discard click below still proves the host holds the move.
+    if (pace === "correspondence")
+      await host.getByText("Correspondence", { exact: true }).waitFor();
+    else await host.getByRole("heading", { name: "Your move" }).waitFor();
     await host
       .getByRole("button", { name: /^Discard / })
       .first()
