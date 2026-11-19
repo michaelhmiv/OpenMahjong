@@ -96,3 +96,25 @@ drafted by the runs and removed again — it stays intentionally English.
   this file is the complete history.
 - No runtime translation cost exists: the shipped app makes no network
   call to any translation provider. These are one-time build-time costs.
+
+## PR #87 top-up — 6 multiplayer keys (2026-11-19)
+
+PR #87 (rebased onto main f93a1e8 after PR #93/#94) added exactly 6
+English keys — `ui.app.solo`, `ui.app.online`, `ui.app.play-mode`,
+`review.board.coach-advice-uses-only-what-you-knew-at-each-dec`,
+`review.board.hide-opponents-hands`, `review.board.reveal-all-hands` —
+missing from all four draft locales. The driver re-ran with translation
+memory; per locale it billed 7 keys (the 6 new keys plus
+`ui.app.improve-this-translation`, which was then removed again: that
+key is intentionally absent from the draft locales — its shipped
+rendering is the English fallback, per the baseline design). All four
+runs: 0 failures, 0 glossary flags, 0 tile-ref flags. New entries are
+status `draft` only. Total list-price cost $0.0015 (provider-reported
+runs ~1.4% lower, per the note at the top of this file).
+
+| Run | Model | In tokens | Out tokens | Cost | Failures |
+| --- | --- | --- | --- | --- | --- |
+| zh-Hans top-up (6 keys kept) | qwen/qwen-plus | 551 | 109 | $0.0002 | 0 |
+| zh-Hant top-up (6 keys kept) | qwen/qwen-plus | 554 | 113 | $0.0002 | 0 |
+| ja top-up (6 keys kept) | google/gemini-2.5-flash | 571 | 144 | $0.0005 | 0 |
+| ko top-up (6 keys kept) | google/gemini-2.5-flash | 572 | 144 | $0.0005 | 0 |
