@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-19T11:41:12.209Z",
-    "keyCount": 3754,
+    "generatedAt": "2026-11-19T13:56:37.836Z",
+    "keyCount": 3781,
     "model": "google/gemini-2.5-flash",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -34483,8 +34483,8 @@
       "dynamic": true
     },
     "ui.app.v-0-1-3": {
-      "value": "{0}{1}",
-      "hash": "8391da809dd9ca6b46bd1d406cd1e6298334ec421ec1292451c9e2acc2fd10e4",
+      "value": "{0} {1}",
+      "hash": "10866a9df5f8be5be75c79314de01412b0b35db060b06fdc333c1d9cd82d73c0",
       "status": "draft",
       "source": {
         "file": "app.ts",
@@ -34497,8 +34497,8 @@
       "dynamic": true
     },
     "ui.app.v-0-1-4": {
-      "value": "{0} {1}",
-      "hash": "10866a9df5f8be5be75c79314de01412b0b35db060b06fdc333c1d9cd82d73c0",
+      "value": "{0} — {1}",
+      "hash": "fa4816846a52134eaa901ce9be4cdf4f68a2e306e212bbbb9b4588ebf9fca0dc",
       "status": "draft",
       "source": {
         "file": "app.ts",
@@ -34619,8 +34619,8 @@
       "dynamic": true
     },
     "ui.app.v-0-6": {
-      "value": "{0}",
-      "hash": "a00644508de97e85263c9d0cd67e63d3c3b5d733bcaddc65b110e501ad5a7b73",
+      "value": "+{0}",
+      "hash": "e6f36eec2093006bbf6bbc44f8ec977484c54a5de9d810ebd450fb4a63646468",
       "status": "draft",
       "source": {
         "file": "app.ts",
@@ -38571,6 +38571,276 @@
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 135
+      },
+      "placeholders": []
+    },
+    "learn.american.card.q-rn4-pairs.choice0": {
+      "value": "0",
+      "hash": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 280
+      },
+      "placeholders": []
+    },
+    "learn.american.card.q-rn4-pairs.choice1": {
+      "value": "1",
+      "hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 280
+      },
+      "placeholders": []
+    },
+    "learn.american.card.q-rn4-pairs.choice2": {
+      "value": "2",
+      "hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 280
+      },
+      "placeholders": []
+    },
+    "learn.american.card.q-rn4-pairs.choice3": {
+      "value": "3",
+      "hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 280
+      },
+      "placeholders": []
+    },
+    "learn.american.drills.q-ib2-flowers.choice0": {
+      "value": "3",
+      "hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 1069
+      },
+      "placeholders": []
+    },
+    "learn.american.drills.q-ib2-flowers.choice1": {
+      "value": "4",
+      "hash": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 1069
+      },
+      "placeholders": []
+    },
+    "learn.american.drills.q-ib2-flowers.choice2": {
+      "value": "5",
+      "hash": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 1069
+      },
+      "placeholders": []
+    },
+    "learn.american.drills.q-ib2-flowers.choice3": {
+      "value": "8",
+      "hash": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 1069
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-qt3-jokers.choice0": {
+      "value": "1",
+      "hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 876
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-qt3-jokers.choice1": {
+      "value": "2",
+      "hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 876
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-qt3-jokers.choice2": {
+      "value": "3",
+      "hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 876
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-qt3-jokers.choice3": {
+      "value": "4",
+      "hash": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 876
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-quint-jokers.choice0": {
+      "value": "1",
+      "hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 850
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-quint-jokers.choice1": {
+      "value": "2",
+      "hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 850
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-quint-jokers.choice2": {
+      "value": "3",
+      "hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 850
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-quint-jokers.choice3": {
+      "value": "4",
+      "hash": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 850
+      },
+      "placeholders": []
+    },
+    "learn.american.picking.q-ev1-held.choice0": {
+      "value": "8",
+      "hash": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 643
+      },
+      "placeholders": []
+    },
+    "learn.american.picking.q-ev1-held.choice1": {
+      "value": "9",
+      "hash": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 643
+      },
+      "placeholders": []
+    },
+    "learn.american.picking.q-ev1-to-go.choice0": {
+      "value": "2",
+      "hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 662
+      },
+      "placeholders": []
+    },
+    "learn.american.picking.q-ev1-to-go.choice1": {
+      "value": "3",
+      "hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 662
+      },
+      "placeholders": []
+    },
+    "learn.american.picking.q-ev1-to-go.choice2": {
+      "value": "4",
+      "hash": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 662
+      },
+      "placeholders": []
+    },
+    "learn.american.picking.q-ev1-to-go.choice3": {
+      "value": "5",
+      "hash": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 662
+      },
+      "placeholders": []
+    },
+    "learn.american.section-title": {
+      "value": "미국식",
+      "hash": "0baaf6f25d1c5da82d9e4a3229cd45bd99e151c41dce518d7c7e526d86283f24",
+      "status": "draft",
+      "source": {
+        "file": "american-lesson-ui.ts",
+        "line": 167
+      },
+      "placeholders": []
+    },
+    "learn.hong-kong.payments.q-hk-discard-payment.choice0": {
+      "value": "8",
+      "hash": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+      "status": "draft",
+      "source": {
+        "file": "education/variant-content.ts",
+        "line": 894
+      },
+      "placeholders": []
+    },
+    "learn.riichi.section-title": {
+      "value": "리치",
+      "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 599
+      },
+      "placeholders": []
+    },
+    "learn.variant.ui.continue": {
+      "value": "계속",
+      "hash": "31fbef162594de01bab0cd525c51f74de7bcb15063029fa1a54b2cf5944c80d8",
+      "status": "draft",
+      "source": {
+        "file": "variant-education-ui.ts",
+        "line": 325
+      },
+      "placeholders": []
+    },
+    "learn.variant.ui.next-exercise": {
+      "value": "다음 연습",
+      "hash": "ee075885c9281f770f489778da89da5adc9cdd68600c3523b85b89e312399e60",
+      "status": "draft",
+      "source": {
+        "file": "variant-education-ui.ts",
+        "line": 325
       },
       "placeholders": []
     }

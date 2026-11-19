@@ -57,6 +57,10 @@ spend is **$1.2877** ($1.2847 bulk + $0.0030 top-up).
 | ko top-up (13 keys) | google/gemini-2.5-flash | 732 | 365 | $0.0011 | 0 |
 | zh-Hans top-up (13 keys) | qwen/qwen-plus | 676 | 261 | $0.0004 | 0 |
 | zh-Hant top-up (13 keys) | qwen/qwen-plus | 679 | 282 | $0.0004 | 0 |
+| ja rewire top-up (28 keys) | google/gemini-2.5-flash | 1,043 | 605 | $0.0018 | 0 |
+| ko rewire top-up (28 keys) | google/gemini-2.5-flash | 1,044 | 608 | $0.0018 | 0 |
+| zh-Hans rewire top-up (28 keys) | qwen/qwen-plus | 929 | 512 | $0.0006 | 0 |
+| zh-Hant rewire top-up (28 keys) | qwen/qwen-plus | 932 | 515 | $0.0006 | 0 |
 
 ## Notes
 
