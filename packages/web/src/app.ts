@@ -2739,6 +2739,12 @@ export class App {
     // with the win moment's read in the prompt row, so the floating
     // overlay stays silent while a tsumo is on offer.
     if (this.guideMoment()?.kind === "win") return null;
+    // A call window owns the decision too: the guided ruling hides
+    // the floating hint during call prompts (the prompt row carries
+    // its own moment hint), and the bubble must never sit over the
+    // call buttons.
+    const pending = this.runner?.pending;
+    if (pending?.kind === "call" && this.pendingVisible()) return null;
     const advice = this.guideAdvice();
     if (!advice) return null;
     const el = h("div", {

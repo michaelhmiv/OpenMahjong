@@ -689,12 +689,12 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 
 /* Guided hint: floating overlay above the player's hand (HINT
    PLACEMENT ruling). The hand row ends 16px above the table's bottom
-   edge (padding) + handctl (~31px) + hand (~35px, 86px in Large
-   Tiles two-row mode) + prompt row (~58px when shown): 200px clears
-   the worst case (182px) with room, and the element is a sibling
-   layer — never part of the table's flow layout. */
+   edge (padding) + handctl (44px since the F22 target fix) + hand
+   (~35px, 86px in Large Tiles two-row mode) + prompt row (~58px when
+   shown): 213px clears the worst case (~195px) with room, and the
+   element is a sibling layer — never part of the table's flow layout. */
 .guidehint {
-  position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 200px;
+  position: absolute; z-index: 6; left: 50%; transform: translateX(-50%); bottom: 213px;
   background: var(--panel-hi); color: var(--ink); font-size: 13px; font-weight: 700;
   padding: 10px 16px; border-radius: 14px; width: 300px; max-width: 320px; text-align: left;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
