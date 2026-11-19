@@ -5,10 +5,11 @@ import enData from "../src/i18n/locales/en.json";
 
 /**
  * Missing-key gate (brief-i18n-v1 Phase 1, CI layer 1):
- * every key referenced by a t("...") call site in packages/web/src must
- * exist in en.json. The reverse direction — no orphan keys in en.json —
- * is covered by i18n-extraction.test.ts, which asserts en.json is exactly
- * the extractor's output (the extractor only emits keys it found in code,
+ * every key referenced by a t("..."), tx("...", "English source"),
+ * or tForLocale("...", locale, "English source") call site in
+ * packages/web/src must exist in en.json. The reverse direction — no orphan keys in en.json — is covered by
+ * i18n-extraction.test.ts, which asserts en.json is exactly the
+ * extractor's output (the extractor only emits keys it found in code,
  * lesson data, or content pages).
  *
  * Phase 1 wiring is deliberately minimal: only the four tab labels go
@@ -32,7 +33,10 @@ function tsFiles(dir: string): string[] {
 
 function referencedKeys(): Map<string, string[]> {
   const found = new Map<string, string[]>();
-  const re = /\bt\(\s*["']([^"']+)["']/g;
+  // t("key"), tx("key", "English source"), and tForLocale("key",
+  // locale, "English source"): the first string argument is the key
+  // in all three forms.
+  const re = /\b(?:tx|tForLocale|t)\(\s*["']([^"']+)["']/g;
   for (const file of tsFiles(SRC)) {
     const text = readFileSync(file, "utf8");
     let m: RegExpExecArray | null;
@@ -47,7 +51,7 @@ function referencedKeys(): Map<string, string[]> {
 }
 
 describe("missing-key gate", () => {
-  it("every t() call-site key exists in en.json", () => {
+  it("every t() / tx() call-site key exists in en.json", () => {
     const refs = referencedKeys();
     expect(refs.size).toBeGreaterThan(0);
     const missing = [...refs.entries()].filter(([key]) => !enKeys.has(key));

@@ -128,7 +128,7 @@ Play (the landing), Learn (index + lesson runner), Games (stats
 header + history list; the former History and Stats screens merged),
 More (account + settings + about links; the former Settings screen
 re-homed) — and the drilled-in screens: Table, Hand-end breakdown,
-Game-end results, Rules, About, Privacy, Review, Practice.
+Game-end results, Rules, About, Privacy, Language, Review, Practice.
 A new screen requires a brief amendment and an approved rendering.
 
 ## 7. Copy law
@@ -344,8 +344,25 @@ records the shell the renderings specify.)
   Review path until the game-summary restructure lands.
 - More carries the account block (identity, sign out, delete),
   every settings row (sound, reduced motion, large tiles, guided
-  mode), the About links (Rules, About, Privacy), and the AGPL
-  footer.
+  mode), the LANGUAGE section — one row showing the current
+  language, opening the drilled-in Language screen — the About
+  links (Rules, About, Privacy), and the AGPL footer.
+- Language (i18n-switcher-v1, approved 2026-11-19): the drilled-in
+  Language screen lists shipped locales only, each row the
+  language's own name over its English name, the current locale
+  marked bold with a state-green check (never colour alone, never
+  gold). Unshipped locales are hidden, not listed. A first visit
+  whose browser language matches a shipped locale other than
+  English is offered a quiet, dismissible confirmation sheet over
+  Play — never a silent auto-switch; either direction remembers the
+  choice. Switching languages opens that locale's URL (English at
+  the root, e.g. `/ja/` for Japanese); the choice is remembered
+  and wins over browser detection thereafter. Shipped locales that
+  are machine translations (owner ruling Nov 19, 2026: ship now,
+  community reviews later) are marked, never passed off as
+  reviewed copy: " · Machine translated" on the row's English-name
+  line, a footnote on the Language screen, and a line on the
+  first-visit sheet.
 
 ## 14. Game details, board review and in-person tools
 

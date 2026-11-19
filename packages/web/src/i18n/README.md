@@ -1,8 +1,11 @@
-# i18n — Phase 1 (infrastructure)
+# i18n — Phase 1 (infrastructure) + Phase 2 Tracks A/B
 
 Brief: `~/workspace/mahjong-prep/brief-i18n-v1.md` (approved Nov 18, 2026).
 Phase 1 only: infrastructure + glossary + CI gates + dashboard. English keys
 extracted, **no translations shipped**, no visible UI change.
+Phase 2 Track A adds routing/detection plumbing; Track B adds the language
+switcher UI (More LANGUAGE section, Language list, first-visit sheet).
+Still no translations shipped: only English is a shipped locale.
 
 ## Files
 
@@ -33,6 +36,17 @@ To wire a string through the loader, call `t("namespace.key")` (or
 `t("namespace.key", arg0, arg1)` for `{0}`/`{1}` placeholders). Only the
 four tab labels are wired in Phase 1; the rest of the inventory is
 extracted and waiting for Phase 2's component wiring.
+
+A string that only exists behind a translate call — new UI copy with
+no literal anywhere else in the code — cannot use plain `t()`: the
+extractor only inventories string literals it finds, so the key would
+never land in en.json. Use `tx("namespace.key", "English source",
+...)` instead: the extractor records the second argument as the key's
+English source under the explicit key. `tForLocale("namespace.key",
+locale, "English source", ...)` is the same form for a lookup in a
+named locale (the first-visit sheet's detected-language strings).
+Both fall back to the English source when the key has no en.json
+entry at all (extractor drift — the missing-key gate fails CI first).
 
 ## How stale marking works
 
@@ -65,6 +79,66 @@ report 0% and are listed as unshipped — they are never gated. CI runs
 both `extract-i18n.mjs --check` and `i18n-coverage.mjs --gate` in the
 build job.
 
+## Routing + detection (Phase 2 Track A, semantics revised Track B)
+
+- One URL per locale: English at the root, `/ja/`, `/zh-Hant/`, etc.
+  for the rest (`localeFromPath` / `pathForLocale` in `index.ts`).
+  `packages/web/server.mjs` serves the app shell for a locale prefix
+  only when that locale is shipped; unshipped locales stay 404, so a
+  crawler is never served English content at `/ja/`.
+- Activation precedence: URL path locale > remembered choice
+  (`localStorage`, key `openmahjong.locale.v1`) > English. Browser
+  detection deliberately does NOT activate a locale: the approved
+  switcher design shows a confirmation sheet for a detected locale
+  instead of silently switching, so a first visit stays English until
+  the user picks. `detectLocale()` / `firstVisitDetectedLocale()`
+  expose detection to the sheet. A path locale for an unshipped
+  locale still resolves to English.
+- `applyLocaleDocumentTags(locale)` (called from `main.ts`) sets
+  `<html lang>`, the canonical URL, and hreflang alternates for shipped
+  locales only. With only English shipped this is lang="en" and the
+  root canonical — English behaviour is unchanged.
+- Per-language static pages (e.g. `/ja/learn/`) are a ship-step item:
+  until they exist, a shipped locale's unmatched paths serve the app
+  shell, never another language's static page.
+
+## Language switcher (Phase 2 Track B)
+
+Design: `~/workspace/mahjong-prep/renderings/i18n-switcher-v1/`
+(notes + 5-page PDF, independent QC PASS 9/9; approved by Michael
+Nov 19, 2026). Implementation: `packages/web/src/app.ts`
+(`renderLanguage`, `chooseLocale`, `maybeShowFirstVisitSheet`,
+`buildFirstVisitSheet`) + the `i18n-*` CSS block in `styles.css`.
+
+- Home: More, new LANGUAGE section between SETTINGS and ABOUT. The
+  row is the shipped `.hrow` grammar (current locale's own name as
+  the dim value) and opens the drilled-in Language screen.
+- The list shows shipped locales only (`shippedLocaleMeta()`), in
+  order: English first, then alphabetical by English name. Each row
+  shows the language's own name over its English name (fixed labels
+  in `LOCALE_META`, not translated copy); the current locale is bold
+  with a state-green check. The footnotes state the per-language URL
+  behaviour and the Wave 2 plan, factually.
+- Machine-translation marking (owner ruling Nov 19, 2026: SHIP NOW,
+  community reviews later): the core 4 locales ship as machine
+  translations once draft PR #90 merges, and the switcher marks
+  them — `MACHINE_TRANSLATED_LOCALES` in `i18n/index.ts` (with
+  `isMachineTranslated()`) is the list; a row for a listed locale
+  carries " · Machine translated" on its English-name line, the
+  Language screen gains a footnote stating the status, and the
+  first-visit sheet gains a second fine line naming the detected
+  locale. The marking is dormant while only English ships. When
+  community review completes for a locale, remove it from the list.
+- First visit: a quiet, dismissible confirmation sheet over Play —
+  never a silent auto-switch. Its title and primary button are in
+  the detected language, read from that locale's *approved* strings
+  via `tForLocale()`; the decline is always readable in English.
+  Either direction remembers the choice, so the sheet never re-asks.
+  The sheet is dormant while only English ships.
+- No unapproved translations ship with the switcher: the frame's
+  Japanese strings were mock copy for the rendering only and are
+  never used in code.
+
 ## Machine drafts never ship without native-speaker approval
 
 Only `approved` strings ship in a locale. Approval is by a native
@@ -72,6 +146,18 @@ speaker reading the string in context, not by another model. Machine
 drafts sit in the review queue as `draft` and fall back to English in
 the app. A translation that renders a locked glossary term differently
 is a CI failure, not a style preference.
+
+Owner ruling Nov 19, 2026 (SHIP NOW, community reviews later)
+supersedes the hold for the core 4 only: zh-Hans, zh-Hant, ja, and
+ko ship as machine translations once draft PR #90 merges, marked in
+the switcher as machine translated (see above) — never passed off as
+reviewed copy. The native-approval rule still governs Wave 2 and any
+later locale, and community review follows for the core 4. How a
+shipped machine-translated locale's draft entries display is a
+#90-landing decision (status flip vs. a display-mode change) — the
+loader still falls back to English for `draft` entries, so #90 must
+resolve it before the locales render in anything but English; the
+switcher itself is ready either way.
 
 ## Known gaps / ambiguities (flagged, not silently dropped)
 

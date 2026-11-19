@@ -44,7 +44,19 @@ import {
   type GameSummary,
   type StatsSums,
 } from "./api.js";
-import { t } from "./i18n/index.js";
+import {
+  SOURCE_LOCALE,
+  firstVisitDetectedLocale,
+  getCurrentLocale,
+  isMachineTranslated,
+  localeMeta,
+  pathForLocale,
+  setRememberedLocale,
+  shippedLocaleMeta,
+  t,
+  tForLocale,
+  tx,
+} from "./i18n/index.js";
 import { AiDriver } from "./drivers.js";
 import { TableModel, foldEvents, tileById, type WinInfo } from "./model.js";
 import {
@@ -411,6 +423,62 @@ const ICON_CLOSE = `<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></s
 const ICON_EXPAND = `<svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/></svg>`;
 const ICON_SORT = `<svg viewBox="0 0 24 24"><path d="M7 5v13M7 18l-3.5-3.5M7 18l3.5-3.5M17 19V6M17 6L13.5 9.5M17 6l3.5 3.5"/></svg>`;
 
+/**
+ * First-visit language sheet (i18n switcher v1, frame 03): the quiet,
+ * dismissible confirmation shown when the browser language matches a
+ * shipped locale the user has not chosen yet. The title and primary
+ * button are in the *detected* language (read from that locale's
+ * approved strings via tForLocale — never from a draft), while the
+ * decline is always readable in English. The sheet's English sources
+ * below are the keys' sources — the frame's Japanese strings were
+ * mock copy for the rendering only and are never used here.
+ */
+export function buildFirstVisitSheet(
+  detected: string,
+  callbacks: { onAccept: () => void; onDecline: () => void },
+): { scrim: HTMLElement; sheet: HTMLElement } {
+  const meta = localeMeta(detected);
+  const native = meta?.native ?? detected;
+  const english = meta?.english ?? detected;
+  const scrim = h("div", { class: "i18n-scrim" });
+  const sheet = h("div", { class: "sheet i18n-sheet" });
+  const dismiss = h("button", {
+    class: "i18n-x",
+    "aria-label": tx("ui.app.language.sheet.dismiss", "Dismiss"),
+  }, "×");
+  dismiss.addEventListener("click", () => callbacks.onDecline());
+  const useBtn = h(
+    "button",
+    { class: "pillbtn primary" },
+    tForLocale("ui.app.language.sheet.use", detected, "Use {0}", native),
+  );
+  useBtn.addEventListener("click", () => callbacks.onAccept());
+  const stayBtn = h(
+    "button",
+    { class: "pillbtn ghost" },
+    tx("ui.app.language.sheet.stay", "Continue in English"),
+  );
+  stayBtn.addEventListener("click", () => callbacks.onDecline());
+  const col = h("div", { class: "col" }, useBtn, stayBtn);
+  sheet.append(
+    dismiss,
+    h("div", { class: "t" }, tForLocale("ui.app.language.sheet.title", detected, "Display in {0}?", native)),
+    h("div", { class: "s" }, tx("ui.app.language.sheet.sub", "Your browser is set to {0}. Switch Open Mahjong to {0}?", english)),
+    col,
+    h("div", { class: "fine" }, tx("ui.app.language.sheet.fine", "You can change this later in More → Language.")),
+    // Machine-translation marking (owner ruling Nov 19, 2026): the
+    // detected locale ships as a machine translation, so the sheet
+    // says so at the decision point, in English, before the user
+    // accepts. A second .fine line in the shipped sheet grammar —
+    // the sheet grows one line upward; nothing else moves.
+    ...(isMachineTranslated(detected)
+      ? [h("div", { class: "fine" }, tx("ui.app.language.sheet.machine", "{0} is machine translated and awaiting community review.", english))]
+      : []),
+  );
+  accessibleDialog(sheet, tx("ui.app.language", "Language"), () => callbacks.onDecline());
+  return { scrim, sheet };
+}
+
 // ---------------------------------------------------------------------------
 // App
 // ---------------------------------------------------------------------------
@@ -421,6 +489,7 @@ type ScreenName =
   | "rules"
   | "about"
   | "privacy"
+  | "language"
   | "variant-table"
   | "variant-learn"
   | "american-card"
@@ -609,6 +678,8 @@ export class App {
    *  into view, keyed `${moduleId}:${stepIndex}:${position}`. */
   private lessonIndexRevealed = new Set<string>();
   private currentScreen: ScreenName = "home";
+  /** The first-visit language sheet, while it is open on Play. */
+  private firstVisitSheet: { scrim: HTMLElement; sheet: HTMLElement } | null = null;
   private practice: PracticeProgress = loadPracticeProgress();
   private practiceInitialSkill: SkillId | undefined;
   private reviewData: DecisionReview | null = null;
@@ -670,6 +741,10 @@ export class App {
     // Reconcile this entry with the actual landing before navigation.
     window.history.replaceState({ openmahjongScreen: "home" }, "");
     this.showScreen("home");
+    // First-visit language sheet (i18n switcher v1): offered once,
+    // only when the browser language matches a shipped locale the
+    // user has not chosen yet. Dormant while only English ships.
+    this.maybeShowFirstVisitSheet();
     window.addEventListener("popstate", () => {
       const name = (window.history.state as { openmahjongScreen?: unknown } | null)?.openmahjongScreen;
       if (typeof name === "string" && this.screens.has(name as ScreenName)) {
@@ -717,7 +792,7 @@ export class App {
     this.root.append(this.stage);
     const screensWrap = h("div", { class: "screens" });
     this.stage.append(screensWrap);
-    for (const name of ["home", "table", "rules", "about", "privacy", "variant-table", "variant-learn", "american-card", "american-lesson", "tables", "details", "results", "games", "learn", "practice", "review", "more"] as ScreenName[]) {
+    for (const name of ["home", "table", "rules", "about", "privacy", "language", "variant-table", "variant-learn", "american-card", "american-lesson", "tables", "details", "results", "games", "learn", "practice", "review", "more"] as ScreenName[]) {
       const s = h("section", { class: "screen", id: `screen-${name}` });
       this.screens.set(name, s);
       screensWrap.append(s);
@@ -799,6 +874,7 @@ export class App {
     }
     if (name === "home") this.renderPlay();
     if (name === "more") this.renderMore();
+    if (name === "language") this.renderLanguage();
     if (name === "games") void this.renderGames();
     if (name === "learn") this.renderLearn();
     if (name === "practice") this.renderPractice();
@@ -856,6 +932,7 @@ export class App {
       case "rules":
       case "about":
       case "privacy":
+      case "language":
         this.showScreen(this.lastRoot);
         break;
       case "results":
@@ -911,6 +988,13 @@ export class App {
    */
   private renderPlay(): void {
     const el = this.screens.get("home")!;
+    // The first-visit language sheet lives on the home screen
+    // (frame 03): renderPlay rebuilds the screen, so preserve the
+    // sheet across the rebuild instead of dropping it without a
+    // choice. Focus inside the sheet is restored to its dismiss
+    // control afterwards.
+    const sheetOpen = this.firstVisitSheet;
+    const focusWasInSheet = sheetOpen?.sheet.contains(document.activeElement) ?? false;
     el.innerHTML = "";
     // Glow centre per state (design rules section 1).
     el.style.setProperty("--glow-y", this.user ? "22%" : "27%");
@@ -1046,6 +1130,10 @@ export class App {
     // the shipped tab is unchanged until both ids are configured.
     const adSlot = adSlotEl();
     if (adSlot) body.append(adSlot);
+    if (sheetOpen) {
+      el.append(sheetOpen.scrim, sheetOpen.sheet);
+      if (focusWasInSheet) sheetOpen.sheet.querySelector<HTMLElement>(".i18n-x")?.focus();
+    }
   }
 
   /** The Play fan (rendering 01): the section-4 hand fanned over its
@@ -1676,6 +1764,25 @@ export class App {
       })),
     );
 
+    // LANGUAGE (i18n switcher v1, frames 01/02): the section sits
+    // between SETTINGS and ABOUT — language is a preference, not an
+    // account fact, and it is used far more often than the document
+    // links. The row is the shipped .hrow grammar with the current
+    // locale's own name as the dim value; it opens the drilled-in
+    // Language screen.
+    page.append(h("div", { class: "sec-label" }, tx("ui.app.language.section", "LANGUAGE")));
+    const langRow = h("button", { class: "hrow" });
+    langRow.append(
+      h("span", { class: "ttl2" }, tx("ui.app.language", "Language")),
+      h("span", { class: "i18n-val" }, localeMeta(getCurrentLocale())?.native ?? getCurrentLocale()),
+    );
+    langRow.insertAdjacentHTML(
+      "beforeend",
+      `<svg class="chev" style="margin-left:auto" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
+    );
+    langRow.addEventListener("click", () => this.showScreen("language"));
+    page.append(langRow);
+
     page.append(h("div", { class: "sec-label" }, "ABOUT"));
     for (const [label, screen] of [["Rules", "rules"], ["About", "about"], ["Privacy", "privacy"]] as [string, ScreenName][]) {
       const b = h("button", { class: "hrow" });
@@ -1690,6 +1797,122 @@ export class App {
     page.append(
       h("div", { class: "footer" }, "Open source under AGPLv3 · github.com/michaelhmiv/OpenMahjong"),
     );
+  }
+
+  /**
+   * The Language screen (i18n switcher v1, frame 05): a drilled-in
+   * screen with the medium header grammar (bare back glyph, Fraunces
+   * title) and the §15 de-boxed list — one container, hairline
+   * dividers, no boxes. Each row shows the language's own name over
+   * its English name; the current locale is marked twice (bold name
+   * + state-green check), never by colour alone. Only shipped
+   * locales are listed; unshipped locales stay hidden. Shipped
+   * locales that are machine translations (owner ruling Nov 19,
+   * 2026) carry " · Machine translated" on the English-name line
+   * plus a footnote stating the status. No tab bar, per the nav
+   * law — this is a drilled-in screen, not a tab root.
+   */
+  private renderLanguage(): void {
+    const el = this.screens.get("language")!;
+    el.innerHTML = "";
+    const current = getCurrentLocale();
+    const head = h("header", { class: "i18n-head" });
+    const back = h("button", { class: "i18n-back", "aria-label": t("ui.app.back") }, "‹");
+    back.addEventListener("click", () => this.showScreen("more"));
+    head.append(back, h("h1", {}, tx("ui.app.language", "Language")));
+    el.append(head);
+    const page = h("div", { class: "i18n-page" });
+    const list = h("div", { class: "i18n-list", role: "listbox", "aria-label": tx("ui.app.language", "Language") });
+    for (const meta of shippedLocaleMeta()) {
+      const isCurrent = meta.id === current;
+      const row = h("button", {
+        class: `i18n-row${isCurrent ? " cur" : ""}`,
+        role: "option",
+        ...(isCurrent ? { "aria-current": "true" } : {}),
+      });
+      const names = h("div", {});
+      names.append(h("div", { class: "nm" }, meta.native));
+      if (meta.id !== "en") {
+        // Machine-translation marking (owner ruling Nov 19, 2026):
+        // the English-name line carries " · Machine translated" on
+        // every shipped locale that is a machine translation. Same
+        // two-line row, same 13px dim line — no layout change.
+        const enLine = isMachineTranslated(meta.id)
+          ? `${meta.english} · ${tx("ui.app.language.machine-translated", "Machine translated")}`
+          : meta.english;
+        names.append(h("div", { class: "en" }, enLine));
+      }
+      row.append(names);
+      if (isCurrent) {
+        const check = h("span", { class: "i18n-check", "aria-hidden": "true" });
+        check.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>`;
+        row.append(check);
+      }
+      row.addEventListener("click", () => this.chooseLocale(meta.id));
+      list.append(row);
+    }
+    page.append(list);
+    // Machine-translation footnote, shown only while a shipped
+    // locale is machine translated (dormant in the English-only
+    // state). It states the status plainly; the rows mark which
+    // locales it covers.
+    const anyMachineTranslated = shippedLocaleMeta().some((m) => isMachineTranslated(m.id));
+    page.append(
+      h("p", { class: "i18n-note" }, tx("ui.app.language.url-note", "Switching languages opens the matching page address — for example, /ja/ for Japanese. Your choice is remembered; the browser language is only used on your first visit.")),
+      ...(anyMachineTranslated
+        ? [h("p", { class: "i18n-note" }, tx("ui.app.language.machine-note", "Non-English languages are machine translated and awaiting community review."))]
+        : []),
+      h("p", { class: "i18n-note" }, tx("ui.app.language.wave2-note", "More languages are coming: Vietnamese, Thai, Indonesian, French, German, and Spanish.")),
+    );
+    el.append(page);
+  }
+
+  /** A switcher pick: remember it, then navigate to that locale's
+   *  URL (brief: one URL per language; English lives at the root),
+   *  preserving the rest of the path plus query and hash. The
+   *  navigation reloads the app in the new locale. Tapping the
+   *  current locale navigates nowhere and just returns to More. */
+  private chooseLocale(locale: string): void {
+    setRememberedLocale(locale);
+    const target = pathForLocale(locale, location.pathname) + location.search + location.hash;
+    const current = location.pathname + location.search + location.hash;
+    if (target !== current) {
+      location.assign(target);
+      return;
+    }
+    this.showScreen("more");
+  }
+
+  /** First-visit language sheet (i18n switcher v1, frame 03). Shown
+   *  once, on Play, when the browser language matches a shipped
+   *  locale the user has not chosen yet. Either direction remembers
+   *  the choice, so the sheet never re-asks; declining (including
+   *  the × and Escape) remembers English. */
+  private maybeShowFirstVisitSheet(): void {
+    const detected = firstVisitDetectedLocale();
+    if (!detected) return;
+    const { scrim, sheet } = buildFirstVisitSheet(detected, {
+      onAccept: () => {
+        setRememberedLocale(detected);
+        this.dismissFirstVisitSheet();
+        location.assign(pathForLocale(detected, location.pathname) + location.search + location.hash);
+      },
+      onDecline: () => {
+        // Declining (or dismissing) stays in English — and remembers
+        // it, so the sheet never re-asks.
+        setRememberedLocale(SOURCE_LOCALE);
+        this.dismissFirstVisitSheet();
+      },
+    });
+    this.firstVisitSheet = { scrim, sheet };
+    this.screens.get("home")!.append(scrim, sheet);
+  }
+
+  private dismissFirstVisitSheet(): void {
+    const open = this.firstVisitSheet;
+    this.firstVisitSheet = null;
+    open?.scrim.remove();
+    open?.sheet.remove();
   }
 
   // -- history & stats (slice 2, renderings 03/04) ---------------------------

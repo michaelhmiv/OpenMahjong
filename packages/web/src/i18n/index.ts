@@ -1,5 +1,6 @@
 /**
- * i18n runtime loader — Phase 1 (brief-i18n-v1, sequencing step 1).
+ * i18n runtime loader — Phase 1 (brief-i18n-v1, sequencing step 1)
+ * + Phase 2 Track A routing/detection plumbing + Track B switcher.
  *
  * English is the source and the only shipped locale. Every other core
  * locale (zh-Hans, zh-Hant, ja, ko) is an explicitly untranslated stub:
@@ -63,6 +64,60 @@ export const SUPPORTED_LOCALES = ["en", "zh-Hans", "zh-Hant", "ja", "ko"] as con
 
 /** Locales actually shipped by the app. Phase 1: English only. */
 export const SHIPPED_LOCALES: readonly string[] = ["en"];
+
+/** Locales that ship as machine translations, awaiting community
+ *  review (owner ruling, Nov 19, 2026: SHIP NOW, community reviews
+ *  later). The switcher marks these — a "Machine translated" note
+ *  on the row, a footnote on the Language screen, a line on the
+ *  first-visit sheet — so a machine translation is never mistaken
+ *  for reviewed copy. Dormant until a listed locale actually ships
+ *  (SHIPPED_LOCALES still gates the list). When community review
+ *  completes for a locale, remove it here and the marking
+ *  disappears with it. Wave 2 locales are never listed here: they
+ *  stay hidden until they ship. */
+export const MACHINE_TRANSLATED_LOCALES: readonly string[] = ["zh-Hans", "zh-Hant", "ja", "ko"];
+
+/** Whether a locale ships as a machine translation (see above). */
+export function isMachineTranslated(id: string): boolean {
+  return MACHINE_TRANSLATED_LOCALES.includes(id);
+}
+
+/** Switcher display metadata for every supported locale (Track B
+ *  design, frame 05). `native` is the language's own name, `english`
+ *  is its English name — both are fixed labels, not translated copy:
+ *  the list shows the native name over the English name in every
+ *  locale, so "日本語 / Japanese" reads the same in a Japanese
+ *  session as in an English one. Order is the list order: English
+ *  first (the source locale), then the rest alphabetical by English
+ *  name — Japanese, Korean, Simplified Chinese, Traditional Chinese.
+ *  The current locale is never hoisted, so rows never jump around. */
+export interface LocaleMeta {
+  id: string;
+  native: string;
+  english: string;
+}
+
+export const LOCALE_META: readonly LocaleMeta[] = [
+  { id: "en", native: "English", english: "English" },
+  { id: "ja", native: "日本語", english: "Japanese" },
+  { id: "ko", native: "한국어", english: "Korean" },
+  { id: "zh-Hans", native: "简体中文", english: "Simplified Chinese" },
+  { id: "zh-Hant", native: "繁體中文", english: "Traditional Chinese" },
+];
+
+/** Metadata for shipped locales only, in list order. Unshipped
+ *  locales are hidden, not listed (design decision 3). Today this
+ *  is English alone; when the core 4 ship as machine translations
+ *  (owner ruling Nov 19, 2026) they are listed with the
+ *  machine-translation marking — see isMachineTranslated. */
+export function shippedLocaleMeta(): LocaleMeta[] {
+  return LOCALE_META.filter((m) => SHIPPED_LOCALES.includes(m.id));
+}
+
+/** Metadata for one locale id, or undefined for an unknown id. */
+export function localeMeta(id: string): LocaleMeta | undefined {
+  return LOCALE_META.find((m) => m.id === id);
+}
 
 /** localStorage key for the remembered language choice. */
 export const REMEMBERED_LOCALE_KEY = "openmahjong.locale.v1";
@@ -183,6 +238,48 @@ export function t(key: string, ...args: readonly (string | number)[]): string {
   return interpolate(entry?.value ?? en.value, args);
 }
 
+/** Translate with an explicit English default: `tx("ui.app.language",
+ *  "Language")`. The extractor records the fallback as the key's
+ *  English source in en.json (see scripts/extract-i18n.mjs), which
+ *  is the mechanism by which a string that only exists behind a
+ *  translate call gets its key — `t()` alone cannot do that, because
+ *  the extractor only inventories string literals it finds in code.
+ *  At runtime this is `t()` when the key exists in en.json; when it
+ *  does not (extractor drift — the missing-key gate fails CI first),
+ *  the English default renders instead of the key id. */
+export function tx(
+  key: string,
+  fallback: string,
+  ...args: readonly (string | number)[]
+): string {
+  if (!EN.keys[key]) return interpolate(fallback, args);
+  return t(key, ...args);
+}
+
+/** Look up a key in a specific locale (not the current one), with
+ *  English fallback. Only `approved` entries are shown — the same
+ *  rule as `t()`, applied to the named locale. `fallback` is the
+ *  key's English source (same role as in `tx()` — the extractor
+ *  records it in en.json); it renders only when the key has no
+ *  English entry at all. The first-visit sheet uses this: its title
+ *  and primary button are in the *detected* language while the
+ *  session is still English, so the strings come from the detected
+ *  locale's approved entries, never from a draft. */
+export function tForLocale(
+  key: string,
+  locale: string,
+  fallback: string,
+  ...args: readonly (string | number)[]
+): string {
+  const en = EN.keys[key];
+  if (locale !== SOURCE_LOCALE && en && keyStatus(key, locale) === "approved") {
+    const entry = registry.get(locale)?.keys[key];
+    if (entry) return interpolate(entry.value, args);
+  }
+  if (!en) return interpolate(fallback, args);
+  return interpolate(en.value, args);
+}
+
 /** The locked glossary form of a term in a locale, or null when that
  *  locale has no locked form yet (Phase 1: every non-English locale). */
 export function lockedTerm(termId: string, locale: string): string | null {
@@ -226,20 +323,144 @@ function browserLanguages(): readonly string[] {
   }
 }
 
-/** Resolve and activate the locale for this session. A remembered choice
- *  wins over browser detection; detection picks the best match among
- *  `available` (default: shipped locales); anything else is English.
- *  Returns the active locale. Plumbing only in Phase 1 — no UI reads
- *  this yet. */
-export function initI18n(opts?: {
+/** First path segment is a supported locale tag (e.g. `/ja/`,
+ *  `/zh-Hant/learn/`) -> that locale; anything else -> null. The app's
+ *  own top-level routes (`/riichi/`, `/learn/`, `/calculator/`,
+ *  `/privacy`) are not locale tags. English lives at the root and has no
+ *  prefix, but `/en/...` parses as English so old links still resolve. */
+export function localeFromPath(pathname: string): string | null {
+  const first = pathname.split("/").filter(Boolean)[0] ?? "";
+  if (!first) return null;
+  const norm = normalizeLocaleTag(first);
+  for (const loc of SUPPORTED_LOCALES) {
+    if (normalizeLocaleTag(loc) === norm) return loc;
+  }
+  return null;
+}
+
+/** Rewrite a pathname into a locale's URL: strip any locale prefix
+ *  first, then prefix with `/{locale}` unless the locale is English
+ *  (root). The remainder of the path is preserved exactly. */
+export function pathForLocale(locale: string, pathname: string): string {
+  const withoutPrefix = localeFromPath(pathname)
+    ? pathname.replace(/^\/[^/]+/, "") || "/"
+    : pathname;
+  if (locale === SOURCE_LOCALE) return withoutPrefix;
+  return withoutPrefix === "/" ? `/${locale}/` : `/${locale}${withoutPrefix}`;
+}
+
+/** Canonical URL for a locale (English at the root). */
+export const SITE_ORIGIN = "https://openmahjong.app";
+
+export function canonicalUrlForLocale(locale: string): string {
+  return locale === SOURCE_LOCALE
+    ? `${SITE_ORIGIN}/`
+    : `${SITE_ORIGIN}/${locale}/`;
+}
+
+/** Set the document's language + canonical + hreflang alternates for the
+ *  active locale. Alternates list SHIPPED locales only: an unshipped
+ *  locale (drafts exist, nothing approved) must never be pointed at by a
+ *  crawler, since its URL would serve English content. With only English
+ *  shipped this sets lang="en", canonical to the root, and the en +
+ *  x-default alternates to the root — English behaviour is unchanged. */
+export function applyLocaleDocumentTags(locale: string): void {
+  try {
+    if (typeof document === "undefined") return;
+    document.documentElement.lang = locale;
+    let canonical = document.querySelector(
+      'link[rel="canonical"]',
+    ) as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
+    }
+    canonical.href = canonicalUrlForLocale(locale);
+    const wanted = new Map<string, string>();
+    wanted.set("x-default", canonicalUrlForLocale(SOURCE_LOCALE));
+    for (const loc of SHIPPED_LOCALES) {
+      wanted.set(loc === SOURCE_LOCALE ? "en" : loc, canonicalUrlForLocale(loc));
+    }
+    for (const el of [
+      ...document.querySelectorAll('link[rel="alternate"][data-om-i18n]'),
+    ]) {
+      el.remove();
+    }
+    for (const [hreflang, href] of wanted) {
+      const link = document.createElement("link");
+      link.rel = "alternate";
+      link.hreflang = hreflang;
+      link.href = href;
+      link.setAttribute("data-om-i18n", "");
+      document.head.appendChild(link);
+    }
+  } catch {
+    // Document tags are progressive enhancement; the app still renders.
+  }
+}
+
+/** Best match for the browser language list among `available`
+ *  (default: shipped locales). This is detection only — it never
+ *  activates a locale by itself. The first-visit confirmation sheet
+ *  (Track B design) is the only surface that acts on a detected
+ *  locale, so a browser set to Japanese never silently re-renders
+ *  the app in a language the user cannot read back out of. */
+export function detectLocale(
+  languages?: readonly string[],
+  available: readonly string[] = SHIPPED_LOCALES,
+): string {
+  return resolveLocale(languages ?? browserLanguages(), available);
+}
+
+/** First-visit sheet decision (Track B design, frame 03): the
+ *  detected locale the sheet should offer, or null when no sheet
+ *  is due. A sheet is due only when there is no remembered choice,
+ *  no locale in the URL (an explicit URL choice suppresses it), and
+ *  browser detection yields a shipped locale other than English.
+ *  With only English shipped this is always null — the sheet is
+ *  dormant until the first non-English locale ships. */
+export function firstVisitDetectedLocale(opts?: {
+  remembered?: string | null;
+  pathname?: string;
   languages?: readonly string[];
   available?: readonly string[];
+}): string | null {
+  const remembered =
+    opts?.remembered !== undefined ? opts.remembered : getRememberedLocale();
+  if (remembered) return null;
+  const pathname =
+    opts?.pathname ??
+    (typeof location !== "undefined" ? location.pathname : "");
+  if (localeFromPath(pathname)) return null;
+  const detected = detectLocale(opts?.languages, opts?.available);
+  return detected === SOURCE_LOCALE ? null : detected;
+}
+
+/** Resolve and activate the locale for this session. Precedence:
+ *  URL path locale > remembered choice > English. Browser detection
+ *  deliberately does NOT activate a locale here: the approved
+ *  switcher design (Track B) shows a confirmation sheet for a
+ *  detected locale instead of silently switching, so first-visit
+ *  activation is English until the user picks — in the sheet or in
+ *  the switcher. `detectLocale()` / `firstVisitDetectedLocale()`
+ *  expose detection to the sheet. A path locale for an unshipped
+ *  locale still resolves to English — drafts are data, not live —
+ *  so English behaviour is byte-identical until a locale ships.
+ *  Returns the active locale. */
+export function initI18n(opts?: {
+  available?: readonly string[];
+  pathname?: string;
 }): string {
   const remembered = getRememberedLocale();
-  const langs = remembered
-    ? [remembered]
-    : (opts?.languages ?? browserLanguages());
-  currentLocale = resolveLocale(langs, opts?.available ?? SHIPPED_LOCALES);
+  const pathLocale = localeFromPath(
+    opts?.pathname ??
+      (typeof location !== "undefined" ? location.pathname : ""),
+  );
+  const langs = pathLocale ? [pathLocale] : remembered ? [remembered] : null;
+  currentLocale = langs
+    ? resolveLocale(langs, opts?.available ?? SHIPPED_LOCALES)
+    : SOURCE_LOCALE;
   return currentLocale;
 }
 

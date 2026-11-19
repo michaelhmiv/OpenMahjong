@@ -37,6 +37,17 @@ const TYPES = {
   ".txt": "text/plain; charset=utf-8",
 };
 
+// Per-language URLs (brief-i18n-v1, Phase 2 Track A): /<locale>/ is the
+// URL for a SHIPPED locale. English lives at the root. A locale prefix
+// for an unshipped locale (drafts exist, nothing approved) stays a 404 —
+// a crawler must never be served English content at /ja/. Keep this list
+// in step with SHIPPED_LOCALES in packages/web/src/i18n/index.ts and in
+// scripts/i18n-coverage.mjs; packages/web/test/i18n-routing.test.ts
+// asserts the three agree. Per-language static pages (e.g. /ja/learn/)
+// are a ship-step item: until they exist, a shipped locale's unmatched
+// paths serve the app shell below, never another language's static page.
+const SHIPPED_LOCALES = ["en"];
+
 // MIME types worth compressing (binary formats like png/woff2 already are).
 const COMPRESSIBLE = new Set([
   "text/html",
@@ -88,13 +99,31 @@ const server = createServer(async (req, res) => {
       return res.end(JSON.stringify({ ok: ready }));
     }
     const rel = normalize(decodeURIComponent(url.pathname)).replace(/^(\.\.[/\\])+/, "");
-    let path = join(root, rel);
-    let info = await stat(path).catch(() => null);
-    if (info?.isDirectory()) {
-      path = join(path, "index.html");
-      info = await stat(path).catch(() => null);
+    const firstSeg = rel.split("/").filter(Boolean)[0] ?? "";
+    const localePrefix =
+      firstSeg !== "en" && SHIPPED_LOCALES.includes(firstSeg) ? firstSeg : null;
+    // For a shipped locale prefix, try the path as-is, then with the
+    // prefix stripped for file-like requests only (so /ja/assets/...
+    // resolves to dist/assets/...), then fall back to the app shell (the
+    // SPA owns its screens). A locale-prefixed page path never resolves
+    // to another language's static page: /ja/learn/ serves the shell,
+    // not the English /learn/ page.
+    const stripped = `/${rel.split("/").filter(Boolean).slice(1).join("/")}`;
+    const candidates = localePrefix
+      ? [rel, ...(stripped.split("/").pop()?.includes(".") ? [stripped] : [])]
+      : [rel];
+    for (const cand of candidates) {
+      let path = join(root, cand);
+      let info = await stat(path).catch(() => null);
+      if (info?.isDirectory()) {
+        path = join(path, "index.html");
+        info = await stat(path).catch(() => null);
+      }
+      if (info?.isFile()) return await sendFile(req, res, path);
     }
-    if (info?.isFile()) return await sendFile(req, res, path);
+    if (localePrefix) {
+      return await sendFile(req, res, join(root, "index.html"));
+    }
     res.writeHead(404, { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" });
     return res.end(NOT_FOUND_BODY);
   } catch {

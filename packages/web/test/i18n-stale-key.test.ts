@@ -15,30 +15,35 @@ import enData from "../src/i18n/locales/en.json";
  * are stale — the app falls back to English and the dashboard counts the
  * key unapproved until it is re-translated and re-approved.
  *
- * Fixture locales ("xx-*") stand in for real locales: the mechanism is
- * identical, only the data is invented for the test.
+ * The activated fixture is registered under "ja" (a supported locale
+ * id) with invented data ("Jouer", ...), and activated through the URL
+ * — the only activation inputs initI18n honours (URL > remembered >
+ * English). Browser detection never activates a locale (Track B
+ * design), so the old `initI18n({ languages: [...] })` activation is
+ * gone; the loader tests activate the same way. "xx-lesson-changed"
+ * is a registration-only fixture for the explicit-locale keyStatus
+ * check in the last test.
  */
 
 const EN_KEYS = (enData as { keys: Record<string, { value: string; hash: string }> }).keys;
 
 function fixtureLocale(
-  id: string,
   key: string,
   entry: { value: string; hash: string; status: "approved" | "draft" | "stale" },
 ) {
-  registerLocale(id, {
-    meta: { locale: id, status: "in-progress" },
+  registerLocale("ja", {
+    meta: { locale: "ja", status: "in-progress" },
     keys: { [key]: entry },
   });
-  initI18n({ languages: [id], available: ["en", id] });
-  expect(getCurrentLocale()).toBe(id);
+  initI18n({ pathname: "/ja/", available: ["en", "ja"] });
+  expect(getCurrentLocale()).toBe("ja");
 }
 
 describe("stale-key gate", () => {
   it("an approved, current translation is shown", () => {
     resetI18nForTests();
     const en = EN_KEYS["ui.app.play"]!;
-    fixtureLocale("xx-fresh", "ui.app.play", { value: "Jouer", hash: en.hash, status: "approved" });
+    fixtureLocale("ui.app.play", { value: "Jouer", hash: en.hash, status: "approved" });
     expect(keyStatus("ui.app.play")).toBe("approved");
     expect(t("ui.app.play")).toBe("Jouer");
     resetI18nForTests();
@@ -48,7 +53,7 @@ describe("stale-key gate", () => {
     resetI18nForTests();
     const en = EN_KEYS["ui.app.play"]!;
     // The translator rendered an older English source (different hash).
-    fixtureLocale("xx-stale", "ui.app.play", {
+    fixtureLocale("ui.app.play", {
       value: "Jouer (old)",
       hash: "0000000000000000000000000000000000000000000000000000000000000000",
       status: "approved",
@@ -62,7 +67,7 @@ describe("stale-key gate", () => {
   it("a draft translation is never shown, even with a matching hash", () => {
     resetI18nForTests();
     const en = EN_KEYS["ui.app.play"]!;
-    fixtureLocale("xx-draft", "ui.app.play", { value: "Jouer?", hash: en.hash, status: "draft" });
+    fixtureLocale("ui.app.play", { value: "Jouer?", hash: en.hash, status: "draft" });
     expect(keyStatus("ui.app.play")).toBe("draft");
     expect(t("ui.app.play")).toBe("Play");
     resetI18nForTests();
@@ -71,7 +76,7 @@ describe("stale-key gate", () => {
   it("a key marked stale in its own entry is stale", () => {
     resetI18nForTests();
     const en = EN_KEYS["ui.app.play"]!;
-    fixtureLocale("xx-marked", "ui.app.play", { value: "Jouer", hash: en.hash, status: "stale" });
+    fixtureLocale("ui.app.play", { value: "Jouer", hash: en.hash, status: "stale" });
     expect(keyStatus("ui.app.play")).toBe("stale");
     expect(t("ui.app.play")).toBe("Play");
     resetI18nForTests();
@@ -81,7 +86,7 @@ describe("stale-key gate", () => {
     // Same mechanism the dashboard uses: hash comparison against en.json.
     resetI18nForTests();
     const en = EN_KEYS["learn.riichi.tu1.title"]!;
-    fixtureLocale("xx-lesson", "learn.riichi.tu1.title", {
+    fixtureLocale("learn.riichi.tu1.title", {
       value: "Les tuiles",
       hash: en.hash,
       status: "approved",

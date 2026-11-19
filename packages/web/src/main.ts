@@ -1,5 +1,5 @@
 import { App } from "./app.js";
-import { initI18n } from "./i18n/index.js";
+import { applyLocaleDocumentTags, getCurrentLocale, initI18n } from "./i18n/index.js";
 import { initAnalytics } from "./analytics.js";
 import "./styles.css";
 import "./learning.css";
@@ -14,10 +14,14 @@ import "./compact.css";
 
 const root = document.getElementById("app");
 if (!root) throw new Error("Missing #app root element");
-// Phase 1 i18n: resolve the locale (remembered choice, else browser
-// detection among shipped locales — English only for now) before the
-// app renders, so every t() call below sees the active locale.
+// Phase 2 Track A i18n: resolve the locale (URL path > remembered
+// choice > browser detection, among shipped locales — English only for
+// now) before the app renders, so every t() call below sees the active
+// locale; then set the document language + canonical / hreflang tags for
+// it. With only English shipped this is lang="en" and the root canonical,
+// exactly as before.
 initI18n();
+applyLocaleDocumentTags(getCurrentLocale());
 new App(root);
 
 // Google Analytics ships dark: with ANALYTICS_CONFIG empty this is
