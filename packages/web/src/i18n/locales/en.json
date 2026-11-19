@@ -2,7 +2,7 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T13:35:22.375Z",
+    "generatedAt": "2026-11-19T13:35:58.694Z",
     "keyCount": 3698,
     "namespaces": {
       "calc.compact": 14,
@@ -31600,7 +31600,7 @@
       "hash": "69ef86b8a5fbbd346f7f412554e9df500b135dcbef0ca24b575e1443e1db4d48",
       "source": {
         "file": "moment-text.ts",
-        "line": 176
+        "line": 177
       },
       "placeholders": [],
       "status": "approved"
@@ -31610,7 +31610,7 @@
       "hash": "57e52dfe00b5f8ffb28ea26c75b27d49fd1ccde717a32330ca04674f97101477",
       "source": {
         "file": "moment-text.ts",
-        "line": 176
+        "line": 177
       },
       "placeholders": [],
       "status": "approved"
@@ -31620,7 +31620,7 @@
       "hash": "2ecec90d930d7684620876d9b5e693d0f2d225697350cce263773421162d15ee",
       "source": {
         "file": "moment-text.ts",
-        "line": 64
+        "line": 65
       },
       "placeholders": [],
       "status": "approved"
@@ -31630,7 +31630,7 @@
       "hash": "0b77fb9be0db08f591c6072c08432c083684d0b3d53aae0d54427067b4f1d320",
       "source": {
         "file": "moment-text.ts",
-        "line": 218
+        "line": 219
       },
       "placeholders": [],
       "status": "approved"
@@ -31640,7 +31640,7 @@
       "hash": "d4b4fd06fbd3841e5c83aaebd62bc81146dbac80fc352ee12ca094663cc541cc",
       "source": {
         "file": "moment-text.ts",
-        "line": 131
+        "line": 132
       },
       "placeholders": [],
       "status": "approved"
@@ -31650,7 +31650,7 @@
       "hash": "6a83fdaf4b67ebaf505cc95901bcabcad557e9853853da41eb0e22aaf583db65",
       "source": {
         "file": "moment-text.ts",
-        "line": 147
+        "line": 148
       },
       "placeholders": [],
       "status": "approved"
@@ -31660,7 +31660,7 @@
       "hash": "190de6fa8fdf1335e2fe9cb6edfbd956a972699659f00d5c16a1ca33dbd88fcb",
       "source": {
         "file": "moment-text.ts",
-        "line": 98
+        "line": 99
       },
       "placeholders": [],
       "status": "approved"
@@ -31670,7 +31670,7 @@
       "hash": "c11fb4f8792c6cdca125c52603e40291250469be55c144728c51c47eceb54513",
       "source": {
         "file": "moment-text.ts",
-        "line": 148
+        "line": 149
       },
       "placeholders": [],
       "status": "approved"
@@ -31680,7 +31680,7 @@
       "hash": "1341fe0098f83b7627962036b5fe43475b66385cf124f9e3ae0bd37f4ff9b04a",
       "source": {
         "file": "moment-text.ts",
-        "line": 72
+        "line": 73
       },
       "placeholders": [],
       "status": "approved"
@@ -31690,7 +31690,7 @@
       "hash": "fca1f5cc404884069dbb19678d699ae65467374c6c792bd084f09cadde5a3f25",
       "source": {
         "file": "moment-text.ts",
-        "line": 214
+        "line": 215
       },
       "placeholders": [],
       "status": "approved"
@@ -31700,7 +31700,7 @@
       "hash": "3a8aa299739acc848f500c27c218c3acf0b69e8bd46f3cb5fb1b91758c214075",
       "source": {
         "file": "moment-text.ts",
-        "line": 131
+        "line": 132
       },
       "placeholders": [],
       "status": "approved"
@@ -31710,7 +31710,7 @@
       "hash": "95aab0c7bf5f0252769d608696bf42105b5094e89aca22e7d7bd8c20045ecc8b",
       "source": {
         "file": "moment-text.ts",
-        "line": 134
+        "line": 135
       },
       "placeholders": [],
       "status": "approved"
@@ -31720,7 +31720,7 @@
       "hash": "87fa79373f6711c1e8a48988ae7510ff6c93ed6716e7c8e41d15a17b0ed9b244",
       "source": {
         "file": "moment-text.ts",
-        "line": 152
+        "line": 153
       },
       "placeholders": [],
       "status": "approved"
@@ -31730,7 +31730,7 @@
       "hash": "09de9f250293ed9e6fef18ec60eea5c23462ee9a6cdd6bc96f81b6d6362b6013",
       "source": {
         "file": "moment-text.ts",
-        "line": 218
+        "line": 219
       },
       "placeholders": [
         "0",
@@ -31748,7 +31748,7 @@
       "hash": "1ffeaced38d875400c2f08a791751abfe64d8542d8d070d3c6dcf51a1b0ea4ed",
       "source": {
         "file": "moment-text.ts",
-        "line": 221
+        "line": 222
       },
       "placeholders": [],
       "status": "approved"
@@ -31758,7 +31758,7 @@
       "hash": "c9a9fe159bfeefa282b0c4d636f9426944222e28ea39beca152291c494898886",
       "source": {
         "file": "moment-text.ts",
-        "line": 70
+        "line": 71
       },
       "placeholders": [
         "0"
@@ -31771,7 +31771,7 @@
       "hash": "a56631709d42e612beb3f7f46fa6145e4a45919bfa4f72a308259036eef22345",
       "source": {
         "file": "moment-text.ts",
-        "line": 160
+        "line": 161
       },
       "placeholders": [
         "0"
@@ -31784,7 +31784,7 @@
       "hash": "3cc7964c1645dd1be85234e63c5ca84eadd1aef53f1d336499d990a37fd903a8",
       "source": {
         "file": "moment-text.ts",
-        "line": 89
+        "line": 90
       },
       "placeholders": [],
       "status": "approved"
@@ -31794,7 +31794,7 @@
       "hash": "4d2ab23edab95ea70f5551b07cdeb086824cf8134d58ed073b0f517f729f7ba8",
       "source": {
         "file": "moment-text.ts",
-        "line": 88
+        "line": 89
       },
       "placeholders": [],
       "status": "approved"
@@ -31804,7 +31804,7 @@
       "hash": "fbd64b2be1316ce041c934622746e077a33266e943b4ad4e1193f03bff87890d",
       "source": {
         "file": "moment-text.ts",
-        "line": 70
+        "line": 71
       },
       "placeholders": [
         "0"
@@ -31817,7 +31817,7 @@
       "hash": "bbb67e54d40cf15b3a943ec06a6539c69b79fe5ad94bd5d7c7ce8e2196d3fbb0",
       "source": {
         "file": "moment-text.ts",
-        "line": 65
+        "line": 66
       },
       "placeholders": [
         "0"
@@ -31830,7 +31830,7 @@
       "hash": "82bc45ff12c0259fe991f7aba5f3a523accfb85ec63cd23de094c7514f66adf6",
       "source": {
         "file": "moment-text.ts",
-        "line": 64
+        "line": 65
       },
       "placeholders": [
         "0",
@@ -31846,7 +31846,7 @@
       "hash": "e799e11cd2b8661730cfe80b60fae968a557b4a0fa4afd17863d51d74d4491c0",
       "source": {
         "file": "moment-text.ts",
-        "line": 180
+        "line": 181
       },
       "placeholders": [
         "0",
@@ -31860,7 +31860,7 @@
       "hash": "31474a84d470a280288970990f78f30f26704ebdda61ba1a22a63c660e7e1421",
       "source": {
         "file": "moment-text.ts",
-        "line": 183
+        "line": 184
       },
       "placeholders": [],
       "status": "approved"
@@ -31870,7 +31870,7 @@
       "hash": "409b4d39ac2911a8a80c37371d6ec2d885d4cdfdb1930be83a028c2e220700b1",
       "source": {
         "file": "moment-text.ts",
-        "line": 174
+        "line": 175
       },
       "placeholders": [
         "0"
@@ -31883,7 +31883,7 @@
       "hash": "993d6188a275c1b1f6d0eb80bb703bc16a2314b48c5033f90e78f5c5bdc12c33",
       "source": {
         "file": "moment-text.ts",
-        "line": 131
+        "line": 132
       },
       "placeholders": [
         "0",
@@ -31899,7 +31899,7 @@
       "hash": "bfcb85aed83ea02df9607bb4e03c7ec0d2117f8af1ac569676d2f746e2d4ead1",
       "source": {
         "file": "moment-text.ts",
-        "line": 75
+        "line": 76
       },
       "placeholders": [
         "0"
@@ -31912,7 +31912,7 @@
       "hash": "fd56f10e2eb60f52bc9b2fe543633bce0f38a197fc71a6c60da54402532cdb26",
       "source": {
         "file": "moment-text.ts",
-        "line": 119
+        "line": 120
       },
       "placeholders": [],
       "status": "approved"
@@ -31922,7 +31922,7 @@
       "hash": "3d6f049762c1863114254933bfd13929c7c4cb47538486a62bd5729dc273526d",
       "source": {
         "file": "moment-text.ts",
-        "line": 164
+        "line": 165
       },
       "placeholders": [],
       "status": "approved"
@@ -31932,7 +31932,7 @@
       "hash": "b7864837043d2a35b44611ce06529adf64c7d9e52d2c401a429e7d3f2459e336",
       "source": {
         "file": "moment-text.ts",
-        "line": 81
+        "line": 82
       },
       "placeholders": [
         "0",
@@ -31946,7 +31946,7 @@
       "hash": "7999266afdb9857ab8c2ef0318670f3c1d4a20830d6dbaaa6d8eb4f0ee136417",
       "source": {
         "file": "moment-text.ts",
-        "line": 141
+        "line": 142
       },
       "placeholders": [
         "0"
@@ -31959,7 +31959,7 @@
       "hash": "8028b7fb1abec19b9759158e81f9c0ae9afd7e9bd8c64773ff6f051c8c6c5a92",
       "source": {
         "file": "moment-text.ts",
-        "line": 198
+        "line": 199
       },
       "placeholders": [],
       "status": "approved"
@@ -31969,7 +31969,7 @@
       "hash": "b7fd41efba79d40ecc3ad9ef91c6d9779bb5014cff47524a83a580444b89780c",
       "source": {
         "file": "moment-text.ts",
-        "line": 119
+        "line": 120
       },
       "placeholders": [],
       "status": "approved"
@@ -31979,7 +31979,7 @@
       "hash": "4601a99a06aec5506f3abf8d59853b0db9fc9a06919f67c883768d602c413de1",
       "source": {
         "file": "moment-text.ts",
-        "line": 176
+        "line": 177
       },
       "placeholders": [
         "0",
@@ -31994,7 +31994,7 @@
       "hash": "5043b448fcdd414c4ee6387b2781fa350c02aadd0d6ae8b6f62fcc2655f3e8d9",
       "source": {
         "file": "moment-text.ts",
-        "line": 226
+        "line": 227
       },
       "placeholders": [],
       "status": "approved"
@@ -32004,7 +32004,7 @@
       "hash": "00b6674ea324ff48c6d551a706437478953b1bc79ab776c1812a3cc09223c11a",
       "source": {
         "file": "moment-text.ts",
-        "line": 214
+        "line": 215
       },
       "placeholders": [
         "0",
@@ -32019,7 +32019,7 @@
       "hash": "e0d9d9305781ab577d9a61a5ed3746772f4c25fe3d8d772da325b80b7919d582",
       "source": {
         "file": "moment-text.ts",
-        "line": 72
+        "line": 73
       },
       "placeholders": [
         "0",
@@ -32035,7 +32035,7 @@
       "hash": "f614dac4d260454cee4aada5b891808553e0985eedae5e41c4604aab1f21eec7",
       "source": {
         "file": "moment-text.ts",
-        "line": 192
+        "line": 193
       },
       "placeholders": [
         "0"
@@ -32048,7 +32048,7 @@
       "hash": "ee9096de98bd89159d1af7531225dcb8746209d2e9695edff2a525eb68cf4b4f",
       "source": {
         "file": "moment-text.ts",
-        "line": 77
+        "line": 78
       },
       "placeholders": [
         "0",
@@ -32062,7 +32062,7 @@
       "hash": "414c4b1e185f1b257870bc4db31870c9295d92d2c207b145761f2e130984f820",
       "source": {
         "file": "moment-text.ts",
-        "line": 143
+        "line": 144
       },
       "placeholders": [
         "0"
@@ -32075,7 +32075,7 @@
       "hash": "1cb55f0d445689536b7993e4263a832455609376c060ca0730b842740259509b",
       "source": {
         "file": "moment-text.ts",
-        "line": 189
+        "line": 190
       },
       "placeholders": [
         "0"
@@ -32088,7 +32088,7 @@
       "hash": "e6a5ce5397e303775a907a068b17073827dfde675d00012cc019c7835184c3ed",
       "source": {
         "file": "moment-text.ts",
-        "line": 110
+        "line": 111
       },
       "placeholders": [
         "0"
@@ -32101,7 +32101,7 @@
       "hash": "32f076a81c67629eafb4d6f530f0b094cd7a96a01c2643d9b0a619541bacd799",
       "source": {
         "file": "moment-text.ts",
-        "line": 108
+        "line": 109
       },
       "placeholders": [
         "0"
@@ -32114,7 +32114,7 @@
       "hash": "7f7a30e8260fc57c4b1764886daf6ddc4221231a563a1f563a6a0db073d97654",
       "source": {
         "file": "moment-text.ts",
-        "line": 106
+        "line": 107
       },
       "placeholders": [
         "0"
@@ -32127,7 +32127,7 @@
       "hash": "7f4ea769890e81b6b020283f9b1f7e891fc8f430379b219452bcee5dbcbdb7a6",
       "source": {
         "file": "moment-text.ts",
-        "line": 203
+        "line": 204
       },
       "placeholders": [
         "0"
@@ -32140,7 +32140,7 @@
       "hash": "59b02bac97b822b781ef70adc77f1ef984ff9f32b253a4d6f7006ec1ad6e7e69",
       "source": {
         "file": "moment-text.ts",
-        "line": 160
+        "line": 161
       },
       "placeholders": [
         "0"
@@ -32153,7 +32153,7 @@
       "hash": "af77794e49ef4566e52152e0c4226fb9f11d15372f4038adfbfde2d449bc5806",
       "source": {
         "file": "moment-text.ts",
-        "line": 232
+        "line": 233
       },
       "placeholders": [
         "0"
@@ -32166,7 +32166,7 @@
       "hash": "e222b30e3032b5d8785f076d79f353181ab3cec3f61067f2f1beafb6c1fb9b25",
       "source": {
         "file": "moment-text.ts",
-        "line": 161
+        "line": 162
       },
       "placeholders": [
         "0"
@@ -32179,7 +32179,7 @@
       "hash": "9f00d76221d6becab31764ed485a21fe94fdad4f962c8afb1b6ec61b9502837b",
       "source": {
         "file": "moment-text.ts",
-        "line": 186
+        "line": 187
       },
       "placeholders": [
         "0"
@@ -32192,7 +32192,7 @@
       "hash": "fb15087c7830089188d8c6390fd413bf590877c04e2ff747932964fc8de78989",
       "source": {
         "file": "moment-text.ts",
-        "line": 113
+        "line": 114
       },
       "placeholders": [],
       "status": "approved"
@@ -32202,7 +32202,7 @@
       "hash": "a03b776fd786496adc959f034f3784560faad4f59f4a05f271abac457918aca1",
       "source": {
         "file": "moment-text.ts",
-        "line": 112
+        "line": 113
       },
       "placeholders": [
         "0"
@@ -32215,7 +32215,7 @@
       "hash": "9026cd871806e51c5b051310f55a08e708d58414cc1123d1e58ce4ae94265048",
       "source": {
         "file": "moment-text.ts",
-        "line": 204
+        "line": 205
       },
       "placeholders": [
         "0"
@@ -32228,7 +32228,7 @@
       "hash": "ac0bc52af59199f45adf224cc8547e6e437f329fa97a6428fb89ca1109edd36a",
       "source": {
         "file": "moment-text.ts",
-        "line": 104
+        "line": 105
       },
       "placeholders": [
         "0"
@@ -32241,7 +32241,7 @@
       "hash": "bf50f5270066dbded43add35ce55e833319e950f97fe642ce4a70a5bd6620a0c",
       "source": {
         "file": "moment-text.ts",
-        "line": 231
+        "line": 232
       },
       "placeholders": [],
       "status": "approved"
@@ -32251,7 +32251,7 @@
       "hash": "4191ff34245cecf888f53b20321202e27764baa0d20f1e76dd8fceb20137f4cb",
       "source": {
         "file": "moment-text.ts",
-        "line": 93
+        "line": 94
       },
       "placeholders": [
         "0"
@@ -32264,7 +32264,7 @@
       "hash": "bb7149ca0abef39b0e8ecbbdfcdb6dad22c28459b23380830a74b74afb6eb7ff",
       "source": {
         "file": "moment-text.ts",
-        "line": 137
+        "line": 138
       },
       "placeholders": [],
       "status": "approved"
@@ -32618,7 +32618,7 @@
       "hash": "ee834f2d80697b39951d954ddc7664121a4a481c3192278b220fe90d26cfe887",
       "source": {
         "file": "moment-text.ts",
-        "line": 43
+        "line": 44
       },
       "placeholders": [],
       "status": "approved"
@@ -32628,7 +32628,7 @@
       "hash": "b75de795d8f81758d6e2b335163e8ea0de466ae9d0e130fa609621be14ae4187",
       "source": {
         "file": "moment-text.ts",
-        "line": 45
+        "line": 46
       },
       "placeholders": [],
       "status": "approved"
@@ -32638,7 +32638,7 @@
       "hash": "549f8c91c982dc78b23cd0b0e984f357b2c89c3775a0f296c1ca0481ff2700a9",
       "source": {
         "file": "moment-text.ts",
-        "line": 40
+        "line": 41
       },
       "placeholders": [],
       "status": "approved"
@@ -32648,7 +32648,7 @@
       "hash": "260d7dc2eeef03f3e1be52a62997f2283ef0e101ebf6564db963882372eaca2c",
       "source": {
         "file": "moment-text.ts",
-        "line": 44
+        "line": 45
       },
       "placeholders": [],
       "status": "approved"
@@ -32658,7 +32658,7 @@
       "hash": "699addde33c32c3c42772bd14b377d18d3f3541d76867712ecea83570295b710",
       "source": {
         "file": "moment-text.ts",
-        "line": 42
+        "line": 43
       },
       "placeholders": [],
       "status": "approved"
@@ -32668,7 +32668,7 @@
       "hash": "63c333937fb67f4f3bd612300ab1a62015e71d4cb18d05395367a5a3e2bce95b",
       "source": {
         "file": "moment-text.ts",
-        "line": 37
+        "line": 38
       },
       "placeholders": [],
       "status": "approved"
@@ -32678,7 +32678,7 @@
       "hash": "ab63d2b674c8fa9b100dd934712c7b94f49e9aa73789a695b877f8e34d844e2e",
       "source": {
         "file": "moment-text.ts",
-        "line": 46
+        "line": 47
       },
       "placeholders": [],
       "status": "approved"
@@ -32688,7 +32688,7 @@
       "hash": "a505f023da6c82ef81565dcf5d7976faae9429a93249c9b628abe33503ada840",
       "source": {
         "file": "moment-text.ts",
-        "line": 38
+        "line": 39
       },
       "placeholders": [],
       "status": "approved"
