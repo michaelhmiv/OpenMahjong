@@ -2,7 +2,7 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T13:32:06.329Z",
+    "generatedAt": "2026-11-19T13:32:34.377Z",
     "keyCount": 3698,
     "namespaces": {
       "calc.compact": 14,
@@ -30714,7 +30714,7 @@
       "hash": "a52c83a8700f33363bafdf5830bfbe22dd5e2046e8d1ca796ad756313a6ce8a7",
       "source": {
         "file": "board-review.ts",
-        "line": 101
+        "line": 102
       },
       "placeholders": [
         "0"
@@ -30727,7 +30727,7 @@
       "hash": "d83730d057602cd6e874b40f584b4443e2042dc9da987117ff77af2cc1252092",
       "source": {
         "file": "board-review.ts",
-        "line": 110
+        "line": 111
       },
       "placeholders": [],
       "status": "approved"
@@ -30737,7 +30737,7 @@
       "hash": "92e7b1ce34a47ef9a8fda8d823df6eeb46bca119582fa9718802fcbc3bb3694c",
       "source": {
         "file": "board-review.ts",
-        "line": 98
+        "line": 99
       },
       "placeholders": [],
       "status": "approved"
@@ -30747,7 +30747,7 @@
       "hash": "0aa2666b2c6d6b0c4fa03efe5fead4d85e6509da28946cd0aeafc3609624f3b4",
       "source": {
         "file": "board-review.ts",
-        "line": 97
+        "line": 98
       },
       "placeholders": [],
       "status": "approved"
@@ -30757,7 +30757,7 @@
       "hash": "e783d0d661d39bcea357e97df45bede533ca7cdc6323ce6740dfcd670b4071fa",
       "source": {
         "file": "board-review.ts",
-        "line": 99
+        "line": 100
       },
       "placeholders": [],
       "status": "approved"
@@ -30767,7 +30767,7 @@
       "hash": "493c4a994fd94e97c84d9f5287286f46498aba674ffa574b59beef234c8eca22",
       "source": {
         "file": "board-review.ts",
-        "line": 108
+        "line": 109
       },
       "placeholders": [],
       "status": "approved"
@@ -30777,7 +30777,7 @@
       "hash": "b278b3465d9a763e7a6bb702802fa568b1240a148fb7a587511753de95485b3d",
       "source": {
         "file": "board-review.ts",
-        "line": 102
+        "line": 103
       },
       "placeholders": [],
       "status": "approved"
@@ -30787,7 +30787,7 @@
       "hash": "9700f737b999059448a1be4e11e394e0eb6c73dcd3e30f2c914147efe66a9f61",
       "source": {
         "file": "board-review.ts",
-        "line": 103
+        "line": 104
       },
       "placeholders": [],
       "status": "approved"
@@ -30797,7 +30797,7 @@
       "hash": "2f4ef1fd733efff94edfcd79bbc1cca13ade3394b20fe7cd3eb5805cdef8cf0c",
       "source": {
         "file": "board-review.ts",
-        "line": 109
+        "line": 110
       },
       "placeholders": [],
       "status": "approved"
@@ -30807,7 +30807,7 @@
       "hash": "a962826d4641c07e18eeda9f2aa6b36c2dbe45ea326640a9612be70212373112",
       "source": {
         "file": "board-review.ts",
-        "line": 104
+        "line": 105
       },
       "placeholders": [],
       "status": "approved"
@@ -30847,7 +30847,7 @@
       "hash": "42320c664b9c0572acc3d0342998ff0a24ef251b6c68f783db67f17075f4093d",
       "source": {
         "file": "board-review.ts",
-        "line": 111
+        "line": 112
       },
       "placeholders": [],
       "status": "approved"
@@ -30867,7 +30867,7 @@
       "hash": "e04d54e1e8f2c2e280129e6395850c734f3a6838dfbc5a7459a641bc23eff253",
       "source": {
         "file": "board-review.ts",
-        "line": 112
+        "line": 113
       },
       "placeholders": [],
       "status": "approved"
@@ -30887,7 +30887,7 @@
       "hash": "74691a4c685815bac855d776a1417d11b9b0e99de07931bc6ed251ca97536fce",
       "source": {
         "file": "board-review.ts",
-        "line": 106
+        "line": 107
       },
       "placeholders": [],
       "status": "approved"
@@ -30897,7 +30897,7 @@
       "hash": "1ed9b441d53420405edcb586a77593d299eb0694d4e8f9bfc7d6f17af945505f",
       "source": {
         "file": "board-review.ts",
-        "line": 107
+        "line": 108
       },
       "placeholders": [],
       "status": "approved"
@@ -30917,7 +30917,7 @@
       "hash": "2ebaedd5f0b53a75d58d39c4a57c898f0705610cf031f8cf49823bd9284271d5",
       "source": {
         "file": "board-review.ts",
-        "line": 105
+        "line": 106
       },
       "placeholders": [],
       "status": "approved"
@@ -30937,7 +30937,7 @@
       "hash": "30f38ecd82ed2317dc7e7401b31807bd1dab0eb2cbebe8c51e7f4dc881c5ef80",
       "source": {
         "file": "board-review.ts",
-        "line": 100
+        "line": 101
       },
       "placeholders": [],
       "status": "approved"
@@ -30977,7 +30977,7 @@
       "hash": "0b27c158feb36ab18a10ff687909ec730ece6280581dd407e2672359be7725dd",
       "source": {
         "file": "board-review.ts",
-        "line": 101
+        "line": 61
       },
       "placeholders": [],
       "status": "approved"
@@ -31017,7 +31017,7 @@
       "hash": "5be04777eb995c687a22d426f9e95a4603f8f74847b29fdfeaa9d5e72c2e8302",
       "source": {
         "file": "board-review.ts",
-        "line": 62
+        "line": 63
       },
       "placeholders": [],
       "status": "approved"
@@ -31027,7 +31027,7 @@
       "hash": "1ab8291730fe3e189951c7b83a82a4ee1071443a2636735fd47f173092e5b7e9",
       "source": {
         "file": "board-review.ts",
-        "line": 61
+        "line": 62
       },
       "placeholders": [],
       "status": "approved"
@@ -31090,7 +31090,7 @@
       "hash": "4514b7a4422d372e0ee695e6418b307aeadf77a99c5d78e63d3973759e99f34b",
       "source": {
         "file": "board-review.ts",
-        "line": 52
+        "line": 53
       },
       "placeholders": [],
       "status": "approved"
@@ -31234,7 +31234,7 @@
       "hash": "8935beca0f315c20ee76896b46f9351c80a90b9c24b5a929836e1255c1593d6c",
       "source": {
         "file": "board-review.ts",
-        "line": 51
+        "line": 52
       },
       "placeholders": [
         "0",
@@ -31303,7 +31303,7 @@
       "hash": "870289c81c32b9ed41643548c506b925d3645ae4f41ad4295de96b8f2599bbc9",
       "source": {
         "file": "board-review.ts",
-        "line": 57
+        "line": 58
       },
       "placeholders": [
         "0"

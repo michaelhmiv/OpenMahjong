@@ -3,6 +3,7 @@
 import type { GameEvent } from "@openmahjong/engine";
 import { TableModel } from "./model.js";
 import { reconstructReview, type ReconstructedReview } from "./review.js";
+import { tx } from "./i18n/index.js";
 
 export const CHECKPOINT_INTERVAL = 16;
 const WINDS = ["East", "South", "West", "North"];
@@ -48,18 +49,18 @@ export class BoardTimeline {
           index: this.hands.length,
           start: index,
           end: data.events.length - 1,
-          label: `${WINDS[Number(event["roundWind"]) - 27]} ${event["kyoku"]} · Repeat ${event["honba"]}`,
-          result: "Recorded prefix",
+          label: tx("review.board.v-0-1-repeat-2", `${WINDS[Number(event["roundWind"]) - 27]} ${event["kyoku"]} · Repeat ${event["honba"]}`, WINDS[Number(event["roundWind"]) - 27], event["kyoku"], event["honba"]),
+          result: tx("review.board.recorded-prefix", "Recorded prefix"),
         });
       }
       if (event.type === "win")
         this.hands.at(-1)!.result =
-          `Won by ${WINDS[(Number(event["seat"]) - model.dealer + 4) % 4]}`;
+          tx("review.board.won-by-0", `Won by ${WINDS[(Number(event["seat"]) - model.dealer + 4) % 4]}`, WINDS[(Number(event["seat"]) - model.dealer + 4) % 4]);
       if (event.type === "drawn-hand")
         this.hands.at(-1)!.result =
-          event["kind"] === "exhaustive"
-            ? "No winner · Wall exhausted"
-            : "No winner · Aborted hand";
+          event[tx("review.board.kind", "kind")] === "exhaustive"
+            ? tx("review.board.no-winner-wall-exhausted", "No winner · Wall exhausted")
+            : tx("review.board.no-winner-aborted-hand", "No winner · Aborted hand");
     });
   }
   seek(index: number): TableModel {
@@ -94,22 +95,22 @@ export function eventLabel(event: GameEvent, model: TableModel): string {
     ? WINDS[(seat - model.dealer + 4) % 4]
     : "";
   const names: Record<string, string> = {
-    draw: "draws",
-    discard: "discards",
-    flower: "exposes a flower or season",
-    "robbed-kong": "has an added quad robbed",
-    call: `calls ${event["kind"]}`,
-    kan: "declares a quad",
-    riichi: "declares riichi",
-    win: "wins",
-    "drawn-hand": "Hand without a winner",
-    "hand-start": "Hand begins",
-    "hand-end": "Hand ends",
-    indicator: "Indicator revealed",
-    score: "score updated",
-    deal: "receives tiles",
-    "game-start": "Game begins",
-    "game-end": "Game ends",
+    draw: tx("review.board.event.draw", "draws"),
+    discard: tx("review.board.event.discard", "discards"),
+    flower: tx("review.board.event.flower", "exposes a flower or season"),
+    "robbed-kong": tx("review.board.has-an-added-quad-robbed", "has an added quad robbed"),
+    call: tx("review.board.event.call", `calls ${event[tx("review.board.kind", "kind")]}`, event[tx("review.board.kind", "kind")]),
+    kan: tx("review.board.event.kan", "declares a quad"),
+    riichi: tx("review.board.event.riichi", "declares riichi"),
+    win: tx("review.board.event.win", "wins"),
+    "drawn-hand": tx("review.board.hand-without-a-winner", "Hand without a winner"),
+    "hand-start": tx("review.board.hand-begins", "Hand begins"),
+    "hand-end": tx("review.board.hand-ends", "Hand ends"),
+    indicator: tx("review.board.event.indicator", "Indicator revealed"),
+    score: tx("review.board.event.score", "score updated"),
+    deal: tx("review.board.event.deal", "receives tiles"),
+    "game-start": tx("review.board.game-begins", "Game begins"),
+    "game-end": tx("review.board.game-ends", "Game ends"),
   };
   return `${who ?? ""} ${names[event.type] ?? event.type}`.trim();
 }
