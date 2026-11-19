@@ -2,7 +2,7 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T13:28:51.385Z",
+    "generatedAt": "2026-11-19T13:30:05.501Z",
     "keyCount": 3698,
     "namespaces": {
       "calc.compact": 14,
@@ -7259,7 +7259,7 @@
       "hash": "3d8754db0d065cd6a32a11d7c3f8e93118dbe34126f1c431de1d89c58138a77d",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 137
+        "line": 151
       },
       "placeholders": [],
       "status": "approved"
@@ -7269,7 +7269,7 @@
       "hash": "3190db525f1d3dc93c8e5d9d517b12711ee9c988a89af3cc8a0456e423c1042c",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 50
+        "line": 58
       },
       "placeholders": [],
       "status": "approved"
@@ -7279,7 +7279,7 @@
       "hash": "9b2325686ae61a3a4fce386b35d12eab66c0749c0cb9eee21ad3085ae383c2ee",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 47
+        "line": 53
       },
       "placeholders": [],
       "status": "approved"
@@ -7289,7 +7289,7 @@
       "hash": "ffb0e6fd22174289047f124030a18bac4b6e60205c49bf2993d5d185d760cec4",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 55
+        "line": 68
       },
       "placeholders": [],
       "status": "approved"
@@ -7299,7 +7299,7 @@
       "hash": "76900f1bfd16c8d4dd3d25e6f46638d7165aee23883ccea6bfe071c514421769",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 163
+        "line": 177
       },
       "placeholders": [],
       "status": "approved"
@@ -7309,7 +7309,7 @@
       "hash": "4ce14a052ab4d6f6238d287aaabf9c7ae39f7524241574960d1bffc5d18f94aa",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 133
+        "line": 147
       },
       "placeholders": [],
       "status": "approved"
@@ -7319,7 +7319,7 @@
       "hash": "08872102624fe28c2f1a11ed58cd2a9d94e747e16d5d5a25c55f4776dfca30e9",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 45
+        "line": 48
       },
       "placeholders": [],
       "status": "approved"
@@ -7329,7 +7329,7 @@
       "hash": "bb7f722a96d222da7e99aa0643e9b07821aae7768d3f420a519d5199f0e07290",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 131
+        "line": 145
       },
       "placeholders": [],
       "status": "approved"
@@ -7339,7 +7339,7 @@
       "hash": "dc998df1d615377301fce34ff05ca88aaeb9baddf54d222f68f64b7035d784d6",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 41
+        "line": 43
       },
       "placeholders": [],
       "status": "approved"
@@ -7349,7 +7349,7 @@
       "hash": "46391e0a67f2217d078e6013a859f4fb05d5e1296ac8cb603bf2d2c6302c05e5",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 213
+        "line": 227
       },
       "placeholders": [],
       "status": "approved"
@@ -7359,7 +7359,7 @@
       "hash": "a70005c2d4f94ecb837dc6645981c862c1d18e602c0fe10c645a7fba239e7343",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 233
+        "line": 247
       },
       "placeholders": [],
       "status": "approved"
@@ -7369,7 +7369,7 @@
       "hash": "a31e64e0dc4d86952d5b630d4b5ec146a04a4beb9cc6eb803507ec8ead8829bb",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 84
+        "line": 98
       },
       "placeholders": [
         "0",
@@ -7383,7 +7383,7 @@
       "hash": "0a1cacc55eb6461c899a48ef5785179b4b90ccc7a3394fcd5a7b222b2e6d621b",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 59
+        "line": 73
       },
       "placeholders": [],
       "status": "approved"
@@ -7393,7 +7393,7 @@
       "hash": "56bdc791b4c543178e3a8bf9548fedb19c31d6a3ac439dc48c0abfd7f266dc95",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 167
+        "line": 181
       },
       "placeholders": [],
       "status": "approved"
@@ -7403,7 +7403,7 @@
       "hash": "cb85174f8eb04f88555491a748fa12a59b647ca98dc053fa616a5f5428a86041",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 207
+        "line": 221
       },
       "placeholders": [],
       "status": "approved"
@@ -7413,7 +7413,7 @@
       "hash": "27b02562fdbfc85b7d7d302a6fb06e60e32d9428c59cc760ae01d4fe6e20b8bf",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 52
+        "line": 63
       },
       "placeholders": [],
       "status": "approved"
@@ -7423,7 +7423,7 @@
       "hash": "6314359a79e11f45ba606fc1d0b99ef54c62bcb0db0d549239b37ce606004ea0",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 139
+        "line": 153
       },
       "placeholders": [],
       "status": "approved"
@@ -7433,7 +7433,7 @@
       "hash": "f375d67c93d5164351500b649a0d9c22b3593796c97cd9eea062cf1ffad5727d",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 115
+        "line": 129
       },
       "placeholders": [
         "0"
@@ -7446,7 +7446,7 @@
       "hash": "5fcdf7fa4f87926d1de5917c28d6c7852039748fb283230e6d53a1c6504e47ec",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 104
+        "line": 118
       },
       "placeholders": [
         "0",
