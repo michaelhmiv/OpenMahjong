@@ -189,10 +189,6 @@ export class OnlineTables {
       return fail("New tables are currently paused", 503);
     if (origin === "ranked" && !actor.user_id)
       return fail("Sign in to play Ranked", 403);
-    // Ranked runs at the Live pace only (ruled 2026-11-18): the
-    // Relaxed sub-format and correspondence are casual paces.
-    if (origin === "ranked" && f.pace !== "live")
-      return fail("Ranked uses the Live pace", 400);
     const id = randomUUID();
     const room = (
       await db.query<Room>(
