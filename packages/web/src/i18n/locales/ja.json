@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-19T16:09:55.210Z",
-    "keyCount": 3807,
+    "generatedAt": "2026-11-19T20:13:51.596Z",
+    "keyCount": 3961,
     "model": "google/gemini-2.5-flash",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -39102,6 +39102,1596 @@
         "line": 1141
       },
       "placeholders": []
+    },
+    "online.action.chi": {
+      "value": "チー",
+      "hash": "0878b9867b874985a3507b4a8aed0789b23507585ee88388f0b1ecc44aa01fd0",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1400
+      },
+      "placeholders": []
+    },
+    "online.action.chi-with": {
+      "value": "{0} をチー",
+      "hash": "e0463ae9b206aca51e6d789c5598740ebb08f298d8c1dac35383558ad1efd2f1",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1401
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "online.action.discard": {
+      "value": "{0} を捨てる",
+      "hash": "80042063926d2de54c4b9883995ad70611f8b77bdee73a07ce7fb44d31e8e73f",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1444
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "online.action.kan": {
+      "value": "カン",
+      "hash": "280e734ad97dc30988848d811fa19ed72666533d7be0d93a613471e54ac26a73",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1395
+      },
+      "placeholders": []
+    },
+    "online.action.kyuushu": {
+      "value": "九種九牌",
+      "hash": "33876f63c5e1596e173f127b8ff278d7ca1d3ab7a3c21695c4926a83330bdc52",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1404
+      },
+      "placeholders": []
+    },
+    "online.action.pass": {
+      "value": "パス",
+      "hash": "ebdf8cc00bc4d9ceee633c56c63b49955769a92ca060825c9b08e4af61326e2b",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1403
+      },
+      "placeholders": []
+    },
+    "online.action.pon": {
+      "value": "ポン",
+      "hash": "d212f995bf6e13c9ca3fbae0dccbfcfe066dcc94c2cf243a6a64a8f5ecd11379",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1393
+      },
+      "placeholders": []
+    },
+    "online.action.riichi": {
+      "value": "リーチ",
+      "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1390
+      },
+      "placeholders": []
+    },
+    "online.action.ron": {
+      "value": "ロン",
+      "hash": "866b3a5cb1cb3d1e83d0ec67609ab8cc88f8d41765b3dc30cc67e3793a7e66a6",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1391
+      },
+      "placeholders": []
+    },
+    "online.action.tsumo": {
+      "value": "ツモ",
+      "hash": "e43342e391d0d27a9b5091293265d6ac37d78c2a3811250d4cffce6a5567dd34",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1392
+      },
+      "placeholders": []
+    },
+    "online.chip.you": {
+      "value": "{0} · あなた",
+      "hash": "8a6b46fde9b835a24527087f47562d0b6f36d1a52e4b13e87350722645bc5f7b",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1200
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "online.closed.note": {
+      "value": "テーブルは閉じられました。",
+      "hash": "f0aad92693534746b401c13ec2c035d36286fa27b277e94b76158005f162aae2",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1697
+      },
+      "placeholders": []
+    },
+    "online.closed.title": {
+      "value": "テーブルは閉じられました",
+      "hash": "8cc3b2f76042d8b7f08ea4bdd82a3a8e654b82f82d54f318151e53a4e39e0bd7",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1695
+      },
+      "placeholders": []
+    },
+    "online.cover.reclaim": {
+      "value": "席に戻る",
+      "hash": "adf3ae9d8cfa10a3a0afdbe665aa3f7a88e65bf212563b0eb01afede30f5e760",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1371
+      },
+      "placeholders": []
+    },
+    "online.cover.sub": {
+      "value": "接続が切れました。ゲームは続行されます。",
+      "hash": "98282fb17f86704397776f86074ea73b45b9c1fe60a7a311f53625626c818991",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1368
+      },
+      "placeholders": []
+    },
+    "online.cover.title": {
+      "value": "ボットがあなたの席でプレイしています",
+      "hash": "64b4d6fbd94e717b1e26a7bc396a93efb70134bd4e13028a60727df0ef0fd174",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1367
+      },
+      "placeholders": []
+    },
+    "online.error.try-again": {
+      "value": "もう一度お試しください",
+      "hash": "d8b8392e2c542950ca64867168e4ef87d4ad606882d5898f826b51c6d553988f",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1797
+      },
+      "placeholders": []
+    },
+    "online.error.unreachable": {
+      "value": "このテーブルに到達できません",
+      "hash": "9ca634b9ad923af344527cf411f98cb0863763736ec6cab1c4bcf3be4ae5e883",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 361
+      },
+      "placeholders": []
+    },
+    "online.fact.host": {
+      "value": "ホスト",
+      "hash": "4a823118b9ba8baa2f47489c0716f52755368e3e3c2c26d60736ccfa1bb21b5e",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 896
+      },
+      "placeholders": []
+    },
+    "online.filter.all": {
+      "value": "すべて",
+      "hash": "a52ace420f2175d08b1577a1bea5445e36801229c074ef9ed6c55a73401fd9c2",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 656
+      },
+      "placeholders": []
+    },
+    "online.filter.waiting": {
+      "value": "待機中",
+      "hash": "6e293a8c009e001103199768f7bcbea1729c59f9fc1ef2748958757f47ab99ed",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 658
+      },
+      "placeholders": []
+    },
+    "online.filter.your-move": {
+      "value": "あなたの番",
+      "hash": "720c2081aedb47ef7fcc517418372d0d0514ab0edad49564a552ac4bb8e6086f",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 657
+      },
+      "placeholders": []
+    },
+    "online.guest.have-code": {
+      "value": "復元コードをお持ちですか？",
+      "hash": "bae3d7e065f58183e486b75a4ca6fe82fb24c06e77e54607b2af077b0bc59213",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 831
+      },
+      "placeholders": []
+    },
+    "online.guest.play-as-guest": {
+      "value": "ゲストとしてプレイ",
+      "hash": "78143586f7bb47e720a63f1f21e803bffb773a1f59d1dd157235bc84603e52be",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 815
+      },
+      "placeholders": []
+    },
+    "online.guest.recover-seat": {
+      "value": "ゲスト席を復元",
+      "hash": "b394cb76108937ca5d66fc29a548c8ccd7001a0bc0d6013528aa4f0e42dd8693",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 832
+      },
+      "placeholders": []
+    },
+    "online.guest.sign-in-google": {
+      "value": "Googleでサインイン",
+      "hash": "1dbcee6824432178cc78fb788a641916632604e164350ba5df29375d365f31fa",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 827
+      },
+      "placeholders": []
+    },
+    "online.guest.sub": {
+      "value": "ゲストゲームはこのデバイスに保存されます。",
+      "hash": "4366a59c6a3a13d7315fe7782eda751ca7d670fca945f3e868c4e4c653626f6f",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 800
+      },
+      "placeholders": []
+    },
+    "online.guest.title": {
+      "value": "オンラインでプレイ",
+      "hash": "ee5780bc24f15a89954f68e0b3ab4b7853b66e6e8e9ffc3d588cc352196ddf92",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 800
+      },
+      "placeholders": []
+    },
+    "online.identity.account": {
+      "value": "アカウント",
+      "hash": "7e1b0d5641f2640ce9a953ec231eea2c27a2a7633f7d3c273e5735e2b30c10b7",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 729
+      },
+      "placeholders": []
+    },
+    "online.identity.display-name": {
+      "value": "表示名",
+      "hash": "2b7f6a84de917e387539dbe441ca22056e793d738e6c50db30c3f569e4448df3",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 748
+      },
+      "placeholders": []
+    },
+    "online.identity.guest-account": {
+      "value": "ゲストアカウント",
+      "hash": "67a66f1275077b263192cf34bd85ce681e64e70eea07c0c369fb83682d28347f",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 729
+      },
+      "placeholders": []
+    },
+    "online.identity.replace-confirm": {
+      "value": "以前のゲスト復元コードを置き換えますか？",
+      "hash": "18962a855f4161c151dd96792d8187f5dbac5733550256c5ac8bd1bd1c879172",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 736
+      },
+      "placeholders": []
+    },
+    "online.identity.replace-recovery": {
+      "value": "復元コードを置き換える",
+      "hash": "1b707314e930a06ac1110a85ba57d8d91299887c2b51eebb9394dc2cff5fa6bf",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 735
+      },
+      "placeholders": []
+    },
+    "online.identity.save-name": {
+      "value": "名前を保存",
+      "hash": "b7297226fd1f468119a6dee837d0ad0afaa04b35d25f3a4c525de6ae8f9e93b1",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 751
+      },
+      "placeholders": []
+    },
+    "online.inspect.title": {
+      "value": "あなたの手牌",
+      "hash": "9de3e4f92af405a6c72dbcf82e8190eb892c7e064ee97e48785217161563a47b",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1511
+      },
+      "placeholders": []
+    },
+    "online.join.as-name": {
+      "value": "{0} としてこのカスタムルームに参加しますか？",
+      "hash": "af736f9abc0a118e899008f466062aa3955fd2c04b791f56113d9803d6e1115f",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 893
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "online.join.back-lobby": {
+      "value": "ロビーに戻る",
+      "hash": "eb3b689d42ba83e9cd495eb7972fc70d4a4ace6119d7d5a249e8671949c7a35c",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 921
+      },
+      "placeholders": []
+    },
+    "online.join.join-room": {
+      "value": "ルームに参加",
+      "hash": "cb2421c4877be6cdb97fde16f58bf5c35c54c09b164f1385488e8e7be11d0c1b",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 907
+      },
+      "placeholders": []
+    },
+    "online.join.not-now": {
+      "value": "今はしない",
+      "hash": "a0e63d7c7125d29af84d6919af5550529be77c327324940c98c4b2cb13a99c8c",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 911
+      },
+      "placeholders": []
+    },
+    "online.join.title": {
+      "value": "ルーム招待",
+      "hash": "9ae8dcdfaef85ce72718e91451e555dcda25963bedc989f37f1a2787e39fef0a",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 883
+      },
+      "placeholders": []
+    },
+    "online.length.east": {
+      "value": "東風戦",
+      "hash": "4e2cd851cfdab8b554b71408d984989127f1db0430f647c711863c42d20f39e7",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 113
+      },
+      "placeholders": []
+    },
+    "online.length.east-only": {
+      "value": "東風戦のみ",
+      "hash": "413833e506bf418dc8fdbb9d4068b42a6564053296b399c9ff56f8f54357d158",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 108
+      },
+      "placeholders": []
+    },
+    "online.length.east-south": {
+      "value": "東南戦",
+      "hash": "1af3cc8d899d63838b81370f325985d87d03b61e981c8ba1fe04d326f020d2cc",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 109
+      },
+      "placeholders": []
+    },
+    "online.length.four-rounds": {
+      "value": "四局戦",
+      "hash": "53ffb6a3d3b51c4fb38a7f842bc56f6a44eb30b90cee9b360a0131cd7c0e5afc",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 110
+      },
+      "placeholders": []
+    },
+    "online.lobby.create-room": {
+      "value": "カスタムルームを作成",
+      "hash": "439a44204e5a91314e8db269ba50ec63cffb79462b480b962d01f3d7f4fc29f4",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 606
+      },
+      "placeholders": []
+    },
+    "online.lobby.find-friendly": {
+      "value": "フリー対局を探す",
+      "hash": "592d44f1250a8d0fe7ad76cd53960efae6c7f1eae5c5741de95c528cbd87e8f5",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 585
+      },
+      "placeholders": []
+    },
+    "online.lobby.find-ranked": {
+      "value": "ランク対局を探す",
+      "hash": "5f44b6a069dfb8ffbbe8b53bcf97c958cd8f6a02d82c04dd463536dd98fcc4eb",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 594
+      },
+      "placeholders": []
+    },
+    "online.lobby.friendly-seats": {
+      "value": "カスタムテーブルのフリー対局席",
+      "hash": "45b6d1d2302bd6fae8eb6a074b6ac92088dda807b42b8cba66627255aa1b2117",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 632
+      },
+      "placeholders": []
+    },
+    "online.lobby.game-detail": {
+      "value": "{0} · {1} · {2}",
+      "hash": "21ca73aa725638b8e9e359e1cf712f748b68d6ed9e42c7de1ff2ee6f45cd65d2",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 694
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ]
+    },
+    "online.lobby.game-format": {
+      "value": "{0} · {1}",
+      "hash": "cd55a9d95751fb9bb9e4a0988dd7ae3b08c7b49d0a28ba51cd94d9bafe6a27d0",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 692
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ]
+    },
+    "online.lobby.join": {
+      "value": "参加",
+      "hash": "fd30fe681b4b2d9e55f851cb34641f907401aa43e9d80f5b1e14ce714ef00497",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 644
+      },
+      "placeholders": []
+    },
+    "online.lobby.length": {
+      "value": "長さ",
+      "hash": "adc95605a1b30c73959fbaf21e60f9723efe855c482fa336a957924d4ea0a08b",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 557
+      },
+      "placeholders": []
+    },
+    "online.lobby.my-games": {
+      "value": "マイゲーム",
+      "hash": "e50033eea3e78d8227bd99fe8c507178d36a3faf3c6d9943d32ba15fc56d9f73",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 653
+      },
+      "placeholders": []
+    },
+    "online.lobby.no-games": {
+      "value": "まだゲームはありません。",
+      "hash": "c6491895297540752381f371540a1e07b32940d2062a9973d7ca03a503685cf0",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 678
+      },
+      "placeholders": []
+    },
+    "online.lobby.no-open-seats": {
+      "value": "空席の広告はありません。",
+      "hash": "3900f7bd04e4be5811e0df4ed555b07187d06f12a66348446bf22c955d71a8df",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 634
+      },
+      "placeholders": []
+    },
+    "online.lobby.offer-seats": {
+      "value": "カスタムテーブルで一致するフリー対局席を提供する",
+      "hash": "490c99c5305b77b74b914fd746c619f89983984caddf55433434412115efd9ac",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 625
+      },
+      "placeholders": []
+    },
+    "online.lobby.open": {
+      "value": "オープン",
+      "hash": "ed077f3d8125d60dca1979c7133601bd187d47c73ed9975028f677e49e709942",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 712
+      },
+      "placeholders": []
+    },
+    "online.lobby.pace": {
+      "value": "ペース",
+      "hash": "9582b504fec0a9c1b2c9b1812be3b1aa08732622bced0cb1f45dd013571f50dc",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 562
+      },
+      "placeholders": []
+    },
+    "online.lobby.ranked-needs-account": {
+      "value": "ランク対局にはアカウントが必要です。",
+      "hash": "ed80261d9ae6b9b135c926309bdd9631bda5724530b043780fe0842e23dd8868",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 613
+      },
+      "placeholders": []
+    },
+    "online.lobby.rules": {
+      "value": "ルール",
+      "hash": "4228aeb07c410ffc9d15b458bf7c2bf8d9dfa7af632f2c339e69f8cb54654da3",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 551
+      },
+      "placeholders": []
+    },
+    "online.lobby.sign-in-ranked": {
+      "value": "ランク戦にサインイン",
+      "hash": "0b98b0ffc12926a13b2b6dd5c0728e9ad45821dbfe630f0ff037249ec580b810",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 595
+      },
+      "placeholders": []
+    },
+    "online.nav.back": {
+      "value": "戻る",
+      "hash": "76900f1bfd16c8d4dd3d25e6f46638d7165aee23883ccea6bfe071c514421769",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 463
+      },
+      "placeholders": []
+    },
+    "online.nav.close": {
+      "value": "閉じる",
+      "hash": "7d9eb7acb13e24625c404401d8e88b2350e32162455885f18276cf802f7701ed",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 480
+      },
+      "placeholders": []
+    },
+    "online.offer.accept": {
+      "value": "席に着く",
+      "hash": "7d703538fd37917bed4a1978e03e52389ec14ff12ae93082a8b646d02d4a7d57",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1094
+      },
+      "placeholders": []
+    },
+    "online.offer.expires-in": {
+      "value": "オファーは{0}で期限切れ",
+      "hash": "5316a4afef51851eca5bb93bee90a66b45f15a307cb0c7fc193efd66443dbfe9",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1074
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "online.offer.keep-waiting": {
+      "value": "待ち続ける",
+      "hash": "b9ad2e4e8954b13e474b1563bb889502563f431975e3f9177a8607ff48253826",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1097
+      },
+      "placeholders": []
+    },
+    "online.offer.sub": {
+      "value": "カスタム卓に空席があります。",
+      "hash": "8afbceb3d2a2b9580a95eebd14eb1757efc1bf82d16790ca376de39521a5e874",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1065
+      },
+      "placeholders": []
+    },
+    "online.offer.title": {
+      "value": "フレンドリーマッチの招待",
+      "hash": "b3081a5b1c71c98c69cf2d06b1e93096b529901854044202cc837b96357d51b8",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1064
+      },
+      "placeholders": []
+    },
+    "online.origin.custom": {
+      "value": "カスタムルーム",
+      "hash": "257ccb0c714a0ce95a2e85e248e896cc5cd3e99dff1b4c5c09252b21003d71dc",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 137
+      },
+      "placeholders": []
+    },
+    "online.origin.friendly": {
+      "value": "フレンドリー",
+      "hash": "397423500c32c55ac6f2a59142ba9c330361d9a2285e90b63e3d7e8953ececfe",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 135
+      },
+      "placeholders": []
+    },
+    "online.origin.ranked": {
+      "value": "ランク戦",
+      "hash": "1f4f6aeccaf8b95d32b61bc38389336bc145da297fd7d217ddd47b315be8a4fe",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 136
+      },
+      "placeholders": []
+    },
+    "online.pace.correspondence": {
+      "value": "通信対局",
+      "hash": "dcdd73c5c3533c00dd05ddd3cabb671cb0dcd31e2cb64135006eaa6a0756a30b",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 120
+      },
+      "placeholders": []
+    },
+    "online.pace.live": {
+      "value": "ライブ · 5+20",
+      "hash": "e5080ae41e130576763e62664be726ea2a1c1009774ea07b912f9450febf7ac5",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 118
+      },
+      "placeholders": []
+    },
+    "online.pace.live-short": {
+      "value": "ライブ",
+      "hash": "b64ac05f17e64d037db81a98f51e2688216e292ae9748f979f04dfbac49fd7fc",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 123
+      },
+      "placeholders": []
+    },
+    "online.pace.relaxed": {
+      "value": "リラックス · 10+40",
+      "hash": "68e9d3346cf84d1a1d6b9f960bb37411fde876a3a054c3fd1639dcfc702818d8",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 119
+      },
+      "placeholders": []
+    },
+    "online.pace.relaxed-short": {
+      "value": "リラックス",
+      "hash": "43ddd4ca77f3867dc868038ee29f599d6827cea28b5d00e7ad1827fa9373b76d",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 124
+      },
+      "placeholders": []
+    },
+    "online.pill.finished": {
+      "value": "終了",
+      "hash": "20797ee0657b01c990353bc9862562fb29998b8b26a69d59c5db31cfc42dba26",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 708
+      },
+      "placeholders": []
+    },
+    "online.pill.live": {
+      "value": "ライブ",
+      "hash": "35e0d0360a0af6d115f9df30e1b00b5b544ebf4bb93272aa02cd5d64b064a64b",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 705
+      },
+      "placeholders": []
+    },
+    "online.pill.waiting": {
+      "value": "待機中",
+      "hash": "77aaf105c28c4c82ea7b2e0627b92fdff753c249771e7d2ab4a6f7ec6a5f400f",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 707
+      },
+      "placeholders": []
+    },
+    "online.pill.your-move": {
+      "value": "あなたの番",
+      "hash": "623dcf9b1ad896be491af174c9166c7591c10a28ebab7c328c80fc7a435adf6e",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 703
+      },
+      "placeholders": []
+    },
+    "online.recovery.code": {
+      "value": "復元コード",
+      "hash": "5bda8302b5ecf4d357d2ee14f3cfb5eabd34c3d804c614042d45176cfa44bcdb",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 853
+      },
+      "placeholders": []
+    },
+    "online.recovery.continue": {
+      "value": "続行",
+      "hash": "31fbef162594de01bab0cd525c51f74de7bcb15063029fa1a54b2cf5944c80d8",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 781
+      },
+      "placeholders": []
+    },
+    "online.recovery.note": {
+      "value": "このプライベートコードを使用して、別のデバイスで席を復元してください。",
+      "hash": "24cbcd349a04ef4d40fa1964714df47b1503e5ffed5decca05459a33d0a3eec5",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 776
+      },
+      "placeholders": []
+    },
+    "online.recovery.recover": {
+      "value": "復元",
+      "hash": "0c5327fd45c725528c37b589d6198944faba2decd050086cbf89fa636c9843c7",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 859
+      },
+      "placeholders": []
+    },
+    "online.recovery.title": {
+      "value": "ゲスト復元コードを保存",
+      "hash": "e1b3dd35756e884031000cbce74c372d5c8746c740c68d612ad1af76f896cfb4",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 774
+      },
+      "placeholders": []
+    },
+    "online.results.analyze": {
+      "value": "分析",
+      "hash": "cad5bf29c702403e939ce6efa70573eb03e7233456c21c478b0444bb69f3c939",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1613
+      },
+      "placeholders": []
+    },
+    "online.results.board-review": {
+      "value": "牌譜レビュー",
+      "hash": "1c80ab389c2dc0dc2c1724fd896f69469a37272f9c42c47b06e315cd350095d0",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1633
+      },
+      "placeholders": []
+    },
+    "online.results.friendly-rematch": {
+      "value": "フレンドリーマッチを再戦",
+      "hash": "622e91e6272abc89911c7589a370da91c797a87e2c74b38e9bbc82052b944732",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1605
+      },
+      "placeholders": []
+    },
+    "online.results.play-ranked-again": {
+      "value": "もう一度ランク戦をプレイ",
+      "hash": "81bf7ee5efe3584a72695a0de209ab4c8a97982bbad3de7e10ccd86835f42253",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1592
+      },
+      "placeholders": []
+    },
+    "online.results.rating": {
+      "value": "レーティング",
+      "hash": "9f29530464f730bd28f137cfc9ea941af137187b57c21e8ff5fefed520764d99",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1568
+      },
+      "placeholders": []
+    },
+    "online.results.rating-before": {
+      "value": "{0} →",
+      "hash": "2e95a827235093b675ce7222fd912d2e4138bc97b40f88742e7cba0b092a6bd6",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1579
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "online.results.standings": {
+      "value": "最終順位 · {0}",
+      "hash": "ebaded5885eb790e36b248fb1f8db599ae7dc6ed41269248e95f23632be58e59",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1541
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "online.results.title": {
+      "value": "結果",
+      "hash": "219c4a6c86a716e99d5dc9611b61e584deb11b57e972d87d4b773387ebc3cadd",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1534
+      },
+      "placeholders": []
+    },
+    "online.results.unrated": {
+      "value": "評価なしの結果 · {0}",
+      "hash": "295c20543fb072c4ba7fc7644bb4da27a4711ac490f4979b9ad81e33c66cc279",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1565
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "online.seat.add-bot": {
+      "value": "ボットを追加",
+      "hash": "4cc11408e76c022d8be4be213b7573c4ba49ffcdfe07996a60fc22ba21eccad6",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 962
+      },
+      "placeholders": []
+    },
+    "online.seat.bot": {
+      "value": "ボット",
+      "hash": "41e35ba1a1fd8b4cdc7f899b3b8f9442a7542f445170e8782e219732cc25c10f",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 944
+      },
+      "placeholders": []
+    },
+    "online.seat.host": {
+      "value": "ホスト",
+      "hash": "4a823118b9ba8baa2f47489c0716f52755368e3e3c2c26d60736ccfa1bb21b5e",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 953
+      },
+      "placeholders": []
+    },
+    "online.seat.in-queue": {
+      "value": "キュー内",
+      "hash": "03872dc9d62dc79de6f25320162bb73a9dd5f3ebb316dea7385261269ada06b3",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 967
+      },
+      "placeholders": []
+    },
+    "online.seat.not-ready": {
+      "value": "準備ができていません",
+      "hash": "330010f40240ecd83defa493b21a57b0504ddea6d30810be14e06debba8ad55b",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 977
+      },
+      "placeholders": []
+    },
+    "online.seat.open": {
+      "value": "空席",
+      "hash": "017b10bacda0f441447ad52bf421ef68982e6a4aecb3f1687c4e5f4ffcfc865f",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 948
+      },
+      "placeholders": []
+    },
+    "online.seat.ready": {
+      "value": "準備完了",
+      "hash": "5fa7aac5375c5815787fba3f49559f9b45b14023147ce0652803387974144e5f",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 973
+      },
+      "placeholders": []
+    },
+    "online.seat.ready-up": {
+      "value": "準備完了",
+      "hash": "42345f564af924ba47ba606ccfe6841fb027ab316d22c193d226d92da23407ee",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 976
+      },
+      "placeholders": []
+    },
+    "online.seat.remove-bot": {
+      "value": "ボットを削除",
+      "hash": "5c58ac605d4fe4770890f55573002f716d06e10fae4b0d906c2d2fe5b4a07925",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 972
+      },
+      "placeholders": []
+    },
+    "online.seat.seated": {
+      "value": "着席済み",
+      "hash": "d4b1b0c4413e7bcc50778061ec119f747bca2ff79bf5e39779cf5ac908acb391",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 967
+      },
+      "placeholders": []
+    },
+    "online.seat.waiting": {
+      "value": "待機中",
+      "hash": "6e293a8c009e001103199768f7bcbea1729c59f9fc1ef2748958757f47ab99ed",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 963
+      },
+      "placeholders": []
+    },
+    "online.seat.you": {
+      "value": "あなた",
+      "hash": "08b041935798fbf6fd6ff51099ffedb140a475889986d14f5559ff8e7fc571dd",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 946
+      },
+      "placeholders": []
+    },
+    "online.state.finished": {
+      "value": "終了",
+      "hash": "7804f7a79a9eee323b6e89d3f8287c7d36076f4d76291646295f435b0dec736e",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 690
+      },
+      "placeholders": []
+    },
+    "online.state.waiting-room": {
+      "value": "待機室",
+      "hash": "e820cfc5a5ddc0648be1c5b61a816d49a46c4d4103d16623498f7dee53cb3103",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 689
+      },
+      "placeholders": []
+    },
+    "online.state.waiting-table": {
+      "value": "卓を待っています",
+      "hash": "17ec100ff1cb69a9109a877c6ac044231f5783b73c637d33a60c43d76e051a34",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 687
+      },
+      "placeholders": []
+    },
+    "online.state.your-move": {
+      "value": "あなたの番",
+      "hash": "720c2081aedb47ef7fcc517418372d0d0514ab0edad49564a552ac4bb8e6086f",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 686
+      },
+      "placeholders": []
+    },
+    "online.table.clock": {
+      "value": "{0}:{1}",
+      "hash": "ce1cbb810048bff6b5139edf197d7b75faf609cadc8f762911ed394a202671ad",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1344
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ]
+    },
+    "online.table.correspondence-row": {
+      "value": "通信対局 · 時間制限なし",
+      "hash": "f67dff2e27cc3d0cb820a8fd7778bf2c9e3a1ae6200ca840c335c337ae9fc722",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1320
+      },
+      "placeholders": []
+    },
+    "online.table.dora": {
+      "value": "ドラ",
+      "hash": "3174efdaff7d059b46c35cdd556908c72d2317293c479751f4995844a5ccc93d",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1306
+      },
+      "placeholders": []
+    },
+    "online.table.end-requested": {
+      "value": "終了リクエスト ({0} / 4)",
+      "hash": "8f01bb9e6d2a21b1bc534753c25047cd102b42eefc27a44671522dfde618c381",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1463
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "online.table.honba-wall": {
+      "value": "{0}本場 · 山 {1}",
+      "hash": "50e5b6cadbd6abcc9fc395fb900d808d91cb5d02f231f2879acbbe39aefbfe27",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1299
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ]
+    },
+    "online.table.inspect-hand": {
+      "value": "手牌を確認",
+      "hash": "05a93976b2fff8c8e78c9807e67f6090e8c22699819d6b7dcbfa68123c98669d",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1477
+      },
+      "placeholders": []
+    },
+    "online.table.leave-confirm": {
+      "value": "この卓から離れますか？ボットがあなたの席で続行します。",
+      "hash": "070008599c7cd914dd9fa5805805d67540f5c335baf1747f8a352e64da9c6f1f",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1484
+      },
+      "placeholders": []
+    },
+    "online.table.leave-table": {
+      "value": "卓を離れる",
+      "hash": "27fd2220e65ef98bde07e699ca85aae10b987e276bbf3332e2fd3c0ae3c25381",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1482
+      },
+      "placeholders": []
+    },
+    "online.table.menu": {
+      "value": "メニュー",
+      "hash": "99af6606ff9d6cd5154d4d4e9c21e325086d3e904677cdb41d363c8a3480f862",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1229
+      },
+      "placeholders": []
+    },
+    "online.table.previous-hand": {
+      "value": "前の手 · {0}{1}",
+      "hash": "564bc1229dd4550463ee5d711980b06407fdc5dd0a678df7e4ae33bff75b7fd2",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1258
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ]
+    },
+    "online.table.propose-ending": {
+      "value": "合意による終了を提案",
+      "hash": "66191277a1a43018c67f52c0cfa1703082c34fe25dde87ff4084e26248bcacd3",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1463
+      },
+      "placeholders": []
+    },
+    "online.table.reconnecting": {
+      "value": "再接続中…",
+      "hash": "27b80374e1151af6df7824a358606c77502548bff4d467e4ae2e146801f601ce",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1249
+      },
+      "placeholders": []
+    },
+    "online.table.round-details": {
+      "value": "局の詳細",
+      "hash": "f0acb4082a1fb7d131dcb76d8a51e3aed693d628c7c18b26f9e4d91150f04892",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1292
+      },
+      "placeholders": []
+    },
+    "online.table.round-name": {
+      "value": "{0} {1}",
+      "hash": "10866a9df5f8be5be75c79314de01412b0b35db060b06fdc333c1d9cd82d73c0",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1296
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ]
+    },
+    "online.table.sound": {
+      "value": "サウンド",
+      "hash": "46124e023603420f8670526e3eb9a603935e8916cb8e0428ea84bbe42d85d297",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1234
+      },
+      "placeholders": []
+    },
+    "online.table.sticks": {
+      "value": "× {0}",
+      "hash": "506ddfb229995d0add313668d06c84e3e7fcab62a9a53772e5626a977558ad8e",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1302
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "online.table.your-claim": {
+      "value": "あなたの主張",
+      "hash": "d91225233dbca8a4c252b801df665b5ffcddf356592035e508815326c247630d",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1326
+      },
+      "placeholders": []
+    },
+    "online.table.your-move": {
+      "value": "あなたの番",
+      "hash": "720c2081aedb47ef7fcc517418372d0d0514ab0edad49564a552ac4bb8e6086f",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1324
+      },
+      "placeholders": []
+    },
+    "online.tile.concealed": {
+      "value": "暗牌",
+      "hash": "afa2d79673c42c29d1d3f46fc28cc0c6ad4391f093ec8e0d1c7939d6d4806e08",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 207
+      },
+      "placeholders": []
+    },
+    "online.variant.hong-kong": {
+      "value": "香港式麻雀",
+      "hash": "e3d302188d4b21872b53b175b46bf2dec2ae64bd24aa2320aa7065ff85f34450",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 103
+      },
+      "placeholders": []
+    },
+    "online.variant.mcr": {
+      "value": "MCR",
+      "hash": "d6b206585b93da356fd144c08eac7446eb126bb4d2adf6970f9b97bb9c149dd5",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 104
+      },
+      "placeholders": []
+    },
+    "online.variant.riichi": {
+      "value": "リーチ",
+      "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 102
+      },
+      "placeholders": []
+    },
+    "online.variant.taiwanese": {
+      "value": "台湾麻雀",
+      "hash": "4590eb3a55fc3aafe45893f2c057598e04ea249cb7d924e3417735726abaff01",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 105
+      },
+      "placeholders": []
+    },
+    "online.waiting.copy-invite": {
+      "value": "招待をコピー",
+      "hash": "953ed058eed4f230e7d37b405c736d29cb891d8ae1902bae02e4d294579ab71c",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1010
+      },
+      "placeholders": []
+    },
+    "online.waiting.custom-sub": {
+      "value": "{0} · カスタムルーム",
+      "hash": "9d3d7407a7c8b5cb33a290b6db66163c937ea8f4e0d377afa9c9859c0531e47d",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 994
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "online.waiting.finding": {
+      "value": "卓を検索中",
+      "hash": "d1f887b4b33e2214f77d9667dd0b9a392885e67b58e59ab745dbe668fb00bc6e",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 991
+      },
+      "placeholders": []
+    },
+    "online.waiting.friendly-sub": {
+      "value": "フレンドリー · {0}",
+      "hash": "db2ed2bacbae3eae3fb4498073c0bd352efdd9ce49d73eb7ddbaf02db2690a8a",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 997
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "online.waiting.host-starts": {
+      "value": "すべての席の準備が整うと、ホストが対局を開始します。",
+      "hash": "8d4df4e219519998d3f0bbac25d22d4693303b25a8c8405b1a636cdd38bc7015",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1050
+      },
+      "placeholders": []
+    },
+    "online.waiting.invite-link": {
+      "value": "招待リンク",
+      "hash": "826c272260db2d1f1a6d33fb290c5ba7b709a18c39fefb05e3e874ec4d002718",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1009
+      },
+      "placeholders": []
+    },
+    "online.waiting.leave": {
+      "value": "退出",
+      "hash": "fc6e4a408d56be9670c14ee7be21e1a39c93c2df82f7c95975485e90ca6371c3",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1037
+      },
+      "placeholders": []
+    },
+    "online.waiting.leave-queue": {
+      "value": "キューを離れる",
+      "hash": "c36730e531fd6549f70aa48ac057ee2936bc9dcc5f79c97ffb9e239053fdc6e9",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1054
+      },
+      "placeholders": []
+    },
+    "online.waiting.offer-seats": {
+      "value": "フレンドリーで席を提供する",
+      "hash": "dd2c994c6d2a1fba2d17e63e465d8b9fdadc9fec746eb896135276abae5bf91e",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1023
+      },
+      "placeholders": []
+    },
+    "online.waiting.ranked-queue": {
+      "value": "ランク戦キュー",
+      "hash": "8e538c93c066fcef35502c2548df20aab2325321769b59976fa3099b1ca2c951",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 990
+      },
+      "placeholders": []
+    },
+    "online.waiting.ranked-sub": {
+      "value": "ランク戦 · {0} · {1} · 5+20",
+      "hash": "56f20b422aca951677490847f53bef6eee2f74d7ada54977669c250aba74776a",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 996
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ]
+    },
+    "online.waiting.start-match": {
+      "value": "対局開始",
+      "hash": "497fea2a1a2d4c7413ca25944c4046cfc3ecf47c8ed7bc3aa63b5b5e93b88bc4",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1038
+      },
+      "placeholders": []
+    },
+    "online.waiting.start-unlocks": {
+      "value": "すべての席が埋まり、準備が整うと対局を開始できます。",
+      "hash": "de7a42b83a0962f5ad71932a63d3068d89922f363f852e2c507c7877207f3af0",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1044
+      },
+      "placeholders": []
+    },
+    "online.waiting.starts-when-four": {
+      "value": "4人のプレイヤーが着席するとゲームが開始されます。",
+      "hash": "b73ef9694f92fc6e5ab2b41c7d6b8d2d3075796df6c74b1b74de99ce13ad074b",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 1030
+      },
+      "placeholders": []
+    },
+    "online.waiting.title": {
+      "value": "待機室",
+      "hash": "e820cfc5a5ddc0648be1c5b61a816d49a46c4d4103d16623498f7dee53cb3103",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 988
+      },
+      "placeholders": []
+    },
+    "online.wind.east": {
+      "value": "東",
+      "hash": "4e2cd851cfdab8b554b71408d984989127f1db0430f647c711863c42d20f39e7",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 128
+      },
+      "placeholders": []
+    },
+    "online.wind.north": {
+      "value": "北",
+      "hash": "43f853bbb592860098a76140c1770ee2add66f4720453d64dcf225178e238e57",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 131
+      },
+      "placeholders": []
+    },
+    "online.wind.south": {
+      "value": "南",
+      "hash": "0dd2dae4dd83ae3085cd80ac1bfc28e8d76ba51ddfd972c269fe9f98a85c099a",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 129
+      },
+      "placeholders": []
+    },
+    "online.wind.west": {
+      "value": "西",
+      "hash": "41a6741e9a0faee34fec1fce082d6c634d48b44aee0d15bee819d12917073df8",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 130
+      },
+      "placeholders": []
+    },
+    "online.wordmark": {
+      "value": "オープン麻雀",
+      "hash": "49365f077495fa21df3fabc4f5bc2cdbcb083f4eedffd89bfb63de3751c0093d",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 517
+      },
+      "placeholders": []
+    },
+    "online.lobby.host-seats-open": {
+      "value": "ホスト {0} · {1}席{2}空いています",
+      "hash": "997178874ba642f32fcb3cf4e45b80afce2bad1675572c071730780c62b736d1",
+      "status": "draft",
+      "source": {
+        "file": "online.ts",
+        "line": 641
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ]
     }
   }
 }

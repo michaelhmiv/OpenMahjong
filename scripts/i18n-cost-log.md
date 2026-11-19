@@ -118,3 +118,31 @@ runs ~1.4% lower, per the note at the top of this file).
 | zh-Hant top-up (6 keys kept) | qwen/qwen-plus | 554 | 113 | $0.0002 | 0 |
 | ja top-up (6 keys kept) | google/gemini-2.5-flash | 571 | 144 | $0.0005 | 0 |
 | ko top-up (6 keys kept) | google/gemini-2.5-flash | 572 | 144 | $0.0005 | 0 |
+
+## PR2 online top-up — 154 multiplayer keys (2026-11-19)
+
+The Online surface (online.ts) was wired to the i18n system for the
+first time (audit finding F24): 154 new English keys under the
+`online.*` namespace, machine-drafted into all four locales with the
+driver (translation memory billed only the new keys). All runs:
+0 glossary flags, 0 tile-ref flags. ja needed two extra single-key
+retries for `online.lobby.host-seats-open`: Gemini kept dropping the
+{2} plural placeholder (Japanese has no plural marker; pluralS()
+renders it empty), so that one entry was written by hand as a draft
+with the placeholder preserved, matching the zh form. New entries are
+status `draft` only; baseline.json was regenerated at this ship, per
+the established mechanism. Per locale the driver billed 155 keys: the
+154 new online keys plus `ui.app.improve-this-translation`, which is
+intentionally absent from the draft locales (its shipped rendering is
+the English fallback, per the baseline design) — its drafted entry
+was removed again after each run, as in the PR #87 top-up.
+
+| Run | Model | In tokens | Out tokens | Cost | Failures |
+| --- | --- | --- | --- | --- | --- |
+| zh-Hans top-up (154 keys kept) | qwen/qwen-plus | 3189 | 2118 | $0.0025 | 0 |
+| zh-Hant top-up (154 keys kept) | qwen/qwen-plus | 3198 | 2221 | $0.0026 | 0 |
+| ja top-up (153 of 154 keys kept) | google/gemini-2.5-flash | 3559 | 2365 | $0.0070 | 1 |
+| ja retries (1 key ×2) | google/gemini-2.5-flash | 940 | 59 | $0.0004 | 1 (hand-written draft) |
+| ko top-up (154 keys kept) | google/gemini-2.5-flash | 5782 | 2461 | $0.0079 | 0 |
+
+Total list-price cost: **$0.0204**.
