@@ -295,9 +295,9 @@ export function mountBoardReview(
     if (jumps.value !== "") seek(Number(jumps.value));
   });
   if (options.allowReveal) {
-    const reveal = button("Reveal all hands", () => {
+    const reveal = button(tx("review.board.reveal-all-hands", "Reveal all hands"), () => {
       revealHands = !revealHands;
-      reveal.textContent = revealHands ? "Hide opponents’ hands" : "Reveal all hands";
+      reveal.textContent = revealHands ? tx("review.board.hide-opponents-hands", "Hide opponents’ hands") : tx("review.board.reveal-all-hands", "Reveal all hands");
       reveal.setAttribute("aria-pressed", String(revealHands));
       seek(cursor);
     });
@@ -308,7 +308,7 @@ export function mountBoardReview(
     handSelect,
     el(
       "p",
-      options.allowReveal ? "Coach advice uses only what you knew at each decision." : "Opponents’ concealed tiles stay face-down. Coach advice uses only what you knew at each decision.",
+      options.allowReveal ? tx("review.board.coach-advice-uses-only-what-you-knew-at-each-dec", "Coach advice uses only what you knew at each decision.") : tx("review.board.opponents-concealed-tiles-stay-face-down-coach-a", "Opponents’ concealed tiles stay face-down. Coach advice uses only what you knew at each decision."),
       "dim",
     ),
     board,

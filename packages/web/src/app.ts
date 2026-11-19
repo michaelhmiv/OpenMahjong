@@ -1137,9 +1137,9 @@ export class App {
     // picked the Play-tab integrated lobby, 2026-11-18): the Online
     // segment hands over to the online app, which renders this same
     // Play surface with Online selected and the lobby below it.
-    const modeSeg = h("div", { class: "seg play-mode-seg", role: "radiogroup", "aria-label": "Play mode", style: "width:100%; max-width:334px; margin:14px 0 0;" });
-    const soloBtn = h("button", { type: "button", class: "on", role: "radio", "aria-checked": "true" }, "Solo");
-    const onlineBtn = h("button", { type: "button", role: "radio", "aria-checked": "false" }, "Online");
+    const modeSeg = h("div", { class: "seg play-mode-seg", role: "radiogroup", "aria-label": tx("ui.app.play-mode", "Play mode"), style: "width:100%; max-width:334px; margin:14px 0 0;" });
+    const soloBtn = h("button", { type: "button", class: "on", role: "radio", "aria-checked": "true" }, tx("ui.app.solo", "Solo"));
+    const onlineBtn = h("button", { type: "button", role: "radio", "aria-checked": "false" }, tx("ui.app.online", "Online"));
     onlineBtn.addEventListener("click", () => { location.hash = "/online"; });
     modeSeg.append(soloBtn, onlineBtn);
     body.append(modeSeg);
