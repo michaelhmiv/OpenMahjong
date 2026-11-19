@@ -537,6 +537,17 @@ tap); steppers 48px; chips 46px; seat chips and choices carry
 no invisible tap expansion (their real size clears the 44px
 floor). Type sizes are the shipped scale (§15 R12).
 
+**Tap-target exception (recorded 2026-11-19, audit F6).** The
+compact calculator's buttons render at a 36px visual height —
+the primaries, the action row, and the deposit row alike. This
+is an approved exception to §5's 44px floor, in the same
+pattern as §5's home-segment exception: the compact form was
+approved from renderings at this size, and §15's slim-action
+rule already carries each button's tap area to 48px with an
+invisible expansion, so the effective target clears the floor
+even though the visual height does not. The buttons are not
+to be bulk-resized to 44px.
+
 ## 17. American training — Practice Card notation inks
 
 Approved 2026-11-18 (renderings `american-card-v1`, QC-passed;

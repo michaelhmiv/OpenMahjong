@@ -254,7 +254,7 @@ export function mountVariantCalculator(
     show(tx("calc.variant.hand-value", "Hand value"));
     fastContext = cxContextPanel(contextRows());
     screen.append(fastContext);
-    const panel = el("section", "", "cx-panel");
+    const panel = el("section", "", "cx-panel cx-value-panel");
     const fanCtl = cxStepperChips({
       label:
         variant === "mcr"
@@ -300,17 +300,19 @@ export function mountVariantCalculator(
       );
     fastLive = el("div");
     screen.append(fastLive);
+    // Primary verb first, tiles escalation after it — the same
+    // order as the riichi value screen (audit B7).
     screen.append(
+      btn(
+        tx("calc.variant.show-payments", "Show payments"),
+        () => safe(() => renderPreview(fastDraft())),
+        "primary",
+      ),
       btn(tx("calc.variant.score-it-from-the-tiles", "Score it from the tiles"), () => renderTiles(), "cx-quiet"),
       el(
         "p",
         tx("calc.variant.enter-the-tiles-instead-the-winner-and-win-type", "Enter the tiles instead. The winner and win type carry over."),
         "cx-note",
-      ),
-      btn(
-        tx("calc.variant.show-payments", "Show payments"),
-        () => safe(() => renderPreview(fastDraft())),
-        "primary",
       ),
     );
     paintFastLive();

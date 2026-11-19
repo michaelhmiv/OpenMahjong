@@ -2,8 +2,8 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T23:31:24.643Z",
-    "keyCount": 3976,
+    "generatedAt": "2026-11-19T23:44:11.978Z",
+    "keyCount": 3979,
     "namespaces": {
       "calc.compact": 14,
       "calc.riichi": 90,
@@ -152,7 +152,7 @@
       "review.your-discard": 1,
       "review.your-discard-leaves-0-shanten-and-1-unseen-impro": 1,
       "review.your-hand-at-this-decision": 1,
-      "tools.inperson": 130,
+      "tools.inperson": 133,
       "ui.app": 356,
       "ui.stats": 12,
       "ui.tiles": 9
@@ -327,7 +327,7 @@
       "hash": "6e1aedf87021ed4b7eb9591c45660716b067461520987580519e39b676990e7d",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 660
+        "line": 663
       },
       "placeholders": [
         "0",
@@ -341,7 +341,7 @@
       "hash": "62c7dcc7873a403f44c2e4043cc6ff7fa41999ce36137b866319306d0f685d7f",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 863
+        "line": 866
       },
       "placeholders": [],
       "status": "approved"
@@ -351,7 +351,7 @@
       "hash": "8dcce94d00c2c698108258b83fef7cf6407a3228c9d53a86acb44d0ae1e3cfad",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 675
+        "line": 678
       },
       "placeholders": [],
       "status": "approved"
@@ -361,7 +361,7 @@
       "hash": "37629e87d8939caee9e3ee25b198bc29ba403c30bdfead6017a3038d72441be9",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 699
+        "line": 702
       },
       "placeholders": [],
       "status": "approved"
@@ -371,7 +371,7 @@
       "hash": "063f0e84139e195eb96e1160b5f0c1e85dca8298a4a868fe2a95b245654540f5",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 671
+        "line": 674
       },
       "placeholders": [],
       "status": "approved"
@@ -381,7 +381,7 @@
       "hash": "41bb6368afaaf9a2c6a96a520c19c0c6c5edb097391e5090fc66eed49e52aa6b",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 555
+        "line": 558
       },
       "placeholders": [],
       "status": "approved"
@@ -391,7 +391,7 @@
       "hash": "2ac60550506531c04e2db782dcdfe5ff7c68bea44b5ee51771d8b3fd5272cebe",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 843
+        "line": 846
       },
       "placeholders": [],
       "status": "approved"
@@ -401,7 +401,7 @@
       "hash": "8db81320df98b43c1a4ebd434b2774f6d6d9408c994cbe98c3ada85cd588e82f",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 651
+        "line": 654
       },
       "placeholders": [],
       "status": "approved"
@@ -411,7 +411,7 @@
       "hash": "b3ebbadbc40585d9575d9b1bd6abfce9afdae0cd490dad38f1d1a62870c45623",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 678
+        "line": 681
       },
       "placeholders": [],
       "status": "approved"
@@ -484,7 +484,7 @@
       "hash": "af77d63b3093c71010a98eb5cf397ec580acc12f5c636857c4f69a4de8eb0f5c",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 755
+        "line": 758
       },
       "placeholders": [],
       "status": "approved"
@@ -494,7 +494,7 @@
       "hash": "99014c0516dec84dbbf72ee3795ed1c18c9583a139778502650b6cfab043ce30",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 553
+        "line": 556
       },
       "placeholders": [],
       "status": "approved"
@@ -504,7 +504,7 @@
       "hash": "d558459d1b87e6bea00aee4a725e4a568482cc9f23a482509200de07810a8acc",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 542
+        "line": 545
       },
       "placeholders": [],
       "status": "approved"
@@ -514,7 +514,7 @@
       "hash": "3e4126ecfb910ce8a84e1faad0fe4d4d52c9c8b6444ae967a092611a5ac58de0",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 853
+        "line": 856
       },
       "placeholders": [],
       "status": "approved"
@@ -524,7 +524,7 @@
       "hash": "07250c86a8b1c934a6eecadf302f1e32c3b46b45a30e8e18fe7b8dd7b33f7926",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 852
+        "line": 855
       },
       "placeholders": [],
       "status": "approved"
@@ -534,7 +534,7 @@
       "hash": "1e5c8b3191f7c2bd397cafb35c805472a93b13e724669e52ebbf1dec229eadb7",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 778
+        "line": 781
       },
       "placeholders": [],
       "status": "approved"
@@ -544,7 +544,7 @@
       "hash": "fe241b15fafd542f0b1ca2e66d8c6c56c00fdf558901090ae87413e3831b9e4a",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 543
+        "line": 546
       },
       "placeholders": [],
       "status": "approved"
@@ -554,7 +554,7 @@
       "hash": "fb73b43bfddf7069463b4f38e5c3cbf07295b06c51703b9876b0ccc5f4ffdfdc",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 672
+        "line": 675
       },
       "placeholders": [],
       "status": "approved"
@@ -564,7 +564,7 @@
       "hash": "d2d86d3ee8c90bc6b55ef7054eb60b52ef5dc52afe4e271b2ebda2d748b10e2c",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 607
+        "line": 610
       },
       "placeholders": [],
       "status": "approved"
@@ -584,7 +584,7 @@
       "hash": "98f44027339bffda465fcae4ee59aa16c90aeeb6dd743c3c41cf16807a4d2444",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 544
+        "line": 547
       },
       "placeholders": [],
       "status": "approved"
@@ -594,7 +594,7 @@
       "hash": "659b15b24fbe62119b6b1e9cb5007eb4ef6e8756b25957e0afcc332f04fc58c0",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 621
+        "line": 624
       },
       "placeholders": [],
       "status": "approved"
@@ -604,7 +604,7 @@
       "hash": "4c0dbea42e20233a0ac046cc10f7f6be5c36d72cdd40f3eb482cf2dcebffc51e",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 517
+        "line": 520
       },
       "placeholders": [],
       "status": "approved"
@@ -614,7 +614,7 @@
       "hash": "ad95039f97ef67908dfd0d38fd5b4150862df75b565127b907db85035e39195b",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 681
+        "line": 684
       },
       "placeholders": [
         "0"
@@ -627,7 +627,7 @@
       "hash": "ba6c23db49d60cb5564c260ec7d545dace26d3558673019c38d9af76fecfaccf",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 747
+        "line": 750
       },
       "placeholders": [],
       "status": "approved"
@@ -647,7 +647,7 @@
       "hash": "e6888d1e1558e90559638833420602b57caf6b29ac81e234e7e224b042fee689",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 328
+        "line": 339
       },
       "placeholders": [],
       "status": "approved"
@@ -657,7 +657,7 @@
       "hash": "bdf75e99dfe5f7e152adbb0be7087262cc8da191282e01ed40a0af3d813db84b",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 668
+        "line": 671
       },
       "placeholders": [],
       "status": "approved"
@@ -667,7 +667,7 @@
       "hash": "2e6cad7a7a82bda4c825a831c935bddb30bee55ba5958cc9620e153e5aa5746d",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 791
+        "line": 794
       },
       "placeholders": [
         "0",
@@ -732,7 +732,7 @@
       "hash": "07bda4d5f666ea2caf536b686da441c9949a56774b945c0722db2835f2f4d81f",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 408
+        "line": 411
       },
       "placeholders": [
         "0"
@@ -745,7 +745,7 @@
       "hash": "71c003457767b7b57382dbee830c963bf81cadfbcc3c37149a762a2a810eaa14",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 812
+        "line": 815
       },
       "placeholders": [
         "0",
@@ -759,7 +759,7 @@
       "hash": "c7851607b1a83e0d6a4145c4c74a1dc707fa8576a4f3dc34de4701e2d23e2834",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 813
+        "line": 816
       },
       "placeholders": [
         "0",
@@ -813,7 +813,7 @@
       "hash": "ced264fc64b61238ebbe554af678c9bf9aae73060182b2a5d4f38746e9cff589",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 518
+        "line": 521
       },
       "placeholders": [],
       "status": "approved"
@@ -823,7 +823,7 @@
       "hash": "253be9c52efdd319e62e9335e2c930a15a2dcbe71ed474f6cb98faa499a94334",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 554
+        "line": 557
       },
       "placeholders": [],
       "status": "approved"
@@ -833,7 +833,7 @@
       "hash": "dcf15fb5c1a5e3b1ac7a8aa15eb4209fc42e5f19b28c1cb3e648413656a307c6",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 551
+        "line": 554
       },
       "placeholders": [],
       "status": "approved"
@@ -843,7 +843,7 @@
       "hash": "9cacbbf6954519e8e6fccaf6889e72d72068f60c42bde3a87ece03364d334bdf",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 552
+        "line": 555
       },
       "placeholders": [],
       "status": "approved"
@@ -876,7 +876,7 @@
       "hash": "b088bcaa092f4ee31458ae18af2547106b1bb53c6ef82a4897ca0726959735e2",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 845
+        "line": 848
       },
       "placeholders": [],
       "status": "approved"
@@ -886,7 +886,7 @@
       "hash": "b1f51a511f1da0cd348b8f8598db32e61cb963e5fc69e2b41485bf99590ed75a",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 660
+        "line": 663
       },
       "placeholders": [],
       "status": "approved"
@@ -896,7 +896,7 @@
       "hash": "dfbfd0da8890920dca12a78a08210bc467df81e904dbca2aad7e005ac10e1e00",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 600
+        "line": 603
       },
       "placeholders": [
         "0"
@@ -909,7 +909,7 @@
       "hash": "60c5e38dde51c4376aebc8b851c4863c7ff3db52548e77876be76106b99cf7cf",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 613
+        "line": 616
       },
       "placeholders": [],
       "status": "approved"
@@ -929,7 +929,7 @@
       "hash": "a6f0a113302d4db5e029e3a6769a650b501f29c64dd5afeaf90852a322985cca",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 516
+        "line": 519
       },
       "placeholders": [],
       "status": "approved"
@@ -939,7 +939,7 @@
       "hash": "24273c44f244bc4f48f4a241e294b5d385f3985723072c028227da93939b421e",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 823
+        "line": 826
       },
       "placeholders": [
         "0",
@@ -953,7 +953,7 @@
       "hash": "3642e09186f53c24941df28b851fef2d14213819d3b6b80a1eb1925074aadfa0",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 819
+        "line": 822
       },
       "placeholders": [
         "0",
@@ -967,7 +967,7 @@
       "hash": "d24ca137a0a2c8aa8d6c6caa6fc50d53cbfcb8bdfc83b05e93b0f4bebca85ba7",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 827
+        "line": 830
       },
       "placeholders": [
         "0",
@@ -981,7 +981,7 @@
       "hash": "d911111c438404b954d67ad7d04f7772f7efbc8829a61c73b25f73974eca4404",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 325
+        "line": 336
       },
       "placeholders": [],
       "status": "approved"
@@ -1001,7 +1001,7 @@
       "hash": "599ab6241de98e5010822e2cba018841a4f290175100a512701570bf5d0db358",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 519
+        "line": 522
       },
       "placeholders": [],
       "status": "approved"
@@ -1021,7 +1021,7 @@
       "hash": "35d77d06ad266be8d0dd88d2cb78c5a99b1c2babf91e12026f17895c0312e5f4",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 336
+        "line": 329
       },
       "placeholders": [],
       "status": "approved"
@@ -1041,7 +1041,7 @@
       "hash": "b7506383003901efb6f3f159e519841af59188b4780e3347c3d12be2a9f3419d",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 635
+        "line": 638
       },
       "placeholders": [],
       "status": "approved"
@@ -1051,7 +1051,7 @@
       "hash": "70c1341a0ecbafb1b99a26993b9e098af502f73326fa90e89d71c3263c138d36",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 545
+        "line": 548
       },
       "placeholders": [],
       "status": "approved"
@@ -1061,7 +1061,7 @@
       "hash": "87b48ae7d01d1c9bd3edbc3fb4a6457222cb60b61a7018a186d9122f4f055838",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 623
+        "line": 626
       },
       "placeholders": [],
       "status": "approved"
@@ -1071,7 +1071,7 @@
       "hash": "80d6d3699a5a90ea9bb97214991951e9973ab2f9f843624175791894bc7d85a0",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 586
+        "line": 589
       },
       "placeholders": [
         "0"
@@ -1097,7 +1097,7 @@
       "hash": "ed1b0e7a8d399aba78fbe091dfcc32289c183958d6505fa9e5b18830b93933bd",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 406
+        "line": 409
       },
       "placeholders": [
         "0",
@@ -1112,7 +1112,7 @@
       "hash": "f572de52bc5e9785a2bf59602c47d0a1a60c0b1b25e461684d9c1d8a6dc4513f",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 792
+        "line": 795
       },
       "placeholders": [
         "0",
@@ -1129,7 +1129,7 @@
       "hash": "0bcf44a53cc1164732b8a8704c6a5654601bb5a59233fc78b066e3cf162e1ea7",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 362
+        "line": 365
       },
       "placeholders": [
         "0",
@@ -1143,7 +1143,7 @@
       "hash": "5d584f1f4b4c7d835c61a4c5fd3f392bb9d38c0a91111b9efad602f1625d5235",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 385
+        "line": 388
       },
       "placeholders": [
         "0",
@@ -1157,7 +1157,7 @@
       "hash": "fac88e67ae659415d9de07e651b4ec0a3764999853e3bf54ebb0505e244d3efe",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 788
+        "line": 791
       },
       "placeholders": [
         "0"
@@ -1170,7 +1170,7 @@
       "hash": "c66b0f3760ef2dcc5d66c661482fe0fd494527c6b73f8f0f4ac0ca88d3413fb1",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 380
+        "line": 383
       },
       "placeholders": [
         "0",
@@ -1185,7 +1185,7 @@
       "hash": "63f7c4b1bcd4db46a0e1c883c04e7db5c82a622c101956bca545848e46f90a4c",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 787
+        "line": 790
       },
       "placeholders": [
         "0"
@@ -1198,7 +1198,7 @@
       "hash": "96a174f3a9f1668bceadf90940f6c2ea885772e7cae59b2aae6a6fe4e220b114",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 785
+        "line": 788
       },
       "placeholders": [
         "0",
@@ -1212,7 +1212,7 @@
       "hash": "e3e46805ed18b39488f5af0e0325f25611756f82f4b9452127c23c6c4cf5b957",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 379
+        "line": 382
       },
       "placeholders": [
         "0",
@@ -1228,7 +1228,7 @@
       "hash": "05bdb7a78230930687c6c7ab729887709f955280fb418cb903c1ecc2a571c23c",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 406
+        "line": 409
       },
       "placeholders": [
         "0"
@@ -1241,7 +1241,7 @@
       "hash": "d538f43732e89381f0ee018071b28a687d1982b7ea83c7bb4ea3d29feea4f968",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 522
+        "line": 525
       },
       "placeholders": [],
       "status": "approved"
@@ -1251,7 +1251,7 @@
       "hash": "5486d8fa510350234bf050cbe9cac8bc6b0c19c4852f3f8edbb25f1d4e4e7c05",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 521
+        "line": 524
       },
       "placeholders": [],
       "status": "approved"
@@ -1261,7 +1261,7 @@
       "hash": "10693d05514769150279cd6a24dff23c956bd99a96f1cbe26047291d2f61b0a7",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 520
+        "line": 523
       },
       "placeholders": [],
       "status": "approved"
@@ -1271,7 +1271,7 @@
       "hash": "6f7ee37c8b42ad65d7feeb20fb3fc9509d8a52410d08c04342e5379a31fc58f3",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 523
+        "line": 526
       },
       "placeholders": [],
       "status": "approved"
@@ -1281,7 +1281,7 @@
       "hash": "cd4aeb59ca8eff37d5281af393fd81268db9caffff9ebfedb6c2a204ceb83a77",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 434
+        "line": 437
       },
       "placeholders": [],
       "status": "approved"
@@ -1301,7 +1301,7 @@
       "hash": "78574fa82e5930d82445e3809b4d8e0b5a7db9d3e31d856683f3cec04245ecd8",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 689
+        "line": 692
       },
       "placeholders": [],
       "status": "approved"
@@ -1321,7 +1321,7 @@
       "hash": "68a8e08d6d3f46d1e7aea4ef7cdface539b6d8baf8a86d8cac73a8efb3afcd3e",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 645
+        "line": 647
       },
       "placeholders": [],
       "status": "approved"
@@ -1331,7 +1331,7 @@
       "hash": "882c2180a5e94e1971d0aa48eabf415a36f558701b89eccd6bddd1b5a959511d",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 561
+        "line": 563
       },
       "placeholders": [
         "0"
@@ -1344,7 +1344,7 @@
       "hash": "8dcce94d00c2c698108258b83fef7cf6407a3228c9d53a86acb44d0ae1e3cfad",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 624
+        "line": 626
       },
       "placeholders": [],
       "status": "approved"
@@ -1354,7 +1354,7 @@
       "hash": "063f0e84139e195eb96e1160b5f0c1e85dca8298a4a868fe2a95b245654540f5",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 621
+        "line": 623
       },
       "placeholders": [],
       "status": "approved"
@@ -1364,7 +1364,7 @@
       "hash": "41bb6368afaaf9a2c6a96a520c19c0c6c5edb097391e5090fc66eed49e52aa6b",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 454
+        "line": 456
       },
       "placeholders": [],
       "status": "approved"
@@ -1374,7 +1374,7 @@
       "hash": "764d59a7fcf52a0ed70fd2005ffbc07b57cefde20bfd6eeb26026095f468bd46",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 749
+        "line": 751
       },
       "placeholders": [],
       "status": "approved"
@@ -1384,7 +1384,7 @@
       "hash": "252eec12b9f5c22dbbd8a8555ebdcd080d2c04a07eb3010190b95f43009c225c",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 748
+        "line": 750
       },
       "placeholders": [],
       "status": "approved"
@@ -1394,7 +1394,7 @@
       "hash": "7c27044609d677258f978311641f761b75ba50a4d8bf4fdbf444a36a951e43e1",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 555
+        "line": 557
       },
       "placeholders": [],
       "status": "approved"
@@ -1404,7 +1404,7 @@
       "hash": "d88beb1e2976cb2198a0c382141e12f898f88377046ef204062a65e89e47c574",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 381
+        "line": 383
       },
       "placeholders": [],
       "status": "approved"
@@ -1414,7 +1414,7 @@
       "hash": "96f2ad7419d2ab69fa2f070ccbe55cab2a0f172a2c65ca8bd9f3e9fd8e031fb6",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 741
+        "line": 743
       },
       "placeholders": [],
       "status": "approved"
@@ -1424,7 +1424,7 @@
       "hash": "59139d748866bc5ef12ed35ce194ceaab401a0849d1d1eeb0b5258786fbb7700",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 618
+        "line": 620
       },
       "placeholders": [
         "0"
@@ -1437,7 +1437,7 @@
       "hash": "af77d63b3093c71010a98eb5cf397ec580acc12f5c636857c4f69a4de8eb0f5c",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 704
+        "line": 706
       },
       "placeholders": [],
       "status": "approved"
@@ -1447,7 +1447,7 @@
       "hash": "4b858fe5658fe4dc924430054ec8ac14185044bbaa7d22f0d7f1ff9296fc657c",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 523
+        "line": 525
       },
       "placeholders": [],
       "status": "approved"
@@ -1457,7 +1457,7 @@
       "hash": "99014c0516dec84dbbf72ee3795ed1c18c9583a139778502650b6cfab043ce30",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 452
+        "line": 454
       },
       "placeholders": [],
       "status": "approved"
@@ -1467,7 +1467,7 @@
       "hash": "015ec07dfba7159796953789697d755b9c66b6cbdf79cdf3c5be41c22de322bd",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 433
+        "line": 435
       },
       "placeholders": [],
       "status": "approved"
@@ -1477,7 +1477,7 @@
       "hash": "ddbeefd00c349bf2874185b545c6ee44836283f775b83d4f6315ad17546948bb",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 759
+        "line": 761
       },
       "placeholders": [],
       "status": "approved"
@@ -1487,7 +1487,7 @@
       "hash": "3e4126ecfb910ce8a84e1faad0fe4d4d52c9c8b6444ae967a092611a5ac58de0",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 755
+        "line": 757
       },
       "placeholders": [],
       "status": "approved"
@@ -1497,7 +1497,7 @@
       "hash": "07250c86a8b1c934a6eecadf302f1e32c3b46b45a30e8e18fe7b8dd7b33f7926",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 755
+        "line": 757
       },
       "placeholders": [],
       "status": "approved"
@@ -1507,7 +1507,7 @@
       "hash": "1e5c8b3191f7c2bd397cafb35c805472a93b13e724669e52ebbf1dec229eadb7",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 730
+        "line": 732
       },
       "placeholders": [],
       "status": "approved"
@@ -1527,7 +1527,7 @@
       "hash": "442bc2b0ceb66478a1cac7f72684916a4b9f307f5b6a45dce82b45fa0d83d499",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 721
+        "line": 723
       },
       "placeholders": [
         "0"
@@ -1540,7 +1540,7 @@
       "hash": "fe241b15fafd542f0b1ca2e66d8c6c56c00fdf558901090ae87413e3831b9e4a",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 434
+        "line": 436
       },
       "placeholders": [],
       "status": "approved"
@@ -1550,7 +1550,7 @@
       "hash": "317dfede9bf3910aecf8a9c21149a72bd6ee6279b38d66ab66e60b2c7f26c5f4",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 354
+        "line": 356
       },
       "placeholders": [],
       "status": "approved"
@@ -1570,7 +1570,7 @@
       "hash": "00f30ce2f169f5a756265df23bb579bfc57cca94e04e748f56c4320665977584",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 334
+        "line": 336
       },
       "placeholders": [],
       "status": "approved"
@@ -1580,7 +1580,7 @@
       "hash": "a07fba969c20597b9bc951856b17850b7733bff866fdf32e650b859c2470b8a8",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 333
+        "line": 335
       },
       "placeholders": [],
       "status": "approved"
@@ -1590,7 +1590,7 @@
       "hash": "e6888d1e1558e90559638833420602b57caf6b29ac81e234e7e224b042fee689",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 307
+        "line": 314
       },
       "placeholders": [],
       "status": "approved"
@@ -1600,7 +1600,7 @@
       "hash": "f7081117b01c5328c337f80aa69aadada64a4988b7ec03ac980aa0ae829546d0",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 385
+        "line": 387
       },
       "placeholders": [],
       "status": "approved"
@@ -1620,7 +1620,7 @@
       "hash": "2c4842ee535cbe47a39d6c9b2da11ca1b10e22b31f4c262def7d9b237d4eeae2",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 352
+        "line": 354
       },
       "placeholders": [],
       "status": "approved"
@@ -1630,7 +1630,7 @@
       "hash": "0e3f669e34eedcb17ce87233e803fb0422ccd0f9defa72bf4334a4e20057b672",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 353
+        "line": 355
       },
       "placeholders": [],
       "status": "approved"
@@ -1650,7 +1650,7 @@
       "hash": "191e181a736df82aad6b8004be602cd0d3cbf5d3c91231c16f794cfd98c55461",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 693
+        "line": 695
       },
       "placeholders": [],
       "status": "approved"
@@ -1660,7 +1660,7 @@
       "hash": "cf220ab2ecaaaf84e3db9465de733432c3ec2cd18b8c4e85c6f77b4ca0dbe58d",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 693
+        "line": 695
       },
       "placeholders": [],
       "status": "approved"
@@ -1670,7 +1670,7 @@
       "hash": "e7ba9de978e6e6dd6ec49edeef267470f88c755d44662e3978a72fb2c62edae8",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 661
+        "line": 663
       },
       "placeholders": [],
       "status": "approved"
@@ -1680,7 +1680,7 @@
       "hash": "79c1a08732b8ae3198c7b435dcaa3ee10d3e4c813ec526e198b69c3605589b84",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 574
+        "line": 576
       },
       "placeholders": [
         "0"
@@ -1703,7 +1703,7 @@
       "hash": "dfd4d5762e271706106da26e34cb21b078599a3163a0e181b315e84e5c939129",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 650
+        "line": 652
       },
       "placeholders": [],
       "status": "approved"
@@ -1713,7 +1713,7 @@
       "hash": "28eecee6564a3976f026e3dfb2f8f456eedfd1fc41dd210b34186f987e10308a",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 327
+        "line": 329
       },
       "placeholders": [],
       "status": "approved"
@@ -1723,7 +1723,7 @@
       "hash": "6cdc906970b706052c3cea1f27b103b743ac5fbb7921b5d6d5523cb9da417540",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 326
+        "line": 328
       },
       "placeholders": [],
       "status": "approved"
@@ -1733,7 +1733,7 @@
       "hash": "1461c1718fa298eefda463d066ddfe917c50e83ded7fa79320b34f8c3410a435",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 357
+        "line": 359
       },
       "placeholders": [],
       "status": "approved"
@@ -1786,7 +1786,7 @@
       "hash": "fbffbe7b43bc7764ec86b16418a91cb828b26e5abfb77c5a765e334002963e29",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 597
+        "line": 599
       },
       "placeholders": [],
       "status": "approved"
@@ -1816,7 +1816,7 @@
       "hash": "41d76318bc21ad454689d95cc31a759ba62bf745ea697aeef67e426bfd45ac32",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 518
+        "line": 520
       },
       "placeholders": [],
       "status": "approved"
@@ -1826,7 +1826,7 @@
       "hash": "6421306d9e4ed06b47ee5dfe0230f61aa2f8805ff2731d7f745af19d256e6468",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 622
+        "line": 624
       },
       "placeholders": [],
       "status": "approved"
@@ -1836,7 +1836,7 @@
       "hash": "f7b8932a9274d05c9d8beee08e6cddd4b15d78ecaa3b32691cc9989a21935a8d",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 351
+        "line": 353
       },
       "placeholders": [],
       "status": "approved"
@@ -1856,7 +1856,7 @@
       "hash": "253be9c52efdd319e62e9335e2c930a15a2dcbe71ed474f6cb98faa499a94334",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 453
+        "line": 455
       },
       "placeholders": [],
       "status": "approved"
@@ -1866,7 +1866,7 @@
       "hash": "49974669c012c7d86100c872b5aa5a9b98decae7f4e7dba3ca826535e954359b",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 496
+        "line": 498
       },
       "placeholders": [],
       "status": "approved"
@@ -1876,7 +1876,7 @@
       "hash": "b97923ea53083e3aaa88b40b90dd551462f8583b855af8c60e2a97daef42b6a5",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 443
+        "line": 445
       },
       "placeholders": [],
       "status": "approved"
@@ -1886,7 +1886,7 @@
       "hash": "6bfef463282852f31d93a92bde6da92e5472b703ce624c5ea59cccfe7c443d44",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 444
+        "line": 446
       },
       "placeholders": [],
       "status": "approved"
@@ -1896,7 +1896,7 @@
       "hash": "ac08ede1036f54adc7549911f5d51afe3fc397a784a9ebaf7a9ec69445ab9069",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 500
+        "line": 502
       },
       "placeholders": [],
       "status": "approved"
@@ -1906,7 +1906,7 @@
       "hash": "cf5f316838837928dcf3f2598977e726069114237b1a034e31fbe6c54c17b881",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 450
+        "line": 452
       },
       "placeholders": [],
       "status": "approved"
@@ -1916,7 +1916,7 @@
       "hash": "2eadb22d22a6304029ed6378cc413e9bb9433ae96dd49a942db630e6da053efb",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 449
+        "line": 451
       },
       "placeholders": [],
       "status": "approved"
@@ -1939,7 +1939,7 @@
       "hash": "7ef5eec47c680e0c971a57b893ec27ef22d990eb43ee494e1192a929cb91abbc",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 382
+        "line": 384
       },
       "placeholders": [],
       "status": "approved"
@@ -1949,7 +1949,7 @@
       "hash": "5dede18821db98c63a054c0950bdd151243539c2f6a645cbcba517e3bfa93a9a",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 751
+        "line": 753
       },
       "placeholders": [],
       "status": "approved"
@@ -1959,7 +1959,7 @@
       "hash": "dfbfd0da8890920dca12a78a08210bc467df81e904dbca2aad7e005ac10e1e00",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 482
+        "line": 484
       },
       "placeholders": [
         "0"
@@ -1972,7 +1972,7 @@
       "hash": "60c5e38dde51c4376aebc8b851c4863c7ff3db52548e77876be76106b99cf7cf",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 509
+        "line": 511
       },
       "placeholders": [],
       "status": "approved"
@@ -1982,7 +1982,7 @@
       "hash": "d911111c438404b954d67ad7d04f7772f7efbc8829a61c73b25f73974eca4404",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 304
+        "line": 311
       },
       "placeholders": [],
       "status": "approved"
@@ -1992,7 +1992,7 @@
       "hash": "35d77d06ad266be8d0dd88d2cb78c5a99b1c2babf91e12026f17895c0312e5f4",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 311
+        "line": 307
       },
       "placeholders": [],
       "status": "approved"
@@ -2002,7 +2002,7 @@
       "hash": "5a15ad74e0c4d6c1e90c592d5485076db5f222ab3181c0c2c3e5dc1895439cb1",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 321
+        "line": 323
       },
       "placeholders": [],
       "status": "approved"
@@ -2032,7 +2032,7 @@
       "hash": "0f3f7f57c7d02caf7c6d25762b0fa4fa8a6670e2292ef7aa95bc42480a50f22c",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 362
+        "line": 364
       },
       "placeholders": [],
       "status": "approved"
@@ -2042,7 +2042,7 @@
       "hash": "ca140485678cc29e98fde86d3d9f3cf9b14d733a1201e1c5201692be2b04064e",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 546
+        "line": 548
       },
       "placeholders": [],
       "status": "approved"
@@ -2052,7 +2052,7 @@
       "hash": "9c5e1753a3899e257ceefba0e9db219367b253bd82ca54adf52df3851dfd0850",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 626
+        "line": 628
       },
       "placeholders": [],
       "status": "approved"
@@ -2072,7 +2072,7 @@
       "hash": "57dfd02defd2d92af77b040041af75a9fcf9e38b663a5a55fa701bfb4b8ac07a",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 721
+        "line": 723
       },
       "placeholders": [
         "0",
@@ -2089,7 +2089,7 @@
       "hash": "d15cd445b14916975798d9cd288c48612fde4c0052e49965c63872ed4d69e8f6",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 471
+        "line": 473
       },
       "placeholders": [
         "0",
@@ -2117,7 +2117,7 @@
       "hash": "7e9f878dbb4a86a03b564f9839d9d1ca17b82bedc3c0d1ff3dad4098d2f785e0",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 720
+        "line": 722
       },
       "placeholders": [
         "0",
@@ -2147,7 +2147,7 @@
       "hash": "cd787565b1dc4240973ffaeccf78a8a28e2ed3e0487ed0e605227063195fd528",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 590
+        "line": 592
       },
       "placeholders": [],
       "status": "approved"
@@ -2157,7 +2157,7 @@
       "hash": "d538f43732e89381f0ee018071b28a687d1982b7ea83c7bb4ea3d29feea4f968",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 586
+        "line": 588
       },
       "placeholders": [],
       "status": "approved"
@@ -2167,7 +2167,7 @@
       "hash": "1d3239626e6043df0b2f401f7fe69977b8672eb338fd469c2d6e6b687f8902a6",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 583
+        "line": 585
       },
       "placeholders": [],
       "status": "approved"
@@ -2177,7 +2177,7 @@
       "hash": "77433753bf8527bfd23b920e7443ba8664b41c2cf309d42065a9dbeee5e8497e",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 584
+        "line": 586
       },
       "placeholders": [],
       "status": "approved"
@@ -2187,7 +2187,7 @@
       "hash": "ca08b5198db22228f1e125e4f96bd5cd909b89ff4ceabb743378d9fa07e16204",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 591
+        "line": 593
       },
       "placeholders": [],
       "status": "approved"
@@ -2197,7 +2197,7 @@
       "hash": "3b0af5e1ea284dbd451f259b95e5be2a11c8eb3d7956cc421063b053ddf6eac4",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 596
+        "line": 598
       },
       "placeholders": [],
       "status": "approved"
@@ -2207,7 +2207,7 @@
       "hash": "78574fa82e5930d82445e3809b4d8e0b5a7db9d3e31d856683f3cec04245ecd8",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 640
+        "line": 642
       },
       "placeholders": [],
       "status": "approved"
@@ -2217,7 +2217,7 @@
       "hash": "cdb4e1eb8e1233958bec091ddd7d0413bde4a621c2891b64ece1a2faf788dfd1",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 602
+        "line": 604
       },
       "placeholders": [],
       "status": "approved"
@@ -2227,7 +2227,7 @@
       "hash": "f9dda699ced41ee85d438eeb655d40567e5f6982ed1c617e86a270b0cb560d69",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 603
+        "line": 605
       },
       "placeholders": [],
       "status": "approved"
@@ -36490,7 +36490,7 @@
       "hash": "aa99a3b27f75c65b7f8b0dab1fe75c2dc4cbebd835d7f86b1e13d1ef4b355de1",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 474
+        "line": 488
       },
       "placeholders": [],
       "status": "approved"
@@ -36500,7 +36500,7 @@
       "hash": "2dc8e0d3610b5f340627bdb126f9277974fa79d166efa7f9d2d438330d2dd52f",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 791
+        "line": 809
       },
       "placeholders": [],
       "status": "approved"
@@ -36530,7 +36530,7 @@
       "hash": "6a4c1d2fab5542ad1cd79a86fc8873b8088de0425951771e1fcc871435aeb94a",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 201
+        "line": 212
       },
       "placeholders": [],
       "status": "approved"
@@ -36540,7 +36540,7 @@
       "hash": "8c78ec8035c14c1f60d1242bcbed178f58e2b531250e0c56c453085028776ab3",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 812
+        "line": 830
       },
       "placeholders": [],
       "status": "approved"
@@ -36550,7 +36550,7 @@
       "hash": "8b9c9b2beec09d345a7f7a63a58d6d1658faaebe51d4c40b1eeba19934bc29d1",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 285
+        "line": 296
       },
       "placeholders": [],
       "status": "approved"
@@ -36560,7 +36560,7 @@
       "hash": "6df928aba7eb3b1968cb5a3aa588e446f3182cb9ade3b343487803f15ade0fd7",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 262
+        "line": 273
       },
       "placeholders": [],
       "status": "approved"
@@ -36570,7 +36570,7 @@
       "hash": "3836349891877d9163f42724ac334daaa04423cfcaa47523b319b39f98fb10b8",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 309
+        "line": 320
       },
       "placeholders": [],
       "status": "approved"
@@ -36580,7 +36580,7 @@
       "hash": "a13de209c880f830ae00cbf64bf8d6233c227f58a9208a77a2670793657456b7",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 238
+        "line": 249
       },
       "placeholders": [],
       "status": "approved"
@@ -36590,7 +36590,7 @@
       "hash": "0b0ffdf330078d3c6c6ce1b5af211dfbac767b3aab4e10e5c1410035b84180c5",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 395
+        "line": 409
       },
       "placeholders": [],
       "status": "approved"
@@ -36610,7 +36610,7 @@
       "hash": "5fde2ee56aa6a9c459a61dc1a8f690299d81c15af676b5e4fb98ba673cf356c6",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 298
+        "line": 309
       },
       "placeholders": [],
       "status": "approved"
@@ -36630,7 +36630,7 @@
       "hash": "a0866c915eee5c1a84da1f5a4b343837962df6ae07acaa170f184bc11d93c503",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 818
+        "line": 836
       },
       "placeholders": [],
       "status": "approved"
@@ -36640,7 +36640,7 @@
       "hash": "b3774b962aaa649ccb2062cb5be4d1c1fc5f1e20f8725f391ef18db19024a10d",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 813
+        "line": 831
       },
       "placeholders": [],
       "status": "approved"
@@ -36650,7 +36650,7 @@
       "hash": "c05dd6345812b5fc906ed91d35738ad12c78ba8e56bb5d43e357ee94bdd1d954",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 917
+        "line": 935
       },
       "placeholders": [],
       "status": "approved"
@@ -36660,7 +36660,7 @@
       "hash": "36d6a726e26ac6ff6ff630bef3d58e613d34e3cd3ca19818f4685e029e28d9d9",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 912
+        "line": 930
       },
       "placeholders": [],
       "status": "approved"
@@ -36670,7 +36670,7 @@
       "hash": "57da654615394778219809a3ff3836d00aea20916c8abeb3b7709ba858f00cd7",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 560
+        "line": 574
       },
       "placeholders": [],
       "status": "approved"
@@ -36680,7 +36680,7 @@
       "hash": "663e9beb112031ee742a283e4c7a9b3d7dae3917143f71a95b9bf4c7855bef10",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 666
+        "line": 684
       },
       "placeholders": [],
       "status": "approved"
@@ -36690,7 +36690,7 @@
       "hash": "41e60a3d9d66d6e169f007fa1f9dd154592dc1d148cab188eda38ecda41d0ec6",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 207
+        "line": 218
       },
       "placeholders": [],
       "status": "approved"
@@ -36700,7 +36700,7 @@
       "hash": "935e7c299dcd317ae9945f07aff5948450bcd57fb2096b2850bd643091cf41a7",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 775
+        "line": 793
       },
       "placeholders": [],
       "status": "approved"
@@ -36710,7 +36710,7 @@
       "hash": "da820f707b0349db7179ca2fd99fe808ae5a78eeb85f7b6c5ab55263b515969e",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 610
+        "line": 628
       },
       "placeholders": [],
       "status": "approved"
@@ -36720,7 +36720,7 @@
       "hash": "7c2e40541cb9a38cd306de5a365f8ba5ee8e898b6aeaa0936e9f00094b2c8afc",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 1016
+        "line": 1043
       },
       "placeholders": [],
       "status": "approved"
@@ -36730,7 +36730,7 @@
       "hash": "442bc2b0ceb66478a1cac7f72684916a4b9f307f5b6a45dce82b45fa0d83d499",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 417
+        "line": 431
       },
       "placeholders": [
         "0"
@@ -36743,7 +36743,7 @@
       "hash": "e5fbdb7bfa7e63c992e2ee2f5c65be562493c67059611eecd3d0e03bdd870788",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 1067
+        "line": 1094
       },
       "placeholders": [
         "0"
@@ -36756,7 +36756,7 @@
       "hash": "4a8608ba5a39aef4ac21c5e88af03b7c2ec21e57f6d9b82771a2420e4079da3e",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 1068
+        "line": 1095
       },
       "placeholders": [
         "0",
@@ -36770,7 +36770,7 @@
       "hash": "7dc4da202820094270174a5c7b4da4b4284de02f1165ff335991ad6fa0180b58",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 306
+        "line": 317
       },
       "placeholders": [],
       "status": "approved"
@@ -36780,7 +36780,7 @@
       "hash": "72f2c80cb1f0bd40a85fc4ee38f21af5aaa200107741d99759dbc448291d8988",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 704
+        "line": 722
       },
       "placeholders": [],
       "status": "approved"
@@ -36790,7 +36790,7 @@
       "hash": "d47de030323e349fb47c0210c40feb2ac7d5cca5118b8c789f7207ddbe0ed622",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 499
+        "line": 513
       },
       "placeholders": [],
       "status": "approved"
@@ -36800,7 +36800,7 @@
       "hash": "17b8b11fe6e17bbed6e10f6effca8993288a480ca00557addc3dcc04f5dfcdb5",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 848
+        "line": 866
       },
       "placeholders": [],
       "status": "approved"
@@ -36810,7 +36810,7 @@
       "hash": "27f18ca3c72eb04b2c11c41ca7fba1a9d70980128616352a07fd72a9d0804932",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 307
+        "line": 318
       },
       "placeholders": [],
       "status": "approved"
@@ -36820,7 +36820,7 @@
       "hash": "523d62c23c4688fb2a165e79b978c8ee315ab140bac0fcc5b1cf16f6c67c8b00",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 531
+        "line": 545
       },
       "placeholders": [],
       "status": "approved"
@@ -36830,7 +36830,7 @@
       "hash": "ff5a627f9c56d0a9f35e1468859ed3ca5aee3fff590e09887393754d79a6be88",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 981
+        "line": 1008
       },
       "placeholders": [],
       "status": "approved"
@@ -36840,7 +36840,7 @@
       "hash": "7804f7a79a9eee323b6e89d3f8287c7d36076f4d76291646295f435b0dec736e",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 238
+        "line": 249
       },
       "placeholders": [],
       "status": "approved"
@@ -36850,7 +36850,7 @@
       "hash": "39c5cc484c73e4737fb5c924c5f86013659d5082101bf8ed0bd0d7de28872e35",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 745
+        "line": 763
       },
       "placeholders": [],
       "status": "approved"
@@ -36860,7 +36860,7 @@
       "hash": "73250e92eac97d3997da681fdc24d1dcc7999f0a2dec24206edcf36ccf0127b4",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 579
+        "line": 593
       },
       "placeholders": [],
       "status": "approved"
@@ -36870,7 +36870,7 @@
       "hash": "8ba7571f7a832b0034e6c925121df2b041dfaefd161560b210802ab0bba6fa94",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 1053
+        "line": 1080
       },
       "placeholders": [],
       "status": "approved"
@@ -36880,7 +36880,7 @@
       "hash": "2ebaedd5f0b53a75d58d39c4a57c898f0705610cf031f8cf49823bd9284271d5",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 777
+        "line": 795
       },
       "placeholders": [],
       "status": "approved"
@@ -36890,7 +36890,7 @@
       "hash": "e3d302188d4b21872b53b175b46bf2dec2ae64bd24aa2320aa7065ff85f34450",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 238
+        "line": 249
       },
       "placeholders": [],
       "status": "approved"
@@ -36900,7 +36900,7 @@
       "hash": "e2e110d774cad5e3609880be25fd16d216ca7f16f7be6905cf53ccef9a449c3e",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 260
+        "line": 271
       },
       "placeholders": [],
       "status": "approved"
@@ -36910,7 +36910,7 @@
       "hash": "7973549c3fb34cdfa5ee9ee668ecdc02391b1cc28e6ea8f18e26297b54da85fb",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 397
+        "line": 411
       },
       "placeholders": [],
       "status": "approved"
@@ -36920,7 +36920,7 @@
       "hash": "75828adf710ce6c9d4a624e363c07e17e6c4347eec302398847f06ee85d177e7",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 821
+        "line": 839
       },
       "placeholders": [],
       "status": "approved"
@@ -36930,7 +36930,7 @@
       "hash": "c1f88e9d6c4145cf0530ae020155384d5688d70ed82a07a35d783bbc4b32238c",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 238
+        "line": 249
       },
       "placeholders": [],
       "status": "approved"
@@ -36950,7 +36950,7 @@
       "hash": "977e207d22d120a105e5d5e0087fcfec76ed62ad01ab5bc857af9174f0855723",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 572
+        "line": 586
       },
       "placeholders": [],
       "status": "approved"
@@ -36960,7 +36960,7 @@
       "hash": "3c2645a17f60816a45aab27a52325def212f9c7198e755274bb874f8fbb52de8",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 193
+        "line": 204
       },
       "placeholders": [],
       "status": "approved"
@@ -36970,7 +36970,7 @@
       "hash": "94773b66b57bd4e7b432447fd50c7c4fbe9ca652f9e849865d8563dcf7660037",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 194
+        "line": 205
       },
       "placeholders": [],
       "status": "approved"
@@ -36980,7 +36980,7 @@
       "hash": "4e04462fa3ee3a7036df246b38398fe6d5873f3d3bd403db530ff4564aba5096",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 827
+        "line": 845
       },
       "placeholders": [],
       "status": "approved"
@@ -36990,7 +36990,7 @@
       "hash": "b2ef631bca17f1c0e824a553c09f4dc92d6e8e5bf12af314a388f927bfca0bab",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 185
+        "line": 186
       },
       "placeholders": [],
       "status": "approved"
@@ -37000,7 +37000,7 @@
       "hash": "d6b206585b93da356fd144c08eac7446eb126bb4d2adf6970f9b97bb9c149dd5",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 238
+        "line": 249
       },
       "placeholders": [],
       "status": "approved"
@@ -37010,7 +37010,7 @@
       "hash": "c30877d8ec3aa4e244c09c7e23c88c2b88011415cce7fdfe06ff573cf0c7b3ca",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 399
+        "line": 413
       },
       "placeholders": [],
       "status": "approved"
@@ -37020,7 +37020,7 @@
       "hash": "f2502902671c99482427df4d51d84af1e7ee10cefd5c83db3e4e54f834f00b02",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 258
+        "line": 269
       },
       "placeholders": [],
       "status": "approved"
@@ -37030,7 +37030,7 @@
       "hash": "f2ce05dffc5edb31e2883db11db29407c1e5e6ceca2a182e3204641cf837fe5e",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 269
+        "line": 280
       },
       "placeholders": [],
       "status": "approved"
@@ -37040,7 +37040,7 @@
       "hash": "fb09c7cfee4eea380c462333d3ee2b6a106e5a165844e7e9d24075c2165a52dc",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 284
+        "line": 295
       },
       "placeholders": [],
       "status": "approved"
@@ -37050,7 +37050,7 @@
       "hash": "9c26c543725e3bf756ee6ddcd938c43c732c323389c58234303d951b7e8cd461",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 946
+        "line": 970
       },
       "placeholders": [],
       "status": "approved"
@@ -37060,7 +37060,7 @@
       "hash": "6bed78ba0de12f2294ad3d69b04e9d425a22d875610a59fd960f08a4d2a05e5c",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 188
+        "line": 199
       },
       "placeholders": [],
       "status": "approved"
@@ -37070,7 +37070,17 @@
       "hash": "203536539140fa532483734ca188f8b9ae79f4b396ed3efd896d4909e635b394",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 653
+        "line": 671
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "tools.inperson.no-hands-recorded-yet": {
+      "value": "No hands recorded yet.",
+      "hash": "219bce601821b59475fbd1f1f14864a0c809a84569c7eda2c817e6fe4dfe2364",
+      "source": {
+        "file": "in-person-ui.ts",
+        "line": 596
       },
       "placeholders": [],
       "status": "approved"
@@ -37080,7 +37090,17 @@
       "hash": "3dd29410b069c6b984978e3948082b834b7b6b563b2c1628cbd079e1e701a4d1",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 426
+        "line": 440
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "tools.inperson.no-sessions-yet": {
+      "value": "No sessions yet.",
+      "hash": "0e25da739ad62e684664678083a4fb021acc563b3580d00149878f1b373face9",
+      "source": {
+        "file": "in-person-ui.ts",
+        "line": 196
       },
       "placeholders": [],
       "status": "approved"
@@ -37090,7 +37110,7 @@
       "hash": "95f04249688939186131586e830338dd56304c3aafb88f059c2afa8389610477",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 588
+        "line": 606
       },
       "placeholders": [],
       "status": "approved"
@@ -37100,7 +37120,7 @@
       "hash": "4bbd1492903443b182a47a41d4d7ac5898089f38a689466be657a5af385d2fd1",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 561
+        "line": 575
       },
       "placeholders": [],
       "status": "approved"
@@ -37110,7 +37130,7 @@
       "hash": "921900d078c41600bcfed3fb8db0888ed3dc3ce16574ec59a700207ff10cd844",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 692
+        "line": 710
       },
       "placeholders": [],
       "status": "approved"
@@ -37120,7 +37140,7 @@
       "hash": "b280720687ac4e475d659d35100c71f8620a024798bd6d252226c91a45e48607",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 661
+        "line": 679
       },
       "placeholders": [
         "0",
@@ -37134,7 +37154,7 @@
       "hash": "6c310b6675784b9092f5bf8a023a7ba7d0052f106295c9df50253fa85d97a94c",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 189
+        "line": 200
       },
       "placeholders": [],
       "status": "approved"
@@ -37144,7 +37164,7 @@
       "hash": "144a25c75ab0c88b356272a17c5fbad24960c1cdf46e2e11f009c2e3ff56a3da",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 291
+        "line": 302
       },
       "placeholders": [],
       "status": "approved"
@@ -37154,7 +37174,7 @@
       "hash": "0666bfd5f6d40d004f75883e95187be068cc315a8d933ad16ffba5d16f8038d2",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 265
+        "line": 276
       },
       "placeholders": [],
       "status": "approved"
@@ -37164,7 +37184,7 @@
       "hash": "24b3b83d7e9cfe1d39677644c08e8d204834a2c5a0c5ec454b08ed11026c42b5",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 840
+        "line": 858
       },
       "placeholders": [],
       "status": "approved"
@@ -37174,7 +37194,7 @@
       "hash": "241c75409278874095b343a758827ebca7ef656c0268205b61bce32276dce56c",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 500
+        "line": 514
       },
       "placeholders": [],
       "status": "approved"
@@ -37184,7 +37204,7 @@
       "hash": "8dd09c92e666e0ea733f84a5360bc610cafcd36609feba85c50017911c880327",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 838
+        "line": 856
       },
       "placeholders": [],
       "status": "approved"
@@ -37207,7 +37227,7 @@
       "hash": "8b8eb0b366c701550deee80fd40e7311f1355623a04da0daf56847f3fea20631",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 832
+        "line": 850
       },
       "placeholders": [],
       "status": "approved"
@@ -37217,7 +37237,7 @@
       "hash": "850d07a9621ca3f02ebbb14c37bf3a7a4fa6b2532696a06d9360055a935fd454",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 292
+        "line": 303
       },
       "placeholders": [],
       "status": "approved"
@@ -37227,7 +37247,7 @@
       "hash": "9c31f007110afbf89a17d1a4f902fa7aae994071b6c89eb2bc73bfa39699acbb",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 951
+        "line": 978
       },
       "placeholders": [],
       "status": "approved"
@@ -37237,7 +37257,7 @@
       "hash": "df535289354689eb4fd70cc10368cdea726ce31548d7be167415155f05f79d08",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 841
+        "line": 859
       },
       "placeholders": [],
       "status": "approved"
@@ -37247,7 +37267,7 @@
       "hash": "3767034185d3c01186426c31f07d3121e18f0dec8b6d78615e9c204c66587e76",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 946
+        "line": 970
       },
       "placeholders": [],
       "status": "approved"
@@ -37257,7 +37277,7 @@
       "hash": "f81ab834de5f84918dc040b884267c2b61cb1a52d46442de10e97f35a94d0500",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 843
+        "line": 861
       },
       "placeholders": [],
       "status": "approved"
@@ -37267,7 +37287,7 @@
       "hash": "67944814dbf9099a63d2671f33450daea166441f625df980afd584e7dcd18155",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 509
+        "line": 523
       },
       "placeholders": [],
       "status": "approved"
@@ -37277,7 +37297,7 @@
       "hash": "5b28491ba985cd49da39c61e92c4408466a9be24a1d6e46f35d0218176b6ecd8",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 524
+        "line": 538
       },
       "placeholders": [],
       "status": "approved"
@@ -37287,7 +37307,7 @@
       "hash": "43c64e72cbce8b3ce7ef8b9af48ffb3d71127b88229611fe9b599b7181dc49d0",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 415
+        "line": 429
       },
       "placeholders": [
         "0"
@@ -37300,7 +37320,7 @@
       "hash": "9eb036304e0170cb29a15770dff628f5b2bcc07f606c8b89655ccf363214cad8",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 299
+        "line": 310
       },
       "placeholders": [],
       "status": "approved"
@@ -37310,7 +37330,7 @@
       "hash": "c520d28db69b28cceab9aa650035770ee5190a3721b8cd2bd965139a77df38cb",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 852
+        "line": 870
       },
       "placeholders": [],
       "status": "approved"
@@ -37320,7 +37340,7 @@
       "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 238
+        "line": 249
       },
       "placeholders": [],
       "status": "approved"
@@ -37330,7 +37350,7 @@
       "hash": "86be6a8589b394caa93fe70932b2573e129f4517cdfd76a502f3ca8e6409161c",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 590
+        "line": 608
       },
       "placeholders": [],
       "status": "approved"
@@ -37340,7 +37360,7 @@
       "hash": "3fc91dde3f96a1091deec813f69572388dcd123331d037b147efa01693ec4c62",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 264
+        "line": 275
       },
       "placeholders": [],
       "status": "approved"
@@ -37350,7 +37370,7 @@
       "hash": "3a61a1cbcb0584f1a09012a31b18d0530c62305b00b6f1993ab56fc1c057ccf6",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 402
+        "line": 416
       },
       "placeholders": [],
       "status": "approved"
@@ -37360,7 +37380,7 @@
       "hash": "ec9ee855f0d37802fb4e60c20b656d6029e59fa63c867cd193365041811bc425",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 544
+        "line": 558
       },
       "placeholders": [],
       "status": "approved"
@@ -37370,7 +37390,7 @@
       "hash": "0545477b5f917404fd26aeeb46a36e5b59774a21e1404261d1d4719ed170b2e5",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 231
+        "line": 242
       },
       "placeholders": [],
       "status": "approved"
@@ -37380,7 +37400,7 @@
       "hash": "29ace3edaae0efb3b4fca43ab5efc6c3fed315a82616623a137ecc2c7ef38f0c",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 558
+        "line": 572
       },
       "placeholders": [],
       "status": "approved"
@@ -37390,7 +37410,7 @@
       "hash": "92278484399c5577f8e2e2eed808c15fa9238fa3effdb6b655d96595a14247c1",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 685
+        "line": 703
       },
       "placeholders": [],
       "status": "approved"
@@ -37400,7 +37420,7 @@
       "hash": "561965b1697d372e8dde5ace9db65b8a2e69e095e960abc9d504b6ce37130a51",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 684
+        "line": 702
       },
       "placeholders": [],
       "status": "approved"
@@ -37420,7 +37440,7 @@
       "hash": "711b5c6af51719b7fdbb63dcdaac05e3c50b79221ab1cf228d7eb79f3c3ab1cb",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 496
+        "line": 510
       },
       "placeholders": [],
       "status": "approved"
@@ -37430,7 +37450,7 @@
       "hash": "805b2cb0469d7e1649a88853d0062534cce981c8d2057358cb8bdff0f34ee941",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 320
+        "line": 331
       },
       "placeholders": [],
       "status": "approved"
@@ -37440,7 +37460,7 @@
       "hash": "4d480b3bb2adf21b2a3a0b7bb29e480fc2a73f4ad2b08a7137cbbc133b08a0f7",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 536
+        "line": 550
       },
       "placeholders": [],
       "status": "approved"
@@ -37450,7 +37470,7 @@
       "hash": "08054aa36807b962928ece0238d190f847718dfce4f1dd214afe58e0bae35560",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 566
+        "line": 580
       },
       "placeholders": [],
       "status": "approved"
@@ -37460,7 +37480,7 @@
       "hash": "8a046cc90ab0a981f95cbf2c9c609309e0cfda272d8c01fdffecdb8286877e91",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 547
+        "line": 561
       },
       "placeholders": [],
       "status": "approved"
@@ -37470,7 +37490,7 @@
       "hash": "4590eb3a55fc3aafe45893f2c057598e04ea249cb7d924e3417735726abaff01",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 238
+        "line": 249
       },
       "placeholders": [],
       "status": "approved"
@@ -37480,7 +37500,7 @@
       "hash": "ee62935cf2ee8b01fe4f09ef3f7bef5e5d19aaecd98d122e79b7edf79a1a652d",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 256
+        "line": 267
       },
       "placeholders": [],
       "status": "approved"
@@ -37490,7 +37510,7 @@
       "hash": "b764f4315984d07649a1694cc9df9d522829122fcb924438d531af5f5568c715",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 401
+        "line": 415
       },
       "placeholders": [],
       "status": "approved"
@@ -37500,7 +37520,7 @@
       "hash": "6c3e98a22ba6a0b05ba0693f0e1f8b5db14a44047c458bbe2703f244afb19ebd",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 447
+        "line": 461
       },
       "placeholders": [],
       "status": "approved"
@@ -37510,7 +37530,7 @@
       "hash": "53cd2c3f0ab709730ad5386bf89c562002e8e4809b72ac61f500d70beb78b527",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 957
+        "line": 984
       },
       "placeholders": [],
       "status": "approved"
@@ -37540,7 +37560,7 @@
       "hash": "6c525996482abf1ed993bd023c26635bcd760c4b17635dbb942c983787096f68",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 971
+        "line": 998
       },
       "placeholders": [],
       "status": "approved"
@@ -37550,7 +37570,7 @@
       "hash": "0d76d72c28357afcf808e1ccd724dd808756a8ecf7b339f91c3887868a81547d",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 482
+        "line": 496
       },
       "placeholders": [],
       "status": "approved"
@@ -37565,12 +37585,22 @@
       "placeholders": [],
       "status": "approved"
     },
+    "tools.inperson.tied": {
+      "value": "· Tied",
+      "hash": "13c406a5940fbb882a0630d64b2940a8cde7d5a844c9ba27163be313df9ea042",
+      "source": {
+        "file": "in-person-ui.ts",
+        "line": 972
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "tools.inperson.transfers-1-000-points-to-the-outstanding-pot": {
       "value": "Transfers 1,000 points to the outstanding pot.",
       "hash": "c393c9af73f8a751d117f97c12efa118095828f07c2661dcf85e58acb3bf3b06",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 833
+        "line": 851
       },
       "placeholders": [],
       "status": "approved"
@@ -37580,7 +37610,7 @@
       "hash": "9fc6cf1d2b434543328444f6f3e18a8d958644b4739d61252a8676c3eac91cf4",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 956
+        "line": 983
       },
       "placeholders": [],
       "status": "approved"
@@ -37590,7 +37620,7 @@
       "hash": "e9e87a45a2b87dc6321fbd356ef4f3f16ae82b6c2c802fc70f8d25db9f3a528e",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 308
+        "line": 319
       },
       "placeholders": [],
       "status": "approved"
@@ -37600,7 +37630,7 @@
       "hash": "6f1b76f5352a2787d54a45e8578ee7ce831d74764a6352096f2671e395f880a6",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 486
+        "line": 500
       },
       "placeholders": [],
       "status": "approved"
@@ -37610,7 +37640,7 @@
       "hash": "fc5f9fa571866d020874c432ccbf4e2a6171607a299c2ba788fdb43e07afcc65",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 492
+        "line": 506
       },
       "placeholders": [],
       "status": "approved"
@@ -37620,7 +37650,7 @@
       "hash": "3fd67706c0289cf8a5d30b5b0ba0481512205a9962d31593cd429d36e30b5907",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 847
+        "line": 865
       },
       "placeholders": [],
       "status": "approved"
@@ -37630,7 +37660,7 @@
       "hash": "cd55a9d95751fb9bb9e4a0988dd7ae3b08c7b49d0a28ba51cd94d9bafe6a27d0",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 713
+        "line": 731
       },
       "placeholders": [
         "0",
@@ -37644,7 +37674,7 @@
       "hash": "21ca73aa725638b8e9e359e1cf712f748b68d6ed9e42c7de1ff2ee6f45cd65d2",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 238
+        "line": 249
       },
       "placeholders": [
         "0",
@@ -37659,7 +37689,7 @@
       "hash": "ad6d681d188c7d3779d6e308d29e62bb263e9bdbb5d44ce276824e6e30c96b9a",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 413
+        "line": 427
       },
       "placeholders": [
         "0",
@@ -37674,7 +37704,7 @@
       "hash": "a1452426144b0b9bb5460f4ac2e6ef7b6305e2825c4a59e380e0387bfea39433",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 653
+        "line": 671
       },
       "placeholders": [
         "0",
@@ -37689,7 +37719,7 @@
       "hash": "14b0e6f5c5391bbc424abafc4b359853d6e3f163945973536ce92b88faaf850c",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 946
+        "line": 970
       },
       "placeholders": [
         "0",
@@ -37707,7 +37737,7 @@
       "hash": "8bfee7217ac583224997e757b98e7cf21ca8a80f07f9f31f929db8fcb05372bd",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 386
+        "line": 400
       },
       "placeholders": [
         "0",
@@ -37721,7 +37751,7 @@
       "hash": "1531a4fdeeefeab08c652b153aed7f162f69c619552259a5affb909f9cc5f72b",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 362
+        "line": 376
       },
       "placeholders": [
         "0",
@@ -37736,7 +37766,7 @@
       "hash": "46802de68f5f9bdabcf143b7ed3b50c357dd459aca80634c31eba2c504d20b17",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 915
+        "line": 933
       },
       "placeholders": [
         "0"
@@ -37749,7 +37779,7 @@
       "hash": "af3bdf9c9c348c547ffef2952ec2be5860af3b62e4dc609b3090d59f14d44fc8",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 433
+        "line": 447
       },
       "placeholders": [
         "0"
@@ -37762,7 +37792,7 @@
       "hash": "c450eae246cfbc50e06796a3e86963dae7e16036213858be1e23b92a58704352",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 797
+        "line": 815
       },
       "placeholders": [
         "0"
@@ -37775,7 +37805,7 @@
       "hash": "3fc6f11f54b99eed04ee50942df2851cd1cc18c70c2ae86782a03ce07fd63690",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 808
+        "line": 826
       },
       "placeholders": [
         "0"
@@ -37788,7 +37818,7 @@
       "hash": "b08fc7e969ce4c00d11ff3d497c11a0eafff02db7fd30981f21cf1efc3451ea5",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 432
+        "line": 446
       },
       "placeholders": [
         "0",
@@ -37803,7 +37833,7 @@
       "hash": "08f42118e263f0bfc35f4fa0bec9e9b40b5243c151d6e874a2a8afff33bb977c",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 279
+        "line": 290
       },
       "placeholders": [
         "0"
@@ -37816,7 +37846,7 @@
       "hash": "6b39274dd787f6e48794dfd9ed65bd495b303111384f6ec4f6ee3ce43fe8bafd",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 274
+        "line": 285
       },
       "placeholders": [
         "0"
@@ -37829,7 +37859,7 @@
       "hash": "341e8350064e05570756f9b36a379d987f7895ee097158ef25189637e46ef74c",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 462
+        "line": 476
       },
       "placeholders": [
         "0",
@@ -37844,7 +37874,7 @@
       "hash": "9fbc12b85c6326b2e97891f11f3387758ad30484991072f177bda83d0a0a908b",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 790
+        "line": 808
       },
       "placeholders": [],
       "status": "approved"
@@ -37854,7 +37884,7 @@
       "hash": "105dc74a45e3688b4bcc374d001c6166d063ea77117c8daf7199893cd02b297e",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 653
+        "line": 671
       },
       "placeholders": [],
       "status": "approved"
@@ -37864,7 +37894,7 @@
       "hash": "a56b2b9d9d8238ceb6fb4f7da5516d9df875bd34c96121c31ec012f0312f0696",
       "source": {
         "file": "in-person-ui.ts",
-        "line": 586
+        "line": 604
       },
       "placeholders": [],
       "status": "approved"

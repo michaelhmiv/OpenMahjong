@@ -5,7 +5,7 @@
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
     "generatedAt": "2026-11-19T23:17:45.773Z",
-    "keyCount": 3975,
+    "keyCount": 3978,
     "model": "qwen/qwen-plus",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -32914,6 +32914,16 @@
       },
       "placeholders": []
     },
+    "review.board.coachs-pick": {
+      "value": "教练推荐",
+      "hash": "443b61918c335f57aa11779f0406e10d160f883094afefe2909ca95a2cb63c29",
+      "status": "draft",
+      "source": {
+        "file": "board-review-ui.ts",
+        "line": 181
+      },
+      "placeholders": []
+    },
     "review.board.concealed-tile": {
       "value": "暗置牌",
       "hash": "afa2d79673c42c29d1d3f46fc28cc0c6ad4391f093ec8e0d1c7939d6d4806e08",
@@ -33564,6 +33574,26 @@
       "source": {
         "file": "board-review-ui.ts",
         "line": 186
+      },
+      "placeholders": []
+    },
+    "review.board.your-discard": {
+      "value": "你打出的牌",
+      "hash": "45d80bdcf00bcf705be5f2a569228d40f3c25f50772a9c456517cdf9f33b9bbb",
+      "status": "draft",
+      "source": {
+        "file": "board-review-ui.ts",
+        "line": 180
+      },
+      "placeholders": []
+    },
+    "review.board.your-discard-is-outlined-the-coachs-pick-is-ringed": {
+      "value": "你打出的牌已加边框；教练推荐的牌已加圆圈。",
+      "hash": "c1515c43642d0f80dabdbbec950d325d3c3290e5bfe1c8206bb8081861efd6e9",
+      "status": "draft",
+      "source": {
+        "file": "review-ui.ts",
+        "line": 277
       },
       "placeholders": []
     },
@@ -35944,6 +35974,16 @@
       },
       "placeholders": []
     },
+    "tools.inperson.no-hands-recorded-yet": {
+      "value": "尚无手牌记录。",
+      "hash": "219bce601821b59475fbd1f1f14864a0c809a84569c7eda2c817e6fe4dfe2364",
+      "status": "draft",
+      "source": {
+        "file": "in-person-ui.ts",
+        "line": 596
+      },
+      "placeholders": []
+    },
     "tools.inperson.no-riichi-sticks": {
       "value": "无立直棒",
       "hash": "3dd29410b069c6b984978e3948082b834b7b6b563b2c1628cbd079e1e701a4d1",
@@ -35951,6 +35991,16 @@
       "source": {
         "file": "in-person-ui.ts",
         "line": 421
+      },
+      "placeholders": []
+    },
+    "tools.inperson.no-sessions-yet": {
+      "value": "尚无对局记录。",
+      "hash": "0e25da739ad62e684664678083a4fb021acc563b3580d00149878f1b373face9",
+      "status": "draft",
+      "source": {
+        "file": "in-person-ui.ts",
+        "line": 196
       },
       "placeholders": []
     },
@@ -36434,6 +36484,16 @@
       },
       "placeholders": []
     },
+    "tools.inperson.tied": {
+      "value": "· 并列",
+      "hash": "13c406a5940fbb882a0630d64b2940a8cde7d5a844c9ba27163be313df9ea042",
+      "status": "draft",
+      "source": {
+        "file": "in-person-ui.ts",
+        "line": 972
+      },
+      "placeholders": []
+    },
     "tools.inperson.transfers-1-000-points-to-the-outstanding-pot": {
       "value": "向未结清彩池转移 1,000 点。",
       "hash": "c393c9af73f8a751d117f97c12efa118095828f07c2661dcf85e58acb3bf3b06",
@@ -36855,6 +36915,16 @@
       "source": {
         "file": "app.ts",
         "line": 4301
+      },
+      "placeholders": []
+    },
+    "ui.app.all-three-opponents-pay": {
+      "value": "三家都需支付",
+      "hash": "e5e84d0ffd19022d8b1b343f8451e6008109adc1aed01ad7f214b47053f158bd",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 4708
       },
       "placeholders": []
     },
@@ -37730,6 +37800,19 @@
         "line": 4560
       },
       "placeholders": []
+    },
+    "ui.app.honba-0": {
+      "value": "本场 {0}",
+      "hash": "89246ba303970ec1779353e412e5161a40e0240852e6c44a368543e0fb63500f",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 4758
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
     },
     "ui.app.honchantai": {
       "value": "混全带幺九",
@@ -40769,59 +40852,6 @@
       "source": {
         "file": "tile-info.ts",
         "line": 112
-      },
-      "placeholders": [
-        "0"
-      ],
-      "dynamic": true
-    },
-    "review.board.coachs-pick": {
-      "value": "教练推荐",
-      "hash": "443b61918c335f57aa11779f0406e10d160f883094afefe2909ca95a2cb63c29",
-      "status": "draft",
-      "source": {
-        "file": "board-review-ui.ts",
-        "line": 181
-      },
-      "placeholders": []
-    },
-    "review.board.your-discard": {
-      "value": "你打出的牌",
-      "hash": "45d80bdcf00bcf705be5f2a569228d40f3c25f50772a9c456517cdf9f33b9bbb",
-      "status": "draft",
-      "source": {
-        "file": "board-review-ui.ts",
-        "line": 180
-      },
-      "placeholders": []
-    },
-    "review.board.your-discard-is-outlined-the-coachs-pick-is-ringed": {
-      "value": "你打出的牌已加边框；教练推荐的牌已加圆圈。",
-      "hash": "c1515c43642d0f80dabdbbec950d325d3c3290e5bfe1c8206bb8081861efd6e9",
-      "status": "draft",
-      "source": {
-        "file": "review-ui.ts",
-        "line": 277
-      },
-      "placeholders": []
-    },
-    "ui.app.all-three-opponents-pay": {
-      "value": "三家都需支付",
-      "hash": "e5e84d0ffd19022d8b1b343f8451e6008109adc1aed01ad7f214b47053f158bd",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4708
-      },
-      "placeholders": []
-    },
-    "ui.app.honba-0": {
-      "value": "本场 {0}",
-      "hash": "89246ba303970ec1779353e412e5161a40e0240852e6c44a368543e0fb63500f",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4758
       },
       "placeholders": [
         "0"
