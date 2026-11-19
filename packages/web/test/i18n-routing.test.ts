@@ -106,8 +106,9 @@ describe("initI18n path precedence", () => {
   });
 
   it("a path locale for an unshipped locale still resolves to English", () => {
-    // Drafts are data, not live: /ja/ serves English until ja ships.
-    expect(initI18n({ pathname: "/ja/" })).toBe("en");
+    // No supported locale is unshipped any more (the core 5 ship), so
+    // the unshipped case is an unsupported prefix: /fr/ serves English.
+    expect(initI18n({ pathname: "/fr/" })).toBe("en");
     expect(getCurrentLocale()).toBe("en");
     resetI18nForTests();
   });
@@ -122,9 +123,10 @@ describe("detectLocale", () => {
     expect(detectLocale(["fr-FR"], ["en", "ja", "ko"])).toBe("en");
   });
 
-  it("resolves to English while only English ships, whatever the browser says", () => {
-    expect(detectLocale(["ja-JP"])).toBe("en");
-    expect(detectLocale(["ko-KR"])).toBe("en");
+  it("resolves to the matching shipped locale by default", () => {
+    expect(detectLocale(["ja-JP"])).toBe("ja");
+    expect(detectLocale(["ko-KR"])).toBe("ko");
+    expect(detectLocale(["fr-FR"])).toBe("en");
   });
 });
 
@@ -173,14 +175,14 @@ describe("firstVisitDetectedLocale", () => {
     ).toBeNull();
   });
 
-  it("offers nothing while only English ships", () => {
+  it("offers the detected locale now that the core 4 ship", () => {
     expect(
       firstVisitDetectedLocale({
         remembered: null,
         pathname: "/",
         languages: ["ja-JP"],
       }),
-    ).toBeNull();
+    ).toBe("ja");
   });
 });
 
@@ -196,9 +198,15 @@ describe("applyLocaleDocumentTags", () => {
     const alternates = [...document.querySelectorAll('link[rel="alternate"][data-om-i18n]')].map(
       (el) => `${el.getAttribute("hreflang")}=${el.getAttribute("href")}`,
     );
+    // x-default + one alternate per shipped locale (core 5 now ship);
+    // no unshipped locale (fr, vi, …) is ever listed.
     expect(alternates).toEqual([
       "x-default=https://openmahjong.app/",
       "en=https://openmahjong.app/",
+      "zh-Hans=https://openmahjong.app/zh-Hans/",
+      "zh-Hant=https://openmahjong.app/zh-Hant/",
+      "ja=https://openmahjong.app/ja/",
+      "ko=https://openmahjong.app/ko/",
     ]);
   });
 
@@ -207,7 +215,7 @@ describe("applyLocaleDocumentTags", () => {
     applyLocaleDocumentTags("en");
     expect(
       document.querySelectorAll('link[rel="alternate"][data-om-i18n]').length,
-    ).toBe(2);
+    ).toBe(6);
   });
 });
 
@@ -222,6 +230,6 @@ describe("shipped-locale agreement across all three lists", () => {
     const serverShipped = JSON.parse(m![1]!) as string[];
     expect(serverShipped).toEqual([...SHIPPED_LOCALES]);
     expect(serverShipped).toEqual([...COVERAGE_SHIPPED]);
-    expect(serverShipped).toEqual(["en"]);
+    expect(serverShipped).toEqual(["en", "zh-Hans", "zh-Hant", "ja", "ko"]);
   });
 });

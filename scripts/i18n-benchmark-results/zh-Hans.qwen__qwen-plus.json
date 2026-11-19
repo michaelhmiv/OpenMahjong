@@ -1,0 +1,315 @@
+{
+  "model": "qwen/qwen-plus",
+  "locale": "zh-Hans",
+  "sampleKeys": 40,
+  "usage": {
+    "prompt_tokens": 1890,
+    "completion_tokens": 1487,
+    "total_tokens": 3377,
+    "cost": 0.0016347474,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00165126,
+      "upstream_inference_prompt_cost": 0.0004914,
+      "upstream_inference_completions_cost": 0.00115986
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "costUsd": 0.0016512600000000003,
+  "results": [
+    {
+      "key": "ui.app.play",
+      "en": "Play",
+      "translated": "游玩",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "ui.app.learn",
+      "en": "Learn",
+      "translated": "学习",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "ui.app.games",
+      "en": "Games",
+      "translated": "对局",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "ui.app.more",
+      "en": "More",
+      "translated": "更多",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "play.groups.triplet",
+      "en": "Triplet",
+      "translated": "刻子",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "play.groups.sequence",
+      "en": "Sequence",
+      "translated": "顺子",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step01.text",
+      "en": "Mahjong is played with tiles. A tile's face tells you what it is: this face shows five circles, so this tile is the 5 of dots.",
+      "translated": "麻将使用牌进行游戏。牌面显示其种类：这张牌面上有五个圆圈，因此它是五筒。",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step02.text",
+      "en": "Tiles come in three suits — three groups of tiles that share one kind of face. The first suit is dots, numbered 1 to 9. Read a dots tile by counting its circles: the number of circles is the tile's number.",
+      "translated": "牌分为三门花色——即三种具有相同牌面特征的牌组。第一门是筒子（又称‘饼子’），编号为1至9。筒子牌通过数其面上的圆圈来识别：圆圈数量即为该牌的数字。",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step03.text",
+      "en": "Tap every dots tile — the tiles whose faces are made of circles.",
+      "translated": "点击所有筒子牌——即牌面由圆圈组成的牌。",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step04.text",
+      "en": "The second suit is bamboo, numbered 1 to 9. Read a bamboo tile by counting its green sticks: the number of sticks is the tile's number. One exception: the 1 of bamboo, first in this row, is a picture of a bird — it has no sticks to count.",
+      "translated": "第二门是索子（又称‘条子’或‘竹子’），编号为1至9。索子牌通过数其面上的绿色竖条来识别：竖条数量即为该牌的数字。但有一个例外：一索（本行最左侧）的牌面是一只鸟，没有竖条可数。",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step05.text",
+      "en": "Tap every bamboo tile — the tiles with the green sticks.",
+      "translated": "点击所有索子牌——即牌面带有绿色竖条的牌。",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step06.text",
+      "en": "The third suit is characters, numbered 1 to 9. A characters tile has a two-part face: the dark character on top is the number, and the red character below is the suit's mark — it means ten thousand, and it is the same on every characters tile. The top characters are numbers written in Chinese: one line is 1, two lines are 2, three lines are 3. This row runs 1 to 9, left to right.",
+      "translated": "第三门是万子，编号为1至9。万子牌牌面由两部分组成：上方深色汉字表示数字，下方红色汉字为花色标记——即‘万’字，所有万子牌下方均相同。上方汉字为中文数字写法：一横为1，两横为2，三横为3。本行从左到右依次为1至9。",
+      "validation": [],
+      "glossary": [
+        "locked term \"Chi\" rendered without draft form \"吃\""
+      ]
+    },
+    {
+      "key": "learn.riichi.tu1.step07.text",
+      "en": "Here are all nine characters tiles again, labelled in order: 1, 2, 3, 4, 5, 6, 7, 8, 9, left to right. To read a characters tile, look only at the small dark character on top — that character is the number. The red mark below is the same on all nine, so it never tells you the number. For 1, 2, and 3 you can count the lines; for the rest, match the top character against this labelled row until the faces are familiar.",
+      "translated": "此处再次列出全部九张万子牌，并按顺序标注：1、2、3、4、5、6、7、8、9（从左到右）。识别万子牌时，只需看上方的小型深色汉字——该字即为数字。下方红色‘万’字在全部九张牌中完全相同，因此无法用于判断数字。对于1、2、3，可通过横画数量判断；其余数字则需将上方汉字与本行标注对照，直至熟悉各牌面。",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step08.text",
+      "en": "Two characters faces are easy to mix up: the 6 and the 9. Here they are side by side — the 6 on the left, the 9 on the right. Compare only the top characters: the 6's top character ends in two separate short legs at the bottom, while the 9's top character is one long stroke that bends down and ends in a hook, with nothing separate below it. No drill in this lesson uses a 6 or a 9 until you have seen them side by side like this.",
+      "translated": "有两个万子牌面容易混淆：六万和九万。此处并排展示——左侧为六万，右侧为九万。仅比较上方汉字：六万的上方汉字底部收笔为两条分离的短腿；而九万的上方汉字是一笔长划，向下弯曲后带钩，下方无任何分离部件。本课所有练习中，六万与九万仅在如此并排展示之后才出现。",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.add-declared-meld",
+      "en": "Add declared meld",
+      "translated": "添加已声明的副露",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.dora-indicator",
+      "en": "Dora indicator",
+      "translated": "宝牌指示牌",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.riichi-deposit-0-s-1-000-points-go-to-1-as-winne",
+      "en": "Riichi deposit: {0}’s 1,000 points go to {1} as winner.",
+      "translated": "立直押金：{0}支付的1000点归胜者{1}所有。",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.open-triplet-pung-pon",
+      "en": "Open triplet (pung / pon)",
+      "translated": "明刻（碰）",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.han",
+      "en": "Han",
+      "translated": "番",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.fu",
+      "en": "Fu",
+      "translated": "符",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.add-0-1",
+      "en": "Add {0}{1}",
+      "translated": "添加{0}{1}",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.compact.decrease-0",
+      "en": "Decrease {0}",
+      "translated": "减少{0}",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "review.board.board-review",
+      "en": "Board review",
+      "translated": "牌局复盘",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "review.board.back-to-games",
+      "en": "Back to Games",
+      "translated": "返回对局",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "review.board.concealed-tile",
+      "en": "Concealed tile",
+      "translated": "暗牌",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "review.board.event-0-1",
+      "en": "Event {0} · {1}",
+      "translated": "事件 {0} · {1}",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "review.board.event.call",
+      "en": "calls {0}",
+      "translated": "宣布{0}",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "review.board.event.discard",
+      "en": "discards",
+      "translated": "打出",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.ron",
+      "en": "Ron",
+      "translated": "荣和",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tsumo",
+      "en": "Tsumo",
+      "translated": "自摸",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.pon",
+      "en": "Pon",
+      "translated": "碰",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.kan",
+      "en": "Kan",
+      "translated": "杠",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.chi",
+      "en": "Chi",
+      "translated": "吃",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "ui.app.a-riichi-stick-is-a-1-000-point-stake-a-player-p",
+      "en": "A riichi stick is a 1,000-point stake a player paid when declaring riichi. The winner collects the sticks on the table.",
+      "translated": "立直棒是玩家宣布立直时支付的1000点押金。胜者获得桌上所有立直棒。",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "ui.app.a-yakuman-is-the-highest-value-kind-of-hand-it-p",
+      "en": "A yakuman is the highest-value kind of hand. It pays a fixed large amount.",
+      "translated": "役满是最高价值的牌型，按固定高额点数结算。",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu5.step05.text",
+      "en": "One rule limits ron: furiten. If one of your waits is a tile you discarded earlier yourself — a tile now sitting in your own pond — then you are in furiten, and you cannot ron at all, not even on a different wait. You can still win by tsumo. Furiten ends when your waits change.",
+      "translated": "荣和有一项限制规则：振听。若你所听的牌中，有一张是你此前自己打出过的牌（即已出现在你的弃牌区中），则你处于振听状态，此时不得荣和，即使听其他牌也不行。但你仍可自摸和牌。当你的听牌发生变化时，振听状态即解除。",
+      "validation": [],
+      "glossary": [
+        "locked term \"Fu\" rendered without draft form \"符\""
+      ]
+    },
+    {
+      "key": "learn.riichi.tu8.step08.text",
+      "en": "If the dealer wins a hand, or a hand is drawn with the dealer tenpai, the same dealer deals the next hand, and the honba count rises by one. Honba are a bonus counter: each honba adds 300 points to the next winning hand. An East-only game runs from East 1 to East 4; an East/South game continues through South 4. A game ends early if any player's score falls below zero.",
+      "translated": "若庄家和牌，或流局时庄家听牌，则下一轮仍由同一人担任庄家，且本场数加一。本场是一种奖励计数器：每增加一场，下一局和牌者额外获得300点。东风战共四局（东一局至东四局）；东风南风战则继续进行至南四局。若任一玩家分数低于零，游戏提前结束。",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu7.step01.text",
+      "en": "A complete shape is not enough to win. The hand must also contain at least one yaku — a scoring pattern in the tiles. Each yaku is worth han, the units a hand's value is counted in; the next lesson turns han into points. Dora are not yaku: each dora adds 1 han as a bonus, but a hand with dora and no yaku still cannot win. This lesson introduces the patterns a beginner meets first.",
+      "translated": "仅有完整的牌型结构尚不足以和牌。手牌还必须至少包含一个役——即牌型中满足计分条件的特定组合。每个役对应一定番数，而番数是计算手牌价值的基本单位；下一课将讲解如何将番数换算为具体点数。宝牌不是役：每张宝牌额外加1番，但若手牌仅有宝牌而无任何役，则仍不能和牌。本课介绍初学者最先接触的几种役。",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.american.pcard.hand.BK-1.description",
+      "en": "Pungs of 1s and 9s in two suits, and a pair of 1s in the third — nothing but the two ends of the suits.",
+      "translated": "两门花色中各有一组1s与9s的刻子，第三门花色中有一对1s——整手牌仅含各门花色的两端数字。",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "review.terms.dora",
+      "en": "Dora are bonus tiles worth one extra han each. Each dora indicator on the table names the tile after it in sequence as dora.",
+      "translated": "宝牌是额外加分的牌，每张宝牌提供1番。桌上每张宝牌指示牌，其后按序排列的牌即为对应的宝牌。",
+      "validation": [],
+      "glossary": []
+    }
+  ]
+}

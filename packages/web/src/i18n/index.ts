@@ -1,23 +1,34 @@
 /**
  * i18n runtime loader — Phase 1 (brief-i18n-v1, sequencing step 1)
- * + Phase 2 Track A routing/detection plumbing + Track B switcher.
+ * + Phase 2 Track A routing/detection plumbing + Track B switcher
+ * + core-5 ship (PR #90).
  *
- * English is the source and the only shipped locale. Every other core
- * locale (zh-Hans, zh-Hant, ja, ko) is an explicitly untranslated stub:
- * lookups fall back to English, and the dashboard reports them 0%.
+ * English is the source. The four core locales (zh-Hans, zh-Hant, ja,
+ * ko) ship as machine translations (owner ruling Nov 19, 2026: SHIP
+ * NOW, community reviews later), clearly marked as such in the
+ * switcher, and community review follows.
  *
  * Rules this module enforces:
  * - No network call to any translation provider, ever. All strings are
  *   static files shipped with the app.
- * - Only `approved` strings in a locale are ever shown. A missing, draft,
- *   or stale key falls back to English in the app and is counted as
- *   unapproved by the dashboard.
+ * - Display rule (ship step): an `approved` string is always shown.
+ *   A `draft` string is shown only in a locale listed in
+ *   MACHINE_TRANSLATED_LOCALES — the initial-ship waiver locales —
+ *   where the language-level "Machine translated" marking makes the
+ *   status honest. A draft in any other locale falls back to English,
+ *   as does a `stale` or `missing` key everywhere. Wave 2 locales
+ *   therefore stay under the approved-only rule until a ruling ships
+ *   them the same way.
  * - Translation memory is keyed by source hash: a locale entry carries
  *   the hash of the English string it was translated from. If the English
  *   hash changes, the entry is stale until re-translated and re-approved.
  */
 
 import enData from "./locales/en.json";
+import jaData from "./locales/ja.json";
+import koData from "./locales/ko.json";
+import zhHansData from "./locales/zh-Hans.json";
+import zhHantData from "./locales/zh-Hant.json";
 import glossaryData from "./glossary.json";
 
 export type KeyStatus = "approved" | "draft" | "stale" | "missing";
@@ -59,11 +70,12 @@ export interface GlossaryFile {
 /** English is the source locale. */
 export const SOURCE_LOCALE = "en";
 
-/** Core 5 locales (brief §Scope). Only English ships in Phase 1. */
+/** Core 5 locales (brief §Scope). All five ship: English plus the
+ *  four machine-translated core locales (PR #90). */
 export const SUPPORTED_LOCALES = ["en", "zh-Hans", "zh-Hant", "ja", "ko"] as const;
 
-/** Locales actually shipped by the app. Phase 1: English only. */
-export const SHIPPED_LOCALES: readonly string[] = ["en"];
+/** Locales actually shipped by the app: the core 5 (PR #90). */
+export const SHIPPED_LOCALES: readonly string[] = ["en", "zh-Hans", "zh-Hant", "ja", "ko"];
 
 /** Locales that ship as machine translations, awaiting community
  *  review (owner ruling, Nov 19, 2026: SHIP NOW, community reviews
@@ -125,14 +137,23 @@ export const REMEMBERED_LOCALE_KEY = "openmahjong.locale.v1";
 const EN = enData as unknown as LocaleFile;
 export const GLOSSARY = glossaryData as unknown as GlossaryFile;
 
-/** Registered locale data. English is built in; other locales register
- *  their file here when they ship (Phase 2). Unregistered locales have
- *  no data, so every lookup falls back to English. */
+/** Registered locale data. English is built in; the four core locales
+ *  register their files here at import (PR #90) — they ship as machine
+ *  translations, so their draft entries display under the display rule
+ *  above. An unregistered locale has no data, so every lookup falls
+ *  back to English. */
 const registry = new Map<string, LocaleFile>([["en", EN]]);
 
 export function registerLocale(id: string, data: LocaleFile): void {
   registry.set(id, data);
 }
+
+// Core-5 ship (PR #90): the machine-translated locale files are part
+// of the bundle, registered at import like English.
+registerLocale("ja", jaData as unknown as LocaleFile);
+registerLocale("ko", koData as unknown as LocaleFile);
+registerLocale("zh-Hans", zhHansData as unknown as LocaleFile);
+registerLocale("zh-Hant", zhHantData as unknown as LocaleFile);
 
 export function getLocaleData(id: string): LocaleFile | undefined {
   return registry.get(id);
@@ -200,8 +221,10 @@ export function resolveLocale(
 
 /** Per-key status in a locale, readable by the dashboard.
  *  - "approved": translated, approved, and its hash matches the current
- *    English source — the only status the app ever shows.
- *  - "draft": translated but not yet native-speaker approved.
+ *    English source — always shown by the app.
+ *  - "draft": translated but not yet native-speaker approved. Shown
+ *    only in a machine-translated ship locale (see isDisplayable);
+ *    elsewhere it falls back to English.
  *  - "stale": translated from an older English source (hash mismatch).
  *  - "missing": no entry in that locale (or no such key in English). */
 export function keyStatus(key: string, locale: string = currentLocale): KeyStatus {
@@ -226,14 +249,28 @@ export function interpolate(
   });
 }
 
+/** Whether a key's entry in a locale is shown by the app (display
+ *  rule, PR #90 ship step): `approved` always; `draft` only in a
+ *  machine-translated ship locale, where the language-level marking
+ *  keeps it honest. `stale` and `missing` never show. Statuses are
+ *  already hash-checked by keyStatus(), so a draft here is current. */
+export function isDisplayable(key: string, locale: string = currentLocale): boolean {
+  const status = keyStatus(key, locale);
+  if (status === "approved") return true;
+  if (status === "draft" && isMachineTranslated(locale)) return true;
+  return false;
+}
+
 /** Look up a key in the current locale with English fallback.
- *  Only `approved` entries are shown; anything else (missing, draft,
- *  stale) returns the English source. A key with no English entry at
- *  all returns the key id itself, so the gap is visible. */
+ *  Shown entries follow isDisplayable(): approved always, draft only
+ *  in a machine-translated ship locale; anything else (missing,
+ *  stale, or a draft in any other locale) returns the English source.
+ *  A key with no English entry at all returns the key id itself, so
+ *  the gap is visible. */
 export function t(key: string, ...args: readonly (string | number)[]): string {
   const en = EN.keys[key];
   if (!en) return key;
-  if (keyStatus(key) !== "approved") return interpolate(en.value, args);
+  if (!isDisplayable(key)) return interpolate(en.value, args);
   const entry = registry.get(currentLocale)?.keys[key];
   return interpolate(entry?.value ?? en.value, args);
 }
@@ -257,14 +294,16 @@ export function tx(
 }
 
 /** Look up a key in a specific locale (not the current one), with
- *  English fallback. Only `approved` entries are shown — the same
+ *  English fallback. Shown entries follow isDisplayable() — the same
  *  rule as `t()`, applied to the named locale. `fallback` is the
  *  key's English source (same role as in `tx()` — the extractor
  *  records it in en.json); it renders only when the key has no
  *  English entry at all. The first-visit sheet uses this: its title
  *  and primary button are in the *detected* language while the
- *  session is still English, so the strings come from the detected
- *  locale's approved entries, never from a draft. */
+ *  session is still English. For a machine-translated locale those
+ *  strings are its drafts, and the sheet carries the
+ *  machine-translation line at the decision point, so the sheet never
+ *  presents draft copy as reviewed copy. */
 export function tForLocale(
   key: string,
   locale: string,
@@ -272,7 +311,7 @@ export function tForLocale(
   ...args: readonly (string | number)[]
 ): string {
   const en = EN.keys[key];
-  if (locale !== SOURCE_LOCALE && en && keyStatus(key, locale) === "approved") {
+  if (locale !== SOURCE_LOCALE && en && isDisplayable(key, locale)) {
     const entry = registry.get(locale)?.keys[key];
     if (entry) return interpolate(entry.value, args);
   }
@@ -361,9 +400,7 @@ export function canonicalUrlForLocale(locale: string): string {
 /** Set the document's language + canonical + hreflang alternates for the
  *  active locale. Alternates list SHIPPED locales only: an unshipped
  *  locale (drafts exist, nothing approved) must never be pointed at by a
- *  crawler, since its URL would serve English content. With only English
- *  shipped this sets lang="en", canonical to the root, and the en +
- *  x-default alternates to the root — English behaviour is unchanged. */
+ *  crawler, since its URL would serve English content. */
 export function applyLocaleDocumentTags(locale: string): void {
   try {
     if (typeof document === "undefined") return;
@@ -417,9 +454,7 @@ export function detectLocale(
  *  detected locale the sheet should offer, or null when no sheet
  *  is due. A sheet is due only when there is no remembered choice,
  *  no locale in the URL (an explicit URL choice suppresses it), and
- *  browser detection yields a shipped locale other than English.
- *  With only English shipped this is always null — the sheet is
- *  dormant until the first non-English locale ships. */
+ *  browser detection yields a shipped locale other than English. */
 export function firstVisitDetectedLocale(opts?: {
   remembered?: string | null;
   pathname?: string;
@@ -445,9 +480,7 @@ export function firstVisitDetectedLocale(opts?: {
  *  activation is English until the user picks — in the sheet or in
  *  the switcher. `detectLocale()` / `firstVisitDetectedLocale()`
  *  expose detection to the sheet. A path locale for an unshipped
- *  locale still resolves to English — drafts are data, not live —
- *  so English behaviour is byte-identical until a locale ships.
- *  Returns the active locale. */
+ *  locale still resolves to English. Returns the active locale. */
 export function initI18n(opts?: {
   available?: readonly string[];
   pathname?: string;

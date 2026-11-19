@@ -29,7 +29,22 @@
         "zh-Hans": null,
         "zh-Hant": null
       },
-      "note": "A run (sequence) meld."
+      "note": "A run (sequence) meld.",
+      "research": {
+        "status": "Sourced research for Michael's approval — NOT native-speaker approval. Locked forms stay null until a native speaker decides. See ~/workspace/mahjong-prep/pung-pon-research.md.",
+        "call": {
+          "zh-Hans": "吃",
+          "zh-Hant": "吃",
+          "ja": "チー",
+          "ko": "치"
+        },
+        "noun": {
+          "zh-Hans": "顺子",
+          "zh-Hant": "順子",
+          "ja": "順子",
+          "ko": "슌쯔"
+        }
+      }
     },
     "dora": {
       "en": "Dora",
@@ -119,7 +134,23 @@
         "zh-Hans": null,
         "zh-Hant": null
       },
-      "note": "A four-of-a-kind meld (quad)."
+      "note": "A four-of-a-kind meld (quad).",
+      "research": {
+        "status": "Sourced research for Michael's approval — NOT native-speaker approval. Locked forms stay null until a native speaker decides. See ~/workspace/mahjong-prep/pung-pon-research.md.",
+        "call": {
+          "zh-Hans": "杠",
+          "zh-Hant": "槓",
+          "ja": "カン",
+          "ko": "깡"
+        },
+        "noun": {
+          "zh-Hans": "杠子",
+          "zh-Hant": "槓子",
+          "ja": "槓子",
+          "ko": "깡쯔"
+        },
+        "note": "Unlike pon/pung, the English source does not distinguish the kan call from the kan noun, and the drafts use the call form as the noun far more often (ja カン 56x vs 槓子 8x in the 96 pung keys). Kan noun forms were NOT rewritten in this track; native reviewer to rule — see research file."
+      }
     },
     "pon": {
       "en": "Pon",
@@ -129,7 +160,23 @@
         "zh-Hans": null,
         "zh-Hant": null
       },
-      "note": "A three-of-a-kind meld (pung)."
+      "note": "A three-of-a-kind meld (pung). English split: Pon is the riichi call; Pung is the noun used by American / MCR / Hong Kong / Taiwanese copy — see the research annotation on this entry.",
+      "research": {
+        "status": "Sourced research for Michael's approval — NOT native-speaker approval. Locked forms stay null until a native speaker decides. See ~/workspace/mahjong-prep/pung-pon-research.md.",
+        "call": {
+          "zh-Hans": "碰",
+          "zh-Hant": "碰",
+          "ja": "ポン",
+          "ko": "퐁"
+        },
+        "noun": {
+          "zh-Hans": "刻子",
+          "zh-Hant": "刻子",
+          "ja": "刻子",
+          "ko": "커쯔"
+        },
+        "englishSplit": "English uses Pon for the riichi call and Pung for the triplet noun in American / MCR / Hong Kong / Taiwanese copy — one locked English form cannot cover both; see research file, Structural finding."
+      }
     },
     "riichi": {
       "en": "Riichi",

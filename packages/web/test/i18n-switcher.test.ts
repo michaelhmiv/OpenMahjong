@@ -7,6 +7,7 @@ import {
   detectLocale,
   firstVisitDetectedLocale,
   getCurrentLocale,
+  initI18n,
   isMachineTranslated,
   registerLocale,
   resetI18nForTests,
@@ -16,25 +17,22 @@ import {
   type LocaleFile,
 } from "../src/i18n/index.js";
 import enData from "../src/i18n/locales/en.json";
+import jaData from "../src/i18n/locales/ja.json";
 
 /**
  * Language switcher (brief-i18n-v1, Phase 2 Track B; design
  * i18n-switcher-v1, Michael-approved 2026-11-19): More-tab LANGUAGE
  * section, drilled-in Language list (shipped locales only), and the
- * first-visit confirmation sheet. Only English ships in this track,
- * so the production behaviour is English-only — the sheet is dormant
- * until the first non-English locale ships, and its positive path is
- * proven here with a registered test locale, never with the design
- * mock's unapproved Japanese strings.
+ * first-visit confirmation sheet. The core 5 ship with PR #90, so the
+ * production behaviour is five locales — the sheet is live for a
+ * detected non-English browser language, and its positive path is
+ * proven here with a registered test locale as well as the real
+ * shipped drafts.
  *
  * Machine-translation marking (owner ruling Nov 19, 2026: SHIP NOW,
- * community reviews later): the core 4 locales will ship with draft
- * PR #90 as machine translations, and the switcher must mark them —
- * a row note, a Language-screen footnote, a sheet line. The marking
- * is keyed off MACHINE_TRANSLATED_LOCALES and is dormant while only
- * English ships; the 5-locale rendering is verified by capture in a
- * scratch flip (see the PR body), not by these tests, because
- * SHIPPED_LOCALES is still ["en"] on this branch.
+ * community reviews later): the core 4 locales ship with draft
+ * PR #90 as machine translations, and the switcher marks them —
+ * a row note, a Language-screen footnote, a sheet line.
  */
 
 const EN_KEYS = (
@@ -45,7 +43,8 @@ function testJaLocale(status: "approved" | "draft"): LocaleFile {
   // Test-only Japanese strings (obviously fake, never the design
   // mock's copy): the approved entry proves the sheet reads the
   // detected locale's approved strings; the draft entry proves a
-  // draft never shows.
+  // draft SHOWS in a machine-translated locale (PR #90 display rule)
+  // and falls back in any other locale.
   return {
     meta: { locale: "ja" },
     keys: {
@@ -128,17 +127,35 @@ describe("tForLocale()", () => {
     );
   });
 
-  it("falls back to English for a draft entry — a draft never shows", () => {
+  it("shows a draft entry in a machine-translated locale — a draft shows there", () => {
+    // Display rule (PR #90): ja is machine-translated, so its draft
+    // strings render, with the machine-translation line on the sheet.
     registerLocale("ja", testJaLocale("draft"));
     expect(
       tForLocale("ui.app.language.sheet.title", "ja", "Display in {0}?", "日本語"),
-    ).toBe("Display in 日本語?");
+    ).toBe("テストタイトル");
+  });
+
+  it("falls back to English for a draft entry in a locale that is not machine translated", () => {
+    registerLocale("fr", {
+      meta: { locale: "fr" },
+      keys: {
+        "ui.app.language.sheet.title": {
+          value: "Afficher en français ?",
+          hash: EN_KEYS["ui.app.language.sheet.title"]!.hash,
+          status: "draft",
+        },
+      },
+    });
+    expect(
+      tForLocale("ui.app.language.sheet.title", "fr", "Display in {0}?", "français"),
+    ).toBe("Display in français?");
   });
 
   it("falls back to English for an unregistered locale", () => {
     expect(
-      tForLocale("ui.app.language.sheet.title", "ko", "Display in {0}?", "한국어"),
-    ).toBe("Display in 한국어?");
+      tForLocale("ui.app.language.sheet.title", "xx", "Display in {0}?", "xx"),
+    ).toBe("Display in xx?");
   });
 
   it("renders the fallback for an unknown key", () => {
@@ -174,23 +191,48 @@ describe("locale metadata", () => {
     expect(hant?.english).toBe("Traditional Chinese");
   });
 
-  it("ships English only: unshipped locales stay hidden", () => {
+  it("ships the core 5: unshipped locales stay hidden", () => {
     expect(shippedLocaleMeta()).toEqual([
       { id: "en", native: "English", english: "English" },
+      { id: "ja", native: "日本語", english: "Japanese" },
+      { id: "ko", native: "한국어", english: "Korean" },
+      { id: "zh-Hans", native: "简体中文", english: "Simplified Chinese" },
+      { id: "zh-Hant", native: "繁體中文", english: "Traditional Chinese" },
     ]);
   });
 });
 
-describe("switcher in the app (English only ships)", () => {
-  it("shows no sheet on boot, even with a Japanese browser language", async () => {
+describe("switcher in the app (core 5 ship)", () => {
+  it("tab labels render in the active locale (regression: labels were module-scope t())", async () => {
+    // TAB_DEFS used to call t() at module scope, which runs at import
+    // time — before main.ts calls initI18n — so the tabs always
+    // rendered English on /ja/. Labels are keys now, resolved when
+    // the tab bar is built. Restore the real ja file first: earlier
+    // tests in this file register 2-key ja fixtures over it.
+    registerLocale("ja", jaData as unknown as LocaleFile);
+    initI18n({ pathname: "/ja/" });
+    expect(getCurrentLocale()).toBe("ja");
+    bootGuest();
+    await settle();
+    const labels = [...root.querySelectorAll(".tabbtn span")].map(
+      (el) => el.textContent,
+    );
+    expect(labels).toEqual(["プレイ", "学ぶ", "ゲーム", "その他"]);
+    resetI18nForTests();
+  });
+
+  it("shows the first-visit sheet on boot with a Japanese browser language", async () => {
+    // The core 4 ship (PR #90), so a clean first visit with a
+    // Japanese browser is offered the sheet — the dormant-English
+    // behaviour ended with the ship.
     Object.defineProperty(window.navigator, "languages", {
       value: ["ja-JP"],
       configurable: true,
     });
     bootGuest();
     await settle();
-    expect(root.querySelector(".i18n-sheet")).toBeNull();
-    expect(root.querySelector(".i18n-scrim")).toBeNull();
+    expect(root.querySelector(".i18n-sheet")).not.toBeNull();
+    expect(root.querySelector(".i18n-scrim")).not.toBeNull();
     expect(getCurrentLocale()).toBe("en");
   });
 
@@ -221,7 +263,7 @@ describe("switcher in the app (English only ships)", () => {
     expect(row?.querySelector(".i18n-val")?.textContent).toBe("English");
   });
 
-  it("Language screen lists shipped locales only, current marked twice", async () => {
+  it("Language screen lists all 5 shipped locales, current marked twice", async () => {
     bootGuest();
     await settle();
     root.querySelector<HTMLButtonElement>('.tabbtn[data-tab="more"]')?.click();
@@ -236,20 +278,32 @@ describe("switcher in the app (English only ships)", () => {
       "Language",
     );
     const rows = [...root.querySelectorAll("#screen-language .i18n-row")];
-    expect(rows).toHaveLength(1);
+    expect(rows).toHaveLength(5);
+    expect(rows.map((r) => r.querySelector(".nm")?.textContent)).toEqual([
+      "English",
+      "日本語",
+      "한국어",
+      "简体中文",
+      "繁體中文",
+    ]);
     expect(rows[0]?.querySelector(".nm")?.textContent).toBe("English");
     expect(rows[0]?.classList.contains("cur")).toBe(true);
     expect(rows[0]?.getAttribute("aria-current")).toBe("true");
     expect(rows[0]?.querySelector(".i18n-check")).not.toBeNull();
+    // Every non-English row carries the machine-translation mark.
+    for (const r of rows.slice(1)) {
+      expect(r.querySelector(".en")?.textContent).toContain("Machine translated");
+    }
     // No tab bar on a drilled-in screen (nav law).
     expect(root.querySelector(".tabbar")?.hasAttribute("hidden")).toBe(true);
     const notes = [...root.querySelectorAll("#screen-language .i18n-note")].map(
       (el) => el.textContent,
     );
-    expect(notes).toHaveLength(2);
+    expect(notes).toHaveLength(3);
     expect(notes[0]).toContain("/ja/");
-    expect(notes[1]).toContain("More languages are coming:");
-    expect(notes[1]).toContain("Vietnamese");
+    expect(notes[1]).toContain("machine translated");
+    expect(notes[2]).toContain("More languages are coming:");
+    expect(notes[2]).toContain("Vietnamese");
     // Back returns to More; tapping the current locale does too.
     root.querySelector<HTMLButtonElement>("#screen-language .i18n-back")?.click();
     await settle();
@@ -293,7 +347,7 @@ describe("machine-translation marking (ruling Nov 19, 2026)", () => {
     }
   });
 
-  it("is dormant while only English ships: no mark, still 2 footnotes", async () => {
+  it("marks machine-translated locales now that the core 4 ship: mark + 3 footnotes", async () => {
     bootGuest();
     await settle();
     root.querySelector<HTMLButtonElement>('.tabbtn[data-tab="more"]')?.click();
@@ -303,15 +357,15 @@ describe("machine-translation marking (ruling Nov 19, 2026)", () => {
     );
     (row as HTMLButtonElement).click();
     await settle();
-    expect(root.querySelector("#screen-language")?.textContent).not.toContain(
+    expect(root.querySelector("#screen-language")?.textContent).toContain(
       "Machine translated",
     );
-    expect(root.querySelector("#screen-language")?.textContent).not.toContain(
+    expect(root.querySelector("#screen-language")?.textContent).toContain(
       "machine translated",
     );
     expect(
       [...root.querySelectorAll("#screen-language .i18n-note")],
-    ).toHaveLength(2);
+    ).toHaveLength(3);
   });
 });
 
@@ -358,14 +412,13 @@ describe("first-visit sheet builder", () => {
     expect(declined).toBe(1);
   });
 
-  it("never shows a draft string in the title", () => {
+  it("shows a draft string in the title for a machine-translated locale", () => {
     registerLocale("ja", testJaLocale("draft"));
     const { sheet } = buildFirstVisitSheet("ja", {
       onAccept: () => {},
       onDecline: () => {},
     });
-    expect(sheet.querySelector(".t")?.textContent).toBe("Display in 日本語?");
-    expect(sheet.querySelector(".t")?.textContent).not.toContain("テスト");
+    expect(sheet.querySelector(".t")?.textContent).toBe("テストタイトル");
   });
 
   it("marks a machine-translated locale with a second fine line", () => {
