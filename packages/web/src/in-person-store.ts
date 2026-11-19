@@ -7,6 +7,7 @@ import {
   type LedgerOperation,
 } from "@openmahjong/engine";
 import { API_BASE } from "./api.js";
+import { tx } from "./i18n/index.js";
 
 export const TABLES_KEY = "openmahjong.tables.v1";
 const LAST_TABLE_ACCOUNT = "openmahjong.tables.last-account.v1";
@@ -90,7 +91,7 @@ export function writeTable(copy: TableCopy, accountId?: string): void {
     (row) => row.session.id !== copy.session.id,
   );
   if (copies.length >= 100)
-    throw new Error("This device already has 100 table sessions");
+    throw new Error(tx("tools.inperson.this-device-already-has-100-table-sessions", "This device already has 100 table sessions"));
   localStorage.setItem(
     tableStorageKey(accountId),
     JSON.stringify([...copies, copy]),
@@ -103,7 +104,7 @@ export function appendTableEvent(
 ): TableCopy {
   if (copy.session.finished)
     throw new Error(
-      "This session is finished. Reopen it before making changes.",
+      tx("tools.inperson.this-session-is-finished-reopen-it-before-making", "This session is finished. Reopen it before making changes."),
     );
   // A correction re-records an existing entry (same recordId) and stays
   // available on a busted table so the bust hand itself can be fixed;
@@ -145,7 +146,7 @@ export function nextUndoTarget(
 export function undoTable(copy: TableCopy): TableCopy {
   if (copy.session.finished)
     throw new Error(
-      "This session is finished. Reopen it before making changes.",
+      tx("tools.inperson.this-session-is-finished-reopen-it-before-making", "This session is finished. Reopen it before making changes."),
     );
   const target = nextUndoTarget(copy.session);
   if (!target) return copy;
@@ -192,7 +193,7 @@ export async function syncTable(
 ): Promise<"saved" | "conflict" | "offline"> {
   const epoch = accountEpochs.get(auth.accountId);
   let copy = readTables(auth.accountId).find((row) => row.session.id === id);
-  if (!copy) throw new Error("Session unavailable");
+  if (!copy) throw new Error(tx("tools.inperson.session-unavailable", "Session unavailable"));
   if (copy.conflict) return "conflict";
   if (!copy.pending) {
     copy = {
@@ -302,12 +303,12 @@ export async function pullTables(
   const response = await fetchFn(`${API_BASE}/api/table-sessions`, {
     credentials: "include",
   });
-  if (!response.ok) throw new Error("Account sessions unavailable");
+  if (!response.ok) throw new Error(tx("tools.inperson.account-sessions-unavailable", "Account sessions unavailable"));
   const body = (await response.json()) as {
     sessions: { id: string; revision: number }[];
   };
   if (!Array.isArray(body.sessions) || body.sessions.length > 100)
-    throw new Error("Invalid account sessions");
+    throw new Error(tx("tools.inperson.invalid-account-sessions", "Invalid account sessions"));
   let loaded = 0;
   for (const summary of body.sessions) {
     const current = readTables(accountId).find(

@@ -2,7 +2,7 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T13:19:25.902Z",
+    "generatedAt": "2026-11-19T13:19:42.813Z",
     "keyCount": 3727,
     "namespaces": {
       "calc.compact": 14,
@@ -33422,7 +33422,7 @@
       "hash": "f47424c1d55e77a3189745d22525f024e756848dad5515f96429a757fa498113",
       "source": {
         "file": "in-person-store.ts",
-        "line": 305
+        "line": 306
       },
       "placeholders": [],
       "status": "approved"
@@ -33862,7 +33862,7 @@
       "hash": "66bb449ae45e6ee1fc833a91e770903a5d48e2aa30abc2fc2473f698dca5a930",
       "source": {
         "file": "in-person-store.ts",
-        "line": 310
+        "line": 311
       },
       "placeholders": [],
       "status": "approved"
@@ -34332,7 +34332,7 @@
       "hash": "b4bc9ad13c556d52ea9f0d7dcaa48014d00a3826415063e1a61fa8e65e758538",
       "source": {
         "file": "in-person-store.ts",
-        "line": 195
+        "line": 196
       },
       "placeholders": [],
       "status": "approved"
@@ -34442,7 +34442,7 @@
       "hash": "af7a3994f8f93b81bf368d7af13529f5b6da044a2e956cd217ee0188eee1d5a8",
       "source": {
         "file": "in-person-store.ts",
-        "line": 93
+        "line": 94
       },
       "placeholders": [],
       "status": "approved"
@@ -34482,7 +34482,7 @@
       "hash": "129420b607e8588cb7795acba5fa9ac50e3dac3de7c1b44f8a4cb60d89dbb18a",
       "source": {
         "file": "in-person-store.ts",
-        "line": 106
+        "line": 107
       },
       "placeholders": [],
       "status": "approved"
