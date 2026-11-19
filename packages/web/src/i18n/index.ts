@@ -249,15 +249,23 @@ export function keyStatus(key: string, locale: string = currentLocale): KeyStatu
   return entry.status;
 }
 
-/** Interpolate positional `{0}`, `{1}`, ... placeholders. Unknown
- *  placeholders are left as-is so a broken template is visible, not silent. */
+/** Interpolate positional `{0}`, `{1}`, ... placeholders. Args are
+ *  `unknown` deliberately: tx() call sites pass a template's own
+ *  interpolations verbatim (array indexing, optional lookups), so the
+ *  type must admit `string | undefined` and friends. An argument that
+ *  was supplied — even undefined — renders exactly as a template
+ *  literal would (String(undefined) === "undefined"), so the English
+ *  output stays byte-identical to the template it replaced. Only a
+ *  placeholder with NO supplied argument is left as-is, so a broken
+ *  template stays visible instead of silently rendering "undefined". */
 export function interpolate(
   template: string,
-  args: readonly (string | number)[] = [],
+  args: readonly unknown[] = [],
 ): string {
   return template.replace(/\{(\d+)\}/g, (m, n) => {
-    const v = args[Number(n)];
-    return v === undefined ? m : String(v);
+    const i = Number(n);
+    if (i >= args.length) return m;
+    return String(args[i]);
   });
 }
 
@@ -283,7 +291,7 @@ export function isDisplayable(key: string, locale: string = currentLocale): bool
  *  (missing, stale, or a draft/reviewed in any other locale) returns
  *  the English source. A key with no English entry at all returns the
  *  key id itself, so the gap is visible. */
-export function t(key: string, ...args: readonly (string | number)[]): string {
+export function t(key: string, ...args: readonly unknown[]): string {
   const en = EN.keys[key];
   if (!en) return key;
   if (!isDisplayable(key)) return interpolate(en.value, args);
@@ -303,7 +311,7 @@ export function t(key: string, ...args: readonly (string | number)[]): string {
 export function tx(
   key: string,
   fallback: string,
-  ...args: readonly (string | number)[]
+  ...args: readonly unknown[]
 ): string {
   if (!EN.keys[key]) return interpolate(fallback, args);
   return t(key, ...args);
@@ -324,7 +332,7 @@ export function tForLocale(
   key: string,
   locale: string,
   fallback: string,
-  ...args: readonly (string | number)[]
+  ...args: readonly unknown[]
 ): string {
   const en = EN.keys[key];
   if (locale !== SOURCE_LOCALE && en && isDisplayable(key, locale)) {

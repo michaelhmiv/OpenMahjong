@@ -286,6 +286,13 @@ function addStepKey(base, value, file, line, extra = {}) {
 }
 
 function addUiKey(namespace, value, file, line, extra = {}) {
+  // Dedupe on the STORED value: addKey() trims, so the dedupe key, the
+  // slug, and the collision comparison must all use the trimmed value —
+  // otherwise " {0}", "{0} " and "{0}" mint three keys for one string
+  // (ui.app.v-0 vs ui.app.v-0-6 on main), and a tx() fallback that
+  // strips the whitespace reassigns the suffixed key and collides
+  // (rewire PR). First-claims-wins, as before.
+  value = value.trim();
   const dedupe = `${namespace}::${value}`;
   if (uiKeysByValue.has(dedupe)) return uiKeysByValue.get(dedupe);
   let base = `${namespace}.${slugify(value)}`;
@@ -670,19 +677,36 @@ function extractSourceFile(rel, absPath) {
       // entry (packages/web/src/i18n/index.ts). The key is explicit,
       // never slug-derived. The key id, the locale, and args >= the
       // fallback are not prose, so they are skipped.
+      // The literal must BE the fallback argument itself: a display
+      // fragment nested inside the fallback template's ${...} spans
+      // (or inside a later arg) is NOT the fallback — it is its own
+      // string, inventoried by the rules below under its slug key
+      // (the template-branch rule). Claiming it under the outer key
+      // misattributes it and collides when the values differ
+      // (rewire PR: nested tx() composition, e.g. a translated
+      // sentence whose ${...} branch is itself a tx() call).
       if (call.name === "tx" || call.name === "tForLocale") {
         const fallbackIdx = call.name === "tx" ? 1 : 2;
-        const idx = call.node.arguments.indexOf(a.child);
-        if (idx === fallbackIdx) {
+        if (call.node.arguments[fallbackIdx] === node) {
           const keyArg = call.node.arguments[0];
           if (keyArg && ts.isStringLiteral(keyArg)) {
             stats.ui++;
+            // Claim the UI-dedupe slot for the explicit key (first
+            // claim wins): a raw literal with the same trimmed value
+            // elsewhere in this file is the same string, so it must
+            // resolve to this key rather than minting a suffixed twin
+            // (rewire PR: tx() fallbacks strip the extractor-trimmed
+            // whitespace, so without the claim a shadow literal
+            // reassigns the suffix and collides).
+            const slot = `${namespace}::${value.trim()}`;
+            if (!uiKeysByValue.has(slot)) uiKeysByValue.set(slot, keyArg.text);
             return void addKey(keyArg.text, value, rel, line, {
               ...(ts.isTemplateExpression(node) ? { dynamic: true } : {}),
             });
           }
+          return;
         }
-        return;
+        continue;
       }
       // h(tag, attrs, ...children): string children are UI text. The
       // literal may be nested inside a child argument (a ternary choosing

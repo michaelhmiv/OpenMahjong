@@ -172,60 +172,60 @@ const SIGN_IN_PENDING_KEY = "om.signin.pending";
 /** Yaku id -> [display name, han]. Presentation table for the breakdown;
  *  han values are the standard ones the engine's scorer awards. */
 const YAKU: Record<string, readonly [string, number]> = {
-  riichi: ["Riichi", 1],
-  "double-riichi": ["Double Riichi", 2],
-  ippatsu: ["Ippatsu", 1],
-  "menzen-tsumo": ["Menzen Tsumo", 1],
-  pinfu: ["Pinfu", 1],
-  iipeikou: ["Iipeikou", 1],
-  ryanpeikou: ["Ryanpeikou", 3],
-  tanyao: ["Tanyao", 1],
-  "yakuhai-haku": ["Yakuhai (Haku)", 1],
-  "yakuhai-hatsu": ["Yakuhai (Hatsu)", 1],
-  "yakuhai-chun": ["Yakuhai (Chun)", 1],
-  "yakuhai-seat": ["Yakuhai (Seat Wind)", 1],
-  "yakuhai-round": ["Yakuhai (Round Wind)", 1],
-  chankan: ["Chankan", 1],
-  rinshan: ["Rinshan Kaihou", 1],
-  haitei: ["Haitei Raoyue", 1],
-  houtei: ["Houtei Raoyui", 1],
-  chiitoitsu: ["Chiitoitsu", 2],
-  ittsu: ["Ittsu", 2],
-  "sanshoku-doujun": ["Sanshoku Doujun", 2],
-  "sanshoku-doukou": ["Sanshoku Doukou", 2],
-  sanankou: ["Sanankou", 2],
-  sankantsu: ["Sankantsu", 2],
-  toitoi: ["Toitoi", 2],
-  honchan: ["Honchantai", 2],
-  shousuushi: ["Shousuushi", 13],
-  shousangen: ["Shousangen", 2],
-  daisangen: ["Daisangen", 13],
-  chinroutou: ["Chinroutou", 13],
-  honitsu: ["Honitsu", 3],
-  junchan: ["Junchan", 3],
-  honroutou: ["Honroutou", 2],
-  chinitsu: ["Chinitsu", 6],
-  tenhou: ["Tenhou", 13],
-  chiihou: ["Chiihou", 13],
-  kokushi: ["Kokushi Musou", 13],
-  "kokushi-13": ["Kokushi Musou (13-wait)", 26],
-  suuankou: ["Suuankou", 13],
-  "suuankou-tanki": ["Suuankou Tanki", 26],
-  chuuren: ["Chuuren Poutou", 13],
-  "chuuren-junsei": ["Junsei Chuuren Poutou", 26],
-  daisuushi: ["Daisuushi", 26],
-  tsuiisou: ["Tsuiisou", 13],
-  ryuuiisou: ["Ryuuiisou", 13],
-  suukantsu: ["Suukantsu", 13],
+  riichi: [tx("ui.app.riichi", "Riichi"), 1],
+  "double-riichi": [tx("ui.app.double-riichi", "Double Riichi"), 2],
+  ippatsu: [tx("ui.app.ippatsu", "Ippatsu"), 1],
+  "menzen-tsumo": [tx("ui.app.menzen-tsumo", "Menzen Tsumo"), 1],
+  pinfu: [tx("ui.app.pinfu", "Pinfu"), 1],
+  iipeikou: [tx("ui.app.iipeikou", "Iipeikou"), 1],
+  ryanpeikou: [tx("ui.app.ryanpeikou", "Ryanpeikou"), 3],
+  tanyao: [tx("ui.app.tanyao", "Tanyao"), 1],
+  "yakuhai-haku": [tx("ui.app.yakuhai-haku", "Yakuhai (Haku)"), 1],
+  "yakuhai-hatsu": [tx("ui.app.yakuhai-hatsu", "Yakuhai (Hatsu)"), 1],
+  "yakuhai-chun": [tx("ui.app.yakuhai-chun", "Yakuhai (Chun)"), 1],
+  "yakuhai-seat": [tx("ui.app.yakuhai-seat-wind", "Yakuhai (Seat Wind)"), 1],
+  "yakuhai-round": [tx("ui.app.yakuhai-round-wind", "Yakuhai (Round Wind)"), 1],
+  chankan: [tx("ui.app.chankan", "Chankan"), 1],
+  rinshan: [tx("ui.app.rinshan-kaihou", "Rinshan Kaihou"), 1],
+  haitei: [tx("ui.app.haitei-raoyue", "Haitei Raoyue"), 1],
+  houtei: [tx("ui.app.houtei-raoyui", "Houtei Raoyui"), 1],
+  chiitoitsu: [tx("ui.app.chiitoitsu", "Chiitoitsu"), 2],
+  ittsu: [tx("ui.app.ittsu", "Ittsu"), 2],
+  "sanshoku-doujun": [tx("ui.app.sanshoku-doujun", "Sanshoku Doujun"), 2],
+  "sanshoku-doukou": [tx("ui.app.sanshoku-doukou", "Sanshoku Doukou"), 2],
+  sanankou: [tx("ui.app.sanankou", "Sanankou"), 2],
+  sankantsu: [tx("ui.app.sankantsu", "Sankantsu"), 2],
+  toitoi: [tx("ui.app.toitoi", "Toitoi"), 2],
+  honchan: [tx("ui.app.honchantai", "Honchantai"), 2],
+  shousuushi: [tx("ui.app.shousuushi", "Shousuushi"), 13],
+  shousangen: [tx("ui.app.shousangen", "Shousangen"), 2],
+  daisangen: [tx("ui.app.daisangen", "Daisangen"), 13],
+  chinroutou: [tx("ui.app.chinroutou", "Chinroutou"), 13],
+  honitsu: [tx("ui.app.honitsu", "Honitsu"), 3],
+  junchan: [tx("ui.app.junchan", "Junchan"), 3],
+  honroutou: [tx("ui.app.honroutou", "Honroutou"), 2],
+  chinitsu: [tx("ui.app.chinitsu", "Chinitsu"), 6],
+  tenhou: [tx("ui.app.tenhou", "Tenhou"), 13],
+  chiihou: [tx("ui.app.chiihou", "Chiihou"), 13],
+  kokushi: [tx("ui.app.kokushi-musou", "Kokushi Musou"), 13],
+  "kokushi-13": [tx("ui.app.kokushi-musou-13-wait", "Kokushi Musou (13-wait)"), 26],
+  suuankou: [tx("ui.app.suuankou", "Suuankou"), 13],
+  "suuankou-tanki": [tx("ui.app.suuankou-tanki", "Suuankou Tanki"), 26],
+  chuuren: [tx("ui.app.chuuren-poutou", "Chuuren Poutou"), 13],
+  "chuuren-junsei": [tx("ui.app.junsei-chuuren-poutou", "Junsei Chuuren Poutou"), 26],
+  daisuushi: [tx("ui.app.daisuushi", "Daisuushi"), 26],
+  tsuiisou: [tx("ui.app.tsuiisou", "Tsuiisou"), 13],
+  ryuuiisou: [tx("ui.app.ryuuiisou", "Ryuuiisou"), 13],
+  suukantsu: [tx("ui.app.suukantsu", "Suukantsu"), 13],
 };
 
 const WIND_NAMES: Record<number, string> = { 27: "East", 28: "South", 29: "West", 30: "North" };
 const WIND_KANJI: Record<number, string> = { 27: "東", 28: "南", 29: "西", 30: "北" };
 const ABORTIVE_NAMES: Record<string, string> = {
-  "kyuushu-kyuuhai": "Kyuushu Kyuuhai (nine terminals)",
-  "suucha-riichi": "Suucha Riichi (four riichi)",
-  "suufon-renda": "Suufon Renda (four winds)",
-  suukaikan: "Suukaikan (four kan)",
+  "kyuushu-kyuuhai": tx("ui.app.kyuushu-kyuuhai-nine-terminals", "Kyuushu Kyuuhai (nine terminals)"),
+  "suucha-riichi": tx("ui.app.suucha-riichi-four-riichi", "Suucha Riichi (four riichi)"),
+  "suufon-renda": tx("ui.app.suufon-renda-four-winds", "Suufon Renda (four winds)"),
+  suukaikan: tx("ui.app.suukaikan-four-kan", "Suukaikan (four kan)"),
 };
 
 /**
@@ -253,7 +253,7 @@ export function tileSymbol(tile: Tile): string {
 export function tileLabel(tile: Tile): string {
   if (tile.type < 27) {
     const suit = ["characters", "circles", "bamboo"][Math.floor(tile.type / 9)]!;
-    return `${(tile.type % 9) + 1} of ${suit}${tile.red ? " (red five)" : ""}`;
+    return tx("ui.app.v-0-of-1-2", `${(tile.type % 9) + 1} of ${suit}${tile.red ? " " + tx("ui.app.red-five", "(red five)") : ""}`, (tile.type % 9) + 1, suit, tile.red ? " " + tx("ui.app.red-five", "(red five)") : "");
   }
   return { 27: "East wind", 28: "South wind", 29: "West wind", 30: "North wind", 31: "White dragon", 32: "Green dragon", 33: "Red dragon" }[tile.type]!;
 }
@@ -322,15 +322,15 @@ function safetyBadgeEl(): HTMLSpanElement {
 export function safetyLineText(names: readonly string[]): string {
   if (names.length === 0) return "";
   if (names.length === 1) {
-    return `Safe against ${names[0]} — ${names[0]} has discarded this tile, so ${names[0]} cannot win on it.`;
+    return tx("ui.app.safe-against-0-1-has-discarded-this-tile-so-2-ca", `Safe against ${names[0]} — ${names[0]} has discarded this tile, so ${names[0]} cannot win on it.`, names[0], names[0], names[0]);
   }
   const list =
     names.length === 2
-      ? `${names[0]} and ${names[1]}`
-      : `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`;
+      ? tx("ui.app.v-0-and-1", `${names[0]} and ${names[1]}`, names[0], names[1])
+      : tx("ui.app.v-0-and-1-2", `${names.slice(0, -1).join(", ")}, and ${names[names.length - 1]}`, names.slice(0, -1).join(", "), names[names.length - 1]);
   return names.length === 2
-    ? `Safe against ${list} — both have discarded this tile, so neither can win on it.`
-    : `Safe against ${list} — all of them have discarded this tile, so none of them can win on it.`;
+    ? tx("ui.app.safe-against-0-both-have-discarded-this-tile-so", `Safe against ${list} — both have discarded this tile, so neither can win on it.`, list)
+    : tx("ui.app.safe-against-0-all-of-them-have-discarded-this-t", `Safe against ${list} — all of them have discarded this tile, so none of them can win on it.`, list);
 }
 
 /** The faces of a call option's resulting set, in display order: the
@@ -504,7 +504,7 @@ export function buildImproveTranslationLink(): HTMLAnchorElement | null {
   return h(
     "a",
     { href: url, target: "_blank", rel: "noreferrer" },
-    "Improve this translation",
+    tx("ui.app.improve-this-translation", "Improve this translation"),
   );
 }
 
@@ -831,7 +831,7 @@ export class App {
     // App shell (approved 2026-11-16): one persistent tab bar whose
     // visibility showScreen governs — it exists ONLY on the four tab
     // roots (nav law, design rules section 13).
-    this.tabbar = h("nav", { class: "tabbar", "aria-label": "Main" });
+    this.tabbar = h("nav", { class: "tabbar", "aria-label": tx("ui.app.main", "Main") });
     for (const def of TAB_DEFS) {
       const b = h("button", { class: "tabbtn", "data-tab": def.name });
       b.innerHTML = `<svg viewBox="0 0 24 24">${def.icon}</svg>`;
@@ -1032,7 +1032,7 @@ export class App {
     el.append(body);
 
     body.append(h("div", { class: "spacer" }));
-    body.append(h("div", { class: "wordmark" }, "OPEN MAHJONG"));
+    body.append(h("div", { class: "wordmark" }, tx("ui.app.open-mahjong", "OPEN MAHJONG")));
     body.append(this.fanEl());
 
     const summary = saved ? this.savedGameSummary(saved) : null;
@@ -1047,8 +1047,8 @@ export class App {
       // names fit four-across; radio-group semantics with roving
       // tabindex and arrow-key movement, matching the old select's
       // behaviour exactly (set variantChoice, re-render).
-      const wrap = h("div", { class: "play-variant-label" }, "Variant");
-      const picker = h("div", { class: "seg play-variant-seg", role: "radiogroup", "aria-label": "Play variant" });
+      const wrap = h("div", { class: "play-variant-label" }, tx("ui.app.variant", "Variant"));
+      const picker = h("div", { class: "seg play-variant-seg", role: "radiogroup", "aria-label": tx("ui.app.play-variant", "Play variant") });
       const choices: [VariantId | "riichi", string][] = [
         ["riichi", "Riichi"],
         ...releases.map(v => [v.id, v.name] as [VariantId | "riichi", string]),
@@ -1096,7 +1096,7 @@ export class App {
       return b;
     };
     if (this.variantChoice === "riichi") seg.append(mkSeg("East only", "east"), mkSeg("East + South", "south"));
-    else for (const [length,label] of [["east","East"],["south","East + South"],["full","Four rounds"]] as const) {
+    else for (const [length,label] of [["east",tx("ui.app.east", "East")],["south",tx("ui.app.east-south", "East + South")],["full",tx("ui.app.four-rounds", "Four rounds")]] as const) {
       const b=h("button",{class:this.variantLength===length?"on":""},label);
       b.addEventListener("click",()=>{this.variantLength=length;this.renderPlay();});seg.append(b);
     }
@@ -1104,31 +1104,31 @@ export class App {
 
     body.append(this.guidedRowEl());
 
-    const play = h("button", { class: "pillbtn primary play" }, "Play");
+    const play = h("button", { class: "pillbtn primary play" }, tx("ui.app.play", "Play"));
     play.addEventListener("click", () => {
       this.sound.unlock();
       if (this.variantChoice === "riichi") this.startGame(this.settings.lastLength);
       else this.startVariantGame(this.variantChoice);
     });
     body.append(play);
-    const tableTools = h("button", { class:"pillbtn table-tools-entry" }, "In-person calculator and scorekeeper");
+    const tableTools = h("button", { class:"pillbtn table-tools-entry" }, tx("ui.app.in-person-calculator-and-scorekeeper", "In-person calculator and scorekeeper"));
     tableTools.addEventListener("click", () => { this.tableSessionId = undefined; this.showScreen("tables"); });
     body.append(tableTools);
 
     if (this.user && this.statsSums && this.variantChoice === "riichi") {
       const strip = formatRecordStrip(this.statsSums);
       const part = (label: string, value: string): HTMLElement => {
-        const s = h("span", {}, `${label} `);
+        const s = h("span", {}, tx("ui.app.v-0", `${label}`, label) + " ");
         s.append(h("b", {}, value));
         return s;
       };
       const rs = h("div", { class: "recstrip" });
       rs.append(
-        part("Games", String(strip.games)),
+        part(tx("ui.app.games", "Games"), String(strip.games)),
         h("span", { class: "sep" }, "·"),
-        part("Won", String(strip.wins)),
+        part(tx("ui.app.won", "Won"), String(strip.wins)),
         h("span", { class: "sep" }, "·"),
-        part("Avg place", strip.avgPlace),
+        part(tx("ui.app.avg-place", "Avg place"), strip.avgPlace),
       );
       body.append(rs);
     }
@@ -1136,10 +1136,10 @@ export class App {
     if (this.importOfferCount > 0) {
       const box = h("div", { class: "importbox" });
       box.append(
-        h("div", { class: "txt" }, `Import ${this.importOfferCount} games from this device`),
+        h("div", { class: "txt" }, tx("ui.app.import-0-games-from-this-device", `Import ${this.importOfferCount} games from this device`, this.importOfferCount)),
       );
       const rowEl = h("div", { class: "row" });
-      const imp = h("button", { class: "pillbtn primary" }, "Import");
+      const imp = h("button", { class: "pillbtn primary" }, tx("ui.app.import", "Import"));
       imp.addEventListener("click", () => void this.doImport());
       const dis = h("button", { class: "pillbtn ghost" }, "Dismiss");
       dis.addEventListener("click", () => {
@@ -1197,7 +1197,7 @@ export class App {
   private motifRowEl(): HTMLElement {
     const row = h("div", { class: "motifrow", "aria-hidden": "true" });
     const left = h("div", { class: "motif" });
-    left.append(h("span", { class: "cap" }, this.variantChoice === "riichi" ? "Dora" : "Flowers"));
+    left.append(h("span", { class: "cap" }, this.variantChoice === "riichi" ? tx("ui.app.dora", "Dora") : tx("ui.app.flowers", "Flowers")));
     const dora = h("span", { class: "tile t-dora" });
     dora.innerHTML = `<svg viewBox="0 0 40 56"><use href="#${this.variantChoice === "riichi" ? tileSymbol(tileById(49)) : "t-f0"}"/></svg>`;
     left.append(dora);
@@ -1208,7 +1208,7 @@ export class App {
       w.innerHTML = `<svg viewBox="0 0 40 56"><use href="#${tileSymbol(tileById(id))}"/></svg>`;
       winds.append(w);
     }
-    right.append(winds, h("span", { class: "cap" }, "Winds"));
+    right.append(winds, h("span", { class: "cap" }, tx("ui.app.winds", "Winds")));
     row.append(left, right);
     return row;
   }
@@ -1238,8 +1238,8 @@ export class App {
     const grow = h("div", { class: "growrow" });
     const glab = h("div", {});
     glab.append(
-      h("div", { class: "lab" }, "Guided mode"),
-      h("div", { class: "note" }, "Hints and explanations during CPU games."),
+      h("div", { class: "lab" }, tx("ui.app.guided-mode", "Guided mode")),
+      h("div", { class: "note" }, tx("ui.app.hints-and-explanations-during-cpu-games", "Hints and explanations during CPU games.")),
     );
     const gsw = h("label", { class: "switch" });
     const ginput = h("input", { type: "checkbox", "aria-label": "Guided mode" });
@@ -1268,7 +1268,7 @@ export class App {
       const byWind = [...model.players].sort((a, b) => a.seatWind - b.seatWind);
       return {
         round: `${WIND_NAMES[model.roundWind]} ${model.kyoku}`,
-        lengthLabel: `${saved.v === 3 ? (VARIANT_RELEASES.find(v=>v.id===saved.variant)?.name ?? saved.variant) + " · " : ""}${saved.length === "full" ? "Four rounds" : saved.length === "south" ? "East + South" : "East only"}`,
+        lengthLabel: tx("ui.app.v-0-1", `${saved.v === 3 ? (VARIANT_RELEASES.find(v=>v.id===saved.variant)?.name ?? saved.variant) + " · " : ""}${saved.length === "full" ? "Four rounds" : saved.length === "south" ? "East + South" : tx("ui.app.east-only", "East only")}`, saved.v === 3 ? (VARIANT_RELEASES.find(v=>v.id===saved.variant)?.name ?? saved.variant) + " · " : "", saved.length === "full" ? "Four rounds" : saved.length === "south" ? "East + South" : tx("ui.app.east-only", "East only")),
         standing: `You are ${placementLabel(ranked.indexOf(human) + 1)}`,
         humanScore: human.score,
         scores: byWind.map((p) => ({
@@ -1284,15 +1284,15 @@ export class App {
   /** The Continue card (rendering 02): the production infocard
    *  grammar carrying the saved game's live state, gold Continue. */
   private continueCardEl(summary: SavedSummary): HTMLElement {
-    const card = h("button", { class: "infocard contcard", "aria-label": "Resume game" });
+    const card = h("button", { class: "infocard contcard", "aria-label": tx("ui.app.resume-game", "Resume game") });
     const top = h("span", { class: "ic-top" });
     top.append(
-      h("span", { class: "ic-label" }, "Game in progress"),
+      h("span", { class: "ic-label" }, tx("ui.app.game-in-progress", "Game in progress")),
       h("span", { class: "ic-date" }, summary.lengthLabel),
     );
     card.append(
       top,
-      h("span", { class: "ic-result" }, `${summary.round} · ${summary.standing}`),
+      h("span", { class: "ic-result" }, tx("ui.app.v-0-1-2", `${summary.round} · ${summary.standing}`, summary.round, summary.standing)),
     );
     const scores = h("span", { class: "ic-scores" });
     for (const s of summary.scores) {
@@ -1302,7 +1302,7 @@ export class App {
     }
     card.append(scores);
     const foot = h("span", { class: "ic-foot" });
-    foot.append(h("span", { class: "ic-cta" }, "Continue ›"));
+    foot.append(h("span", { class: "ic-cta" }, tx("ui.app.continue", "Continue ›")));
     card.append(foot);
     card.addEventListener("click", () => {
       this.sound.unlock();
@@ -1319,12 +1319,12 @@ export class App {
     const main = h("span", { class: "ipmain" });
     main.append(
       h("span", { class: "l1" }, `${summary.round} · ${summary.lengthLabel}`),
-      h("span", { class: "l2" }, `${summary.standing} · ${fmt(summary.humanScore)} points`),
+      h("span", { class: "l2" }, tx("ui.app.v-0-1-points", `${summary.standing} · ${fmt(summary.humanScore)} points`, summary.standing, fmt(summary.humanScore))),
     );
     const right = h("span", { class: "ipright" });
     const pill = h("span", { class: "ippill" });
-    pill.append(h("span", { class: "ipdot" }), document.createTextNode("IN PROGRESS"));
-    const resume = h("span", { class: "resume" }, "Resume");
+    pill.append(h("span", { class: "ipdot" }), document.createTextNode(tx("ui.app.in-progress", "IN PROGRESS")));
+    const resume = h("span", { class: "resume" }, tx("ui.app.resume", "Resume"));
     resume.insertAdjacentHTML(
       "beforeend",
       `<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,
@@ -1590,7 +1590,7 @@ export class App {
     const screen = this.screens.get(name)!;
     screen.innerHTML = "";
     const bar = h("header", { class: "bar" });
-    const back = h("button", { class: "iconbtn", "aria-label": "Back" });
+    const back = h("button", { class: "iconbtn", "aria-label": tx("ui.app.back", "Back") });
     back.innerHTML = `<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>`;
     back.addEventListener("click", () => this.showScreen(this.runner && !this.runner.result ? "table" : this.lastRoot));
     bar.append(back, h("span", { class: "word" }, "OPEN MAHJONG"), h("span", { class: "iconbtn" }));
@@ -1606,14 +1606,14 @@ export class App {
       const li = (text: string) => h("li", {}, text);
       page.append(
         p("Open Mahjong plays modern online-standard riichi mahjong. Every rules choice the engine makes is listed here."),
-        h("h3", {}, "Stakes and settlement"),
+        h("h3", {}, tx("ui.app.stakes-and-settlement", "Stakes and settlement")),
         h("ul", {},
           li("Start 25,000 points; return 30,000. Uma +15 / +5 / −5 / −15, oka 20 to first place. Tied seats split the uma (and oka) of the ranks they occupy."),
           li("A game ends early (tobi) as soon as any player is below zero at the end of a hand."),
           li("Riichi sticks left on the table when the game ends go to the first-place player."),
           li("If the dealer repeats on the final hand, the game extends until a hand ends without a dealer repeat (no agari-yame)."),
         ),
-        h("h3", {}, "Hands and calls"),
+        h("h3", {}, tx("ui.app.hands-and-calls", "Hands and calls")),
         h("ul", {},
           li("Red fives (aka dora) are in: one each of 5m, 5p, 5s. Open tanyao is allowed."),
           li("Chi may only be called from the player on your left. Pon and kan from anyone."),
@@ -1631,7 +1631,7 @@ export class App {
           li("One indicator at the start; each kan flips one more (ankan flips before the rinshan draw; open kans flip after it). Uradora are revealed under the indicators when a riichi hand wins."),
           li("Kiriage mangan is OFF: 4 han 30 fu is 7,700 (dealer 11,600), 3 han 60 fu is 7,700 — no rounding up to mangan."),
         ),
-        h("h3", {}, "Draws"),
+        h("h3", {}, tx("ui.app.draws", "Draws")),
         h("ul", {},
           li("Exhaustive draw: tenpai players split 3,000 from noten players. Nagashi mangan pays as a mangan tsumo instead, when a player's discards are all terminals/honors and none were called."),
           li("Abortive draws are on: kyuushu kyuuhai (nine different terminals/honors on your first draw), suufon renda (all four first discards the same wind), suucha riichi (four riichi), and suukaikan (four kan by two or more players). The hand restarts with one more honba; the dealer repeats."),
@@ -1641,12 +1641,12 @@ export class App {
 
     this.textScreen("about", "About", (page) => {
       page.append(
-        h("p", {}, "Open Mahjong is a free, open-source mahjong platform. Play Riichi, Hong Kong Old Style, MCR or Taiwanese against CPU opponents, study games, and keep an in-person score ledger."),
-        h("p", {}, "Free forever. As a guest, your settings and game history live only in this browser. Signed in, they are saved to your account."),
-        h("h3", {}, "License"),
-        h("p", {}, "Open Mahjong is free software under the GNU Affero General Public License v3 (AGPLv3). The rules engine is a separate library, so anyone can build their own client on it. MCR includes the MIT-licensed mahjong-algorithm scorer by Jeff Wang (2016–2023); its readable source, full license and reproducible build ship in the repository."),
-        h("p", {}, h("a", {href:"./third-party-notices.txt",target:"_blank",rel:"noreferrer"}, "Third-party notices")),
-        h("h3", {}, "Source"),
+        h("p", {}, tx("ui.app.open-mahjong-is-a-free-open-source-mahjong-platf", "Open Mahjong is a free, open-source mahjong platform. Play Riichi, Hong Kong Old Style, MCR or Taiwanese against CPU opponents, study games, and keep an in-person score ledger.")),
+        h("p", {}, tx("ui.app.free-forever-as-a-guest-your-settings-and-game-h", "Free forever. As a guest, your settings and game history live only in this browser. Signed in, they are saved to your account.")),
+        h("h3", {}, tx("ui.app.license", "License")),
+        h("p", {}, tx("ui.app.open-mahjong-is-free-software-under-the-gnu-affe", "Open Mahjong is free software under the GNU Affero General Public License v3 (AGPLv3). The rules engine is a separate library, so anyone can build their own client on it. MCR includes the MIT-licensed mahjong-algorithm scorer by Jeff Wang (2016–2023); its readable source, full license and reproducible build ship in the repository.")),
+        h("p", {}, h("a", {href:"./third-party-notices.txt",target:"_blank",rel:"noreferrer"}, tx("ui.app.third-party-notices", "Third-party notices"))),
+        h("h3", {}, tx("ui.app.source", "Source")),
         (() => {
           const para = h("p", {});
           const a = h("a", { href: "https://github.com/michaelhmiv/OpenMahjong", target: "_blank", rel: "noreferrer" }, "github.com/michaelhmiv/OpenMahjong");
@@ -1658,31 +1658,31 @@ export class App {
 
     this.textScreen("privacy", "Privacy", (page) => {
       page.append(
-        h("p", {}, "Last updated: November 17, 2026."),
-        h("h3", {}, "Playing as a guest"),
-        h("p", {}, "Games you play as a guest, your settings, and your game history are stored only in your browser on your device. They are not sent to our servers."),
-        h("h3", {}, "Accounts"),
-        h("p", {}, "If you sign in with Google, we store your Google account identifier, the display name and profile photo from your Google profile, the date you created your account, records of your finished games (date, game length, placement, score, the game's move record, and game statistics), and your settings, so they follow you between devices. We do not receive or store your email address or your Google password."),
-        h("p", {}, 'If you choose private sync for an in-person session, we also store its player names, entered completed hands, scoring corrections, ledger and settlement. These sessions are separate from CPU statistics. Local-only sessions stay on your device; conflicting offline copies are preserved for your review.'),
-        h("h3", {}, "Cookies"),
-        h("p", {}, "We use one cookie to keep you signed in. Advertising cookies are described in the Advertising section below."),
-        h("h3", {}, "Advertising"),
+        h("p", {}, tx("ui.app.last-updated-november-17-2026", "Last updated: November 17, 2026.")),
+        h("h3", {}, tx("ui.app.playing-as-a-guest", "Playing as a guest")),
+        h("p", {}, tx("ui.app.games-you-play-as-a-guest-your-settings-and-your", "Games you play as a guest, your settings, and your game history are stored only in your browser on your device. They are not sent to our servers.")),
+        h("h3", {}, tx("ui.app.accounts", "Accounts")),
+        h("p", {}, tx("ui.app.if-you-sign-in-with-google-we-store-your-google", "If you sign in with Google, we store your Google account identifier, the display name and profile photo from your Google profile, the date you created your account, records of your finished games (date, game length, placement, score, the game's move record, and game statistics), and your settings, so they follow you between devices. We do not receive or store your email address or your Google password.")),
+        h("p", {}, tx("ui.app.if-you-choose-private-sync-for-an-in-person-sess", 'If you choose private sync for an in-person session, we also store its player names, entered completed hands, scoring corrections, ledger and settlement. These sessions are separate from CPU statistics. Local-only sessions stay on your device; conflicting offline copies are preserved for your review.')),
+        h("h3", {}, tx("ui.app.cookies", "Cookies")),
+        h("p", {}, tx("ui.app.we-use-one-cookie-to-keep-you-signed-in-advertis", "We use one cookie to keep you signed in. Advertising cookies are described in the Advertising section below.")),
+        h("h3", {}, tx("ui.app.advertising", "Advertising")),
         (() => {
-          const para = h("p", {}, "This site uses Google AdSense to display ads. Google and its partners use cookies to serve and measure ads. The ads shown on this site are non-personalized: they are based on the content of the page and general location, not on your visits to other sites. Google describes how it uses information from sites that use its services at ");
+          const para = h("p", {}, tx("ui.app.this-site-uses-google-adsense-to-display-ads-goo", "This site uses Google AdSense to display ads. Google and its partners use cookies to serve and measure ads. The ads shown on this site are non-personalized: they are based on the content of the page and general location, not on your visits to other sites. Google describes how it uses information from sites that use its services at") + " ");
           const partner = h("a", { href: "https://policies.google.com/technologies/partner-sites", target: "_blank", rel: "noreferrer" }, "policies.google.com/technologies/partner-sites");
           const settings = h("a", { href: "https://adssettings.google.com", target: "_blank", rel: "noreferrer" }, "adssettings.google.com");
-          para.append(partner, document.createTextNode(". You can review and control ad settings at "), settings, document.createTextNode("."));
+          para.append(partner, document.createTextNode(tx("ui.app.you-can-review-and-control-ad-settings-at", ". You can review and control ad settings at") + " "), settings, document.createTextNode("."));
           return para;
         })(),
-        h("h3", {}, "Sharing"),
-        h("p", {}, "We do not sell personal information. Your information is processed by Google (sign-in and advertising) and Railway (hosting) only to operate the service."),
-        h("h3", {}, "Deletion"),
-        h("p", {}, "More, then Delete account, permanently deletes your account and everything stored with it. Guest data can be removed by clearing your browser's site data."),
-        h("h3", {}, "Children"),
-        h("p", {}, "Open Mahjong is not directed to children under 13."),
-        h("h3", {}, "Changes"),
-        h("p", {}, "If this policy changes, the new version will be posted on this page with an updated date."),
-        h("h3", {}, "Contact"),
+        h("h3", {}, tx("ui.app.sharing", "Sharing")),
+        h("p", {}, tx("ui.app.we-do-not-sell-personal-information-your-informa", "We do not sell personal information. Your information is processed by Google (sign-in and advertising) and Railway (hosting) only to operate the service.")),
+        h("h3", {}, tx("ui.app.deletion", "Deletion")),
+        h("p", {}, tx("ui.app.more-then-delete-account-permanently-deletes-you", "More, then Delete account, permanently deletes your account and everything stored with it. Guest data can be removed by clearing your browser's site data.")),
+        h("h3", {}, tx("ui.app.children", "Children")),
+        h("p", {}, tx("ui.app.open-mahjong-is-not-directed-to-children-under-1", "Open Mahjong is not directed to children under 13.")),
+        h("h3", {}, tx("ui.app.changes", "Changes")),
+        h("p", {}, tx("ui.app.if-this-policy-changes-the-new-version-will-be-p", "If this policy changes, the new version will be posted on this page with an updated date.")),
+        h("h3", {}, tx("ui.app.contact", "Contact")),
         h("p", {}, "sportfolioholdings@gmail.com"),
       );
     });
@@ -1702,7 +1702,7 @@ export class App {
     el.innerHTML = "";
     const page = h("div", { class: "tabpage" });
     el.append(page);
-    page.append(h("h2", {}, "More"));
+    page.append(h("h2", {}, tx("ui.app.more", "More")));
     const row = (label: string, note: string, control: HTMLElement) => {
       const wrap = h("div", { class: "setrow" });
       const lab = h("div", {});
@@ -1721,7 +1721,7 @@ export class App {
       return sw;
     };
 
-    page.append(h("div", { class: "sec-label" }, "ACCOUNT"));
+    page.append(h("div", { class: "sec-label" }, tx("ui.app.account", "ACCOUNT")));
     if (this.user) {
       const idRow = h("div", { class: "setrow" });
       const acct = h("div", { class: "acctid" });
@@ -1729,10 +1729,10 @@ export class App {
       const who = h("div", {});
       who.append(
         h("div", { class: "lab" }, this.user.name),
-        h("div", { class: "note" }, "Signed in with Google"),
+        h("div", { class: "note" }, tx("ui.app.signed-in-with-google", "Signed in with Google")),
       );
       acct.append(who);
-      const outBtn = h("button", { class: "pillbtn ghost" }, "Sign out");
+      const outBtn = h("button", { class: "pillbtn ghost" }, tx("ui.app.sign-out", "Sign out"));
       outBtn.addEventListener("click", () => void this.signOutFlow());
       idRow.append(acct, outBtn);
       page.append(idRow);
@@ -1740,10 +1740,10 @@ export class App {
       const delRow = h("div", { class: "setrow" });
       const delLab = h("div", {});
       delLab.append(
-        h("div", { class: "lab" }, "Delete account"),
-        h("div", { class: "note" }, "Removes your profile, game history, and stats. This cannot be undone."),
+        h("div", { class: "lab" }, tx("ui.app.delete-account", "Delete account")),
+        h("div", { class: "note" }, tx("ui.app.removes-your-profile-game-history-and-stats-this", "Removes your profile, game history, and stats. This cannot be undone.")),
       );
-      const delBtn = h("button", { class: "pillbtn ghost" }, "Delete");
+      const delBtn = h("button", { class: "pillbtn ghost" }, tx("ui.app.delete", "Delete"));
       delBtn.addEventListener("click", () => {
         // Two-step confirm in place: the first tap arms the button.
         if (delBtn.dataset["confirm"] === "1") {
@@ -1751,12 +1751,12 @@ export class App {
           return;
         }
         delBtn.dataset["confirm"] = "1";
-        delBtn.textContent = "Confirm delete";
+        delBtn.textContent = tx("ui.app.confirm-delete", "Confirm delete");
       });
       delRow.append(delLab, delBtn);
       page.append(delRow);
     } else {
-      const signInBtn = h("button", { class: "pillbtn ghost" }, "Sign in with Google");
+      const signInBtn = h("button", { class: "pillbtn ghost" }, tx("ui.app.sign-in-with-google", "Sign in with Google"));
       signInBtn.addEventListener("click", () => {
         try {
           sessionStorage.setItem(SIGN_IN_PENDING_KEY, "1");
@@ -1766,27 +1766,27 @@ export class App {
         }
         window.location.href = GOOGLE_START_URL;
       });
-      page.append(row("Account", "Not signed in.", signInBtn));
+      page.append(row(tx("ui.app.account-2", "Account"), tx("ui.app.not-signed-in", "Not signed in."), signInBtn));
     }
 
-    page.append(h("div", { class: "sec-label" }, "SETTINGS"));
+    page.append(h("div", { class: "sec-label" }, tx("ui.app.settings", "SETTINGS")));
     page.append(
-      row("Sound", "Quiet tile clicks only. No music, no voices.", toggle(this.settings.sound, false, (v) => {
+      row(tx("ui.app.sound", "Sound"), tx("ui.app.quiet-tile-clicks-only-no-music-no-voices", "Quiet tile clicks only. No music, no voices."), toggle(this.settings.sound, false, (v) => {
         this.settings = { ...this.settings, sound: v };
         this.sound.enabled = v;
         this.persistSettings();
       })),
-      row("Reduced motion", "Collapses animation to near-instant. Your operating system's reduced-motion setting is always respected too.", toggle(this.settings.motion === "reduced", false, (v) => {
+      row(tx("ui.app.reduced-motion", "Reduced motion"), tx("ui.app.collapses-animation-to-near-instant-your-operati", "Collapses animation to near-instant. Your operating system's reduced-motion setting is always respected too."), toggle(this.settings.motion === "reduced", false, (v) => {
         this.settings = { ...this.settings, motion: v ? "reduced" : "standard" };
         this.persistSettings();
       })),
-      row("Large tiles", "Hand tiles step up to 28px in two rows of seven; ponds step down to 22px; the panel type grows. The approved large layout (table-large-v1).", toggle(this.settings.largeTiles, false, (v) => {
+      row(tx("ui.app.large-tiles", "Large tiles"), tx("ui.app.hand-tiles-step-up-to-28px-in-two-rows-of-seven", "Hand tiles step up to 28px in two rows of seven; ponds step down to 22px; the panel type grows. The approved large layout (table-large-v1)."), toggle(this.settings.largeTiles, false, (v) => {
         this.settings = { ...this.settings, largeTiles: v };
         this.persistSettings();
         this.applyTheme();
         if (this.runner) this.renderTable();
       })),
-      row("Guided mode", "Hints and explanations on the table during CPU games. The same switch is on the Play tab and in the in-game menu.", toggle(this.settings.guided, false, (v) => {
+      row("Guided mode", tx("ui.app.hints-and-explanations-on-the-table-during-cpu-g", "Hints and explanations on the table during CPU games. The same switch is on the Play tab and in the in-game menu."), toggle(this.settings.guided, false, (v) => {
         this.settings = { ...this.settings, guided: v };
         this.persistSettings();
         if (this.runner) this.renderTable();
@@ -1812,7 +1812,7 @@ export class App {
     langRow.addEventListener("click", () => this.showScreen("language"));
     page.append(langRow);
 
-    page.append(h("div", { class: "sec-label" }, "ABOUT"));
+    page.append(h("div", { class: "sec-label" }, tx("ui.app.about", "ABOUT")));
     for (const [label, screen] of [["Rules", "rules"], ["About", "about"], ["Privacy", "privacy"]] as [string, ScreenName][]) {
       const b = h("button", { class: "hrow" });
       b.append(h("span", { class: "ttl2" }, label));
@@ -1824,7 +1824,7 @@ export class App {
       page.append(b);
     }
     page.append(
-      h("div", { class: "footer" }, "Open source under AGPLv3 · github.com/michaelhmiv/OpenMahjong"),
+      h("div", { class: "footer" }, tx("ui.app.open-source-under-agplv3-github-com-michaelhmiv", "Open source under AGPLv3 · github.com/michaelhmiv/OpenMahjong")),
     );
     const improveLink = buildImproveTranslationLink();
     if (improveLink) {
@@ -2001,13 +2001,13 @@ export class App {
     el.append(page);
     page.append(h("h2", {}, "Games"));
     if (VARIANT_RELEASES.some(v=>v.released)) {
-      const picker=h("select",{"aria-label":"Games variant",class:"play-variant"});
+      const picker=h("select",{"aria-label":tx("ui.app.games-variant", "Games variant"),class:"play-variant"});
       for (const [id,name] of [["riichi","Riichi"],...VARIANT_RELEASES.filter(v=>v.released).map(v=>[v.id,v.name])]) picker.append(h("option",{value:id!},name!));
       picker.value=selectedVariant;picker.addEventListener("change",()=>{this.historyVariant=picker.value as VariantId | "riichi";void this.renderGames();});page.append(picker);
     }
     const east = rows.filter((r) => r.length === "east").length;
     page.append(
-      h("p", { class: "count" }, `${rows.length} recorded game${rows.length === 1 ? "" : "s"} — ${east} East, ${rows.filter(r=>r.length==="south").length} East + South${rows.some(r=>r.length==="full")?`, ${rows.filter(r=>r.length==="full").length} four rounds`:""}`),
+      h("p", { class: "count" }, tx("ui.app.v-0-recorded-game-1-2-east-3-east-south-4", `${rows.length} recorded game${rows.length === 1 ? "" : "s"} — ${east} East, ${rows.filter(r=>r.length==="south").length} East + South${rows.some(r=>r.length==="full")?tx("ui.app.v-0-four-rounds", `, ${rows.filter(r=>r.length==="full").length} four rounds`, rows.filter(r=>r.length==="full").length):""}`, rows.length, rows.length === 1 ? "" : "s", east, rows.filter(r=>r.length==="south").length, rows.some(r=>r.length==="full")?tx("ui.app.v-0-four-rounds", `, ${rows.filter(r=>r.length==="full").length} four rounds`, rows.filter(r=>r.length==="full").length):"")),
     );
     const saved = loadGame();
     const summary = saved ? this.savedGameSummary(saved) : null;
@@ -2022,14 +2022,14 @@ export class App {
     }
     page.append(grid);
     if (rows.length === 0) {
-      page.append(h("p", { class: "dim" }, "No games recorded yet."));
+      page.append(h("p", { class: "dim" }, tx("ui.app.no-games-recorded-yet", "No games recorded yet.")));
     }
     for (const r of rows) page.append(this.historyRowEl(r));
     const tables = readTables(this.user?.id);
     if (tables.length) {
-      page.append(h("h3", {}, "At the table"), h("p", { class: "dim" }, "In-person sessions · Excluded from CPU-game statistics"));
+      page.append(h("h3", {}, tx("ui.app.at-the-table", "At the table")), h("p", { class: "dim" }, tx("ui.app.in-person-sessions-excluded-from-cpu-game-statis", "In-person sessions · Excluded from CPU-game statistics")));
       for (const copy of [...tables].reverse()) {
-        const row = h("button", { class: "hrow" }, `${copy.session.variant === "american" ? "American helper" : copy.session.variant === "hong-kong" ? "Hong Kong Old Style" : copy.session.variant === "mcr" ? "MCR" : copy.session.variant === "taiwanese" ? "Taiwanese" : "Riichi"} · ${copy.session.finished ? "Finished" : "In progress"} · ${copy.session.names.join(", ")}`);
+        const row = h("button", { class: "hrow" }, tx("ui.app.v-0-1-2-2", `${copy.session.variant === "american" ? tx("ui.app.american-helper", "American helper") : copy.session.variant === "hong-kong" ? tx("ui.app.hong-kong-old-style", "Hong Kong Old Style") : copy.session.variant === "mcr" ? tx("ui.app.mcr", "MCR") : copy.session.variant === "taiwanese" ? tx("ui.app.taiwanese", "Taiwanese") : "Riichi"} · ${copy.session.finished ? tx("ui.app.finished", "Finished") : tx("ui.app.in-progress-2", "In progress")} · ${copy.session.names.join(", ")}`, copy.session.variant === "american" ? tx("ui.app.american-helper", "American helper") : copy.session.variant === "hong-kong" ? tx("ui.app.hong-kong-old-style", "Hong Kong Old Style") : copy.session.variant === "mcr" ? tx("ui.app.mcr", "MCR") : copy.session.variant === "taiwanese" ? tx("ui.app.taiwanese", "Taiwanese") : "Riichi", copy.session.finished ? tx("ui.app.finished", "Finished") : tx("ui.app.in-progress-2", "In progress"), copy.session.names.join(", ")));
         row.addEventListener("click", () => { this.tableSessionId = copy.session.id; this.showScreen("tables"); });
         page.append(row);
       }
@@ -2042,7 +2042,7 @@ export class App {
     const counts = [0, 0, 0, 0];
     for (const r of rows) counts[r.placement - 1] = (counts[r.placement - 1] ?? 0) + 1;
     const card = h("div", { class: "distcard" });
-    card.append(h("div", { class: "l" }, "Placements"));
+    card.append(h("div", { class: "l" }, tx("ui.app.placements", "Placements")));
     const bar = h("div", { class: "distbar" });
     const labs = h("div", { class: "distlab" });
     const names = ["1st", "2nd", "3rd", "4th"];
@@ -2050,7 +2050,7 @@ export class App {
     counts.forEach((c, i) => {
       const seg = h("i", { style: `flex:${c};background:${colors[i]}` });
       bar.append(seg);
-      const lab = h("span", { style: `flex:${c}` }, `${names[i]} · `);
+      const lab = h("span", { style: `flex:${c}` }, tx("ui.app.v-0-2", `${names[i]} ·`, names[i]) + " ");
       lab.append(h("b", {}, String(c)));
       labs.append(lab);
     });
@@ -2062,11 +2062,11 @@ export class App {
     const row = h("button", { class: "hrow" });
     row.append(
       h("span", { class: "when" }, historyDateLabel(r.finishedAt)),
-      h("span", { class: "lenbadge" }, r.length === "full" ? "FOUR ROUNDS" : r.length === "east" ? "EAST" : "EAST + SOUTH"),
+      h("span", { class: "lenbadge" }, r.length === "full" ? tx("ui.app.four-rounds-2", "FOUR ROUNDS") : r.length === "east" ? tx("ui.app.east-2", "EAST") : tx("ui.app.east-south-2", "EAST + SOUTH")),
     );
     const res = h("span", { class: "res" });
     res.append(h("b", {}, placementLabel(r.placement)), document.createTextNode(" "));
-    res.append(h("span", { class: "sc" }, `· ${fmt(r.score)}`));
+    res.append(h("span", { class: "sc" }, tx("ui.app.v-0-3", `· ${fmt(r.score)}`, fmt(r.score))));
     row.append(res);
     row.insertAdjacentHTML(
       "beforeend",
@@ -2388,7 +2388,7 @@ export class App {
     if (focusFrameTaught() || this.hintShownThisGame) return;
     const seat = Number(ev["seat"] ?? -1);
     if (ev.type === "discard" && seat !== this.humanSeat) {
-      this.showHint("Tap any pond to inspect it up close — melds included.");
+      this.showHint(tx("ui.app.tap-any-pond-to-inspect-it-up-close-melds-includ", "Tap any pond to inspect it up close — melds included."));
     }
   }
 
@@ -2439,10 +2439,10 @@ export class App {
     const isTurn = this.model.currentTurn === seat && this.model.handInProgress;
     const chip = h("div", { class: `chip ${extraCls} ${isTurn ? "turn" : ""}` });
     if (seat === this.humanSeat) {
-      const d = h("span", { class: "dealer" }, `${wind} · You`);
+      const d = h("span", { class: "dealer" }, tx("ui.app.v-0-you", `${wind} · You`, wind));
       chip.append(d, document.createTextNode(`  `));
     } else {
-      chip.append(document.createTextNode(`${wind}${p.riichi ? " · Riichi" : ""}  `));
+      chip.append(document.createTextNode(`${wind}${p.riichi ? " " + tx("ui.app.riichi-2", "· Riichi") : ""}  `));
     }
     chip.append(h("b", {}, fmt(p.score)));
     return chip;
@@ -2517,7 +2517,7 @@ export class App {
 
     // Header
     const header = h("header", { class: "bar" });
-    const menuBtn = h("button", { class: "iconbtn", "aria-label": "Menu", "data-control-key": "menu" });
+    const menuBtn = h("button", { class: "iconbtn", "aria-label": tx("ui.app.menu", "Menu"), "data-control-key": "menu" });
     menuBtn.innerHTML = ICON_MENU;
     menuBtn.addEventListener("click", () => {
       if (this.lesson) this.showLessonMenu();
@@ -2594,7 +2594,7 @@ export class App {
     if (this.handOutOfOrderNow()) {
       // The player's own arrangement is showing; one tap restores
       // the resting order (the sort, or group order in guided mode).
-      const sortBtn = h("button", { "data-control-key": "hand-sort" }, "Sort");
+      const sortBtn = h("button", { "data-control-key": "hand-sort" }, tx("ui.app.sort", "Sort"));
       sortBtn.innerHTML = `${ICON_SORT}<span>Sort</span>`;
       sortBtn.addEventListener("click", () => {
         this.sound.unlock();
@@ -2604,8 +2604,8 @@ export class App {
       });
       handctl.append(sortBtn);
     }
-    const expandBtn = h("button", { "data-control-key": "inspect-open" }, "Inspect hand");
-    expandBtn.innerHTML = `${ICON_EXPAND}<span>Inspect hand</span>`;
+    const expandBtn = h("button", { "data-control-key": "inspect-open" }, tx("ui.app.inspect-hand", "Inspect hand"));
+    expandBtn.innerHTML = tx("ui.app.v-0-span-inspect-hand-span", `${ICON_EXPAND}<span>Inspect hand</span>`, ICON_EXPAND);
     expandBtn.addEventListener("click", () => this.openFrame({ kind: "hand", mode: "inspect" }));
     handctl.append(expandBtn);
     zonePlayer.append(handctl);
@@ -2613,7 +2613,7 @@ export class App {
 
     // Focus frame layer
     if (this.frame) {
-      const scrim = h("button", { class: "scrim", "aria-label": "Close" });
+      const scrim = h("button", { class: "scrim", "aria-label": tx("ui.app.close", "Close") });
       scrim.addEventListener("click", () => this.closeFrame());
       t.append(scrim);
       const dialog = this.frameEl();
@@ -2718,7 +2718,7 @@ export class App {
       class: "guidehint",
       role: "button",
       tabindex: "0",
-      "aria-label": "Why this move?",
+      "aria-label": tx("ui.app.why-this-move", "Why this move?"),
     });
     el.append(
       tileEl(tileById(advice.recommendation.tileId), "gface", { flip: false }),
@@ -2753,13 +2753,13 @@ export class App {
     const center = h("button", { class: "center", "data-control-key": "round-details" });
     const round = h("div", { class: "round" });
     const wind = h("span", { class: "wind kj" }, WIND_KANJI[m.roundWind]!);
-    const rname = h("span", { class: "rname" }, `${WIND_NAMES[m.roundWind]} ${m.kyoku}`);
+    const rname = h("span", { class: "rname" }, tx("ui.app.v-0-1-3", `${WIND_NAMES[m.roundWind]} ${m.kyoku}`, WIND_NAMES[m.roundWind], m.kyoku));
     round.append(wind, rname);
     center.append(round);
-    center.append(h("div", { class: "sub" }, `${m.honba} honba · Wall ${m.wallRemaining}`));
+    center.append(h("div", { class: "sub" }, tx("ui.app.v-0-honba-wall-1", `${m.honba} honba · Wall ${m.wallRemaining}`, m.honba, m.wallRemaining)));
     if (m.sticks > 0) {
       const sr = h("div", { class: "stickrow" });
-      sr.append(h("span", { class: "stick" }), h("span", { class: "n" }, `× ${m.sticks}`));
+      sr.append(h("span", { class: "stick" }), h("span", { class: "n" }, tx("ui.app.v-0-4", `× ${m.sticks}`, m.sticks)));
       center.append(sr);
     }
     const dr = h("div", { class: "dorarow" });
@@ -2992,7 +2992,7 @@ export class App {
   private applyDragTransform(dx: number): void {
     const drag = this.tileDrag;
     if (!drag) return;
-    drag.inner.style.transform = `translate(${dx}px, -6px) scale(1.12)`;
+    drag.inner.style.transform = tx("ui.app.translate-0-px-6px-scale-1-12", `translate(${dx}px, -6px) scale(1.12)`, dx);
     drag.inner.style.zIndex = "6";
     drag.inner.style.position = "relative";
   }
@@ -3130,7 +3130,7 @@ export class App {
         }
       }
       if (myTurn || this.lesson?.view().acceptsTiles) {
-        tileControl(wrap, `hand-${tile.id}`, `${tileLabel(tile)}${badgedIds.has(tile.id) ? ", safe against every riichi player" : ""}${this.selectedTileId === tile.id ? ", selected; activate to discard" : "; activate to select"}`, () => this.onHandTileTap(tile), this.selectedTileId === tile.id);
+        tileControl(wrap, `hand-${tile.id}`, tx("ui.app.v-0-1-2-3", `${tileLabel(tile)}${badgedIds.has(tile.id) ? tx("ui.app.safe-against-every-riichi-player", ", safe against every riichi player") : ""}${this.selectedTileId === tile.id ? tx("ui.app.selected-activate-to-discard", ", selected; activate to discard") : tx("ui.app.activate-to-select", "; activate to select")}`, tileLabel(tile), badgedIds.has(tile.id) ? tx("ui.app.safe-against-every-riichi-player", ", safe against every riichi player") : "", this.selectedTileId === tile.id ? tx("ui.app.selected-activate-to-discard", ", selected; activate to discard") : tx("ui.app.activate-to-select", "; activate to select")), () => this.onHandTileTap(tile), this.selectedTileId === tile.id);
       }
       if (this.canShiftTiles()) {
         wrap.addEventListener("pointerdown", (ev) =>
@@ -3219,19 +3219,19 @@ export class App {
     if (pending.kind === "call") {
       const ctx = pending.ctx;
       row.classList.add("show");
-      if (ctx.canRon) row.append(btn("Ron", "ron", () => this.humanAct({ type: "ron" })));
+      if (ctx.canRon) row.append(btn(tx("ui.app.ron", "Ron"), "ron", () => this.humanAct({ type: "ron" })));
       if (ctx.phase === "call" && pending.ponDecidable) {
-        if (ctx.canPon) row.append(btn("Pon", "pon", () => this.humanAct({ type: "pon" })));
-        if (ctx.canKan) row.append(btn("Kan", "pon", () => this.humanAct({ type: "daiminkan" })));
+        if (ctx.canPon) row.append(btn(tx("ui.app.pon", "Pon"), "pon", () => this.humanAct({ type: "pon" })));
+        if (ctx.canKan) row.append(btn(tx("ui.app.kan", "Kan"), "pon", () => this.humanAct({ type: "daiminkan" })));
       }
       if (ctx.phase === "call" && pending.chiDecidable) {
         if (ctx.chiOptions.length === 1) {
-          row.append(btn("Chi", "chi", () => this.humanAct({ type: "chi", tileIds: ctx.chiOptions[0]! })));
+          row.append(btn(tx("ui.app.chi", "Chi"), "chi", () => this.humanAct({ type: "chi", tileIds: ctx.chiOptions[0]! })));
         } else if (ctx.chiOptions.length > 1) {
           row.append(btn("Chi", "chi", () => this.openFrame({ kind: "hand", mode: "chi" })));
         }
       }
-      row.append(btn("Pass", "pass", () => this.humanAct({ type: "pass" })));
+      row.append(btn(tx("ui.app.pass", "Pass"), "pass", () => this.humanAct({ type: "pass" })));
       const callHint = momentHint();
       if (callHint) row.append(callHint);
       return row;
@@ -3248,7 +3248,7 @@ export class App {
     if (this.riichiArmed) {
       row.classList.add("show");
       row.append(btn("Riichi", "riichi", () => {}));
-      row.append(btn("Cancel", "pass", () => {
+      row.append(btn(tx("ui.app.cancel", "Cancel"), "pass", () => {
         this.riichiArmed = false;
         this.renderTable();
       }));
@@ -3256,13 +3256,13 @@ export class App {
       // discard lands; the armed confirmation row states the cost
       // before the player commits (panel rebuild finding, TU-11).
       row.append(
-        h("span", { class: "pill" }, "Costs 1,000 points — paid as a stake"),
+        h("span", { class: "pill" }, tx("ui.app.costs-1-000-points-paid-as-a-stake", "Costs 1,000 points — paid as a stake")),
       );
       return row;
     }
     if (ctx.canTsumo) {
       row.classList.add("show");
-      row.append(btn("Tsumo", "tsumo", () => this.humanAct({ type: "tsumo" })));
+      row.append(btn(tx("ui.app.tsumo", "Tsumo"), "tsumo", () => this.humanAct({ type: "tsumo" })));
     }
     if (selectedRiichi) {
       row.classList.add("show");
@@ -3298,9 +3298,9 @@ export class App {
     }
     if (ctx.canKyuushu) {
       row.classList.add("show");
-      row.append(btn("Kyuushu", "pass", () => this.humanAct({ type: "kyuushu" })));
+      row.append(btn(tx("ui.app.kyuushu", "Kyuushu"), "pass", () => this.humanAct({ type: "kyuushu" })));
       row.append(
-        h("span", { class: "pill" }, "End the hand as a draw — nine different terminals or honors on your first draw"),
+        h("span", { class: "pill" }, tx("ui.app.end-the-hand-as-a-draw-nine-different-terminals", "End the hand as a draw — nine different terminals or honors on your first draw")),
       );
     }
     const turnHint = momentHint();
@@ -3360,15 +3360,15 @@ export class App {
   private playerFrameEl(seat: Seat): HTMLElement {
     const m = this.model;
     const p = m.players[seat]!;
-    const title = `${WIND_NAMES[p.seatWind]}${seat === this.humanSeat ? " · You" : ""}`;
+    const title = `${WIND_NAMES[p.seatWind]}${seat === this.humanSeat ? " " + tx("ui.app.you", "· You") : ""}`;
     const { frame } = this.frameShell(
       title,
-      `${fmt(p.score)} points${p.isDealer ? " · Dealer" : ""}`,
+      tx("ui.app.v-0-points-1", `${fmt(p.score)} points${p.isDealer ? " " + tx("ui.app.dealer", "· Dealer") : ""}`, fmt(p.score), p.isDealer ? " " + tx("ui.app.dealer", "· Dealer") : ""),
     );
     if (p.riichi) {
       frame.querySelector(".ftitle")!.append(h("span", { class: "pill" }, p.doubleRiichi ? "Double Riichi" : "Riichi"));
     }
-    frame.append(h("div", { class: "fsec" }, "DISCARDS"));
+    frame.append(h("div", { class: "fsec" }, tx("ui.app.discards", "DISCARDS")));
     const fpond = h("div", { class: "fpond" });
     const entries = p.pond.filter((e) => !e.called);
     entries.forEach((e, i) => {
@@ -3378,19 +3378,19 @@ export class App {
       cell.append(tileEl(e.tile, "", { flip: false, index: true }));
       fpond.append(cell);
     });
-    if (entries.length === 0) fpond.append(h("span", { class: "fsub" }, "No discards yet"));
+    if (entries.length === 0) fpond.append(h("span", { class: "fsub" }, tx("ui.app.no-discards-yet", "No discards yet")));
     frame.append(fpond);
     const legend = h("div", { class: "legend" });
     const li1 = h("span", { class: "li" });
-    li1.append(h("span", { class: "swatch dim" }), document.createTextNode("Drawn discard (tsumogiri)"));
+    li1.append(h("span", { class: "swatch dim" }), document.createTextNode(tx("ui.app.drawn-discard-tsumogiri", "Drawn discard (tsumogiri)")));
     const li2 = h("span", { class: "li" });
-    li2.append(h("span", { class: "swatch" }), document.createTextNode("Hand discard (tedashi)"));
+    li2.append(h("span", { class: "swatch" }), document.createTextNode(tx("ui.app.hand-discard-tedashi", "Hand discard (tedashi)")));
     legend.append(li1, li2);
     frame.append(legend);
 
-    frame.append(h("div", { class: "fsec" }, "MELDS"));
+    frame.append(h("div", { class: "fsec" }, tx("ui.app.melds", "MELDS")));
     if (p.melds.length === 0) {
-      frame.append(h("div", { class: "fsub" }, "None — closed hand"));
+      frame.append(h("div", { class: "fsub" }, tx("ui.app.none-closed-hand", "None — closed hand")));
     } else {
       const row = h("div", { class: "fmelds" });
       for (const meld of p.melds) {
@@ -3407,14 +3407,14 @@ export class App {
       frame.append(row);
     }
 
-    frame.append(h("div", { class: "fsec" }, "YOUR HAND"));
+    frame.append(h("div", { class: "fsec" }, tx("ui.app.your-hand", "YOUR HAND")));
     const anchor = h("div", { class: "anchor" });
     const { tiles } = this.handDisplayTiles();
     for (const tile of tiles) anchor.append(tileEl(tile, "t-meld", { flip: false, index: true }));
     frame.append(anchor);
 
     if (this.runner?.pending?.kind === "turn" && !this.playing) {
-      frame.append(h("div", { class: "turnbanner" }, "Your turn — close this view to play."));
+      frame.append(h("div", { class: "turnbanner" }, tx("ui.app.your-turn-close-this-view-to-play", "Your turn — close this view to play.")));
     }
     return frame;
   }
@@ -3422,8 +3422,8 @@ export class App {
   private centerFrameEl(): HTMLElement {
     const m = this.model;
     const { frame } = this.frameShell(
-      "Round",
-      `${m.honba} honba · Wall ${m.wallRemaining} · ${m.sticks} riichi stick${m.sticks === 1 ? "" : "s"} on the table`,
+      tx("ui.app.round", "Round"),
+      tx("ui.app.v-0-honba-wall-1-2-riichi-stick-3-on-the-table", `${m.honba} honba · Wall ${m.wallRemaining} · ${m.sticks} riichi stick${m.sticks === 1 ? "" : "s"} on the table`, m.honba, m.wallRemaining, m.sticks, m.sticks === 1 ? "" : "s"),
     );
     const crow = h("div", { class: "crow" });
     crow.append(
@@ -3431,7 +3431,7 @@ export class App {
       h("span", { class: "rname" }, `${WIND_NAMES[m.roundWind]} ${m.kyoku}`),
     );
     frame.append(crow);
-    frame.append(h("div", { class: "fsec" }, "DORA — INDICATOR SHOWS DORA"));
+    frame.append(h("div", { class: "fsec" }, tx("ui.app.dora-indicator-shows-dora", "DORA — INDICATOR SHOWS DORA")));
     const doraTypes = m.doraTypes();
     m.doraIndicators.forEach((ind, i) => {
       const row = h("div", { class: "dpair" });
@@ -3444,7 +3444,7 @@ export class App {
       );
       frame.append(row);
     });
-    frame.append(h("div", { class: "fsec" }, "SCORES"));
+    frame.append(h("div", { class: "fsec" }, tx("ui.app.scores", "SCORES")));
     for (let rel = 0; rel < 4; rel++) {
       const seat = this.seatAt(rel);
       const p = m.players[seat]!;
@@ -3478,7 +3478,7 @@ export class App {
     const sheet = h("div", { class: "sheet xsheet" });
     const pending = this.runner?.pending;
     const grade = this.guideMoment();
-    const { frame: headShell } = this.frameShell("Guided hint", "");
+    const { frame: headShell } = this.frameShell(tx("ui.app.guided-hint", "Guided hint"), "");
     headShell.querySelector(".fsub")?.remove();
     sheet.append(...headShell.childNodes);
     sheet.firstElementChild!.classList.remove("frame");
@@ -3486,11 +3486,11 @@ export class App {
     const text: MomentText = momentTexts([grade], { kind: pending.kind, view: pending.view, action: null })[0]!;
     const sec = (label: string) => sheet.append(h("div", { class: "fsec" }, label));
     const body = (line: string) => sheet.append(h("p", { class: "xbody" }, line));
-    sec("The moment");
+    sec(tx("ui.app.the-moment", "The moment"));
     for (const term of text.terms) body(term);
-    sec("The read");
+    sec(tx("ui.app.the-read", "The read"));
     body(text.headline);
-    sec("The facts");
+    sec(tx("ui.app.the-facts", "The facts"));
     for (const fact of text.facts) body(fact);
     return sheet;
   }
@@ -3525,9 +3525,9 @@ export class App {
     const numWord = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight"];
 
     // The goal for this hand right now.
-    sec("The goal");
+    sec(tx("ui.app.the-goal", "The goal"));
     if (advice.canTsumo) {
-      body("You are holding a finished hand — four groups of three tiles, plus one pair. Declare the win.");
+      body(tx("ui.app.you-are-holding-a-finished-hand-four-groups-of-t", "You are holding a finished hand — four groups of three tiles, plus one pair. Declare the win."));
     } else if (rec.shantenAfter === 0) {
       // The composition sentence names the hand's own groups when a
       // plain decomposition leaves exactly one group open (the
@@ -3554,28 +3554,28 @@ export class App {
       let composition = "";
       if (sets === 3 && pair && remainder === 2) {
         const parts = ["the pair"];
-        if (triplets > 0) parts.push(`${numWord[triplets] ?? triplets} triplet${triplets > 1 ? "s" : ""}`);
-        if (runs > 0) parts.push(`${numWord[runs] ?? runs} run${runs > 1 ? "s" : ""}`);
+        if (triplets > 0) parts.push(tx("ui.app.v-0-triplet-1", `${numWord[triplets] ?? triplets} triplet${triplets > 1 ? "s" : ""}`, numWord[triplets] ?? triplets, triplets > 1 ? "s" : ""));
+        if (runs > 0) parts.push(tx("ui.app.v-0-run-1", `${numWord[runs] ?? runs} run${runs > 1 ? "s" : ""}`, numWord[runs] ?? runs, runs > 1 ? "s" : ""));
         const list = parts.length > 1
           ? `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`
           : parts[0]!;
-        composition = ` You have ${list}; one group is still open.`;
+        composition = " " + tx("ui.app.you-have-0-one-group-is-still-open", `You have ${list}; one group is still open.`, list);
       }
       body(
-        `You are one tile from a finished hand: four groups of three tiles — three in a row, or three of a kind — plus one pair.${composition} One tile from finished is called ready.`,
+        tx("ui.app.you-are-one-tile-from-a-finished-hand-four-group", `You are one tile from a finished hand: four groups of three tiles — three in a row, or three of a kind — plus one pair.${composition} One tile from finished is called ready.`, composition),
       );
     } else if (rec.shantenAfter === 1) {
       body(
-        "You are building toward a finished hand: four groups of three tiles — three in a row, or three of a kind — plus one pair. This move leaves the hand one good draw away from ready — one tile from finished.",
+        tx("ui.app.you-are-building-toward-a-finished-hand-four-gro", "You are building toward a finished hand: four groups of three tiles — three in a row, or three of a kind — plus one pair. This move leaves the hand one good draw away from ready — one tile from finished."),
       );
     } else {
       body(
-        `You are building toward a finished hand: four groups of three tiles — three in a row, or three of a kind — plus one pair. This move leaves the hand ${rec.shantenAfter} steps away from ready.`,
+        tx("ui.app.you-are-building-toward-a-finished-hand-four-gro-2", `You are building toward a finished hand: four groups of three tiles — three in a row, or three of a kind — plus one pair. This move leaves the hand ${rec.shantenAfter} steps away from ready.`, rec.shantenAfter),
       );
     }
 
     // The move: the tile's face beside its name and the plain order.
-    sec("The move");
+    sec(tx("ui.app.the-move", "The move"));
     const recTile = tileById(rec.tileId);
     const moveRow = h("div", { class: "xmove" });
     if (recTile) moveRow.append(tileEl(recTile, "", { flip: false, index: true }));
@@ -3585,20 +3585,20 @@ export class App {
     ).length;
     const moveFacts: string[] = [];
     if (advice.riichi?.recommended && advice.riichi.tileId === rec.tileId) {
-      moveFacts.push("Discard it and declare riichi.");
+      moveFacts.push(tx("ui.app.discard-it-and-declare-riichi", "Discard it and declare riichi."));
     } else {
-      moveFacts.push("Discard it.");
+      moveFacts.push(tx("ui.app.discard-it", "Discard it."));
     }
-    if (drawn) moveFacts.push("You just drew this tile,");
+    if (drawn) moveFacts.push(tx("ui.app.you-just-drew-this-tile", "You just drew this tile,"));
     if (rec.shantenAfter === 0 && tenpaiDiscards === 1) {
       moveFacts.push(
         drawn
-          ? "and it is the only discard that leaves the hand ready."
-          : "It is the only discard that leaves the hand ready.",
+          ? tx("ui.app.and-it-is-the-only-discard-that-leaves-the-hand", "and it is the only discard that leaves the hand ready.")
+          : tx("ui.app.it-is-the-only-discard-that-leaves-the-hand-read", "It is the only discard that leaves the hand ready."),
       );
     } else if (rec.shantenAfter === 0) {
       moveFacts.push(
-        drawn ? "and the hand is ready after it." : "The hand is ready after it.",
+        drawn ? tx("ui.app.and-the-hand-is-ready-after-it", "and the hand is ready after it.") : tx("ui.app.the-hand-is-ready-after-it", "The hand is ready after it."),
       );
     }
     const moveText = h("div", {},
@@ -3609,7 +3609,7 @@ export class App {
     sheet.append(moveRow);
 
     // Why this tile.
-    sec("Why this tile");
+    sec(tx("ui.app.why-this-tile", "Why this tile"));
     const counts = countsOfTiles(view.hand);
     const type = rec.tileType;
     const inHand = counts[type] ?? 0;
@@ -3622,36 +3622,36 @@ export class App {
       const suitName = recName.split(" of ")[1] ?? "";
       const partners = [rank - 2, rank - 1, rank + 1, rank + 2].filter((r) => r >= 1 && r <= 9);
       const partnerList = partners.length > 1
-        ? `${partners.slice(0, -1).join(", ")} or ${partners[partners.length - 1]}`
+        ? tx("ui.app.v-0-or-1", `${partners.slice(0, -1).join(", ")} or ${partners[partners.length - 1]}`, partners.slice(0, -1).join(", "), partners[partners.length - 1])
         : `${partners[0] ?? ""}`;
       const isolated = suited
-        ? `The ${recName} connects to nothing — no second copy to pair with, no ${partnerList} of ${suitName} to make a run.`
-        : `The ${recName} connects to nothing — no second copy to pair with.`;
+        ? tx("ui.app.the-0-connects-to-nothing-no-second-copy-to-pair", `The ${recName} connects to nothing — no second copy to pair with, no ${partnerList} of ${suitName} to make a run.`, recName, partnerList, suitName)
+        : tx("ui.app.the-0-connects-to-nothing-no-second-copy-to-pair-2", `The ${recName} connects to nothing — no second copy to pair with.`, recName);
       body(
         rec.shantenAfter === 0 && tenpaiDiscards === 1
-          ? `${isolated} Every other tile is part of a group or your pair — discard one, its group breaks, and the hand is no longer ready.`
+          ? tx("ui.app.v-0-every-other-tile-is-part-of-a-group-or-your-pa", `${isolated} Every other tile is part of a group or your pair — discard one, its group breaks, and the hand is no longer ready.`, isolated)
           : isolated,
       );
     } else if (rec.improvingTotal > 0) {
       body(
-        `${rec.improvingTotal} unseen tiles improve the hand after this discard — the most of any discard.`,
+        tx("ui.app.v-0-unseen-tiles-improve-the-hand-after-this-disca", `${rec.improvingTotal} unseen tiles improve the hand after this discard — the most of any discard.`, rec.improvingTotal),
       );
     } else {
-      body("It leaves the hand as close to ready as any discard can.");
+      body(tx("ui.app.it-leaves-the-hand-as-close-to-ready-as-any-disc", "It leaves the hand as close to ready as any discard can."));
     }
     if (rec.doraDiscarded > 0) {
-      body("It throws away a dora, but the shape it leaves is worth more.");
+      body(tx("ui.app.it-throws-away-a-dora-but-the-shape-it-leaves-is", "It throws away a dora, but the shape it leaves is worth more."));
     }
     if (rec.genbutsu) {
-      body("Every riichi opponent has already discarded it, so none of them can win off it.");
+      body(tx("ui.app.every-riichi-opponent-has-already-discarded-it-s", "Every riichi opponent has already discarded it, so none of them can win off it."));
     } else if (rec.reasons.includes("safe-vs-riichi")) {
-      body("No riichi opponent can win off it.");
+      body(tx("ui.app.no-riichi-opponent-can-win-off-it", "No riichi opponent can win off it."));
     }
     if (rec.reasons.includes("dangerous-vs-riichi")) {
-      body("A riichi opponent could win off it — it is still the best move toward winning.");
+      body(tx("ui.app.a-riichi-opponent-could-win-off-it-it-is-still-t", "A riichi opponent could win off it — it is still the best move toward winning."));
     }
     if (rec.furiten) {
-      body("One catch: a tile the hand waits on is in your own discards, so you can only win by drawing it yourself.");
+      body(tx("ui.app.one-catch-a-tile-the-hand-waits-on-is-in-your-ow", "One catch: a tile the hand waits on is in your own discards, so you can only win by drawing it yourself."));
     }
     // The value paragraph: why a ready hand stays quiet, or why
     // riichi is worth declaring — dora named from the indicators.
@@ -3672,7 +3672,7 @@ export class App {
       for (const t of view.hand) if (t.id !== rec.tileId) tally(t, t.red);
       for (const m of view.melds) for (const t of m.tiles) tally(t, t.red);
       if (advice.riichi?.recommended && advice.riichi.tileId === rec.tileId) {
-        body("Riichi — an optional declaration made when your hand is ready — raises the score here. Declaring it costs 1,000 points, paid as a stake at once. It also locks your hand to discarding only what you draw.");
+        body(tx("ui.app.riichi-an-optional-declaration-made-when-your-ha", "Riichi — an optional declaration made when your hand is ready — raises the score here. Declaring it costs 1,000 points, paid as a stake at once. It also locks your hand to discarding only what you draw."));
       } else if (dora >= 2) {
         // The approved paragraph (rendering C, final): riichi and
         // dora defined at first use, the dora named group by group
@@ -3686,9 +3686,9 @@ export class App {
             const t = Number(tStr) as TileType;
             const name = display(tileName(t));
             if (kind === "red") {
-              parts.push(parts.length === 0 ? `one is the red ${name}` : `one the red ${name}`);
+              parts.push(parts.length === 0 ? tx("ui.app.one-is-the-red-0", `one is the red ${name}`, name) : tx("ui.app.one-the-red-0", `one the red ${name}`, name));
             } else {
-              parts.push(c === 1 ? `one is the ${name}` : `${numWord[c] ?? c} are ${name}`);
+              parts.push(c === 1 ? tx("ui.app.one-is-the-0", `one is the ${name}`, name) : tx("ui.app.v-0-are-1", `${numWord[c] ?? c} are ${name}`, numWord[c] ?? c, name));
             }
           }
         }
@@ -3705,21 +3705,21 @@ export class App {
           if (!ind || seenInd.has(ind.type)) continue;
           seenInd.add(ind.type);
           indSentences.push(
-            `The face-up tile in the middle of the table, the indicator, is the ${display(tileName(ind.type))}; the tile one step above is a dora.`,
+            tx("ui.app.the-face-up-tile-in-the-middle-of-the-table-the", `The face-up tile in the middle of the table, the indicator, is the ${display(tileName(ind.type))}; the tile one step above is a dora.`, display(tileName(ind.type))),
           );
         }
         body(
-          `Already valuable, the hand needs no riichi — an optional declaration made when your hand is ready — with ${numWord[dora] ?? dora} dora — bonus tiles worth extra score.${partsSentence ? ` ${partsSentence}.` : ""}${indSentences.length ? ` ${indSentences.join(" ")}` : ""} Riichi can raise the score, but declaring it costs 1,000 points, and it locks your hand to discarding only what you draw.`,
+          tx("ui.app.already-valuable-the-hand-needs-no-riichi-an-opt", `Already valuable, the hand needs no riichi — an optional declaration made when your hand is ready — with ${numWord[dora] ?? dora} dora — bonus tiles worth extra score.${partsSentence ? " " + tx("ui.app.v-0-5", `${partsSentence}.`, partsSentence) : ""}${indSentences.length ? ` ${indSentences.join(" ")}` : ""} Riichi can raise the score, but declaring it costs 1,000 points, and it locks your hand to discarding only what you draw.`, numWord[dora] ?? dora, partsSentence ? " " + tx("ui.app.v-0-5", `${partsSentence}.`, partsSentence) : "", indSentences.length ? ` ${indSentences.join(" ")}` : ""),
         );
       }
     }
 
     // What the player is waiting for (ready hands).
     if (rec.shantenAfter === 0 && rec.waits.length > 0) {
-      sec("What you're waiting for");
+      sec(tx("ui.app.what-youre-waiting-for", "What you're waiting for"));
       const words = ["", "One", "Two", "Three", "Four"];
       body(
-        `${words[rec.waits.length] ?? rec.waits.length} ${rec.waits.length === 1 ? "tile finishes" : "tiles finish"} the hand. Their other copies are unseen — in the wall — the pile of tiles everyone draws from — or in another player's hand.`,
+        tx("ui.app.v-0-1-the-hand-their-other-copies-are-unseen-in-th", `${words[rec.waits.length] ?? rec.waits.length} ${rec.waits.length === 1 ? tx("ui.app.tile-finishes", "tile finishes") : tx("ui.app.tiles-finish", "tiles finish")} the hand. Their other copies are unseen — in the wall — the pile of tiles everyone draws from — or in another player's hand.`, words[rec.waits.length] ?? rec.waits.length, rec.waits.length === 1 ? tx("ui.app.tile-finishes", "tile finishes") : tx("ui.app.tiles-finish", "tiles finish")),
       );
       const after = counts.slice();
       after[type] = (after[type] ?? 0) - 1;
@@ -3740,13 +3740,13 @@ export class App {
             if (s < 1 || s + 2 > 9) continue;
             if ([s, s + 1, s + 2].every((rr) => rr === r || has(rr))) { start = s; break; }
           }
-          fact = `Completes the ${start}, ${start + 1}, ${start + 2} run · ${w.live} ${w.live === 1 ? "copy" : "copies"} still unseen.`;
+          fact = tx("ui.app.completes-the-0-1-2-run-3-4-still-unseen", `Completes the ${start}, ${start + 1}, ${start + 2} run · ${w.live} ${w.live === 1 ? "copy" : "copies"} still unseen.`, start, start + 1, start + 2, w.live, w.live === 1 ? "copy" : "copies");
         } else if (held >= 2) {
-          fact = `Completes three of a kind · ${w.live} ${w.live === 1 ? "copy" : "copies"} still unseen.`;
+          fact = tx("ui.app.completes-three-of-a-kind-0-1-still-unseen", `Completes three of a kind · ${w.live} ${w.live === 1 ? "copy" : "copies"} still unseen.`, w.live, w.live === 1 ? "copy" : "copies");
         } else if (held === 1) {
-          fact = `Completes your pair · ${w.live} ${w.live === 1 ? "copy" : "copies"} still unseen.`;
+          fact = tx("ui.app.completes-your-pair-0-1-still-unseen", `Completes your pair · ${w.live} ${w.live === 1 ? "copy" : "copies"} still unseen.`, w.live, w.live === 1 ? "copy" : "copies");
         } else {
-          fact = `${w.live} ${w.live === 1 ? "copy" : "copies"} still unseen.`;
+          fact = tx("ui.app.v-0-1-still-unseen", `${w.live} ${w.live === 1 ? "copy" : "copies"} still unseen.`, w.live, w.live === 1 ? "copy" : "copies");
         }
         row.append(h("div", {},
           h("div", { class: "wname" }, display(w.name)),
@@ -3754,7 +3754,7 @@ export class App {
         ));
         sheet.append(row);
       }
-      body("Draw one, or claim one an opponent discards with the Ron button, and the hand is complete.");
+      body(tx("ui.app.draw-one-or-claim-one-an-opponent-discards-with", "Draw one, or claim one an opponent discards with the Ron button, and the hand is complete."));
     }
     return sheet;
   }
@@ -3796,8 +3796,8 @@ export class App {
       sheet.append(preview);
     } else {
       const { frame: headShell } = this.frameShell(
-        mode === "chi" ? "Choose a chi" : mode === "kan" ? "Declare a kan" : "Your hand",
-        mode === "inspect" ? "Tap a tile to select it. Everything here is playable." : "Pick one — it happens right away.",
+        mode === "chi" ? tx("ui.app.choose-a-chi", "Choose a chi") : mode === "kan" ? tx("ui.app.declare-a-kan", "Declare a kan") : tx("ui.app.your-hand-2", "Your hand"),
+        mode === "inspect" ? tx("ui.app.tap-a-tile-to-select-it-everything-here-is-playa", "Tap a tile to select it. Everything here is playable.") : tx("ui.app.pick-one-it-happens-right-away", "Pick one — it happens right away."),
       );
       sheet.append(...headShell.childNodes);
       // frameShell builds a .frame; reuse only its header row.
@@ -3838,7 +3838,7 @@ export class App {
         );
         const b = h("button", {
           class: "hbtn primary",
-          "aria-label": `Chi — ${faces.map((f) => tileLabel(f.tile)).join(", ")}`,
+          "aria-label": tx("ui.app.chi-0", `Chi — ${faces.map((f) => tileLabel(f.tile)).join(", ")}`, faces.map((f) => tileLabel(f.tile)).join(", ")),
         });
         b.append(h("span", {}, "Chi"), chiFacesEl(faces));
         b.addEventListener("click", () => {
@@ -3850,13 +3850,13 @@ export class App {
       }
     } else if (mode === "kan" && pending?.kind === "turn") {
       for (const t of pending.ctx.ankanOptions) {
-        act.append(hbtn(`Kan ${tileTypeName(t)} (closed)`, "primary", () => {
+        act.append(hbtn(tx("ui.app.kan-0-closed", `Kan ${tileTypeName(t)} (closed)`, tileTypeName(t)), "primary", () => {
           this.closeFrame();
           this.humanAct({ type: "ankan", tileType: t });
         }));
       }
       for (const t of pending.ctx.shouminkanOptions) {
-        act.append(hbtn(`Kan ${tileTypeName(t)} (added)`, "primary", () => {
+        act.append(hbtn(tx("ui.app.kan-0-added", `Kan ${tileTypeName(t)} (added)`, tileTypeName(t)), "primary", () => {
           this.closeFrame();
           this.humanAct({ type: "shouminkan", tileType: t });
         }));
@@ -3864,13 +3864,13 @@ export class App {
     } else if (pending?.kind === "turn" && !this.playing) {
       const ctx = pending.ctx;
       if (selected && ctx.riichiDiscardIds.includes(selected.id)) {
-        act.append(hbtn("Riichi + discard", "decisive", () => {
+        act.append(hbtn(tx("ui.app.riichi-discard", "Riichi + discard"), "decisive", () => {
           this.closeFrame();
           this.humanAct({ type: "discard", tileId: selected.id, riichi: true });
         }));
       }
       if (selected) {
-        act.append(hbtn("Discard", "primary", () => {
+        act.append(hbtn(tx("ui.app.discard", "Discard"), "primary", () => {
           this.closeFrame();
           this.humanAct({ type: "discard", tileId: selected.id });
         }));
@@ -3882,7 +3882,7 @@ export class App {
         }));
       }
       if (ctx.ankanOptions.length + ctx.shouminkanOptions.length > 0) {
-        act.append(hbtn("Kan…", "", () => {
+        act.append(hbtn(tx("ui.app.kan-2", "Kan…"), "", () => {
           this.frame = { kind: "hand", mode: "kan" };
           this.renderTable();
         }));
@@ -3904,7 +3904,7 @@ export class App {
         this.humanAct({ type: "pon" });
       }));
       if (ctx.phase === "call" && pending.chiDecidable && ctx.chiOptions.length > 0) {
-        act.append(hbtn("Chi…", "primary", () => {
+        act.append(hbtn(tx("ui.app.chi-2", "Chi…"), "primary", () => {
           this.frame = { kind: "hand", mode: "chi" };
           this.renderTable();
         }));
@@ -3945,9 +3945,9 @@ export class App {
   private savedReviewSupplement(): HTMLElement | null {
     if (!this.reviewCollection.items.length) return null;
     const details = h("details", { class: "saved-reviews" });
-    details.append(h("summary", {}, `Saved decisions (${this.reviewCollection.items.length})`));
+    details.append(h("summary", {}, tx("ui.app.saved-decisions-0", `Saved decisions (${this.reviewCollection.items.length})`, this.reviewCollection.items.length)));
     for (const item of this.reviewCollection.items) {
-      const button = h("button", { class: "primary" }, `Return to decision ${item.decisionIndex + 1}`);
+      const button = h("button", { class: "primary" }, tx("ui.app.return-to-decision-0", `Return to decision ${item.decisionIndex + 1}`, item.decisionIndex + 1));
       button.addEventListener("click", () => void this.openSavedReview(item.recordId, item.decisionIndex));
       details.append(button);
     }
@@ -3968,7 +3968,7 @@ export class App {
     this.reviewUI?.destroy();
     const screen = this.screens.get("review")!;
     if (!this.reviewData || !this.reviewTimeline) {
-      this.textScreen("review", "Review", (page) => page.append(h("p", {}, "Open a finished game in Games, then select a hand to review its board.")));
+      this.textScreen("review", "Review", (page) => page.append(h("p", {}, tx("ui.app.open-a-finished-game-in-games-then-select-a-hand", "Open a finished game in Games, then select a hand to review its board."))));
       return;
     }
     this.reviewUI = mountBoardReview(screen, { timeline: this.reviewTimeline, handIndex: this.reviewHandIndex,
@@ -4000,7 +4000,7 @@ export class App {
   private async openSavedReview(recordId: string, decisionIndex: number): Promise<void> {
     const record = loadRecords().find((candidate) => candidate.id === recordId) ?? (this.user ? await fetchGame(recordId) : null);
     if (!record?.log) {
-      this.screens.get("practice")?.querySelector(".saved-reviews")?.append(h("p", { role: "status" }, "This game record is unavailable. Try again when it has synced."));
+      this.screens.get("practice")?.querySelector(".saved-reviews")?.append(h("p", { role: "status" }, tx("ui.app.this-game-record-is-unavailable-try-again-when-i", "This game record is unavailable. Try again when it has synced.")));
       return;
     }
     this.openRecord(record);
@@ -4021,11 +4021,11 @@ export class App {
     el.innerHTML = "";
     const page = h("div", { class: "tabpage" });
     el.append(page);
-    page.append(h("h2", {}, "Learn"));
-    page.append(h("p", { class: "dim" }, "Lessons teach each game from the first tile. Start with lesson 1 of the game you want to learn."));
+    page.append(h("h2", {}, tx("ui.app.learn", "Learn")));
+    page.append(h("p", { class: "dim" }, tx("ui.app.lessons-teach-each-game-from-the-first-tile-star", "Lessons teach each game from the first tile. Start with lesson 1 of the game you want to learn.")));
     page.append(this.guidedRowEl());
     for (const section of LEARN_SECTIONS) page.append(this.learnSectionEl(section));
-    const practice = h("button", { class: "pillbtn", "aria-label": "Practice" }, "Practice");
+    const practice = h("button", { class: "pillbtn", "aria-label": tx("ui.app.practice", "Practice") }, tx("ui.app.practice", "Practice"));
     practice.addEventListener("click", () => { this.practiceInitialSkill = undefined; this.showScreen("practice"); });
     const prow = h("div", { class: "practicerow" });
     prow.append(practice);
@@ -4085,8 +4085,8 @@ export class App {
     });
     head.append(
       h("span", { class: "secttl" }, AMERICAN_SECTION_NAME),
-      h("span", { class: "lenbadge" }, "TRAINING ONLY"),
-      h("span", { class: "seccount" }, `${doneCount} of ${AMERICAN_LESSONS.length} lessons done`),
+      h("span", { class: "lenbadge" }, tx("ui.app.training-only", "TRAINING ONLY")),
+      h("span", { class: "seccount" }, tx("ui.app.v-0-of-1-lessons-done", `${doneCount} of ${AMERICAN_LESSONS.length} lessons done`, doneCount, AMERICAN_LESSONS.length)),
     );
     head.insertAdjacentHTML(
       "beforeend",
@@ -4113,8 +4113,8 @@ export class App {
     cardGlyph.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" style="stroke:var(--dim);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M3.5 10h17"/></svg>`;
     cardRow.append(
       cardGlyph,
-      h("span", { class: "ttl" }, "Practice Card"),
-      h("span", { class: "st" }, `${cardHandCount()} hands`),
+      h("span", { class: "ttl" }, tx("ui.app.practice-card", "Practice Card")),
+      h("span", { class: "st" }, tx("ui.app.v-0-hands", `${cardHandCount()} hands`, cardHandCount())),
     );
     cardRow.insertAdjacentHTML(
       "beforeend",
@@ -4134,7 +4134,7 @@ export class App {
       if (done) {
         const st = h("span", { class: "st" });
         st.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>`;
-        st.append(document.createTextNode("Done"));
+        st.append(document.createTextNode(tx("ui.app.done", "Done")));
         row.append(st);
       } else if (isActive) {
         row.append(h("span", { class: "st now" }, "In progress"));
@@ -4169,7 +4169,7 @@ export class App {
       "data-section": release.id,
     });
     head.append(
-      h("span", { class: "secttl" }, release.id === "mcr" ? "MCR (Mahjong Competition Rules)" : release.name),
+      h("span", { class: "secttl" }, release.id === "mcr" ? tx("ui.app.mcr-mahjong-competition-rules", "MCR (Mahjong Competition Rules)") : release.name),
       h("span", { class: "seccount" }, `${doneCount} of ${lessons.length} lessons done`),
     );
     head.insertAdjacentHTML(
@@ -4191,7 +4191,7 @@ export class App {
     fill.style.width = `${lessons.length ? Math.round((doneCount / lessons.length) * 100) : 0}%`;
     bar.append(fill);
     wrap.append(bar);
-    const practice = h("button", { class: "pillbtn" }, `Practice ${release.name}`);
+    const practice = h("button", { class: "pillbtn" }, tx("ui.app.practice-0", `Practice ${release.name}`, release.name));
     practice.addEventListener("click", () => {
       this.variantLearningId = release.id;
       this.variantPracticeMode = true;
@@ -4274,7 +4274,7 @@ export class App {
       row.dataset["module"] = mod.id;
       row.append(h("span", { class: "n" }, String(i + 1)));
       row.append(h("span", { class: "ttl" }, mod.title));
-      if (mod.optional) row.append(h("span", { class: "lenbadge" }, "OPTIONAL"));
+      if (mod.optional) row.append(h("span", { class: "lenbadge" }, tx("ui.app.optional", "OPTIONAL")));
       if (isDone) {
         const st = h("span", { class: "st" });
         st.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>`;
@@ -4283,7 +4283,7 @@ export class App {
       } else if (isActive) {
         row.append(h("span", { class: "st now" }, "In progress"));
       } else {
-        row.append(h("span", { class: "st" }, `${mod.minutes} min`));
+        row.append(h("span", { class: "st" }, tx("ui.app.v-0-min", `${mod.minutes} min`, mod.minutes)));
       }
       row.insertAdjacentHTML(
         "beforeend",
@@ -4372,13 +4372,13 @@ export class App {
     const overlay = h("div", { class: "overlay show" });
     const card = h("div", { class: "card" });
     card.append(
-      h("h2", {}, this.lesson ? moduleDef(this.lesson.moduleId).title : "Lesson"),
-      h("div", { class: "sub" }, "Your place in the lesson is saved."),
+      h("h2", {}, this.lesson ? moduleDef(this.lesson.moduleId).title : tx("ui.app.lesson", "Lesson")),
+      h("div", { class: "sub" }, tx("ui.app.your-place-in-the-lesson-is-saved", "Your place in the lesson is saved.")),
     );
     const col = h("div", { class: "col" });
     const resume = h("button", { class: "pillbtn primary" }, "Resume");
     resume.addEventListener("click", () => this.dismissOverlay(overlay));
-    const leave = h("button", { class: "pillbtn" }, "Leave lesson");
+    const leave = h("button", { class: "pillbtn" }, tx("ui.app.leave-lesson", "Leave lesson"));
     leave.addEventListener("click", () => {
       this.dismissOverlay(overlay);
       this.exitLesson();
@@ -4412,7 +4412,7 @@ export class App {
       if (inspectable) {
         w.classList.add("stripinspect");
         w.setAttribute("role", "button");
-        w.setAttribute("aria-label", `Inspect the ${tileLabel(tile)}`);
+        w.setAttribute("aria-label", tx("ui.app.inspect-the-0", `Inspect the ${tileLabel(tile)}`, tileLabel(tile)));
         w.addEventListener("click", () => {
           if (this.lessonIndexRevealed.has(key)) this.lessonIndexRevealed.delete(key);
           else this.lessonIndexRevealed.add(key);
@@ -4442,12 +4442,12 @@ export class App {
     const view = this.lesson!.view();
     const ctl = h("div", { class: "revctl" });
     if (!inPanel) {
-      const leave = h("button", { class: "pillbtn ghost" }, "Leave");
+      const leave = h("button", { class: "pillbtn ghost" }, tx("ui.app.leave", "Leave"));
       leave.addEventListener("click", () => this.exitLesson());
       ctl.append(leave);
     }
     ctl.append(
-      h("span", { class: "step" }, `Step ${view.stepIndex + 1} of ${view.stepCount}`),
+      h("span", { class: "step" }, tx("ui.app.step-0-of-1", `Step ${view.stepIndex + 1} of ${view.stepCount}`, view.stepIndex + 1, view.stepCount)),
     );
     for (const b of view.buttons) {
       const btn = h("button", { class: `pillbtn ${b.cls}` });
@@ -4457,7 +4457,7 @@ export class App {
         btn.append(chiFacesEl(b.faces.map((f) => ({ tile: tileById(f.id), ...(f.side ? { side: true as const } : {}) }))));
         btn.setAttribute(
           "aria-label",
-          `${b.label} — ${b.faces.map((f) => tileLabel(tileById(f.id))).join(", ")}`,
+          tx("ui.app.v-0-1-4", `${b.label} — ${b.faces.map((f) => tileLabel(tileById(f.id))).join(", ")}`, b.label, b.faces.map((f) => tileLabel(tileById(f.id))).join(", ")),
         );
       }
       btn.addEventListener("click", () => this.lessonAct({ kind: "button", id: b.id }));
@@ -4542,7 +4542,7 @@ export class App {
     const wrap = h("div", { class: "revwrap" });
     wrap.append(h("h2", {}, def.title));
     const panel = h("div", { class: "revpanel" });
-    panel.append(h("div", { class: "lab" }, "LESSON COMPLETE"));
+    panel.append(h("div", { class: "lab" }, tx("ui.app.lesson-complete", "LESSON COMPLETE")));
     for (const line of def.covered) panel.append(h("p", {}, line));
     wrap.append(panel);
     const prog = h("div", { class: "progrow" });
@@ -4556,7 +4556,7 @@ export class App {
     prog.append(bar);
     wrap.append(prog);
     const ctl = h("div", { class: "revctl" });
-    const all = h("button", { class: "pillbtn ghost" }, "All lessons");
+    const all = h("button", { class: "pillbtn ghost" }, tx("ui.app.all-lessons", "All lessons"));
     all.addEventListener("click", () => this.exitLesson());
     ctl.append(all);
     // Next is the first incomplete module AFTER the one just
@@ -4566,7 +4566,7 @@ export class App {
     const next = MODULES.slice(completedIndex + 1).find((m) => !this.tutorial.done.includes(m.id))
       ?? MODULES.find((m) => !this.tutorial.done.includes(m.id));
     if (next) {
-      const nb = h("button", { class: "pillbtn primary" }, `Next: ${next.title}`);
+      const nb = h("button", { class: "pillbtn primary" }, tx("ui.app.next-0", `Next: ${next.title}`, next.title));
       nb.addEventListener("click", () => this.startLesson(next.id));
       ctl.append(nb);
     }
@@ -4596,7 +4596,7 @@ export class App {
   private showPause(): void {
     const overlay = h("div", { class: "overlay show" });
     const card = h("div", { class: "card" });
-    card.append(h("h2", {}, "Paused"), h("div", { class: "sub" }, "The game waits — nothing moves without you."));
+    card.append(h("h2", {}, tx("ui.app.paused", "Paused")), h("div", { class: "sub" }, tx("ui.app.the-game-waits-nothing-moves-without-you", "The game waits — nothing moves without you.")));
     const col = h("div", { class: "col" });
     const mk = (label: string, cls: string, fn: () => void) => {
       const b = h("button", { class: `pillbtn ${cls}` }, label);
@@ -4605,24 +4605,24 @@ export class App {
     };
     col.append(
       mk("Resume", "primary", () => this.dismissOverlay(overlay)),
-      mk(this.settings.guided ? "Guided: on" : "Guided: off", "ghost", () => {
+      mk(this.settings.guided ? tx("ui.app.guided-on", "Guided: on") : tx("ui.app.guided-off", "Guided: off"), "ghost", () => {
         this.settings = { ...this.settings, guided: !this.settings.guided };
         this.persistSettings();
         this.dismissOverlay(overlay);
         this.renderTable();
       }),
-      mk(this.settings.sound ? "Sound: on" : "Sound: off", "ghost", () => {
+      mk(this.settings.sound ? tx("ui.app.sound-on", "Sound: on") : tx("ui.app.sound-off", "Sound: off"), "ghost", () => {
         this.settings = { ...this.settings, sound: !this.settings.sound };
         this.sound.enabled = this.settings.sound;
         this.persistSettings();
         this.dismissOverlay(overlay);
         this.renderTable();
       }),
-      mk("Restart game", "", () => {
+      mk(tx("ui.app.restart-game", "Restart game"), "", () => {
         this.dismissOverlay(overlay);
         this.restartGame();
       }),
-      mk("Quit to home", "", () => {
+      mk(tx("ui.app.quit-to-home", "Quit to home"), "", () => {
         this.dismissOverlay(overlay);
         this.quitToHome();
       }),
@@ -4648,7 +4648,7 @@ export class App {
       const nextIsGameEnd =
         this.runner?.result !== null ||
         this.runner?.events[this.cursor]?.type === "game-end";
-      const cont = h("button", { class: "pillbtn primary" }, nextIsGameEnd ? "Final results" : "Next hand");
+      const cont = h("button", { class: "pillbtn primary" }, nextIsGameEnd ? tx("ui.app.final-results", "Final results") : tx("ui.app.next-hand", "Next hand"));
       cont.style.width = "100%";
       cont.style.marginTop = "16px";
       cont.addEventListener("click", () => {
@@ -4663,11 +4663,11 @@ export class App {
 
   private fillWinBreakdown(card: HTMLElement, win: WinInfo): void {
     const winner = this.model.players[win.seat]!;
-    const title = win.winType === "ron" ? `Ron — ${WIND_NAMES[winner.seatWind]}` : `Tsumo — ${WIND_NAMES[winner.seatWind]}`;
+    const title = win.winType === "ron" ? `Ron — ${WIND_NAMES[winner.seatWind]}` : tx("ui.app.tsumo-0", `Tsumo — ${WIND_NAMES[winner.seatWind]}`, WIND_NAMES[winner.seatWind]);
     card.append(h("h2", {}, title));
     if (win.winType === "ron" && win.fromSeat !== undefined) {
       const from = this.model.players[win.fromSeat]!;
-      card.append(h("div", { class: "sub" }, `On ${WIND_NAMES[from.seatWind]}'s discard`));
+      card.append(h("div", { class: "sub" }, tx("ui.app.on-0-s-discard", `On ${WIND_NAMES[from.seatWind]}'s discard`, WIND_NAMES[from.seatWind])));
     }
     // In-place glosses (definition audit, 2026-11-17): a player can
     // reach this sheet from the land-and-play home before any
@@ -4675,8 +4675,8 @@ export class App {
     // words the lessons use. The wind in the title is the winner's
     // seat wind — the wind of the seat the winner is sitting in.
     card.append(h("p", { class: "dim" }, win.winType === "ron"
-      ? "Ron: winning on a tile another player discarded. Only the player who discarded it pays. The wind in the title is the winner's seat wind."
-      : "Tsumo: winning on a tile you drew yourself. All three opponents pay. The wind in the title is the winner's seat wind."));
+      ? tx("ui.app.ron-winning-on-a-tile-another-player-discarded-o", "Ron: winning on a tile another player discarded. Only the player who discarded it pays. The wind in the title is the winner's seat wind.")
+      : tx("ui.app.tsumo-winning-on-a-tile-you-drew-yourself-all-th", "Tsumo: winning on a tile you drew yourself. All three opponents pay. The wind in the title is the winner's seat wind.")));
     const handRow = h("div", { class: "bk-hand" });
     for (const meld of win.winnerMelds) handRow.append(this.meldEl(meld, "t-meld", win.seat));
     const sorted = [...win.handTiles].sort((a, b) => a.type - b.type || a.id - b.id);
@@ -4694,7 +4694,7 @@ export class App {
         (open && ["ittsu", "sanshoku-doujun", "honchan", "junchan", "honitsu", "chinitsu"].includes(id) ? closedHan - 1 : closedHan);
       yakuHan += han;
       const row = h("div", { class: "row" });
-      row.append(h("span", {}, name), h("span", { class: "han" }, win.yakumanMultiple > 0 ? "Yakuman" : `${han} han`));
+      row.append(h("span", {}, name), h("span", { class: "han" }, win.yakumanMultiple > 0 ? tx("ui.app.yakuman", "Yakuman") : tx("ui.app.v-0-han", `${han} han`, han)));
       yakuBox.append(row);
     }
     if (win.yakumanMultiple === 0) {
@@ -4707,7 +4707,7 @@ export class App {
       const total = h("div", { class: "row total" });
       const gained = win.payments.reduce((s, p) => s + p.amount, 0) + win.stickPoints;
       total.append(
-        h("span", {}, `${win.han} han · ${win.fu} fu`),
+        h("span", {}, tx("ui.app.v-0-han-1-fu", `${win.han} han · ${win.fu} fu`, win.han, win.fu)),
         h("span", {}, `${fmt(gained)}`),
       );
       yakuBox.append(total);
@@ -4715,43 +4715,43 @@ export class App {
       const total = h("div", { class: "row total" });
       const gained = win.payments.reduce((s, p) => s + p.amount, 0) + win.stickPoints;
       total.append(
-        h("span", {}, win.yakumanMultiple > 1 ? `Yakuman ×${win.yakumanMultiple}` : "Yakuman"),
+        h("span", {}, win.yakumanMultiple > 1 ? tx("ui.app.yakuman-0", `Yakuman ×${win.yakumanMultiple}`, win.yakumanMultiple) : "Yakuman"),
         h("span", {}, `${fmt(gained)}`),
       );
       yakuBox.append(total);
     }
     card.append(yakuBox);
     card.append(h("p", { class: "dim" }, win.yakumanMultiple > 0
-      ? "A yakuman is the highest-value kind of hand. It pays a fixed large amount."
-      : "Han count the hand's scoring patterns and bonus dora. Fu are minipoints from the hand's shape. Han and fu together set the points."));
-    card.append(h("p", { class: "dim" }, `Honba — the repeat counter — stands at ${this.model.honba}. Each honba adds 300 points to a winning hand.`));
+      ? tx("ui.app.a-yakuman-is-the-highest-value-kind-of-hand-it-p", "A yakuman is the highest-value kind of hand. It pays a fixed large amount.")
+      : tx("ui.app.han-count-the-hands-scoring-patterns-and-bonus-d", "Han count the hand's scoring patterns and bonus dora. Fu are minipoints from the hand's shape. Han and fu together set the points.")));
+    card.append(h("p", { class: "dim" }, tx("ui.app.honba-the-repeat-counter-stands-at-0-each-honba", `Honba — the repeat counter — stands at ${this.model.honba}. Each honba adds 300 points to a winning hand.`, this.model.honba)));
 
     const pay = h("div", { class: "bk-pay" });
     for (const p of win.payments) {
       const payer = this.model.players[p.seat]!;
-      pay.append(h("div", {}, `${WIND_NAMES[payer.seatWind]} pays `, h("b", {}, fmt(p.amount))));
+      pay.append(h("div", {}, tx("ui.app.v-0-pays", `${WIND_NAMES[payer.seatWind]} pays`, WIND_NAMES[payer.seatWind]) + " ", h("b", {}, fmt(p.amount))));
     }
     if (win.stickPoints > 0) {
-      pay.append(h("div", {}, `Riichi sticks `, h("b", {}, `+${fmt(win.stickPoints)}`)));
+      pay.append(h("div", {}, tx("ui.app.riichi-sticks", `Riichi sticks`) + " ", h("b", {}, tx("ui.app.v-0-6", `+${fmt(win.stickPoints)}`, fmt(win.stickPoints)))));
     }
     card.append(pay);
     if (win.stickPoints > 0) {
-      card.append(h("p", { class: "dim" }, "A riichi stick is a 1,000-point stake a player paid when declaring riichi. The winner collects the sticks on the table."));
+      card.append(h("p", { class: "dim" }, tx("ui.app.a-riichi-stick-is-a-1-000-point-stake-a-player-p", "A riichi stick is a 1,000-point stake a player paid when declaring riichi. The winner collects the sticks on the table.")));
     }
 
     const doraRow = h("div", { class: "bk-dora" });
-    doraRow.append(h("span", { class: "lbl" }, "Dora indicator"));
+    doraRow.append(h("span", { class: "lbl" }, tx("ui.app.dora-indicator", "Dora indicator")));
     for (const ind of this.model.doraIndicators) doraRow.append(tileEl(ind, "", { flip: false }));
     card.append(doraRow);
-    card.append(h("p", { class: "dim" }, "The dora indicator points to a bonus tile: the tile one step on from the indicator, in the same suit, is a dora, worth extra han in a winning hand."));
+    card.append(h("p", { class: "dim" }, tx("ui.app.the-dora-indicator-points-to-a-bonus-tile-the-ti", "The dora indicator points to a bonus tile: the tile one step on from the indicator, in the same suit, is a dora, worth extra han in a winning hand.")));
     if (winner.riichi) {
       const ura = this.model.uraIndicators();
       if (ura) {
         const uraRow = h("div", { class: "bk-dora" });
-        uraRow.append(h("span", { class: "lbl" }, "Uradora indicator"));
+        uraRow.append(h("span", { class: "lbl" }, tx("ui.app.uradora-indicator", "Uradora indicator")));
         for (const ind of ura) uraRow.append(tileEl(ind, "", { flip: false }));
         card.append(uraRow);
-        card.append(h("p", { class: "dim" }, "Uradora indicators sit hidden under the dora indicators. They are revealed only when a riichi hand wins, and the tile one step on from each is also a bonus tile."));
+        card.append(h("p", { class: "dim" }, tx("ui.app.uradora-indicators-sit-hidden-under-the-dora-ind", "Uradora indicators sit hidden under the dora indicators. They are revealed only when a riichi hand wins, and the tile one step on from each is also a bonus tile.")));
       }
     }
   }
@@ -4759,23 +4759,23 @@ export class App {
   private fillDrawBreakdown(card: HTMLElement, drawn: NonNullable<TableModel["lastDrawnHand"]>): void {
     if (drawn.kind === "abortive") {
       card.append(
-        h("h2", {}, "Hand drawn"),
-        h("div", { class: "sub" }, ABORTIVE_NAMES[drawn.abortive ?? ""] ?? "Abortive draw"),
-        h("p", { class: "dim" }, "The hand restarts with one more honba — the repeat counter rises by one. The dealer repeats."),
+        h("h2", {}, tx("ui.app.hand-drawn", "Hand drawn")),
+        h("div", { class: "sub" }, ABORTIVE_NAMES[drawn.abortive ?? ""] ?? tx("ui.app.abortive-draw", "Abortive draw")),
+        h("p", { class: "dim" }, tx("ui.app.the-hand-restarts-with-one-more-honba-the-repeat", "The hand restarts with one more honba — the repeat counter rises by one. The dealer repeats.")),
       );
       return;
     }
-    card.append(h("h2", {}, "Exhaustive draw"));
+    card.append(h("h2", {}, tx("ui.app.exhaustive-draw", "Exhaustive draw")));
     if (drawn.nagashi && drawn.nagashi.length > 0) {
       const names = drawn.nagashi.map((s) => WIND_NAMES[this.model.players[s]!.seatWind]).join(", ");
-      card.append(h("div", { class: "sub" }, `Nagashi mangan: ${names} — that player's discards were all terminals or honors and none were claimed, so the drawn hand pays that player as a large fixed-value win.`));
+      card.append(h("div", { class: "sub" }, tx("ui.app.nagashi-mangan-0-that-players-discards-were-all", `Nagashi mangan: ${names} — that player's discards were all terminals or honors and none were claimed, so the drawn hand pays that player as a large fixed-value win.`, names)));
     } else {
       const names = (drawn.tenpai ?? []).map((s) => WIND_NAMES[this.model.players[s]!.seatWind]).join(", ") || "None";
-      card.append(h("div", { class: "sub" }, `Tenpai: ${names}. Tenpai players — players one tile from a complete hand — split 3,000 points paid by the players who were not tenpai.`));
+      card.append(h("div", { class: "sub" }, tx("ui.app.tenpai-0-tenpai-players-players-one-tile-from-a", `Tenpai: ${names}. Tenpai players — players one tile from a complete hand — split 3,000 points paid by the players who were not tenpai.`, names)));
     }
     for (const [seat, tiles] of drawn.revealedHands) {
       const p = this.model.players[seat]!;
-      const label = h("div", { class: "fsec" }, `${WIND_NAMES[p.seatWind]}${seat === this.humanSeat ? " · YOU" : ""} — TENPAI`);
+      const label = h("div", { class: "fsec" }, tx("ui.app.v-0-1-tenpai", `${WIND_NAMES[p.seatWind]}${seat === this.humanSeat ? " " + tx("ui.app.you-2", "· YOU") : ""} — TENPAI`, WIND_NAMES[p.seatWind], seat === this.humanSeat ? " " + tx("ui.app.you-2", "· YOU") : ""));
       const row = h("div", { class: "bk-hand" });
       const sorted = [...tiles].sort((a, b) => a.type - b.type || a.id - b.id);
       for (const tile of sorted) row.append(tileEl(tile, "", { flip: false }));
@@ -4800,25 +4800,25 @@ export class App {
       const pts = `${entry.points > 0 ? "+" : ""}${formatStandingsPoints(entry.points)}`;
       row.append(
         h("span", { class: "rank" }, `${entry.rank}`),
-        h("span", { class: "who" }, entry.seat === this.humanSeat ? "You" : WIND_NAMES[p.seatWind]!),
+        h("span", { class: "who" }, entry.seat === this.humanSeat ? tx("ui.app.you-3", "You") : WIND_NAMES[p.seatWind]!),
         h("span", { class: "score" }, fmt(entry.score)),
         h("span", { class: `pts ${entry.points > 0 ? "pos" : entry.points < 0 ? "neg" : ""}` }, pts),
       );
       table.append(row);
     }
     page.append(table);
-    page.append(h("p", { class: "dim" }, `${this.runner?.replayVersion === 1 ? "Historical rules v1; saved results preserved. " : ""}Points include uma — place bonuses of +15/+5/−5/−15 for finishing first to fourth — and the oka, a 20-point bonus to first place.`));
+    page.append(h("p", { class: "dim" }, tx("ui.app.v-0-points-include-uma-place-bonuses-of-15-5-5-15", `${this.runner?.replayVersion === 1 ? tx("ui.app.historical-rules-v1-saved-results-preserved", "Historical rules v1; saved results preserved.") + " " : ""}Points include uma — place bonuses of +15/+5/−5/−15 for finishing first to fourth — and the oka, a 20-point bonus to first place.`, this.runner?.replayVersion === 1 ? tx("ui.app.historical-rules-v1-saved-results-preserved", "Historical rules v1; saved results preserved.") + " " : "")));
     const col = h("div", { class: "col" });
     col.style.display = "flex";
     col.style.flexDirection = "column";
     col.style.gap = "10px";
     col.style.marginTop = "18px";
-    const again = h("button", { class: "pillbtn primary" }, "Play again");
+    const again = h("button", { class: "pillbtn primary" }, tx("ui.app.play-again", "Play again"));
     again.addEventListener("click", () => this.startGame(this.runner?.length ?? "south"));
-    const home = h("button", { class: "pillbtn ghost" }, "Home");
+    const home = h("button", { class: "pillbtn ghost" }, tx("ui.app.home", "Home"));
     home.addEventListener("click", () => this.showScreen("home"));
     col.append(again, home);
-    const review = h("button", { class: "pillbtn", "aria-label": "Review game" }, "Review game");
+    const review = h("button", { class: "pillbtn", "aria-label": tx("ui.app.review-game", "Review game") }, tx("ui.app.review-game", "Review game"));
     review.addEventListener("click", () => this.openReview());
     col.prepend(review);
     page.append(col);
