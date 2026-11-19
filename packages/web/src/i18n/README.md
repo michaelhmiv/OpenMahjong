@@ -112,6 +112,19 @@ carry the plural as an arg (`"{0} recorded game{1}"`) must pass
 `pluralS(count)` from i18n/index.ts, never a raw `"s"` — ja/ko/zh do
 not mark plurals, so a raw "s" leaks Latin letters onto their screens.
 
+Two more shapes the extractor AND the check both miss (render
+verification of every screen is the only guard): (3) literals behind
+LOCAL inline helpers the extractor does not know — the Rules screen's
+intro and bullets were passed to a block-local `p`/`li` helper, and
+their values were already claimed by the `pages.riichi.*` inventory,
+so no `ui.app` key existed; and (4) display text passed as a plain
+method argument — `textScreen()` received its title (`Rules`,
+`About`, …) as a raw literal and rendered it as the screen heading.
+Both are fixed now (Rules body +16 keys, titles +4 keys). Derived-key
+render sites that can meet unminted content degrade to the data text
+via a `keyStatus(key) === "missing"` guard (`dt()` in
+variant-education-ui.ts) — a key id must never reach the screen.
+
 Extractor fixes from the rewire (see `scripts/extract-i18n.mjs`):
 the mcr-guide rule runs before the generic bare-list rule (its tuple
 elements were claimed under slug keys instead of positional pattern
