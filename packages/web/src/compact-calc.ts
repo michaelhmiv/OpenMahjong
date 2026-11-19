@@ -3,6 +3,7 @@ import {
   type CalculationDraft,
   type CalculationResult,
 } from "@openmahjong/engine";
+import { tx } from "./i18n/index.js";
 
 /**
  * The compact calculator grammar (approved set: calc-v2 compact +
@@ -101,13 +102,13 @@ export function cxSeatTile(
   texts.append(
     el(
       "span",
-      info.dealer ? `${wind} · Dealer` : wind,
+      info.dealer ? tx("calc.compact.v-0-dealer", `${wind} · Dealer`, wind) : wind,
       "cx-seat-wind",
     ),
     el("span", info.name, "cx-seat-name"),
     el(
       "span",
-      `${info.score.toLocaleString("en-US")} points`,
+      tx("calc.compact.v-0-points", `${info.score.toLocaleString("en-US")} points`, info.score.toLocaleString("en-US")),
       "cx-seat-score",
     ),
   );
@@ -208,9 +209,9 @@ export function cxStepperChips(opts: {
   };
   const stepper = el("div", "", "cx-stepper");
   const minus = btn("−", () => stepBy(-1), "cx-stepbtn");
-  minus.setAttribute("aria-label", `Decrease ${opts.label}`);
+  minus.setAttribute("aria-label", tx("calc.compact.decrease-0", `Decrease ${opts.label}`, opts.label));
   const plus = btn("+", () => stepBy(1), "cx-stepbtn");
-  plus.setAttribute("aria-label", `Increase ${opts.label}`);
+  plus.setAttribute("aria-label", tx("calc.compact.increase-0", `Increase ${opts.label}`, opts.label));
   stepper.append(minus, display, plus);
   wrap.append(cxLabel(opts.label), stepper);
   if (opts.chips?.length) {
@@ -293,7 +294,7 @@ export function cxCorrections(opts: CorrectionsOptions): HTMLElement {
     const control = numInput(
       result.corrected.find((c) => c.id === f.id)?.units ?? f.units,
     );
-    box.append(field(`${f.label} · Original ${f.units}`, control));
+    box.append(field(tx("calc.compact.v-0-original-1", `${f.label} · Original ${f.units}`, f.label, f.units), control));
     return { id: f.id, units: f.units, control };
   });
   const adjustment = numInput(
@@ -303,7 +304,7 @@ export function cxCorrections(opts: CorrectionsOptions): HTMLElement {
   let correctedFu: HTMLInputElement | undefined;
   if (opts.showFu) {
     correctedFu = numInput(result.fu);
-    box.append(field("Corrected fu", correctedFu));
+    box.append(field(tx("calc.compact.corrected-fu", "Corrected fu"), correctedFu));
   }
   const reason = el("input");
   reason.type = "text";
@@ -311,7 +312,7 @@ export function cxCorrections(opts: CorrectionsOptions): HTMLElement {
   reason.maxLength = 240;
   box.append(field(opts.reasonLabel, reason));
   box.append(
-    btn("Apply corrections and recalculate", () =>
+    btn(tx("calc.compact.apply-corrections-and-recalculate", "Apply corrections and recalculate"), () =>
       opts.safe(() => {
         const corrections = factFields
           .filter((f) => Number(f.control.value) !== f.units)
@@ -332,7 +333,7 @@ export function cxCorrections(opts: CorrectionsOptions): HTMLElement {
           Number(correctedFu.value) !== result.fu &&
           !reason.value.trim()
         )
-          throw new Error("Enter a correction reason");
+          throw new Error(tx("calc.compact.enter-a-correction-reason", "Enter a correction reason"));
         opts.onApply({
           input: draft.input,
           corrections,
@@ -388,15 +389,15 @@ export function cxPreview(host: HTMLElement, opts: PreviewOptions): void {
   );
   out.append(head);
   const deltas = el("section", "", "cx-panel cx-deltas");
-  deltas.append(cxLabel("Score changes"));
+  deltas.append(cxLabel(tx("calc.compact.score-changes", "Score changes")));
   for (const row of opts.rows) {
     const line = el("div", "", "cx-delta");
     const who = el("span", row.name, "who");
-    if (row.suffix) who.append(el("span", ` ${row.suffix}`));
+    if (row.suffix) who.append(el("span", " " + tx("calc.compact.v-0", `${row.suffix}`, row.suffix)));
     const amt = el(
       "span",
       row.delta > 0
-        ? `+${row.delta.toLocaleString("en-US")}`
+        ? tx("calc.compact.v-0-2", `+${row.delta.toLocaleString("en-US")}`, row.delta.toLocaleString("en-US"))
         : row.delta.toLocaleString("en-US"),
       row.delta === 0 ? "amt zero" : "amt",
     );
@@ -422,9 +423,9 @@ export function cxPreview(host: HTMLElement, opts: PreviewOptions): void {
     body.addEventListener("input", () => {
       if (confirm) confirm.disabled = true;
       dirtyNote.textContent =
-        "Apply corrections and recalculate before confirming.";
+        tx("calc.compact.apply-corrections-and-recalculate-before-confirm", "Apply corrections and recalculate before confirming.");
     });
-    const toggle = btn("Correct the breakdown", () => {
+    const toggle = btn(tx("calc.compact.correct-the-breakdown", "Correct the breakdown"), () => {
       body.hidden = !body.hidden;
       toggle.setAttribute("aria-expanded", String(!body.hidden));
     }, "cx-quiet");
@@ -438,7 +439,7 @@ export function cxPreview(host: HTMLElement, opts: PreviewOptions): void {
     );
   if (opts.confirmLabel && opts.onConfirm) {
     const row = el("div", "", "cx-btnrow");
-    if (opts.onEdit) row.append(btn("Edit", opts.onEdit, "cx-quiet"));
+    if (opts.onEdit) row.append(btn(tx("calc.compact.edit", "Edit"), opts.onEdit, "cx-quiet"));
     confirm = btn(opts.confirmLabel, opts.onConfirm, "primary");
     confirm.disabled = Boolean(
       opts.confirmDisabled || opts.ineligibleNote,
@@ -446,7 +447,7 @@ export function cxPreview(host: HTMLElement, opts: PreviewOptions): void {
     row.append(confirm);
     out.append(row);
   } else if (opts.onEdit) {
-    out.append(btn("Edit", opts.onEdit, "cx-quiet"));
+    out.append(btn(tx("calc.compact.edit", "Edit"), opts.onEdit, "cx-quiet"));
   }
   host.append(out);
 }

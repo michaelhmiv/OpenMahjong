@@ -2,7 +2,7 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T13:18:34.327Z",
+    "generatedAt": "2026-11-19T13:19:02.692Z",
     "keyCount": 3727,
     "namespaces": {
       "calc.compact": 14,
@@ -137,7 +137,7 @@
       "hash": "393531636c0c87cdf7d6584ff7874fe999f0bb1230e2673bf8a3aba5bcc1c328",
       "source": {
         "file": "compact-calc.ts",
-        "line": 314
+        "line": 315
       },
       "placeholders": [],
       "status": "approved"
@@ -147,7 +147,7 @@
       "hash": "0e0540a921ea9f5f52443763297313b47f765b3d324df0ccd545da4fe12f459b",
       "source": {
         "file": "compact-calc.ts",
-        "line": 425
+        "line": 426
       },
       "placeholders": [],
       "status": "approved"
@@ -157,7 +157,7 @@
       "hash": "86208e8008aeb78c93935f4a767c2da09cef5c8f3839fe185d72a6782e2c2467",
       "source": {
         "file": "compact-calc.ts",
-        "line": 427
+        "line": 428
       },
       "placeholders": [],
       "status": "approved"
@@ -167,7 +167,7 @@
       "hash": "3976516ff2ee21b645eb4314275695cfee817f7fb10f4c2acfab557bd616746c",
       "source": {
         "file": "compact-calc.ts",
-        "line": 306
+        "line": 307
       },
       "placeholders": [],
       "status": "approved"
@@ -177,19 +177,20 @@
       "hash": "08ad0c2c2f941e58b2a4d94d1abd378e32753ae1d15699683cff3000ebf7f8f9",
       "source": {
         "file": "compact-calc.ts",
-        "line": 211
+        "line": 212
       },
       "placeholders": [
         "0"
       ],
-      "status": "approved"
+      "status": "approved",
+      "dynamic": true
     },
     "calc.compact.edit": {
       "value": "Edit",
       "hash": "464c4ffd019e1e9691dcf0537c797353ef2b1c1d4833d3d463e5b74ae4547344",
       "source": {
         "file": "compact-calc.ts",
-        "line": 441
+        "line": 442
       },
       "placeholders": [],
       "status": "approved"
@@ -199,7 +200,7 @@
       "hash": "4836d7690bc34ec07ea4fe1ba9e1ec222d35372ac1a240ee6fad0eba71edd9e0",
       "source": {
         "file": "compact-calc.ts",
-        "line": 335
+        "line": 336
       },
       "placeholders": [],
       "status": "approved"
@@ -209,19 +210,20 @@
       "hash": "ee6f1f61849bf70c645514dcf64b94906818ea4d529faa0ea19b0190daf9fb3f",
       "source": {
         "file": "compact-calc.ts",
-        "line": 213
+        "line": 214
       },
       "placeholders": [
         "0"
       ],
-      "status": "approved"
+      "status": "approved",
+      "dynamic": true
     },
     "calc.compact.score-changes": {
       "value": "Score changes",
       "hash": "4600b93764b0fcace7328e3c0b55132d2a467a2d844e12a40f748bdb603ed81e",
       "source": {
         "file": "compact-calc.ts",
-        "line": 391
+        "line": 392
       },
       "placeholders": [],
       "status": "approved"
@@ -231,7 +233,7 @@
       "hash": "a00644508de97e85263c9d0cd67e63d3c3b5d733bcaddc65b110e501ad5a7b73",
       "source": {
         "file": "compact-calc.ts",
-        "line": 395
+        "line": 396
       },
       "placeholders": [
         "0"
@@ -244,7 +246,7 @@
       "hash": "e6f36eec2093006bbf6bbc44f8ec977484c54a5de9d810ebd450fb4a63646468",
       "source": {
         "file": "compact-calc.ts",
-        "line": 399
+        "line": 400
       },
       "placeholders": [
         "0"
@@ -257,7 +259,7 @@
       "hash": "36d45fb235cb907cbbb9c72c266dc912cc2447fcf88fb2a5d0df1565800da984",
       "source": {
         "file": "compact-calc.ts",
-        "line": 104
+        "line": 105
       },
       "placeholders": [
         "0"
@@ -270,7 +272,7 @@
       "hash": "dea050fe50f928bbc5d3c96ae3cece2d75a8a7727090ba666500d5dd3f917877",
       "source": {
         "file": "compact-calc.ts",
-        "line": 296
+        "line": 297
       },
       "placeholders": [
         "0",
@@ -284,7 +286,7 @@
       "hash": "b717883aa3880c7f315c6b8dae4d4b23ce965a5b0f8f45247ad6c6108beb4689",
       "source": {
         "file": "compact-calc.ts",
-        "line": 110
+        "line": 111
       },
       "placeholders": [
         "0"
