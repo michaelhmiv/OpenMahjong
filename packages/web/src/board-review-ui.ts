@@ -2,6 +2,7 @@ import { variantAdapter, type Tile } from "@openmahjong/engine";
 import { formatStandingsPoints } from "./records.js";
 import { tileById } from "./model.js";
 import { BoardTimeline, eventLabel } from "./board-review.js";
+import { analyzeReviewDecision } from "./review.js";
 import { mountReview, type ReviewUIController } from "./review-ui.js";
 import type { ReviewDecision } from "./review.js";
 import type { SkillId } from "./education/curriculum.js";
@@ -136,9 +137,24 @@ export function mountBoardReview(
     ...(options.onPractice ? {onPractice:options.onPractice} : {}),
     embedded: true,
   });
+  // The coach analysis for a decision is computed once and cached:
+  // seek() runs on every slider step, and re-running the evaluator
+  // per step would make scrubbing (and the marks) crawl.
+  const analysisCache = new Map<number, ReturnType<typeof analyzeReviewDecision>>();
+  const analysisFor = (position: ReviewDecision): ReturnType<typeof analyzeReviewDecision> => {
+    const cached = analysisCache.get(position.decisionIndex);
+    if (cached) return cached;
+    const fresh = analyzeReviewDecision(position);
+    analysisCache.set(position.decisionIndex, fresh);
+    return fresh;
+  };
   let cursor = timeline.hands[options.handIndex ?? 0]?.start ?? 0;
   let selectedPosition: ReviewDecision | null = null;
-  const tiles = (values: readonly Tile[], hidden = false): HTMLElement => {
+  const tiles = (
+    values: readonly Tile[],
+    hidden = false,
+    marks?: { chosenId?: number; advisedId?: number; drawnId?: number },
+  ): HTMLElement => {
     const row = el("div", "", "board-tiles");
     for (const value of values) {
       if (hidden) {
@@ -146,7 +162,25 @@ export function mountBoardReview(
         back.setAttribute("role", "img");
         back.setAttribute("aria-label", tx("review.board.concealed-tile", "Concealed tile"));
         row.append(back);
-      } else row.append(options.renderTile(value));
+        continue;
+      }
+      const face = options.renderTile(value);
+      const isChosen = marks?.chosenId === value.id;
+      const isAdvised = marks?.advisedId === value.id;
+      const isDrawn = marks?.drawnId === value.id;
+      if (!isChosen && !isAdvised && !isDrawn) {
+        row.append(face);
+        continue;
+      }
+      // Decision marks (audit C19): the board itself shows which
+      // discard was chosen and which the coach advised, and the
+      // drawn tile is separated from the rest of the hand.
+      if (isDrawn) row.append(el("span", "", "board-drawn-sep"));
+      const wrap = el("span", "", `board-mark${isChosen ? " chosen" : ""}${isAdvised ? " advised" : ""}${isDrawn ? " drawn" : ""}`);
+      if (isChosen) wrap.setAttribute("aria-label", tx("review.board.your-discard", "Your discard"));
+      if (isAdvised) wrap.setAttribute("aria-label", tx("review.board.coachs-pick", "Coach's pick"));
+      wrap.append(face);
+      row.append(wrap);
     }
     return row;
   };
@@ -164,6 +198,19 @@ export function mountBoardReview(
     status.textContent = tx("review.board.event-0-1", `Event ${cursor + 1} · ${label}`, cursor + 1, label);
     previous.disabled = cursor <= (hand?.start ?? 0);
     next.disabled = cursor >= (hand?.end ?? timeline.data.events.length - 1);
+    // Resolve the decision at this event before the board renders:
+    // its chosen/advised discards are marked on the player's hand.
+    const earlyPositionIndex =
+      timeline.decisionsByEvent.get(timeline.data.events[cursor]!.seq)?.[0] ?? -1;
+    const earlyPosition = timeline.data.review.positions[earlyPositionIndex] ?? null;
+    const earlyAnalysis = earlyPosition ? analysisFor(earlyPosition) : null;
+    const handMarks = earlyPosition && earlyPosition.kind === "turn"
+      ? {
+          ...(earlyPosition.action.type === "discard" ? { chosenId: earlyPosition.action.tileId } : {}),
+          ...(earlyAnalysis?.available ? { advisedId: earlyAnalysis.advice.recommendation.tileId } : {}),
+          ...(earlyPosition.context.drawnTile ? { drawnId: earlyPosition.context.drawnTile.id } : {}),
+        }
+      : undefined;
     board.replaceChildren();
     const center = el("div", "", "board-center");
     center.append(
@@ -180,8 +227,9 @@ export function mountBoardReview(
     for (let relative = 0; relative < 4; relative++) {
       const player = model.players[(timeline.data.humanSeat + relative) % 4]!;
       const area = el("section", "", `board-seat board-seat-${relative}`);
-      // The dealer mark (design rules section 15): medium.css rings
-      // this seat in chun and appends the " · Dealer" suffix.
+      // The dealer mark: medium.css outlines this seat with a
+      // neutral line and appends the " · Dealer" suffix (audit F9 —
+      // red stays inside design rules section 3's reserved set).
       if (player.isDealer) area.setAttribute("data-dealer", "true");
       area.append(
         el(
@@ -193,6 +241,7 @@ export function mountBoardReview(
             .map((id) => model.resolveTile(id))
             .sort((a, b) => a.type - b.type || a.id - b.id),
           relative !== 0 && !revealHands,
+          relative === 0 ? handMarks : undefined,
         ),
       );
       if (player.flowers.length)
@@ -228,6 +277,10 @@ export function mountBoardReview(
       }
       area.append(pond);
       board.append(area);
+    }
+    if (handMarks && (handMarks.chosenId !== undefined || handMarks.advisedId !== undefined)) {
+      const legend = el("p", tx("review.board.your-discard-is-outlined-the-coachs-pick-is-ringed", "Your discard is outlined; the coach's pick is ringed."), "board-mark-legend");
+      board.append(legend);
     }
     jumps.replaceChildren(el("option", tx("review.board.jump-to-significant-event", "Jump to significant event")));
     jumps.options[0]!.value = "";
@@ -304,6 +357,9 @@ export function mountBoardReview(
     reveal.setAttribute("aria-pressed", "false");
     controls.append(reveal);
   }
+  // The coach comparison rides directly under the board status —
+  // within the first screen at the decision point — not below the
+  // timeline controls where it opened off-screen (audit C19).
   main.append(
     handSelect,
     el(
@@ -313,10 +369,10 @@ export function mountBoardReview(
     ),
     board,
     status,
+    adviceHost,
     range,
     controls,
     jumps,
-    adviceHost,
   );
   shell.append(header, main);
   container.replaceChildren(shell);

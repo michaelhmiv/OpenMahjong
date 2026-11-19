@@ -148,13 +148,16 @@ describe("medium surface system: locked structure", () => {
   });
 
   it("the dealer's seat ring and suffix are keyed off data-dealer", () => {
+    // Audit F9: Board Review's dealer seat wears a neutral line,
+    // not red — section 3 reserves red on that screen.
     const ring = bySelector('.board-seat[data-dealer="true"]');
     expect(ring).toBeDefined();
-    expect(ring!.body).toContain("inset 0 0 0 2px var(--chun)");
+    expect(ring!.body).toContain("inset 0 0 0 2px var(--on-tint)");
+    expect(ring!.body).not.toContain("var(--chun)");
     const suffix = bySelector('.board-seat[data-dealer="true"] h2::after');
     expect(suffix).toBeDefined();
     expect(suffix!.body).toContain('content: " · Dealer"');
-    expect(suffix!.body).toContain("color: var(--chun-text)");
+    expect(suffix!.body).toContain("color: var(--on-tint)");
   });
 });
 

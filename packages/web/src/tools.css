@@ -127,6 +127,15 @@
 .board-pond {
   margin-top: 8px;
 }
+/* Decision marks on the board hand (audit C19): chosen discard in
+   an ink outline, the coach's pick in a state-green ring — never
+   colour alone, the legend line under the board names both. */
+.board-mark { display: inline-flex; border-radius: 4px; }
+.board-mark.chosen { outline: 2px solid var(--ink); outline-offset: 1px; }
+.board-mark.advised { box-shadow: 0 0 0 2px var(--state); }
+.board-mark.chosen.advised { outline: 2px solid var(--ink); box-shadow: 0 0 0 4px var(--state); }
+.board-drawn-sep { width: 2px; align-self: stretch; background: var(--line); margin: 0 3px; border-radius: 1px; }
+.board-mark-legend { grid-column: 1 / -1; font-size: 11px; color: var(--dim); margin: 2px 0 0; }
 .board-pond > span {
   display: flex;
   flex-direction: column;

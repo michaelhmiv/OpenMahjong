@@ -255,14 +255,22 @@ button.hrow {
 .sidehand .tile:first-child { margin-top: 0; }
 .sidehand.left { left: 0; transform: translateY(-50%); }
 .sidehand.right { right: 0; transform: translateY(-50%); }
-.sp { position: absolute; top: 50%; transform: translateY(-50%); display: grid; grid-template-rows: repeat(6, 25px); grid-auto-flow: column; gap: 7px 3px; }
-/* A one-column side pond is 35px wide — under the §5 tap floor.
-   Like the hand tiles, the strip keeps its approved visual and
-   gains an expanded invisible hit area (35 + 5 + 5 = 45px). */
+/* Base side-pond faces ride at the back column's own tile size
+   (20x28, the t-back/t-meld size): rotated, a face measures 28x20 —
+   the column it emerges from — instead of a 25x35 hand tile whose
+   35px rotated width dwarfed the column and jutted into the felt
+   (audit C10). The v4 condense step below still steps the pond to
+   two columns at the 13th discard. */
+.sp { position: absolute; top: 50%; transform: translateY(-50%); display: grid; grid-template-rows: repeat(6, 20px); grid-auto-flow: column; gap: 7px 3px; }
+.sp .tile { width: 20px; height: 28px; }
+/* A one-column side pond is 28px wide — under the §5 tap floor.
+   Like the hand tiles, the strip keeps its visual and gains an
+   expanded invisible hit area (28 + 5 + 5 = 38px wide, and each
+   20px row rides in a 27px row pitch). */
 .sp::after { content: ""; position: absolute; inset: 0 -5px; }
 .sp.left { left: 22px; }
 .sp.right { right: 22px; direction: rtl; }
-.sp .cell { width: 35px; height: 25px; position: relative; }
+.sp .cell { width: 28px; height: 20px; position: relative; }
 .sp .tile { position: absolute; left: 50%; top: 50%; }
 .sp.left .tile.rot { transform: translate(-50%, -50%) rotate(-90deg); }
 .sp.right .tile.rot { transform: translate(-50%, -50%) rotate(90deg); }
@@ -297,6 +305,17 @@ button.hrow {
 .chip.turn { box-shadow: 0 0 0 1.5px var(--state); }
 
 .zone-player .pondwrap { padding-bottom: 14px; }
+/* Your own pond is anchored to your seat: rows centre on the seat
+   axis, so an early pond of a few tiles sits under your chip as one
+   group instead of floating at the left of a fixed six-column grid
+   with dead felt to its right (audit C10). A full row of six spans
+   exactly the shipped grid width, so full ponds are unchanged. */
+.pond.ownpond {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  width: calc(6 * 25px + 5 * 1.5px + 6px); margin: 0 auto;
+  row-gap: 2.5px; column-gap: 1.5px;
+}
+html.large .pond.ownpond { width: calc(6 * 22px + 5 * 1.5px + 6px); }
 .zone-player.with-prompt .pondwrap { padding-bottom: 8px; }
 .handrow { display: flex; align-items: flex-end; justify-content: center; }
 .handrow .tile { margin-right: 1px; }
@@ -332,12 +351,9 @@ button.hrow {
 .handctl { display: flex; justify-content: center; padding-top: 6px; }
 .handctl button {
   background: none; border: none; color: var(--dim); font-size: 12px; font-weight: 600;
-  display: flex; align-items: center; gap: 5px; min-height: 32px; padding: 4px 10px;
+  display: flex; align-items: center; gap: 5px; min-height: 44px; padding: 6px 10px;
   position: relative;
 }
-/* The button's 32px visual is part of the table's fitted geometry;
-   its hit area expands invisibly to the §5 floor (32 + 6 + 6). */
-.handctl button::after { content: ""; position: absolute; inset: -6px 0; }
 .handctl svg { width: 15px; height: 15px; stroke: var(--dim); fill: none; stroke-width: 2; stroke-linecap: round; }
 
 /* ------------------------------------------------------------------ */
@@ -408,9 +424,15 @@ button.hrow {
 .selpreview .readout .tname { font-size: 17px; font-weight: 700; color: var(--ink); line-height: 1.25; }
 .selpreview .readout .iline { font-size: 13px; color: var(--dim); line-height: 1.4; margin-top: 3px; }
 .selpreview .readout .iline.waits { color: var(--ink); font-weight: 600; }
-.hgrid { display: grid; grid-template-columns: repeat(7, 48px); gap: 8px 4px; margin-top: 10px; }
-.hgrid .cell { position: relative; width: 48px; height: 67px; }
-.hgrid .tile { width: 48px; height: 67px; position: absolute; left: 0; top: 0; }
+/* The grid is fluid: seven columns share the sheet's inner width
+   (the onlineHandTileSize row-budget idea, in CSS), so every tile —
+   and the drawn tile's selection bar under it — fits fully inside
+   the sheet at the 390 floor and at 412. Fixed 48px columns plus
+   gaps sat within 2px of the inner width and the last tile of the
+   second row clipped at the sheet's right edge (audit B4). */
+.hgrid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px 4px; margin-top: 10px; }
+.hgrid .cell { position: relative; width: auto; aspect-ratio: 48 / 67; }
+.hgrid .tile { width: 100%; height: 100%; position: absolute; left: 0; top: 0; }
 .hgrid .drawn .tile { transform: translateY(-6px); }
 .hgrid .drawn::after { content: ""; position: absolute; left: 9px; right: 9px; bottom: -2px; height: 3px; border-radius: 2px; background: var(--state); }
 .hgrid .sel { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--state); border-radius: 8px; z-index: 3; }
@@ -455,6 +477,10 @@ button.hrow {
 .bk-hand .tile { width: 25px; height: 35px; }
 .bk-hand .tile.win { transform: translateY(-5px); box-shadow: 0 0 0 2px var(--decisive); border-radius: 4px; margin-left: 8px; }
 .bk-hand .meld { margin-left: 8px; }
+/* Win sheet only: the called tile in a meld stands upright with the
+   rest of the hand — the table's sideways meld grammar reads as
+   spilled tiles inside the breakdown sheet (audit C9). */
+.bk-hand .meld .side { transform: none; margin: 0; }
 .bk-yaku { margin-top: 10px; }
 .bk-yaku .row { display: flex; justify-content: space-between; font-size: 14px; padding: 4px 0; border-top: 1px solid var(--line); }
 .bk-yaku .row.total { font-weight: 800; }
@@ -678,7 +704,7 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
   pointer-events: auto; cursor: pointer;
 }
 .guidehint .tile { width: 22px; height: 31px; flex: 0 0 auto; }
-.guidehint .gtext { flex: 1 1 auto; line-height: 1.35; }
+.guidehint .gtext { flex: 1 1 auto; min-width: 0; line-height: 1.35; }
 .guidehint { flex-wrap: wrap; }
 /* The safety reason, stated in words under the headline when the
    selected tile carries the badge (guided-play package). */
@@ -697,7 +723,7 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 .hseg { display: flex; flex-direction: column; }
 .hseg-tiles { display: flex; align-items: flex-end; }
 .hseg-label {
-  font-size: 11px; font-weight: 600; color: var(--sage);
+  font-size: 11px; font-weight: 600; color: var(--dim);
   text-align: center; line-height: 1.3; margin-top: 2px; white-space: nowrap;
 }
 
@@ -762,6 +788,11 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 .xbody { font-size: 14px; line-height: 1.42; }
 .xbody + .xbody { margin-top: 8px; }
 .xmove { display: flex; align-items: center; gap: 12px; }
+/* The explanation sheet is an inspect surface (§12), but its mini
+   faces (28x39 / 24x34) fell back to the 8px base index — the
+   audit's only sub-11px text (F21). The floor is the floor: this
+   surface's indices step up to 11px. */
+.xmove .tindex, .xwait .tindex { font-size: 11px; top: 2px; left: 3px; }
 .xmove .tile { width: 28px; height: 39px; flex: 0 0 auto; }
 .xmove .mname { font-size: 16px; font-weight: 700; line-height: 1.25; }
 .xmove .msub { font-size: 13px; color: var(--dim); margin-top: 2px; line-height: 1.35; }

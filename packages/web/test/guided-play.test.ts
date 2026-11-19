@@ -959,7 +959,7 @@ describe("lesson indices obey the no-leak law", () => {
 describe("guided-play CSS", () => {
   const css = readFileSync(resolve(process.cwd(), "packages/web/src/styles.css"), "utf8");
 
-  it("the badge is a state-green disc; the label is 11px sage; no gold in the package rules", () => {
+  it("the badge is a state-green disc; the label is 11px dim sage; no gold in the package rules", () => {
     const badge = css.match(/\.safebadge\s*\{([^}]*)\}/);
     expect(badge).not.toBeNull();
     expect(badge![1]).toContain("background: var(--state)");
@@ -967,7 +967,7 @@ describe("guided-play CSS", () => {
     const label = css.match(/\.hseg-label\s*\{([^}]*)\}/);
     expect(label).not.toBeNull();
     expect(label![1]).toContain("font-size: 11px");
-    expect(label![1]).toContain("color: var(--sage)");
+    expect(label![1]).toContain("color: var(--dim)");
     const start = css.indexOf("guided-play package: grouping");
     expect(start).toBeGreaterThan(0);
     const block = css.slice(start, start + 4000);

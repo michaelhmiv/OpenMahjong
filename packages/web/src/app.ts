@@ -2506,7 +2506,7 @@ export class App {
     const last = this.lastDiscardRef();
     const entries = p.pond.filter((e) => !e.called);
     if (variant === "grid") {
-      const pond = h("div", { class: `pond ${seat === this.seatAt(2) ? "flip" : ""}` });
+      const pond = h("div", { class: `pond ${seat === this.seatAt(2) ? "flip" : ""} ${seat === this.humanSeat ? "ownpond" : ""}` });
       for (const e of entries) {
         const isLast = last && last.seat === seat && last.tileId === e.tile.id;
         const wrap = tileEl(e.tile, `t-pond ${e.riichiDeclaration ? "side" : ""}`);
@@ -4700,18 +4700,17 @@ export class App {
       const from = this.model.players[win.fromSeat]!;
       card.append(h("div", { class: "sub" }, tx("ui.app.on-0-s-discard", `On ${WIND_NAMES[from.seatWind]}'s discard`, WIND_NAMES[from.seatWind])));
     }
-    // In-place glosses (definition audit, 2026-11-17): a player can
-    // reach this sheet from the land-and-play home before any
-    // lesson, so the win type is defined here, in the same plain
-    // words the lessons use. The wind in the title is the winner's
-    // seat wind — the wind of the seat the winner is sitting in.
-    card.append(h("p", { class: "dim" }, win.winType === "ron"
-      ? tx("ui.app.ron-winning-on-a-tile-another-player-discarded-o", "Ron: winning on a tile another player discarded. Only the player who discarded it pays. The wind in the title is the winner's seat wind.")
-      : tx("ui.app.tsumo-winning-on-a-tile-you-drew-yourself-all-th", "Tsumo: winning on a tile you drew yourself. All three opponents pay. The wind in the title is the winner's seat wind.")));
+    // Copy law (audit C9): the sheet states the facts — who pays
+    // is the sub line, the yaku/han/fu rows and payment lines carry
+    // the numbers. The 2026-11-17 in-place gloss paragraphs are
+    // retired here; the lessons define the terms.
+    if (win.winType === "tsumo") {
+      card.append(h("div", { class: "sub" }, tx("ui.app.all-three-opponents-pay", "All three opponents pay")));
+    }
     const handRow = h("div", { class: "bk-hand" });
-    for (const meld of win.winnerMelds) handRow.append(this.meldEl(meld, "t-meld", win.seat));
     const sorted = [...win.handTiles].sort((a, b) => a.type - b.type || a.id - b.id);
     for (const tile of sorted) handRow.append(tileEl(tile, "", { flip: false }));
+    for (const meld of win.winnerMelds) handRow.append(this.meldEl(meld, "t-meld", win.seat));
     const winWrap = tileEl(win.winningTile, "win", { flip: false });
     handRow.append(winWrap);
     card.append(handRow);
@@ -4754,12 +4753,9 @@ export class App {
       yakuBox.append(total);
     }
     card.append(yakuBox);
-    card.append(h("p", { class: "dim" }, win.yakumanMultiple > 0
-      ? tx("ui.app.a-yakuman-is-the-highest-value-kind-of-hand-it-p", "A yakuman is the highest-value kind of hand. It pays a fixed large amount.")
-      : tx("ui.app.han-count-the-hands-scoring-patterns-and-bonus-d", "Han count the hand's scoring patterns and bonus dora. Fu are minipoints from the hand's shape. Han and fu together set the points.")));
-    card.append(h("p", { class: "dim" }, tx("ui.app.honba-the-repeat-counter-stands-at-0-each-honba", `Honba — the repeat counter — stands at ${this.model.honba}. Each honba adds 300 points to a winning hand.`, this.model.honba)));
 
     const pay = h("div", { class: "bk-pay" });
+    pay.append(h("div", {}, tx("ui.app.honba-0", `Honba ${this.model.honba}`, this.model.honba)));
     for (const p of win.payments) {
       const payer = this.model.players[p.seat]!;
       pay.append(h("div", {}, tx("ui.app.v-0-pays", `${WIND_NAMES[payer.seatWind]} pays`, WIND_NAMES[payer.seatWind]) + " ", h("b", {}, fmt(p.amount))));
@@ -4768,15 +4764,11 @@ export class App {
       pay.append(h("div", {}, tx("ui.app.riichi-sticks", `Riichi sticks`) + " ", h("b", {}, tx("ui.app.v-0-6", `+${fmt(win.stickPoints)}`, fmt(win.stickPoints)))));
     }
     card.append(pay);
-    if (win.stickPoints > 0) {
-      card.append(h("p", { class: "dim" }, tx("ui.app.a-riichi-stick-is-a-1-000-point-stake-a-player-p", "A riichi stick is a 1,000-point stake a player paid when declaring riichi. The winner collects the sticks on the table.")));
-    }
 
     const doraRow = h("div", { class: "bk-dora" });
     doraRow.append(h("span", { class: "lbl" }, tx("ui.app.dora-indicator", "Dora indicator")));
     for (const ind of this.model.doraIndicators) doraRow.append(tileEl(ind, "", { flip: false }));
     card.append(doraRow);
-    card.append(h("p", { class: "dim" }, tx("ui.app.the-dora-indicator-points-to-a-bonus-tile-the-ti", "The dora indicator points to a bonus tile: the tile one step on from the indicator, in the same suit, is a dora, worth extra han in a winning hand.")));
     if (winner.riichi) {
       const ura = this.model.uraIndicators();
       if (ura) {
@@ -4784,7 +4776,6 @@ export class App {
         uraRow.append(h("span", { class: "lbl" }, tx("ui.app.uradora-indicator", "Uradora indicator")));
         for (const ind of ura) uraRow.append(tileEl(ind, "", { flip: false }));
         card.append(uraRow);
-        card.append(h("p", { class: "dim" }, tx("ui.app.uradora-indicators-sit-hidden-under-the-dora-ind", "Uradora indicators sit hidden under the dora indicators. They are revealed only when a riichi hand wins, and the tile one step on from each is also a bonus tile.")));
       }
     }
   }
@@ -4812,6 +4803,10 @@ export class App {
       const row = h("div", { class: "bk-hand" });
       const sorted = [...tiles].sort((a, b) => a.type - b.type || a.id - b.id);
       for (const tile of sorted) row.append(tileEl(tile, "", { flip: false }));
+      // The full hand is concealed tiles + melds: a tenpai player
+      // with melds down holds fewer concealed tiles, and showing
+      // those alone reads as a truncated hand (audit B5).
+      for (const meld of drawn.revealedMelds.get(seat) ?? []) row.append(this.meldEl(meld, "t-meld", seat));
       card.append(label, row);
     }
   }

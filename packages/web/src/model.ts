@@ -93,6 +93,10 @@ export interface DrawnHandInfo {
   readonly nagashi?: readonly Seat[];
   /** Tenpai players' hands, revealed on an exhaustive draw. */
   readonly revealedHands: ReadonlyMap<Seat, readonly Tile[]>;
+  /** Tenpai players' melds at the draw. A revealed hand is the
+   *  concealed tiles PLUS these melds — showing the concealed
+   *  tiles alone reads as a truncated hand (audit B5). */
+  readonly revealedMelds: ReadonlyMap<Seat, readonly MeldModel[]>;
 }
 
 export interface HandEndInfo {
@@ -351,20 +355,24 @@ export class TableModel {
         if (kind === "exhaustive") {
           const tenpai = [...(ev["tenpai"] as readonly Seat[])];
           const revealed = new Map<Seat, readonly Tile[]>();
+          const revealedMelds = new Map<Seat, readonly MeldModel[]>();
           for (const seat of tenpai) {
             revealed.set(seat, this.players[seat]!.handIds.map(id => this.resolveTile(id)));
+            revealedMelds.set(seat, [...this.players[seat]!.melds]);
           }
           this.lastDrawnHand = {
             kind: "exhaustive",
             tenpai,
             nagashi: [...(ev["nagashi"] as readonly Seat[])],
             revealedHands: revealed,
+            revealedMelds,
           };
         } else {
           this.lastDrawnHand = {
             kind: "abortive",
             abortive: String(ev["abortive"]),
             revealedHands: new Map(),
+            revealedMelds: new Map(),
           };
         }
         break;

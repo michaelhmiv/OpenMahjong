@@ -554,6 +554,10 @@
 .learning-shell .review-scoreline { font-size:13px; }
 .learning-shell .review-discard, .learning-shell .review-meld { font-size:11px; color:var(--dim); }
 .learning-shell .review-hand-label, .learning-shell .review-alternative-label { display:flex; align-items:center; gap:8px; font-size:12px; margin-bottom:8px; }
+.learning-shell .hand .review-chosen { outline: 2px solid var(--ink); outline-offset: 1px; }
+.learning-shell .hand .review-advised { box-shadow: 0 0 0 2px var(--state); }
+.learning-shell .hand .review-drawn-sep { width: 2px; background: var(--line); border-radius: 1px; justify-self: center; }
+.learning-shell .review-mark-legend { margin-top: 2px; font-size: 11px; line-height: 1.4; color: var(--dim); }
 .learning-shell .review-hand-select, .learning-shell .comparison-select { min-width:0; flex:1; }
 .learning-shell .review-moments { display:flex; flex-direction:column; gap:12px; margin-top:12px; }
 .learning-shell .moment-card h2 { font-size:17px; }
