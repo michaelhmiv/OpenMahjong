@@ -200,6 +200,27 @@ function backEl(cls: string) {
   wrap.append(inner);
   return wrap;
 }
+/** Hand tile size for the online table's 370px hand row. Meld and
+ *  flower groups ride at the shipped meld size (20px + gaps, ~21.5px
+ *  per tile plus 10px per group); the hand tiles take what remains,
+ *  capped at the shipped 25px and floored at 12px. At 25px a 17-tile
+ *  Taiwanese hand needs 442px and its edge tiles leave the screen. */
+export function onlineHandTileSize(
+  handCount: number,
+  meldTileCount: number,
+  meldGroupCount: number,
+  flowerCount: number,
+): number {
+  if (handCount === 0) return 25;
+  const fixed =
+    meldTileCount * 21.5 +
+    meldGroupCount * 10 +
+    (flowerCount ? flowerCount * 21.5 + 10 : 0);
+  return Math.max(
+    12,
+    Math.min(25, Math.floor((370 - fixed) / handCount) - 1),
+  );
+}
 /** Small tile for the Board review renderer (Analyze). */
 function reviewTile(t: Tile) {
   const face = el("span", "", "online-tile");
@@ -1340,18 +1361,41 @@ export async function onlineApp(root: HTMLElement) {
     // Hand: sorted, melds at the right, in the shipped hand row.
     const handRow = el("div", "", "handrow" + (covered ? " mp-dim" : ""));
     const sorted = [...v.hand].sort((a, b) => a.type - b.type || a.id - b.id);
+    // Hand tiles shrink to fit the 370px row when the hand runs wide:
+    // a closed Taiwanese hand holds 17 tiles, and at the shipped 25px
+    // the row overflows the table — the edge tiles leave the screen
+    // and cannot be tapped (CI run 44574304623, postgres job). Same
+    // budget shape as the solo table's handTileSize, floor lowered so
+    // 17 tiles plus set-aside flowers still fit.
+    const myMelds = v.players[mySeat]!.melds;
+    const myFlowers = v.flowerTiles?.[mySeat]?.length ?? 0;
+    const handSize = onlineHandTileSize(
+      sorted.length,
+      myMelds.reduce((w, m) => w + m.tiles.length, 0),
+      myMelds.length,
+      myFlowers,
+    );
+    const sizedTile = (t: Tile) => {
+      const wrap = tileEl(t, "t-hand");
+      if (handSize < 25) {
+        const inner = wrap.firstElementChild as HTMLElement;
+        inner.style.width = `${handSize}px`;
+        inner.style.height = `${Math.round(handSize * 1.4)}px`;
+      }
+      return wrap;
+    };
     for (const t of sorted) {
       const index = choices.findIndex(
         (a) => a.type === "discard" && !a.riichi && a.tileId === t.id,
       );
       if (index < 0 || covered) {
-        handRow.append(tileEl(t, "t-hand"));
+        handRow.append(sizedTile(t));
         continue;
       }
       const actionId = crypto.randomUUID();
       const pick = button("", () => move(index, actionId), "mp-pick");
       pick.setAttribute("aria-label", "Discard " + tileName(t));
-      pick.append(tileEl(t, "t-hand"));
+      pick.append(sizedTile(t));
       handRow.append(pick);
     }
     const meP = v.players[mySeat]!;
