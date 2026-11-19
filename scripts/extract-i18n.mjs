@@ -249,7 +249,7 @@ const uiKeysByValue = new Map(); // `${namespace}::${value}` -> key
 const stats = { lesson: 0, ui: 0, page: 0, skippedCode: 0, dynamic: 0 };
 
 function addKey(key, value, file, line, extra = {}) {
-  if (!value || !value.trim() || isCodeData(value.trim())) {
+  if (!value || !value.trim() || (!extra.force && isCodeData(value.trim()))) {
     stats.skippedCode++;
     return null;
   }
@@ -531,12 +531,16 @@ function extractSourceFile(rel, absPath) {
       if (q.call === "choice") {
         if (q.argIndex === 1) return void addKey(`${prefix}.prompt`, value, rel, line);
         if (q.argIndex === 2) {
-          // choices array element: index within the array
+          // choices array element: index within the array. A choice
+          // is display text by construction, even a single digit
+          // ("8"): the length-1 code-data skip would drop it, so the
+          // key is forced (rewire PR: choice0 "8" was missing from
+          // en.json and the renderer would have shown the key id).
           const choiceIdx =
             parent && ts.isArrayLiteralExpression(parent)
               ? parent.elements.indexOf(node)
               : 0;
-          return void addKey(`${prefix}.choice${choiceIdx}`, value, rel, line);
+          return void addKey(`${prefix}.choice${choiceIdx}`, value, rel, line, { force: true });
         }
         if (q.argIndex === 4) return void addKey(`${prefix}.explanation`, value, rel, line);
         if (q.argIndex === 5) return void addKey(`${prefix}.hint`, value, rel, line);
@@ -562,6 +566,37 @@ function extractSourceFile(rel, absPath) {
       // the same property name holds SVG path data elsewhere; path data
       // uses only path commands, digits and separators, so exclude it.
       if (propName === "d" && /^[MLCQZAHVmlcqzahv\d\s.,\-e]+$/.test(value)) return;
+      // -- Explicit `key` sibling: a record that carries its own key
+      //    (`{ label: "Continue", key: "learn.riichi.continue" }`,
+      //    LessonButton; `{ title: "Riichi",
+      //    key: "learn.riichi.section-title" }`, LEARN_SECTIONS) claims
+      //    its text literal under that key instead of the slug-derived
+      //    one. The key id is the record's own stable id, so the render
+      //    site resolves it with t(record.key) and the extractor's
+      //    source stays the record's literal. This also covers records
+      //    whose text lives only in module scope, where no tx()
+      //    fallback literal exists to mint the key (rewire PR: the
+      //    Learn section titles).
+      if (propNode && ts.isPropertyAssignment(propNode)) {
+        const owner = propNode.parent;
+        if (owner && ts.isObjectLiteralExpression(owner)) {
+          const keyProp = owner.properties.find(
+            (p) =>
+              ts.isPropertyAssignment(p) &&
+              ts.isIdentifier(p.name) &&
+              p.name.text === "key" &&
+              ts.isStringLiteral(p.initializer),
+          );
+          if (
+            keyProp &&
+            ts.isPropertyAssignment(keyProp) &&
+            ts.isStringLiteral(keyProp.initializer)
+          ) {
+            stats.ui++;
+            return void addKey(keyProp.initializer.text, value, rel, line);
+          }
+        }
+      }
       if (lesson) {
         const stepIdx = stepIndexFor(lesson, pos);
         const base = `${namespace}.${lesson.id}`;

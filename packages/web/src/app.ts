@@ -54,6 +54,7 @@ import {
   pathForLocale,
   setRememberedLocale,
   shippedLocaleMeta,
+  slugify,
   t,
   tForLocale,
   tx,
@@ -594,8 +595,8 @@ function loadCollapsedSections(): Set<string> {
  *  2026-11-16): lessons are grouped by variant from the start, so
  *  the Hong Kong, MCR, and Taiwanese sections slot in here later
  *  without restructuring the tab. */
-const LEARN_SECTIONS: { id: string; title: string; modules: typeof MODULES }[] = [
-  { id: "riichi", title: "Riichi", modules: MODULES },
+const LEARN_SECTIONS: { id: string; key: string; title: string; modules: typeof MODULES }[] = [
+  { id: "riichi", key: "learn.riichi.section-title", title: "Riichi", modules: MODULES },
 ];
 
 /** Live state of an in-progress game, derived from its saved record
@@ -2026,7 +2027,7 @@ export class App {
     if (summary) page.append(this.inProgressRowEl(summary));
     if (rows.length > 0) page.append(this.distCardEl(rows));
     const grid = h("div", { class: "statgrid" });
-    for (const b of formatStatsView(sums, { handStats }).filter(b => selectedVariant === "riichi" || b.label !== "Riichi rate")) {
+    for (const b of formatStatsView(sums, { handStats }).filter(b => selectedVariant === "riichi" || b.id !== "riichi-rate")) {
       const st = h("div", { class: "stat" });
       st.append(h("div", { class: "v" }, b.value), h("div", { class: "l" }, b.label));
       if (b.sample) st.append(h("div", { class: "s" }, b.sample));
@@ -4096,7 +4097,7 @@ export class App {
       "data-section": AMERICAN_SECTION_ID,
     });
     head.append(
-      h("span", { class: "secttl" }, AMERICAN_SECTION_NAME),
+      h("span", { class: "secttl" }, tx("learn.american.section-title", AMERICAN_SECTION_NAME)),
       h("span", { class: "lenbadge" }, tx("ui.app.training-only", "TRAINING ONLY")),
       h("span", { class: "seccount" }, tx("ui.app.v-0-of-1-lessons-done", `${doneCount} of ${AMERICAN_LESSONS.length} lessons done`, doneCount, AMERICAN_LESSONS.length)),
     );
@@ -4114,7 +4115,7 @@ export class App {
     });
     wrap.append(head);
     if (collapsed) return wrap;
-    wrap.append(h("p", { class: "amc-trainline" }, AMERICAN_TRAINING_LINE));
+    wrap.append(h("p", { class: "amc-trainline" }, tx("learn.american.training-only-lessons-and-a-practice-card-there", AMERICAN_TRAINING_LINE)));
     const bar = h("div", { class: "progbar" });
     const fill = h("i");
     fill.style.width = `${Math.round((doneCount / AMERICAN_LESSONS.length) * 100)}%`;
@@ -4142,7 +4143,7 @@ export class App {
       const isCurrent = isActive || (!activeId && firstOpen === lesson.id);
       const row = h("button", { class: `hrow lrow${isCurrent ? " current" : ""}` });
       row.append(h("span", { class: "n" }, String(i + 1)));
-      row.append(h("span", { class: "ttl" }, lesson.title));
+      row.append(h("span", { class: "ttl" }, t(`learn.american.${slugify(lesson.title)}`)));
       if (done) {
         const st = h("span", { class: "st" });
         st.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>`;
@@ -4218,7 +4219,7 @@ export class App {
       const isCurrent = isActive || (!activeId && firstOpen === lesson.id);
       const row = h("button", { class: `hrow lrow${isCurrent ? " current" : ""}` });
       row.append(h("span", { class: "n" }, String(i + 1)));
-      row.append(h("span", { class: "ttl" }, lesson.title));
+      row.append(h("span", { class: "ttl" }, t(`learn.${lesson.variant}.${lesson.id.slice(lesson.id.indexOf("-") + 1)}.title`)));
       if (done) {
         const st = h("span", { class: "st" });
         st.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>`;
@@ -4254,7 +4255,7 @@ export class App {
       "data-section": section.id,
     });
     head.append(
-      h("span", { class: "secttl" }, section.title),
+      h("span", { class: "secttl" }, tx(section.key, section.title)),
       h("span", { class: "seccount" }, tx("ui.app.v-0-of-1-lessons-done", `${doneCount} of ${section.modules.length} lessons done`, doneCount, section.modules.length)),
     );
     head.insertAdjacentHTML(
@@ -4285,7 +4286,7 @@ export class App {
       const row = h("button", { class: `hrow lrow${isCurrent ? " current" : "" }` });
       row.dataset["module"] = mod.id;
       row.append(h("span", { class: "n" }, String(i + 1)));
-      row.append(h("span", { class: "ttl" }, mod.title));
+      row.append(h("span", { class: "ttl" }, t(`learn.riichi.${mod.id}.title`)));
       if (mod.optional) row.append(h("span", { class: "lenbadge" }, tx("ui.app.optional", "OPTIONAL")));
       if (isDone) {
         const st = h("span", { class: "st" });
@@ -4384,7 +4385,7 @@ export class App {
     const overlay = h("div", { class: "overlay show" });
     const card = h("div", { class: "card" });
     card.append(
-      h("h2", {}, this.lesson ? moduleDef(this.lesson.moduleId).title : tx("ui.app.lesson", "Lesson")),
+      h("h2", {}, this.lesson ? t(`learn.riichi.${this.lesson.moduleId}.title`) : tx("ui.app.lesson", "Lesson")),
       h("div", { class: "sub" }, tx("ui.app.your-place-in-the-lesson-is-saved", "Your place in the lesson is saved.")),
     );
     const col = h("div", { class: "col" });
@@ -4555,10 +4556,10 @@ export class App {
   private lessonCompleteEl(): HTMLElement {
     const def = moduleDef(this.lesson!.moduleId);
     const wrap = h("div", { class: "revwrap" });
-    wrap.append(h("h2", {}, def.title));
+    wrap.append(h("h2", {}, t(`learn.riichi.${def.id}.title`)));
     const panel = h("div", { class: "revpanel" });
     panel.append(h("div", { class: "lab" }, tx("ui.app.lesson-complete", "LESSON COMPLETE")));
-    for (const line of def.covered) panel.append(h("p", {}, line));
+    def.covered.forEach((_line, i) => panel.append(h("p", {}, t(`learn.riichi.${def.id}.covered${i}`))));
     wrap.append(panel);
     const prog = h("div", { class: "progrow" });
     prog.append(

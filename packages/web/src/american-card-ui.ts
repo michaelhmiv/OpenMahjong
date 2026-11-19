@@ -90,7 +90,7 @@ function handEl(hand: AmericanHand, first: boolean): HTMLElement {
   line.append(
     el("span", hand.exposure, hand.exposure === "C" ? "amc-xc c" : "amc-xc"),
   );
-  block.append(line, el("p", hand.description, "amc-desc"));
+  block.append(line, el("p", t(`learn.american.pcard.hand.${hand.id}.description`), "amc-desc"));
   if (hand.minJokers > 0) {
     block.append(
       el(
@@ -111,7 +111,7 @@ export function buildPrintableCard(): HTMLElement {
   const root = el("div", "", "amc-print");
   const page = el("div", "", "p-page");
   page.append(el("p", PRACTICE_CARD_LABEL, "p-label"));
-  page.append(el("div", PRACTICE_CARD.title, "p-title"));
+  page.append(el("div", t("learn.american.pcard.title"), "p-title"));
   page.append(
     el(
       "p",
@@ -125,7 +125,7 @@ export function buildPrintableCard(): HTMLElement {
     const sec = el("div", "", "p-sec");
     const head = el("div", "", "p-sechead");
     head.append(
-      document.createTextNode(section.name),
+      document.createTextNode(t(`learn.american.pcard.section.${section.id}.name`)),
       el("span", tx("learn.american.ui.v-0-hands", `${hands.length} hands`, hands.length), "ct"),
     );
     sec.append(head);
@@ -197,14 +197,14 @@ export function mountAmericanCard(
   function renderSections(): void {
     title.textContent = tx("learn.american.ui.practice-card", "Practice Card");
     const sheet = el("div", "", "amc-sheet");
-    sheet.append(el("div", PRACTICE_CARD.title, "amc-cardtitle"));
+    sheet.append(el("div", t("learn.american.pcard.title"), "amc-cardtitle"));
     sheet.append(el("p", PRACTICE_CARD_LABEL, "amc-label"));
     for (const section of cardSections()) {
       const hands = sectionHands(section.id);
       const row = el("button", "", "amc-sec-row");
       row.type = "button";
       row.append(
-        el("span", section.name, "nm"),
+        el("span", t(`learn.american.pcard.section.${section.id}.name`), "nm"),
         el("span", tx("learn.american.ui.v-0-hands", `${hands.length} hands`, hands.length), "ct"),
       );
       row.insertAdjacentHTML("beforeend", CHEV);
@@ -239,8 +239,8 @@ export function mountAmericanCard(
       renderSections();
       return;
     }
-    title.textContent = section.name;
-    main.append(el("p", section.blurb, "amc-blurb"));
+    title.textContent = t(`learn.american.pcard.section.${section.id}.name`);
+    main.append(el("p", t(`learn.american.pcard.section.${section.id}.blurb`), "amc-blurb"));
     main.append(
       el(
         "p",

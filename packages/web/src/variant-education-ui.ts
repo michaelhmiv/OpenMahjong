@@ -20,6 +20,47 @@ import {
 import { trackLessonCompleted, trackLessonStarted } from "./analytics.js";
 import { tileIndexEl } from "./tile-index.js";
 import { slugify, t, tx } from "./i18n/index.js";
+
+/** Derived keys for lesson content. The lesson DATA files are the
+ *  extractor's source of truth (see scripts/extract-i18n.mjs): a
+ *  lesson id is `<prefix>-<topic>`, a question id `<prefix>-<qid>`,
+ *  and the namespace is the lesson's variant — so a step's text is
+ *  `learn.<variant>.<topic>.step<N>.text` (1-based, the position in
+ *  the lesson's steps array), a question's prompt
+ *  `learn.<variant>.<topic>.q-<qid>.prompt`, and the lesson title
+ *  `learn.<variant>.<topic>.title`. The data files stay untouched;
+ *  this runner resolves the keys at render time. */
+function lessonTopic(lesson: VariantLesson): string {
+  return lesson.id.slice(lesson.id.indexOf("-") + 1);
+}
+function lessonTitle(lesson: VariantLesson): string {
+  return t(`learn.${lesson.variant}.${lessonTopic(lesson)}.title`);
+}
+function questionText(
+  lesson: VariantLesson,
+  q: VariantQuestion,
+  field: string,
+): string {
+  // The question id the extractor inventoried is the builders' raw id:
+  // the MCR / Taiwanese / American helpers prefix it at runtime
+  // (`mcr-`, `tw-`, `am-`), so the runtime id carries the prefix and
+  // it is stripped here — but Hong Kong's builders pass the full id
+  // (`hk-inventory`), its helpers prefix nothing, so the runtime id
+  // IS the raw id and is used as-is.
+  const qid =
+    lesson.variant === "hong-kong"
+      ? q.id
+      : q.id.slice(q.id.indexOf("-") + 1);
+  return t(
+    `learn.${lesson.variant}.${lessonTopic(lesson)}.q-${qid}.${field}`,
+  );
+}
+function stepText(lesson: VariantLesson, step: number): string {
+  return t(
+    `learn.${lesson.variant}.${lessonTopic(lesson)}.step${String(step + 1).padStart(2, "0")}.text`,
+  );
+}
+
 function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
   text = "",
@@ -109,7 +150,7 @@ export function mountVariantEducation(
   );
   const back = button("‹", options.onBack);
   back.setAttribute("aria-label", tx("learn.variant.ui.back", "Back"));
-  header.append(back, el("h1", options.practice ? tx("learn.variant.ui.practice", "Practice") : lesson.title));
+  header.append(back, el("h1", options.practice ? tx("learn.variant.ui.practice", "Practice") : lessonTitle(lesson)));
   shell.append(header, main);
   container.replaceChildren(shell);
   function persist(next: VariantLearningProgress): void {
@@ -178,7 +219,7 @@ export function mountVariantEducation(
     }));
   }
   function quiz(q: VariantQuestion, owner: VariantLesson): void {
-    main.append(el("h2", q.prompt));
+    main.append(el("h2", questionText(owner, q, "prompt")));
     if (q.kind === "tile-pick") {
       const row = el("div", "", "variant-example-tiles variant-tile-pick");
       row.setAttribute("role", "group");
@@ -216,8 +257,8 @@ export function mountVariantEducation(
       const group = el("div", "", "variant-answers");
       group.setAttribute("role", "group");
       group.setAttribute("aria-label", tx("learn.variant.ui.answer-choices", "Answer choices"));
-      q.choices.forEach((choice, index) => {
-        const b = button(choice, () => {
+      q.choices.forEach((_choice, index) => {
+        const b = button(questionText(owner, q, `choice${index}`), () => {
           chosen = index;
           checked = false;
           render();
@@ -264,7 +305,7 @@ export function mountVariantEducation(
     main.append(check);
     if (checked) {
       if (correct) {
-        feedback.textContent = tx("learn.variant.ui.correct-0", `Correct. ${q.explanation}`, q.explanation);
+        feedback.textContent = tx("learn.variant.ui.correct-0", `Correct. ${q.explanation}`, questionText(owner, q, "explanation"));
       } else if (q.kind === "tile-pick") {
         // No membership counts while the question is open (the
         // no-leak law, Nov 18, 2026 hardening): exact belong/missing
@@ -273,15 +314,15 @@ export function mountVariantEducation(
         // every multi-tile pick was solvable by elimination with no
         // understanding. A wrong set now earns the hint only.
         feedback.textContent =
-          tx("learn.variant.ui.try-again-0", `Try again. ${q.hint}`, q.hint) + " " +
+          tx("learn.variant.ui.try-again-0", `Try again. ${q.hint}`, questionText(owner, q, "hint")) + " " +
           tx("learn.variant.ui.tap-a-picked-tile-again-to-un-pick-it", "Tap a picked tile again to un-pick it.");
       } else {
-        feedback.textContent = tx("learn.variant.ui.try-again-0", `Try again. ${q.hint}`, q.hint);
+        feedback.textContent = tx("learn.variant.ui.try-again-0", `Try again. ${q.hint}`, questionText(owner, q, "hint"));
       }
       main.append(feedback);
     }
     if (checked && correct)
-      advance(options.practice ? "Next exercise" : "Continue", () => {
+      advance(options.practice ? tx("learn.variant.ui.next-exercise", "Next exercise") : tx("learn.variant.ui.continue", "Continue"), () => {
         if (options.practice)
           practiceIndex = (practiceIndex + 1) % questions.length;
         else {
@@ -329,12 +370,12 @@ export function mountVariantEducation(
     if (!alive) return;
     main.replaceChildren();
     main.scrollTop = 0;
+    const release = VARIANT_RELEASES.find((v) => v.id === options.variant);
     main.append(
       el(
         "p",
         options.displayName ??
-          VARIANT_RELEASES.find((v) => v.id === options.variant)?.name ??
-          options.variant,
+          (release ? t(`common.variant.${slugify(release.name)}`) : options.variant),
         "dim",
       ),
     );
@@ -359,7 +400,7 @@ export function mountVariantEducation(
       lessonPicker.setAttribute("aria-label", tx("learn.variant.ui.practice-lesson", "Practice lesson"));
       for (const l of variantLessons(options.variant)) {
         if (!questions.some((row) => row.lesson.id === l.id)) continue;
-        const option = el("option", l.title);
+        const option = el("option", lessonTitle(l));
         option.value = l.id;
         lessonPicker.append(option);
       }
@@ -378,7 +419,7 @@ export function mountVariantEducation(
       exercisePicker.setAttribute("aria-label", tx("learn.variant.ui.practice-exercise", "Practice exercise"));
       questions.forEach((row, i) => {
         if (row.lesson.id !== currentRow.lesson.id) return;
-        const option = el("option", row.question.prompt);
+        const option = el("option", questionText(row.lesson, row.question, "prompt"));
         option.value = String(i);
         exercisePicker.append(option);
       });
@@ -406,7 +447,7 @@ export function mountVariantEducation(
       main.append(
         el("p", tx("learn.variant.ui.step-0-of-1", `Step ${step + 1} of ${lesson.steps.length}`, step + 1, lesson.steps.length), "dim"),
       );
-      if (current.text) main.append(el("p", current.text));
+      if (current.text) main.append(el("p", stepText(lesson, step)));
       // A step carrying a question is a check: its pictured tiles
       // stay plain until the answer is in. Teaching steps are
       // tap-to-inspect.
@@ -416,7 +457,7 @@ export function mountVariantEducation(
       if (current.question) {
         quiz(current.question, lesson);
       } else {
-        advance("Continue", () => {
+        advance(tx("learn.variant.ui.continue", "Continue"), () => {
           step++;
           persist(lessonStep(progress, lesson, step));
         });
@@ -440,7 +481,7 @@ export function mountVariantEducation(
     }
     main.append(
       el("h2", tx("learn.variant.ui.lesson-complete", "Lesson complete")),
-      el("p", tx("learn.variant.ui.you-finished-0", `You finished “${lesson.title}”.`, lesson.title)),
+      el("p", tx("learn.variant.ui.you-finished-0", `You finished “${lesson.title}”.`, lessonTitle(lesson))),
     );
     if (lesson.id === "mcr-families") main.append(mcrReference());
     main.append(button(tx("learn.variant.ui.back-to-learn", "Back to Learn"), options.onBack));

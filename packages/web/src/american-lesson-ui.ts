@@ -164,7 +164,7 @@ export function createAmericanLessonMounter(
       renderTile: renderAmericanTile,
       onBack: options.onBack,
       inventory: AMERICAN_TILE_INVENTORY,
-      displayName: "American",
+      displayName: tx("learn.american.section-title", "American"),
       // No onPlay: there is no American game to start.
     });
   };

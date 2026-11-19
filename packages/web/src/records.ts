@@ -222,6 +222,10 @@ export function sumRecords(
 // ---------------------------------------------------------------------------
 
 export interface StatBlock {
+  /** Stable id: filters compare against this, never the translated
+   *  label (rewire PR: the "Riichi rate" label filter broke in every
+   *  non-English locale once the label translated). */
+  readonly id: string;
   readonly value: string;
   readonly label: string;
   readonly sample?: string;
@@ -256,32 +260,38 @@ export function formatStatsView(
   const blocks: StatBlock[] = [];
   const since = sinceLabel(sums.since);
   blocks.push({
+    id: "games-played",
     value: fmt(sums.games),
     label: tx("ui.stats.games-played", "Games played"),
     ...(since ? { sample: tx("ui.stats.since-0", `Since ${since}`, since) } : {}),
   });
   blocks.push({
+    id: "win-rate",
     value: pct(sums.wins, sums.games),
     label: tx("ui.stats.win-rate", "Win rate"),
     sample: tx("ui.stats.v-0-of-1-games", `${sums.wins} of ${sums.games} games`, sums.wins, sums.games),
   });
   blocks.push({
+    id: "avg-placement",
     value: sums.games > 0 ? (sums.placementSum / sums.games).toFixed(1) : "—",
     label: tx("ui.stats.avg-placement", "Avg placement"),
     sample: tx("ui.stats.v-0-games", `${sums.games} games`, sums.games),
   });
   if (opts.handStats) {
     blocks.push({
+      id: "riichi-rate",
       value: pct(sums.riichi, sums.hands),
       label: tx("ui.stats.riichi-rate", "Riichi rate"),
       sample: tx("ui.stats.v-0-of-1-hands", `${sums.riichi} of ${sums.hands} hands`, sums.riichi, sums.hands),
     });
     blocks.push({
+      id: "deal-in-rate",
       value: pct(sums.dealIns, sums.hands),
       label: tx("ui.stats.deal-in-rate", "Deal-in rate"),
       sample: tx("ui.stats.v-0-of-1-hands", `${sums.dealIns} of ${sums.hands} hands`, sums.dealIns, sums.hands),
     });
     blocks.push({
+      id: "avg-winning-hand",
       value: sums.handsWon > 0 ? fmt(Math.round(sums.winPoints / sums.handsWon)) : "—",
       label: tx("ui.stats.avg-winning-hand", "Avg winning hand"),
       sample: tx("ui.stats.v-0-hands-won", `${sums.handsWon} hands won`, sums.handsWon),
