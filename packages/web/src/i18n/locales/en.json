@@ -2,7 +2,7 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T13:18:05.420Z",
+    "generatedAt": "2026-11-19T13:18:34.327Z",
     "keyCount": 3727,
     "namespaces": {
       "calc.compact": 14,
@@ -1291,7 +1291,7 @@
       "hash": "68a8e08d6d3f46d1e7aea4ef7cdface539b6d8baf8a86d8cac73a8efb3afcd3e",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 644
+        "line": 645
       },
       "placeholders": [],
       "status": "approved"
@@ -1301,19 +1301,20 @@
       "hash": "882c2180a5e94e1971d0aa48eabf415a36f558701b89eccd6bddd1b5a959511d",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 560
+        "line": 561
       },
       "placeholders": [
         "0"
       ],
-      "status": "approved"
+      "status": "approved",
+      "dynamic": true
     },
     "calc.variant.add-declared-meld": {
       "value": "Add declared meld",
       "hash": "8dcce94d00c2c698108258b83fef7cf6407a3228c9d53a86acb44d0ae1e3cfad",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 623
+        "line": 624
       },
       "placeholders": [],
       "status": "approved"
@@ -1323,7 +1324,7 @@
       "hash": "063f0e84139e195eb96e1160b5f0c1e85dca8298a4a868fe2a95b245654540f5",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 620
+        "line": 621
       },
       "placeholders": [],
       "status": "approved"
@@ -1333,7 +1334,7 @@
       "hash": "41bb6368afaaf9a2c6a96a520c19c0c6c5edb097391e5090fc66eed49e52aa6b",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 453
+        "line": 454
       },
       "placeholders": [],
       "status": "approved"
@@ -1343,7 +1344,7 @@
       "hash": "764d59a7fcf52a0ed70fd2005ffbc07b57cefde20bfd6eeb26026095f468bd46",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 748
+        "line": 749
       },
       "placeholders": [],
       "status": "approved"
@@ -1353,7 +1354,7 @@
       "hash": "252eec12b9f5c22dbbd8a8555ebdcd080d2c04a07eb3010190b95f43009c225c",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 747
+        "line": 748
       },
       "placeholders": [],
       "status": "approved"
@@ -1363,7 +1364,7 @@
       "hash": "7c27044609d677258f978311641f761b75ba50a4d8bf4fdbf444a36a951e43e1",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 554
+        "line": 555
       },
       "placeholders": [],
       "status": "approved"
@@ -1373,7 +1374,7 @@
       "hash": "d88beb1e2976cb2198a0c382141e12f898f88377046ef204062a65e89e47c574",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 380
+        "line": 381
       },
       "placeholders": [],
       "status": "approved"
@@ -1383,7 +1384,7 @@
       "hash": "96f2ad7419d2ab69fa2f070ccbe55cab2a0f172a2c65ca8bd9f3e9fd8e031fb6",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 740
+        "line": 741
       },
       "placeholders": [],
       "status": "approved"
@@ -1393,7 +1394,7 @@
       "hash": "59139d748866bc5ef12ed35ce194ceaab401a0849d1d1eeb0b5258786fbb7700",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 617
+        "line": 618
       },
       "placeholders": [
         "0"
@@ -1406,7 +1407,7 @@
       "hash": "af77d63b3093c71010a98eb5cf397ec580acc12f5c636857c4f69a4de8eb0f5c",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 703
+        "line": 704
       },
       "placeholders": [],
       "status": "approved"
@@ -1416,7 +1417,7 @@
       "hash": "4b858fe5658fe4dc924430054ec8ac14185044bbaa7d22f0d7f1ff9296fc657c",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 522
+        "line": 523
       },
       "placeholders": [],
       "status": "approved"
@@ -1426,7 +1427,7 @@
       "hash": "99014c0516dec84dbbf72ee3795ed1c18c9583a139778502650b6cfab043ce30",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 451
+        "line": 452
       },
       "placeholders": [],
       "status": "approved"
@@ -1436,7 +1437,7 @@
       "hash": "015ec07dfba7159796953789697d755b9c66b6cbdf79cdf3c5be41c22de322bd",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 432
+        "line": 433
       },
       "placeholders": [],
       "status": "approved"
@@ -1446,7 +1447,7 @@
       "hash": "ddbeefd00c349bf2874185b545c6ee44836283f775b83d4f6315ad17546948bb",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 758
+        "line": 759
       },
       "placeholders": [],
       "status": "approved"
@@ -1456,7 +1457,7 @@
       "hash": "3e4126ecfb910ce8a84e1faad0fe4d4d52c9c8b6444ae967a092611a5ac58de0",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 754
+        "line": 755
       },
       "placeholders": [],
       "status": "approved"
@@ -1466,7 +1467,7 @@
       "hash": "07250c86a8b1c934a6eecadf302f1e32c3b46b45a30e8e18fe7b8dd7b33f7926",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 754
+        "line": 755
       },
       "placeholders": [],
       "status": "approved"
@@ -1476,7 +1477,7 @@
       "hash": "1e5c8b3191f7c2bd397cafb35c805472a93b13e724669e52ebbf1dec229eadb7",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 729
+        "line": 730
       },
       "placeholders": [],
       "status": "approved"
@@ -1486,7 +1487,7 @@
       "hash": "a7b119f3aca63ee7e247a4d41174f213f017f1f92db22ac97e3e3f497821e4b9",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 179
+        "line": 180
       },
       "placeholders": [],
       "status": "approved"
@@ -1496,7 +1497,7 @@
       "hash": "442bc2b0ceb66478a1cac7f72684916a4b9f307f5b6a45dce82b45fa0d83d499",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 720
+        "line": 721
       },
       "placeholders": [
         "0"
@@ -1509,7 +1510,7 @@
       "hash": "fe241b15fafd542f0b1ca2e66d8c6c56c00fdf558901090ae87413e3831b9e4a",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 433
+        "line": 434
       },
       "placeholders": [],
       "status": "approved"
@@ -1519,7 +1520,7 @@
       "hash": "317dfede9bf3910aecf8a9c21149a72bd6ee6279b38d66ab66e60b2c7f26c5f4",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 353
+        "line": 354
       },
       "placeholders": [],
       "status": "approved"
@@ -1529,7 +1530,7 @@
       "hash": "72f2c80cb1f0bd40a85fc4ee38f21af5aaa200107741d99759dbc448291d8988",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 173
+        "line": 174
       },
       "placeholders": [],
       "status": "approved"
@@ -1539,7 +1540,7 @@
       "hash": "00f30ce2f169f5a756265df23bb579bfc57cca94e04e748f56c4320665977584",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 333
+        "line": 334
       },
       "placeholders": [],
       "status": "approved"
@@ -1549,7 +1550,7 @@
       "hash": "a07fba969c20597b9bc951856b17850b7733bff866fdf32e650b859c2470b8a8",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 332
+        "line": 333
       },
       "placeholders": [],
       "status": "approved"
@@ -1559,7 +1560,7 @@
       "hash": "e6888d1e1558e90559638833420602b57caf6b29ac81e234e7e224b042fee689",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 306
+        "line": 307
       },
       "placeholders": [],
       "status": "approved"
@@ -1569,7 +1570,7 @@
       "hash": "f7081117b01c5328c337f80aa69aadada64a4988b7ec03ac980aa0ae829546d0",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 384
+        "line": 385
       },
       "placeholders": [],
       "status": "approved"
@@ -1579,7 +1580,7 @@
       "hash": "e27be6419b092ee1ebd0df157a846beced428c69b3dfe260a9e3da8dd7d9dd30",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 263
+        "line": 264
       },
       "placeholders": [],
       "status": "approved"
@@ -1589,7 +1590,7 @@
       "hash": "2c4842ee535cbe47a39d6c9b2da11ca1b10e22b31f4c262def7d9b237d4eeae2",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 351
+        "line": 352
       },
       "placeholders": [],
       "status": "approved"
@@ -1599,7 +1600,7 @@
       "hash": "0e3f669e34eedcb17ce87233e803fb0422ccd0f9defa72bf4334a4e20057b672",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 352
+        "line": 353
       },
       "placeholders": [],
       "status": "approved"
@@ -1609,7 +1610,7 @@
       "hash": "36c9eabb2885c52e2e70c6544b4f7a0465513f37391a73d5301bcef5463fde0e",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 260
+        "line": 261
       },
       "placeholders": [],
       "status": "approved"
@@ -1619,7 +1620,7 @@
       "hash": "191e181a736df82aad6b8004be602cd0d3cbf5d3c91231c16f794cfd98c55461",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 692
+        "line": 693
       },
       "placeholders": [],
       "status": "approved"
@@ -1629,7 +1630,7 @@
       "hash": "cf220ab2ecaaaf84e3db9465de733432c3ec2cd18b8c4e85c6f77b4ca0dbe58d",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 692
+        "line": 693
       },
       "placeholders": [],
       "status": "approved"
@@ -1639,7 +1640,7 @@
       "hash": "e7ba9de978e6e6dd6ec49edeef267470f88c755d44662e3978a72fb2c62edae8",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 660
+        "line": 661
       },
       "placeholders": [],
       "status": "approved"
@@ -1649,19 +1650,20 @@
       "hash": "79c1a08732b8ae3198c7b435dcaa3ee10d3e4c813ec526e198b69c3605589b84",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 573
+        "line": 574
       },
       "placeholders": [
         "0"
       ],
-      "status": "approved"
+      "status": "approved",
+      "dynamic": true
     },
     "calc.variant.flowers": {
       "value": "Flowers",
       "hash": "a3b6cb52ce986ff4ca5baa8a1051a42b2748d06b0f33b93a75a87add2a7d74d2",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 278
+        "line": 279
       },
       "placeholders": [],
       "status": "approved"
@@ -1671,7 +1673,7 @@
       "hash": "dfd4d5762e271706106da26e34cb21b078599a3163a0e181b315e84e5c939129",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 649
+        "line": 650
       },
       "placeholders": [],
       "status": "approved"
@@ -1681,7 +1683,7 @@
       "hash": "28eecee6564a3976f026e3dfb2f8f456eedfd1fc41dd210b34186f987e10308a",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 326
+        "line": 327
       },
       "placeholders": [],
       "status": "approved"
@@ -1691,7 +1693,7 @@
       "hash": "6cdc906970b706052c3cea1f27b103b743ac5fbb7921b5d6d5523cb9da417540",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 325
+        "line": 326
       },
       "placeholders": [],
       "status": "approved"
@@ -1701,7 +1703,7 @@
       "hash": "1461c1718fa298eefda463d066ddfe917c50e83ded7fa79320b34f8c3410a435",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 356
+        "line": 357
       },
       "placeholders": [],
       "status": "approved"
@@ -1711,7 +1713,7 @@
       "hash": "8ba7571f7a832b0034e6c925121df2b041dfaefd161560b210802ab0bba6fa94",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 253
+        "line": 254
       },
       "placeholders": [],
       "status": "approved"
@@ -1721,7 +1723,7 @@
       "hash": "8d2659ada2ac9643f5870dc8f4ad703ac3f8ac51c6993848c63fa668c604f43d",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 244
+        "line": 245
       },
       "placeholders": [
         "0"
@@ -1734,7 +1736,7 @@
       "hash": "737b95e0d24660963dcf26eff0617a5710562ef26d27cfa5f310137886eb5a14",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 245
+        "line": 246
       },
       "placeholders": [],
       "status": "approved"
@@ -1744,7 +1746,7 @@
       "hash": "e3d302188d4b21872b53b175b46bf2dec2ae64bd24aa2320aa7065ff85f34450",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 143
+        "line": 144
       },
       "placeholders": [],
       "status": "approved"
@@ -1754,7 +1756,7 @@
       "hash": "fbffbe7b43bc7764ec86b16418a91cb828b26e5abfb77c5a765e334002963e29",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 596
+        "line": 597
       },
       "placeholders": [],
       "status": "approved"
@@ -1764,7 +1766,7 @@
       "hash": "d16d5a48c5f05e0a0617cf07ac98e6e4bbc12f0ebc343b940653772c743f64b7",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 130
+        "line": 131
       },
       "placeholders": [],
       "status": "approved"
@@ -1774,7 +1776,7 @@
       "hash": "ecfecf12fdbe09af71f77013c74284ffbf10c93d032783cd3a9ddb330dd101b3",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 296
+        "line": 297
       },
       "placeholders": [],
       "status": "approved"
@@ -1784,7 +1786,7 @@
       "hash": "41d76318bc21ad454689d95cc31a759ba62bf745ea697aeef67e426bfd45ac32",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 517
+        "line": 518
       },
       "placeholders": [],
       "status": "approved"
@@ -1794,7 +1796,7 @@
       "hash": "6421306d9e4ed06b47ee5dfe0230f61aa2f8805ff2731d7f745af19d256e6468",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 621
+        "line": 622
       },
       "placeholders": [],
       "status": "approved"
@@ -1804,7 +1806,7 @@
       "hash": "f7b8932a9274d05c9d8beee08e6cddd4b15d78ecaa3b32691cc9989a21935a8d",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 350
+        "line": 351
       },
       "placeholders": [],
       "status": "approved"
@@ -1814,7 +1816,7 @@
       "hash": "921900d078c41600bcfed3fb8db0888ed3dc3ce16574ec59a700207ff10cd844",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 170
+        "line": 171
       },
       "placeholders": [],
       "status": "approved"
@@ -1824,7 +1826,7 @@
       "hash": "253be9c52efdd319e62e9335e2c930a15a2dcbe71ed474f6cb98faa499a94334",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 452
+        "line": 453
       },
       "placeholders": [],
       "status": "approved"
@@ -1834,7 +1836,7 @@
       "hash": "49974669c012c7d86100c872b5aa5a9b98decae7f4e7dba3ca826535e954359b",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 495
+        "line": 496
       },
       "placeholders": [],
       "status": "approved"
@@ -1844,7 +1846,7 @@
       "hash": "b97923ea53083e3aaa88b40b90dd551462f8583b855af8c60e2a97daef42b6a5",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 442
+        "line": 443
       },
       "placeholders": [],
       "status": "approved"
@@ -1854,7 +1856,7 @@
       "hash": "6bfef463282852f31d93a92bde6da92e5472b703ce624c5ea59cccfe7c443d44",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 443
+        "line": 444
       },
       "placeholders": [],
       "status": "approved"
@@ -1864,7 +1866,7 @@
       "hash": "ac08ede1036f54adc7549911f5d51afe3fc397a784a9ebaf7a9ec69445ab9069",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 499
+        "line": 500
       },
       "placeholders": [],
       "status": "approved"
@@ -1874,7 +1876,7 @@
       "hash": "cf5f316838837928dcf3f2598977e726069114237b1a034e31fbe6c54c17b881",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 449
+        "line": 450
       },
       "placeholders": [],
       "status": "approved"
@@ -1884,7 +1886,7 @@
       "hash": "2eadb22d22a6304029ed6378cc413e9bb9433ae96dd49a942db630e6da053efb",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 448
+        "line": 449
       },
       "placeholders": [],
       "status": "approved"
@@ -1894,7 +1896,7 @@
       "hash": "3da8a3487f6d4b31eda46e37c7e00451ec62b40c938812c697540959af33eda2",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 138
+        "line": 139
       },
       "placeholders": [
         "0"
@@ -1907,7 +1909,7 @@
       "hash": "7ef5eec47c680e0c971a57b893ec27ef22d990eb43ee494e1192a929cb91abbc",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 381
+        "line": 382
       },
       "placeholders": [],
       "status": "approved"
@@ -1917,7 +1919,7 @@
       "hash": "5dede18821db98c63a054c0950bdd151243539c2f6a645cbcba517e3bfa93a9a",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 750
+        "line": 751
       },
       "placeholders": [],
       "status": "approved"
@@ -1927,19 +1929,20 @@
       "hash": "dfbfd0da8890920dca12a78a08210bc467df81e904dbca2aad7e005ac10e1e00",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 481
+        "line": 482
       },
       "placeholders": [
         "0"
       ],
-      "status": "approved"
+      "status": "approved",
+      "dynamic": true
     },
     "calc.variant.remove-meld": {
       "value": "Remove meld",
       "hash": "60c5e38dde51c4376aebc8b851c4863c7ff3db52548e77876be76106b99cf7cf",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 508
+        "line": 509
       },
       "placeholders": [],
       "status": "approved"
@@ -1949,7 +1952,7 @@
       "hash": "d911111c438404b954d67ad7d04f7772f7efbc8829a61c73b25f73974eca4404",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 303
+        "line": 304
       },
       "placeholders": [],
       "status": "approved"
@@ -1959,7 +1962,7 @@
       "hash": "35d77d06ad266be8d0dd88d2cb78c5a99b1c2babf91e12026f17895c0312e5f4",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 310
+        "line": 311
       },
       "placeholders": [],
       "status": "approved"
@@ -1969,7 +1972,7 @@
       "hash": "5a15ad74e0c4d6c1e90c592d5485076db5f222ab3181c0c2c3e5dc1895439cb1",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 320
+        "line": 321
       },
       "placeholders": [],
       "status": "approved"
@@ -1979,7 +1982,7 @@
       "hash": "960eca16a329217b01d747da32415ceaf5537566d5d5436db51e4c5d12ebc812",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 176
+        "line": 177
       },
       "placeholders": [],
       "status": "approved"
@@ -1989,7 +1992,7 @@
       "hash": "adfe3cbb981bc0f194712bbefb2fc0dab654a1b60f3980ee9310f310ff9497e2",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 262
+        "line": 263
       },
       "placeholders": [],
       "status": "approved"
@@ -1999,7 +2002,7 @@
       "hash": "0f3f7f57c7d02caf7c6d25762b0fa4fa8a6670e2292ef7aa95bc42480a50f22c",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 361
+        "line": 362
       },
       "placeholders": [],
       "status": "approved"
@@ -2009,7 +2012,7 @@
       "hash": "ca140485678cc29e98fde86d3d9f3cf9b14d733a1201e1c5201692be2b04064e",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 545
+        "line": 546
       },
       "placeholders": [],
       "status": "approved"
@@ -2019,7 +2022,7 @@
       "hash": "9c5e1753a3899e257ceefba0e9db219367b253bd82ca54adf52df3851dfd0850",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 625
+        "line": 626
       },
       "placeholders": [],
       "status": "approved"
@@ -2029,7 +2032,7 @@
       "hash": "a7a970bd2fd6e7983b11af85d13e0028c659c81cf8958de817ee42218c78c303",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 85
+        "line": 86
       },
       "placeholders": [],
       "status": "approved"
@@ -2039,7 +2042,7 @@
       "hash": "57dfd02defd2d92af77b040041af75a9fcf9e38b663a5a55fa701bfb4b8ac07a",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 720
+        "line": 721
       },
       "placeholders": [
         "0",
@@ -2056,7 +2059,7 @@
       "hash": "d15cd445b14916975798d9cd288c48612fde4c0052e49965c63872ed4d69e8f6",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 470
+        "line": 471
       },
       "placeholders": [
         "0",
@@ -2071,7 +2074,7 @@
       "hash": "47b2c3bebcd6f881659771ac0ffb63f22287cc34c733502d7bc689452fb6eaf4",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 174
+        "line": 175
       },
       "placeholders": [
         "0"
@@ -2084,7 +2087,7 @@
       "hash": "7e9f878dbb4a86a03b564f9839d9d1ca17b82bedc3c0d1ff3dad4098d2f785e0",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 719
+        "line": 720
       },
       "placeholders": [
         "0",
@@ -2100,7 +2103,7 @@
       "hash": "5d584f1f4b4c7d835c61a4c5fd3f392bb9d38c0a91111b9efad602f1625d5235",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 236
+        "line": 237
       },
       "placeholders": [
         "0",
@@ -2114,7 +2117,7 @@
       "hash": "cd787565b1dc4240973ffaeccf78a8a28e2ed3e0487ed0e605227063195fd528",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 589
+        "line": 590
       },
       "placeholders": [],
       "status": "approved"
@@ -2124,7 +2127,7 @@
       "hash": "d538f43732e89381f0ee018071b28a687d1982b7ea83c7bb4ea3d29feea4f968",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 585
+        "line": 586
       },
       "placeholders": [],
       "status": "approved"
@@ -2134,7 +2137,7 @@
       "hash": "1d3239626e6043df0b2f401f7fe69977b8672eb338fd469c2d6e6b687f8902a6",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 582
+        "line": 583
       },
       "placeholders": [],
       "status": "approved"
@@ -2144,7 +2147,7 @@
       "hash": "77433753bf8527bfd23b920e7443ba8664b41c2cf309d42065a9dbeee5e8497e",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 583
+        "line": 584
       },
       "placeholders": [],
       "status": "approved"
@@ -2154,7 +2157,7 @@
       "hash": "ca08b5198db22228f1e125e4f96bd5cd909b89ff4ceabb743378d9fa07e16204",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 590
+        "line": 591
       },
       "placeholders": [],
       "status": "approved"
@@ -2164,7 +2167,7 @@
       "hash": "3b0af5e1ea284dbd451f259b95e5be2a11c8eb3d7956cc421063b053ddf6eac4",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 595
+        "line": 596
       },
       "placeholders": [],
       "status": "approved"
@@ -2174,7 +2177,7 @@
       "hash": "78574fa82e5930d82445e3809b4d8e0b5a7db9d3e31d856683f3cec04245ecd8",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 639
+        "line": 640
       },
       "placeholders": [],
       "status": "approved"
@@ -2184,7 +2187,7 @@
       "hash": "cdb4e1eb8e1233958bec091ddd7d0413bde4a621c2891b64ece1a2faf788dfd1",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 601
+        "line": 602
       },
       "placeholders": [],
       "status": "approved"
@@ -2194,7 +2197,7 @@
       "hash": "f9dda699ced41ee85d438eeb655d40567e5f6982ed1c617e86a270b0cb560d69",
       "source": {
         "file": "variant-calculator-ui.ts",
-        "line": 602
+        "line": 603
       },
       "placeholders": [],
       "status": "approved"
