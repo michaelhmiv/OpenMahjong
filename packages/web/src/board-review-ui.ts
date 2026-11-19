@@ -5,6 +5,7 @@ import { BoardTimeline, eventLabel } from "./board-review.js";
 import { mountReview, type ReviewUIController } from "./review-ui.js";
 import type { ReviewDecision } from "./review.js";
 import type { SkillId } from "./education/curriculum.js";
+import { tx } from "./i18n/index.js";
 
 const WINDS = ["East", "South", "West", "North"];
 function el<K extends keyof HTMLElementTagNameMap>(
@@ -32,18 +33,18 @@ export function mountGameDetail(
   const shell = el("div", "", "learning-shell game-detail");
   const header = el("header", "", "learning-header");
   const back = button("‹", onBack);
-  back.setAttribute("aria-label", "Back to Games");
-  header.append(back, el("h1", "Game details"));
+  back.setAttribute("aria-label", tx("review.board.back-to-games", "Back to Games"));
+  header.append(back, el("h1", tx("review.board.game-details", "Game details")));
   const main = el("main", "", "learning-content");
   const profileLabel =
     timeline.data.review.variant === "hong-kong"
-      ? "Hong Kong Old Style · Clear Chapter"
+      ? tx("review.board.hong-kong-old-style-clear-chapter", "Hong Kong Old Style · Clear Chapter")
       : timeline.data.review.variant === "mcr"
-        ? "MCR · WMO 2006"
+        ? tx("review.board.mcr-wmo-2006", "MCR · WMO 2006")
         : timeline.data.review.variant === "taiwanese"
-          ? "Taiwanese · Every-flower, no Ting, 30/10"
-          : "Riichi · OpenMahjong";
-  main.append(el("p", profileLabel, "dim"), el("h2", "Final standings"));
+          ? tx("review.board.taiwanese-every-flower-no-ting-30-10", "Taiwanese · Every-flower, no Ting, 30/10")
+          : tx("review.board.riichi-openmahjong", "Riichi · OpenMahjong");
+  main.append(el("p", profileLabel, "dim"), el("h2", tx("review.board.final-standings", "Final standings")));
   for (const entry of [...(timeline.data.result?.settlement ?? [])].sort(
     (a, b) => a.rank - b.rank || a.seat - b.seat,
   )) {
@@ -51,12 +52,12 @@ export function mountGameDetail(
     row.append(
       el(
         "span",
-        `${entry.rank}. ${entry.seat === timeline.data.humanSeat ? "You" : `Player ${entry.seat + 1}`}`,
+        tx("review.board.v-0-1", `${entry.rank}. ${entry.seat === timeline.data.humanSeat ? tx("review.board.you", "You") : tx("review.board.player-0", `Player ${entry.seat + 1}`, entry.seat + 1)}`, entry.rank, entry.seat === timeline.data.humanSeat ? tx("review.board.you", "You") : tx("review.board.player-0", `Player ${entry.seat + 1}`, entry.seat + 1)),
       ),
-      el("b", `${entry.score.toLocaleString("en-US")} points`),
+      el("b", tx("review.board.v-0-points", `${entry.score.toLocaleString("en-US")} points`, entry.score.toLocaleString("en-US"))),
       el(
         "span",
-        `${entry.points > 0 ? "+" : ""}${formatStandingsPoints(entry.points)} settlement`,
+        tx("review.board.v-0-1-settlement", `${entry.points > 0 ? "+" : ""}${formatStandingsPoints(entry.points)} settlement`, entry.points > 0 ? "+" : "", formatStandingsPoints(entry.points)),
       ),
     );
     main.append(row);
@@ -65,21 +66,21 @@ export function mountGameDetail(
     el(
       "p",
       timeline.data.review.variant
-        ? "Settlement shows net points under the recorded variant profile."
-        : "Settlement includes rank bonuses (+15/+5/−5/−15) and the 20-point first-place bonus.",
+        ? tx("review.board.settlement-shows-net-points-under-the-recorded-v", "Settlement shows net points under the recorded variant profile.")
+        : tx("review.board.settlement-includes-rank-bonuses-15-5-5-15-and-t", "Settlement includes rank bonuses (+15/+5/−5/−15) and the 20-point first-place bonus."),
       "dim",
     ),
-    el("h2", "Hands"),
+    el("h2", tx("review.board.hands", "Hands")),
   );
   for (const hand of timeline.hands) {
-    const row = button(`${hand.label} · ${hand.result}`, () =>
+    const row = button(tx("review.board.v-0-1-2", `${hand.label} · ${hand.result}`, hand.label, hand.result), () =>
       onHand(hand.index),
     );
     row.classList.add("detail-hand");
     main.append(row);
   }
   if (timeline.data.review.engineVersion === 1)
-    main.append(el("p", "Historical engine 1 · Display only", "dim"));
+    main.append(el("p", tx("review.board.historical-engine-1-display-only", "Historical engine 1 · Display only"), "dim"));
   shell.append(header, main);
   container.replaceChildren(shell);
 }
@@ -97,18 +98,18 @@ export function mountBoardReview(
   const shell = el("div", "", "learning-shell board-review");
   const header = el("header", "", "learning-header");
   const back = button("‹", options.onBack);
-  back.setAttribute("aria-label", "Game details");
-  header.append(back, el("h1", "Board review"));
+  back.setAttribute("aria-label", tx("review.board.game-details", "Game details"));
+  header.append(back, el("h1", tx("review.board.board-review", "Board review")));
   const main = el("main", "", "learning-content");
   const handSelect = el("select");
-  handSelect.setAttribute("aria-label", "Hand");
+  handSelect.setAttribute("aria-label", tx("review.board.hand", "Hand"));
   for (const hand of timeline.hands) {
     const option = el("option", hand.label);
     option.value = String(hand.index);
     handSelect.append(option);
   }
   const board = el("div", "", "review-board");
-  board.setAttribute("aria-label", "Recorded table, player perspective");
+  board.setAttribute("aria-label", tx("review.board.recorded-table-player-perspective", "Recorded table, player perspective"));
   const status = el("p", "", "timeline-status");
   status.setAttribute("aria-live", "polite");
   const range = el("input");
@@ -116,15 +117,15 @@ export function mountBoardReview(
   range.min = "0";
   range.max = String(timeline.data.events.length - 1);
   range.step = "1";
-  range.setAttribute("aria-label", "Hand timeline");
+  range.setAttribute("aria-label", tx("review.board.hand-timeline", "Hand timeline"));
   const controls = el("div", "", "timeline-controls");
-  const previous = button("Previous event", () => seek(cursor - 1));
-  const next = button("Next event", () => seek(cursor + 1));
-  const prevDecision = button("Previous decision", () => jumpDecision(-1));
-  const nextDecision = button("Next decision", () => jumpDecision(1));
+  const previous = button(tx("review.board.previous-event", "Previous event"), () => seek(cursor - 1));
+  const next = button(tx("review.board.next-event", "Next event"), () => seek(cursor + 1));
+  const prevDecision = button(tx("review.board.previous-decision", "Previous decision"), () => jumpDecision(-1));
+  const nextDecision = button(tx("review.board.next-decision", "Next decision"), () => jumpDecision(1));
   controls.append(previous, next, prevDecision, nextDecision);
   const jumps = el("select");
-  jumps.setAttribute("aria-label", "Jump to significant event");
+  jumps.setAttribute("aria-label", tx("review.board.jump-to-significant-event", "Jump to significant event"));
   const adviceHost = el("div", "", "board-advice");
   const advice = mountReview(adviceHost, {
     review: timeline.data.review,
@@ -141,7 +142,7 @@ export function mountBoardReview(
       if (hidden) {
         const back = el("span", "", "board-tile-back");
         back.setAttribute("role", "img");
-        back.setAttribute("aria-label", "Concealed tile");
+        back.setAttribute("aria-label", tx("review.board.concealed-tile", "Concealed tile"));
         row.append(back);
       } else row.append(options.renderTile(value));
     }
@@ -158,18 +159,18 @@ export function mountBoardReview(
     range.value = String(cursor);
     const label = eventLabel(timeline.data.events[cursor]!, model);
     range.setAttribute("aria-valuetext", `${cursor + 1}: ${label}`);
-    status.textContent = `Event ${cursor + 1} · ${label}`;
+    status.textContent = tx("review.board.event-0-1", `Event ${cursor + 1} · ${label}`, cursor + 1, label);
     previous.disabled = cursor <= (hand?.start ?? 0);
     next.disabled = cursor >= (hand?.end ?? timeline.data.events.length - 1);
     board.replaceChildren();
     const center = el("div", "", "board-center");
     center.append(
-      el("b", hand?.label ?? "Game"),
+      el("b", hand?.label ?? tx("review.board.game", "Game")),
       el(
         "span",
         model.variant === "riichi"
-          ? `${model.wallRemaining} tiles left · ${model.sticks} deposits`
-          : `${model.wallRemaining} tiles left`,
+          ? tx("review.board.v-0-tiles-left-1-deposits", `${model.wallRemaining} tiles left · ${model.sticks} deposits`, model.wallRemaining, model.sticks)
+          : tx("review.board.v-0-tiles-left", `${model.wallRemaining} tiles left`, model.wallRemaining),
       ),
       tiles(model.doraIndicators),
     );
@@ -183,7 +184,7 @@ export function mountBoardReview(
       area.append(
         el(
           "h2",
-          `${WINDS[player.seatWind - 27]}${relative === 0 ? " · You" : ""} · ${player.score.toLocaleString("en-US")}${player.riichi ? " · Riichi" : ""}`,
+          tx("review.board.v-0-1-2-3", `${WINDS[player.seatWind - 27]}${relative === 0 ? " " + tx("review.board.you-2", "· You") : ""} · ${player.score.toLocaleString("en-US")}${player.riichi ? " " + tx("review.board.riichi", "· Riichi") : ""}`, WINDS[player.seatWind - 27], relative === 0 ? " " + tx("review.board.you-2", "· You") : "", player.score.toLocaleString("en-US"), player.riichi ? " " + tx("review.board.riichi", "· Riichi") : ""),
         ),
         tiles(
           player.handIds
@@ -193,17 +194,17 @@ export function mountBoardReview(
         ),
       );
       if (player.flowers.length)
-        area.append(el("span", "Flowers and seasons"), tiles(player.flowers));
+        area.append(el("span", tx("review.board.flowers-and-seasons", "Flowers and seasons")), tiles(player.flowers));
       for (const meld of player.melds) {
         const group = el("div", "", "board-meld");
         group.append(
           el(
             "span",
             meld.kind === "chi"
-              ? "Sequence"
+              ? tx("review.board.sequence", "Sequence")
               : meld.kind === "pon"
-                ? "Triplet"
-                : "Quad",
+                ? tx("review.board.triplet", "Triplet")
+                : tx("review.board.quad", "Quad"),
           ),
           tiles(
             meld.tiles,
@@ -219,21 +220,21 @@ export function mountBoardReview(
       for (const entry of player.pond) {
         const wrap = el("span", "", entry.called ? "called" : "");
         wrap.append(options.renderTile(entry.tile));
-        if (entry.called) wrap.append(el("small", "Called"));
-        if (entry.riichiDeclaration) wrap.append(el("small", "Riichi"));
+        if (entry.called) wrap.append(el("small", tx("review.board.called", "Called")));
+        if (entry.riichiDeclaration) wrap.append(el("small", tx("review.board.riichi-2", "Riichi")));
         pond.append(wrap);
       }
       area.append(pond);
       board.append(area);
     }
-    jumps.replaceChildren(el("option", "Jump to significant event"));
+    jumps.replaceChildren(el("option", tx("review.board.jump-to-significant-event", "Jump to significant event")));
     jumps.options[0]!.value = "";
     for (const i of timeline.significant.filter(
       (i) => i >= (hand?.start ?? 0) && i <= (hand?.end ?? Infinity),
     )) {
       const option = el(
         "option",
-        `${i + 1} · ${eventLabel(timeline.data.events[i]!, model)}`,
+        tx("review.board.v-0-1-2", `${i + 1} · ${eventLabel(timeline.data.events[i]!, model)}`, i + 1, eventLabel(timeline.data.events[i]!, model)),
       );
       option.value = String(i);
       jumps.append(option);
@@ -293,7 +294,7 @@ export function mountBoardReview(
     handSelect,
     el(
       "p",
-      "Opponents’ concealed tiles stay face-down. Coach advice uses only what you knew at each decision.",
+      tx("review.board.opponents-concealed-tiles-stay-face-down-coach-a", "Opponents’ concealed tiles stay face-down. Coach advice uses only what you knew at each decision."),
       "dim",
     ),
     board,
