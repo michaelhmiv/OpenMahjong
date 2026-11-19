@@ -7,7 +7,14 @@ import {
   LIVE_WALL_SIZE,
 } from "@openmahjong/engine";
 import { createAiPolicy, createVariantPolicy } from "@openmahjong/ai";
-import { TableEngine, newJournal, type Format } from "../src/online/match.js";
+import {
+  TableEngine,
+  newJournal,
+  CLAIM_MS,
+  PACE_CLOCK,
+  type Format,
+} from "../src/online/match.js";
+import { formatOf } from "../src/online/service.js";
 import { buildScriptedWall, types } from "../../engine/test/game-helpers.js";
 
 const formats: Format[] = [];
@@ -17,6 +24,23 @@ for (const variant of ["riichi", "hong-kong", "mcr", "taiwanese"] as const) {
       formats.push({ variant, length, pace: "correspondence" });
   }
 }
+
+describe("ruled pace presets (multiplayer UI v1)", () => {
+  it("Live is 5+20 and Relaxed doubles it; correspondence is untimed", () => {
+    expect(PACE_CLOCK.live).toEqual({ base: 5000, reserve: 20000 });
+    expect(PACE_CLOCK.relaxed).toEqual({ base: 10000, reserve: 40000 });
+    expect(PACE_CLOCK.correspondence).toBeNull();
+    expect(CLAIM_MS).toBe(5000);
+  });
+  it("accepts the relaxed pace and rejects unknown paces (no Unlimited live pace exists)", () => {
+    expect(
+      formatOf({ variant: "riichi", length: "east", pace: "relaxed" }),
+    ).toEqual({ variant: "riichi", length: "east", pace: "relaxed" });
+    expect(() =>
+      formatOf({ variant: "riichi", length: "east", pace: "unlimited" }),
+    ).toThrow();
+  });
+});
 
 describe("authoritative matches", () => {
   it.each(formats)(

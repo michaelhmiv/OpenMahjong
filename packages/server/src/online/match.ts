@@ -29,8 +29,26 @@ import {
 export type Format = {
   variant: "riichi" | VariantId;
   length: VariantLength;
-  pace: "live" | "correspondence";
+  pace: "live" | "relaxed" | "correspondence";
 };
+
+/**
+ * Ruled pace presets (Michael, 2026-11-18; multiplayer UI v1):
+ * Live — and Ranked, which only runs at this pace — is Mahjong
+ * Soul's 5+20: 5 seconds per move plus a 20-second reserve that
+ * refills each hand. Relaxed, the casual sub-format, doubles both
+ * (10+40). Correspondence is untimed. The claim window is a flat
+ * 5 seconds at every timed pace and never draws on the reserve.
+ */
+export const PACE_CLOCK: Record<
+  Format["pace"],
+  { base: number; reserve: number } | null
+> = {
+  live: { base: 5000, reserve: 20000 },
+  relaxed: { base: 10000, reserve: 40000 },
+  correspondence: null,
+};
+export const CLAIM_MS = 5000;
 export type Action = TurnAction | CallAction;
 export type Answer = { action: Action; by: "human" | "bot" | "clock" };
 export type Answers = Record<number, Answer>;
@@ -54,6 +72,15 @@ export type Journal = {
   steps: Step[];
   answers: Answers;
   deadline: number | null;
+  /** Per-seat reserve milliseconds remaining this hand (timed
+   *  paces only); refilled when a new hand's wall is committed. */
+  reserves?: (number | null)[];
+  /** The wall count the reserves were last refilled for. */
+  reserveHand?: number;
+  /** The open turn decision the deadline belongs to: its seat, the
+   *  server time it opened, and the per-move base it opened with.
+   *  Null while a claim window (flat 5s, no reserve) is open. */
+  clock?: { seat: number; since: number; base: number } | null;
 };
 export function newJournal(): Journal {
   return { version: 1, walls: [], steps: [], answers: {}, deadline: null };

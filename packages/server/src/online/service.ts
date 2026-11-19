@@ -8,7 +8,14 @@ import {
 } from "@openmahjong/engine";
 import { ValidationError } from "../validate.js";
 import { newToken } from "../auth.js";
-import { TableEngine, newJournal, type Format, type Journal } from "./match.js";
+import {
+  TableEngine,
+  newJournal,
+  CLAIM_MS,
+  PACE_CLOCK,
+  type Format,
+  type Journal,
+} from "./match.js";
 
 export type Player = { id: string; name: string; user_id: string | null };
 type Seat = {
@@ -62,7 +69,7 @@ export function formatOf(b: Record<string, unknown>): Format {
     !["east", "south", "full"].includes(b.length) ||
     (b.variant === "riichi" && b.length === "full") ||
     typeof b.pace !== "string" ||
-    !["live", "correspondence"].includes(b.pace)
+    !["live", "relaxed", "correspondence"].includes(b.pace)
   )
     return fail("Invalid table settings");
   return { variant: b.variant, length: b.length, pace: b.pace } as Format;
@@ -145,7 +152,7 @@ export class OnlineTables {
       [actor],
     );
     const open = await this.db
-      .query(`SELECT r.id,r.variant,r.length,r.pace,count(s.seat)::int occupied,
+      .query(`SELECT r.id,r.variant,r.length,r.pace,(SELECT p.name FROM online_players p WHERE p.id=r.host) AS host,count(s.seat)::int occupied,
       count(s.seat) FILTER (WHERE s.player IS NULL)::int bots FROM online_rooms r JOIN online_seats s ON s.room=r.id
       WHERE r.state='waiting' AND r.origin='custom' AND r.listed GROUP BY r.id HAVING count(*)<4 ORDER BY r.created_at LIMIT 100`);
     return { games: mine.rows, open: open.rows, enabled: this.enabled };
@@ -182,6 +189,10 @@ export class OnlineTables {
       return fail("New tables are currently paused", 503);
     if (origin === "ranked" && !actor.user_id)
       return fail("Sign in to play Ranked", 403);
+    // Ranked runs at the Live pace only (ruled 2026-11-18): the
+    // Relaxed sub-format and correspondence are casual paces.
+    if (origin === "ranked" && f.pace !== "live")
+      return fail("Ranked uses the Live pace", 400);
     const id = randomUUID();
     const room = (
       await db.query<Room>(
@@ -237,6 +248,22 @@ export class OnlineTables {
     const seats = await seatsOf(db, room.id);
     if (seats.length === 4) await this.start(db, room, seats);
     return { id: room.id };
+  }
+
+  /** The facts the join sheet shows before a seat is taken: the
+   *  room behind an invite code, without joining it. */
+  async preview(invite: unknown) {
+    if (typeof invite !== "string" || !invite || invite.length > 64)
+      return fail("Invite expired or unavailable", 404);
+    const row = (
+      await this.db.query(
+        `SELECT r.variant,r.length,r.pace,(SELECT p.name FROM online_players p WHERE p.id=r.host) AS host
+        FROM online_rooms r WHERE r.invite=$1 AND r.origin='custom' AND r.state='waiting'`,
+        [invite],
+      )
+    ).rows[0];
+    if (!row) return fail("Invite expired or unavailable", 404);
+    return row;
   }
 
   async join(db: Db, actor: Player, id: unknown, invite: unknown) {
@@ -424,12 +451,13 @@ export class OnlineTables {
         seat: s.seat,
         name: s.name,
         bot: s.player === null,
+        host: s.player !== null && s.player === room.host,
         covered: s.covered,
         ready: s.ready,
         endRequested: s.end_requested,
         coverAt:
           room.state === "playing" &&
-          room.pace === "live" &&
+          room.pace !== "correspondence" &&
           s.player &&
           !s.covered &&
           Date.now() - s.seen_at.getTime() > 15000
@@ -440,7 +468,7 @@ export class OnlineTables {
     if (room.state === "waiting" && room.origin === "friendly") {
       const offer = (
         await db.query(
-          `SELECT o.id,o.expires_at,r.variant,r.length,r.pace,count(s.seat)::int occupied,
+          `SELECT o.id,o.expires_at,r.variant,r.length,r.pace,(SELECT p.name FROM online_players p WHERE p.id=r.host) AS host,count(s.seat)::int occupied,
         count(s.seat) FILTER (WHERE s.player IS NULL)::int bots
         FROM online_offers o JOIN online_rooms r ON r.id=o.room JOIN online_seats s ON s.room=r.id
         WHERE o.player=$1 AND o.ticket=$2 AND o.expires_at>clock_timestamp() AND r.listed AND r.state='waiting'
@@ -478,16 +506,58 @@ export class OnlineTables {
     };
   }
 
+  /**
+   * Open the clock for the decision the engine is waiting on (timed
+   * paces only). A claim window is a flat CLAIM_MS and never touches
+   * the reserve; a turn decision gets the pace's per-move base plus
+   * whatever reserve the seat has left this hand. Reserves refill
+   * when the hand's wall count changes (a new hand was committed).
+   */
+  private openClock(room: Room, engine: TableEngine, j: Journal, now: number) {
+    const preset = PACE_CLOCK[room.pace];
+    if (!preset) return;
+    if (engine.kind === "call") {
+      j.deadline = now + CLAIM_MS;
+      j.clock = null;
+      return;
+    }
+    const seat = engine.choices.findIndex((c) => c.length > 0);
+    if (seat < 0) return;
+    if (!j.reserves || j.reserveHand !== j.walls.length) {
+      j.reserves = [preset.reserve, preset.reserve, preset.reserve, preset.reserve];
+      j.reserveHand = j.walls.length;
+    }
+    const reserve = j.reserves[seat] ?? preset.reserve;
+    j.clock = { seat, since: now, base: preset.base };
+    j.deadline = now + preset.base + reserve;
+  }
+
+  /** Charge a resolved turn decision against its seat's reserve:
+   *  only the time past the per-move base drains, never below zero. */
+  private settleClock(j: Journal, seat: number, now: number) {
+    const clock = j.clock;
+    if (!clock || clock.seat !== seat || !j.reserves) return;
+    const spent = now - clock.since - clock.base;
+    if (spent > 0)
+      j.reserves[seat] = Math.max(0, (j.reserves[seat] ?? 0) - spent);
+    j.clock = null;
+  }
+
   private project(room: Room, seat: Seat, engine = this.engine(room)) {
     const j = room.journal!;
     const choices =
       j.answers[seat.seat] || seat.covered ? [] : engine.choices[seat.seat]!;
+    const preset = PACE_CLOCK[room.pace];
     return {
       view: engine.view(seat.seat),
       revision: j.steps.length,
       choices,
       claimTile: choices.length ? engine.claimTile : null,
       deadline: j.deadline,
+      reserve:
+        preset && j.reserves
+          ? (j.reserves[seat.seat] ?? preset.reserve)
+          : null,
       handResult: j.handResult ?? null,
     };
   }
@@ -597,6 +667,7 @@ export class OnlineTables {
     const now = await dbTime(db);
     if (j.deadline !== null && now >= j.deadline)
       return fail("Decision expired", 409);
+    this.settleClock(j, me.seat, now);
     const action = this.engine(room).choices[me.seat]?.[body.choice as number];
     if (!action) return fail("Unavailable choice", 422);
     j.answers[me.seat] = { action, by: "human" };
@@ -644,7 +715,7 @@ export class OnlineTables {
       );
     } else if (me.controller && me.controller !== client) return { id };
     if (
-      room.pace === "live" &&
+      room.pace !== "correspondence" &&
       (room.state === "playing" || room.state === "waiting")
     ) {
       await db.query(
@@ -716,7 +787,9 @@ export class OnlineTables {
   private async advance(db: Db, room: Room, seats: Seat[], now: number) {
     const j = room.journal!;
     const engine = this.engine(room);
-    const live = room.pace === "live";
+    // Both timed paces (Live 5+20, Relaxed 10+40) run deadlines and
+    // bot cover; correspondence never does.
+    const live = room.pace !== "correspondence";
     for (const s of seats) {
       if (
         live &&
@@ -735,8 +808,7 @@ export class OnlineTables {
     }
     // Yield after a short burst when an entire table is covered by bots.
     for (let moves = 0; moves < 8 && !engine.result; moves++) {
-      if (live && j.deadline === null)
-        j.deadline = now + (engine.kind === "call" ? 5000 : 20000);
+      if (live && j.deadline === null) this.openClock(room, engine, j, now);
       for (const s of seats) {
         if (!engine.choices[s.seat]?.length || j.answers[s.seat]) continue;
         const bot = !s.player || s.covered;
@@ -745,6 +817,7 @@ export class OnlineTables {
           action: engine.automatic(s.seat, bot),
           by: bot ? "bot" : "clock",
         };
+        this.settleClock(j, s.seat, now);
         if (s.player && bot && !s.bot_played) {
           s.bot_played = true;
           await db.query(
@@ -762,6 +835,7 @@ export class OnlineTables {
       if (!engine.canAdvance(j.answers)) break;
       engine.commit(j);
       j.deadline = null;
+      j.clock = null;
     }
     if (engine.result) {
       await this.finish(db, room, seats, engine.result);
@@ -850,7 +924,7 @@ export class OnlineTables {
       // Remove stale live queue entries. Untimed memberships persist until explicit withdrawal.
       const stale =
         await db.query(`DELETE FROM online_seats s USING online_rooms r
-        WHERE r.id=s.room AND r.state='waiting' AND r.origin IN ('friendly','ranked') AND r.pace='live'
+        WHERE r.id=s.room AND r.state='waiting' AND r.origin IN ('friendly','ranked') AND r.pace<>'correspondence'
         AND s.seen_at < clock_timestamp()-interval '2 minutes' RETURNING s.room`);
       for (const id of new Set(stale.rows.map((r) => r.room))) {
         const first = (await seatsOf(db, id))[0];
@@ -914,7 +988,7 @@ export class OnlineTables {
       if (now - prior.getTime() > 15000)
         await db.query(
           `UPDATE online_rooms SET rating_void_reason='Service interruption'
-        WHERE state='playing' AND origin='ranked' AND pace='live' AND created_at<=$1 AND rating_void_reason IS NULL`,
+        WHERE state='playing' AND origin='ranked' AND pace<>'correspondence' AND created_at<=$1 AND rating_void_reason IS NULL`,
           [prior],
         );
       await db.query(

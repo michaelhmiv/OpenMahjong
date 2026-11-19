@@ -32,7 +32,10 @@ async function main(): Promise<void> {
     const tables = new OnlineTables(pool, {
       custom: process.env.ONLINE_CUSTOM !== "off",
       friendly: process.env.ONLINE_FRIENDLY !== "off",
-      ranked: process.env.ONLINE_RANKED === "on",
+      // Ranked launches enabled (Michael, 2026-11-18): on unless
+      // explicitly switched off, the same default shape as the
+      // custom and friendly switches beside it.
+      ranked: process.env.ONLINE_RANKED !== "off",
     });
     online = new OnlineHttp(tables);
     if (process.env.ONLINE_METRICS === "on") {

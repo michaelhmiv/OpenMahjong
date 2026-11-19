@@ -261,6 +261,10 @@ export class OnlineHttp {
       );
       return;
     }
+    if (route === "rooms/preview" && method === "GET") {
+      json(res, await this.tables.preview(url.searchParams.get("invite")));
+      return;
+    }
     if (route === "rooms/join" && method === "POST") {
       json(
         res,
