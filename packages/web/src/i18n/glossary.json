@@ -1,0 +1,215 @@
+{
+  "meta": {
+    "locales": [
+      "en",
+      "zh-Hans",
+      "zh-Hant",
+      "ja",
+      "ko"
+    ],
+    "note": "Locked mahjong terms. One form per language, decided once with a native speaker. A translation that renders a locked term differently is a CI failure, not a style preference. English forms are filled; all other core locales are explicitly null (untranslated) in Phase 1 — do NOT invent or machine-translate them.",
+    "sourceLocale": "en"
+  },
+  "terms": {
+    "bot": {
+      "en": "Bot",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "The CPU opponent. Never 'AI' — in every locale, the opponent is always called Bot."
+    },
+    "chi": {
+      "en": "Chi",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "A run (sequence) meld."
+    },
+    "dora": {
+      "en": "Dora",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Bonus tile indicated by the dora indicator."
+    },
+    "dragon-green": {
+      "en": "Green dragon",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Dragon tile: Green (hatsu)."
+    },
+    "dragon-red": {
+      "en": "Red dragon",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Dragon tile: Red (chun)."
+    },
+    "dragon-white": {
+      "en": "White dragon",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Dragon tile: White (haku)."
+    },
+    "fu": {
+      "en": "Fu",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Mini-points: the base value of a hand before han are applied."
+    },
+    "furiten": {
+      "en": "Furiten",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Cannot win by ron: a tile you are waiting for is in your own pond."
+    },
+    "han": {
+      "en": "Han",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Scoring unit (doubling unit); one han doubles the hand value."
+    },
+    "honba": {
+      "en": "Honba",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Repeat counter: extra hands the same dealer deals after winning."
+    },
+    "kan": {
+      "en": "Kan",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "A four-of-a-kind meld (quad)."
+    },
+    "pon": {
+      "en": "Pon",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "A three-of-a-kind meld (pung)."
+    },
+    "riichi": {
+      "en": "Riichi",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "The ready declaration (one away from winning, 1,000-point stick)."
+    },
+    "ron": {
+      "en": "Ron",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Win on another player's discard."
+    },
+    "tsumo": {
+      "en": "Tsumo",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Win on your own draw."
+    },
+    "wind-east": {
+      "en": "East",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Wind name: the dealer wind / East seat."
+    },
+    "wind-north": {
+      "en": "North",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Wind name: North seat."
+    },
+    "wind-south": {
+      "en": "South",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Wind name: South seat."
+    },
+    "wind-west": {
+      "en": "West",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "Wind name: West seat."
+    },
+    "yakuman": {
+      "en": "Yakuman",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "A limit hand (maximum value)."
+    }
+  }
+}
