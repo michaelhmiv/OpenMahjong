@@ -52,6 +52,7 @@ import {
   isMachineTranslated,
   localeMeta,
   pathForLocale,
+  pluralS,
   setRememberedLocale,
   shippedLocaleMeta,
   slugify,
@@ -2029,7 +2030,7 @@ export class App {
     }
     const east = rows.filter((r) => r.length === "east").length;
     page.append(
-      h("p", { class: "count" }, tx("ui.app.v-0-recorded-game-1-2-east-3-east-south-4", `${rows.length} recorded game${rows.length === 1 ? "" : "s"} — ${east} East, ${rows.filter(r=>r.length==="south").length} East + South${rows.some(r=>r.length==="full")?tx("ui.app.v-0-four-rounds", `, ${rows.filter(r=>r.length==="full").length} four rounds`, rows.filter(r=>r.length==="full").length):""}`, rows.length, rows.length === 1 ? "" : "s", east, rows.filter(r=>r.length==="south").length, rows.some(r=>r.length==="full")?tx("ui.app.v-0-four-rounds", `, ${rows.filter(r=>r.length==="full").length} four rounds`, rows.filter(r=>r.length==="full").length):"")),
+      h("p", { class: "count" }, tx("ui.app.v-0-recorded-game-1-2-east-3-east-south-4", `${rows.length} recorded game${rows.length === 1 ? "" : "s"} — ${east} East, ${rows.filter(r=>r.length==="south").length} East + South${rows.some(r=>r.length==="full")?tx("ui.app.v-0-four-rounds", `, ${rows.filter(r=>r.length==="full").length} four rounds`, rows.filter(r=>r.length==="full").length):""}`, rows.length, pluralS(rows.length), east, rows.filter(r=>r.length==="south").length, rows.some(r=>r.length==="full")?tx("ui.app.v-0-four-rounds", `, ${rows.filter(r=>r.length==="full").length} four rounds`, rows.filter(r=>r.length==="full").length):"")),
     );
     const saved = loadGame();
     const summary = saved ? this.savedGameSummary(saved) : null;
@@ -3445,7 +3446,7 @@ export class App {
     const m = this.model;
     const { frame } = this.frameShell(
       tx("ui.app.round", "Round"),
-      tx("ui.app.v-0-honba-wall-1-2-riichi-stick-3-on-the-table", `${m.honba} honba · Wall ${m.wallRemaining} · ${m.sticks} riichi stick${m.sticks === 1 ? "" : "s"} on the table`, m.honba, m.wallRemaining, m.sticks, m.sticks === 1 ? "" : "s"),
+      tx("ui.app.v-0-honba-wall-1-2-riichi-stick-3-on-the-table", `${m.honba} honba · Wall ${m.wallRemaining} · ${m.sticks} riichi stick${m.sticks === 1 ? "" : "s"} on the table`, m.honba, m.wallRemaining, m.sticks, pluralS(m.sticks)),
     );
     const crow = h("div", { class: "crow" });
     crow.append(
@@ -3576,8 +3577,8 @@ export class App {
       let composition = "";
       if (sets === 3 && pair && remainder === 2) {
         const parts = ["the pair"];
-        if (triplets > 0) parts.push(tx("ui.app.v-0-triplet-1", `${numWord[triplets] ?? triplets} triplet${triplets > 1 ? "s" : ""}`, numWord[triplets] ?? triplets, triplets > 1 ? "s" : ""));
-        if (runs > 0) parts.push(tx("ui.app.v-0-run-1", `${numWord[runs] ?? runs} run${runs > 1 ? "s" : ""}`, numWord[runs] ?? runs, runs > 1 ? "s" : ""));
+        if (triplets > 0) parts.push(tx("ui.app.v-0-triplet-1", `${numWord[triplets] ?? triplets} triplet${triplets > 1 ? "s" : ""}`, numWord[triplets] ?? triplets, pluralS(triplets)));
+        if (runs > 0) parts.push(tx("ui.app.v-0-run-1", `${numWord[runs] ?? runs} run${runs > 1 ? "s" : ""}`, numWord[runs] ?? runs, pluralS(runs)));
         const list = parts.length > 1
           ? tx("ui.app.v-0-and-1", `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`, parts.slice(0, -1).join(", "), parts[parts.length - 1])
           : parts[0]!;

@@ -98,6 +98,20 @@ cannot call t() at import time (before initI18n), so they store
 that carries its own key (`{label, key}` / `{title, key}`) claims its
 text under that key in the extractor.
 
+Two resolution shapes the wiring check cannot see, both proven by the
+derived-keys test instead: (1) DATA VALUES rendered raw — the check
+scans literals, so a data field rendered directly (`exercise.prompt`,
+`VARIANT_RELEASES[].name`, a module def title) passes it while staying
+English on screen; render verification caught four such families after
+the rewire (release names, the lesson-runner kicker, the practice-card
+label, practice prompt/explanation/hint). Where a value's key is
+slug-derived and slugs collide (the extractor suffixes "-2"), resolve
+BY VALUE within the namespace, as practice-ui.ts does — never by slug.
+(2) English morphology passed as an interpolation arg: templates that
+carry the plural as an arg (`"{0} recorded game{1}"`) must pass
+`pluralS(count)` from i18n/index.ts, never a raw `"s"` — ja/ko/zh do
+not mark plurals, so a raw "s" leaks Latin letters onto their screens.
+
 Extractor fixes from the rewire (see `scripts/extract-i18n.mjs`):
 the mcr-guide rule runs before the generic bare-list rule (its tuple
 elements were claimed under slug keys instead of positional pattern
@@ -113,6 +127,10 @@ from the glossary, still `null` for non-English locales; the static
 content pages (`pages.*`, ~250 keys) are pre-rendered HTML — per-language
 static pages are a separate ship-step item; practice-ui exercise-picker
 labels derived from `entry.id.replace(/-/g, " ")` have no key.
+Hong Kong / Taiwanese win-breakdown pattern names (variant table,
+paused state) render the English engine names: they have no standalone
+keys yet — minting them is a follow-up (MCR patterns already resolve
+through `learn.mcr.guide.pattern.<slug>.name`).
 
 ## How stale marking works
 

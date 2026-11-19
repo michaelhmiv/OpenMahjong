@@ -318,6 +318,15 @@ export function t(key: string, ...args: readonly unknown[]): string {
   return interpolate(entry?.value ?? en.value, args);
 }
 
+/** The English plural "-s" for templates that carry the plural as an
+ *  arg (`"{0} recorded game{1}"`). Only English marks the plural this
+ *  way — ja/ko/zh don't — so passing a raw "s" leaks Latin letters
+ *  onto their screens ("0記録されたゲームs"). The fallback template
+ *  keeps its own ternary: it renders English. */
+export function pluralS(count: number): string {
+  return currentLocale === SOURCE_LOCALE && count !== 1 ? "s" : "";
+}
+
 /** Translate with an explicit English default: `tx("ui.app.language",
  *  "Language")`. The extractor records the fallback as the key's
  *  English source in en.json (see scripts/extract-i18n.mjs), which

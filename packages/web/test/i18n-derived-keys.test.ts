@@ -17,6 +17,7 @@ import cardData from "../src/education/practice-card.json" with {
   type: "json",
 };
 import { mcrPatternGuide } from "../src/education/mcr-guide.js";
+import { CURATED_EXERCISES } from "../src/education/practice.js";
 import { mcrPatterns } from "@openmahjong/engine";
 
 /**
@@ -33,7 +34,10 @@ import { mcrPatterns } from "@openmahjong/engine";
  * curriculum module titles / covered lines / completions, American
  * lesson-ref titles (slugified), practice-card hand descriptions /
  * section names / blurbs / card title, MCR guide pattern fields,
- * variant release names, Learn section titles.
+ * variant release names, Learn section titles. Practice exercise
+ * prompt / explanation / hint resolve by VALUE within learn.practice
+ * (slug collisions make slug derivation unsafe) — asserted as
+ * exactly-one-key per field value.
  *
  * Practice NAMES / YAKU and review TERMS resolve through tx() with an
  * English fallback, so a missing key there degrades to English rather
@@ -145,6 +149,13 @@ describe("derived keys: American track", () => {
       );
     }
     expectKey("learn.american.pcard.title", (cardData as { card: { title: string } }).card.title);
+    // The card label (the not-the-official-card disclaimer) renders at
+    // the sheet head/foot and on the printable card — it resolves
+    // through the same pcard key family.
+    expectKey(
+      "learn.american.pcard.label",
+      (cardData as { card: { label: string } }).card.label,
+    );
   });
 });
 
@@ -193,6 +204,34 @@ describe("derived keys: MCR guide and releases", () => {
   it("Learn section titles resolve", () => {
     expectKey("learn.riichi.section-title", "Riichi");
     expectKey("learn.american.section-title", "American");
+  });
+});
+
+describe("derived keys: practice exercises", () => {
+  it("every exercise prompt, explanation, and hint resolves by value", () => {
+    // practice-ui.ts resolves the three data fields by VALUE within the
+    // learn.practice namespace (practiceText): the extractor mints
+    // slug keys with "-2" suffixes on slug collisions (two scoring
+    // prompts share a slug prefix), so a slug derivation would render
+    // the wrong exercise's text. Value lookup is exact — provided each
+    // field value is claimed by exactly one key in the namespace.
+    const byValue = new Map<string, string[]>();
+    for (const [key, entry] of Object.entries(enKeys)) {
+      if (!key.startsWith("learn.practice.")) continue;
+      const list = byValue.get(entry.value) ?? [];
+      list.push(key);
+      byValue.set(entry.value, list);
+    }
+    expect(CURATED_EXERCISES.length).toBeGreaterThan(0);
+    for (const ex of CURATED_EXERCISES) {
+      for (const field of [ex.prompt, ex.explanation, ex.hint]) {
+        const keys = byValue.get(field) ?? [];
+        expect(
+          keys.length,
+          `practice field must resolve to exactly one key: ${field.slice(0, 60)}`,
+        ).toBe(1);
+      }
+    }
   });
 });
 

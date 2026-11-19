@@ -6,7 +6,7 @@ import { CURATED_EXERCISES, checkPracticeAnswer, validateExercise,
 import { loadPracticeProgress, mergePracticeProgress, parsePracticeProgress, savePracticeProgress,
   recommendExercises, skillEvidence, type PracticeAttempt, type PracticeProgress } from "./education/practice-progress.js";
 import { newGameId } from "./records.js";
-import { tx } from "./i18n/index.js";
+import { getEnglishKeys, t, tx } from "./i18n/index.js";
 
 export const PRACTICE_SESSION_KEY = "openmahjong.practice-session.v1";
 export interface PracticeViewOptions {
@@ -29,6 +29,24 @@ const NAMES: Partial<Record<SkillId, string>> = {
   shanten: "Shanten", ukeire: "Ukeire", "wait-reading": "Wait reading",
   yaku: "Yaku recognition", scoring: "Scoring", defense: "Defense",
 };
+
+/** Exercise prompt / explanation / hint are data strings, minted by the
+ *  extractor under learn.practice.<slug> — with "-2" suffixes where two
+ *  different strings slugify alike, so the key cannot be derived from
+ *  the slug alone. The English value is the identity: resolve by value
+ *  within the namespace (its 90 values are all distinct — the
+ *  derived-keys test asserts every field resolves to exactly one key).
+ *  An unminted string renders as-is rather than leaking a key id. */
+const PRACTICE_KEY_BY_VALUE = new Map<string, string>();
+for (const [key, entry] of Object.entries(getEnglishKeys())) {
+  if (key.startsWith("learn.practice.") && !PRACTICE_KEY_BY_VALUE.has(entry.value)) {
+    PRACTICE_KEY_BY_VALUE.set(entry.value, key);
+  }
+}
+function practiceText(value: string): string {
+  const key = PRACTICE_KEY_BY_VALUE.get(value);
+  return key ? t(key) : value;
+}
 const YAKU = { tanyao: "Tanyao", pinfu: "Pinfu", riichi: "Riichi",
   chiitoitsu: "Seven pairs", toitoi: "All triplets" } as const;
 const HONORS = ["East", "South", "West", "North", "White dragon", "Green dragon", "Red dragon"];
@@ -200,7 +218,7 @@ export function createPracticeView(options: PracticeViewOptions): HTMLElement {
     exerciseLabel.append(choose); selectors.append(categoryLabel, exerciseLabel); content.append(selectors);
     const group = exercises.filter((entry) => entry.skill === exercise.skill);
     content.append(el("div", "eyebrow", tx("learn.practice.ui.v-0-exercise-1-of-2", `${tx(`learn.practice.skill.${exercise.skill}`, NAMES[exercise.skill] ?? exercise.skill).toUpperCase()} · EXERCISE ${group.indexOf(exercise) + 1} OF ${group.length}`, tx(`learn.practice.skill.${exercise.skill}`, NAMES[exercise.skill] ?? exercise.skill).toUpperCase(), group.indexOf(exercise) + 1, group.length)),
-      el("h1", "", tx(`learn.practice.skill.${exercise.skill}`, NAMES[exercise.skill] ?? "Practice")), el("p", "intro", exercise.prompt));
+      el("h1", "", tx(`learn.practice.skill.${exercise.skill}`, NAMES[exercise.skill] ?? "Practice")), el("p", "intro", practiceText(exercise.prompt)));
     if ("position" in exercise) {
       const counts = "counts" in exercise.position ? exercise.position.counts : exercise.position.handCounts;
       const types = counts.flatMap((count, type) => Array.from({ length: count }, () => type));
@@ -247,9 +265,9 @@ export function createPracticeView(options: PracticeViewOptions): HTMLElement {
         // certified), which let every multi-tile exercise be solved
         // by elimination. The grading layer still computes the
         // counts for its own records; they are not shown.
-        box.append(el("p", "", feedback.explanation));
+        box.append(el("p", "", practiceText(feedback.explanation)));
       } else {
-        box.append(el("p", "", feedback.hint));
+        box.append(el("p", "", practiceText(feedback.hint)));
         if (typeof feedback.extraPicks === "number" && typeof feedback.missingPicks === "number") {
           if (exercise.kind === "recognition" || exercise.kind === "waits" ||
             exercise.kind === "ukeire" || exercise.kind === "defense") {
@@ -266,7 +284,7 @@ export function createPracticeView(options: PracticeViewOptions): HTMLElement {
     // The browser queues `toggle`; record assistance in the opening click
     // itself so a quick subsequent submission cannot be counted independent.
     summary.addEventListener("click", () => { if (!details.open) { assisted = true; saveSession(); } });
-    details.append(summary, el("p", "", exercise.explanation));
+    details.append(summary, el("p", "", practiceText(exercise.explanation)));
     details.addEventListener("toggle", () => { if (details.open) { assisted = true; saveSession(); } });
     content.append(details);
     const primary = button(completed ? tx("learn.practice.ui.next-exercise", "Next exercise") : tx("learn.practice.ui.check-answer", "Check answer"), "primary", completed ? () => {

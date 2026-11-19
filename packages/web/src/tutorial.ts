@@ -56,7 +56,7 @@ import type { ChiHint } from "./model.js";
 // ---------------------------------------------------------------------------
 
 import { MODULES, moduleDef, type ModuleDef, type ModuleId } from "./education/curriculum.js";
-import { tx } from "./i18n/index.js";
+import { t, tx } from "./i18n/index.js";
 export { MODULES, moduleDef, type ModuleDef, type ModuleId } from "./education/curriculum.js";
 
 // ---------------------------------------------------------------------------
@@ -1373,7 +1373,9 @@ export class LessonController {
   view(): LessonView {
     const step = this.step;
     const base = {
-      lab: this.def.title.toUpperCase(),
+      // The module title through its derived key (learn.riichi.<id>.title),
+      // like the Learn tab and lesson header — the raw def title is English.
+      lab: t(`learn.riichi.${this.def.id}.title`).toUpperCase(),
       note: this.note,
       stepIndex: Math.min(this.stepIndex, this.steps.length - 1),
       stepCount: this.steps.length,

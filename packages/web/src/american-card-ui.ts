@@ -12,13 +12,12 @@
  */
 import {
   PRACTICE_CARD,
-  PRACTICE_CARD_LABEL,
   cardSections,
   handNotationSpans,
   sectionHands,
   type AmericanHand,
 } from "./education/american-card.js";
-import { t, tx } from "./i18n/index.js";
+import { pluralS, t, tx } from "./i18n/index.js";
 
 function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
@@ -95,7 +94,7 @@ function handEl(hand: AmericanHand, first: boolean): HTMLElement {
     block.append(
       el(
         "p",
-        tx("learn.american.ui.needs-at-least-0-joker-1", `Needs at least ${hand.minJokers} joker${hand.minJokers === 1 ? "" : "s"}.`, hand.minJokers, hand.minJokers === 1 ? "" : "s"),
+        tx("learn.american.ui.needs-at-least-0-joker-1", `Needs at least ${hand.minJokers} joker${hand.minJokers === 1 ? "" : "s"}.`, hand.minJokers, pluralS(hand.minJokers)),
         "amc-joker",
       ),
     );
@@ -110,7 +109,7 @@ function handEl(hand: AmericanHand, first: boolean): HTMLElement {
 export function buildPrintableCard(): HTMLElement {
   const root = el("div", "", "amc-print");
   const page = el("div", "", "p-page");
-  page.append(el("p", PRACTICE_CARD_LABEL, "p-label"));
+  page.append(el("p", t("learn.american.pcard.label"), "p-label"));
   page.append(el("div", t("learn.american.pcard.title"), "p-title"));
   page.append(
     el(
@@ -158,7 +157,7 @@ export function buildPrintableCard(): HTMLElement {
     );
   }
   page.append(key);
-  page.append(el("p", PRACTICE_CARD_LABEL, "p-footlabel"));
+  page.append(el("p", t("learn.american.pcard.label"), "p-footlabel"));
   root.append(page);
   return root;
 }
@@ -198,7 +197,7 @@ export function mountAmericanCard(
     title.textContent = tx("learn.american.ui.practice-card", "Practice Card");
     const sheet = el("div", "", "amc-sheet");
     sheet.append(el("div", t("learn.american.pcard.title"), "amc-cardtitle"));
-    sheet.append(el("p", PRACTICE_CARD_LABEL, "amc-label"));
+    sheet.append(el("p", t("learn.american.pcard.label"), "amc-label"));
     for (const section of cardSections()) {
       const hands = sectionHands(section.id);
       const row = el("button", "", "amc-sec-row");
@@ -214,7 +213,7 @@ export function mountAmericanCard(
       });
       sheet.append(row);
     }
-    sheet.append(el("p", PRACTICE_CARD_LABEL, "amc-footlabel"));
+    sheet.append(el("p", t("learn.american.pcard.label"), "amc-footlabel"));
     main.append(sheet);
 
     const printRow = el("div", "", "practicerow");
@@ -250,7 +249,7 @@ export function mountAmericanCard(
     );
     const sheet = el("div", "", "amc-sheet");
     sectionHands(id).forEach((hand, i) => sheet.append(handEl(hand, i === 0)));
-    sheet.append(el("p", PRACTICE_CARD_LABEL, "amc-footlabel"));
+    sheet.append(el("p", t("learn.american.pcard.label"), "amc-footlabel"));
     main.append(sheet);
   }
 

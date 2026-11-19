@@ -38,7 +38,7 @@ import {
   writeTable,
   type TableCopy,
 } from "./in-person-store.js";
-import { tx } from "./i18n/index.js";
+import { pluralS, tx } from "./i18n/index.js";
 
 function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
@@ -429,7 +429,7 @@ export function mountInPerson(
             sticks = totals.pot / 1000;
           stripSub =
             deps.length && Number.isInteger(sticks)
-              ? tx("tools.inperson.v-0-riichi-stick-1-declared-by-2", `${sticks} riichi stick${sticks > 1 ? "s" : ""} · declared by ${joinNames(deps)}`, sticks, sticks > 1 ? "s" : "", joinNames(deps))
+              ? tx("tools.inperson.v-0-riichi-stick-1-declared-by-2", `${sticks} riichi stick${sticks > 1 ? "s" : ""} · declared by ${joinNames(deps)}`, sticks, pluralS(sticks), joinNames(deps))
               : tx("tools.inperson.v-0-points-in-outstanding-deposits", `${totals.pot.toLocaleString("en-US")} points in outstanding deposits`, totals.pot.toLocaleString("en-US"));
         }
       } else stripSub = `${name(state.dealer)} deals`;
@@ -459,7 +459,7 @@ export function mountInPerson(
         main.append(
           el(
             "p",
-            tx("tools.inperson.v-0-winner-1-staged-on-2-s-discard-tap-the-next-wi", `${flow.staged.length} winner${flow.staged.length > 1 ? "s" : ""} staged on ${name(flow.stagedPayer!)}’s discard. Tap the next winner’s seat, or confirm from the staged winner’s payments.`, flow.staged.length, flow.staged.length > 1 ? "s" : "", name(flow.stagedPayer!)),
+            tx("tools.inperson.v-0-winner-1-staged-on-2-s-discard-tap-the-next-wi", `${flow.staged.length} winner${flow.staged.length > 1 ? "s" : ""} staged on ${name(flow.stagedPayer!)}’s discard. Tap the next winner’s seat, or confirm from the staged winner’s payments.`, flow.staged.length, pluralS(flow.staged.length), name(flow.stagedPayer!)),
             "cx-staged",
           ),
         );
@@ -658,7 +658,7 @@ export function mountInPerson(
       panel.append(
         el(
           "p",
-          tx("tools.inperson.on-a-discard-from-0-the-same-discard-as-the-stag", `On a discard from ${name(f.stagedPayer!)} · the same discard as the staged winner${f.staged.length > 1 ? "s" : ""}.`, name(f.stagedPayer!), f.staged.length > 1 ? "s" : ""),
+          tx("tools.inperson.on-a-discard-from-0-the-same-discard-as-the-stag", `On a discard from ${name(f.stagedPayer!)} · the same discard as the staged winner${f.staged.length > 1 ? "s" : ""}.`, name(f.stagedPayer!), pluralS(f.staged.length)),
           "cx-note",
         ),
         (() => {

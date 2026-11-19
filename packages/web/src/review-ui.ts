@@ -5,7 +5,7 @@ import { adviseVariantDiscard, compareDiscards, type DiscardAdvice, type TurnAdv
 import { analyzeReviewDecision, analyzeReviewMoments, ReviewNavigator, type DecisionReview, type ReviewDecision, type ReviewMomentAnalysis } from "./review.js";
 import { momentTexts } from "./moment-text.js";
 import type { SkillId } from "./education/curriculum.js";
-import { tx } from "./i18n/index.js";
+import { pluralS, tx } from "./i18n/index.js";
 
 export interface ReviewUIOptions {
   readonly review: DecisionReview;
@@ -260,7 +260,7 @@ export function mountReview(container: HTMLElement, options: ReviewUIOptions): R
       if (position.engineVersion === 1) content.append(node("p", "legacy-notice card", tx("review.historical-replay-engine-version-1-current-strat", "Historical replay · engine version 1. Current strategic analysis is unavailable; this replay preserves its historical rules behavior.")));
       const handCard = node("div", "card hand-card"); handCard.append(node("div", "card-label", tx("review.your-hand-at-this-decision", "YOUR HAND AT THIS DECISION")), tileList(position.view.hand));
       const threats = position.view.players.filter((player) => player.seat !== position.view.seat && player.riichi).length;
-      handCard.append(node("div", "hand-caption", tx("review.v-0-in-the-live-wall-1", `${position.view.wallRemaining} in the live wall · ${threats ? tx("review.v-0-riichi-threat-1", `${threats} riichi threat${threats === 1 ? "" : "s"}`, threats, threats === 1 ? "" : "s") : tx("review.no-riichi-threats", "no riichi threats")}.`, position.view.wallRemaining, threats ? tx("review.v-0-riichi-threat-1", `${threats} riichi threat${threats === 1 ? "" : "s"}`, threats, threats === 1 ? "" : "s") : tx("review.no-riichi-threats", "no riichi threats")))); content.append(handCard);
+      handCard.append(node("div", "hand-caption", tx("review.v-0-in-the-live-wall-1", `${position.view.wallRemaining} in the live wall · ${threats ? tx("review.v-0-riichi-threat-1", `${threats} riichi threat${threats === 1 ? "" : "s"}`, threats, pluralS(threats)) : tx("review.no-riichi-threats", "no riichi threats")}.`, position.view.wallRemaining, threats ? tx("review.v-0-riichi-threat-1", `${threats} riichi threat${threats === 1 ? "" : "s"}`, threats, pluralS(threats)) : tx("review.no-riichi-threats", "no riichi threats")))); content.append(handCard);
       if (position.variant) handCard.querySelector(".hand-caption")!.textContent = tx("review.v-0-tiles-in-the-live-wall", `${position.view.wallRemaining} tiles in the live wall.`, position.view.wallRemaining);
       const advice = getAdvice(position);
       const moments = getMoments(position);
