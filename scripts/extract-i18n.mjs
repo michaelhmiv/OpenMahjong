@@ -17,6 +17,13 @@
  * and fails on drift, so a hardcoded string added without regenerating
  * en.json cannot merge silently.
  *
+ * Strings that only exist behind a translate call use `tx("key",
+ * "English source", ...)` or `tForLocale("key", locale, "English
+ * source", ...)` (packages/web/src/i18n/index.ts): the fallback
+ * argument is the key's English source, recorded here under the
+ * explicit key. Plain `t("key")` calls carry no source string, so the
+ * extractor cannot invent one for them.
+ *
  * Usage:
  *   node scripts/extract-i18n.mjs            # regenerate en.json
  *   node scripts/extract-i18n.mjs --check    # exit 1 if en.json is stale
@@ -653,6 +660,27 @@ function extractSourceFile(rel, absPath) {
         if (id) {
           stats.lesson++;
           return void addKey(`${namespace}.${id}.title`, value, rel, line);
+        }
+        return;
+      }
+      // tx("key", "English source", ...args) and tForLocale("key",
+      // locale, "English source", ...args): the fallback argument is
+      // the key's English source — the mechanism by which a string
+      // that only exists behind a translate call gets its en.json
+      // entry (packages/web/src/i18n/index.ts). The key is explicit,
+      // never slug-derived. The key id, the locale, and args >= the
+      // fallback are not prose, so they are skipped.
+      if (call.name === "tx" || call.name === "tForLocale") {
+        const fallbackIdx = call.name === "tx" ? 1 : 2;
+        const idx = call.node.arguments.indexOf(a.child);
+        if (idx === fallbackIdx) {
+          const keyArg = call.node.arguments[0];
+          if (keyArg && ts.isStringLiteral(keyArg)) {
+            stats.ui++;
+            return void addKey(keyArg.text, value, rel, line, {
+              ...(ts.isTemplateExpression(node) ? { dynamic: true } : {}),
+            });
+          }
         }
         return;
       }

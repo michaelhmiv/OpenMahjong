@@ -289,6 +289,25 @@ try {
     }
     await page.getByRole("button", { name: "Back", exact: true }).click();
   }
+  // Language switcher (i18n-switcher-v1): the LANGUAGE section on
+  // More opens the drilled-in list. Only English ships, so the list
+  // holds exactly one row — unshipped locales stay hidden.
+  await check("language switcher", async () => {
+    const sections = await page.locator("#screen-more .sec-label").allInnerTexts();
+    assert.deepEqual(sections, ["ACCOUNT", "SETTINGS", "LANGUAGE", "ABOUT"]);
+    await page.locator('#screen-more .hrow', { hasText: "Language" }).click();
+    const rows = await page.locator("#screen-language .i18n-row").allInnerTexts();
+    assert.deepEqual(rows, ["English"]);
+    assert.equal(await page.locator("#screen-language .i18n-row.cur").count(), 1);
+    assert.equal(await page.locator("#screen-language .i18n-check").count(), 1);
+    const notes = await page.locator("#screen-language .i18n-note").allInnerTexts();
+    assert.equal(notes.length, 2);
+    assert.match(notes[0], /\/ja\//);
+    assert.match(notes[1], /More languages are coming/);
+    await capture(page, "language");
+    await page.getByRole("button", { name: "Back", exact: true }).click();
+    return { sections, rows };
+  }, page);
   await check("wrong-answer feedback and lesson resume", async () => {
     await enterFirstDrill(page);
     const before = await page.locator(".revctl .step").innerText();
