@@ -43,8 +43,8 @@ describe("score breakdown facts", () => {
   });
 });
 
-describe("win sheet in-place glosses (definition audit, 2026-11-17)", () => {
-  it("defines ron, honba, han/fu and the dora indicator on the sheet itself", () => {
+describe("win sheet condensed facts (audit C9, 2026-11-19)", () => {
+  it("states who pays and the honba count as facts, with no explainer paragraphs", () => {
     vi.stubGlobal("fetch", vi.fn(async () => { throw new Error("offline"); }));
     const root = document.createElement("div");
     document.body.append(root);
@@ -64,21 +64,29 @@ describe("win sheet in-place glosses (definition audit, 2026-11-17)", () => {
     const card = document.createElement("div");
     render.fillWinBreakdown(card, win);
     const text = card.textContent ?? "";
-    expect(text).toContain("Ron: winning on a tile another player discarded");
-    expect(text).toContain("The wind in the title is the winner's seat wind");
-    expect(text).toContain("Han count the hand's scoring patterns and bonus dora");
-    expect(text).toContain("Fu are minipoints from the hand's shape");
-    expect(text).toContain("Honba — the repeat counter — stands at 0");
-    expect(text).toContain("Each honba adds 300 points to a winning hand");
-    expect(text).toContain("A riichi stick is a 1,000-point stake a player paid when declaring riichi");
-    expect(text).toContain("The dora indicator points to a bonus tile");
-    // The same sheet for a tsumo win defines tsumo instead.
+    // Facts only: the ron sub line names the discarder, the honba
+    // count is a payment line, and the indicator is labelled.
+    expect(text).toContain("On South's discard");
+    expect(text).toContain("Honba 0");
+    expect(text).toContain("Dora indicator");
+    // The retired explainer paragraphs stay retired (audit C9).
+    expect(text).not.toContain("Han count the hand's scoring patterns");
+    expect(text).not.toContain("The dora indicator points to a bonus tile");
+    expect(text).not.toContain("A riichi stick is a 1,000-point stake");
+    expect(card.querySelectorAll("p.dim")).toHaveLength(0);
+    // Melds render after the concealed tiles, as on the table.
+    const handTiles = [...card.querySelectorAll(".bk-hand .tile")];
+    expect(handTiles.length).toBeGreaterThan(0);
+    const meldTiles = [...card.querySelectorAll(".bk-hand .meld .tile")];
+    expect(meldTiles.length).toBe(3);
+    expect(handTiles.indexOf(meldTiles[0]!)).toBeGreaterThan(0);
+    // The same sheet for a tsumo win states who pays instead.
     const tsumoCard = document.createElement("div");
     render.fillWinBreakdown(tsumoCard, { ...win, winType: "tsumo", fromSeat: undefined, stickPoints: 0 });
-    expect(tsumoCard.textContent).toContain("Tsumo: winning on a tile you drew yourself");
+    expect(tsumoCard.textContent).toContain("All three opponents pay");
   });
 
-  it("glosses the uradora indicator when a riichi win reveals it", () => {
+  it("shows the uradora indicator when a riichi win reveals it", () => {
     vi.stubGlobal("fetch", vi.fn(async () => { throw new Error("offline"); }));
     const root = document.createElement("div");
     document.body.append(root);
@@ -100,7 +108,7 @@ describe("win sheet in-place glosses (definition audit, 2026-11-17)", () => {
     const render = app as unknown as { fillWinBreakdown(card: HTMLElement, value: WinInfo): void };
     const card = document.createElement("div");
     render.fillWinBreakdown(card, win);
-    expect(card.textContent).toContain("Uradora indicators sit hidden under the dora indicators");
-    expect(card.textContent).toContain("revealed only when a riichi hand wins");
+    expect(card.textContent).toContain("Uradora indicator");
+    expect(card.textContent).not.toContain("Uradora indicators sit hidden");
   });
 });

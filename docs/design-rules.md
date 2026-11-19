@@ -435,6 +435,12 @@ dealer and nothing else: the wind-chip glyph, a full ring on
 the dealer's seat tile, the wind label, or a "Dealer" suffix.
 Red never means selection, error, or emphasis elsewhere.
 Small dealer text on tints uses the text-grade red of §2.
+Scoped exception (full-audit F9, 2026-11-19): on the Board
+Review screen the dealer's seat takes a neutral line outline
+and the "Dealer" suffix in the seat's own ink — §3 reserves
+red there for Ron/Riichi/Tsumo, riichi markers, and the
+latest-discard ring, and a whole-seat red perimeter read as
+one of those. The scorekeeper's dealer chip is unchanged.
 
 **De-boxing.** One container per unified subject. Lists —
 ledger entries, standings, game rows, hand rows, settings

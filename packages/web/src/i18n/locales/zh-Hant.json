@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-19T20:12:21.585Z",
-    "keyCount": 3978,
+    "generatedAt": "2026-11-19T23:17:49.786Z",
+    "keyCount": 3975,
     "model": "qwen/qwen-plus",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -36758,26 +36758,6 @@
       },
       "placeholders": []
     },
-    "ui.app.a-riichi-stick-is-a-1-000-point-stake-a-player-p": {
-      "value": "立直棒是玩家宣告立直時所支付的 1,000 點籌碼；和牌者可收取桌上所有立直棒。",
-      "hash": "f7157ffc54f48d2f4261da5cd268b497b35b8c74905c84df8bf82af4f5b41427",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4481
-      },
-      "placeholders": []
-    },
-    "ui.app.a-yakuman-is-the-highest-value-kind-of-hand-it-p": {
-      "value": "役滿是價值最高的和牌型，固定支付一大筆點數。",
-      "hash": "07f53e579f0f60d0d526349d6f58a2aaf8ae82b455f7153e427ce783e987259c",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4467
-      },
-      "placeholders": []
-    },
     "ui.app.abortive-draw": {
       "value": "流局",
       "hash": "148db81748ba6ed2209fc5e53e18464015f25de4b2e36618a6a096365d04991f",
@@ -37671,16 +37651,6 @@
       },
       "placeholders": []
     },
-    "ui.app.han-count-the-hands-scoring-patterns-and-bonus-d": {
-      "value": "番數計算手牌的役種與額外寶牌；符數則依據手牌結構計算的小分。番與符共同決定得分。",
-      "hash": "3cf2e9efea2414cf6c268fda175cf75c393f6de81f7377140f3c740df694a69f",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4468
-      },
-      "placeholders": []
-    },
     "ui.app.hand-discard-tedashi": {
       "value": "手切（手牌中打出）",
       "hash": "fcfd066f0efae0922f297954d3a5dc930be8c1fd3629e25fddc2328a51c84c4d",
@@ -37760,19 +37730,6 @@
         "line": 4560
       },
       "placeholders": []
-    },
-    "ui.app.honba-the-repeat-counter-stands-at-0-each-honba": {
-      "value": "本場 — 連莊計數器為 {0}。每多一莊，和牌時額外加計300分。",
-      "hash": "1cecc206ca88cc02dce792aad1b525f29f90f545b0b6933a13bc113a6b4b5613",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4469
-      },
-      "placeholders": [
-        "0"
-      ],
-      "dynamic": true
     },
     "ui.app.honchantai": {
       "value": "混全帶幺九",
@@ -39047,16 +39004,6 @@
       },
       "placeholders": []
     },
-    "ui.app.ron-winning-on-a-tile-another-player-discarded-o": {
-      "value": "榮和：胡其他玩家打出的牌。僅該打出此牌的玩家須付分。標題中的風向為胡牌者的座位風。",
-      "hash": "74a904e136c94425e6b98da29ef77069683c2f724878d97e094cd0b81f0ed74d",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4420
-      },
-      "placeholders": []
-    },
     "ui.app.round": {
       "value": "局",
       "hash": "cd9558acfc386bd3e1fb14da5d4ed7e9338f80fa29fc2447c36c94667c406295",
@@ -39536,16 +39483,6 @@
       ],
       "dynamic": true
     },
-    "ui.app.the-dora-indicator-points-to-a-bonus-tile-the-ti": {
-      "value": "寶牌指示牌指向一張寶牌：與指示牌同花色、數值大一的牌即為寶牌，在和牌時可額外加算番數。",
-      "hash": "c18ff6be8326000e263b0191d6b1a7cc649f8982a195c9162ef1c49c8bb9ee23",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4488
-      },
-      "placeholders": []
-    },
     "ui.app.the-face-up-tile-in-the-middle-of-the-table-the": {
       "value": "桌中央翻開的指示牌是 {0}；其上一數值（同花色）之牌即為寶牌。",
       "hash": "ed7cc25c18b0edfe622868adc39d2557087e4418f917581f66049e68da4e709a",
@@ -39755,16 +39692,6 @@
       ],
       "dynamic": true
     },
-    "ui.app.tsumo-winning-on-a-tile-you-drew-yourself-all-th": {
-      "value": "自摸：以自己摸到的牌和牌。三家全付點數。標題中的風位為和牌者之座位風。",
-      "hash": "12e44d24ebd2f6695ad9b9617e6a9fa029bed168c245ef5560639f1d7d9b2840",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4421
-      },
-      "placeholders": []
-    },
     "ui.app.uradora-indicator": {
       "value": "裏寶牌指示牌",
       "hash": "aacfe5f35ce545a211feb47763ccbde1a2f2a820b7193b88400f853dfec815ba",
@@ -39772,16 +39699,6 @@
       "source": {
         "file": "app.ts",
         "line": 4493
-      },
-      "placeholders": []
-    },
-    "ui.app.uradora-indicators-sit-hidden-under-the-dora-ind": {
-      "value": "裏寶牌指示牌隱藏於寶牌指示牌下方，僅當立直和牌時才會揭開；每張裏寶牌指示牌之上一數值（同花色）之牌亦為寶牌。",
-      "hash": "8719a17450ae0224b4041a3ab1f51b199fec5c04b2686aa3dbbc32ae5191bff4",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4496
       },
       "placeholders": []
     },
@@ -40852,6 +40769,59 @@
       "source": {
         "file": "tile-info.ts",
         "line": 112
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "review.board.coachs-pick": {
+      "value": "教練精選",
+      "hash": "443b61918c335f57aa11779f0406e10d160f883094afefe2909ca95a2cb63c29",
+      "status": "draft",
+      "source": {
+        "file": "board-review-ui.ts",
+        "line": 181
+      },
+      "placeholders": []
+    },
+    "review.board.your-discard": {
+      "value": "你的棄牌",
+      "hash": "45d80bdcf00bcf705be5f2a569228d40f3c25f50772a9c456517cdf9f33b9bbb",
+      "status": "draft",
+      "source": {
+        "file": "board-review-ui.ts",
+        "line": 180
+      },
+      "placeholders": []
+    },
+    "review.board.your-discard-is-outlined-the-coachs-pick-is-ringed": {
+      "value": "你的棄牌以框線標示；教練精選則以圓圈標示。",
+      "hash": "c1515c43642d0f80dabdbbec950d325d3c3290e5bfe1c8206bb8081861efd6e9",
+      "status": "draft",
+      "source": {
+        "file": "review-ui.ts",
+        "line": 277
+      },
+      "placeholders": []
+    },
+    "ui.app.all-three-opponents-pay": {
+      "value": "三家全付",
+      "hash": "e5e84d0ffd19022d8b1b343f8451e6008109adc1aed01ad7f214b47053f158bd",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 4708
+      },
+      "placeholders": []
+    },
+    "ui.app.honba-0": {
+      "value": "本場 {0}",
+      "hash": "89246ba303970ec1779353e412e5161a40e0240852e6c44a368543e0fb63500f",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 4758
       },
       "placeholders": [
         "0"

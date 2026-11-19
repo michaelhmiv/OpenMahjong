@@ -258,7 +258,23 @@ export function mountReview(container: HTMLElement, options: ReviewUIOptions): R
       hands.addEventListener("change", () => { navigator.goToHand(Number(hands.value)); render(); }); handLabel.append(hands); if (!options.embedded) content.append(handLabel);
       content.append(node("div", "perspective", tx("review.player-perspective", "Player perspective ✓")));
       if (position.engineVersion === 1) content.append(node("p", "legacy-notice card", tx("review.historical-replay-engine-version-1-current-strat", "Historical replay · engine version 1. Current strategic analysis is unavailable; this replay preserves its historical rules behavior.")));
-      const handCard = node("div", "card hand-card"); handCard.append(node("div", "card-label", tx("review.your-hand-at-this-decision", "YOUR HAND AT THIS DECISION")), tileList(position.view.hand));
+      const handCard = node("div", "card hand-card"); handCard.append(node("div", "card-label", tx("review.your-hand-at-this-decision", "YOUR HAND AT THIS DECISION")));
+      // Decision marks (audit C19): the chosen discard and the
+      // coach's pick are marked on the hand itself, and the drawn
+      // tile is separated from the tiles that were already held —
+      // the two rows no longer run together unmarked.
+      const earlyAdvice = position.kind === "turn" && position.action.type === "discard" ? getAdvice(position) : null;
+      const handList = node("div", "hand");
+      const drawnId = position.kind === "turn" ? position.context.drawnTile?.id : undefined;
+      for (const value of position.view.hand) {
+        if (drawnId !== undefined && value.id === drawnId) handList.append(node("span", "review-drawn-sep"));
+        const face = tile(value);
+        if (position.kind === "turn" && position.action.type === "discard" && value.id === position.action.tileId) face.classList.add("review-chosen");
+        if (earlyAdvice && value.id === earlyAdvice.recommendation.tileId) face.classList.add("review-advised");
+        handList.append(face);
+      }
+      handCard.append(handList);
+      if (position.kind === "turn" && position.action.type === "discard") handCard.append(node("div", "review-mark-legend", tx("review.board.your-discard-is-outlined-the-coachs-pick-is-ringed", "Your discard is outlined; the coach's pick is ringed.")));
       const threats = position.view.players.filter((player) => player.seat !== position.view.seat && player.riichi).length;
       handCard.append(node("div", "hand-caption", tx("review.v-0-in-the-live-wall-1", `${position.view.wallRemaining} in the live wall · ${threats ? tx("review.v-0-riichi-threat-1", `${threats} riichi threat${threats === 1 ? "" : "s"}`, threats, pluralS(threats)) : tx("review.no-riichi-threats", "no riichi threats")}.`, position.view.wallRemaining, threats ? tx("review.v-0-riichi-threat-1", `${threats} riichi threat${threats === 1 ? "" : "s"}`, threats, pluralS(threats)) : tx("review.no-riichi-threats", "no riichi threats")))); content.append(handCard);
       if (position.variant) handCard.querySelector(".hand-caption")!.textContent = tx("review.v-0-tiles-in-the-live-wall", `${position.view.wallRemaining} tiles in the live wall.`, position.view.wallRemaining);

@@ -237,18 +237,22 @@
 .board-seat h2 {
   color: var(--on-tint);
 }
-/* The dealer mark is the one color job (R2): a full sprite-red
-   ring on the dealer's seat tile plus a text-grade suffix.
+/* The dealer mark (audit F9): red is reserved by design rules
+   section 3 (Ron/Riichi/Tsumo, riichi markers, latest-discard
+   ring) — a full red perimeter on this seat was none of those.
+   The seat now takes a neutral line border, and the dealer is
+   marked by the word itself in the seat's own ink, the way the
+   table's chip names the dealer in words beside the wind.
    board-review-ui.ts sets data-dealer from the model's dealer. */
 .board-seat[data-dealer="true"] {
   box-shadow:
-    inset 0 0 0 2px var(--chun),
+    inset 0 0 0 2px var(--on-tint),
     var(--tint-lit),
     var(--tint-shadow);
 }
 .board-seat[data-dealer="true"] h2::after {
   content: " · Dealer";
-  color: var(--chun-text);
+  color: var(--on-tint);
   font-weight: 700;
 }
 .board-center {
