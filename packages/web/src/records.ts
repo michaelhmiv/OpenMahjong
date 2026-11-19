@@ -11,6 +11,7 @@ import type { GameEvent, VariantLength as GameLength, VariantId, Seat } from "@o
 import type { GameRecord, HandStats, StatsSums } from "./api.js";
 import type { SavedGame } from "./runner.js";
 import type { HistoryLine } from "./settings.js";
+import { tx } from "./i18n/index.js";
 
 /** Standings/settlement points: whole numbers print as integers
  * ("+140 net points"), never with a forced decimal ("+140.0");
@@ -256,34 +257,34 @@ export function formatStatsView(
   const since = sinceLabel(sums.since);
   blocks.push({
     value: fmt(sums.games),
-    label: "Games played",
-    ...(since ? { sample: `Since ${since}` } : {}),
+    label: tx("ui.stats.games-played", "Games played"),
+    ...(since ? { sample: tx("ui.stats.since-0", `Since ${since}`, since) } : {}),
   });
   blocks.push({
     value: pct(sums.wins, sums.games),
-    label: "Win rate",
-    sample: `${sums.wins} of ${sums.games} games`,
+    label: tx("ui.stats.win-rate", "Win rate"),
+    sample: tx("ui.stats.v-0-of-1-games", `${sums.wins} of ${sums.games} games`, sums.wins, sums.games),
   });
   blocks.push({
     value: sums.games > 0 ? (sums.placementSum / sums.games).toFixed(1) : "—",
-    label: "Avg placement",
-    sample: `${sums.games} games`,
+    label: tx("ui.stats.avg-placement", "Avg placement"),
+    sample: tx("ui.stats.v-0-games", `${sums.games} games`, sums.games),
   });
   if (opts.handStats) {
     blocks.push({
       value: pct(sums.riichi, sums.hands),
-      label: "Riichi rate",
-      sample: `${sums.riichi} of ${sums.hands} hands`,
+      label: tx("ui.stats.riichi-rate", "Riichi rate"),
+      sample: tx("ui.stats.v-0-of-1-hands", `${sums.riichi} of ${sums.hands} hands`, sums.riichi, sums.hands),
     });
     blocks.push({
       value: pct(sums.dealIns, sums.hands),
-      label: "Deal-in rate",
-      sample: `${sums.dealIns} of ${sums.hands} hands`,
+      label: tx("ui.stats.deal-in-rate", "Deal-in rate"),
+      sample: tx("ui.stats.v-0-of-1-hands", `${sums.dealIns} of ${sums.hands} hands`, sums.dealIns, sums.hands),
     });
     blocks.push({
       value: sums.handsWon > 0 ? fmt(Math.round(sums.winPoints / sums.handsWon)) : "—",
-      label: "Avg winning hand",
-      sample: `${sums.handsWon} hands won`,
+      label: tx("ui.stats.avg-winning-hand", "Avg winning hand"),
+      sample: tx("ui.stats.v-0-hands-won", `${sums.handsWon} hands won`, sums.handsWon),
     });
   }
   return blocks;

@@ -19,6 +19,7 @@ import {
 } from "./education/variant-progress.js";
 import { trackLessonCompleted, trackLessonStarted } from "./analytics.js";
 import { tileIndexEl } from "./tile-index.js";
+import { tx } from "./i18n/index.js";
 function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
   text = "",
@@ -104,11 +105,11 @@ export function mountVariantEducation(
   main.tabIndex = 0;
   main.setAttribute(
     "aria-label",
-    options.practice ? "Variant practice" : "Variant tutorial",
+    options.practice ? tx("learn.variant.ui.variant-practice", "Variant practice") : tx("learn.variant.ui.variant-tutorial", "Variant tutorial"),
   );
   const back = button("‹", options.onBack);
-  back.setAttribute("aria-label", "Back");
-  header.append(back, el("h1", options.practice ? "Practice" : lesson.title));
+  back.setAttribute("aria-label", tx("learn.variant.ui.back", "Back"));
+  header.append(back, el("h1", options.practice ? tx("learn.variant.ui.practice", "Practice") : lesson.title));
   shell.append(header, main);
   container.replaceChildren(shell);
   function persist(next: VariantLearningProgress): void {
@@ -152,7 +153,7 @@ export function mountVariantEducation(
       if (mode === "teach") {
         faceEl.classList.add("stripinspect");
         faceEl.setAttribute("role", "button");
-        faceEl.setAttribute("aria-label", `Inspect tile ${pos + 1}`);
+        faceEl.setAttribute("aria-label", tx("learn.variant.ui.inspect-tile-0", `Inspect tile ${pos + 1}`, pos + 1));
         faceEl.addEventListener("click", () => {
           if (indexRevealed.has(key)) indexRevealed.delete(key);
           else indexRevealed.add(key);
@@ -181,7 +182,7 @@ export function mountVariantEducation(
     if (q.kind === "tile-pick") {
       const row = el("div", "", "variant-example-tiles variant-tile-pick");
       row.setAttribute("role", "group");
-      row.setAttribute("aria-label", "Tiles to pick from");
+      row.setAttribute("aria-label", tx("learn.variant.ui.tiles-to-pick-from", "Tiles to pick from"));
       const pickFaces = tileFaces(q.tiles);
       pickFaces.forEach((face, index) => {
         const b = el("button", "", "variant-tile-choice");
@@ -191,7 +192,7 @@ export function mountVariantEducation(
         if (index > 0 && face.type !== pickFaces[index - 1]!.type)
           b.classList.add("variant-group-start");
         b.setAttribute("aria-pressed", String(picks.has(index)));
-        b.setAttribute("aria-label", `Tile ${index + 1}`);
+        b.setAttribute("aria-label", tx("learn.variant.ui.tile-0", `Tile ${index + 1}`, index + 1));
         const faceEl = options.renderTile(face);
         // Answered and correct: the faces may now carry their
         // corner indices. Before that, never (the no-leak law).
@@ -214,7 +215,7 @@ export function mountVariantEducation(
       main.append(tilesRow(q.tiles, checked && correct ? "answered" : "plain", "q"));
       const group = el("div", "", "variant-answers");
       group.setAttribute("role", "group");
-      group.setAttribute("aria-label", "Answer choices");
+      group.setAttribute("aria-label", tx("learn.variant.ui.answer-choices", "Answer choices"));
       q.choices.forEach((choice, index) => {
         const b = button(choice, () => {
           chosen = index;
@@ -229,7 +230,7 @@ export function mountVariantEducation(
     }
     const feedback = el("p", "", "card");
     feedback.setAttribute("role", "status");
-    const check = button("Check answer", () => {
+    const check = button(tx("learn.variant.ui.check-answer", "Check answer"), () => {
       const isCorrect =
         q.kind === "tile-pick"
           ? picks.size === q.picks.length &&
@@ -263,7 +264,7 @@ export function mountVariantEducation(
     main.append(check);
     if (checked) {
       if (correct) {
-        feedback.textContent = `Correct. ${q.explanation}`;
+        feedback.textContent = tx("learn.variant.ui.correct-0", `Correct. ${q.explanation}`, q.explanation);
       } else if (q.kind === "tile-pick") {
         // No membership counts while the question is open (the
         // no-leak law, Nov 18, 2026 hardening): exact belong/missing
@@ -272,10 +273,10 @@ export function mountVariantEducation(
         // every multi-tile pick was solvable by elimination with no
         // understanding. A wrong set now earns the hint only.
         feedback.textContent =
-          `Try again. ${q.hint} ` +
-          "Tap a picked tile again to un-pick it.";
+          tx("learn.variant.ui.try-again-0", `Try again. ${q.hint}`, q.hint) + " " +
+          tx("learn.variant.ui.tap-a-picked-tile-again-to-un-pick-it", "Tap a picked tile again to un-pick it.");
       } else {
-        feedback.textContent = `Try again. ${q.hint}`;
+        feedback.textContent = tx("learn.variant.ui.try-again-0", `Try again. ${q.hint}`, q.hint);
       }
       main.append(feedback);
     }
@@ -293,8 +294,8 @@ export function mountVariantEducation(
     const reference = el("section"),
       search = el("input");
     search.type = "search";
-    search.placeholder = "Find a pattern";
-    search.setAttribute("aria-label", "Search the 81 MCR patterns");
+    search.placeholder = tx("learn.variant.ui.find-a-pattern", "Find a pattern");
+    search.setAttribute("aria-label", tx("learn.variant.ui.search-the-81-mcr-patterns", "Search the 81 MCR patterns"));
     const rows = el("div");
     const drawReference = () => {
       rows.replaceChildren();
@@ -305,7 +306,7 @@ export function mountVariantEducation(
       )) {
         const d = el("details");
         d.append(
-          el("summary", `${p.name} · ${p.units} fan`),
+          el("summary", tx("learn.variant.ui.v-0-1-fan", `${p.name} · ${p.units} fan`, p.name, p.units)),
           el("p", p.family, "dim"),
           el("p", p.description),
           el("p", p.restrictions),
@@ -314,7 +315,7 @@ export function mountVariantEducation(
       }
     };
     search.addEventListener("input", drawReference);
-    reference.append(el("h2", "All 81 scoring patterns"), search, rows);
+    reference.append(el("h2", tx("learn.variant.ui.all-81-scoring-patterns", "All 81 scoring patterns")), search, rows);
     drawReference();
     return reference;
   }
@@ -336,9 +337,9 @@ export function mountVariantEducation(
         main.append(
           el(
             "p",
-            "Finish a lesson first — its questions appear here for practice.",
+            tx("learn.variant.ui.finish-a-lesson-first-its-questions-appear-here", "Finish a lesson first — its questions appear here for practice."),
           ),
-          button("Back to Learn", options.onBack),
+          button(tx("learn.variant.ui.back-to-learn", "Back to Learn"), options.onBack),
         );
         return;
       }
@@ -347,9 +348,9 @@ export function mountVariantEducation(
       // select within it) — here the category is the lesson.
       const currentRow = questions[practiceIndex]!;
       const selectors = el("div", "", "practice-selectors");
-      const lessonLabel = el("label", "Lesson");
+      const lessonLabel = el("label", tx("learn.variant.ui.lesson", "Lesson"));
       const lessonPicker = el("select");
-      lessonPicker.setAttribute("aria-label", "Practice lesson");
+      lessonPicker.setAttribute("aria-label", tx("learn.variant.ui.practice-lesson", "Practice lesson"));
       for (const l of variantLessons(options.variant)) {
         if (!questions.some((row) => row.lesson.id === l.id)) continue;
         const option = el("option", l.title);
@@ -366,9 +367,9 @@ export function mountVariantEducation(
         render();
       });
       lessonLabel.append(lessonPicker);
-      const exerciseLabel = el("label", "Exercise");
+      const exerciseLabel = el("label", tx("learn.variant.ui.exercise", "Exercise"));
       const exercisePicker = el("select");
-      exercisePicker.setAttribute("aria-label", "Practice exercise");
+      exercisePicker.setAttribute("aria-label", tx("learn.variant.ui.practice-exercise", "Practice exercise"));
       questions.forEach((row, i) => {
         if (row.lesson.id !== currentRow.lesson.id) return;
         const option = el("option", row.question.prompt);
@@ -387,7 +388,7 @@ export function mountVariantEducation(
         selectors,
         el(
           "p",
-          "These are authored, checked exercises. A coach preference from your game is not used as a right-or-wrong answer.",
+          tx("learn.variant.ui.these-are-authored-checked-exercises-a-coach-pre", "These are authored, checked exercises. A coach preference from your game is not used as a right-or-wrong answer."),
           "dim",
         ),
       );
@@ -397,7 +398,7 @@ export function mountVariantEducation(
     if (step < lesson.steps.length) {
       const current = lesson.steps[step]!;
       main.append(
-        el("p", `Step ${step + 1} of ${lesson.steps.length}`, "dim"),
+        el("p", tx("learn.variant.ui.step-0-of-1", `Step ${step + 1} of ${lesson.steps.length}`, step + 1, lesson.steps.length), "dim"),
       );
       if (current.text) main.append(el("p", current.text));
       // A step carrying a question is a check: its pictured tiles
@@ -432,16 +433,16 @@ export function mountVariantEducation(
       trackLessonCompleted(lesson.id);
     }
     main.append(
-      el("h2", "Lesson complete"),
-      el("p", `You finished “${lesson.title}”.`),
+      el("h2", tx("learn.variant.ui.lesson-complete", "Lesson complete")),
+      el("p", tx("learn.variant.ui.you-finished-0", `You finished “${lesson.title}”.`, lesson.title)),
     );
     if (lesson.id === "mcr-families") main.append(mcrReference());
-    main.append(button("Back to Learn", options.onBack));
+    main.append(button(tx("learn.variant.ui.back-to-learn", "Back to Learn"), options.onBack));
     // A training-only track has no guided play to start; the button
     // exists only when the caller wires one.
-    if (options.onPlay) main.append(button("Start guided play", options.onPlay));
+    if (options.onPlay) main.append(button(tx("learn.variant.ui.start-guided-play", "Start guided play"), options.onPlay));
     main.append(
-      button("Restart lesson", () => {
+      button(tx("learn.variant.ui.restart-lesson", "Restart lesson"), () => {
         step = 0;
         resetAnswer();
         persist(lessonStep(progress, lesson, 0));

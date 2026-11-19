@@ -2,7 +2,7 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T13:28:15.914Z",
+    "generatedAt": "2026-11-19T13:28:51.385Z",
     "keyCount": 3698,
     "namespaces": {
       "calc.compact": 14,
@@ -7460,7 +7460,7 @@
       "hash": "9fea8201753aa74d07526b957c3b193baf893f3246074b750a113588c55dedc7",
       "source": {
         "file": "american-lesson-ui.ts",
-        "line": 118
+        "line": 119
       },
       "placeholders": [
         "0",
@@ -26546,7 +26546,7 @@
       "hash": "dc4a3b3a935ebb706831f8f18a0bb56c776ef283619780d7c058ebcd2fdc2df3",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 317
+        "line": 318
       },
       "placeholders": [],
       "status": "approved"
@@ -26556,7 +26556,7 @@
       "hash": "86cfa5c34050fff77baf26f5eb331b98c110077e25a10df0a33b9775a2a99192",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 217
+        "line": 218
       },
       "placeholders": [],
       "status": "approved"
@@ -26566,7 +26566,7 @@
       "hash": "76900f1bfd16c8d4dd3d25e6f46638d7165aee23883ccea6bfe071c514421769",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 110
+        "line": 111
       },
       "placeholders": [],
       "status": "approved"
@@ -26576,7 +26576,7 @@
       "hash": "99bc0811c4c9f862e6d705a5b79a4c2d9f8cc32d84e53692ee93eab7c5c243ae",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 341
+        "line": 342
       },
       "placeholders": [],
       "status": "approved"
@@ -26586,7 +26586,7 @@
       "hash": "59b5b25c3f1225bbc759f0a5877604948e64e3484f2e56aafef146d98cd32a61",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 232
+        "line": 233
       },
       "placeholders": [],
       "status": "approved"
@@ -26596,7 +26596,7 @@
       "hash": "3dc3f86cf0986d4df60c2257fb307d6309d05268ad0a4dcc945e6602aa7aa65e",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 266
+        "line": 267
       },
       "placeholders": [
         "0"
@@ -26609,7 +26609,7 @@
       "hash": "9bc3516b784aceb156fb7e182b697e3f2aae96fa300e13aaad39085a986f02a6",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 369
+        "line": 370
       },
       "placeholders": [],
       "status": "approved"
@@ -26619,7 +26619,7 @@
       "hash": "96ffe8b6aa8329369ea446f893400269347942037927529f6c2d0a2d91ab4b1f",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 296
+        "line": 297
       },
       "placeholders": [],
       "status": "approved"
@@ -26629,7 +26629,7 @@
       "hash": "0bca43add105642fdb94db6ebf99746a60816f346bf3cd31ee9a3cbe6f8f3281",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 339
+        "line": 340
       },
       "placeholders": [],
       "status": "approved"
@@ -26639,19 +26639,20 @@
       "hash": "1f5c3e6c2677e436037e236890119dcc0406e6a32e9d06a7ae1849965d3581dc",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 155
+        "line": 156
       },
       "placeholders": [
         "0"
       ],
-      "status": "approved"
+      "status": "approved",
+      "dynamic": true
     },
     "learn.variant.ui.lesson": {
       "value": "Lesson",
       "hash": "6e2b26d9de4033b952bd242f69b798420ee887151b937f394efc23252c78af74",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 350
+        "line": 351
       },
       "placeholders": [],
       "status": "approved"
@@ -26661,7 +26662,7 @@
       "hash": "fd8ea0a29a653cac0de113a4dce5875e61def5197251debfeb9e58855fe9e298",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 435
+        "line": 436
       },
       "placeholders": [],
       "status": "approved"
@@ -26671,7 +26672,7 @@
       "hash": "d3857b12b4cea2bc5d8ea0b8c2ce9cc3d5dc426e0bf3ea06394ddb906e6d60a0",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 111
+        "line": 112
       },
       "placeholders": [],
       "status": "approved"
@@ -26681,7 +26682,7 @@
       "hash": "b05f5312f52ea4878e6aea261af94d91ecd31ac339d6c2a9f1c4b7eae65caea4",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 371
+        "line": 372
       },
       "placeholders": [],
       "status": "approved"
@@ -26691,7 +26692,7 @@
       "hash": "27636f08d4dcb21adb5efb25b0ec61a73ba3eec91049c0288f981238e4a4a581",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 352
+        "line": 353
       },
       "placeholders": [],
       "status": "approved"
@@ -26701,7 +26702,7 @@
       "hash": "cabbcb70d6181880ab073373526a0c6c6e19e654d5efb84953f80e240277b4e8",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 444
+        "line": 445
       },
       "placeholders": [],
       "status": "approved"
@@ -26711,7 +26712,7 @@
       "hash": "70f32e53ef5c7e21cb65f28d00d633bb1937ca14496792fc2436dfa12476803f",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 297
+        "line": 298
       },
       "placeholders": [],
       "status": "approved"
@@ -26721,7 +26722,7 @@
       "hash": "a193b67fe0a1a01d0cde7b84d0a87e9994cd1147b56bfd3ed5bf8f60f8b2489c",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 442
+        "line": 443
       },
       "placeholders": [],
       "status": "approved"
@@ -26731,7 +26732,7 @@
       "hash": "92f19534d8c5411570e603431055706c77573719bc31c19b6e5219457bc1065e",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 400
+        "line": 401
       },
       "placeholders": [
         "0",
@@ -26745,7 +26746,7 @@
       "hash": "5467ab3c1f1231cfabd173a4bb1d692757cc4f01db9c2a0bbab1529ff729aa80",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 276
+        "line": 277
       },
       "placeholders": [],
       "status": "approved"
@@ -26755,7 +26756,7 @@
       "hash": "42ca0a4130a8ffbf849c2133c3396f862c850bd76f6f880798a001d161dfab60",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 390
+        "line": 391
       },
       "placeholders": [],
       "status": "approved"
@@ -26765,19 +26766,20 @@
       "hash": "cfac7bd36ea121f7ad7c0c1efb99d21e4e3bf1ddf3f99f880408fa4d46fbbca4",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 194
+        "line": 195
       },
       "placeholders": [
         "0"
       ],
-      "status": "approved"
+      "status": "approved",
+      "dynamic": true
     },
     "learn.variant.ui.tiles-to-pick-from": {
       "value": "Tiles to pick from",
       "hash": "b502772a2728e4f817d4d01dd96a5c31408ccb646b1a86dad4fabb9c6627b34d",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 184
+        "line": 185
       },
       "placeholders": [],
       "status": "approved"
@@ -26787,7 +26789,7 @@
       "hash": "47ca8c9fbe202d894e57247cc7c0c4e5fc0c22f6ae584989f9b799e216627e49",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 275
+        "line": 276
       },
       "placeholders": [
         "0"
@@ -26800,7 +26802,7 @@
       "hash": "331251cf2525ef16e194747e91d7326840d31f7ccf156479a0abcad93208c5ff",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 308
+        "line": 309
       },
       "placeholders": [
         "0",
@@ -26814,7 +26816,7 @@
       "hash": "d8a0796bfb49607f52211796d6f8a799e6cb5ab6c536b69788f1e79199fd4308",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 107
+        "line": 108
       },
       "placeholders": [],
       "status": "approved"
@@ -26824,7 +26826,7 @@
       "hash": "0628db9457a72006675dc108877779fadd44cc8e051ed5a648681313bfeea0eb",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 107
+        "line": 108
       },
       "placeholders": [],
       "status": "approved"
@@ -26834,7 +26836,7 @@
       "hash": "69a503bfee86704bbfdc30b2e3ca0a612742837f688000a7801ad5e54e0d06e5",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 436
+        "line": 437
       },
       "placeholders": [
         "0"
@@ -38180,7 +38182,7 @@
       "hash": "56070a2b5c11cb77e4f4651f1d57e7ba2349b396208eb3f135bb1d33dbe25043",
       "source": {
         "file": "records.ts",
-        "line": 269
+        "line": 270
       },
       "placeholders": [],
       "status": "approved"
@@ -38190,7 +38192,7 @@
       "hash": "d511e1bb33bf7bf6cd1d730172d8b83a22a29877cb28061d11fd9cb462075c59",
       "source": {
         "file": "records.ts",
-        "line": 285
+        "line": 286
       },
       "placeholders": [],
       "status": "approved"
@@ -38200,7 +38202,7 @@
       "hash": "e755e58b22227a564893d1976237cb3836a267278a3b30f291b825ebbf0beac4",
       "source": {
         "file": "records.ts",
-        "line": 280
+        "line": 281
       },
       "placeholders": [],
       "status": "approved"
@@ -38210,7 +38212,7 @@
       "hash": "6b28c95b81e18d1f332f6afa7fb7705964dbd15972769270006da7e74fdbf1e4",
       "source": {
         "file": "records.ts",
-        "line": 259
+        "line": 260
       },
       "placeholders": [],
       "status": "approved"
@@ -38220,7 +38222,7 @@
       "hash": "778520916fd2dd51ad28fed04bd8b941cd449d4b5d078e97394612e3f20bd9dd",
       "source": {
         "file": "records.ts",
-        "line": 275
+        "line": 276
       },
       "placeholders": [],
       "status": "approved"
@@ -38230,7 +38232,7 @@
       "hash": "47a6dedb993ab45ca74e5192f631a87293c606ca3b8ae069230197b3a7e13618",
       "source": {
         "file": "records.ts",
-        "line": 260
+        "line": 261
       },
       "placeholders": [
         "0"
@@ -38243,7 +38245,7 @@
       "hash": "7ed346ee1cf07686922d2dffe831265ed7a1e6abe6985cc028e16e7709f99c67",
       "source": {
         "file": "records.ts",
-        "line": 270
+        "line": 271
       },
       "placeholders": [
         "0"
@@ -38256,7 +38258,7 @@
       "hash": "aa8b78941f1ad77a9be44281cac285d15641c8f6f884ac55dd617342d4854f8e",
       "source": {
         "file": "records.ts",
-        "line": 286
+        "line": 287
       },
       "placeholders": [
         "0"
@@ -38269,7 +38271,7 @@
       "hash": "2f59065da4d3f41f640402d891d76a9b41ff285975608399566e83490c1c759e",
       "source": {
         "file": "records.ts",
-        "line": 265
+        "line": 266
       },
       "placeholders": [
         "0",
@@ -38283,7 +38285,7 @@
       "hash": "2e8a0b9ee8885c739b44da9c0fdc105d996d4f86e121d4281549d8bf18e6a9c6",
       "source": {
         "file": "records.ts",
-        "line": 276
+        "line": 277
       },
       "placeholders": [
         "0",
@@ -38297,7 +38299,7 @@
       "hash": "4be2547225845431916762b2491bdb2675eacf74dd5c14580b19671763c4aec9",
       "source": {
         "file": "records.ts",
-        "line": 264
+        "line": 265
       },
       "placeholders": [],
       "status": "approved"
@@ -38307,7 +38309,7 @@
       "hash": "3207e38b8751f8ef7f54df9e96efe591bf2aca65a06d7c3149524228ba962b7b",
       "source": {
         "file": "tile-info.ts",
-        "line": 132
+        "line": 133
       },
       "placeholders": [],
       "status": "approved"
@@ -38317,7 +38319,7 @@
       "hash": "546c432ed932997c78483bed9f0bfaef663670872b1b857185f9d475645b41a1",
       "source": {
         "file": "tile-info.ts",
-        "line": 70
+        "line": 71
       },
       "placeholders": [],
       "status": "approved"
@@ -38327,7 +38329,7 @@
       "hash": "e3b877ad806119f0f5734b290e926f9a38483f8e1c1b1df6b7e1c52be58660b8",
       "source": {
         "file": "tile-info.ts",
-        "line": 69
+        "line": 70
       },
       "placeholders": [],
       "status": "approved"
@@ -38337,7 +38339,7 @@
       "hash": "637ea8ef3965fde838d396144a3abca08c26f9628e84275eb7b28cdfba1cb5ba",
       "source": {
         "file": "tile-info.ts",
-        "line": 65
+        "line": 66
       },
       "placeholders": [
         "0",
@@ -38353,7 +38355,7 @@
       "hash": "49ad89c4afee025e1473c3e7de135ce882321b7837141c49df3dd3fc886c6bda",
       "source": {
         "file": "tile-info.ts",
-        "line": 53
+        "line": 54
       },
       "placeholders": [
         "0"
@@ -38366,7 +38368,7 @@
       "hash": "f97c375ff040797a9c44c8e58a17025713b96533d97d6a23ac7f97efcc3cdf85",
       "source": {
         "file": "tile-info.ts",
-        "line": 130
+        "line": 131
       },
       "placeholders": [],
       "status": "approved"
@@ -38376,7 +38378,7 @@
       "hash": "9fea8201753aa74d07526b957c3b193baf893f3246074b750a113588c55dedc7",
       "source": {
         "file": "tile-info.ts",
-        "line": 46
+        "line": 47
       },
       "placeholders": [
         "0",
@@ -38390,7 +38392,7 @@
       "hash": "231bd65de626a2cd5631454ed19853dede0379ad346c08c9a5a4de65a62c0a19",
       "source": {
         "file": "tile-info.ts",
-        "line": 143
+        "line": 144
       },
       "placeholders": [
         "0"
@@ -38403,7 +38405,7 @@
       "hash": "54b6b1f620d0f06a9411caf844271e6cbb1a51bd5f25c5091d08230a7116700c",
       "source": {
         "file": "tile-info.ts",
-        "line": 112
+        "line": 113
       },
       "placeholders": [
         "0"
