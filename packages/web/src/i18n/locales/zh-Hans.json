@@ -3766,7 +3766,7 @@
       "placeholders": []
     },
     "learn.american.jokers.q-dead-joker.prompt": {
-      "value": "一名玩家的手牌已被宣告为死牌。其明杠中含有一张百搭牌，而你手中恰好持有该百搭牌所代表的正牌。你能否用这张正牌与之交换？",
+      "value": "一名玩家的手牌已被宣告为死牌。其明刻中含有一张百搭牌，而你手中恰好持有该百搭牌所代表的正牌。你能否用这张正牌与之交换？",
       "hash": "b63b8b0bf2a7c79eca5be68254ecb27a5c4107982d87370dc65fd7fea6fb4b45",
       "status": "draft",
       "source": {
@@ -7056,7 +7056,7 @@
       "placeholders": []
     },
     "learn.american.setup.step04.text": {
-      "value": "东风自破墙处开始发牌，每次发4张，绕桌三圈——每位玩家共得12张。随后东风再取2张，其余每位玩家各取1张。最终东风持14张，其余玩家各持13张，如图示牌架所示：包括筒子、条子、万子中的顺子，一对东风，以及一对南风。牌发到手后立即立于牌架上；你可以按任意顺序整理手牌。",
+      "value": "东风自破墙处开始发牌，每次发4张，绕桌三圈——每位玩家共得12张。随后东风再取2张，其余每位玩家各取1张。最终东风持14张，其余玩家各持13张，如图示牌架所示：包括筒子、条子、万子中的顺子，一组东风刻子，以及一对南风。牌发到手后立即立于牌架上；你可以按任意顺序整理手牌。",
       "hash": "1738b6b4d859c34c4d3c75cd6ff363baef5218fa306b86c251501706ecab68ae",
       "status": "draft",
       "source": {
@@ -15131,7 +15131,7 @@
       "placeholders": []
     },
     "learn.mcr.guide.pattern.double-pung.name": {
-      "value": "双刻",
+      "value": "双同刻",
       "hash": "e678881603000aea29b69749bfaf558fecf5edf5362f4459198164d06c5f8aec",
       "status": "draft",
       "source": {
@@ -15211,7 +15211,7 @@
       "placeholders": []
     },
     "learn.mcr.guide.pattern.four-pure-shifted-pungs.name": {
-      "value": "四连刻",
+      "value": "一色四节高",
       "hash": "21a6894e643c289b75232b46a9b463194a04509ef30e0cfb2cf38ff7effec17b",
       "status": "draft",
       "source": {
@@ -15431,7 +15431,7 @@
       "placeholders": []
     },
     "learn.mcr.guide.pattern.mixed-shifted-pungs.name": {
-      "value": "混连刻",
+      "value": "三色三节高",
       "hash": "9b391c54a3d97cfc083385786c1c673bb230a239822a243c3f6919214f18dd2e",
       "status": "draft",
       "source": {
@@ -15591,7 +15591,7 @@
       "placeholders": []
     },
     "learn.mcr.guide.pattern.pure-shifted-pungs.name": {
-      "value": "清连刻",
+      "value": "一色三节高",
       "hash": "1e66dfdd5e1ebbbf51fc3ed60b513abe115b43b09fed3c67dca28e71a9ff26a0",
       "status": "draft",
       "source": {
@@ -15821,7 +15821,7 @@
       "placeholders": []
     },
     "learn.mcr.guide.pattern.triple-pung.name": {
-      "value": "三暗刻",
+      "value": "三同刻",
       "hash": "eebeac879126aa6e11de282c7c27ce4580bf815e0e277bf8e6e4c8b997914433",
       "status": "draft",
       "source": {

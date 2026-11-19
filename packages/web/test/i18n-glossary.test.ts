@@ -10,9 +10,15 @@ import enData from "../src/i18n/locales/en.json";
  * locks "Bot" in every locale).
  *
  * Known open question (flagged, not reworded — extraction only):
- * English lesson prose also uses "pung" (61 strings) alongside the locked
- * "Pon". Phase 2 must rule whether "pung" occurrences are the same term
- * before translators render them.
+ * English lesson prose also uses "pung" (96 strings, measured — the
+ * Phase 1 count of 61 was wrong) alongside the locked "Pon". Phase 2
+ * research (~/workspace/mahjong-prep/pung-pon-research.md) rules they are
+ * NOT the same term: Pon is the riichi call, Pung is the triplet noun
+ * used by American / MCR / Hong Kong / Taiwanese copy, and every locale
+ * splits call vs noun the same way. The locked glossary still holds one
+ * form per language, so it cannot express that split — see the research
+ * file's structural finding and the `research` annotations on the
+ * pon/chi/kan entries in glossary.json.
  */
 
 const GLOSSARY = glossaryData as {

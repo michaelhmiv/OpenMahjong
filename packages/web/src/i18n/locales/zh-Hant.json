@@ -3756,7 +3756,7 @@
       "placeholders": []
     },
     "learn.american.jokers.q-dead-joker.prompt": {
-      "value": "一名玩家的手牌已被宣告為死牌。其明槓中包含一張百搭牌，而你手中持有該百搭牌所代表的原牌。你能否與這張百搭牌交換？",
+      "value": "一名玩家的手牌已被宣告為死牌。其明刻中包含一張百搭牌，而你手中持有該百搭牌所代表的原牌。你能否與這張百搭牌交換？",
       "hash": "b63b8b0bf2a7c79eca5be68254ecb27a5c4107982d87370dc65fd7fea6fb4b45",
       "status": "draft",
       "source": {
@@ -3966,7 +3966,7 @@
       "placeholders": []
     },
     "learn.american.jokers.step01.text": {
-      "value": "百搭牌是整副牌中最強力、同時限制也最多的牌。第一課規則完整版如下：百搭牌可代替任意一張牌，但僅限於碰、槓或五連刻——即三張或以上同種牌組成的組合中。百搭牌不可作為單張牌，亦不可構成對子的一半。在合法組合內，百搭牌不受額外限制：一組槓可含一張或三張百搭牌；甚至全由三張百搭牌組成的碰，亦屬合法明示。圖中所示——一組七筒的碰與一組八條的槓——正是百搭牌可置入的合法組合。",
+      "value": "百搭牌是整副牌中最強力、同時限制也最多的牌。第一課規則完整版如下：百搭牌可代替任意一張牌，但僅限於刻子、槓或五連刻——即三張或以上同種牌組成的組合中。百搭牌不可作為單張牌，亦不可構成對子的一半。在合法組合內，百搭牌不受額外限制：一組槓可含一張或三張百搭牌；甚至全由三張百搭牌組成的刻子，亦屬合法明示。圖中所示——一組七筒的刻子與一組八條的槓——正是百搭牌可置入的合法組合。",
       "hash": "947c734b682c770d302d561400637d854330ee4ba6aa021064edd00cc664b8c4",
       "status": "draft",
       "source": {
@@ -4046,7 +4046,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.BK-1.description": {
-      "value": "兩門花色中各有1萬與9萬的碰，第三門花色中另有一對1萬——僅使用各門花色的兩端數字。",
+      "value": "兩門花色中各有1萬與9萬的刻子，第三門花色中另有一對1萬——僅使用各門花色的兩端數字。",
       "hash": "2ccb1baa2f8cabbb6968a6383ba73b3e2c38494e28d00226e406e08fc8142370",
       "status": "draft",
       "source": {
@@ -4056,7 +4056,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.BK-2.description": {
-      "value": "交叉書檔：一門花色中為1萬的槓與9萬的碰，另一門花色中則為9萬的槓與1萬的碰。",
+      "value": "交叉書檔：一門花色中為1萬的槓與9萬的刻子，另一門花色中則為9萬的槓與1萬的刻子。",
       "hash": "63fdefaf407224626178f1d48b4163d10e9bbcc7d8122b24bfe70b33882f24a8",
       "status": "draft",
       "source": {
@@ -4066,7 +4066,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.BK-3.description": {
-      "value": "一組花牌的碰、一門花色中1萬與9萬的碰、第二門花色中1萬的槓，以及最後一張單獨的9萬。",
+      "value": "一組花牌的刻子、一門花色中1萬與9萬的刻子、第二門花色中1萬的槓，以及最後一張單獨的9萬。",
       "hash": "61bcb4557f315267cfa7b63cff326ebe9caaf968ee1ddc21a852af4a0580d13e",
       "status": "draft",
       "source": {
@@ -4086,7 +4086,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.EV-1.description": {
-      "value": "同一門花色中，2萬與4萬的碰，以及6萬與8萬的槓，花色可自選。",
+      "value": "同一門花色中，2萬與4萬的刻子，以及6萬與8萬的槓，花色可自選。",
       "hash": "2a2ce03326ccb299846801df8fcc086e2822665c61fda45b312e3a884ff2fca2",
       "status": "draft",
       "source": {
@@ -4096,7 +4096,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.EV-2.description": {
-      "value": "一對2萬、4萬與6萬的碰、8萬的槓，以及另一對8萬——8萬分屬兩門花色，其餘牌型跟隨此配置。",
+      "value": "一對2萬、4萬與6萬的刻子、8萬的槓，以及另一對8萬——8萬分屬兩門花色，其餘牌型跟隨此配置。",
       "hash": "99f9f7de2fd662b6d23f79629f1846ca76089df79e01d4ca2ec558edbd3dc1f8",
       "status": "draft",
       "source": {
@@ -4106,7 +4106,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.EV-3.description": {
-      "value": "對子與碰互換位置：2萬的碰、4萬的對子、6萬的碰、8萬的對子，以及第二門花色中4萬的槓。",
+      "value": "對子與刻子互換位置：2萬的刻子、4萬的對子、6萬的刻子、8萬的對子，以及第二門花色中4萬的槓。",
       "hash": "c9da1df2656ba58d17c67263fa0cababbb97b2ee772571907ca0865bbe7e2e8d",
       "status": "draft",
       "source": {
@@ -4116,7 +4116,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.EV-4.description": {
-      "value": "門清。所有偶數番號均出現兩次：一門花色中為對子，另一門花色中則為碰或對子——含2萬、4萬、6萬、8萬的對子，並穿插2萬與6萬的碰。",
+      "value": "門清。所有偶數番號均出現兩次：一門花色中為對子，另一門花色中則為刻子或對子——含2萬、4萬、6萬、8萬的對子，並穿插2萬與6萬的刻子。",
       "hash": "e99a787df6a5a9d69df2aee99d3cee19e5113bb61cee9791da761494eb061a89",
       "status": "draft",
       "source": {
@@ -4126,7 +4126,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.EV-5.description": {
-      "value": "一對花牌開局，接著為2萬的碰、4萬的槓、6萬的碰，以及跨兩門花色的8萬對子。",
+      "value": "一對花牌開局，接著為2萬的刻子、4萬的槓、6萬的刻子，以及跨兩門花色的8萬對子。",
       "hash": "8c5b53280b81975cab709eadf491da16a8d4e721f217249c5ec3b05aa5bbab8b",
       "status": "draft",
       "source": {
@@ -4136,7 +4136,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.IB-1.description": {
-      "value": "一組花牌的槓領頭，搭配一門花色中2萬與3萬的碰，以及另一門花色中4萬的槓。",
+      "value": "一組花牌的槓領頭，搭配一門花色中2萬與3萬的刻子，以及另一門花色中4萬的槓。",
       "hash": "26a02f97cf42ce4c8645e6a3c8be3fb835e5f8554d3c780ce17815384f957e8c",
       "status": "draft",
       "source": {
@@ -4146,7 +4146,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.IB-2.description": {
-      "value": "一次五朵花牌——一對加一碰——旁為5萬與6萬的碰、7萬的對子，以及一張單獨的8萬。",
+      "value": "一次五朵花牌——一對加一刻子——旁為5萬與6萬的刻子、7萬的對子，以及一張單獨的8萬。",
       "hash": "abdb993e35051277ed293a6691f6fa1318e0bdfc4f6b0159fbe738a985b1f949",
       "status": "draft",
       "source": {
@@ -4156,7 +4156,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.IB-3.description": {
-      "value": "整束花牌：全部八朵花牌以兩組槓呈現，再以兩門花色中9萬的碰補足十四張。",
+      "value": "整束花牌：全部八朵花牌以兩組槓呈現，再以兩門花色中9萬的刻子補足十四張。",
       "hash": "65887a149f2e669ad77fe8cf7a935d21f9f27061a11525c0a2a78df1f9e7f798",
       "status": "draft",
       "source": {
@@ -4166,7 +4166,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.LK-1.description": {
-      "value": "同一番號遍及三門花色：兩門花色中為同番號的槓，第三門花色中為同番號的碰——圖例為7萬——另加一組花牌的碰。",
+      "value": "同一番號遍及三門花色：兩門花色中為同番號的槓，第三門花色中為同番號的刻子——圖例為7萬——另加一組花牌的刻子。",
       "hash": "dda35ae21e6230d86a834dfa651661c5631cd63063ea0f735b0b30debe54cc74",
       "status": "draft",
       "source": {
@@ -4176,7 +4176,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.LK-2.description": {
-      "value": "兩組番號分工合作：兩門花色中均有3萬的碰與8萬的碰，第三門花色中另有一對3萬。",
+      "value": "兩組番號分工合作：兩門花色中均有3萬的刻子與8萬的刻子，第三門花色中另有一對3萬。",
       "hash": "2267e30cb7608d797acaf1e6532fe5db039aba86af08296e05060e923ecae2a6",
       "status": "draft",
       "source": {
@@ -4206,7 +4206,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.OD-1.description": {
-      "value": "一門花色中，1萬與3萬的碰，以及5萬與7萬的槓——為首組「偶數」手牌的奇數鏡像。",
+      "value": "一門花色中，1萬與3萬的刻子，以及5萬與7萬的槓——為首組「偶數」手牌的奇數鏡像。",
       "hash": "0fb59598efa4eea51546c012caa81ff7db697d9fc046c7cdfe2efebe444afb56",
       "status": "draft",
       "source": {
@@ -4216,7 +4216,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.OD-2.description": {
-      "value": "四組碰——1萬、3萬、5萬、7萬——分佈於兩門花色，並以一對9萬作結。",
+      "value": "四組刻子——1萬、3萬、5萬、7萬——分佈於兩門花色，並以一對9萬作結。",
       "hash": "66670d8b86527417ad5fa5957b204018474f9befd7d1fda2c70f8e6d35c5ef9f",
       "status": "draft",
       "source": {
@@ -4226,7 +4226,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.OD-3.description": {
-      "value": "一組花牌的碰、一對1萬、一組9萬的碰，以及身兼兩職的5萬——一門花色中為槓，另一門花色中為對子。",
+      "value": "一組花牌的刻子、一對1萬、一組9萬的刻子，以及身兼兩職的5萬——一門花色中為槓，另一門花色中為對子。",
       "hash": "2547a880d718c30c8a6b10e77dc43334084dd8acbfc143c1ede86fbf8642e44c",
       "status": "draft",
       "source": {
@@ -4236,7 +4236,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.OD-4.description": {
-      "value": "門清。兩門花色中所有奇數番號均成對，第二門花色中另藏一組3萬的碰，以及一朵單獨花牌。",
+      "value": "門清。兩門花色中所有奇數番號均成對，第二門花色中另藏一組3萬的刻子，以及一朵單獨花牌。",
       "hash": "41461a8671859c3f3fd8a3443193b423a54641cea8a2efcc38eb2187ad5ee7e6",
       "status": "draft",
       "source": {
@@ -4246,7 +4246,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.OD-5.description": {
-      "value": "奇數番號兩端皆為槓——一門花色中為1萬，另一門花色中為9萬——中間夾著3萬與5萬的碰。",
+      "value": "奇數番號兩端皆為槓——一門花色中為1萬，另一門花色中為9萬——中間夾著3萬與5萬的刻子。",
       "hash": "583ebfdbfc84d1ebc34c809e7223a3d9c2b68760c44abd892986d2b6ab85ce8c",
       "status": "draft",
       "source": {
@@ -4256,7 +4256,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.QT-1.description": {
-      "value": "一組5萬的五連刻——四張自然牌加至少一張百搭牌——另加另一門花色中3萬與4萬的碰、一對9萬與一朵花牌。",
+      "value": "一組5萬的五連刻——四張自然牌加至少一張百搭牌——另加另一門花色中3萬與4萬的刻子、一對9萬與一朵花牌。",
       "hash": "d89705b465e90044676751d1f78d6d5e51437155a279d58e4ba73efeaa2c9b73",
       "status": "draft",
       "source": {
@@ -4266,7 +4266,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.QT-2.description": {
-      "value": "同一番號重複出現：一門花色中為7萬的五連刻（至少一張百搭牌），另一門花色中為7萬的槓，並以2萬的碰與對子依相同方式分配。",
+      "value": "同一番號重複出現：一門花色中為7萬的五連刻（至少一張百搭牌），另一門花色中為7萬的槓，並以2萬的刻子與對子依相同方式分配。",
       "hash": "5d6565486d319d315608194ea1ffe9ae147c831e0ee88b0edeaaf6017c6fc580",
       "status": "draft",
       "source": {
@@ -4286,7 +4286,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.QT-4.description": {
-      "value": "一組龍牌的五連刻（圖例為綠發——四張自然龍牌加一至兩張百搭牌），左右分別為北風與東風的碰、一對8萬與一朵花牌。",
+      "value": "一組龍牌的五連刻（圖例為綠發——四張自然龍牌加一至兩張百搭牌），左右分別為北風與東風的刻子、一對8萬與一朵花牌。",
       "hash": "1f4fc6963e721f5149169985018a85a1aa2d55b1d31d95b9b8f9c755e1175bde",
       "status": "draft",
       "source": {
@@ -4296,7 +4296,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.RN-1.description": {
-      "value": "一門花色中的底層階梯：1萬與2萬的碰，向上延伸至3萬與4萬的槓。",
+      "value": "一門花色中的底層階梯：1萬與2萬的刻子，向上延伸至3萬與4萬的槓。",
       "hash": "ecc8be694d69d7c3741f86790c840bea906c232659d4b588026d9f909f0885f8",
       "status": "draft",
       "source": {
@@ -4306,7 +4306,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.RN-2.description": {
-      "value": "同一門花色中接近頂端的階梯：5萬與6萬的碰，7萬與8萬的槓。",
+      "value": "同一門花色中接近頂端的階梯：5萬與6萬的刻子，7萬與8萬的槓。",
       "hash": "ae6238c958f98cd8038759ebe005ff6fb684e76fc96dad5925aa9681425067fc",
       "status": "draft",
       "source": {
@@ -4316,7 +4316,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.RN-3.description": {
-      "value": "2至6的順子中途換花色：一門花色中為2萬與3萬的碰，另一門花色中為4萬與5萬的碰，外加一對6萬。",
+      "value": "2至6的順子中途換花色：一門花色中為2萬與3萬的刻子，另一門花色中為4萬與5萬的刻子，外加一對6萬。",
       "hash": "a4755a0f44e7658e3f5d436547196cfe7f1196ed4d7ade6ef3b74eb264f59fec",
       "status": "draft",
       "source": {
@@ -4326,7 +4326,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.RN-4.description": {
-      "value": "3至7的五段順子，隨階級上升而擴增：3萬與4萬為對子，5萬與6萬為碰，7萬為槓——全屬同一門花色。",
+      "value": "3至7的五段順子，隨階級上升而擴增：3萬與4萬為對子，5萬與6萬為刻子，7萬為槓——全屬同一門花色。",
       "hash": "580a434deb5d5290c36cff1a4a1f50935765405265656cea89afac6da1b371a5",
       "status": "draft",
       "source": {
@@ -4336,7 +4336,7 @@
       "placeholders": []
     },
     "learn.american.pcard.hand.RN-5.description": {
-      "value": "一對花牌旁為3至6的碰順子，順子於4萬與5萬之間切換花色。",
+      "value": "一對花牌旁為3至6的刻子順子，順子於4萬與5萬之間切換花色。",
       "hash": "e2085ba9577606714ca2e5efbb17f574d074c38adea2e27cc68a01e822958906",
       "status": "draft",
       "source": {
@@ -5366,7 +5366,7 @@
       "placeholders": []
     },
     "learn.american.playing.q-call-window.prompt": {
-      "value": "你所需的一張棄牌剛被喊出。你必須何時叫牌？",
+      "value": "一張你為刻子所需的棄牌剛被喊出。你必須何時叫牌？",
       "hash": "67dc60f864bf84db14a7e17600221e846708727128e5894a5f3df289bee849d6",
       "status": "draft",
       "source": {
@@ -15121,7 +15121,7 @@
       "placeholders": []
     },
     "learn.mcr.guide.pattern.double-pung.name": {
-      "value": "雙刻",
+      "value": "雙同刻",
       "hash": "e678881603000aea29b69749bfaf558fecf5edf5362f4459198164d06c5f8aec",
       "status": "draft",
       "source": {
@@ -15201,7 +15201,7 @@
       "placeholders": []
     },
     "learn.mcr.guide.pattern.four-pure-shifted-pungs.name": {
-      "value": "四連碰",
+      "value": "一色四節高",
       "hash": "21a6894e643c289b75232b46a9b463194a04509ef30e0cfb2cf38ff7effec17b",
       "status": "draft",
       "source": {
@@ -15421,7 +15421,7 @@
       "placeholders": []
     },
     "learn.mcr.guide.pattern.mixed-shifted-pungs.name": {
-      "value": "混連七對（碰）",
+      "value": "三色三節高",
       "hash": "9b391c54a3d97cfc083385786c1c673bb230a239822a243c3f6919214f18dd2e",
       "status": "draft",
       "source": {
@@ -15541,7 +15541,7 @@
       "placeholders": []
     },
     "learn.mcr.guide.pattern.pung-of-terminals-or-honors.name": {
-      "value": "字一色",
+      "value": "幺九刻",
       "hash": "1fa53c370ef156f816c56d751027ea29d2cbfabefad485faa9e4e37f9c83e125",
       "status": "draft",
       "source": {
@@ -15581,7 +15581,7 @@
       "placeholders": []
     },
     "learn.mcr.guide.pattern.pure-shifted-pungs.name": {
-      "value": "清連七對（碰）",
+      "value": "一色三節高",
       "hash": "1e66dfdd5e1ebbbf51fc3ed60b513abe115b43b09fed3c67dca28e71a9ff26a0",
       "status": "draft",
       "source": {
@@ -15811,7 +15811,7 @@
       "placeholders": []
     },
     "learn.mcr.guide.pattern.triple-pung.name": {
-      "value": "三暗刻",
+      "value": "三同刻",
       "hash": "eebeac879126aa6e11de282c7c27ce4580bf815e0e277bf8e6e4c8b997914433",
       "status": "draft",
       "source": {
@@ -29434,7 +29434,7 @@
       "placeholders": []
     },
     "play.variant.a-win-takes-priority-over-a-triplet-or-quad-only-2": {
-      "value": "和牌優先於碰或槓。只有下家可搶吃（順子）。按鈕採用簡稱：pung（碰）即刻子——宣告三張相同牌；kong（槓）即槓子——宣告四張相同牌；chow（吃）即順子——宣告同一花色三張連續數字牌。按鈕僅顯示此張棄牌依規則允許之搶牌選項。",
+      "value": "和牌優先於碰或槓。只有下家可搶吃（順子）。按鈕採用簡稱：「碰」即刻子——宣告三張相同牌；「槓」即槓子——宣告四張相同牌；「吃」即順子——宣告同一花色三張連續數字牌。按鈕僅顯示此張棄牌依規則允許之搶牌選項。",
       "hash": "6f82b6e2bebc799e44c718ce1e7ed70245a37dbbebb1a542505f1bef048c651d",
       "status": "draft",
       "source": {
@@ -38171,7 +38171,7 @@
       "dynamic": true
     },
     "learn.american.defense.step02.text": {
-      "value": "將圖中所顯示的副露視為對手的牌型：一組二萬、一組四筒，以及一組六條的槓。將此副露與提示卡比對，箭頭指向「偶數」方向。這名玩家正在收集二、四、六、八這類偶數牌。可能威脅到你的牌，正是能幫他完成該牌型的牌——尤其是更多偶數牌，其中又以他尚未亮出的八萬最需提防。牌桌上每一組副露都是一種局部坦白；提示卡則將這些線索轉化為可辨識的做牌計畫。",
+      "value": "將圖中所顯示的副露視為對手的牌型：一組二萬刻子、一組四筒刻子，以及一組六條的槓。將此副露與提示卡比對，箭頭指向「偶數」方向。這名玩家正在收集二、四、六、八這類偶數牌。可能威脅到你的牌，正是能幫他完成該牌型的牌——尤其是更多偶數牌，其中又以他尚未亮出的八萬最需提防。牌桌上每一組副露都是一種局部坦白；提示卡則將這些線索轉化為可辨識的做牌計畫。",
       "hash": "b99619fce64ad56a6ccdeb4d970d788751be6527c94840c5658d13ccb5e3c817",
       "status": "draft",
       "source": {
