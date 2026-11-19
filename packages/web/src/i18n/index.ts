@@ -11,14 +11,19 @@
  * Rules this module enforces:
  * - No network call to any translation provider, ever. All strings are
  *   static files shipped with the app.
- * - Display rule (ship step): an `approved` string is always shown.
+ * - Display rule (ship step, PR #90): an `approved` string is always shown.
  *   A `draft` string is shown only in a locale listed in
  *   MACHINE_TRANSLATED_LOCALES — the initial-ship waiver locales —
  *   where the language-level "Machine translated" marking makes the
  *   status honest. A draft in any other locale falls back to English,
  *   as does a `stale` or `missing` key everywhere. Wave 2 locales
  *   therefore stay under the approved-only rule until a ruling ships
- *   them the same way.
+ *   them the same way. A `reviewed` entry is shown exactly where a
+ *   draft is shown (machine-translated locales): review is a step up
+ *   from draft, not a separate display tier, so marking a draft
+ *   reviewed must never make it disappear. `reviewed` also counts
+ *   toward community-review coverage and the release gate — see
+ *   community-review-design.md.
  * - Translation memory is keyed by source hash: a locale entry carries
  *   the hash of the English string it was translated from. If the English
  *   hash changes, the entry is stale until re-translated and re-approved.
@@ -31,13 +36,13 @@ import zhHansData from "./locales/zh-Hans.json";
 import zhHantData from "./locales/zh-Hant.json";
 import glossaryData from "./glossary.json";
 
-export type KeyStatus = "approved" | "draft" | "stale" | "missing";
+export type KeyStatus = "approved" | "reviewed" | "draft" | "stale" | "missing";
 
 export interface LocaleKeyEntry {
   value: string;
   /** sha256 of the English source string this entry was translated from. */
   hash: string;
-  status: "approved" | "draft" | "stale";
+  status: "approved" | "reviewed" | "draft" | "stale";
   source?: { file: string; line: number };
   placeholders?: string[];
   dynamic?: boolean;
@@ -222,6 +227,12 @@ export function resolveLocale(
 /** Per-key status in a locale, readable by the dashboard.
  *  - "approved": translated, approved, and its hash matches the current
  *    English source — always shown by the app.
+ *  - "reviewed": one community reviewer — not the author of the wording —
+ *    has read the string in context in the app and confirms the wording.
+ *    Counts toward community-review coverage and the release gate.
+ *    Display follows isDisplayable(): a reviewed entry shows in a
+ *    machine-translated ship locale, like a draft; elsewhere it falls
+ *    back to English.
  *  - "draft": translated but not yet native-speaker approved. Shown
  *    only in a machine-translated ship locale (see isDisplayable);
  *    elsewhere it falls back to English.
@@ -234,6 +245,7 @@ export function keyStatus(key: string, locale: string = currentLocale): KeyStatu
   const entry = registry.get(locale)?.keys[key];
   if (!entry) return "missing";
   if (entry.hash !== en.hash) return "stale";
+  if (entry.status === "reviewed") return "reviewed";
   return entry.status;
 }
 
@@ -250,23 +262,27 @@ export function interpolate(
 }
 
 /** Whether a key's entry in a locale is shown by the app (display
- *  rule, PR #90 ship step): `approved` always; `draft` only in a
+ *  rule, PR #90 ship step, extended by the community-review path,
+ *  PR #92): `approved` always; `draft` and `reviewed` only in a
  *  machine-translated ship locale, where the language-level marking
  *  keeps it honest. `stale` and `missing` never show. Statuses are
- *  already hash-checked by keyStatus(), so a draft here is current. */
+ *  already hash-checked by keyStatus(), so a draft here is current.
+ *  `reviewed` rides with `draft` deliberately: a reviewed entry is a
+ *  draft one community member confirmed, so it must show wherever a
+ *  draft shows — otherwise marking a draft reviewed would hide it. */
 export function isDisplayable(key: string, locale: string = currentLocale): boolean {
   const status = keyStatus(key, locale);
   if (status === "approved") return true;
-  if (status === "draft" && isMachineTranslated(locale)) return true;
+  if ((status === "draft" || status === "reviewed") && isMachineTranslated(locale)) return true;
   return false;
 }
 
 /** Look up a key in the current locale with English fallback.
- *  Shown entries follow isDisplayable(): approved always, draft only
- *  in a machine-translated ship locale; anything else (missing,
- *  stale, or a draft in any other locale) returns the English source.
- *  A key with no English entry at all returns the key id itself, so
- *  the gap is visible. */
+ *  Shown entries follow isDisplayable(): approved always, draft and
+ *  reviewed only in a machine-translated ship locale; anything else
+ *  (missing, stale, or a draft/reviewed in any other locale) returns
+ *  the English source. A key with no English entry at all returns the
+ *  key id itself, so the gap is visible. */
 export function t(key: string, ...args: readonly (string | number)[]): string {
   const en = EN.keys[key];
   if (!en) return key;
@@ -326,6 +342,24 @@ export function lockedTerm(termId: string, locale: string): string | null {
   if (!term) return null;
   if (locale === SOURCE_LOCALE) return term.en;
   return term.locales[locale] ?? null;
+}
+
+/** Contributor guide for translation corrections (community review path,
+ *  see ~/workspace/mahjong-prep/community-review-design.md). The in-app
+ *  "Improve this translation" link opens this page on GitHub, which names
+ *  the exact locale file per language and the no-git (web editor) flow —
+ *  a non-developer landing on the raw 38,000-line JSON file would have no
+ *  instructions. One URL for every locale: the guide links onward to the
+ *  per-locale files. */
+export const TRANSLATIONS_GUIDE_URL =
+  "https://github.com/michaelhmiv/OpenMahjong/blob/main/docs/translating.md";
+
+/** URL the "Improve this translation" link opens for a locale. English
+ *  has no translation to improve, so it returns null and the caller shows
+ *  no link. */
+export function improveTranslationUrl(locale: string = currentLocale): string | null {
+  if (!locale || locale === SOURCE_LOCALE) return null;
+  return TRANSLATIONS_GUIDE_URL;
 }
 
 function readRemembered(): string | null {

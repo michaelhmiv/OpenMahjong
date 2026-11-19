@@ -1,8 +1,8 @@
 {
   "meta": {
-    "generatedAt": "2026-11-19T11:41:33.747Z",
+    "generatedAt": "2026-11-19T12:22:55.898Z",
     "generatedBy": "scripts/i18n-coverage.mjs --write-baseline",
-    "note": "Initial-ship snapshot (owner ruling Nov 19, 2026: SHIP NOW, community reviews later). Every shipped key hash-current at ship time is the baseline, so the release gate measures only keys that change AFTER this snapshot. This is the one-time waiver for the initial machine-translation ship; it does not exempt later changes."
+    "note": "Snapshot (owner ruling Nov 19, 2026: SHIP NOW, community reviews later). Every shipped key is the baseline, so the release gate measures only keys that change AFTER this snapshot. A key missing from a locale is snapshotted at its English hash — its shipped rendering is the English fallback (e.g. the 'Improve this translation' link, design §1.1). A stale entry is NOT snapshotted and counts as new/changed immediately. This is the one-time waiver for the initial machine-translation ship; it does not exempt later changes."
   },
   "locales": {
     "en": {
@@ -3477,6 +3477,7 @@
       "ui.app.iipeikou": "2d0bd1a9bdfd53df71ab2368325857e718efde0ac03ef08bbb959d55355de950",
       "ui.app.import": "2cff9baabf56ca002610e113bc94deb6ededddfc3c130365b6e88ed5195bf774",
       "ui.app.import-0-games-from-this-device": "5a3faf2a3930b5a30682fbf875658ba8ef5a0c972b179c630d32e91765368f58",
+      "ui.app.improve-this-translation": "621f6f0ec45e8e77dbf6d3af3d7aa309bba8efd9cb22b41adff8900619c4d7f8",
       "ui.app.in-person-calculator-and-scorekeeper": "fd32868293c930a69f83a82209a63b6f9127d044a3f7b09544d29974d105914b",
       "ui.app.in-person-sessions-excluded-from-cpu-game-statis": "ec29833c7f5c3ae96c0875fa45d179f62d5252036514ab6f2e90c7d4d2e21f96",
       "ui.app.in-progress": "6a506b74c4f6bc452554b89a8fe813dc1118d936ea81acb86e1019ce7070ee11",
@@ -7208,6 +7209,7 @@
       "ui.app.iipeikou": "2d0bd1a9bdfd53df71ab2368325857e718efde0ac03ef08bbb959d55355de950",
       "ui.app.import": "2cff9baabf56ca002610e113bc94deb6ededddfc3c130365b6e88ed5195bf774",
       "ui.app.import-0-games-from-this-device": "5a3faf2a3930b5a30682fbf875658ba8ef5a0c972b179c630d32e91765368f58",
+      "ui.app.improve-this-translation": "621f6f0ec45e8e77dbf6d3af3d7aa309bba8efd9cb22b41adff8900619c4d7f8",
       "ui.app.in-person-calculator-and-scorekeeper": "fd32868293c930a69f83a82209a63b6f9127d044a3f7b09544d29974d105914b",
       "ui.app.in-person-sessions-excluded-from-cpu-game-statis": "ec29833c7f5c3ae96c0875fa45d179f62d5252036514ab6f2e90c7d4d2e21f96",
       "ui.app.in-progress": "6a506b74c4f6bc452554b89a8fe813dc1118d936ea81acb86e1019ce7070ee11",
@@ -10939,6 +10941,7 @@
       "ui.app.iipeikou": "2d0bd1a9bdfd53df71ab2368325857e718efde0ac03ef08bbb959d55355de950",
       "ui.app.import": "2cff9baabf56ca002610e113bc94deb6ededddfc3c130365b6e88ed5195bf774",
       "ui.app.import-0-games-from-this-device": "5a3faf2a3930b5a30682fbf875658ba8ef5a0c972b179c630d32e91765368f58",
+      "ui.app.improve-this-translation": "621f6f0ec45e8e77dbf6d3af3d7aa309bba8efd9cb22b41adff8900619c4d7f8",
       "ui.app.in-person-calculator-and-scorekeeper": "fd32868293c930a69f83a82209a63b6f9127d044a3f7b09544d29974d105914b",
       "ui.app.in-person-sessions-excluded-from-cpu-game-statis": "ec29833c7f5c3ae96c0875fa45d179f62d5252036514ab6f2e90c7d4d2e21f96",
       "ui.app.in-progress": "6a506b74c4f6bc452554b89a8fe813dc1118d936ea81acb86e1019ce7070ee11",
@@ -14670,6 +14673,7 @@
       "ui.app.iipeikou": "2d0bd1a9bdfd53df71ab2368325857e718efde0ac03ef08bbb959d55355de950",
       "ui.app.import": "2cff9baabf56ca002610e113bc94deb6ededddfc3c130365b6e88ed5195bf774",
       "ui.app.import-0-games-from-this-device": "5a3faf2a3930b5a30682fbf875658ba8ef5a0c972b179c630d32e91765368f58",
+      "ui.app.improve-this-translation": "621f6f0ec45e8e77dbf6d3af3d7aa309bba8efd9cb22b41adff8900619c4d7f8",
       "ui.app.in-person-calculator-and-scorekeeper": "fd32868293c930a69f83a82209a63b6f9127d044a3f7b09544d29974d105914b",
       "ui.app.in-person-sessions-excluded-from-cpu-game-statis": "ec29833c7f5c3ae96c0875fa45d179f62d5252036514ab6f2e90c7d4d2e21f96",
       "ui.app.in-progress": "6a506b74c4f6bc452554b89a8fe813dc1118d936ea81acb86e1019ce7070ee11",
@@ -18401,6 +18405,7 @@
       "ui.app.iipeikou": "2d0bd1a9bdfd53df71ab2368325857e718efde0ac03ef08bbb959d55355de950",
       "ui.app.import": "2cff9baabf56ca002610e113bc94deb6ededddfc3c130365b6e88ed5195bf774",
       "ui.app.import-0-games-from-this-device": "5a3faf2a3930b5a30682fbf875658ba8ef5a0c972b179c630d32e91765368f58",
+      "ui.app.improve-this-translation": "621f6f0ec45e8e77dbf6d3af3d7aa309bba8efd9cb22b41adff8900619c4d7f8",
       "ui.app.in-person-calculator-and-scorekeeper": "fd32868293c930a69f83a82209a63b6f9127d044a3f7b09544d29974d105914b",
       "ui.app.in-person-sessions-excluded-from-cpu-game-statis": "ec29833c7f5c3ae96c0875fa45d179f62d5252036514ab6f2e90c7d4d2e21f96",
       "ui.app.in-progress": "6a506b74c4f6bc452554b89a8fe813dc1118d936ea81acb86e1019ce7070ee11",

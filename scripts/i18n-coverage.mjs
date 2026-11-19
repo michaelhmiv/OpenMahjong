@@ -17,11 +17,23 @@
  * keys that change after the snapshot. Generate it with
  * `node scripts/i18n-coverage.mjs --write-baseline`.
  *
+ * Community era (community-review-design.md §7.1, DECIDED in the
+ * PR #92 rebase, Nov 19, 2026): the dashboard also reports
+ * % community-reviewed — keys with status `reviewed` or `approved`
+ * (hash-current) — and the release gate is on that number for shipped
+ * locales: a locale ships when every new/changed string has been read
+ * in context by an independent community reviewer. % approved (the
+ * native-speaker bar) is still reported alongside, so the gap between
+ * community-reviewed and native-approved stays visible. Reverting
+ * this decision is a one-line change in runGate() below.
+ *
  * Usage:
  *   node scripts/i18n-coverage.mjs            # human-readable report
  *   node scripts/i18n-coverage.mjs --json out/i18n-coverage.json
  *   node scripts/i18n-coverage.mjs --gate     # exit 1 if any SHIPPED
- *                                             # locale is <100% approved
+ *                                             # locale is <100%
+ *                                             # community-reviewed
+ *                                             # (reviewed + approved)
  *                                             # on new/changed strings
  *   node scripts/i18n-coverage.mjs --write-baseline
  *                                             # (re)generate baseline.json
@@ -59,10 +71,19 @@ export function loadBaseline(root = ROOT) {
   }
 }
 
-/** Snapshot {key: hash} for every hash-current entry in each shipped
- *  locale, and write it to baseline.json. A stale entry (hash mismatch
- *  vs English) is deliberately NOT snapshotted, so it counts as
- *  new/changed immediately. Returns the baseline object. */
+/** Snapshot {key: hash} for every key in each shipped locale, and write
+ *  it to baseline.json. A key is snapshotted when its locale entry is
+ *  hash-current — OR when the locale has no entry at all. A missing
+ *  entry ships as the English fallback, which is a decided rendering,
+ *  not a pending translation: the "Improve this translation" link
+ *  (design §1.1) is an extracted English key that is intentionally
+ *  absent from the draft locales, because the guide it opens is in
+ *  English. Snapshotting its English hash records that decision, so
+ *  the gate does not treat the absence as a change. A stale entry
+ *  (hash mismatch vs English) is deliberately NOT snapshotted, so it
+ *  counts as new/changed immediately. A key added to en.json AFTER
+ *  this snapshot has no baseline entry anywhere and still counts as
+ *  new/changed. Returns the baseline object. */
 export function writeBaseline(root = ROOT) {
   const localesDir = join(root, "packages", "web", "src", "i18n", "locales");
   const en = JSON.parse(readFileSync(join(localesDir, "en.json"), "utf8"));
@@ -77,7 +98,10 @@ export function writeBaseline(root = ROOT) {
     const snap = {};
     for (const [key, enEntry] of Object.entries(en.keys)) {
       const entry = file.keys?.[key];
-      if (entry && entry.hash === enEntry.hash) snap[key] = entry.hash;
+      // Hash-current entry: snapshot its hash. No entry: snapshot the
+      // English hash — the shipped rendering is the English fallback.
+      // Stale entry (hash mismatch): skip, so it counts as new/changed.
+      if (!entry || entry.hash === enEntry.hash) snap[key] = enEntry.hash;
     }
     locales[locale] = snap;
   }
@@ -85,7 +109,7 @@ export function writeBaseline(root = ROOT) {
     meta: {
       generatedAt: new Date().toISOString(),
       generatedBy: "scripts/i18n-coverage.mjs --write-baseline",
-      note: "Initial-ship snapshot (owner ruling Nov 19, 2026: SHIP NOW, community reviews later). Every shipped key hash-current at ship time is the baseline, so the release gate measures only keys that change AFTER this snapshot. This is the one-time waiver for the initial machine-translation ship; it does not exempt later changes.",
+      note: "Snapshot (owner ruling Nov 19, 2026: SHIP NOW, community reviews later). Every shipped key is the baseline, so the release gate measures only keys that change AFTER this snapshot. A key missing from a locale is snapshotted at its English hash — its shipped rendering is the English fallback (e.g. the 'Improve this translation' link, design §1.1). A stale entry is NOT snapshotted and counts as new/changed immediately. This is the one-time waiver for the initial machine-translation ship; it does not exempt later changes.",
     },
     locales,
   };
@@ -156,30 +180,38 @@ export function computeCoverage(root = ROOT) {
     if (!file) {
       languages[locale] = {
         locale, shipped, status: "missing-file",
-        total, approved: 0, draft: 0, stale: 0, missing: total,
-        percentApproved: 0, placeholderMismatches: [], glossaryFilled: 0,
+        total, approved: 0, reviewed: 0, draft: 0, stale: 0, missing: total,
+        percentApproved: 0, percentCommunityReviewed: 0,
+        placeholderMismatches: [], glossaryFilled: 0,
         glossaryTotal: Object.keys(glossary.terms).length,
         newChanged: total, newChangedApproved: 0, percentApprovedNewChanged: 0,
+        newChangedReviewed: 0, newChangedCommunityReviewed: 0,
+        percentCommunityReviewedNewChanged: 0,
       };
       continue;
     }
     if (file.meta?.status === "untranslated") {
       languages[locale] = {
         locale, shipped, status: "untranslated",
-        total, approved: 0, draft: 0, stale: 0, missing: total,
-        percentApproved: 0, placeholderMismatches: [],
+        total, approved: 0, reviewed: 0, draft: 0, stale: 0, missing: total,
+        percentApproved: 0, percentCommunityReviewed: 0,
+        placeholderMismatches: [],
         glossaryFilled: 0,
         glossaryTotal: Object.keys(glossary.terms).length,
         newChanged: total, newChangedApproved: 0, percentApprovedNewChanged: 0,
+        newChangedReviewed: 0, newChangedCommunityReviewed: 0,
+        percentCommunityReviewedNewChanged: 0,
       };
       continue;
     }
     let approved = 0;
+    let reviewed = 0;
     let draft = 0;
     let stale = 0;
     let missing = 0;
     let newChanged = 0;
     let newChangedApproved = 0;
+    let newChangedReviewed = 0;
     const mismatches = [];
     for (const [key, enEntry] of Object.entries(enKeys)) {
       // New/changed vs the baseline: no baseline entry for this key,
@@ -193,6 +225,12 @@ export function computeCoverage(root = ROOT) {
         if (entry && entry.hash === enEntry.hash && entry.status === "approved") {
           newChangedApproved++;
         }
+        if (
+          entry && entry.hash === enEntry.hash &&
+          (entry.status === "approved" || entry.status === "reviewed")
+        ) {
+          newChangedReviewed++;
+        }
       }
       const entry = file.keys?.[key];
       if (!entry) { missing++; continue; }
@@ -201,7 +239,8 @@ export function computeCoverage(root = ROOT) {
         approved++;
         const problems = placeholderMismatch(enEntry.value, entry.value);
         if (problems.length > 0) mismatches.push({ key, problems });
-      } else if (entry.status === "draft") draft++;
+      } else if (entry.status === "reviewed") reviewed++;
+      else if (entry.status === "draft") draft++;
       else stale++;
     }
     const glossaryFilled = Object.values(glossary.terms).filter(
@@ -210,8 +249,11 @@ export function computeCoverage(root = ROOT) {
     languages[locale] = {
       locale, shipped,
       status: shipped ? "shipped" : "in-progress",
-      total, approved, draft, stale, missing,
+      total, approved, reviewed, draft, stale, missing,
       percentApproved: total === 0 ? 100 : Math.round((approved / total) * 1000) / 10,
+      percentCommunityReviewed: total === 0
+        ? 100
+        : Math.round(((approved + reviewed) / total) * 1000) / 10,
       placeholderMismatches: mismatches,
       glossaryFilled,
       glossaryTotal: Object.keys(glossary.terms).length,
@@ -219,17 +261,31 @@ export function computeCoverage(root = ROOT) {
       newChangedApproved,
       percentApprovedNewChanged:
         newChanged === 0 ? 100 : Math.round((newChangedApproved / newChanged) * 1000) / 10,
+      // Community-era gate bar (design §7.1, DECIDED Nov 19, 2026):
+      // new/changed keys that are reviewed OR approved, hash-current.
+      newChangedReviewed,
+      newChangedCommunityReviewed: newChangedReviewed,
+      percentCommunityReviewedNewChanged:
+        newChanged === 0 ? 100 : Math.round((newChangedReviewed / newChanged) * 1000) / 10,
     };
   }
 
-  // The gate measures new/changed strings only: a shipped locale fails
-  // when any key that changed after the baseline is not yet approved.
+  // The gate measures new/changed strings only (community era,
+  // design §7.1, DECIDED Nov 19, 2026): a shipped locale fails when
+  // any key that changed after the baseline is not yet
+  // community-reviewed (reviewed or approved, hash-current). % approved
+  // (the native-speaker bar) is still reported but is not the gate —
+  // the Nov 19, 2026 ruling replaced hired native review with community
+  // review as the working bar; gating on approved would block every
+  // release indefinitely while the community does the reviewing.
   // The initial baseline grandfathers the machine-translation ship
   // (all ship-time keys are baseline, so newChanged is 0 and the gate
-  // passes); any key added or re-sourced afterwards must earn approval.
+  // passes); any key added or re-sourced afterwards must earn a
+  // community review. Reverting this decision is a one-line change:
+  // filter on newChangedApproved instead of newChangedReviewed.
   const gateFailures = Object.values(languages)
-    .filter((l) => l.shipped && l.newChangedApproved < l.newChanged)
-    .map((l) => `${l.locale}: ${l.newChangedApproved}/${l.newChanged} new/changed approved (needs 100%)`);
+    .filter((l) => l.shipped && l.newChangedReviewed < l.newChanged)
+    .map((l) => `${l.locale}: ${l.newChangedReviewed}/${l.newChanged} new/changed community-reviewed (needs 100%)`);
   return {
     generatedAt: new Date().toISOString(),
     totalKeys: total,
@@ -243,18 +299,18 @@ export function computeCoverage(root = ROOT) {
 
 export function renderHuman(report) {
   const lines = [];
-  lines.push("i18n coverage — per-language % approved on new/changed strings");
+  lines.push("i18n coverage — per-language % approved / % community-reviewed on new/changed strings");
   lines.push(`English keys (new/changed): ${report.totalKeys}`);
   lines.push(`Baseline: ${report.baseline ?? "absent"}${report.baseline === "present" ? " (gate measures keys changed after the snapshot)" : " (every key counts as new/changed)"}`);
   lines.push("");
   lines.push(
-    "locale    shipped  approved  draft  stale  missing  % approved  new/changed  glossary",
+    "locale    shipped  approved  reviewed  draft  stale  missing  % approved  % comm-reviewed  new/changed revd  glossary",
   );
   for (const locale of SUPPORTED_LOCALES) {
     const l = report.languages[locale];
     const pad = (v, n) => String(v).padEnd(n);
     lines.push(
-      `${pad(locale, 10)}${pad(l.shipped ? "yes" : "no", 9)}${pad(l.approved, 10)}${pad(l.draft, 7)}${pad(l.stale, 7)}${pad(l.missing, 9)}${pad(`${l.percentApproved}%`, 12)}${pad(`${l.newChangedApproved}/${l.newChanged}`, 13)}${l.glossaryFilled}/${l.glossaryTotal}`,
+      `${pad(locale, 10)}${pad(l.shipped ? "yes" : "no", 9)}${pad(l.approved, 10)}${pad(l.reviewed, 10)}${pad(l.draft, 7)}${pad(l.stale, 7)}${pad(l.missing, 9)}${pad(`${l.percentApproved}%`, 13)}${pad(`${l.percentCommunityReviewed}%`, 17)}${pad(`${l.newChangedReviewed}/${l.newChanged}`, 13)}${l.glossaryFilled}/${l.glossaryTotal}`,
     );
   }
   lines.push("");
@@ -262,7 +318,7 @@ export function renderHuman(report) {
   if (report.gateFailures.length > 0) {
     for (const f of report.gateFailures) lines.push(`  FAIL: ${f}`);
   } else {
-    lines.push("  Every shipped locale is 100% approved on new/changed strings.");
+    lines.push("  Every shipped locale is 100% community-reviewed on new/changed strings.");
   }
   const mismatchCount = Object.values(report.languages).reduce(
     (n, l) => n + l.placeholderMismatches.length, 0,

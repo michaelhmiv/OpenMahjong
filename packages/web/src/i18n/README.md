@@ -66,25 +66,31 @@ from (translation memory keyed by source hash). When English changes:
 - Unchanged strings are never re-translated, re-reviewed, or re-billed.
 
 Per-key status, readable by the dashboard: `approved` (translated,
-approved, hash matches — always shown), `draft` (translated, not yet
-native-speaker approved — shown only in a machine-translated ship
-locale), `stale` (hash mismatch or explicitly marked), `missing` (no
-entry in that locale).
+approved, hash matches — always shown), `reviewed` (one community
+reviewer who did not write the wording has read it in context and
+confirms it — counts toward community-review coverage and the release
+gate; shown where a draft is shown, in a machine-translated ship
+locale), `draft` (translated, not yet native-speaker approved — shown
+only in a machine-translated ship locale), `stale` (hash mismatch or
+explicitly marked), `missing` (no entry in that locale).
 
 ## Dashboard and release gate
 
 `node scripts/i18n-coverage.mjs` reads the key files and prints a
-per-language table: % approved on new/changed strings, plus glossary
-coverage. `--json <path>` writes the same report as a JSON artifact.
-`--gate` exits non-zero if any **shipped** locale is <100% approved
-on new/changed strings.
+per-language table: % approved and % community-reviewed
+(`reviewed` + `approved`, hash-current) on new/changed strings, plus
+glossary coverage. `--json <path>` writes the same report as a JSON
+artifact. `--gate` exits non-zero if any **shipped** locale is <100%
+community-reviewed on new/changed strings (design §7.1, DECIDED
+Nov 19, 2026 — see `scripts/i18n-coverage.mjs`).
 
 Baseline: `baseline.json` snapshots every shipped key hash-current at
 ship time, so "new/changed" means "changed after the snapshot". The
 initial baseline is the one-time waiver for the machine-translation
 ship (all ship-time keys are grandfathered); any key added or
-re-sourced afterwards counts as new/changed and must earn approval
-before a later release can pass the gate. Regenerate it with
+re-sourced afterwards counts as new/changed and must earn a community
+review (`reviewed` or `approved`) before a later release can pass the
+gate. Regenerate it with
 `node scripts/i18n-coverage.mjs --write-baseline` — only at a release
 that is meant to re-baseline. CI runs both
 `extract-i18n.mjs --check` and `i18n-coverage.mjs --gate` in the
@@ -169,9 +175,33 @@ is still `status: "draft"`, and the switcher marking is what makes
 the ship honest. A draft in any other locale falls back to English,
 as does a `stale` or `missing` key everywhere. When community review
 completes for a locale, remove it from `MACHINE_TRANSLATED_LOCALES`:
-its drafts stop displaying and only `approved`/`reviewed` strings
-show. A translation that renders a locked glossary term differently
+its drafts and reviewed strings stop displaying and only `approved`
+strings show. A translation that renders a locked glossary term differently
 is a CI failure, not a style preference.
+
+## Community review (Nov 19, 2026 ruling: ship now, community reviews later)
+
+Hired native-speaker review is cancelled as a blocker. The machine drafts
+ship marked machine-translated / community-review pending (release gate
+waived for that initial ship only, by Michael's ruling), and the community
+reviews them in place. Contributor guide: `docs/translating.md` (linked
+from the in-app "Improve this translation" link in the More tab footer).
+
+Per-string status, per language: `draft` (translated, not yet read in
+context by an independent reviewer) → `reviewed` (one community reviewer
+who did not write the wording has read the string in context and confirms
+it) → `approved` (native-speaker bar: read in context and final; lessons
+need native-reader transfer checks). Display follows `isDisplayable()`:
+`approved` always shows; `draft` and `reviewed` show in a
+machine-translated ship locale; `stale` and `missing` fall back to
+English. A correction PR changes `value` only and leaves
+`status: "draft"`; a separate review PR flips the status. A correction
+must NOT be self-approved — enforced by
+`scripts/i18n-approval-gate.mjs` (R1/R2/R3) in CI. Release gate (design
+§7.1, DECIDED Nov 19, 2026): community-reviewed (`reviewed` +
+`approved`) on new/changed strings, not approved-only. Full status model,
+flow, and guardrails:
+`~/workspace/mahjong-prep/community-review-design.md`.
 
 Release-gate waiver for the initial ship only: `baseline.json`
 (same directory) snapshots every shipped key hash-current at ship
