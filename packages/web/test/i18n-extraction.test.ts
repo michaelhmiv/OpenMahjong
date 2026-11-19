@@ -48,4 +48,29 @@ describe("extraction drift gate", () => {
     ).length;
     expect(count).toBeGreaterThan(3000);
   });
+
+  it("nested tx() composes: an inner tx() inside an outer fallback template is its own key, not part of the outer value", () => {
+    // app.ts builds a tile's aria-label as one outer tx() whose
+    // template spans are themselves tx() calls (safe-against text,
+    // selected/activate text). The template-branch rule says a display
+    // fragment nested inside the fallback template's ${...} spans is
+    // its own string: the outer key holds only the {N} placeholders,
+    // and each inner fragment holds its own key. If the rule regressed,
+    // the outer value would contain the inner text (and the inner keys
+    // would collide or vanish).
+    const keys = (enData as { keys: Record<string, { value: string }> })
+      .keys;
+    expect(keys["ui.app.v-0-1-2-3"]!.value).toBe("{0}{1}{2}");
+    expect(keys["ui.app.safe-against-every-riichi-player"]!.value).toBe(
+      ", safe against every riichi player",
+    );
+    expect(keys["ui.app.selected-activate-to-discard"]!.value).toBe(
+      ", selected; activate to discard",
+    );
+    expect(keys["ui.app.activate-to-select"]!.value).toBe(
+      "; activate to select",
+    );
+    expect(keys["ui.app.you"]!.value).toBe("· You");
+    expect(keys["ui.app.dealer"]!.value).toBe("· Dealer");
+  });
 });
