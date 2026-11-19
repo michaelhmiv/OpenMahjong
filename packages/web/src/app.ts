@@ -169,63 +169,75 @@ const SIGN_IN_PENDING_KEY = "om.signin.pending";
 // Presentation data (names only — all values come from the engine)
 // ---------------------------------------------------------------------------
 
-/** Yaku id -> [display name, han]. Presentation table for the breakdown;
- *  han values are the standard ones the engine's scorer awards. */
-const YAKU: Record<string, readonly [string, number]> = {
-  riichi: [tx("ui.app.riichi", "Riichi"), 1],
-  "double-riichi": [tx("ui.app.double-riichi", "Double Riichi"), 2],
-  ippatsu: [tx("ui.app.ippatsu", "Ippatsu"), 1],
-  "menzen-tsumo": [tx("ui.app.menzen-tsumo", "Menzen Tsumo"), 1],
-  pinfu: [tx("ui.app.pinfu", "Pinfu"), 1],
-  iipeikou: [tx("ui.app.iipeikou", "Iipeikou"), 1],
-  ryanpeikou: [tx("ui.app.ryanpeikou", "Ryanpeikou"), 3],
-  tanyao: [tx("ui.app.tanyao", "Tanyao"), 1],
-  "yakuhai-haku": [tx("ui.app.yakuhai-haku", "Yakuhai (Haku)"), 1],
-  "yakuhai-hatsu": [tx("ui.app.yakuhai-hatsu", "Yakuhai (Hatsu)"), 1],
-  "yakuhai-chun": [tx("ui.app.yakuhai-chun", "Yakuhai (Chun)"), 1],
-  "yakuhai-seat": [tx("ui.app.yakuhai-seat-wind", "Yakuhai (Seat Wind)"), 1],
-  "yakuhai-round": [tx("ui.app.yakuhai-round-wind", "Yakuhai (Round Wind)"), 1],
-  chankan: [tx("ui.app.chankan", "Chankan"), 1],
-  rinshan: [tx("ui.app.rinshan-kaihou", "Rinshan Kaihou"), 1],
-  haitei: [tx("ui.app.haitei-raoyue", "Haitei Raoyue"), 1],
-  houtei: [tx("ui.app.houtei-raoyui", "Houtei Raoyui"), 1],
-  chiitoitsu: [tx("ui.app.chiitoitsu", "Chiitoitsu"), 2],
-  ittsu: [tx("ui.app.ittsu", "Ittsu"), 2],
-  "sanshoku-doujun": [tx("ui.app.sanshoku-doujun", "Sanshoku Doujun"), 2],
-  "sanshoku-doukou": [tx("ui.app.sanshoku-doukou", "Sanshoku Doukou"), 2],
-  sanankou: [tx("ui.app.sanankou", "Sanankou"), 2],
-  sankantsu: [tx("ui.app.sankantsu", "Sankantsu"), 2],
-  toitoi: [tx("ui.app.toitoi", "Toitoi"), 2],
-  honchan: [tx("ui.app.honchantai", "Honchantai"), 2],
-  shousuushi: [tx("ui.app.shousuushi", "Shousuushi"), 13],
-  shousangen: [tx("ui.app.shousangen", "Shousangen"), 2],
-  daisangen: [tx("ui.app.daisangen", "Daisangen"), 13],
-  chinroutou: [tx("ui.app.chinroutou", "Chinroutou"), 13],
-  honitsu: [tx("ui.app.honitsu", "Honitsu"), 3],
-  junchan: [tx("ui.app.junchan", "Junchan"), 3],
-  honroutou: [tx("ui.app.honroutou", "Honroutou"), 2],
-  chinitsu: [tx("ui.app.chinitsu", "Chinitsu"), 6],
-  tenhou: [tx("ui.app.tenhou", "Tenhou"), 13],
-  chiihou: [tx("ui.app.chiihou", "Chiihou"), 13],
-  kokushi: [tx("ui.app.kokushi-musou", "Kokushi Musou"), 13],
-  "kokushi-13": [tx("ui.app.kokushi-musou-13-wait", "Kokushi Musou (13-wait)"), 26],
-  suuankou: [tx("ui.app.suuankou", "Suuankou"), 13],
-  "suuankou-tanki": [tx("ui.app.suuankou-tanki", "Suuankou Tanki"), 26],
-  chuuren: [tx("ui.app.chuuren-poutou", "Chuuren Poutou"), 13],
-  "chuuren-junsei": [tx("ui.app.junsei-chuuren-poutou", "Junsei Chuuren Poutou"), 26],
-  daisuushi: [tx("ui.app.daisuushi", "Daisuushi"), 26],
-  tsuiisou: [tx("ui.app.tsuiisou", "Tsuiisou"), 13],
-  ryuuiisou: [tx("ui.app.ryuuiisou", "Ryuuiisou"), 13],
-  suukantsu: [tx("ui.app.suukantsu", "Suukantsu"), 13],
+/** Yaku id -> { key, label, han }. Presentation table for the breakdown;
+ *  han values are the standard ones the engine's scorer awards. `label`
+ *  is the English display name (the extractor's source for the key);
+ *  `key` is the en.json key the render site resolves with t() — this
+ *  record is built at module scope (before initI18n), so it must not
+ *  call t()/tx() here (see fillWinBreakdown). Unknown ids fall back to
+ *  the id itself. */
+const YAKU: Record<string, { key: string; label: string; han: number }> = {
+  riichi: { key: "ui.app.riichi", label: "Riichi", han: 1 },
+  "double-riichi": { key: "ui.app.double-riichi", label: "Double Riichi", han: 2 },
+  ippatsu: { key: "ui.app.ippatsu", label: "Ippatsu", han: 1 },
+  "menzen-tsumo": { key: "ui.app.menzen-tsumo", label: "Menzen Tsumo", han: 1 },
+  pinfu: { key: "ui.app.pinfu", label: "Pinfu", han: 1 },
+  iipeikou: { key: "ui.app.iipeikou", label: "Iipeikou", han: 1 },
+  ryanpeikou: { key: "ui.app.ryanpeikou", label: "Ryanpeikou", han: 3 },
+  tanyao: { key: "ui.app.tanyao", label: "Tanyao", han: 1 },
+  "yakuhai-haku": { key: "ui.app.yakuhai-haku", label: "Yakuhai (Haku)", han: 1 },
+  "yakuhai-hatsu": { key: "ui.app.yakuhai-hatsu", label: "Yakuhai (Hatsu)", han: 1 },
+  "yakuhai-chun": { key: "ui.app.yakuhai-chun", label: "Yakuhai (Chun)", han: 1 },
+  "yakuhai-seat": { key: "ui.app.yakuhai-seat-wind", label: "Yakuhai (Seat Wind)", han: 1 },
+  "yakuhai-round": { key: "ui.app.yakuhai-round-wind", label: "Yakuhai (Round Wind)", han: 1 },
+  chankan: { key: "ui.app.chankan", label: "Chankan", han: 1 },
+  rinshan: { key: "ui.app.rinshan-kaihou", label: "Rinshan Kaihou", han: 1 },
+  haitei: { key: "ui.app.haitei-raoyue", label: "Haitei Raoyue", han: 1 },
+  houtei: { key: "ui.app.houtei-raoyui", label: "Houtei Raoyui", han: 1 },
+  chiitoitsu: { key: "ui.app.chiitoitsu", label: "Chiitoitsu", han: 2 },
+  ittsu: { key: "ui.app.ittsu", label: "Ittsu", han: 2 },
+  "sanshoku-doujun": { key: "ui.app.sanshoku-doujun", label: "Sanshoku Doujun", han: 2 },
+  "sanshoku-doukou": { key: "ui.app.sanshoku-doukou", label: "Sanshoku Doukou", han: 2 },
+  sanankou: { key: "ui.app.sanankou", label: "Sanankou", han: 2 },
+  sankantsu: { key: "ui.app.sankantsu", label: "Sankantsu", han: 2 },
+  toitoi: { key: "ui.app.toitoi", label: "Toitoi", han: 2 },
+  honchan: { key: "ui.app.honchantai", label: "Honchantai", han: 2 },
+  shousuushi: { key: "ui.app.shousuushi", label: "Shousuushi", han: 13 },
+  shousangen: { key: "ui.app.shousangen", label: "Shousangen", han: 2 },
+  daisangen: { key: "ui.app.daisangen", label: "Daisangen", han: 13 },
+  chinroutou: { key: "ui.app.chinroutou", label: "Chinroutou", han: 13 },
+  honitsu: { key: "ui.app.honitsu", label: "Honitsu", han: 3 },
+  junchan: { key: "ui.app.junchan", label: "Junchan", han: 3 },
+  honroutou: { key: "ui.app.honroutou", label: "Honroutou", han: 2 },
+  chinitsu: { key: "ui.app.chinitsu", label: "Chinitsu", han: 6 },
+  tenhou: { key: "ui.app.tenhou", label: "Tenhou", han: 13 },
+  chiihou: { key: "ui.app.chiihou", label: "Chiihou", han: 13 },
+  kokushi: { key: "ui.app.kokushi-musou", label: "Kokushi Musou", han: 13 },
+  "kokushi-13": { key: "ui.app.kokushi-musou-13-wait", label: "Kokushi Musou (13-wait)", han: 26 },
+  suuankou: { key: "ui.app.suuankou", label: "Suuankou", han: 13 },
+  "suuankou-tanki": { key: "ui.app.suuankou-tanki", label: "Suuankou Tanki", han: 26 },
+  chuuren: { key: "ui.app.chuuren-poutou", label: "Chuuren Poutou", han: 13 },
+  "chuuren-junsei": { key: "ui.app.junsei-chuuren-poutou", label: "Junsei Chuuren Poutou", han: 26 },
+  daisuushi: { key: "ui.app.daisuushi", label: "Daisuushi", han: 26 },
+  tsuiisou: { key: "ui.app.tsuiisou", label: "Tsuiisou", han: 13 },
+  ryuuiisou: { key: "ui.app.ryuuiisou", label: "Ryuuiisou", han: 13 },
+  suukantsu: { key: "ui.app.suukantsu", label: "Suukantsu", han: 13 },
 };
 
 const WIND_NAMES: Record<number, string> = { 27: "East", 28: "South", 29: "West", 30: "North" };
 const WIND_KANJI: Record<number, string> = { 27: "東", 28: "南", 29: "西", 30: "北" };
-const ABORTIVE_NAMES: Record<string, string> = {
-  "kyuushu-kyuuhai": tx("ui.app.kyuushu-kyuuhai-nine-terminals", "Kyuushu Kyuuhai (nine terminals)"),
-  "suucha-riichi": tx("ui.app.suucha-riichi-four-riichi", "Suucha Riichi (four riichi)"),
-  "suufon-renda": tx("ui.app.suufon-renda-four-winds", "Suufon Renda (four winds)"),
-  suukaikan: tx("ui.app.suukaikan-four-kan", "Suukaikan (four kan)"),
+/** Generic fallback when the abortive-draw id is unknown (same
+ *  module-scope pattern: the label is the extractor's English source,
+ *  the key is what the render site resolves with t()). */
+const ABORTIVE_DRAW_FALLBACK = { key: "ui.app.abortive-draw", label: "Abortive draw" };
+/** Abortive-draw id -> { key, label } (same module-scope rule as YAKU
+ *  above: the label is the extractor's English source, the key is what
+ *  the render site resolves with t()). */
+const ABORTIVE_NAMES: Record<string, { key: string; label: string }> = {
+  "kyuushu-kyuuhai": { key: "ui.app.kyuushu-kyuuhai-nine-terminals", label: "Kyuushu Kyuuhai (nine terminals)" },
+  "suucha-riichi": { key: "ui.app.suucha-riichi-four-riichi", label: "Suucha Riichi (four riichi)" },
+  "suufon-renda": { key: "ui.app.suufon-renda-four-winds", label: "Suufon Renda (four winds)" },
+  suukaikan: { key: "ui.app.suukaikan-four-kan", label: "Suukaikan (four kan)" },
 };
 
 /**
@@ -359,7 +371,7 @@ function chiOptionFaces(called: Tile, handTiles: readonly Tile[]): { tile: Tile;
 function tileControl(el: HTMLElement, key: string, label: string, action: () => void, selected = false): void {
   el.setAttribute("role", "button");
   el.tabIndex = 0;
-  el.setAttribute("aria-label", label);
+  el.setAttribute(tx("ui.app.aria-label", "aria-label"), label);
   el.setAttribute("aria-pressed", String(selected));
   el.dataset["controlKey"] = key;
   el.querySelectorAll("[role=img]").forEach((img) => img.setAttribute("aria-hidden", "true"));
@@ -389,7 +401,7 @@ function focusByKey(key: string | undefined): void {
 function accessibleDialog(dialog: HTMLElement, label: string, close: () => void): void {
   dialog.setAttribute("role", "dialog");
   dialog.setAttribute("aria-modal", "true");
-  dialog.setAttribute("aria-label", label);
+  dialog.setAttribute(tx("ui.app.aria-label", "aria-label"), label);
   dialog.tabIndex = -1;
   const controls = () => [...dialog.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), [tabindex="0"]')];
   dialog.addEventListener("keydown", (event) => {
@@ -1050,7 +1062,7 @@ export class App {
       const wrap = h("div", { class: "play-variant-label" }, tx("ui.app.variant", "Variant"));
       const picker = h("div", { class: "seg play-variant-seg", role: "radiogroup", "aria-label": tx("ui.app.play-variant", "Play variant") });
       const choices: [VariantId | "riichi", string][] = [
-        ["riichi", "Riichi"],
+        ["riichi", tx("ui.app.riichi", "Riichi")],
         ...releases.map(v => [v.id, v.name] as [VariantId | "riichi", string]),
       ];
       const choose = (id: VariantId | "riichi") => {
@@ -1072,7 +1084,7 @@ export class App {
           let next: number | null = null;
           if (ev.key === "ArrowRight" || ev.key === "ArrowDown") next = (i + 1) % choices.length;
           else if (ev.key === "ArrowLeft" || ev.key === "ArrowUp") next = (i + choices.length - 1) % choices.length;
-          else if (ev.key === "Home") next = 0;
+          else if (ev.key === tx("ui.app.home", "Home")) next = 0;
           else if (ev.key === "End") next = choices.length - 1;
           if (next === null || next === i) return;
           ev.preventDefault();
@@ -1095,7 +1107,7 @@ export class App {
       });
       return b;
     };
-    if (this.variantChoice === "riichi") seg.append(mkSeg("East only", "east"), mkSeg("East + South", "south"));
+    if (this.variantChoice === "riichi") seg.append(mkSeg(tx("ui.app.east-only", "East only"), "east"), mkSeg(tx("ui.app.east-south", "East + South"), "south"));
     else for (const [length,label] of [["east",tx("ui.app.east", "East")],["south",tx("ui.app.east-south", "East + South")],["full",tx("ui.app.four-rounds", "Four rounds")]] as const) {
       const b=h("button",{class:this.variantLength===length?"on":""},label);
       b.addEventListener("click",()=>{this.variantLength=length;this.renderPlay();});seg.append(b);
@@ -1141,7 +1153,7 @@ export class App {
       const rowEl = h("div", { class: "row" });
       const imp = h("button", { class: "pillbtn primary" }, tx("ui.app.import", "Import"));
       imp.addEventListener("click", () => void this.doImport());
-      const dis = h("button", { class: "pillbtn ghost" }, "Dismiss");
+      const dis = h("button", { class: "pillbtn ghost" }, tx("ui.app.language.sheet.dismiss", "Dismiss"));
       dis.addEventListener("click", () => {
         markImportHandled();
         this.importOfferCount = 0;
@@ -1242,7 +1254,7 @@ export class App {
       h("div", { class: "note" }, tx("ui.app.hints-and-explanations-during-cpu-games", "Hints and explanations during CPU games.")),
     );
     const gsw = h("label", { class: "switch" });
-    const ginput = h("input", { type: "checkbox", "aria-label": "Guided mode" });
+    const ginput = h("input", { type: "checkbox", "aria-label": tx("ui.app.guided-mode", "Guided mode") });
     ginput.checked = this.settings.guided;
     ginput.addEventListener("change", () => {
       this.settings = { ...this.settings, guided: ginput.checked };
@@ -1267,12 +1279,12 @@ export class App {
       );
       const byWind = [...model.players].sort((a, b) => a.seatWind - b.seatWind);
       return {
-        round: `${WIND_NAMES[model.roundWind]} ${model.kyoku}`,
+        round: tx("ui.app.v-0-1-3", `${WIND_NAMES[model.roundWind]} ${model.kyoku}`, WIND_NAMES[model.roundWind], model.kyoku),
         lengthLabel: tx("ui.app.v-0-1", `${saved.v === 3 ? (VARIANT_RELEASES.find(v=>v.id===saved.variant)?.name ?? saved.variant) + " · " : ""}${saved.length === "full" ? "Four rounds" : saved.length === "south" ? "East + South" : tx("ui.app.east-only", "East only")}`, saved.v === 3 ? (VARIANT_RELEASES.find(v=>v.id===saved.variant)?.name ?? saved.variant) + " · " : "", saved.length === "full" ? "Four rounds" : saved.length === "south" ? "East + South" : tx("ui.app.east-only", "East only")),
         standing: `You are ${placementLabel(ranked.indexOf(human) + 1)}`,
         humanScore: human.score,
         scores: byWind.map((p) => ({
-          name: p === human ? "You" : WIND_NAMES[p.seatWind]!,
+          name: p === human ? tx("ui.app.you-3", "You") : WIND_NAMES[p.seatWind]!,
           score: p.score,
         })),
       };
@@ -1296,7 +1308,7 @@ export class App {
     );
     const scores = h("span", { class: "ic-scores" });
     for (const s of summary.scores) {
-      const span = h("span", {}, `${s.name} `);
+      const span = h("span", {}, tx("ui.app.v-0", `${s.name}`, s.name) + " ");
       span.append(h("b", {}, fmt(s.score)));
       scores.append(span);
     }
@@ -1315,10 +1327,10 @@ export class App {
    *  treatment): state-green dot, IN PROGRESS pill, live state,
    *  Resume action. Tapping it resumes — never a review. */
   private inProgressRowEl(summary: SavedSummary): HTMLElement {
-    const row = h("button", { class: "iprow", "aria-label": "Resume game" });
+    const row = h("button", { class: "iprow", "aria-label": tx("ui.app.resume-game", "Resume game") });
     const main = h("span", { class: "ipmain" });
     main.append(
-      h("span", { class: "l1" }, `${summary.round} · ${summary.lengthLabel}`),
+      h("span", { class: "l1" }, tx("ui.app.v-0-1-2", `${summary.round} · ${summary.lengthLabel}`, summary.round, summary.lengthLabel)),
       h("span", { class: "l2" }, tx("ui.app.v-0-1-points", `${summary.standing} · ${fmt(summary.humanScore)} points`, summary.standing, fmt(summary.humanScore))),
     );
     const right = h("span", { class: "ipright" });
@@ -1593,7 +1605,7 @@ export class App {
     const back = h("button", { class: "iconbtn", "aria-label": tx("ui.app.back", "Back") });
     back.innerHTML = `<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>`;
     back.addEventListener("click", () => this.showScreen(this.runner && !this.runner.result ? "table" : this.lastRoot));
-    bar.append(back, h("span", { class: "word" }, "OPEN MAHJONG"), h("span", { class: "iconbtn" }));
+    bar.append(back, h("span", { class: "word" }, tx("ui.app.open-mahjong", "OPEN MAHJONG")), h("span", { class: "iconbtn" }));
     screen.append(bar);
     const page = this.buildPage(title);
     fill(page);
@@ -1620,13 +1632,13 @@ export class App {
           li("Double ron does not pay twice: atama-hane (head bump) — the winner nearest the discarder in turn order takes all."),
           li("Chankan (robbing a kan) applies to shouminkan; against an ankan only kokushi may rob."),
         ),
-        h("h3", {}, "Riichi"),
+        h("h3", {}, tx("ui.app.riichi", "Riichi")),
         h("ul", {},
           li("Riichi costs 1,000 points, needs a closed tenpai hand, at least 1,000 points, and at least 4 tiles left in the wall."),
           li("Ippatsu and double riichi count. After riichi you discard what you draw; an ankan is allowed only if it leaves your waits unchanged."),
           li("Furiten applies in all three forms: discard furiten, temporary furiten (passing a winning tile blocks ron until your next draw), and riichi furiten (permanent after passing in riichi)."),
         ),
-        h("h3", {}, "Dora"),
+        h("h3", {}, tx("ui.app.dora", "Dora")),
         h("ul", {},
           li("One indicator at the start; each kan flips one more (ankan flips before the rinshan draw; open kans flip after it). Uradora are revealed under the indicators when a riichi hand wins."),
           li("Kiriage mangan is OFF: 4 han 30 fu is 7,700 (dealer 11,600), 3 han 60 fu is 7,700 — no rounding up to mangan."),
@@ -1708,7 +1720,7 @@ export class App {
       const lab = h("div", {});
       lab.append(h("div", { class: "lab" }, label), h("div", { class: "note" }, note));
       wrap.append(lab, control);
-      control.querySelector("input")?.setAttribute("aria-label", label);
+      control.querySelector("input")?.setAttribute(tx("ui.app.aria-label", "aria-label"), label);
       return wrap;
     };
     const toggle = (on: boolean, disabled: boolean, onChange: (v: boolean) => void) => {
@@ -1786,7 +1798,7 @@ export class App {
         this.applyTheme();
         if (this.runner) this.renderTable();
       })),
-      row("Guided mode", tx("ui.app.hints-and-explanations-on-the-table-during-cpu-g", "Hints and explanations on the table during CPU games. The same switch is on the Play tab and in the in-game menu."), toggle(this.settings.guided, false, (v) => {
+      row(tx("ui.app.guided-mode", "Guided mode"), tx("ui.app.hints-and-explanations-on-the-table-during-cpu-g", "Hints and explanations on the table during CPU games. The same switch is on the Play tab and in the in-game menu."), toggle(this.settings.guided, false, (v) => {
         this.settings = { ...this.settings, guided: v };
         this.persistSettings();
         if (this.runner) this.renderTable();
@@ -1873,7 +1885,7 @@ export class App {
         // every shipped locale that is a machine translation. Same
         // two-line row, same 13px dim line — no layout change.
         const enLine = isMachineTranslated(meta.id)
-          ? `${meta.english} · ${tx("ui.app.language.machine-translated", "Machine translated")}`
+          ? tx("ui.app.v-0-1-2", `${meta.english} · ${tx("ui.app.language.machine-translated", "Machine translated")}`, meta.english, tx("ui.app.language.machine-translated", "Machine translated"))
           : meta.english;
         names.append(h("div", { class: "en" }, enLine));
       }
@@ -1999,10 +2011,10 @@ export class App {
     el.innerHTML = "";
     const page = h("div", { class: "tabpage" });
     el.append(page);
-    page.append(h("h2", {}, "Games"));
+    page.append(h("h2", {}, tx("ui.app.games", "Games")));
     if (VARIANT_RELEASES.some(v=>v.released)) {
       const picker=h("select",{"aria-label":tx("ui.app.games-variant", "Games variant"),class:"play-variant"});
-      for (const [id,name] of [["riichi","Riichi"],...VARIANT_RELEASES.filter(v=>v.released).map(v=>[v.id,v.name])]) picker.append(h("option",{value:id!},name!));
+      for (const [id,name] of [["riichi",tx("ui.app.riichi", "Riichi")],...VARIANT_RELEASES.filter(v=>v.released).map(v=>[v.id,v.name])]) picker.append(h("option",{value:id!},name!));
       picker.value=selectedVariant;picker.addEventListener("change",()=>{this.historyVariant=picker.value as VariantId | "riichi";void this.renderGames();});page.append(picker);
     }
     const east = rows.filter((r) => r.length === "east").length;
@@ -2442,7 +2454,7 @@ export class App {
       const d = h("span", { class: "dealer" }, tx("ui.app.v-0-you", `${wind} · You`, wind));
       chip.append(d, document.createTextNode(`  `));
     } else {
-      chip.append(document.createTextNode(`${wind}${p.riichi ? " " + tx("ui.app.riichi-2", "· Riichi") : ""}  `));
+      chip.append(document.createTextNode(tx("ui.app.v-0-1", `${wind}${p.riichi ? " " + tx("ui.app.riichi-2", "· Riichi") : ""}`, wind, p.riichi ? " " + tx("ui.app.riichi-2", "· Riichi") : "") + "  "));
     }
     chip.append(h("b", {}, fmt(p.score)));
     return chip;
@@ -2469,7 +2481,7 @@ export class App {
       seq.push({ tile: meld.calledTile, side: true });
     }
     for (const { tile, side } of seq) {
-      wrap.append(tileEl(tile, `${cls} ${side ? "side" : ""}`));
+      wrap.append(tileEl(tile, tx("ui.app.v-0-1-3", `${cls} ${side ? "side" : ""}`, cls, side ? "side" : "")));
     }
     return wrap;
   }
@@ -2523,7 +2535,7 @@ export class App {
       if (this.lesson) this.showLessonMenu();
       else this.showPause();
     });
-    const soundBtn = h("button", { class: "iconbtn", "aria-label": "Sound" });
+    const soundBtn = h("button", { class: "iconbtn", "aria-label": tx("ui.app.sound", "Sound") });
     soundBtn.innerHTML = this.settings.sound ? ICON_SOUND_ON : ICON_SOUND_OFF;
     soundBtn.addEventListener("click", () => {
       this.settings = { ...this.settings, sound: !this.settings.sound };
@@ -2531,7 +2543,7 @@ export class App {
       this.persistSettings();
       this.renderTable();
     });
-    header.append(menuBtn, h("span", { class: "word" }, "OPEN MAHJONG"), soundBtn);
+    header.append(menuBtn, h("span", { class: "word" }, tx("ui.app.open-mahjong", "OPEN MAHJONG")), soundBtn);
     t.append(header);
 
     // Lesson surfaces (§9, tutorial renderings): a finished lesson
@@ -2622,7 +2634,7 @@ export class App {
       for (const child of [...t.children]) {
         if (child !== dialog && child !== scrim && child instanceof HTMLElement) child.inert = true;
       }
-      accessibleDialog(dialog, this.frame.kind === "hand" ? "Your hand" : this.frame.kind === "guide" || this.frame.kind === "moment" ? "Why this move?" : this.frame.kind === "center" ? "Round details" : "Player details", () => this.closeFrame());
+      accessibleDialog(dialog, this.frame.kind === "hand" ? tx("ui.app.your-hand-2", "Your hand") : this.frame.kind === "guide" || this.frame.kind === "moment" ? tx("ui.app.why-this-move", "Why this move?") : this.frame.kind === "center" ? "Round details" : "Player details", () => this.closeFrame());
     }
 
     // Guided hint overlay (HINT PLACEMENT ruling): a floating layer
@@ -2763,7 +2775,7 @@ export class App {
       center.append(sr);
     }
     const dr = h("div", { class: "dorarow" });
-    dr.append(h("span", { class: "lbl" }, "Dora"));
+    dr.append(h("span", { class: "lbl" }, tx("ui.app.dora", "Dora")));
     for (const ind of m.doraIndicators) dr.append(tileEl(ind, "t-dora", { flip: false }));
     // Unrevealed indicator slots ride face-down beside the revealed ones
     // (the approved base state shows indicator + two backs).
@@ -3208,7 +3220,7 @@ export class App {
     const momentHint = (): HTMLElement | null => {
       const grade = this.guideMoment();
       if (!grade) return null;
-      const b = h("button", { class: "cbtn momenthint", "aria-label": "Why this move?" }, grade.advice.headline);
+      const b = h("button", { class: "cbtn momenthint", "aria-label": tx("ui.app.why-this-move", "Why this move?") }, grade.advice.headline);
       b.addEventListener("click", () => {
         this.sound.unlock();
         this.openFrame({ kind: "moment" });
@@ -3228,7 +3240,7 @@ export class App {
         if (ctx.chiOptions.length === 1) {
           row.append(btn(tx("ui.app.chi", "Chi"), "chi", () => this.humanAct({ type: "chi", tileIds: ctx.chiOptions[0]! })));
         } else if (ctx.chiOptions.length > 1) {
-          row.append(btn("Chi", "chi", () => this.openFrame({ kind: "hand", mode: "chi" })));
+          row.append(btn(tx("ui.app.chi", "Chi"), "chi", () => this.openFrame({ kind: "hand", mode: "chi" })));
         }
       }
       row.append(btn(tx("ui.app.pass", "Pass"), "pass", () => this.humanAct({ type: "pass" })));
@@ -3247,7 +3259,7 @@ export class App {
 
     if (this.riichiArmed) {
       row.classList.add("show");
-      row.append(btn("Riichi", "riichi", () => {}));
+      row.append(btn(tx("ui.app.riichi", "Riichi"), "riichi", () => {}));
       row.append(btn(tx("ui.app.cancel", "Cancel"), "pass", () => {
         this.riichiArmed = false;
         this.renderTable();
@@ -3266,21 +3278,21 @@ export class App {
     }
     if (selectedRiichi) {
       row.classList.add("show");
-      row.append(btn("Riichi", "riichi", () =>
+      row.append(btn(tx("ui.app.riichi", "Riichi"), "riichi", () =>
         this.humanAct({ type: "discard", tileId: selected!.id, riichi: true }),
       ));
       // Same stake statement as the armed row: this button declares
       // immediately, so the cost stands next to it before the tap.
       row.append(
-        h("span", { class: "pill" }, "Costs 1,000 points — paid as a stake"),
+        h("span", { class: "pill" }, tx("ui.app.costs-1-000-points-paid-as-a-stake", "Costs 1,000 points — paid as a stake")),
       );
     } else if (ctx.riichiDiscardIds.length > 0 && !this.riichiDismissed && !selected) {
       row.classList.add("show");
-      row.append(btn("Riichi", "riichi", () => {
+      row.append(btn(tx("ui.app.riichi", "Riichi"), "riichi", () => {
         this.riichiArmed = true;
         this.renderTable();
       }));
-      row.append(btn("Pass", "pass", () => {
+      row.append(btn(tx("ui.app.pass", "Pass"), "pass", () => {
         this.riichiDismissed = true;
         this.renderTable();
       }));
@@ -3291,10 +3303,10 @@ export class App {
         ctx.ankanOptions.length === 1
           ? { type: "ankan", tileType: ctx.ankanOptions[0]! }
           : { type: "shouminkan", tileType: ctx.shouminkanOptions[0]! };
-      row.append(btn("Kan", "pon", () => this.humanAct(action)));
+      row.append(btn(tx("ui.app.kan", "Kan"), "pon", () => this.humanAct(action)));
     } else if (kanCount > 1) {
       row.classList.add("show");
-      row.append(btn("Kan", "pon", () => this.openFrame({ kind: "hand", mode: "kan" })));
+      row.append(btn(tx("ui.app.kan", "Kan"), "pon", () => this.openFrame({ kind: "hand", mode: "kan" })));
     }
     if (ctx.canKyuushu) {
       row.classList.add("show");
@@ -3349,7 +3361,7 @@ export class App {
     const head = h("div", { class: "fhead" });
     const left = h("div", {});
     left.append(h("div", { class: "ftitle" }, title), h("div", { class: "fsub" }, sub));
-    const close = h("button", { class: "fclose", "aria-label": "Close" });
+    const close = h("button", { class: "fclose", "aria-label": tx("ui.app.close", "Close") });
     close.innerHTML = ICON_CLOSE;
     close.addEventListener("click", () => this.closeFrame());
     head.append(left, close);
@@ -3360,13 +3372,13 @@ export class App {
   private playerFrameEl(seat: Seat): HTMLElement {
     const m = this.model;
     const p = m.players[seat]!;
-    const title = `${WIND_NAMES[p.seatWind]}${seat === this.humanSeat ? " " + tx("ui.app.you", "· You") : ""}`;
+    const title = tx("ui.app.v-0-1", `${WIND_NAMES[p.seatWind]}${seat === this.humanSeat ? " " + tx("ui.app.you", "· You") : ""}`, WIND_NAMES[p.seatWind], seat === this.humanSeat ? " " + tx("ui.app.you", "· You") : "");
     const { frame } = this.frameShell(
       title,
       tx("ui.app.v-0-points-1", `${fmt(p.score)} points${p.isDealer ? " " + tx("ui.app.dealer", "· Dealer") : ""}`, fmt(p.score), p.isDealer ? " " + tx("ui.app.dealer", "· Dealer") : ""),
     );
     if (p.riichi) {
-      frame.querySelector(".ftitle")!.append(h("span", { class: "pill" }, p.doubleRiichi ? "Double Riichi" : "Riichi"));
+      frame.querySelector(".ftitle")!.append(h("span", { class: "pill" }, p.doubleRiichi ? tx("ui.app.double-riichi", "Double Riichi") : tx("ui.app.riichi", "Riichi")));
     }
     frame.append(h("div", { class: "fsec" }, tx("ui.app.discards", "DISCARDS")));
     const fpond = h("div", { class: "fpond" });
@@ -3428,7 +3440,7 @@ export class App {
     const crow = h("div", { class: "crow" });
     crow.append(
       h("span", { class: "wind kj" }, WIND_KANJI[m.roundWind]!),
-      h("span", { class: "rname" }, `${WIND_NAMES[m.roundWind]} ${m.kyoku}`),
+      h("span", { class: "rname" }, tx("ui.app.v-0-1-3", `${WIND_NAMES[m.roundWind]} ${m.kyoku}`, WIND_NAMES[m.roundWind], m.kyoku)),
     );
     frame.append(crow);
     frame.append(h("div", { class: "fsec" }, tx("ui.app.dora-indicator-shows-dora", "DORA — INDICATOR SHOWS DORA")));
@@ -3453,14 +3465,14 @@ export class App {
       who.append(
         h("b", {}, WIND_NAMES[p.seatWind]!),
         document.createTextNode(
-          `${seat === this.humanSeat ? " · You" : ""}${p.isDealer ? " · Dealer" : ""}${p.riichi ? " · Riichi" : ""}`,
+          tx("ui.app.v-0-1-2-3", `${seat === this.humanSeat ? " " + tx("ui.app.you", "· You") : ""}${p.isDealer ? " " + tx("ui.app.dealer", "· Dealer") : ""}${p.riichi ? " " + tx("ui.app.riichi-2", "· Riichi") : ""}`, seat === this.humanSeat ? " " + tx("ui.app.you", "· You") : "", p.isDealer ? " " + tx("ui.app.dealer", "· Dealer") : "", p.riichi ? " " + tx("ui.app.riichi-2", "· Riichi") : ""),
         ),
       );
       row.append(who, h("span", {}, fmt(p.score)));
       frame.append(row);
     }
     if (this.runner?.pending?.kind === "turn" && !this.playing) {
-      frame.append(h("div", { class: "turnbanner" }, "Your turn — close this view to play."));
+      frame.append(h("div", { class: "turnbanner" }, tx("ui.app.your-turn-close-this-view-to-play", "Your turn — close this view to play.")));
     }
     return frame;
   }
@@ -3508,7 +3520,7 @@ export class App {
     const sheet = h("div", { class: "sheet xsheet" });
     const pending = this.runner?.pending;
     const advice = this.guideAdvice();
-    const { frame: headShell } = this.frameShell("Guided hint", "");
+    const { frame: headShell } = this.frameShell(tx("ui.app.guided-hint", "Guided hint"), "");
     headShell.querySelector(".fsub")?.remove(); // rendering C: no sub line
     sheet.append(...headShell.childNodes);
     sheet.firstElementChild!.classList.remove("frame");
@@ -3557,7 +3569,7 @@ export class App {
         if (triplets > 0) parts.push(tx("ui.app.v-0-triplet-1", `${numWord[triplets] ?? triplets} triplet${triplets > 1 ? "s" : ""}`, numWord[triplets] ?? triplets, triplets > 1 ? "s" : ""));
         if (runs > 0) parts.push(tx("ui.app.v-0-run-1", `${numWord[runs] ?? runs} run${runs > 1 ? "s" : ""}`, numWord[runs] ?? runs, runs > 1 ? "s" : ""));
         const list = parts.length > 1
-          ? `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`
+          ? tx("ui.app.v-0-and-1", `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`, parts.slice(0, -1).join(", "), parts[parts.length - 1])
           : parts[0]!;
         composition = " " + tx("ui.app.you-have-0-one-group-is-still-open", `You have ${list}; one group is still open.`, list);
       }
@@ -3623,7 +3635,7 @@ export class App {
       const partners = [rank - 2, rank - 1, rank + 1, rank + 2].filter((r) => r >= 1 && r <= 9);
       const partnerList = partners.length > 1
         ? tx("ui.app.v-0-or-1", `${partners.slice(0, -1).join(", ")} or ${partners[partners.length - 1]}`, partners.slice(0, -1).join(", "), partners[partners.length - 1])
-        : `${partners[0] ?? ""}`;
+        : tx("ui.app.v-0", `${partners[0] ?? ""}`, partners[0] ?? "");
       const isolated = suited
         ? tx("ui.app.the-0-connects-to-nothing-no-second-copy-to-pair", `The ${recName} connects to nothing — no second copy to pair with, no ${partnerList} of ${suitName} to make a run.`, recName, partnerList, suitName)
         : tx("ui.app.the-0-connects-to-nothing-no-second-copy-to-pair-2", `The ${recName} connects to nothing — no second copy to pair with.`, recName);
@@ -3693,7 +3705,7 @@ export class App {
           }
         }
         const partsSentence = parts.length > 0
-          ? `${parts.join(", ")[0]!.toUpperCase()}${parts.join(", ").slice(1)}`
+          ? tx("ui.app.v-0-1", `${parts.join(", ")[0]!.toUpperCase()}${parts.join(", ").slice(1)}`, parts.join(", ")[0]!.toUpperCase(), parts.join(", ").slice(1))
           : "";
         const indSentences: string[] = [];
         const seenInd = new Set<TileType>();
@@ -3840,7 +3852,7 @@ export class App {
           class: "hbtn primary",
           "aria-label": tx("ui.app.chi-0", `Chi — ${faces.map((f) => tileLabel(f.tile)).join(", ")}`, faces.map((f) => tileLabel(f.tile)).join(", ")),
         });
-        b.append(h("span", {}, "Chi"), chiFacesEl(faces));
+        b.append(h("span", {}, tx("ui.app.chi", "Chi")), chiFacesEl(faces));
         b.addEventListener("click", () => {
           this.sound.unlock();
           this.closeFrame();
@@ -3876,7 +3888,7 @@ export class App {
         }));
       }
       if (ctx.canTsumo) {
-        act.append(hbtn("Tsumo", "decisive", () => {
+        act.append(hbtn(tx("ui.app.tsumo", "Tsumo"), "decisive", () => {
           this.closeFrame();
           this.humanAct({ type: "tsumo" });
         }));
@@ -3888,18 +3900,18 @@ export class App {
         }));
       }
       if (ctx.canKyuushu) {
-        act.append(hbtn("Kyuushu", "", () => {
+        act.append(hbtn(tx("ui.app.kyuushu", "Kyuushu"), "", () => {
           this.closeFrame();
           this.humanAct({ type: "kyuushu" });
         }));
       }
     } else if (pending?.kind === "call" && !this.playing) {
       const ctx = pending.ctx;
-      if (ctx.canRon) act.append(hbtn("Ron", "decisive", () => {
+      if (ctx.canRon) act.append(hbtn(tx("ui.app.ron", "Ron"), "decisive", () => {
         this.closeFrame();
         this.humanAct({ type: "ron" });
       }));
-      if (ctx.phase === "call" && pending.ponDecidable && ctx.canPon) act.append(hbtn("Pon", "primary", () => {
+      if (ctx.phase === "call" && pending.ponDecidable && ctx.canPon) act.append(hbtn(tx("ui.app.pon", "Pon"), "primary", () => {
         this.closeFrame();
         this.humanAct({ type: "pon" });
       }));
@@ -3909,7 +3921,7 @@ export class App {
           this.renderTable();
         }));
       }
-      act.append(hbtn("Pass", "", () => {
+      act.append(hbtn(tx("ui.app.pass", "Pass"), "", () => {
         this.closeFrame();
         this.humanAct({ type: "pass" });
       }));
@@ -4137,7 +4149,7 @@ export class App {
         st.append(document.createTextNode(tx("ui.app.done", "Done")));
         row.append(st);
       } else if (isActive) {
-        row.append(h("span", { class: "st now" }, "In progress"));
+        row.append(h("span", { class: "st now" }, tx("ui.app.in-progress-2", "In progress")));
       }
       row.insertAdjacentHTML(
         "beforeend",
@@ -4170,7 +4182,7 @@ export class App {
     });
     head.append(
       h("span", { class: "secttl" }, release.id === "mcr" ? tx("ui.app.mcr-mahjong-competition-rules", "MCR (Mahjong Competition Rules)") : release.name),
-      h("span", { class: "seccount" }, `${doneCount} of ${lessons.length} lessons done`),
+      h("span", { class: "seccount" }, tx("ui.app.v-0-of-1-lessons-done", `${doneCount} of ${lessons.length} lessons done`, doneCount, lessons.length)),
     );
     head.insertAdjacentHTML(
       "beforeend",
@@ -4210,10 +4222,10 @@ export class App {
       if (done) {
         const st = h("span", { class: "st" });
         st.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>`;
-        st.append(document.createTextNode("Done"));
+        st.append(document.createTextNode(tx("ui.app.done", "Done")));
         row.append(st);
       } else if (isActive) {
-        row.append(h("span", { class: "st now" }, "In progress"));
+        row.append(h("span", { class: "st now" }, tx("ui.app.in-progress-2", "In progress")));
       }
       row.insertAdjacentHTML(
         "beforeend",
@@ -4243,7 +4255,7 @@ export class App {
     });
     head.append(
       h("span", { class: "secttl" }, section.title),
-      h("span", { class: "seccount" }, `${doneCount} of ${section.modules.length} lessons done`),
+      h("span", { class: "seccount" }, tx("ui.app.v-0-of-1-lessons-done", `${doneCount} of ${section.modules.length} lessons done`, doneCount, section.modules.length)),
     );
     head.insertAdjacentHTML(
       "beforeend",
@@ -4278,10 +4290,10 @@ export class App {
       if (isDone) {
         const st = h("span", { class: "st" });
         st.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>`;
-        st.append(document.createTextNode("Done"));
+        st.append(document.createTextNode(tx("ui.app.done", "Done")));
         row.append(st);
       } else if (isActive) {
-        row.append(h("span", { class: "st now" }, "In progress"));
+        row.append(h("span", { class: "st now" }, tx("ui.app.in-progress-2", "In progress")));
       } else {
         row.append(h("span", { class: "st" }, tx("ui.app.v-0-min", `${mod.minutes} min`, mod.minutes)));
       }
@@ -4376,7 +4388,7 @@ export class App {
       h("div", { class: "sub" }, tx("ui.app.your-place-in-the-lesson-is-saved", "Your place in the lesson is saved.")),
     );
     const col = h("div", { class: "col" });
-    const resume = h("button", { class: "pillbtn primary" }, "Resume");
+    const resume = h("button", { class: "pillbtn primary" }, tx("ui.app.resume", "Resume"));
     resume.addEventListener("click", () => this.dismissOverlay(overlay));
     const leave = h("button", { class: "pillbtn" }, tx("ui.app.leave-lesson", "Leave lesson"));
     leave.addEventListener("click", () => {
@@ -4412,7 +4424,7 @@ export class App {
       if (inspectable) {
         w.classList.add("stripinspect");
         w.setAttribute("role", "button");
-        w.setAttribute("aria-label", tx("ui.app.inspect-the-0", `Inspect the ${tileLabel(tile)}`, tileLabel(tile)));
+        w.setAttribute(tx("ui.app.aria-label", "aria-label"), tx("ui.app.inspect-the-0", `Inspect the ${tileLabel(tile)}`, tileLabel(tile)));
         w.addEventListener("click", () => {
           if (this.lessonIndexRevealed.has(key)) this.lessonIndexRevealed.delete(key);
           else this.lessonIndexRevealed.add(key);
@@ -4456,7 +4468,7 @@ export class App {
         btn.classList.add("callopt");
         btn.append(chiFacesEl(b.faces.map((f) => ({ tile: tileById(f.id), ...(f.side ? { side: true as const } : {}) }))));
         btn.setAttribute(
-          "aria-label",
+          tx("ui.app.aria-label", "aria-label"),
           tx("ui.app.v-0-1-4", `${b.label} — ${b.faces.map((f) => tileLabel(tileById(f.id))).join(", ")}`, b.label, b.faces.map((f) => tileLabel(tileById(f.id))).join(", ")),
         );
       }
@@ -4547,7 +4559,7 @@ export class App {
     wrap.append(panel);
     const prog = h("div", { class: "progrow" });
     prog.append(
-      h("p", { class: "count" }, `${this.tutorial.done.length} of ${MODULES.length} lessons done`),
+      h("p", { class: "count" }, tx("ui.app.v-0-of-1-lessons-done", `${this.tutorial.done.length} of ${MODULES.length} lessons done`, this.tutorial.done.length, MODULES.length)),
     );
     const bar = h("div", { class: "progbar" });
     const fill = h("i");
@@ -4604,7 +4616,7 @@ export class App {
       return b;
     };
     col.append(
-      mk("Resume", "primary", () => this.dismissOverlay(overlay)),
+      mk(tx("ui.app.resume", "Resume"), "primary", () => this.dismissOverlay(overlay)),
       mk(this.settings.guided ? tx("ui.app.guided-on", "Guided: on") : tx("ui.app.guided-off", "Guided: off"), "ghost", () => {
         this.settings = { ...this.settings, guided: !this.settings.guided };
         this.persistSettings();
@@ -4689,34 +4701,36 @@ export class App {
     let yakuHan = 0;
     const open = win.winnerMelds.some((meld) => meld.kind !== "ankan");
     for (const id of win.yaku) {
-      const [name, closedHan] = YAKU[id] ?? [id, 0];
+      const entry = YAKU[id];
+      const nameKey = entry?.key ?? id;
+      const closedHan = entry?.han ?? 0;
       const han = win.yakuDetails?.find((yaku) => yaku.id === id)?.han ??
         (open && ["ittsu", "sanshoku-doujun", "honchan", "junchan", "honitsu", "chinitsu"].includes(id) ? closedHan - 1 : closedHan);
       yakuHan += han;
       const row = h("div", { class: "row" });
-      row.append(h("span", {}, name), h("span", { class: "han" }, win.yakumanMultiple > 0 ? tx("ui.app.yakuman", "Yakuman") : tx("ui.app.v-0-han", `${han} han`, han)));
+      row.append(h("span", {}, t(nameKey)), h("span", { class: "han" }, win.yakumanMultiple > 0 ? tx("ui.app.yakuman", "Yakuman") : tx("ui.app.v-0-han", `${han} han`, han)));
       yakuBox.append(row);
     }
     if (win.yakumanMultiple === 0) {
       const dora = win.dora ?? Math.max(0, win.han - yakuHan);
       if (dora > 0) {
         const row = h("div", { class: "row" });
-        row.append(h("span", {}, "Dora"), h("span", { class: "han" }, `${dora} han`));
+        row.append(h("span", {}, tx("ui.app.dora", "Dora")), h("span", { class: "han" }, tx("ui.app.v-0-han", `${dora} han`, dora)));
         yakuBox.append(row);
       }
       const total = h("div", { class: "row total" });
       const gained = win.payments.reduce((s, p) => s + p.amount, 0) + win.stickPoints;
       total.append(
         h("span", {}, tx("ui.app.v-0-han-1-fu", `${win.han} han · ${win.fu} fu`, win.han, win.fu)),
-        h("span", {}, `${fmt(gained)}`),
+        h("span", {}, tx("ui.app.v-0", `${fmt(gained)}`, fmt(gained))),
       );
       yakuBox.append(total);
     } else {
       const total = h("div", { class: "row total" });
       const gained = win.payments.reduce((s, p) => s + p.amount, 0) + win.stickPoints;
       total.append(
-        h("span", {}, win.yakumanMultiple > 1 ? tx("ui.app.yakuman-0", `Yakuman ×${win.yakumanMultiple}`, win.yakumanMultiple) : "Yakuman"),
-        h("span", {}, `${fmt(gained)}`),
+        h("span", {}, win.yakumanMultiple > 1 ? tx("ui.app.yakuman-0", `Yakuman ×${win.yakumanMultiple}`, win.yakumanMultiple) : tx("ui.app.yakuman", "Yakuman")),
+        h("span", {}, tx("ui.app.v-0", `${fmt(gained)}`, fmt(gained))),
       );
       yakuBox.append(total);
     }
@@ -4760,7 +4774,7 @@ export class App {
     if (drawn.kind === "abortive") {
       card.append(
         h("h2", {}, tx("ui.app.hand-drawn", "Hand drawn")),
-        h("div", { class: "sub" }, ABORTIVE_NAMES[drawn.abortive ?? ""] ?? tx("ui.app.abortive-draw", "Abortive draw")),
+        h("div", { class: "sub" }, t(ABORTIVE_NAMES[drawn.abortive ?? ""]?.key ?? ABORTIVE_DRAW_FALLBACK.key)),
         h("p", { class: "dim" }, tx("ui.app.the-hand-restarts-with-one-more-honba-the-repeat", "The hand restarts with one more honba — the repeat counter rises by one. The dealer repeats.")),
       );
       return;
@@ -4789,17 +4803,17 @@ export class App {
     const screen = this.screens.get("results")!;
     screen.innerHTML = "";
     const bar = h("header", { class: "bar" });
-    bar.append(h("span", { class: "iconbtn" }), h("span", { class: "word" }, "OPEN MAHJONG"), h("span", { class: "iconbtn" }));
+    bar.append(h("span", { class: "iconbtn" }), h("span", { class: "word" }, tx("ui.app.open-mahjong", "OPEN MAHJONG")), h("span", { class: "iconbtn" }));
     screen.append(bar);
-    const page = this.buildPage("Final results");
+    const page = this.buildPage(tx("ui.app.final-results", "Final results"));
     const table = h("div", { class: "results-table" });
     const sorted = [...result.settlement].sort((a, b) => a.rank - b.rank || a.seat - b.seat);
     for (const entry of sorted) {
       const p = this.model.players[entry.seat]!;
       const row = h("div", { class: "row" });
-      const pts = `${entry.points > 0 ? "+" : ""}${formatStandingsPoints(entry.points)}`;
+      const pts = tx("ui.app.v-0-1", `${entry.points > 0 ? "+" : ""}${formatStandingsPoints(entry.points)}`, entry.points > 0 ? "+" : "", formatStandingsPoints(entry.points));
       row.append(
-        h("span", { class: "rank" }, `${entry.rank}`),
+        h("span", { class: "rank" }, tx("ui.app.v-0", `${entry.rank}`, entry.rank)),
         h("span", { class: "who" }, entry.seat === this.humanSeat ? tx("ui.app.you-3", "You") : WIND_NAMES[p.seatWind]!),
         h("span", { class: "score" }, fmt(entry.score)),
         h("span", { class: `pts ${entry.points > 0 ? "pos" : entry.points < 0 ? "neg" : ""}` }, pts),
