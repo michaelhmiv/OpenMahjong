@@ -19,7 +19,7 @@ import {
 } from "./education/variant-progress.js";
 import { trackLessonCompleted, trackLessonStarted } from "./analytics.js";
 import { tileIndexEl } from "./tile-index.js";
-import { tx } from "./i18n/index.js";
+import { slugify, t, tx } from "./i18n/index.js";
 function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
   text = "",
@@ -299,17 +299,23 @@ export function mountVariantEducation(
     const rows = el("div");
     const drawReference = () => {
       rows.replaceChildren();
-      for (const p of mcrPatternGuide().filter((p) =>
-        `${p.name} ${p.family} ${p.description}`
-          .toLowerCase()
-          .includes(search.value.toLowerCase()),
-      )) {
+      for (const p of mcrPatternGuide()) {
+        // Pattern text lives in the module-scope guide record (the
+        // extractor's source); resolve each field via its derived key
+        // so the reference reads in the session locale. Search matches
+        // the displayed (translated) text.
+        const slug = slugify(p.name);
+        const name = t(`learn.mcr.guide.pattern.${slug}.name`);
+        const family = t(`learn.mcr.guide.pattern.${slug}.family`);
+        const description = t(`learn.mcr.guide.pattern.${slug}.recognition`);
+        const restrictions = t(`learn.mcr.guide.pattern.${slug}.exclusions`);
+        if (!`${name} ${family} ${description}`.toLowerCase().includes(search.value.toLowerCase())) continue;
         const d = el("details");
         d.append(
-          el("summary", tx("learn.variant.ui.v-0-1-fan", `${p.name} · ${p.units} fan`, p.name, p.units)),
-          el("p", p.family, "dim"),
-          el("p", p.description),
-          el("p", p.restrictions),
+          el("summary", tx("learn.variant.ui.v-0-1-fan", `${name} · ${p.units} fan`, name, p.units)),
+          el("p", family, "dim"),
+          el("p", description),
+          el("p", restrictions),
         );
         rows.append(d);
       }

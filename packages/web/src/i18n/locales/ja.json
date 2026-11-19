@@ -5,7 +5,7 @@
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
     "generatedAt": "2026-11-19T11:41:05.131Z",
-    "keyCount": 3700,
+    "keyCount": 3754,
     "model": "google/gemini-2.5-flash",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -13806,996 +13806,6 @@
       },
       "placeholders": []
     },
-    "learn.mcr.guide.a-different-legal-completion-elsewhere-in-the-ha": {
-      "value": "手牌の他の場所で別の合法的な完成形がある場合、単独待ちを無効にします。待ちの種類の点数は1つだけ使用されます。",
-      "hash": "c084d2dca8cd4959ae24209c2364223942d9ab343545efc4257fbceef8fa1fc2",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 396
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.a-higher-pattern-that-necessarily-requires-all-t": {
-      "value": "すべての刻子を必然的に必要とする上位の役は、指定された場合、この役を置き換えます。",
-      "hash": "cadd6cb71889f09fa3e2033b5a9e2099092afcebc3727bec36120d5697cca858",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 251
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.a-sequence-qualifies-only-as-123-or-789-all-term": {
-      "value": "順子は123または789としてのみ成立します。清老頭、字一色、混老頭はこれを置き換えます。",
-      "hash": "05a6682f8f257d0e8e2db9943d5f7400ff372e0bdcf5f58386da7288fb4ed109",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 286
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.a-thrown-tile-completing-a-triplet-makes-that-tr": {
-      "value": "捨て牌で刻子を完成させた場合、その刻子はこのカウントでは鳴いたものとみなされます。対々和と門前清は除きます。",
-      "hash": "96cc08d68c06755da7b4dcb3d456c20024764fd167f74a86b8f1402cf9907286",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 71
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.a-thrown-tile-completing-one-of-these-triplets-m": {
-      "value": "これらの刻子のいずれかを完成させる捨て牌は、このカウントのためにその刻子を明刻とします。二つの暗刻のパターンは除きます。",
-      "hash": "a0b7cffcdcc5838ee096f98679e9695cf03459d3b693b13b9521e9024d13f82c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 176
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.a-triplet-completed-by-a-thrown-tile-counts-as-m": {
-      "value": "捨て牌によって完成した刻子はこのカウントのために明刻と数えられます。三暗刻と四暗刻のパターンはこれに取って代わります。",
-      "hash": "37366f83c3c79c7ebaa8e3912e47257c481fc08d158d2201e733198eab195fba",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 341
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.all-three-suits-must-be-different-these-sets-are": {
-      "value": "3つの数牌はすべて異なる種類でなければなりません。これらのセットは、重複しないルールのもとで一緒に考慮されます。",
-      "hash": "5e3601ded24d13164cfc488a51d54c44e0234951341c4da381663fe9de3eb006",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 206
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.an-honor-pair-disqualifies-this-pattern-excludes": {
-      "value": "字牌の対子は、このパターンを無効にします。字牌なしは除外されます。",
-      "hash": "e396967dde4d567f7985c2bcfa05ac176dd375e9ae064763c00dd5041f31e1f7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 326
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.award-exactly-eight-for-this-condition-flowers-m": {
-      "value": "この条件に対して正確に8翻を与えます。花牌は追加できますが、他の役は鶏和を除外します。",
-      "hash": "4bebadaa815e14768293ec87f72ff0f9ef8219a43feb0965272d0988a32195db",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 226
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.both-suited-tiles-and-honors-must-appear-exclude": {
-      "value": "数牌と字牌の両方が含まれている必要があります。混一色を除きます。",
-      "hash": "2b3e5911c52b20cf7968fb10e264ac5a6e5e1256f2e004f9956800f6af7b33dd",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 256
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.can-combine-with-seat-wind-for-the-same-set-when": {
-      "value": "同じ風牌のセットの場合、場風と自風を組み合わせることができます。その同じ役に対して、么九牌/字牌の刻子の点を追加しないでください。",
-      "hash": "fda39faa89ae9adca0d743c46328082df0ec60cd32aa4b4c608d06f5372b9d67",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 311
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.claim-all-four-sets-from-other-players-thrown-ti": {
-      "value": "他のプレイヤーの捨て牌から4つのセットすべてを鳴き、対子を完成させる捨て牌で和了します。",
-      "hash": "2767a6bd23f26f83eb64c50085b33dbf2aab8ed1ea3fb3d99b61d129474323fc",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 270
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.collect-every-terminal-and-honor-kind-then-dupli": {
-      "value": "すべての么九牌と字牌の種類を集め、その13種類のいずれかを重複させます。",
-      "hash": "269db2b80ca5614d79c2eae7a9b04ee3e4e744e710fb6fa9591a166ecd5e199f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 45
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.complete-four-triplets-or-quads-without-taking-t": {
-      "value": "他のプレイヤーから完成牌を取らずに、4つの刻子または槓子を完成させます。",
-      "hash": "2c983eb1a7cdb5dba13c4ae9ef3f2173a93e4b27aacbe66d6e6f9069f1cf402c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 70
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.complete-two-triplets-or-quads-without-taking-th": {
-      "value": "他のプレイヤーから完成牌を取らずに、2つの刻子または槓子を完成させます。",
-      "hash": "91419a4f901de362dbd38222e464d78a1df5fe8ce418299aa6652ad8e249a214",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 340
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.concealed-special-structure-excludes-all-types-c": {
-      "value": "暗刻の特殊な構造。全帯幺、暗刻役、単騎待ちを除きます。",
-      "hash": "ec1c1a6aa5df5f80bff56c0a443704593f0028bb4d843d1ab3274db4179c3e9d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 46
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.concealment-and-winning": {
-      "value": "面子構成と和了",
-      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 224
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.count-different-four-copy-kinds-separately-excep": {
-      "value": "異なる4枚組の種類を個別に数えます。ただし、上位の役がそれらの4枚組を明示的に含む場合は除きます。",
-      "hash": "7f64196e9c9372ac99f0bed58a2a3da315c8df91870172c72dfd3b21998a198c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 331
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.declare-a-melded-quad-by-claiming-a-thrown-tile": {
-      "value": "捨て牌を鳴くか、明刻に4枚目の牌を追加することで、明槓を宣言します。",
-      "hash": "7018e17ce102745b08457dea71d00e495c349304222c0907474eb9b8e6b7ad06",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 380
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.declare-four-identical-concealed-tiles-as-a-quad": {
-      "value": "同じ暗刻の牌4枚を槓子として宣言し、嶺上牌を引きます。",
-      "hash": "c31b4108d42727d522623aa5942c1aa2c8bd4d953e16f213034bb7fa88fc951a",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 345
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.declare-four-quads-and-complete-the-pair": {
-      "value": "4つの槓子を宣言し、対子を完成させます。",
-      "hash": "b520f84fb1a4b2cf56e667b342df04a4d259825976d96f2c1130883dc4475c2e",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 35
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.declare-three-quads-concealed-or-melded": {
-      "value": "暗槓または明槓の3つの槓子を宣言します。",
-      "hash": "a59fcf7cd1e3bfb816722d68b95cfed3ba5b987c8d9d252be22775ec19675d96",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 95
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.declare-two-concealed-quads": {
-      "value": "2つの暗槓を宣言します。",
-      "hash": "47266da70189b627430e3c148679d0c4a4863cc4e496295330e1f405466b5267",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 275
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.declare-two-melded-quads-whether-claimed-directl": {
-      "value": "直接鳴いたか、明刻に4枚目の牌を追加して作ったかにかかわらず、2つの明槓を宣言します。",
-      "hash": "b395b7a134eac94a8a70e182def745708a1da84fe48b035de3b8def6afe3defb",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 295
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.do-not-reinterpret-the-same-tiles-as-a-triple-se": {
-      "value": "同じ牌を同じ得点構成で三連刻として再解釈しないでください。",
-      "hash": "09c8e1d48ae9d4a40665a238dd2249cccc5470e5eeec49cff9f82edad40f6aca",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 131
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.do-not-reuse-the-same-required-combination-as-an": {
-      "value": "同じ必須の組み合わせを、このパターンの別のインスタンスとして再利用しないでください。",
-      "hash": "a3587263c0ce17a27852fd6aab0314cfa4d373ce8709424f61e469f12914f7e0",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 261
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.dragons-seat-winds-and-round-winds-use-their-own": {
-      "value": "三元牌、自風牌、場風牌はそれぞれ独自の役を持ちます。上位の風牌または么九牌/字牌の役は、この点を排除する場合があります。",
-      "hash": "21fb06f50c2a30cf7b19320a361feb4de1c88ef51d46dcb46a6b06269b9a1658",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 376
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.draw-the-last-tile-of-the-wall-yourself-and-win": {
-      "value": "自分で山牌の最後の牌をツモって和了します。",
-      "hash": "b5c9d92df8186a26eeb32b252954dc1221308f39a9fb6aad887d1c09d90fbb68",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 230
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.each-different-dragon-may-qualify-until-a-larger": {
-      "value": "それぞれの異なる三元牌は、より大きな三元牌の組み合わせが個々の役を置き換えるまで役として認められます。",
-      "hash": "6b43f964e6f2e7331b38e39025ae7af30d599f1c6fac3418d5fc326683986df2",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 306
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.eighteen-physical-tiles-are-required-replaces-le": {
-      "value": "18枚の牌が必要です。下位の槓子複合役、対々和、単騎待ちを置き換えます。",
-      "hash": "737752ef753867c93e3a4b9700711321204e815dc97b2377df203d5f3bc0ee10",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 36
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-number-is-1-2-3-or-4-and-no-honors-appear": {
-      "value": "すべての数牌が1、2、3、または4であり、字牌は含まれません。",
-      "hash": "452c3a5cb2067c47a7b45ecb11b6944c85c3a8987075deed9293d2542c304f4d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 195
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-number-is-1-2-or-3-and-no-honor-is-present": {
-      "value": "すべての数牌が1、2、または3であり、字牌は含まれません。",
-      "hash": "168ac673eb4c63deec153502f6320f005b934bc996a304b27b1885d7244c6038",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 145
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-number-is-4-5-or-6-and-no-honor-is-present": {
-      "value": "すべての数牌が4、5、または6であり、字牌は含まれません。",
-      "hash": "cc2823c96de98e9aab178914f27edeaf11ef37d0aef078c00e992772e22ddf41",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 140
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-number-is-6-7-8-or-9-and-no-honors-appear": {
-      "value": "すべての数牌が6、7、8、または9であり、字牌は含まれません。",
-      "hash": "aeb3a3e0b2aec0f36d37c34b621cc7398e1eab28911ff0f6e375e572b16a3fd2",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 190
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-number-is-7-8-or-9-and-no-honor-is-present": {
-      "value": "すべての数牌が7、8、または9であり、字牌は含まれません。",
-      "hash": "c7bdcfd8f0a60bac145b1fabf36c09edf0bbac1d6da32a539978a0df4df393aa",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 135
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-set-and-the-pair-contains-a-terminal-or-an": {
-      "value": "すべての面子と雀頭に么九牌または字牌が含まれています。",
-      "hash": "51643c35ffdf5bd582ed22124c7e1c943c31e7fcbe35f8aa57fccbc0e1a8ebf5",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 285
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-set-and-the-pair-includes-a-suited-5": {
-      "value": "すべての面子と雀頭に数牌の5が含まれています。",
-      "hash": "c0b1fd7fc5b6d1bba84df2a9150a20a9800b8be39cd83476c1888943ff444ea4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 165
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-set-is-a-triplet-or-quad-and-every-number": {
-      "value": "すべての面子が刻子または槓子であり、雀頭を含むすべての数牌が偶数です。",
-      "hash": "869294f1cd04b400fe8df8c9b240d11b250efdb59cc869a2d1913a6df54bfe2f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 115
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-tile-is-a-suited-1-or-9": {
-      "value": "すべての牌が数牌の1または9です。",
-      "hash": "04f362799c00dce9c1f48827cf77644df35f03dcec10335eeb7fc15b64264df5",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 50
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-tile-is-a-suited-number-from-2-through-8": {
-      "value": "すべての牌が数牌の2から8までの数字です。",
-      "hash": "6b51269289dea704c807fa253a3407c16897c9f5516df76ef30c7db4681608c2",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 350
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-tile-is-a-wind-or-dragon": {
-      "value": "すべての牌が風牌または三元牌です。",
-      "hash": "d2f39334f8967253504b4bfc68c155165fe59bc7001d49f45268dff0764b7abb",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 65
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-all-chows-mixed-double-chow-two-termina": {
-      "value": "全順子、複合両般高、両般高、字牌なしを除きます。",
-      "hash": "60314d805d0694fb5391d7373698d37963fd8a4a9e328064b89b885c1fa5f586",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 156
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-all-simples-and-no-honors": {
-      "value": "断么九と字牌なしを除きます。",
-      "hash": "b314dc5afd04625843de3e0a618379bc1055fec897c7c655e3c22f2f1137df99",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 141
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-all-simples-and-no-honors-honor-tiles-c": {
-      "value": "断么九と字牌なしを除きます。字牌は5を含むセットを満たすことはできません。",
-      "hash": "a526997d7667ea2d338f5605c2049f491a3233fedffa6d163411bdcaef76d918",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 166
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-big-three-winds-and-terminal-honor-trip": {
-      "value": "大三元と、必須の風牌に対する么九牌/字牌の刻子の役を除きます。",
-      "hash": "4f07a24fa5730d4485f8cdbafa259ceab21ec37b6c17689fe74dfb17708eba22",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 56
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-concealed-hand-and-self-drawn-certain-s": {
-      "value": "門前清自摸和と自摸を除きます。特定の特殊役は、自摸の場合に門前清自摸和を追加できます。",
-      "hash": "e748adee393500dcd00ee14491e78e3d869e3f30c68b87c38c2889c9de398650",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 291
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-concealed-hand-and-single-wait-a-self-d": {
-      "value": "門前清自摸和と単騎待ちを除きます。自摸でも門前清自摸和を追加できます。",
-      "hash": "268374804ee9ea3fa7cf1f4f87d5a4177aac15282ab03889092bbe1a7a370ace",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 106
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-full-flush-all-chows-pure-double-chow-t": {
-      "value": "清一色、全順子、一色両順、両般高、字牌なしを除きます。",
-      "hash": "726b4eaeadfa9513e96700371e4d38ea5331b78f24e3cea1e8cc1a3bb997c7f5",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 76
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-last-tile-a-concealed-quad-cannot-be-ro": {
-      "value": "嶺上開花を除きます。暗槓は搶槓できません。",
-      "hash": "24dcc6a0bdaff73b75cd3eb9356ef5db57d9566b41404b7d420af64dccc1b724",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 246
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-lower-four-and-no-honors": {
-      "value": "下四と字牌なしを除きます。",
-      "hash": "fcdc4de717d2115961642b9a2c28273406d3ef5156b7c531ad75562abd9c894f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 146
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-mixed-double-chow-for-pairs-within-the": {
-      "value": "必須のトリオ内の対子に対する複合両般高を除きます。",
-      "hash": "2cd4e04203f7123d329a89d2ef6578d239ae52aa134de09743a4f303898900f8",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 216
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-no-honors-lower-tiles-replaces-it-if-on": {
-      "value": "字牌なしを除きます。1-3のみが出現する場合は、下段牌がそれに取って代わります。",
-      "hash": "d3e8fe711c2e3e59342818aac76d358e7f66899248dd12b0596657326e223f35",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 196
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-no-honors-middle-tiles-all-five-and-the": {
-      "value": "字牌なしを除きます。中段牌、全帯五、および全偶数刻子の役はすでにこの条件を含んでおり、それに取って代わります。",
-      "hash": "23a8b2b4330a2194cd7748425910075190266a52a05b69e1a38411792bcf5d03",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 351
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-no-honors-upper-tiles-replaces-it-if-on": {
-      "value": "字牌なしを除きます。7-9のみが出現する場合は、上段牌がそれに取って代わります。",
-      "hash": "58daa3d11c88000c56e2de76c15c0e0778f5819b72d2c6c0bfeb3da2b81e693d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 191
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-one-voided-suit-and-no-honors-special-h": {
-      "value": "混一色と字牌なしを除きます。特殊な上位役がこの役を置き換える場合があります。",
-      "hash": "03c86d9445c931308c47b846f520e6f5df9d59f21488d0f5e48d076e2b75871a",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 121
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-pure-double-chow-and-cannot-also-treat": {
-      "value": "一色両順を除き、同じ牌を連六として扱うことはできません。",
-      "hash": "0f063ef098ed9985f63231497513e6700c579bd09130d764a285f8d3c643a0a2",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 126
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-pure-shifted-chows-short-straight-and-t": {
-      "value": "一色三順、短連風、およびこの構造に含まれる両般高を除きます。",
-      "hash": "44c4cdde05c1d49ddb1986960dd1f8dbbe3adc8f34accaf9e4133a054617b2da",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 91
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-pure-triple-chow-pure-double-chow-and-t": {
-      "value": "一色三順、一色両順、および同じ牌に対する牌効率を除きます。",
-      "hash": "d07d9f1edf7dc5a085886b9494a7c67a836288d088bae78b6622b7fcc34a6f0a",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 81
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-self-drawn-a-flower-replacement-is-not": {
-      "value": "自摸を除きます。花牌の補充は、山牌からの最後の通常のツモではありません。",
-      "hash": "d65ba814e5999b255281e02cd90b2118ddef0dd2a7d061e5798da71c63d2cdbb",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 231
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-self-drawn-if-that-replacement-is-a-flo": {
-      "value": "自摸を除きます。その補充が花牌である場合、その後の花牌の補充はこの役を受けません。",
-      "hash": "3f994f70740c395ce758799a624943569f291dc94ae9beff5b517919f202f7b5",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 241
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-single-wait-concealed-quads-prevent-thi": {
-      "value": "単騎待ちを除きます。暗槓は、この完全に鳴いた状態を妨げます。",
-      "hash": "5e94822249d6462e0184beff121024a7e4e0789d894dd8f6169399796d75762f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 271
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-terminal-honor-triplet-awards-for-those": {
-      "value": "それらの風牌に対する么九牌/字牌の刻子の役を除きます。適用される自風牌と場風牌の役は引き続き貢献できます。",
-      "hash": "b41e397cde845522b2f237916610116b5d4cc05e8327e6633bc1d5386b3f08d7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 201
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-the-all-triplets-pattern-outside-hand-a": {
-      "value": "対々和、全帯幺、および么九牌/字牌の刻子の役を除きます。",
-      "hash": "63a6370bb80071c649cb1e21caac859e8c9c16a30058ba632c941c66699be022",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 66
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-the-all-triplets-pattern-outside-hand-t": {
-      "value": "対々和、全帯幺、么九牌の刻子の役、および字牌なしを除きます。",
-      "hash": "b95fc86a52e93c0a7d3201498ee331cb0a190b6895c2e436ec9a2a00a017d25f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 51
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-the-double-triplet-combination-for-pair": {
-      "value": "必要な3つのセットから引かれたペアのダブルトリプレットの組み合わせは除外されます。",
-      "hash": "020abcd856199a8a6ec9933981c40c02cb361bf4a4da8d0717621f1a13bf00f9",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 171
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-the-shifted-triplets-pattern-and-the-al": {
-      "value": "シフトされたトリプレットのパターンとオールトリプレットのパターンは除外されます。",
-      "hash": "80b17aa429e2be7229dacdf141de60627b645d5497b59d99c6e0928168381d6e",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 86
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-the-two-dragon-triplets-pattern-and-the": {
-      "value": "2つのドラゴントリプレットのパターンと個々の必要なドラゴントリプレットの役は除外されます。",
-      "hash": "a2fe7bdba3b20e6d51aa717d56cee5bb11c88747aec07e2639574eaa35587932",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 61
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-upper-four-and-no-honors": {
-      "value": "アッパーフォーとノーオナーズは除外されます。",
-      "hash": "ab2828dabee905403c7f0a57185366730a77eb6aa74dc435510ae596639437d4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 136
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.expose-each-unique-flower-or-season-and-take-its": {
-      "value": "ユニークな花牌または季節牌を公開し、その補充牌を取ります。有効な和了後、それぞれ1点です。",
-      "hash": "9ef01983ec9e50aa35b1d32acfed8c0fdc076c344d89ad2e20e2f9d3f2e41abd",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 415
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.flowers-never-help-meet-the-eight-fan-minimum-th": {
-      "value": "花牌は8翻の最低条件を満たすのに役立ちません。通常の14の構造的な場所を埋めることもありません。",
-      "hash": "8201bbf7f724cc7d1bcd4a82c863f53ba62f06584e5c03ab1c74fcfecb190d95",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 416
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.full-flush-half-flush-and-other-specified-patter": {
-      "value": "清一色、混一色、およびその他の指定されたパターンは、すでに欠けている数牌の種類を意味するため、この役は除外されます。",
-      "hash": "fbd4d4ef8939b2095691edeabe28be103cedd6fd19f37badb72fb4998537a17f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 386
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.fully-concealed-hand-covers-a-concealed-self-dra": {
-      "value": "門前清自摸和は、門前での自摸和をカバーします。一部の特殊な構造はすでにこの条件を含んでおり、この役は除外されます。",
-      "hash": "46ac2a0c3b73afdeffb397ec96ebcb93e6ba226d18923b82f5b1dcd9bc4f8d8b",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 321
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.fully-concealed-hand-last-tile-draw-and-out-with": {
-      "value": "門前清自摸和、嶺上開花、海底摸月、河底撈魚は、該当する場合、この1点役を置き換えます。",
-      "hash": "aa636c13bab7dd0b0871afd0991efde83b96a85824c6fe908eb5577c8a888500",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 411
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-123-and-789-sequences-in-the-same-suit": {
-      "value": "同じ種類の数牌で123と789の順子がある。",
-      "hash": "69d66ab0158f542619ce4a0b00fc7617ab25f5cef8d69256da6b64c90889f820",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 370
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-a-terminal-triplet-or-a-non-scoring-wind-tr": {
-      "value": "么九牌の刻子または点数にならない風牌の刻子がある。",
-      "hash": "9285a6ed3d5806404480b8297aaed8290f994446a8adfa9fba6c3ab2e0b8389e",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 375
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-a-triplet-or-quad-matching-the-current-roun": {
-      "value": "現在の場風と一致する刻子または槓子がある。",
-      "hash": "395a27380ad22f7ba77b38c90ffae67f59cfe7e8455b57ef4d3c7b6938288cfa",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 310
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-a-triplet-or-quad-matching-your-seat-wind-d": {
-      "value": "この手牌で、自分の自風と一致する刻子または槓子がある。",
-      "hash": "f70bc2158ecfdb937e671fbc2024ea7e0e801122c0c5b2ead298a3d8414e758a",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 315
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-a-triplet-or-quad-of-any-one-dragon": {
-      "value": "いずれかの三元牌の刻子または槓子がある。",
-      "hash": "0a8d0ae9ce2ccad5eb59bc46589f78022562d7d395181734c423865b3fc306f4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 305
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-three-different-wind-triplets-or-quads": {
-      "value": "3種類の異なる風牌の刻子または槓子がある。",
-      "hash": "c343d8f0f55f852238e311c73875f21117aad4251ea81ef60f9b6d901f2df4e9",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 200
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-three-triplets-or-quads-completed-without-c": {
-      "value": "最後の牌を鳴かずに完成させた3つの刻子または槓子がある。",
-      "hash": "74d61b3c3eb52160797d983c6d1756cebabc95f8ebddd5dd54bec2eb2492417c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 175
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-triplets-or-quads-of-two-different-dragons": {
-      "value": "2種類の異なる三元牌の刻子または槓子がある。",
-      "hash": "d7329e1f2f4bc5fe7ce3b0cd5851862b1fad36362488be6a2b8112492d4bf22d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 280
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-two-triplets-or-quads-of-the-same-number-in": {
-      "value": "2種類の異なる数牌で、同じ数字の刻子または槓子が2つある。",
-      "hash": "235c34dd6025f799825455b72bf7f9880eab65978d853b5a0b1180a259b93319",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 335
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.hold-a-concealed-single-suit-1112345678999-struc": {
-      "value": "門前で、同じ種類の数牌の1112345678999の形に、その種類の牌を1枚加えて完成させる。",
-      "hash": "666d1895a3b13058d14db1108da70c6e718876d0e80d92f6da6ee2d91d601bf7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 30
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.in-one-suit-use-two-123-sequences-two-789-sequen": {
-      "value": "同じ種類の数牌で、123の順子を2つ、789の順子を2つ、そして5の対子を使用する。",
-      "hash": "58c0fbc212a8be7a9bbaca96bb263a2a324bd99e07474512158bd9dee0442166",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 75
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.include-characters-circles-bamboo-at-least-one-w": {
-      "value": "萬子、筒子、索子、少なくとも1つの風牌、そして少なくとも1つの三元牌を含む。",
-      "hash": "69b640b56c0d3703a7838bf3636cae46eb8c7b98f099aac58d033a5b9f5b15e7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 265
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.keep-every-ordinary-set-concealed-and-win-on-a-t": {
-      "value": "すべての面子を門前で完成させ、捨て牌で和了する。暗槓は認められる。",
-      "hash": "b321b4166268bd28ac37360b524b65afea4a27f3159deaac4b3af835cc82ecef",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 320
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.keep-the-hand-concealed-and-win-by-self-draw-con": {
-      "value": "手牌を門前で完成させ、自摸で和了する。暗槓は認められる。",
-      "hash": "89fe4003c907c386b2b31407975b3cda68fe4b822bb6422c8a926ea609b675db",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 290
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.larger-quad-combinations-replace-the-individual": {
-      "value": "より大きな槓子の組み合わせは、それらを構成する個々の役を置き換えます。個別の即時槓子支払いは行われません。",
-      "hash": "4c6fbf8ae86ebe98ea71e63fda4539600ed7479d4365407ecd81f2e4cb1e8b73",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 381
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.make-a-triplet-or-quad-of-each-of-the-four-winds": {
-      "value": "四喜和を構成する刻子または槓子と、対子を作る。",
-      "hash": "a344f70401dd3af237ed7b6d6a39aadea2211af87416d96c2a8ebdccba882b41",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 15
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.make-a-triplet-or-quad-of-white-green-and-red-dr": {
-      "value": "白、發、中の刻子または槓子を作る。",
-      "hash": "881fa73135abe59d234d8bc620b3dcf0a7c6cdccfaecb4d0bb63eaa48b8b55e0",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 20
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.make-seven-pairs-of-consecutive-numbers-within-o": {
-      "value": "同じ種類の数牌で、連続する数字の対子を7組作る。",
-      "hash": "ce3a00d65fbda981ecad14ef9180d8bd456a304759259cbee0dbb79bdc5df36e",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 40
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.make-seven-pairs-with-no-declared-sets-four-iden": {
-      "value": "鳴かずに7つの対子を作る。MCRでは、同じ牌4枚で2つの対子を構成できる。",
-      "hash": "186c43c9e5cbedd61726d020c3b34238fd26f0fd9bf2764996ecb13e300cefa8",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 105
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.many-larger-composition-patterns-and-all-chows-a": {
-      "value": "多くのより大きな構成パターンと全順子はすでにこれを意味しており、追加の点は除外されます。",
-      "hash": "a0f9d2d875c11cbaee1bedcead07bb97c5821c3626890b77af0bb7972a0b47c9",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 391
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.melded-hand-seven-pairs-thirteen-orphans-and-cer": {
-      "value": "鳴いた手、七対子、国士無双、および特定の高得点役はこの点を除外します。",
-      "hash": "9963e7163e0553b02ff0ce732e8e5952af83f23b9e5764c2126be1f3bc5a19c6",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 406
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.mixed-triple-chow-replaces-combinations-formed-s": {
-      "value": "三色同順は、その構成に必要な3つのセットのみから形成される組み合わせを置き換えます。",
-      "hash": "7252bd3c546ddb10ffa646f8a9bec6c1bbda73d17f75c26cd31bcf5836869ea4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 361
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.no-declared-set-excludes-all-types-and-concealed": {
-      "value": "鳴いた面子がない。全帯么と門前清自摸和は除外される。七対子が出現する場合は大七星が置き換わる。",
-      "hash": "bf3880e5b28ba0d9622cb4d78a67538a90458a64c1b6d50e3247b8c2e32f3ca2",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 181
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.no-numbered-suit-other-than-bamboo-can-appear-do": {
-      "value": "索子以外の数牌は出現しない。混一色や一色三同順は別途数えない。",
-      "hash": "280a29223985c0c950a25faab8f572fe2f83e84f40474859fa5a7afcd3637459",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 26
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.no-repeated-kind-and-no-declared-set-excludes-le": {
-      "value": "同じ種類の牌を繰り返さず、鳴いた面子がない。小七星と連六、全帯么、門前清自摸和は除外される。",
-      "hash": "04974ed0e3c4c2b66190f7217b2aad31ade8c906035bc5b322179959dd2e63b4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 111
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.only-2-4-6-and-8-suited-tiles-may-appear-exclude": {
-      "value": "2、4、6、8の数牌のみが出現する。全刻子と平和は除外される。",
-      "hash": "91cf7406e1c3a64ffc353986cc9b03fe6d002720e217c4f4a5bc27a4209425a4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 116
-      },
-      "placeholders": []
-    },
     "learn.mcr.guide.pattern.all-chows.family": {
       "value": "順子",
       "hash": "ff4eaa5e6020142cc2a0db212eb951133ebbdcc55e4985c8bd67b95ecbb167f0",
@@ -15803,676 +14813,6 @@
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 133
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.pure-straight-and-larger-shifted-sequence-patter": {
-      "value": "純全帯么九とより大きな連六パターンは、それらが暗示するより低い組み合わせに取って代わります。",
-      "hash": "b95095389a6fc116dee15e1de47056067d6aad4b028d50bf28cdf26cef37b6d6",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 366
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.pure-straight-or-a-terminal-sequence-special-pat": {
-      "value": "純全帯么九または終端順子の特殊パターンは、この含まれる組み合わせに取って代わることができます。",
-      "hash": "02827287eed6c1dc1e671d9ff80d4d3bdfcc86700ec39c669f9ff36e9a3ac89a",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 371
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.replaces-little-four-winds-big-three-winds-the-a": {
-      "value": "小四喜、大三元、全帯么九、風牌の役、および終端牌/字牌の刻子の役を置き換えます。",
-      "hash": "31fcfcf15e3eef598decea8a518d7133a5526be611777a26247ca5d65886e25d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 16
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.replaces-little-three-dragons-the-two-dragon-tri": {
-      "value": "小三元、双龍会、および個々の三元牌の刻子の役を置き換えます。",
-      "hash": "fa327fe8e8384527ad7f82956a8d4daa6e6c737cb8b7adc951f1a6fae557ac23",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 21
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.replaces-seven-pairs-full-flush-concealed-hand-s": {
-      "value": "七対子、清一色、門前清、単騎待ち、無字、および缺一門を置き換えます。",
-      "hash": "c970103d50fe23a50377986728fad110fc94b721482f1aa351b5c19960bd2377",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 41
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.replaces-the-smaller-three-quad-combinations-it": {
-      "value": "それが構成されるより小さな三槓子の組み合わせを置き換えます。ルールが許す場合、暗槓も貢献できます。",
-      "hash": "8b83ac21822a748faf361d0c78512f6201830a8bf6e5538cfacd480672b90a3a",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 96
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.replaces-the-two-individual-dragon-triplet-award": {
-      "value": "個々の三元牌の刻子の役を2つ置き換えます。小三元または大三元がこの組み合わせを置き換えます。",
-      "hash": "02455608fda89fd595ddc54831c2191a224413a9346406c5b5ae8b046b4bd6e1",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 281
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.replaces-the-two-individual-melded-quad-awards-l": {
-      "value": "個々の明槓の役を2つ置き換えます。より大きな槓子の組み合わせがそれを置き換えることがあります。1つの暗槓と1つの明槓は、個々の役ではなく、合計で6翻になります。この組み合わせは別の名前のパターンではありません。",
-      "hash": "a82b99c3de7ec4a137a7a14fd0e9cdcd684b970ec579c8918a73ac3342932b55",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 296
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.requires-the-concealed-nine-way-base-before-winn": {
-      "value": "和了前に暗九連宝燈の基本形が必要です。清一色、門前清、および暗示される終端牌の刻子の役を置き換えます。",
-      "hash": "6da2a4d391f7df4414d790d53ba11f6a24c90f8a60e2b5a53ec70f3748d520f1",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 31
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.small-combinations": {
-      "value": "小さな組み合わせ",
-      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 329
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.special-honor-and-knitted-hands-and-thirteen-orp": {
-      "value": "特殊な字牌と花牌の組み合わせ、および十三不塔は、すでにこれらのカテゴリを暗示しており、この役を除外します。",
-      "hash": "721499cb7897ce386831ba8d4197a3280a7c2aa3f6db753b1080c39fadb7ad4f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 266
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.special-structures": {
-      "value": "特殊な構造",
-      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 29
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-allowed-kinds-refer-to-the-conventional-tile": {
-      "value": "許可される種類は、従来の牌の面を指します。缺一門は除外されます。",
-      "hash": "2f169474038c0d3304d6969d9b515485a994a1ff0c5ed1f07751db96d95191cb",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 211
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-entire-hand-contains-only-numbered-suits": {
-      "value": "手牌全体が数牌のみで構成されています。",
-      "hash": "593ac1c03f8a3b6aa1ec17ceec58f9fce243b969234fac44aacde3af68f46ff5",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 390
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-four-sets-are-all-triplets-or-quads-with-one": {
-      "value": "4つのセットはすべて刻子または槓子で、1つの対子があります。",
-      "hash": "7b44a12602c64be72b806a83cd5057a1f0607f705377f3ee9a36cc855be9737d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 250
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-nine-knitted-tiles-are-a-special-body-not-th": {
-      "value": "9つの花牌は特殊な構成であり、通常の3つの順子ではありません。最大1つの通常のセットが宣言できます。",
-      "hash": "d417fbe7db62a85327bf24c326d17d708de4e8510b03e95fb93ab4b870d2bfa1",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 186
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-same-required-sequences-cannot-be-split-into": {
-      "value": "同じ必要な順子を、他の重複する組み合わせの役として分割することはできません。",
-      "hash": "dce063ba7521550f6ff5d2171acc63efb8f6b07bd9f2812bdba7a81b16829c19",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 161
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-three-required-sequences-do-not-also-earn-sh": {
-      "value": "必要な3つの順子は、短順子または両般高の役も得られません。",
-      "hash": "1536a9fedea83c374ade2c7be0afa6e27ab578b4f843939c71055344ff91359d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 151
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-three-suits-can-be-assigned-in-any-order-the": {
-      "value": "3つの数牌は任意の順序で割り当てることができます。番号付きのステップは連続している必要があります。",
-      "hash": "06a57e061c6f91a7b467b43c6e959b89b3828bf40baa9730fba8906755d0638d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 221
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-thrown-tile-must-be-the-last-one-thrown-in-t": {
-      "value": "捨てられた牌は、単に4枚目の見えている牌ではなく、手牌で最後に捨てられた牌でなければなりません。",
-      "hash": "ac002d1d5dec893745054028d065fc174e33462df2c5d8fce9b6a6b5a0d9e831",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 236
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-triple-triplet-pattern-replaces-the-double-t": {
-      "value": "三連刻パターンは、それが構成される二連刻の組み合わせを置き換えます。",
-      "hash": "7f18f24c7ad8d392fa5a5c44375673009f00465a18a522c54a01a41a7b6d6c54",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 336
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-two-concealed-quads-pattern-replaces-two-ind": {
-      "value": "二暗槓パターンは、2つの個別の役を置き換えます。4枚目の牌は全求人として再度数えられません。",
-      "hash": "b47cedb4324f78781d55281d3da73a411f2346bb37fb5c9881a5e617b00a6967",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 346
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-two-sets-cannot-be-counted-as-the-same-combi": {
-      "value": "2つのセットを同じ組み合わせとして2回数えることはできません。より大きな同順のパターンは、それらが暗示するより低い役を置き換えます。",
-      "hash": "3942162a77f60fd2ee8442dc9718d2cea1ce1f18bc591ef0a0b614072bbcec49",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 356
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.tile-composition": {
-      "value": "牌の構成",
-      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 24
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.triplets-and-quads": {
-      "value": "刻子と槓子",
-      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 34
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-123-456-and-789-sequences-in-one-suit": {
-      "value": "1つの数牌で123、456、789の順子を使用します。",
-      "hash": "b5ffcc1f88a1d8590f9f2e320b46e24d8d7f5da242c7012fa92f4d3f0d0164d1",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 150
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-123-and-789-in-each-of-two-suits-with-a-pair": {
-      "value": "2つの数牌それぞれで123と789を使用し、3つ目の数牌で5の対子を使用します。",
-      "hash": "d8fbd2a5063dab578940e5c81d92e167ad59828c78a4053133e656d3b867b257",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 155
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-123-in-one-suit-456-in-a-second-and-789-in-t": {
-      "value": "1つの数牌で123、2つ目の数牌で456、3つ目の数牌で789を使用します。",
-      "hash": "085d27bb908b76b2e2e6a356461bb57ac09c4c9f068ce61f9ee80a4e38d10200",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 205
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-147-in-one-suit-258-in-another-and-369-in-th": {
-      "value": "1つの数牌で147、別の数牌で258、3つ目の数牌で369を使用し、さらに通常のセットと対子を使用します。",
-      "hash": "5916fccd4fa0e2540f6eeb144e93ccf2b189f7796234c3400a0e284f8db53f68",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 185
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-all-four-copies-of-a-kind-within-the-hand-wi": {
-      "value": "槓子として宣言せずに、手牌内に同じ種類の牌を4枚すべて使用します。",
-      "hash": "d9243a8bebcce053155b738491decf9d3c3e9f9f66baf17f5e7e77d07678e954",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 330
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-all-seven-different-honors-and-seven-distinc": {
-      "value": "7種類の字牌すべてと、花牌の147/258/369の割り当てから7枚の異なる数牌を使用します。",
-      "hash": "3b044d7e79ae4f5cd240103655175b28ea8f98babcbe3924d77f24d3bb7e9cd7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 110
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-exactly-one-numbered-suit-and-no-honors": {
-      "value": "数牌をちょうど1種類だけ使用し、字牌は使用しません。",
-      "hash": "3057d9154a2edda9cb91239ed4361f697e03d713bf4c19fd1ce8c168413dbef8",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 120
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-exactly-two-of-the-three-numbered-suits-hono": {
-      "value": "3種類の数牌のうちちょうど2種類を使用します。字牌も含まれる場合があります。",
-      "hash": "5cd49935ba2828bf3388380ada36e5a3791834d122d35e2d4000d48c00fb1536",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 385
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-four-identical-sequences-in-the-same-suit": {
-      "value": "同じ数牌で4つの同一の順子を使用します。",
-      "hash": "4da6c2e3cf972bac1813403eeb0ecc447e43bb6f3d9410e534faa62bf2d0a760",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 80
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-four-sequences-and-a-pair-of-suited-tiles": {
-      "value": "4つの順子と数牌の対子を使用します。",
-      "hash": "caead8681355963a7f410d26fcf92e7624f78ef110b1930ef57c3e67a5ae6ad4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 325
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-four-sequences-in-one-suit-with-starting-num": {
-      "value": "1つの数牌で、開始番号が常に1または2ずつ離れている4つの順子を使用します。",
-      "hash": "131a0b0a835e58827b58d9051a470ed26d39184cf609a81b5880bac19bec60b7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 90
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-four-triplets-in-one-suit-whose-numbers-adva": {
-      "value": "1つの数牌で、番号が毎回1ずつ進む4つの刻子を使用します。",
-      "hash": "1a0eb80c9e506dded982b9b8148bb60dbd56e1961f62508f916c93a58aa3b8cf",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 85
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-fourteen-distinct-tiles-drawn-from-a-knitted": {
-      "value": "花牌の割り当てと7種類の字牌から、14枚の異なる牌を使用します。",
-      "hash": "b1ee897261be232445ec840b530601ef6ef169f3985f801ee784b3d79a623980",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 180
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-one-numbered-suit-together-with-honors": {
-      "value": "1種類の数牌と字牌を組み合わせて使用します。",
-      "hash": "cbe8cc8db9fe6f9629478bb204b83c75cec620b2ffea5f690291fb1db6c89d4b",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 255
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-only-1-2-3-4-5-8-9-circles-2-4-5-6-8-9-bambo": {
-      "value": "1, 2, 3, 4, 5, 8, 9筒子、2, 4, 5, 6, 8, 9索子、および白のみを使用します。",
-      "hash": "1c0140d55a8ff52249a848dd60e585c0562359cbda6d7860379f13d68542a71f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 210
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-only-2-3-4-6-and-8-bamboo-and-green-dragons": {
-      "value": "2, 3, 4, 6, 8索子と發のみを使用します。",
-      "hash": "8d8dc4574c2bb59457a5303cc483a442f64fee5616507e1679639a896bc2398c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 25
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-only-suited-1s-suited-9s-winds-and-dragons-w": {
-      "value": "数牌の1、数牌の9、風牌、および三元牌のみを使用し、数牌と字牌の両方が存在するようにします。",
-      "hash": "39c1c5ded9939befb6702083bde7f5c1c49bff42639084ec4d1b58fbc296cea7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 100
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-the-actual-winning-tile-and-pre-win-structur": {
-      "value": "都合の良い後の再配置ではなく、実際の和了牌と和了前の構造を使用します。待ちの種類の点数は1つだけ使用されます。",
-      "hash": "580a5d4aa26998759dff77acb81ad646a69af2901e26abd224a660b2a7310d6e",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 401
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-the-same-numbered-sequence-in-each-of-the-th": {
-      "value": "3つの数牌それぞれで同じ番号の順子を使用します。",
-      "hash": "1a6c54618548d6a7e14388c6fa3a6db74b5c0b421cc63aff625600250854e9a3",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 215
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-the-seat-at-decision-time-it-can-combine-wit": {
-      "value": "決定時に座席を使用します。自風と場風が同じ風の場合、組み合わせることができます。",
-      "hash": "c9397a56a9cce4501aa502c65b9222869862469b313a45006eea850e92de855e",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 316
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-three-identical-sequences-in-the-same-suit": {
-      "value": "同じ種類の3つの同一の順子を使用します。",
-      "hash": "db46db262aa62ec65019dd6adaf8dad2cc87891b569efaafa7bfd8fe3c325bba",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 125
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-three-sequences-in-different-suits-whose-sta": {
-      "value": "異なる種類の、開始番号が1つずつ進む3つの順子を使用します。",
-      "hash": "3d57fdf06131161ffc4ad2bd9dcc37ef7f1dc24d445a0e0db3c12cef8bbeac38",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 260
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-three-sequences-in-one-suit-whose-starts-adv": {
-      "value": "同じ種類の、開始番号が1つまたは2つずつ進む3つの順子を使用します。",
-      "hash": "90deea7605c258a817d9a8ebf1516d18426ee920685bccfe21fc46a284476e59",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 160
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-three-triplets-in-one-suit-with-consecutive": {
-      "value": "同じ種類の、連続する番号の3つの刻子を使用します。",
-      "hash": "7aab1df3801f38623bc8485a445e1033568f4bf7bf8729e6712e2e636655c581",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 130
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-three-triplets-in-three-different-suits-with": {
-      "value": "異なる種類の、番号が1つずつ上がる3つの刻子を使用します。",
-      "hash": "e5c52f93cbc4a5500be9c0a90b1bd7f9b1245fc291a4c11862db6d8b4da52132",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 220
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-three-wind-triplets-or-quads-and-the-fourth": {
-      "value": "3つの風牌の刻子または槓子と、4つ目の風牌を雀頭として使用します。",
-      "hash": "6c3e794f9a98ed6ac98f55b9e8bfe8d3b4ddeeb4a5c7efc3362e4391a04805bd",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 55
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-triplets-or-quads-of-the-same-number-in-all": {
-      "value": "3つのすべての種類で、同じ番号の刻子または槓子を使用します。",
-      "hash": "03952f03e5d0bd276aac1519100a7637b7ebb5e396286cfbed94f337b0fc7e56",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 170
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-two-dragon-triplets-or-quads-and-a-pair-of-t": {
-      "value": "2つの三元牌の刻子または槓子と、3つ目の三元牌の雀頭を使用します。",
-      "hash": "5de5ac3dcaa6869aedfe7fd76b7d5948d19e1e4bfc8b36d73b2332617db1ce9b",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 60
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-two-identical-sequences-in-the-same-suit": {
-      "value": "同じ種類の2つの同一の順子を使用します。",
-      "hash": "29ac6a58c66070ce58fba55ff300ad0f713a6dee5ffeb134a9a5d0d8fe02b210",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 355
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-two-sequences-in-one-suit-to-cover-six-conse": {
-      "value": "同じ種類の2つの順子を使用して、234と567のように6つの連続する番号をカバーします。",
-      "hash": "d35e8422ea63c6dc27396deed6808d495fee947bc0bbacc7f7167b196376b7d6",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 365
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-two-sequences-with-the-same-numbers-in-diffe": {
-      "value": "異なる種類の、同じ番号の2つの順子を使用します。",
-      "hash": "6513979f1d5a24444bd1a2121c8d2dd9bce2494ac78a19e845793c1e051a5701",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 360
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.visibility-comes-from-tiles-everyone-can-see-not": {
-      "value": "可視性は、全員が見ることができる牌から得られ、隠された手牌や山からは得られません。槓を奪うことはそれを除外します。",
-      "hash": "95010ab25e83bb20cb0620b909098eb2a8cbf3d84d0d46fee2705f3ae523ad21",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 301
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-by-completing-the-pair-when-this-is-the-hand": {
-      "value": "この手牌が唯一の和了形である場合、雀頭を完成させて和了します。",
-      "hash": "249877c71e8927c9e2938aac7f303679b38bdfcf9da4b4662366ca669609e77c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 405
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-immediately-on-the-ordinary-replacement-take": {
-      "value": "宣言された槓に対する通常の補充牌を引いてすぐに和了します。",
-      "hash": "2d65c21d955e31ce626e5395e324c21053336a83cb471594e1252b1629b32d1b",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 240
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-on-a-tile-you-draw-from-the-wall-yourself": {
-      "value": "自分で山から引いた牌で和了します。",
-      "hash": "4f6aa8351e632df7d8825c7e64853268ffba219c81b77c590419b5023c68e750",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 410
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-on-the-last-thrown-tile-of-the-hand-thrown-a": {
-      "value": "山から最後の牌が引かれた後に捨てられた、その局の最後の捨て牌で和了します。",
-      "hash": "45c06521a94b7b0e056a57bc78eb9499cb88d0ea053525136ca09ec485c92179",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 235
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-on-the-middle-tile-of-a-sequence-with-no-oth": {
-      "value": "他の和了形がない場合、順子の真ん中の牌で和了します。",
-      "hash": "d7678ae39b14971d29d52f685c8380bde5b25690b62e664e4dc26f1606674bd4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 400
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-on-the-tile-another-player-adds-to-a-melded": {
-      "value": "他のプレイヤーが鳴いた刻子に牌を加えて槓子にした牌で和了します。",
-      "hash": "897e1747c652dd816b238479487b08a783536307a70e7631641e052268e3d9f8",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 245
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-with-3-completing-12-or-7-completing-89-when": {
-      "value": "この手牌が唯一の和了形である場合、12を完成させる3、または89を完成させる7で和了します。",
-      "hash": "17e235b1210bdae60d06c0ed8c2fae158c8899b548be0c405ede0fe390a6d671",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 395
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-with-a-valid-structure-that-earns-no-other-n": {
-      "value": "他の花牌以外の役を獲得しない有効な構造で和了します。",
-      "hash": "204fdcf0d40eb795a64f97a98089d10d4c772f0a94627ef0257d7c2e662abb61",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 225
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-with-the-fourth-copy-when-the-other-three-co": {
-      "value": "他の3枚が和了前にすでに公開されている場合、4枚目で和了します。",
-      "hash": "643c39f68a5392f807c56d59e6fc90ce775fd0a0a0d443fe3be5496b025d654b",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 300
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.worth-eight-fan-together-do-not-also-count-the-t": {
-      "value": "合計で8翻の価値があります。2つの個別の暗槓の役は数えません。",
-      "hash": "1d8ea522e0cec52c75841afa88a10d9622cf190948c1320d7a9c3b033b06bea7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 276
       },
       "placeholders": []
     },
@@ -34496,16 +32836,6 @@
       },
       "placeholders": []
     },
-    "ui.app.dismiss": {
-      "value": "閉じる",
-      "hash": "48845bff334a50a59aaecf499f28a7a24c3b4b891b8b18a9f1169ad8e8a6b261",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 1031
-      },
-      "placeholders": []
-    },
     "ui.app.done": {
       "value": "完了",
       "hash": "11a6767d5674c7e45f7e00dc525762275b3a48491ad6045427d2609cc496c516",
@@ -36741,19 +35071,6 @@
       ],
       "dynamic": true
     },
-    "ui.app.v-0-1-5": {
-      "value": "{0} — {1}",
-      "hash": "fa4816846a52134eaa901ce9be4cdf4f68a2e306e212bbbb9b4588ebf9fca0dc",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4202
-      },
-      "placeholders": [
-        "0",
-        "1"
-      ]
-    },
     "ui.app.v-0-1-points": {
       "value": "{0} · {1}点",
       "hash": "07417d2a46dc8a6bc5f80d274b79ae546c35df6faf2b03bc74b91d4e1dedb07e",
@@ -36855,19 +35172,6 @@
       "source": {
         "file": "app.ts",
         "line": 3454
-      },
-      "placeholders": [
-        "0"
-      ],
-      "dynamic": true
-    },
-    "ui.app.v-0-7": {
-      "value": "+{0}",
-      "hash": "e6f36eec2093006bbf6bbc44f8ec977484c54a5de9d810ebd450fb4a63646468",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4477
       },
       "placeholders": [
         "0"
@@ -38036,6 +36340,2236 @@
       "source": {
         "file": "app.ts",
         "line": 1865
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-chows.exclusions": {
+      "value": "字牌の対子は、このパターンを無効にします。字牌なしは除外されます。",
+      "hash": "e396967dde4d567f7985c2bcfa05ac176dd375e9ae064763c00dd5041f31e1f7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 326
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-chows.recognition": {
+      "value": "4つの順子と数牌の対子を使用します。",
+      "hash": "caead8681355963a7f410d26fcf92e7624f78ef110b1930ef57c3e67a5ae6ad4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 325
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-even-pungs.exclusions": {
+      "value": "2、4、6、8の数牌のみが出現する。全刻子と平和は除外される。",
+      "hash": "91cf7406e1c3a64ffc353986cc9b03fe6d002720e217c4f4a5bc27a4209425a4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 116
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-even-pungs.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-even-pungs.recognition": {
+      "value": "すべての面子が刻子または槓子であり、雀頭を含むすべての数牌が偶数です。",
+      "hash": "869294f1cd04b400fe8df8c9b240d11b250efdb59cc869a2d1913a6df54bfe2f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 115
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-five.exclusions": {
+      "value": "断么九と字牌なしを除きます。字牌は5を含むセットを満たすことはできません。",
+      "hash": "a526997d7667ea2d338f5605c2049f491a3233fedffa6d163411bdcaef76d918",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 166
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-five.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-five.recognition": {
+      "value": "すべての面子と雀頭に数牌の5が含まれています。",
+      "hash": "c0b1fd7fc5b6d1bba84df2a9150a20a9800b8be39cd83476c1888943ff444ea4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 165
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-green.exclusions": {
+      "value": "索子以外の数牌は出現しない。混一色や一色三同順は別途数えない。",
+      "hash": "280a29223985c0c950a25faab8f572fe2f83e84f40474859fa5a7afcd3637459",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 26
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-green.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-green.recognition": {
+      "value": "2, 3, 4, 6, 8索子と發のみを使用します。",
+      "hash": "8d8dc4574c2bb59457a5303cc483a442f64fee5616507e1679639a896bc2398c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 25
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-honors.exclusions": {
+      "value": "対々和、全帯幺、および么九牌/字牌の刻子の役を除きます。",
+      "hash": "63a6370bb80071c649cb1e21caac859e8c9c16a30058ba632c941c66699be022",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 66
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-honors.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-honors.recognition": {
+      "value": "すべての牌が風牌または三元牌です。",
+      "hash": "d2f39334f8967253504b4bfc68c155165fe59bc7001d49f45268dff0764b7abb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 65
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-pungs.exclusions": {
+      "value": "すべての刻子を必然的に必要とする上位の役は、指定された場合、この役を置き換えます。",
+      "hash": "cadd6cb71889f09fa3e2033b5a9e2099092afcebc3727bec36120d5697cca858",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 251
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-pungs.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-pungs.recognition": {
+      "value": "4つのセットはすべて刻子または槓子で、1つの対子があります。",
+      "hash": "7b44a12602c64be72b806a83cd5057a1f0607f705377f3ee9a36cc855be9737d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 250
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-simples.exclusions": {
+      "value": "字牌なしを除きます。中段牌、全帯五、および全偶数刻子の役はすでにこの条件を含んでおり、それに取って代わります。",
+      "hash": "23a8b2b4330a2194cd7748425910075190266a52a05b69e1a38411792bcf5d03",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 351
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-simples.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-simples.recognition": {
+      "value": "すべての牌が数牌の2から8までの数字です。",
+      "hash": "6b51269289dea704c807fa253a3407c16897c9f5516df76ef30c7db4681608c2",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 350
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-terminals-and-honors.exclusions": {
+      "value": "対々和、全帯幺、および么九牌/字牌の刻子の役を除きます。",
+      "hash": "63a6370bb80071c649cb1e21caac859e8c9c16a30058ba632c941c66699be022",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 66
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-terminals-and-honors.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-terminals-and-honors.recognition": {
+      "value": "数牌の1、数牌の9、風牌、および三元牌のみを使用し、数牌と字牌の両方が存在するようにします。",
+      "hash": "39c1c5ded9939befb6702083bde7f5c1c49bff42639084ec4d1b58fbc296cea7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 100
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-terminals.exclusions": {
+      "value": "対々和、全帯幺、么九牌の刻子の役、および字牌なしを除きます。",
+      "hash": "b95fc86a52e93c0a7d3201498ee331cb0a190b6895c2e436ec9a2a00a017d25f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 51
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-terminals.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-terminals.recognition": {
+      "value": "すべての牌が数牌の1または9です。",
+      "hash": "04f362799c00dce9c1f48827cf77644df35f03dcec10335eeb7fc15b64264df5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 50
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-types.exclusions": {
+      "value": "特殊な字牌と花牌の組み合わせ、および十三不塔は、すでにこれらのカテゴリを暗示しており、この役を除外します。",
+      "hash": "721499cb7897ce386831ba8d4197a3280a7c2aa3f6db753b1080c39fadb7ad4f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 266
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-types.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-types.recognition": {
+      "value": "萬子、筒子、索子、少なくとも1つの風牌、そして少なくとも1つの三元牌を含む。",
+      "hash": "69b640b56c0d3703a7838bf3636cae46eb8c7b98f099aac58d033a5b9f5b15e7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 265
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.big-four-winds.exclusions": {
+      "value": "小四喜、大三元、全帯么九、風牌の役、および終端牌/字牌の刻子の役を置き換えます。",
+      "hash": "31fcfcf15e3eef598decea8a518d7133a5526be611777a26247ca5d65886e25d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 16
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.big-four-winds.recognition": {
+      "value": "四喜和を構成する刻子または槓子と、対子を作る。",
+      "hash": "a344f70401dd3af237ed7b6d6a39aadea2211af87416d96c2a8ebdccba882b41",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 15
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.big-three-dragons.exclusions": {
+      "value": "小三元、双龍会、および個々の三元牌の刻子の役を置き換えます。",
+      "hash": "fa327fe8e8384527ad7f82956a8d4daa6e6c737cb8b7adc951f1a6fae557ac23",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 21
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.big-three-dragons.recognition": {
+      "value": "白、發、中の刻子または槓子を作る。",
+      "hash": "881fa73135abe59d234d8bc620b3dcf0a7c6cdccfaecb4d0bb63eaa48b8b55e0",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 20
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.big-three-winds.exclusions": {
+      "value": "それらの風牌に対する么九牌/字牌の刻子の役を除きます。適用される自風牌と場風牌の役は引き続き貢献できます。",
+      "hash": "b41e397cde845522b2f237916610116b5d4cc05e8327e6633bc1d5386b3f08d7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 201
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.big-three-winds.recognition": {
+      "value": "3種類の異なる風牌の刻子または槓子がある。",
+      "hash": "c343d8f0f55f852238e311c73875f21117aad4251ea81ef60f9b6d901f2df4e9",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 200
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.chicken-hand.exclusions": {
+      "value": "この条件に対して正確に8翻を与えます。花牌は追加できますが、他の役は鶏和を除外します。",
+      "hash": "4bebadaa815e14768293ec87f72ff0f9ef8219a43feb0965272d0988a32195db",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 226
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.chicken-hand.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.chicken-hand.recognition": {
+      "value": "他の花牌以外の役を獲得しない有効な構造で和了します。",
+      "hash": "204fdcf0d40eb795a64f97a98089d10d4c772f0a94627ef0257d7c2e662abb61",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 225
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.concealed-hand.exclusions": {
+      "value": "門前清自摸和は、門前での自摸和をカバーします。一部の特殊な構造はすでにこの条件を含んでおり、この役は除外されます。",
+      "hash": "46ac2a0c3b73afdeffb397ec96ebcb93e6ba226d18923b82f5b1dcd9bc4f8d8b",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 321
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.concealed-hand.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.concealed-hand.recognition": {
+      "value": "すべての面子を門前で完成させ、捨て牌で和了する。暗槓は認められる。",
+      "hash": "b321b4166268bd28ac37360b524b65afea4a27f3159deaac4b3af835cc82ecef",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 320
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.concealed-kong.exclusions": {
+      "value": "二暗槓パターンは、2つの個別の役を置き換えます。4枚目の牌は全求人として再度数えられません。",
+      "hash": "b47cedb4324f78781d55281d3da73a411f2346bb37fb5c9881a5e617b00a6967",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 346
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.concealed-kong.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.concealed-kong.recognition": {
+      "value": "同じ暗刻の牌4枚を槓子として宣言し、嶺上牌を引きます。",
+      "hash": "c31b4108d42727d522623aa5942c1aa2c8bd4d953e16f213034bb7fa88fc951a",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 345
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.double-pung.exclusions": {
+      "value": "三連刻パターンは、それが構成される二連刻の組み合わせを置き換えます。",
+      "hash": "7f18f24c7ad8d392fa5a5c44375673009f00465a18a522c54a01a41a7b6d6c54",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 336
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.double-pung.family": {
+      "value": "小さな組み合わせ",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.double-pung.recognition": {
+      "value": "2種類の異なる数牌で、同じ数字の刻子または槓子が2つある。",
+      "hash": "235c34dd6025f799825455b72bf7f9880eab65978d853b5a0b1180a259b93319",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 335
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.dragon-pung.exclusions": {
+      "value": "それぞれの異なる三元牌は、より大きな三元牌の組み合わせが個々の役を置き換えるまで役として認められます。",
+      "hash": "6b43f964e6f2e7331b38e39025ae7af30d599f1c6fac3418d5fc326683986df2",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 306
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.dragon-pung.recognition": {
+      "value": "いずれかの三元牌の刻子または槓子がある。",
+      "hash": "0a8d0ae9ce2ccad5eb59bc46589f78022562d7d395181734c423865b3fc306f4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 305
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.flower-tiles.exclusions": {
+      "value": "花牌は8翻の最低条件を満たすのに役立ちません。通常の14の構造的な場所を埋めることもありません。",
+      "hash": "8201bbf7f724cc7d1bcd4a82c863f53ba62f06584e5c03ab1c74fcfecb190d95",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 416
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.flower-tiles.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.flower-tiles.recognition": {
+      "value": "ユニークな花牌または季節牌を公開し、その補充牌を取ります。有効な和了後、それぞれ1点です。",
+      "hash": "9ef01983ec9e50aa35b1d32acfed8c0fdc076c344d89ad2e20e2f9d3f2e41abd",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 415
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-concealed-pungs.exclusions": {
+      "value": "捨て牌で刻子を完成させた場合、その刻子はこのカウントでは鳴いたものとみなされます。対々和と門前清は除きます。",
+      "hash": "96cc08d68c06755da7b4dcb3d456c20024764fd167f74a86b8f1402cf9907286",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 71
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-concealed-pungs.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-concealed-pungs.recognition": {
+      "value": "他のプレイヤーから完成牌を取らずに、4つの刻子または槓子を完成させます。",
+      "hash": "2c983eb1a7cdb5dba13c4ae9ef3f2173a93e4b27aacbe66d6e6f9069f1cf402c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 70
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-kongs.exclusions": {
+      "value": "18枚の牌が必要です。下位の槓子複合役、対々和、単騎待ちを置き換えます。",
+      "hash": "737752ef753867c93e3a4b9700711321204e815dc97b2377df203d5f3bc0ee10",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 36
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-kongs.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-kongs.recognition": {
+      "value": "4つの槓子を宣言し、対子を完成させます。",
+      "hash": "b520f84fb1a4b2cf56e667b342df04a4d259825976d96f2c1130883dc4475c2e",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 35
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-chows.exclusions": {
+      "value": "一色三順、短連風、およびこの構造に含まれる両般高を除きます。",
+      "hash": "44c4cdde05c1d49ddb1986960dd1f8dbbe3adc8f34accaf9e4133a054617b2da",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 91
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-chows.recognition": {
+      "value": "1つの数牌で、開始番号が常に1または2ずつ離れている4つの順子を使用します。",
+      "hash": "131a0b0a835e58827b58d9051a470ed26d39184cf609a81b5880bac19bec60b7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 90
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-pungs.exclusions": {
+      "value": "シフトされたトリプレットのパターンとオールトリプレットのパターンは除外されます。",
+      "hash": "80b17aa429e2be7229dacdf141de60627b645d5497b59d99c6e0928168381d6e",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 86
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-pungs.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-pungs.recognition": {
+      "value": "1つの数牌で、番号が毎回1ずつ進む4つの刻子を使用します。",
+      "hash": "1a0eb80c9e506dded982b9b8148bb60dbd56e1961f62508f916c93a58aa3b8cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 85
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.full-flush.exclusions": {
+      "value": "混一色と字牌なしを除きます。特殊な上位役がこの役を置き換える場合があります。",
+      "hash": "03c86d9445c931308c47b846f520e6f5df9d59f21488d0f5e48d076e2b75871a",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 121
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.full-flush.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.full-flush.recognition": {
+      "value": "数牌をちょうど1種類だけ使用し、字牌は使用しません。",
+      "hash": "3057d9154a2edda9cb91239ed4361f697e03d713bf4c19fd1ce8c168413dbef8",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 120
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.fully-concealed-hand.exclusions": {
+      "value": "門前清自摸和と自摸を除きます。特定の特殊役は、自摸の場合に門前清自摸和を追加できます。",
+      "hash": "e748adee393500dcd00ee14491e78e3d869e3f30c68b87c38c2889c9de398650",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 291
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.fully-concealed-hand.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.fully-concealed-hand.recognition": {
+      "value": "手牌を門前で完成させ、自摸で和了する。暗槓は認められる。",
+      "hash": "89fe4003c907c386b2b31407975b3cda68fe4b822bb6422c8a926ea609b675db",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 290
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.greater-honors-and-knitted-tiles.exclusions": {
+      "value": "同じ種類の牌を繰り返さず、鳴いた面子がない。小七星と連六、全帯么、門前清自摸和は除外される。",
+      "hash": "04974ed0e3c4c2b66190f7217b2aad31ade8c906035bc5b322179959dd2e63b4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 111
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.greater-honors-and-knitted-tiles.family": {
+      "value": "特殊な構造",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.greater-honors-and-knitted-tiles.recognition": {
+      "value": "7種類の字牌すべてと、花牌の147/258/369の割り当てから7枚の異なる数牌を使用します。",
+      "hash": "3b044d7e79ae4f5cd240103655175b28ea8f98babcbe3924d77f24d3bb7e9cd7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 110
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.half-flush.exclusions": {
+      "value": "数牌と字牌の両方が含まれている必要があります。混一色を除きます。",
+      "hash": "2b3e5911c52b20cf7968fb10e264ac5a6e5e1256f2e004f9956800f6af7b33dd",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 256
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.half-flush.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.half-flush.recognition": {
+      "value": "1種類の数牌と字牌を組み合わせて使用します。",
+      "hash": "cbe8cc8db9fe6f9629478bb204b83c75cec620b2ffea5f690291fb1db6c89d4b",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 255
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.knitted-straight.exclusions": {
+      "value": "9つの花牌は特殊な構成であり、通常の3つの順子ではありません。最大1つの通常のセットが宣言できます。",
+      "hash": "d417fbe7db62a85327bf24c326d17d708de4e8510b03e95fb93ab4b870d2bfa1",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 186
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.knitted-straight.family": {
+      "value": "特殊な構造",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.knitted-straight.recognition": {
+      "value": "1つの数牌で147、別の数牌で258、3つ目の数牌で369を使用し、さらに通常のセットと対子を使用します。",
+      "hash": "5916fccd4fa0e2540f6eeb144e93ccf2b189f7796234c3400a0e284f8db53f68",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 185
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile-claim.exclusions": {
+      "value": "捨てられた牌は、単に4枚目の見えている牌ではなく、手牌で最後に捨てられた牌でなければなりません。",
+      "hash": "ac002d1d5dec893745054028d065fc174e33462df2c5d8fce9b6a6b5a0d9e831",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 236
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile-claim.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile-claim.recognition": {
+      "value": "山から最後の牌が引かれた後に捨てられた、その局の最後の捨て牌で和了します。",
+      "hash": "45c06521a94b7b0e056a57bc78eb9499cb88d0ea053525136ca09ec485c92179",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 235
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile-draw.exclusions": {
+      "value": "自摸を除きます。花牌の補充は、山牌からの最後の通常のツモではありません。",
+      "hash": "d65ba814e5999b255281e02cd90b2118ddef0dd2a7d061e5798da71c63d2cdbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 231
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile-draw.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile-draw.recognition": {
+      "value": "自分で山牌の最後の牌をツモって和了します。",
+      "hash": "b5c9d92df8186a26eeb32b252954dc1221308f39a9fb6aad887d1c09d90fbb68",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 230
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile.exclusions": {
+      "value": "可視性は、全員が見ることができる牌から得られ、隠された手牌や山からは得られません。槓を奪うことはそれを除外します。",
+      "hash": "95010ab25e83bb20cb0620b909098eb2a8cbf3d84d0d46fee2705f3ae523ad21",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 301
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile.recognition": {
+      "value": "他の3枚が和了前にすでに公開されている場合、4枚目で和了します。",
+      "hash": "643c39f68a5392f807c56d59e6fc90ce775fd0a0a0d443fe3be5496b025d654b",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 300
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lesser-honors-and-knitted-tiles.exclusions": {
+      "value": "鳴いた面子がない。全帯么と門前清自摸和は除外される。七対子が出現する場合は大七星が置き換わる。",
+      "hash": "bf3880e5b28ba0d9622cb4d78a67538a90458a64c1b6d50e3247b8c2e32f3ca2",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 181
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lesser-honors-and-knitted-tiles.family": {
+      "value": "特殊な構造",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lesser-honors-and-knitted-tiles.recognition": {
+      "value": "花牌の割り当てと7種類の字牌から、14枚の異なる牌を使用します。",
+      "hash": "b1ee897261be232445ec840b530601ef6ef169f3985f801ee784b3d79a623980",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 180
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.little-four-winds.exclusions": {
+      "value": "大三元と、必須の風牌に対する么九牌/字牌の刻子の役を除きます。",
+      "hash": "4f07a24fa5730d4485f8cdbafa259ceab21ec37b6c17689fe74dfb17708eba22",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 56
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.little-four-winds.recognition": {
+      "value": "3つの風牌の刻子または槓子と、4つ目の風牌を雀頭として使用します。",
+      "hash": "6c3e794f9a98ed6ac98f55b9e8bfe8d3b4ddeeb4a5c7efc3362e4391a04805bd",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 55
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.little-three-dragons.exclusions": {
+      "value": "2つのドラゴントリプレットのパターンと個々の必要なドラゴントリプレットの役は除外されます。",
+      "hash": "a2fe7bdba3b20e6d51aa717d56cee5bb11c88747aec07e2639574eaa35587932",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 61
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.little-three-dragons.recognition": {
+      "value": "2つの三元牌の刻子または槓子と、3つ目の三元牌の雀頭を使用します。",
+      "hash": "5de5ac3dcaa6869aedfe7fd76b7d5948d19e1e4bfc8b36d73b2332617db1ce9b",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 60
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lower-four.exclusions": {
+      "value": "字牌なしを除きます。1-3のみが出現する場合は、下段牌がそれに取って代わります。",
+      "hash": "d3e8fe711c2e3e59342818aac76d358e7f66899248dd12b0596657326e223f35",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 196
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lower-four.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lower-four.recognition": {
+      "value": "すべての数牌が1、2、3、または4であり、字牌は含まれません。",
+      "hash": "452c3a5cb2067c47a7b45ecb11b6944c85c3a8987075deed9293d2542c304f4d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 195
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lower-tiles.exclusions": {
+      "value": "下四と字牌なしを除きます。",
+      "hash": "fcdc4de717d2115961642b9a2c28273406d3ef5156b7c531ad75562abd9c894f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 146
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lower-tiles.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lower-tiles.recognition": {
+      "value": "すべての数牌が1、2、または3であり、字牌は含まれません。",
+      "hash": "168ac673eb4c63deec153502f6320f005b934bc996a304b27b1885d7244c6038",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 145
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.melded-hand.exclusions": {
+      "value": "単騎待ちを除きます。暗槓は、この完全に鳴いた状態を妨げます。",
+      "hash": "5e94822249d6462e0184beff121024a7e4e0789d894dd8f6169399796d75762f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 271
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.melded-hand.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.melded-hand.recognition": {
+      "value": "他のプレイヤーの捨て牌から4つのセットすべてを鳴き、対子を完成させる捨て牌で和了します。",
+      "hash": "2767a6bd23f26f83eb64c50085b33dbf2aab8ed1ea3fb3d99b61d129474323fc",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 270
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.melded-kong.exclusions": {
+      "value": "より大きな槓子の組み合わせは、それらを構成する個々の役を置き換えます。個別の即時槓子支払いは行われません。",
+      "hash": "4c6fbf8ae86ebe98ea71e63fda4539600ed7479d4365407ecd81f2e4cb1e8b73",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 381
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.melded-kong.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.melded-kong.recognition": {
+      "value": "捨て牌を鳴くか、明刻に4枚目の牌を追加することで、明槓を宣言します。",
+      "hash": "7018e17ce102745b08457dea71d00e495c349304222c0907474eb9b8e6b7ad06",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 380
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.middle-tiles.exclusions": {
+      "value": "断么九と字牌なしを除きます。",
+      "hash": "b314dc5afd04625843de3e0a618379bc1055fec897c7c655e3c22f2f1137df99",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 141
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.middle-tiles.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.middle-tiles.recognition": {
+      "value": "すべての数牌が4、5、または6であり、字牌は含まれません。",
+      "hash": "cc2823c96de98e9aab178914f27edeaf11ef37d0aef078c00e992772e22ddf41",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 140
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-double-chow.exclusions": {
+      "value": "三色同順は、その構成に必要な3つのセットのみから形成される組み合わせを置き換えます。",
+      "hash": "7252bd3c546ddb10ffa646f8a9bec6c1bbda73d17f75c26cd31bcf5836869ea4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 361
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-double-chow.family": {
+      "value": "小さな組み合わせ",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-double-chow.recognition": {
+      "value": "異なる種類の、同じ番号の2つの順子を使用します。",
+      "hash": "6513979f1d5a24444bd1a2121c8d2dd9bce2494ac78a19e845793c1e051a5701",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 360
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-chows.exclusions": {
+      "value": "同じ必須の組み合わせを、このパターンの別のインスタンスとして再利用しないでください。",
+      "hash": "a3587263c0ce17a27852fd6aab0314cfa4d373ce8709424f61e469f12914f7e0",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 261
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-chows.recognition": {
+      "value": "異なる種類の、開始番号が1つずつ進む3つの順子を使用します。",
+      "hash": "3d57fdf06131161ffc4ad2bd9dcc37ef7f1dc24d445a0e0db3c12cef8bbeac38",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 260
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-pungs.exclusions": {
+      "value": "3つの数牌は任意の順序で割り当てることができます。番号付きのステップは連続している必要があります。",
+      "hash": "06a57e061c6f91a7b467b43c6e959b89b3828bf40baa9730fba8906755d0638d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 221
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-pungs.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-pungs.recognition": {
+      "value": "異なる種類の、番号が1つずつ上がる3つの刻子を使用します。",
+      "hash": "e5c52f93cbc4a5500be9c0a90b1bd7f9b1245fc291a4c11862db6d8b4da52132",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 220
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-straight.exclusions": {
+      "value": "3つの数牌はすべて異なる種類でなければなりません。これらのセットは、重複しないルールのもとで一緒に考慮されます。",
+      "hash": "5e3601ded24d13164cfc488a51d54c44e0234951341c4da381663fe9de3eb006",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 206
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-straight.recognition": {
+      "value": "1つの数牌で123、2つ目の数牌で456、3つ目の数牌で789を使用します。",
+      "hash": "085d27bb908b76b2e2e6a356461bb57ac09c4c9f068ce61f9ee80a4e38d10200",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 205
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-triple-chow.exclusions": {
+      "value": "必須のトリオ内の対子に対する複合両般高を除きます。",
+      "hash": "2cd4e04203f7123d329a89d2ef6578d239ae52aa134de09743a4f303898900f8",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 216
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-triple-chow.recognition": {
+      "value": "3つの数牌それぞれで同じ番号の順子を使用します。",
+      "hash": "1a6c54618548d6a7e14388c6fa3a6db74b5c0b421cc63aff625600250854e9a3",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 215
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.nine-gates.exclusions": {
+      "value": "和了前に暗九連宝燈の基本形が必要です。清一色、門前清、および暗示される終端牌の刻子の役を置き換えます。",
+      "hash": "6da2a4d391f7df4414d790d53ba11f6a24c90f8a60e2b5a53ec70f3748d520f1",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 31
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.nine-gates.family": {
+      "value": "特殊な構造",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.nine-gates.recognition": {
+      "value": "門前で、同じ種類の数牌の1112345678999の形に、その種類の牌を1枚加えて完成させる。",
+      "hash": "666d1895a3b13058d14db1108da70c6e718876d0e80d92f6da6ee2d91d601bf7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 30
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.no-honors.exclusions": {
+      "value": "多くのより大きな構成パターンと全順子はすでにこれを意味しており、追加の点は除外されます。",
+      "hash": "a0f9d2d875c11cbaee1bedcead07bb97c5821c3626890b77af0bb7972a0b47c9",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 391
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.no-honors.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.no-honors.recognition": {
+      "value": "手牌全体が数牌のみで構成されています。",
+      "hash": "593ac1c03f8a3b6aa1ec17ceec58f9fce243b969234fac44aacde3af68f46ff5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 390
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.one-voided-suit.exclusions": {
+      "value": "清一色、混一色、およびその他の指定されたパターンは、すでに欠けている数牌の種類を意味するため、この役は除外されます。",
+      "hash": "fbd4d4ef8939b2095691edeabe28be103cedd6fd19f37badb72fb4998537a17f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 386
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.one-voided-suit.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.one-voided-suit.recognition": {
+      "value": "3種類の数牌のうちちょうど2種類を使用します。字牌も含まれる場合があります。",
+      "hash": "5cd49935ba2828bf3388380ada36e5a3791834d122d35e2d4000d48c00fb1536",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 385
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.out-with-replacement-tile.exclusions": {
+      "value": "自摸を除きます。その補充が花牌である場合、その後の花牌の補充はこの役を受けません。",
+      "hash": "3f994f70740c395ce758799a624943569f291dc94ae9beff5b517919f202f7b5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 241
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.out-with-replacement-tile.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.out-with-replacement-tile.recognition": {
+      "value": "宣言された槓に対する通常の補充牌を引いてすぐに和了します。",
+      "hash": "2d65c21d955e31ce626e5395e324c21053336a83cb471594e1252b1629b32d1b",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 240
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.outside-hand.exclusions": {
+      "value": "順子は123または789としてのみ成立します。清老頭、字一色、混老頭はこれを置き換えます。",
+      "hash": "05a6682f8f257d0e8e2db9943d5f7400ff372e0bdcf5f58386da7288fb4ed109",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 286
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.outside-hand.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.outside-hand.recognition": {
+      "value": "すべての面子と雀頭に么九牌または字牌が含まれています。",
+      "hash": "51643c35ffdf5bd582ed22124c7e1c943c31e7fcbe35f8aa57fccbc0e1a8ebf5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 285
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.prevalent-wind.exclusions": {
+      "value": "同じ風牌のセットの場合、場風と自風を組み合わせることができます。その同じ役に対して、么九牌/字牌の刻子の点を追加しないでください。",
+      "hash": "fda39faa89ae9adca0d743c46328082df0ec60cd32aa4b4c608d06f5372b9d67",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 311
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.prevalent-wind.recognition": {
+      "value": "現在の場風と一致する刻子または槓子がある。",
+      "hash": "395a27380ad22f7ba77b38c90ffae67f59cfe7e8455b57ef4d3c7b6938288cfa",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 310
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pung-of-terminals-or-honors.exclusions": {
+      "value": "三元牌、自風牌、場風牌はそれぞれ独自の役を持ちます。上位の風牌または么九牌/字牌の役は、この点を排除する場合があります。",
+      "hash": "21fb06f50c2a30cf7b19320a361feb4de1c88ef51d46dcb46a6b06269b9a1658",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 376
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pung-of-terminals-or-honors.family": {
+      "value": "小さな組み合わせ",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pung-of-terminals-or-honors.recognition": {
+      "value": "么九牌の刻子または点数にならない風牌の刻子がある。",
+      "hash": "9285a6ed3d5806404480b8297aaed8290f994446a8adfa9fba6c3ab2e0b8389e",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 375
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-double-chow.exclusions": {
+      "value": "2つのセットを同じ組み合わせとして2回数えることはできません。より大きな同順のパターンは、それらが暗示するより低い役を置き換えます。",
+      "hash": "3942162a77f60fd2ee8442dc9718d2cea1ce1f18bc591ef0a0b614072bbcec49",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 356
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-double-chow.family": {
+      "value": "小さな組み合わせ",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-double-chow.recognition": {
+      "value": "同じ種類の2つの同一の順子を使用します。",
+      "hash": "29ac6a58c66070ce58fba55ff300ad0f713a6dee5ffeb134a9a5d0d8fe02b210",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 355
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-shifted-chows.exclusions": {
+      "value": "同じ必要な順子を、他の重複する組み合わせの役として分割することはできません。",
+      "hash": "dce063ba7521550f6ff5d2171acc63efb8f6b07bd9f2812bdba7a81b16829c19",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 161
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-shifted-chows.recognition": {
+      "value": "同じ種類の、開始番号が1つまたは2つずつ進む3つの順子を使用します。",
+      "hash": "90deea7605c258a817d9a8ebf1516d18426ee920685bccfe21fc46a284476e59",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 160
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-shifted-pungs.exclusions": {
+      "value": "同じ牌を同じ得点構成で三連刻として再解釈しないでください。",
+      "hash": "09c8e1d48ae9d4a40665a238dd2249cccc5470e5eeec49cff9f82edad40f6aca",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 131
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-shifted-pungs.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-shifted-pungs.recognition": {
+      "value": "同じ種類の、連続する番号の3つの刻子を使用します。",
+      "hash": "7aab1df3801f38623bc8485a445e1033568f4bf7bf8729e6712e2e636655c581",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 130
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-straight.exclusions": {
+      "value": "必要な3つの順子は、短順子または両般高の役も得られません。",
+      "hash": "1536a9fedea83c374ade2c7be0afa6e27ab578b4f843939c71055344ff91359d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 151
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-straight.recognition": {
+      "value": "1つの数牌で123、456、789の順子を使用します。",
+      "hash": "b5ffcc1f88a1d8590f9f2e320b46e24d8d7f5da242c7012fa92f4d3f0d0164d1",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 150
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-terminal-chows.exclusions": {
+      "value": "清一色、全順子、一色両順、両般高、字牌なしを除きます。",
+      "hash": "726b4eaeadfa9513e96700371e4d38ea5331b78f24e3cea1e8cc1a3bb997c7f5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 76
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-terminal-chows.recognition": {
+      "value": "同じ種類の数牌で、123の順子を2つ、789の順子を2つ、そして5の対子を使用する。",
+      "hash": "58c0fbc212a8be7a9bbaca96bb263a2a324bd99e07474512158bd9dee0442166",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 75
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-triple-chow.exclusions": {
+      "value": "一色両順を除き、同じ牌を連六として扱うことはできません。",
+      "hash": "0f063ef098ed9985f63231497513e6700c579bd09130d764a285f8d3c643a0a2",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 126
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-triple-chow.recognition": {
+      "value": "同じ種類の3つの同一の順子を使用します。",
+      "hash": "db46db262aa62ec65019dd6adaf8dad2cc87891b569efaafa7bfd8fe3c325bba",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 125
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.quadruple-chow.exclusions": {
+      "value": "一色三順、一色両順、および同じ牌に対する牌効率を除きます。",
+      "hash": "d07d9f1edf7dc5a085886b9494a7c67a836288d088bae78b6622b7fcc34a6f0a",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 81
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.quadruple-chow.recognition": {
+      "value": "同じ数牌で4つの同一の順子を使用します。",
+      "hash": "4da6c2e3cf972bac1813403eeb0ecc447e43bb6f3d9410e534faa62bf2d0a760",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 80
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.reversible-tiles.exclusions": {
+      "value": "許可される種類は、従来の牌の面を指します。缺一門は除外されます。",
+      "hash": "2f169474038c0d3304d6969d9b515485a994a1ff0c5ed1f07751db96d95191cb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 211
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.reversible-tiles.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.reversible-tiles.recognition": {
+      "value": "1, 2, 3, 4, 5, 8, 9筒子、2, 4, 5, 6, 8, 9索子、および白のみを使用します。",
+      "hash": "1c0140d55a8ff52249a848dd60e585c0562359cbda6d7860379f13d68542a71f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 210
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.robbing-the-kong.exclusions": {
+      "value": "嶺上開花を除きます。暗槓は搶槓できません。",
+      "hash": "24dcc6a0bdaff73b75cd3eb9356ef5db57d9566b41404b7d420af64dccc1b724",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 246
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.robbing-the-kong.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.robbing-the-kong.recognition": {
+      "value": "他のプレイヤーが鳴いた刻子に牌を加えて槓子にした牌で和了します。",
+      "hash": "897e1747c652dd816b238479487b08a783536307a70e7631641e052268e3d9f8",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 245
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seat-wind.exclusions": {
+      "value": "決定時に座席を使用します。自風と場風が同じ風の場合、組み合わせることができます。",
+      "hash": "c9397a56a9cce4501aa502c65b9222869862469b313a45006eea850e92de855e",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 316
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seat-wind.recognition": {
+      "value": "この手牌で、自分の自風と一致する刻子または槓子がある。",
+      "hash": "f70bc2158ecfdb937e671fbc2024ea7e0e801122c0c5b2ead298a3d8414e758a",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 315
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.self-drawn.exclusions": {
+      "value": "門前清自摸和、嶺上開花、海底摸月、河底撈魚は、該当する場合、この1点役を置き換えます。",
+      "hash": "aa636c13bab7dd0b0871afd0991efde83b96a85824c6fe908eb5577c8a888500",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 411
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.self-drawn.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.self-drawn.recognition": {
+      "value": "自分で山から引いた牌で和了します。",
+      "hash": "4f6aa8351e632df7d8825c7e64853268ffba219c81b77c590419b5023c68e750",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 410
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seven-pairs.exclusions": {
+      "value": "門前清自摸和と単騎待ちを除きます。自摸でも門前清自摸和を追加できます。",
+      "hash": "268374804ee9ea3fa7cf1f4f87d5a4177aac15282ab03889092bbe1a7a370ace",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 106
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seven-pairs.family": {
+      "value": "特殊な構造",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seven-pairs.recognition": {
+      "value": "鳴かずに7つの対子を作る。MCRでは、同じ牌4枚で2つの対子を構成できる。",
+      "hash": "186c43c9e5cbedd61726d020c3b34238fd26f0fd9bf2764996ecb13e300cefa8",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 105
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seven-shifted-pairs.exclusions": {
+      "value": "七対子、清一色、門前清、単騎待ち、無字、および缺一門を置き換えます。",
+      "hash": "c970103d50fe23a50377986728fad110fc94b721482f1aa351b5c19960bd2377",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 41
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seven-shifted-pairs.family": {
+      "value": "特殊な構造",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seven-shifted-pairs.recognition": {
+      "value": "同じ種類の数牌で、連続する数字の対子を7組作る。",
+      "hash": "ce3a00d65fbda981ecad14ef9180d8bd456a304759259cbee0dbb79bdc5df36e",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 40
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.short-straight.exclusions": {
+      "value": "純全帯么九とより大きな連六パターンは、それらが暗示するより低い組み合わせに取って代わります。",
+      "hash": "b95095389a6fc116dee15e1de47056067d6aad4b028d50bf28cdf26cef37b6d6",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 366
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.short-straight.family": {
+      "value": "小さな組み合わせ",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.short-straight.recognition": {
+      "value": "同じ種類の2つの順子を使用して、234と567のように6つの連続する番号をカバーします。",
+      "hash": "d35e8422ea63c6dc27396deed6808d495fee947bc0bbacc7f7167b196376b7d6",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 365
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.thirteen-orphans.exclusions": {
+      "value": "暗刻の特殊な構造。全帯幺、暗刻役、単騎待ちを除きます。",
+      "hash": "ec1c1a6aa5df5f80bff56c0a443704593f0028bb4d843d1ab3274db4179c3e9d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 46
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.thirteen-orphans.family": {
+      "value": "特殊な構造",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.thirteen-orphans.recognition": {
+      "value": "すべての么九牌と字牌の種類を集め、その13種類のいずれかを重複させます。",
+      "hash": "269db2b80ca5614d79c2eae7a9b04ee3e4e744e710fb6fa9591a166ecd5e199f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 45
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-concealed-pungs.exclusions": {
+      "value": "これらの刻子のいずれかを完成させる捨て牌は、このカウントのためにその刻子を明刻とします。二つの暗刻のパターンは除きます。",
+      "hash": "a0b7cffcdcc5838ee096f98679e9695cf03459d3b693b13b9521e9024d13f82c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 176
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-concealed-pungs.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-concealed-pungs.recognition": {
+      "value": "最後の牌を鳴かずに完成させた3つの刻子または槓子がある。",
+      "hash": "74d61b3c3eb52160797d983c6d1756cebabc95f8ebddd5dd54bec2eb2492417c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 175
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-kongs.exclusions": {
+      "value": "それが構成されるより小さな三槓子の組み合わせを置き換えます。ルールが許す場合、暗槓も貢献できます。",
+      "hash": "8b83ac21822a748faf361d0c78512f6201830a8bf6e5538cfacd480672b90a3a",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 96
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-kongs.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-kongs.recognition": {
+      "value": "暗槓または明槓の3つの槓子を宣言します。",
+      "hash": "a59fcf7cd1e3bfb816722d68b95cfed3ba5b987c8d9d252be22775ec19675d96",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 95
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-suited-terminal-chows.exclusions": {
+      "value": "全順子、複合両般高、両般高、字牌なしを除きます。",
+      "hash": "60314d805d0694fb5391d7373698d37963fd8a4a9e328064b89b885c1fa5f586",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 156
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-suited-terminal-chows.recognition": {
+      "value": "2つの数牌それぞれで123と789を使用し、3つ目の数牌で5の対子を使用します。",
+      "hash": "d8fbd2a5063dab578940e5c81d92e167ad59828c78a4053133e656d3b867b257",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 155
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.tile-hog.exclusions": {
+      "value": "異なる4枚組の種類を個別に数えます。ただし、上位の役がそれらの4枚組を明示的に含む場合は除きます。",
+      "hash": "7f64196e9c9372ac99f0bed58a2a3da315c8df91870172c72dfd3b21998a198c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 331
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.tile-hog.family": {
+      "value": "小さな組み合わせ",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.tile-hog.recognition": {
+      "value": "槓子として宣言せずに、手牌内に同じ種類の牌を4枚すべて使用します。",
+      "hash": "d9243a8bebcce053155b738491decf9d3c3e9f9f66baf17f5e7e77d07678e954",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 330
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.triple-pung.exclusions": {
+      "value": "必要な3つのセットから引かれたペアのダブルトリプレットの組み合わせは除外されます。",
+      "hash": "020abcd856199a8a6ec9933981c40c02cb361bf4a4da8d0717621f1a13bf00f9",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 171
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.triple-pung.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.triple-pung.recognition": {
+      "value": "3つのすべての種類で、同じ番号の刻子または槓子を使用します。",
+      "hash": "03952f03e5d0bd276aac1519100a7637b7ebb5e396286cfbed94f337b0fc7e56",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 170
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-concealed-kongs.exclusions": {
+      "value": "合計で8翻の価値があります。2つの個別の暗槓の役は数えません。",
+      "hash": "1d8ea522e0cec52c75841afa88a10d9622cf190948c1320d7a9c3b033b06bea7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 276
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-concealed-kongs.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-concealed-kongs.recognition": {
+      "value": "2つの暗槓を宣言します。",
+      "hash": "47266da70189b627430e3c148679d0c4a4863cc4e496295330e1f405466b5267",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 275
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-concealed-pungs.exclusions": {
+      "value": "捨て牌によって完成した刻子はこのカウントのために明刻と数えられます。三暗刻と四暗刻のパターンはこれに取って代わります。",
+      "hash": "37366f83c3c79c7ebaa8e3912e47257c481fc08d158d2201e733198eab195fba",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 341
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-concealed-pungs.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-concealed-pungs.recognition": {
+      "value": "他のプレイヤーから完成牌を取らずに、2つの刻子または槓子を完成させます。",
+      "hash": "91419a4f901de362dbd38222e464d78a1df5fe8ce418299aa6652ad8e249a214",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 340
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-dragons-pungs.exclusions": {
+      "value": "個々の三元牌の刻子の役を2つ置き換えます。小三元または大三元がこの組み合わせを置き換えます。",
+      "hash": "02455608fda89fd595ddc54831c2191a224413a9346406c5b5ae8b046b4bd6e1",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 281
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-dragons-pungs.recognition": {
+      "value": "2種類の異なる三元牌の刻子または槓子がある。",
+      "hash": "d7329e1f2f4bc5fe7ce3b0cd5851862b1fad36362488be6a2b8112492d4bf22d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 280
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-melded-kongs.exclusions": {
+      "value": "個々の明槓の役を2つ置き換えます。より大きな槓子の組み合わせがそれを置き換えることがあります。1つの暗槓と1つの明槓は、個々の役ではなく、合計で6翻になります。この組み合わせは別の名前のパターンではありません。",
+      "hash": "a82b99c3de7ec4a137a7a14fd0e9cdcd684b970ec579c8918a73ac3342932b55",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 296
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-melded-kongs.family": {
+      "value": "刻子と槓子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-melded-kongs.recognition": {
+      "value": "直接鳴いたか、明刻に4枚目の牌を追加して作ったかにかかわらず、2つの明槓を宣言します。",
+      "hash": "b395b7a134eac94a8a70e182def745708a1da84fe48b035de3b8def6afe3defb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 295
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-terminal-chows.exclusions": {
+      "value": "純全帯么九または終端順子の特殊パターンは、この含まれる組み合わせに取って代わることができます。",
+      "hash": "02827287eed6c1dc1e671d9ff80d4d3bdfcc86700ec39c669f9ff36e9a3ac89a",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 371
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-terminal-chows.family": {
+      "value": "小さな組み合わせ",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-terminal-chows.recognition": {
+      "value": "同じ種類の数牌で123と789の順子がある。",
+      "hash": "69d66ab0158f542619ce4a0b00fc7617ab25f5cef8d69256da6b64c90889f820",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 370
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-closed.exclusions": {
+      "value": "都合の良い後の再配置ではなく、実際の和了牌と和了前の構造を使用します。待ちの種類の点数は1つだけ使用されます。",
+      "hash": "580a5d4aa26998759dff77acb81ad646a69af2901e26abd224a660b2a7310d6e",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 401
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-closed.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-closed.recognition": {
+      "value": "他の和了形がない場合、順子の真ん中の牌で和了します。",
+      "hash": "d7678ae39b14971d29d52f685c8380bde5b25690b62e664e4dc26f1606674bd4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 400
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-edge.exclusions": {
+      "value": "手牌の他の場所で別の合法的な完成形がある場合、単独待ちを無効にします。待ちの種類の点数は1つだけ使用されます。",
+      "hash": "c084d2dca8cd4959ae24209c2364223942d9ab343545efc4257fbceef8fa1fc2",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 396
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-edge.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-edge.recognition": {
+      "value": "この手牌が唯一の和了形である場合、12を完成させる3、または89を完成させる7で和了します。",
+      "hash": "17e235b1210bdae60d06c0ed8c2fae158c8899b548be0c405ede0fe390a6d671",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 395
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-single.exclusions": {
+      "value": "鳴いた手、七対子、国士無双、および特定の高得点役はこの点を除外します。",
+      "hash": "9963e7163e0553b02ff0ce732e8e5952af83f23b9e5764c2126be1f3bc5a19c6",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 406
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-single.family": {
+      "value": "面子構成と和了",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-single.recognition": {
+      "value": "この手牌が唯一の和了形である場合、雀頭を完成させて和了します。",
+      "hash": "249877c71e8927c9e2938aac7f303679b38bdfcf9da4b4662366ca669609e77c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 405
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.upper-four.exclusions": {
+      "value": "字牌なしを除きます。7-9のみが出現する場合は、上段牌がそれに取って代わります。",
+      "hash": "58daa3d11c88000c56e2de76c15c0e0778f5819b72d2c6c0bfeb3da2b81e693d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 191
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.upper-four.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.upper-four.recognition": {
+      "value": "すべての数牌が6、7、8、または9であり、字牌は含まれません。",
+      "hash": "aeb3a3e0b2aec0f36d37c34b621cc7398e1eab28911ff0f6e375e572b16a3fd2",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 190
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.upper-tiles.exclusions": {
+      "value": "アッパーフォーとノーオナーズは除外されます。",
+      "hash": "ab2828dabee905403c7f0a57185366730a77eb6aa74dc435510ae596639437d4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 136
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.upper-tiles.family": {
+      "value": "牌の構成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.upper-tiles.recognition": {
+      "value": "すべての数牌が7、8、または9であり、字牌は含まれません。",
+      "hash": "c7bdcfd8f0a60bac145b1fabf36c09edf0bbac1d6da32a539978a0df4df393aa",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 135
       },
       "placeholders": []
     }

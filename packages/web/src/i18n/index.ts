@@ -269,6 +269,25 @@ export function interpolate(
   });
 }
 
+/** Key slug for a display string — the runtime twin of slugify() in
+ *  scripts/extract-i18n.mjs. Renderers use it to derive keys for data
+ *  whose English source lives in a module-scope record (MCR pattern
+ *  guide: learn.mcr.guide.pattern.${slugify(name)}.name). The two
+ *  implementations must stay identical; the derived-key coverage test
+ *  (packages/web/test/i18n-keys.test.ts) asserts every derived key
+ *  exists in en.json with the expected English value. */
+export function slugify(value: string): string {
+  const slug = value
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 48)
+    .replace(/-+$/g, "");
+  if (!slug) return "v";
+  return /^[0-9]/.test(slug) ? `v-${slug}` : slug;
+}
+
 /** Whether a key's entry in a locale is shown by the app (display
  *  rule, PR #90 ship step, extended by the community-review path,
  *  PR #92): `approved` always; `draft` and `reviewed` only in a

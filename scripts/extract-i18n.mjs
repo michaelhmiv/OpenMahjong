@@ -929,6 +929,54 @@ function extractSourceFile(rel, absPath) {
       }
     }
 
+    // -- mcr-guide.ts pattern reference ------------------------------------
+    // entries: Record<pattern name, [family, recognition, exclusions]>.
+    // The quoted key is the pattern's display name; the tuple elements
+    // are its family, recognition text and exclusions text.
+    if (rel === "education/mcr-guide.ts") {
+      // Tuple element: parent array's parent is the quoted-key property.
+      if (parent && ts.isArrayLiteralExpression(parent)) {
+        const grand = ancestors.length >= 3 ? ancestors[ancestors.length - 3].node : null;
+        if (
+          grand &&
+          ts.isPropertyAssignment(grand) &&
+          ts.isStringLiteral(grand.name)
+        ) {
+          const slug = slugify(grand.name.text);
+          const idx = parent.elements.indexOf(node);
+          const field = ["family", "recognition", "exclusions"][idx] ?? `field${idx}`;
+          stats.lesson++;
+          return void addKey(`learn.mcr.guide.pattern.${slug}.${field}`, value, rel, line);
+        }
+      }
+      // The quoted key itself (property name is a string literal).
+      if (
+        parent &&
+        ts.isPropertyAssignment(parent) &&
+        parent.name === node &&
+        (ts.isArrayLiteralExpression(parent.initializer) ||
+          ts.isObjectLiteralExpression(parent.initializer))
+      ) {
+        const trimmed = value.trim();
+        if (
+          trimmed.length >= 3 &&
+          (/\s/.test(trimmed) || /^[A-Z][A-Za-z'’ -]+$/.test(trimmed))
+        ) {
+          stats.lesson++;
+          return void addKey(
+            `learn.mcr.guide.pattern.${slugify(trimmed)}.name`, value, rel, line,
+          );
+        }
+      }
+    }
+
+    // NOTE: the mcr-guide block above this one must run BEFORE the
+    // bare-list rule: a guide tuple element is also a bare array
+    // element, and the bare-list rule would claim it under a slug
+    // key (learn.mcr.guide.make-a-triplet-...) instead of its
+    // positional pattern key (learn.mcr.guide.pattern.<slug>.family).
+    // File-specific rules that mint positional keys always win
+    // over the generic sentence rules below (rewire PR).
     // -- Bare string-list elements -------------------------------------------
     // A sentence-like element of a string array (e.g. the card key's
     // fragments, " exposures allowed · "). Choice arrays and id lists
@@ -990,47 +1038,6 @@ function extractSourceFile(rel, absPath) {
         ts.isSourceFile(a)
       ) {
         break;
-      }
-    }
-
-    // -- mcr-guide.ts pattern reference ------------------------------------
-    // entries: Record<pattern name, [family, recognition, exclusions]>.
-    // The quoted key is the pattern's display name; the tuple elements
-    // are its family, recognition text and exclusions text.
-    if (rel === "education/mcr-guide.ts") {
-      // Tuple element: parent array's parent is the quoted-key property.
-      if (parent && ts.isArrayLiteralExpression(parent)) {
-        const grand = ancestors.length >= 3 ? ancestors[ancestors.length - 3].node : null;
-        if (
-          grand &&
-          ts.isPropertyAssignment(grand) &&
-          ts.isStringLiteral(grand.name)
-        ) {
-          const slug = slugify(grand.name.text);
-          const idx = parent.elements.indexOf(node);
-          const field = ["family", "recognition", "exclusions"][idx] ?? `field${idx}`;
-          stats.lesson++;
-          return void addKey(`learn.mcr.guide.pattern.${slug}.${field}`, value, rel, line);
-        }
-      }
-      // The quoted key itself (property name is a string literal).
-      if (
-        parent &&
-        ts.isPropertyAssignment(parent) &&
-        parent.name === node &&
-        (ts.isArrayLiteralExpression(parent.initializer) ||
-          ts.isObjectLiteralExpression(parent.initializer))
-      ) {
-        const trimmed = value.trim();
-        if (
-          trimmed.length >= 3 &&
-          (/\s/.test(trimmed) || /^[A-Z][A-Za-z'’ -]+$/.test(trimmed))
-        ) {
-          stats.lesson++;
-          return void addKey(
-            `learn.mcr.guide.pattern.${slugify(trimmed)}.name`, value, rel, line,
-          );
-        }
       }
     }
 

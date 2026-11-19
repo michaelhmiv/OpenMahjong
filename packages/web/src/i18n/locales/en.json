@@ -2,8 +2,8 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T13:35:58.694Z",
-    "keyCount": 3698,
+    "generatedAt": "2026-11-19T13:37:53.707Z",
+    "keyCount": 3755,
     "namespaces": {
       "calc.compact": 14,
       "calc.riichi": 90,
@@ -11,7 +11,7 @@
       "common.variant": 3,
       "learn.american": 523,
       "learn.hong-kong": 451,
-      "learn.mcr": 634,
+      "learn.mcr": 691,
       "learn.practice": 90,
       "learn.riichi": 378,
       "learn.taiwanese": 342,
@@ -14069,992 +14069,12 @@
       "placeholders": [],
       "status": "approved"
     },
-    "learn.mcr.guide.a-different-legal-completion-elsewhere-in-the-ha": {
-      "value": "A different legal completion elsewhere in the hand disqualifies the unique wait. Only one wait-type point is used.",
-      "hash": "c084d2dca8cd4959ae24209c2364223942d9ab343545efc4257fbceef8fa1fc2",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 396
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.a-higher-pattern-that-necessarily-requires-all-t": {
-      "value": "A higher pattern that necessarily requires all triplets replaces this award where specified.",
-      "hash": "cadd6cb71889f09fa3e2033b5a9e2099092afcebc3727bec36120d5697cca858",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 251
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.a-sequence-qualifies-only-as-123-or-789-all-term": {
-      "value": "A sequence qualifies only as 123 or 789. All Terminals, All Honors and All Terminals and Honors replace it.",
-      "hash": "05a6682f8f257d0e8e2db9943d5f7400ff372e0bdcf5f58386da7288fb4ed109",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 286
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.a-thrown-tile-completing-a-triplet-makes-that-tr": {
-      "value": "A thrown tile completing a triplet makes that triplet melded for this count. Excludes the all-triplets pattern and Concealed Hand.",
-      "hash": "96cc08d68c06755da7b4dcb3d456c20024764fd167f74a86b8f1402cf9907286",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 71
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.a-thrown-tile-completing-one-of-these-triplets-m": {
-      "value": "A thrown tile completing one of these triplets makes that triplet melded for this count. Excludes the two-concealed-triplets pattern.",
-      "hash": "a0b7cffcdcc5838ee096f98679e9695cf03459d3b693b13b9521e9024d13f82c",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 176
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.a-triplet-completed-by-a-thrown-tile-counts-as-m": {
-      "value": "A triplet completed by a thrown tile counts as melded for this count. The three- and four-concealed-triplets patterns replace it.",
-      "hash": "37366f83c3c79c7ebaa8e3912e47257c481fc08d158d2201e733198eab195fba",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 341
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.all-three-suits-must-be-different-these-sets-are": {
-      "value": "All three suits must be different. These sets are considered together under the non-repeat rules.",
-      "hash": "5e3601ded24d13164cfc488a51d54c44e0234951341c4da381663fe9de3eb006",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 206
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.an-honor-pair-disqualifies-this-pattern-excludes": {
+    "learn.mcr.guide.pattern.all-chows.exclusions": {
       "value": "An honor pair disqualifies this pattern. Excludes No Honors.",
       "hash": "e396967dde4d567f7985c2bcfa05ac176dd375e9ae064763c00dd5041f31e1f7",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 326
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.award-exactly-eight-for-this-condition-flowers-m": {
-      "value": "Award exactly eight for this condition. Flowers may be added, but any other scoring feature removes Chicken Hand.",
-      "hash": "4bebadaa815e14768293ec87f72ff0f9ef8219a43feb0965272d0988a32195db",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 226
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.both-suited-tiles-and-honors-must-appear-exclude": {
-      "value": "Both suited tiles and honors must appear. Excludes One Voided Suit.",
-      "hash": "2b3e5911c52b20cf7968fb10e264ac5a6e5e1256f2e004f9956800f6af7b33dd",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 256
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.can-combine-with-seat-wind-for-the-same-set-when": {
-      "value": "Can combine with Seat Wind for the same set when both winds are the same. Do not add a terminal/honor-triplet point for that same award.",
-      "hash": "fda39faa89ae9adca0d743c46328082df0ec60cd32aa4b4c608d06f5372b9d67",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 311
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.claim-all-four-sets-from-other-players-thrown-ti": {
-      "value": "Claim all four sets from other players' thrown tiles and win on a thrown tile that completes the pair.",
-      "hash": "2767a6bd23f26f83eb64c50085b33dbf2aab8ed1ea3fb3d99b61d129474323fc",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 270
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.collect-every-terminal-and-honor-kind-then-dupli": {
-      "value": "Collect every terminal and honor kind, then duplicate one of those thirteen kinds.",
-      "hash": "269db2b80ca5614d79c2eae7a9b04ee3e4e744e710fb6fa9591a166ecd5e199f",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 45
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.complete-four-triplets-or-quads-without-taking-t": {
-      "value": "Complete four triplets or quads without taking their completing tile from another player.",
-      "hash": "2c983eb1a7cdb5dba13c4ae9ef3f2173a93e4b27aacbe66d6e6f9069f1cf402c",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 70
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.complete-two-triplets-or-quads-without-taking-th": {
-      "value": "Complete two triplets or quads without taking their completing tile from another player.",
-      "hash": "91419a4f901de362dbd38222e464d78a1df5fe8ce418299aa6652ad8e249a214",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 340
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.concealed-special-structure-excludes-all-types-c": {
-      "value": "Concealed special structure; excludes All Types, Concealed Hand and Single Wait.",
-      "hash": "ec1c1a6aa5df5f80bff56c0a443704593f0028bb4d843d1ab3274db4179c3e9d",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 46
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.concealment-and-winning": {
-      "value": "Concealment and winning",
-      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 224
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.count-different-four-copy-kinds-separately-excep": {
-      "value": "Count different four-copy kinds separately, except when a higher pattern explicitly includes those copies.",
-      "hash": "7f64196e9c9372ac99f0bed58a2a3da315c8df91870172c72dfd3b21998a198c",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 331
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.declare-a-melded-quad-by-claiming-a-thrown-tile": {
-      "value": "Declare a melded quad by claiming a thrown tile or adding a fourth tile to a melded triplet.",
-      "hash": "7018e17ce102745b08457dea71d00e495c349304222c0907474eb9b8e6b7ad06",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 380
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.declare-four-identical-concealed-tiles-as-a-quad": {
-      "value": "Declare four identical concealed tiles as a quad and take a replacement.",
-      "hash": "c31b4108d42727d522623aa5942c1aa2c8bd4d953e16f213034bb7fa88fc951a",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 345
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.declare-four-quads-and-complete-the-pair": {
-      "value": "Declare four quads and complete the pair.",
-      "hash": "b520f84fb1a4b2cf56e667b342df04a4d259825976d96f2c1130883dc4475c2e",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 35
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.declare-three-quads-concealed-or-melded": {
-      "value": "Declare three quads, concealed or melded.",
-      "hash": "a59fcf7cd1e3bfb816722d68b95cfed3ba5b987c8d9d252be22775ec19675d96",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 95
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.declare-two-concealed-quads": {
-      "value": "Declare two concealed quads.",
-      "hash": "47266da70189b627430e3c148679d0c4a4863cc4e496295330e1f405466b5267",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 275
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.declare-two-melded-quads-whether-claimed-directl": {
-      "value": "Declare two melded quads, whether claimed directly or made by adding a fourth tile to a melded triplet.",
-      "hash": "b395b7a134eac94a8a70e182def745708a1da84fe48b035de3b8def6afe3defb",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 295
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.do-not-reinterpret-the-same-tiles-as-a-triple-se": {
-      "value": "Do not reinterpret the same tiles as a triple sequence in the same scoring arrangement.",
-      "hash": "09c8e1d48ae9d4a40665a238dd2249cccc5470e5eeec49cff9f82edad40f6aca",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 131
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.do-not-reuse-the-same-required-combination-as-an": {
-      "value": "Do not reuse the same required combination as another instance of this pattern.",
-      "hash": "a3587263c0ce17a27852fd6aab0314cfa4d373ce8709424f61e469f12914f7e0",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 261
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.dragons-seat-winds-and-round-winds-use-their-own": {
-      "value": "Dragons, seat winds and round winds use their own awards. Higher wind or terminal/honor patterns may exclude this point.",
-      "hash": "21fb06f50c2a30cf7b19320a361feb4de1c88ef51d46dcb46a6b06269b9a1658",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 376
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.draw-the-last-tile-of-the-wall-yourself-and-win": {
-      "value": "Draw the last tile of the wall yourself and win on it.",
-      "hash": "b5c9d92df8186a26eeb32b252954dc1221308f39a9fb6aad887d1c09d90fbb68",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 230
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.each-different-dragon-may-qualify-until-a-larger": {
-      "value": "Each different dragon may qualify until a larger dragon combination replaces the individual awards.",
-      "hash": "6b43f964e6f2e7331b38e39025ae7af30d599f1c6fac3418d5fc326683986df2",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 306
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.eighteen-physical-tiles-are-required-replaces-le": {
-      "value": "Eighteen physical tiles are required. Replaces lesser quad combinations, the all-triplets pattern and Single Wait.",
-      "hash": "737752ef753867c93e3a4b9700711321204e815dc97b2377df203d5f3bc0ee10",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 36
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.every-number-is-1-2-3-or-4-and-no-honors-appear": {
-      "value": "Every number is 1, 2, 3 or 4 and no honors appear.",
-      "hash": "452c3a5cb2067c47a7b45ecb11b6944c85c3a8987075deed9293d2542c304f4d",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 195
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.every-number-is-1-2-or-3-and-no-honor-is-present": {
-      "value": "Every number is 1, 2 or 3 and no honor is present.",
-      "hash": "168ac673eb4c63deec153502f6320f005b934bc996a304b27b1885d7244c6038",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 145
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.every-number-is-4-5-or-6-and-no-honor-is-present": {
-      "value": "Every number is 4, 5 or 6 and no honor is present.",
-      "hash": "cc2823c96de98e9aab178914f27edeaf11ef37d0aef078c00e992772e22ddf41",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 140
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.every-number-is-6-7-8-or-9-and-no-honors-appear": {
-      "value": "Every number is 6, 7, 8 or 9 and no honors appear.",
-      "hash": "aeb3a3e0b2aec0f36d37c34b621cc7398e1eab28911ff0f6e375e572b16a3fd2",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 190
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.every-number-is-7-8-or-9-and-no-honor-is-present": {
-      "value": "Every number is 7, 8 or 9 and no honor is present.",
-      "hash": "c7bdcfd8f0a60bac145b1fabf36c09edf0bbac1d6da32a539978a0df4df393aa",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 135
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.every-set-and-the-pair-contains-a-terminal-or-an": {
-      "value": "Every set and the pair contains a terminal or an honor.",
-      "hash": "51643c35ffdf5bd582ed22124c7e1c943c31e7fcbe35f8aa57fccbc0e1a8ebf5",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 285
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.every-set-and-the-pair-includes-a-suited-5": {
-      "value": "Every set and the pair includes a suited 5.",
-      "hash": "c0b1fd7fc5b6d1bba84df2a9150a20a9800b8be39cd83476c1888943ff444ea4",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 165
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.every-set-is-a-triplet-or-quad-and-every-number": {
-      "value": "Every set is a triplet or quad and every number, including the pair, is even.",
-      "hash": "869294f1cd04b400fe8df8c9b240d11b250efdb59cc869a2d1913a6df54bfe2f",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 115
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.every-tile-is-a-suited-1-or-9": {
-      "value": "Every tile is a suited 1 or 9.",
-      "hash": "04f362799c00dce9c1f48827cf77644df35f03dcec10335eeb7fc15b64264df5",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 50
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.every-tile-is-a-suited-number-from-2-through-8": {
-      "value": "Every tile is a suited number from 2 through 8.",
-      "hash": "6b51269289dea704c807fa253a3407c16897c9f5516df76ef30c7db4681608c2",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 350
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.every-tile-is-a-wind-or-dragon": {
-      "value": "Every tile is a wind or dragon.",
-      "hash": "d2f39334f8967253504b4bfc68c155165fe59bc7001d49f45268dff0764b7abb",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 65
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-all-chows-mixed-double-chow-two-termina": {
-      "value": "Excludes All Chows, Mixed Double Chow, Two Terminal Chows and No Honors.",
-      "hash": "60314d805d0694fb5391d7373698d37963fd8a4a9e328064b89b885c1fa5f586",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 156
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-all-simples-and-no-honors": {
-      "value": "Excludes All Simples and No Honors.",
-      "hash": "b314dc5afd04625843de3e0a618379bc1055fec897c7c655e3c22f2f1137df99",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 141
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-all-simples-and-no-honors-honor-tiles-c": {
-      "value": "Excludes All Simples and No Honors; honor tiles cannot satisfy a five-containing set.",
-      "hash": "a526997d7667ea2d338f5605c2049f491a3233fedffa6d163411bdcaef76d918",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 166
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-big-three-winds-and-terminal-honor-trip": {
-      "value": "Excludes Big Three Winds and terminal/honor-triplet awards for the required winds.",
-      "hash": "4f07a24fa5730d4485f8cdbafa259ceab21ec37b6c17689fe74dfb17708eba22",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 56
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-concealed-hand-and-self-drawn-certain-s": {
-      "value": "Excludes Concealed Hand and Self-Drawn. Certain special hands can add it when self-drawn.",
-      "hash": "e748adee393500dcd00ee14491e78e3d869e3f30c68b87c38c2889c9de398650",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 291
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-concealed-hand-and-single-wait-a-self-d": {
-      "value": "Excludes Concealed Hand and Single Wait. A self-draw can still add Fully Concealed Hand.",
-      "hash": "268374804ee9ea3fa7cf1f4f87d5a4177aac15282ab03889092bbe1a7a370ace",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 106
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-full-flush-all-chows-pure-double-chow-t": {
-      "value": "Excludes Full Flush, All Chows, Pure Double Chow, Two Terminal Chows and No Honors.",
-      "hash": "726b4eaeadfa9513e96700371e4d38ea5331b78f24e3cea1e8cc1a3bb997c7f5",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 76
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-last-tile-a-concealed-quad-cannot-be-ro": {
-      "value": "Excludes Last Tile. A concealed quad cannot be robbed.",
-      "hash": "24dcc6a0bdaff73b75cd3eb9356ef5db57d9566b41404b7d420af64dccc1b724",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 246
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-lower-four-and-no-honors": {
-      "value": "Excludes Lower Four and No Honors.",
-      "hash": "fcdc4de717d2115961642b9a2c28273406d3ef5156b7c531ad75562abd9c894f",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 146
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-mixed-double-chow-for-pairs-within-the": {
-      "value": "Excludes Mixed Double Chow for pairs within the required trio.",
-      "hash": "2cd4e04203f7123d329a89d2ef6578d239ae52aa134de09743a4f303898900f8",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 216
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-no-honors-lower-tiles-replaces-it-if-on": {
-      "value": "Excludes No Honors. Lower Tiles replaces it if only 1–3 appear.",
-      "hash": "d3e8fe711c2e3e59342818aac76d358e7f66899248dd12b0596657326e223f35",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 196
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-no-honors-middle-tiles-all-five-and-the": {
-      "value": "Excludes No Honors. Middle Tiles, All Five and the all-even-triplets pattern already include this condition and replace it.",
-      "hash": "23a8b2b4330a2194cd7748425910075190266a52a05b69e1a38411792bcf5d03",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 351
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-no-honors-upper-tiles-replaces-it-if-on": {
-      "value": "Excludes No Honors. Upper Tiles replaces it if only 7–9 appear.",
-      "hash": "58daa3d11c88000c56e2de76c15c0e0778f5819b72d2c6c0bfeb3da2b81e693d",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 191
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-one-voided-suit-and-no-honors-special-h": {
-      "value": "Excludes One Voided Suit and No Honors. Special higher patterns may replace this award.",
-      "hash": "03c86d9445c931308c47b846f520e6f5df9d59f21488d0f5e48d076e2b75871a",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 121
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-pure-double-chow-and-cannot-also-treat": {
-      "value": "Excludes Pure Double Chow and cannot also treat those same tiles as shifted triplets.",
-      "hash": "0f063ef098ed9985f63231497513e6700c579bd09130d764a285f8d3c643a0a2",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 126
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-pure-shifted-chows-short-straight-and-t": {
-      "value": "Excludes Pure Shifted Chows, Short Straight and Two Terminal Chows included in this structure.",
-      "hash": "44c4cdde05c1d49ddb1986960dd1f8dbbe3adc8f34accaf9e4133a054617b2da",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 91
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-pure-triple-chow-pure-double-chow-and-t": {
-      "value": "Excludes Pure Triple Chow, Pure Double Chow and Tile Hog for the same tiles.",
-      "hash": "d07d9f1edf7dc5a085886b9494a7c67a836288d088bae78b6622b7fcc34a6f0a",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 81
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-self-drawn-a-flower-replacement-is-not": {
-      "value": "Excludes Self-Drawn. A flower replacement is not the last ordinary draw from the wall.",
-      "hash": "d65ba814e5999b255281e02cd90b2118ddef0dd2a7d061e5798da71c63d2cdbb",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 231
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-self-drawn-if-that-replacement-is-a-flo": {
-      "value": "Excludes Self-Drawn. If that replacement is a flower, the later flower replacement does not receive this award.",
-      "hash": "3f994f70740c395ce758799a624943569f291dc94ae9beff5b517919f202f7b5",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 241
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-single-wait-concealed-quads-prevent-thi": {
-      "value": "Excludes Single Wait. Concealed quads prevent this fully melded condition.",
-      "hash": "5e94822249d6462e0184beff121024a7e4e0789d894dd8f6169399796d75762f",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 271
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-terminal-honor-triplet-awards-for-those": {
-      "value": "Excludes terminal/honor-triplet awards for those winds; applicable seat and round wind awards can still contribute.",
-      "hash": "b41e397cde845522b2f237916610116b5d4cc05e8327e6633bc1d5386b3f08d7",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 201
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-the-all-triplets-pattern-outside-hand-a": {
-      "value": "Excludes the all-triplets pattern, Outside Hand and terminal/honor-triplet awards.",
-      "hash": "63a6370bb80071c649cb1e21caac859e8c9c16a30058ba632c941c66699be022",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 66
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-the-all-triplets-pattern-outside-hand-t": {
-      "value": "Excludes the all-triplets pattern, Outside Hand, terminal-triplet awards and No Honors.",
-      "hash": "b95fc86a52e93c0a7d3201498ee331cb0a190b6895c2e436ec9a2a00a017d25f",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 51
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-the-double-triplet-combination-for-pair": {
-      "value": "Excludes the double-triplet combination for pairs drawn from the required three sets.",
-      "hash": "020abcd856199a8a6ec9933981c40c02cb361bf4a4da8d0717621f1a13bf00f9",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 171
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-the-shifted-triplets-pattern-and-the-al": {
-      "value": "Excludes the shifted-triplets pattern and the all-triplets pattern.",
-      "hash": "80b17aa429e2be7229dacdf141de60627b645d5497b59d99c6e0928168381d6e",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 86
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-the-two-dragon-triplets-pattern-and-the": {
-      "value": "Excludes the two-dragon-triplets pattern and the individual required dragon triplet awards.",
-      "hash": "a2fe7bdba3b20e6d51aa717d56cee5bb11c88747aec07e2639574eaa35587932",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 61
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.excludes-upper-four-and-no-honors": {
-      "value": "Excludes Upper Four and No Honors.",
-      "hash": "ab2828dabee905403c7f0a57185366730a77eb6aa74dc435510ae596639437d4",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 136
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.expose-each-unique-flower-or-season-and-take-its": {
-      "value": "Expose each unique flower or season and take its replacement. Each is one point after a valid win.",
-      "hash": "9ef01983ec9e50aa35b1d32acfed8c0fdc076c344d89ad2e20e2f9d3f2e41abd",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 415
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.flowers-never-help-meet-the-eight-fan-minimum-th": {
-      "value": "Flowers never help meet the eight-fan minimum. They do not fill the fourteen ordinary structural places.",
-      "hash": "8201bbf7f724cc7d1bcd4a82c863f53ba62f06584e5c03ab1c74fcfecb190d95",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 416
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.full-flush-half-flush-and-other-specified-patter": {
-      "value": "Full Flush, Half Flush and other specified patterns already imply missing suits and exclude this award.",
-      "hash": "fbd4d4ef8939b2095691edeabe28be103cedd6fd19f37badb72fb4998537a17f",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 386
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.fully-concealed-hand-covers-a-concealed-self-dra": {
-      "value": "Fully Concealed Hand covers a concealed self-draw. Some special structures already include this condition and exclude the award.",
-      "hash": "46ac2a0c3b73afdeffb397ec96ebcb93e6ba226d18923b82f5b1dcd9bc4f8d8b",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 321
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.fully-concealed-hand-last-tile-draw-and-out-with": {
-      "value": "Fully Concealed Hand, Last Tile Draw and Out with Replacement Tile replace this one-point award when applicable.",
-      "hash": "aa636c13bab7dd0b0871afd0991efde83b96a85824c6fe908eb5577c8a888500",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 411
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.have-123-and-789-sequences-in-the-same-suit": {
-      "value": "Have 123 and 789 sequences in the same suit.",
-      "hash": "69d66ab0158f542619ce4a0b00fc7617ab25f5cef8d69256da6b64c90889f820",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 370
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.have-a-terminal-triplet-or-a-non-scoring-wind-tr": {
-      "value": "Have a terminal triplet or a non-scoring wind triplet.",
-      "hash": "9285a6ed3d5806404480b8297aaed8290f994446a8adfa9fba6c3ab2e0b8389e",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 375
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.have-a-triplet-or-quad-matching-the-current-roun": {
-      "value": "Have a triplet or quad matching the current round wind.",
-      "hash": "395a27380ad22f7ba77b38c90ffae67f59cfe7e8455b57ef4d3c7b6938288cfa",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 310
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.have-a-triplet-or-quad-matching-your-seat-wind-d": {
-      "value": "Have a triplet or quad matching your seat wind during this hand.",
-      "hash": "f70bc2158ecfdb937e671fbc2024ea7e0e801122c0c5b2ead298a3d8414e758a",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 315
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.have-a-triplet-or-quad-of-any-one-dragon": {
-      "value": "Have a triplet or quad of any one dragon.",
-      "hash": "0a8d0ae9ce2ccad5eb59bc46589f78022562d7d395181734c423865b3fc306f4",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 305
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.have-three-different-wind-triplets-or-quads": {
-      "value": "Have three different wind triplets or quads.",
-      "hash": "c343d8f0f55f852238e311c73875f21117aad4251ea81ef60f9b6d901f2df4e9",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 200
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.have-three-triplets-or-quads-completed-without-c": {
-      "value": "Have three triplets or quads completed without claiming their final tile.",
-      "hash": "74d61b3c3eb52160797d983c6d1756cebabc95f8ebddd5dd54bec2eb2492417c",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 175
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.have-triplets-or-quads-of-two-different-dragons": {
-      "value": "Have triplets or quads of two different dragons.",
-      "hash": "d7329e1f2f4bc5fe7ce3b0cd5851862b1fad36362488be6a2b8112492d4bf22d",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 280
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.have-two-triplets-or-quads-of-the-same-number-in": {
-      "value": "Have two triplets or quads of the same number in two different suits.",
-      "hash": "235c34dd6025f799825455b72bf7f9880eab65978d853b5a0b1180a259b93319",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 335
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.hold-a-concealed-single-suit-1112345678999-struc": {
-      "value": "Hold a concealed single-suit 1112345678999 structure completed by one extra tile of that suit.",
-      "hash": "666d1895a3b13058d14db1108da70c6e718876d0e80d92f6da6ee2d91d601bf7",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 30
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.in-one-suit-use-two-123-sequences-two-789-sequen": {
-      "value": "In one suit, use two 123 sequences, two 789 sequences and a pair of 5s.",
-      "hash": "58c0fbc212a8be7a9bbaca96bb263a2a324bd99e07474512158bd9dee0442166",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 75
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.include-characters-circles-bamboo-at-least-one-w": {
-      "value": "Include characters, circles, bamboo, at least one wind and at least one dragon.",
-      "hash": "69b640b56c0d3703a7838bf3636cae46eb8c7b98f099aac58d033a5b9f5b15e7",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 265
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.keep-every-ordinary-set-concealed-and-win-on-a-t": {
-      "value": "Keep every ordinary set concealed and win on a thrown tile; concealed quads are permitted.",
-      "hash": "b321b4166268bd28ac37360b524b65afea4a27f3159deaac4b3af835cc82ecef",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 320
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.keep-the-hand-concealed-and-win-by-self-draw-con": {
-      "value": "Keep the hand concealed and win by self-draw; concealed quads are permitted.",
-      "hash": "89fe4003c907c386b2b31407975b3cda68fe4b822bb6422c8a926ea609b675db",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 290
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.larger-quad-combinations-replace-the-individual": {
-      "value": "Larger quad combinations replace the individual awards they are made from. No separate immediate quad payment is made.",
-      "hash": "4c6fbf8ae86ebe98ea71e63fda4539600ed7479d4365407ecd81f2e4cb1e8b73",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 381
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.make-a-triplet-or-quad-of-each-of-the-four-winds": {
-      "value": "Make a triplet or quad of each of the four winds, plus a pair.",
-      "hash": "a344f70401dd3af237ed7b6d6a39aadea2211af87416d96c2a8ebdccba882b41",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 15
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.make-a-triplet-or-quad-of-white-green-and-red-dr": {
-      "value": "Make a triplet or quad of white, green and red dragons.",
-      "hash": "881fa73135abe59d234d8bc620b3dcf0a7c6cdccfaecb4d0bb63eaa48b8b55e0",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 20
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.make-seven-pairs-of-consecutive-numbers-within-o": {
-      "value": "Make seven pairs of consecutive numbers within one suit.",
-      "hash": "ce3a00d65fbda981ecad14ef9180d8bd456a304759259cbee0dbb79bdc5df36e",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 40
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.make-seven-pairs-with-no-declared-sets-four-iden": {
-      "value": "Make seven pairs with no declared sets. Four identical tiles may supply two pairs in MCR.",
-      "hash": "186c43c9e5cbedd61726d020c3b34238fd26f0fd9bf2764996ecb13e300cefa8",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 105
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.many-larger-composition-patterns-and-all-chows-a": {
-      "value": "Many larger composition patterns and All Chows already imply this and exclude the extra point.",
-      "hash": "a0f9d2d875c11cbaee1bedcead07bb97c5821c3626890b77af0bb7972a0b47c9",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 391
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.melded-hand-seven-pairs-thirteen-orphans-and-cer": {
-      "value": "Melded Hand, Seven Pairs, Thirteen Orphans and certain higher patterns exclude this point.",
-      "hash": "9963e7163e0553b02ff0ce732e8e5952af83f23b9e5764c2126be1f3bc5a19c6",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 406
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.mixed-triple-chow-replaces-combinations-formed-s": {
-      "value": "Mixed Triple Chow replaces combinations formed solely from its required three sets.",
-      "hash": "7252bd3c546ddb10ffa646f8a9bec6c1bbda73d17f75c26cd31bcf5836869ea4",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 361
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.no-declared-set-excludes-all-types-and-concealed": {
-      "value": "No declared set. Excludes All Types and Concealed Hand; Greater Honors replaces it when all seven honors appear.",
-      "hash": "bf3880e5b28ba0d9622cb4d78a67538a90458a64c1b6d50e3247b8c2e32f3ca2",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 181
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.no-numbered-suit-other-than-bamboo-can-appear-do": {
-      "value": "No numbered suit other than bamboo can appear. Do not separately count Half Flush or One Voided Suit.",
-      "hash": "280a29223985c0c950a25faab8f572fe2f83e84f40474859fa5a7afcd3637459",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 26
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.no-repeated-kind-and-no-declared-set-excludes-le": {
-      "value": "No repeated kind and no declared set. Excludes Lesser Honors and Knitted Tiles, All Types and Concealed Hand.",
-      "hash": "04974ed0e3c4c2b66190f7217b2aad31ade8c906035bc5b322179959dd2e63b4",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 111
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.only-2-4-6-and-8-suited-tiles-may-appear-exclude": {
-      "value": "Only 2, 4, 6 and 8 suited tiles may appear. Excludes the all-triplets pattern and All Simples.",
-      "hash": "91cf7406e1c3a64ffc353986cc9b03fe6d002720e217c4f4a5bc27a4209425a4",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 116
       },
       "placeholders": [],
       "status": "approved"
@@ -15079,12 +14099,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.all-chows.recognition": {
+      "value": "Use four sequences and a pair of suited tiles.",
+      "hash": "caead8681355963a7f410d26fcf92e7624f78ef110b1930ef57c3e67a5ae6ad4",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 325
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-even-pungs.exclusions": {
+      "value": "Only 2, 4, 6 and 8 suited tiles may appear. Excludes the all-triplets pattern and All Simples.",
+      "hash": "91cf7406e1c3a64ffc353986cc9b03fe6d002720e217c4f4a5bc27a4209425a4",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 116
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-even-pungs.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 114
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.all-even-pungs.name": {
       "value": "All Even Pungs",
       "hash": "c0de4f31728b8ecd6f2bfac3907b8d35a1a4b554a7c37ce4867fa78458356fb6",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 113
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-even-pungs.recognition": {
+      "value": "Every set is a triplet or quad and every number, including the pair, is even.",
+      "hash": "869294f1cd04b400fe8df8c9b240d11b250efdb59cc869a2d1913a6df54bfe2f",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 115
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-five.exclusions": {
+      "value": "Excludes All Simples and No Honors; honor tiles cannot satisfy a five-containing set.",
+      "hash": "a526997d7667ea2d338f5605c2049f491a3233fedffa6d163411bdcaef76d918",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 166
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-five.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 164
       },
       "placeholders": [],
       "status": "approved"
@@ -15099,12 +14179,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.all-five.recognition": {
+      "value": "Every set and the pair includes a suited 5.",
+      "hash": "c0b1fd7fc5b6d1bba84df2a9150a20a9800b8be39cd83476c1888943ff444ea4",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 165
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-green.exclusions": {
+      "value": "No numbered suit other than bamboo can appear. Do not separately count Half Flush or One Voided Suit.",
+      "hash": "280a29223985c0c950a25faab8f572fe2f83e84f40474859fa5a7afcd3637459",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 26
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-green.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.all-green.name": {
       "value": "All Green",
       "hash": "89f51d46e05ed6c41df1501014a01018f3a4d1e9850e4afeed368e1e54f22054",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 23
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-green.recognition": {
+      "value": "Use only 2, 3, 4, 6 and 8 bamboo and green dragons.",
+      "hash": "8d8dc4574c2bb59457a5303cc483a442f64fee5616507e1679639a896bc2398c",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 25
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-honors.exclusions": {
+      "value": "Excludes the all-triplets pattern, Outside Hand and terminal/honor-triplet awards.",
+      "hash": "63a6370bb80071c649cb1e21caac859e8c9c16a30058ba632c941c66699be022",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 66
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-honors.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 64
       },
       "placeholders": [],
       "status": "approved"
@@ -15119,12 +14259,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.all-honors.recognition": {
+      "value": "Every tile is a wind or dragon.",
+      "hash": "d2f39334f8967253504b4bfc68c155165fe59bc7001d49f45268dff0764b7abb",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 65
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-pungs.exclusions": {
+      "value": "A higher pattern that necessarily requires all triplets replaces this award where specified.",
+      "hash": "cadd6cb71889f09fa3e2033b5a9e2099092afcebc3727bec36120d5697cca858",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 251
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-pungs.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 249
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.all-pungs.name": {
       "value": "All Pungs",
       "hash": "ed8482c5bbccda3ac4658bd4780686d4cba058514d70a772415d11cdedc70ef6",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 248
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-pungs.recognition": {
+      "value": "The four sets are all triplets or quads, with one pair.",
+      "hash": "7b44a12602c64be72b806a83cd5057a1f0607f705377f3ee9a36cc855be9737d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 250
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-simples.exclusions": {
+      "value": "Excludes No Honors. Middle Tiles, All Five and the all-even-triplets pattern already include this condition and replace it.",
+      "hash": "23a8b2b4330a2194cd7748425910075190266a52a05b69e1a38411792bcf5d03",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 351
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-simples.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 349
       },
       "placeholders": [],
       "status": "approved"
@@ -15139,12 +14339,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.all-simples.recognition": {
+      "value": "Every tile is a suited number from 2 through 8.",
+      "hash": "6b51269289dea704c807fa253a3407c16897c9f5516df76ef30c7db4681608c2",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 350
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-terminals-and-honors.exclusions": {
+      "value": "Excludes the all-triplets pattern, Outside Hand and terminal/honor-triplet awards.",
+      "hash": "63a6370bb80071c649cb1e21caac859e8c9c16a30058ba632c941c66699be022",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 101
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-terminals-and-honors.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 99
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.all-terminals-and-honors.name": {
       "value": "All Terminals and Honors",
       "hash": "1a7fef889b54b55f283f97e2a8a98da24eef303db7eec4401ec55a8e8af66775",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 98
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-terminals-and-honors.recognition": {
+      "value": "Use only suited 1s, suited 9s, winds and dragons, with both suited and honor tiles present.",
+      "hash": "39c1c5ded9939befb6702083bde7f5c1c49bff42639084ec4d1b58fbc296cea7",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 100
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-terminals.exclusions": {
+      "value": "Excludes the all-triplets pattern, Outside Hand, terminal-triplet awards and No Honors.",
+      "hash": "b95fc86a52e93c0a7d3201498ee331cb0a190b6895c2e436ec9a2a00a017d25f",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 51
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-terminals.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 49
       },
       "placeholders": [],
       "status": "approved"
@@ -15159,12 +14419,62 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.all-terminals.recognition": {
+      "value": "Every tile is a suited 1 or 9.",
+      "hash": "04f362799c00dce9c1f48827cf77644df35f03dcec10335eeb7fc15b64264df5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 50
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-types.exclusions": {
+      "value": "Special honor-and-knitted hands and Thirteen Orphans already imply these categories and exclude this award.",
+      "hash": "721499cb7897ce386831ba8d4197a3280a7c2aa3f6db753b1080c39fadb7ad4f",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 266
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-types.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 264
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.all-types.name": {
       "value": "All Types",
       "hash": "bc01325482f36133553683efae89b40b5f0c1f671f6ea54ede38313e36d476b5",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 263
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.all-types.recognition": {
+      "value": "Include characters, circles, bamboo, at least one wind and at least one dragon.",
+      "hash": "69b640b56c0d3703a7838bf3636cae46eb8c7b98f099aac58d033a5b9f5b15e7",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 265
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.big-four-winds.exclusions": {
+      "value": "Replaces Little Four Winds, Big Three Winds, the all-triplets pattern, wind awards and terminal/honor-triplet awards.",
+      "hash": "31fcfcf15e3eef598decea8a518d7133a5526be611777a26247ca5d65886e25d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 16
       },
       "placeholders": [],
       "status": "approved"
@@ -15189,6 +14499,26 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.big-four-winds.recognition": {
+      "value": "Make a triplet or quad of each of the four winds, plus a pair.",
+      "hash": "a344f70401dd3af237ed7b6d6a39aadea2211af87416d96c2a8ebdccba882b41",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 15
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.big-three-dragons.exclusions": {
+      "value": "Replaces Little Three Dragons, the two-dragon-triplets pattern and the individual dragon triplet awards.",
+      "hash": "fa327fe8e8384527ad7f82956a8d4daa6e6c737cb8b7adc951f1a6fae557ac23",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 21
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.big-three-dragons.family": {
       "value": "Honors",
       "hash": "229f4cff32da475cbf366a53a3fbe7452051b00713d07b12bf513a06ada42e99",
@@ -15205,6 +14535,26 @@
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 18
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.big-three-dragons.recognition": {
+      "value": "Make a triplet or quad of white, green and red dragons.",
+      "hash": "881fa73135abe59d234d8bc620b3dcf0a7c6cdccfaecb4d0bb63eaa48b8b55e0",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 20
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.big-three-winds.exclusions": {
+      "value": "Excludes terminal/honor-triplet awards for those winds; applicable seat and round wind awards can still contribute.",
+      "hash": "b41e397cde845522b2f237916610116b5d4cc05e8327e6633bc1d5386b3f08d7",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 201
       },
       "placeholders": [],
       "status": "approved"
@@ -15229,12 +14579,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.big-three-winds.recognition": {
+      "value": "Have three different wind triplets or quads.",
+      "hash": "c343d8f0f55f852238e311c73875f21117aad4251ea81ef60f9b6d901f2df4e9",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 200
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.chicken-hand.exclusions": {
+      "value": "Award exactly eight for this condition. Flowers may be added, but any other scoring feature removes Chicken Hand.",
+      "hash": "4bebadaa815e14768293ec87f72ff0f9ef8219a43feb0965272d0988a32195db",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 226
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.chicken-hand.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.chicken-hand.name": {
       "value": "Chicken Hand",
       "hash": "5f759fb868014597c009ce2b69e7d430f784856cc3febbcd7fec570adc08cd1a",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 223
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.chicken-hand.recognition": {
+      "value": "Win with a valid structure that earns no other non-flower pattern.",
+      "hash": "204fdcf0d40eb795a64f97a98089d10d4c772f0a94627ef0257d7c2e662abb61",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 225
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.concealed-hand.exclusions": {
+      "value": "Fully Concealed Hand covers a concealed self-draw. Some special structures already include this condition and exclude the award.",
+      "hash": "46ac2a0c3b73afdeffb397ec96ebcb93e6ba226d18923b82f5b1dcd9bc4f8d8b",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 321
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.concealed-hand.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 319
       },
       "placeholders": [],
       "status": "approved"
@@ -15249,6 +14659,36 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.concealed-hand.recognition": {
+      "value": "Keep every ordinary set concealed and win on a thrown tile; concealed quads are permitted.",
+      "hash": "b321b4166268bd28ac37360b524b65afea4a27f3159deaac4b3af835cc82ecef",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 320
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.concealed-kong.exclusions": {
+      "value": "The two-concealed-quads pattern replaces two individual awards. The fourth tile is not counted again as Tile Hog.",
+      "hash": "b47cedb4324f78781d55281d3da73a411f2346bb37fb5c9881a5e617b00a6967",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 346
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.concealed-kong.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 344
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.concealed-kong.name": {
       "value": "Concealed Kong",
       "hash": "48d019e210a816b913b780c05a2b2d4297a099698c4889a97da256884a5e6778",
@@ -15259,12 +14699,62 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.concealed-kong.recognition": {
+      "value": "Declare four identical concealed tiles as a quad and take a replacement.",
+      "hash": "c31b4108d42727d522623aa5942c1aa2c8bd4d953e16f213034bb7fa88fc951a",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 345
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.double-pung.exclusions": {
+      "value": "The triple-triplet pattern replaces the double-triplet combinations it is made from.",
+      "hash": "7f18f24c7ad8d392fa5a5c44375673009f00465a18a522c54a01a41a7b6d6c54",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 336
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.double-pung.family": {
+      "value": "Small combinations",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 334
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.double-pung.name": {
       "value": "Double Pung",
       "hash": "e678881603000aea29b69749bfaf558fecf5edf5362f4459198164d06c5f8aec",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 333
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.double-pung.recognition": {
+      "value": "Have two triplets or quads of the same number in two different suits.",
+      "hash": "235c34dd6025f799825455b72bf7f9880eab65978d853b5a0b1180a259b93319",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 335
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.dragon-pung.exclusions": {
+      "value": "Each different dragon may qualify until a larger dragon combination replaces the individual awards.",
+      "hash": "6b43f964e6f2e7331b38e39025ae7af30d599f1c6fac3418d5fc326683986df2",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 306
       },
       "placeholders": [],
       "status": "approved"
@@ -15289,12 +14779,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.dragon-pung.recognition": {
+      "value": "Have a triplet or quad of any one dragon.",
+      "hash": "0a8d0ae9ce2ccad5eb59bc46589f78022562d7d395181734c423865b3fc306f4",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 305
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.flower-tiles.exclusions": {
+      "value": "Flowers never help meet the eight-fan minimum. They do not fill the fourteen ordinary structural places.",
+      "hash": "8201bbf7f724cc7d1bcd4a82c863f53ba62f06584e5c03ab1c74fcfecb190d95",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 416
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.flower-tiles.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 414
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.flower-tiles.name": {
       "value": "Flower Tiles",
       "hash": "973f0e1f7b26d500f8bb19171254c960d51ffcb161dadf56679c999667519584",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 413
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.flower-tiles.recognition": {
+      "value": "Expose each unique flower or season and take its replacement. Each is one point after a valid win.",
+      "hash": "9ef01983ec9e50aa35b1d32acfed8c0fdc076c344d89ad2e20e2f9d3f2e41abd",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 415
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.four-concealed-pungs.exclusions": {
+      "value": "A thrown tile completing a triplet makes that triplet melded for this count. Excludes the all-triplets pattern and Concealed Hand.",
+      "hash": "96cc08d68c06755da7b4dcb3d456c20024764fd167f74a86b8f1402cf9907286",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 71
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.four-concealed-pungs.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 69
       },
       "placeholders": [],
       "status": "approved"
@@ -15309,12 +14859,62 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.four-concealed-pungs.recognition": {
+      "value": "Complete four triplets or quads without taking their completing tile from another player.",
+      "hash": "2c983eb1a7cdb5dba13c4ae9ef3f2173a93e4b27aacbe66d6e6f9069f1cf402c",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 70
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.four-kongs.exclusions": {
+      "value": "Eighteen physical tiles are required. Replaces lesser quad combinations, the all-triplets pattern and Single Wait.",
+      "hash": "737752ef753867c93e3a4b9700711321204e815dc97b2377df203d5f3bc0ee10",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 36
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.four-kongs.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.four-kongs.name": {
       "value": "Four Kongs",
       "hash": "a45c0a31640b3130199158c97058ab76df0a10750168a595671a1017c24f3bf8",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 33
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.four-kongs.recognition": {
+      "value": "Declare four quads and complete the pair.",
+      "hash": "b520f84fb1a4b2cf56e667b342df04a4d259825976d96f2c1130883dc4475c2e",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 35
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-chows.exclusions": {
+      "value": "Excludes Pure Shifted Chows, Short Straight and Two Terminal Chows included in this structure.",
+      "hash": "44c4cdde05c1d49ddb1986960dd1f8dbbe3adc8f34accaf9e4133a054617b2da",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 91
       },
       "placeholders": [],
       "status": "approved"
@@ -15339,12 +14939,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.four-pure-shifted-chows.recognition": {
+      "value": "Use four sequences in one suit with starting numbers separated consistently by one or by two.",
+      "hash": "131a0b0a835e58827b58d9051a470ed26d39184cf609a81b5880bac19bec60b7",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 90
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-pungs.exclusions": {
+      "value": "Excludes the shifted-triplets pattern and the all-triplets pattern.",
+      "hash": "80b17aa429e2be7229dacdf141de60627b645d5497b59d99c6e0928168381d6e",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 86
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-pungs.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 84
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.four-pure-shifted-pungs.name": {
       "value": "Four Pure Shifted Pungs",
       "hash": "21a6894e643c289b75232b46a9b463194a04509ef30e0cfb2cf38ff7effec17b",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 83
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-pungs.recognition": {
+      "value": "Use four triplets in one suit whose numbers advance by one each time.",
+      "hash": "1a0eb80c9e506dded982b9b8148bb60dbd56e1961f62508f916c93a58aa3b8cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 85
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.full-flush.exclusions": {
+      "value": "Excludes One Voided Suit and No Honors. Special higher patterns may replace this award.",
+      "hash": "03c86d9445c931308c47b846f520e6f5df9d59f21488d0f5e48d076e2b75871a",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 121
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.full-flush.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 119
       },
       "placeholders": [],
       "status": "approved"
@@ -15359,12 +15019,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.full-flush.recognition": {
+      "value": "Use exactly one numbered suit and no honors.",
+      "hash": "3057d9154a2edda9cb91239ed4361f697e03d713bf4c19fd1ce8c168413dbef8",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 120
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.fully-concealed-hand.exclusions": {
+      "value": "Excludes Concealed Hand and Self-Drawn. Certain special hands can add it when self-drawn.",
+      "hash": "e748adee393500dcd00ee14491e78e3d869e3f30c68b87c38c2889c9de398650",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 291
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.fully-concealed-hand.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 289
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.fully-concealed-hand.name": {
       "value": "Fully Concealed Hand",
       "hash": "fd86c0f9d83c7014d89aab9f8d22717856aaa401839f9f3035f3e94faa588c54",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 288
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.fully-concealed-hand.recognition": {
+      "value": "Keep the hand concealed and win by self-draw; concealed quads are permitted.",
+      "hash": "89fe4003c907c386b2b31407975b3cda68fe4b822bb6422c8a926ea609b675db",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 290
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.greater-honors-and-knitted-tiles.exclusions": {
+      "value": "No repeated kind and no declared set. Excludes Lesser Honors and Knitted Tiles, All Types and Concealed Hand.",
+      "hash": "04974ed0e3c4c2b66190f7217b2aad31ade8c906035bc5b322179959dd2e63b4",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 111
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.greater-honors-and-knitted-tiles.family": {
+      "value": "Special structures",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 109
       },
       "placeholders": [],
       "status": "approved"
@@ -15379,12 +15099,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.greater-honors-and-knitted-tiles.recognition": {
+      "value": "Use all seven different honors and seven distinct suited tiles from a knitted 147/258/369 suit assignment.",
+      "hash": "3b044d7e79ae4f5cd240103655175b28ea8f98babcbe3924d77f24d3bb7e9cd7",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 110
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.half-flush.exclusions": {
+      "value": "Both suited tiles and honors must appear. Excludes One Voided Suit.",
+      "hash": "2b3e5911c52b20cf7968fb10e264ac5a6e5e1256f2e004f9956800f6af7b33dd",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 256
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.half-flush.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 254
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.half-flush.name": {
       "value": "Half Flush",
       "hash": "602cef971585d09c6b51c60bc420c0c4efddf1f9af69eb50a0de51a772b308c6",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 253
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.half-flush.recognition": {
+      "value": "Use one numbered suit together with honors.",
+      "hash": "cbe8cc8db9fe6f9629478bb204b83c75cec620b2ffea5f690291fb1db6c89d4b",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 255
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.knitted-straight.exclusions": {
+      "value": "The nine knitted tiles are a special body, not three ordinary sequences. At most one ordinary set may be declared.",
+      "hash": "d417fbe7db62a85327bf24c326d17d708de4e8510b03e95fb93ab4b870d2bfa1",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 186
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.knitted-straight.family": {
+      "value": "Special structures",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 184
       },
       "placeholders": [],
       "status": "approved"
@@ -15399,12 +15179,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.knitted-straight.recognition": {
+      "value": "Use 147 in one suit, 258 in another and 369 in the third, plus an ordinary set and pair.",
+      "hash": "5916fccd4fa0e2540f6eeb144e93ccf2b189f7796234c3400a0e284f8db53f68",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 185
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.last-tile-claim.exclusions": {
+      "value": "The thrown tile must be the last one thrown in the hand, not merely the fourth visible copy.",
+      "hash": "ac002d1d5dec893745054028d065fc174e33462df2c5d8fce9b6a6b5a0d9e831",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 236
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.last-tile-claim.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 234
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.last-tile-claim.name": {
       "value": "Last Tile Claim",
       "hash": "d3b9521401bcfc4ecbab8f7858366917f7dedf6429965db2eda7d518439f60bc",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 233
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.last-tile-claim.recognition": {
+      "value": "Win on the last thrown tile of the hand, thrown after the last tile was drawn from the wall.",
+      "hash": "45c06521a94b7b0e056a57bc78eb9499cb88d0ea053525136ca09ec485c92179",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 235
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.last-tile-draw.exclusions": {
+      "value": "Excludes Self-Drawn. A flower replacement is not the last ordinary draw from the wall.",
+      "hash": "d65ba814e5999b255281e02cd90b2118ddef0dd2a7d061e5798da71c63d2cdbb",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 231
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.last-tile-draw.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 229
       },
       "placeholders": [],
       "status": "approved"
@@ -15419,6 +15259,36 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.last-tile-draw.recognition": {
+      "value": "Draw the last tile of the wall yourself and win on it.",
+      "hash": "b5c9d92df8186a26eeb32b252954dc1221308f39a9fb6aad887d1c09d90fbb68",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 230
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.last-tile.exclusions": {
+      "value": "Visibility comes from tiles everyone can see, not hidden hands or the wall. Robbing a quad excludes it.",
+      "hash": "95010ab25e83bb20cb0620b909098eb2a8cbf3d84d0d46fee2705f3ae523ad21",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 301
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.last-tile.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 299
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.last-tile.name": {
       "value": "Last Tile",
       "hash": "dc19a4c97e27a872b4104f83afa50d3cf681c7d72252f66585fab2ab13a3b4b0",
@@ -15429,12 +15299,62 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.last-tile.recognition": {
+      "value": "Win with the fourth copy when the other three copies are already visible before the win.",
+      "hash": "643c39f68a5392f807c56d59e6fc90ce775fd0a0a0d443fe3be5496b025d654b",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 300
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.lesser-honors-and-knitted-tiles.exclusions": {
+      "value": "No declared set. Excludes All Types and Concealed Hand; Greater Honors replaces it when all seven honors appear.",
+      "hash": "bf3880e5b28ba0d9622cb4d78a67538a90458a64c1b6d50e3247b8c2e32f3ca2",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 181
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.lesser-honors-and-knitted-tiles.family": {
+      "value": "Special structures",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 179
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.lesser-honors-and-knitted-tiles.name": {
       "value": "Lesser Honors and Knitted Tiles",
       "hash": "acb8d8aa1042d5219c376143f1dbe52204d0113145b91dbc998c3fe31d0e5afd",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 178
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.lesser-honors-and-knitted-tiles.recognition": {
+      "value": "Use fourteen distinct tiles drawn from a knitted suit assignment and the seven honors.",
+      "hash": "b1ee897261be232445ec840b530601ef6ef169f3985f801ee784b3d79a623980",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 180
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.little-four-winds.exclusions": {
+      "value": "Excludes Big Three Winds and terminal/honor-triplet awards for the required winds.",
+      "hash": "4f07a24fa5730d4485f8cdbafa259ceab21ec37b6c17689fe74dfb17708eba22",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 56
       },
       "placeholders": [],
       "status": "approved"
@@ -15459,6 +15379,26 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.little-four-winds.recognition": {
+      "value": "Use three wind triplets or quads and the fourth wind as the pair.",
+      "hash": "6c3e794f9a98ed6ac98f55b9e8bfe8d3b4ddeeb4a5c7efc3362e4391a04805bd",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 55
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.little-three-dragons.exclusions": {
+      "value": "Excludes the two-dragon-triplets pattern and the individual required dragon triplet awards.",
+      "hash": "a2fe7bdba3b20e6d51aa717d56cee5bb11c88747aec07e2639574eaa35587932",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 61
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.little-three-dragons.family": {
       "value": "Honors",
       "hash": "229f4cff32da475cbf366a53a3fbe7452051b00713d07b12bf513a06ada42e99",
@@ -15479,12 +15419,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.little-three-dragons.recognition": {
+      "value": "Use two dragon triplets or quads and a pair of the third dragon.",
+      "hash": "5de5ac3dcaa6869aedfe7fd76b7d5948d19e1e4bfc8b36d73b2332617db1ce9b",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 60
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.lower-four.exclusions": {
+      "value": "Excludes No Honors. Lower Tiles replaces it if only 1–3 appear.",
+      "hash": "d3e8fe711c2e3e59342818aac76d358e7f66899248dd12b0596657326e223f35",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 196
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.lower-four.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 194
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.lower-four.name": {
       "value": "Lower Four",
       "hash": "67c64c08ab76842964cc37c438efbbb2c94ecda75092ab9f33b5b47289c2a815",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 193
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.lower-four.recognition": {
+      "value": "Every number is 1, 2, 3 or 4 and no honors appear.",
+      "hash": "452c3a5cb2067c47a7b45ecb11b6944c85c3a8987075deed9293d2542c304f4d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 195
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.lower-tiles.exclusions": {
+      "value": "Excludes Lower Four and No Honors.",
+      "hash": "fcdc4de717d2115961642b9a2c28273406d3ef5156b7c531ad75562abd9c894f",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 146
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.lower-tiles.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 144
       },
       "placeholders": [],
       "status": "approved"
@@ -15499,12 +15499,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.lower-tiles.recognition": {
+      "value": "Every number is 1, 2 or 3 and no honor is present.",
+      "hash": "168ac673eb4c63deec153502f6320f005b934bc996a304b27b1885d7244c6038",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 145
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.melded-hand.exclusions": {
+      "value": "Excludes Single Wait. Concealed quads prevent this fully melded condition.",
+      "hash": "5e94822249d6462e0184beff121024a7e4e0789d894dd8f6169399796d75762f",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 271
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.melded-hand.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 269
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.melded-hand.name": {
       "value": "Melded Hand",
       "hash": "fc1e8e3c7f2ffc174b0b72894652bf4a13bdc86674c6ba923b4201eaa58cb9d9",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 268
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.melded-hand.recognition": {
+      "value": "Claim all four sets from other players' thrown tiles and win on a thrown tile that completes the pair.",
+      "hash": "2767a6bd23f26f83eb64c50085b33dbf2aab8ed1ea3fb3d99b61d129474323fc",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 270
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.melded-kong.exclusions": {
+      "value": "Larger quad combinations replace the individual awards they are made from. No separate immediate quad payment is made.",
+      "hash": "4c6fbf8ae86ebe98ea71e63fda4539600ed7479d4365407ecd81f2e4cb1e8b73",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 381
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.melded-kong.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 379
       },
       "placeholders": [],
       "status": "approved"
@@ -15519,6 +15579,36 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.melded-kong.recognition": {
+      "value": "Declare a melded quad by claiming a thrown tile or adding a fourth tile to a melded triplet.",
+      "hash": "7018e17ce102745b08457dea71d00e495c349304222c0907474eb9b8e6b7ad06",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 380
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.middle-tiles.exclusions": {
+      "value": "Excludes All Simples and No Honors.",
+      "hash": "b314dc5afd04625843de3e0a618379bc1055fec897c7c655e3c22f2f1137df99",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 141
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.middle-tiles.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 139
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.middle-tiles.name": {
       "value": "Middle Tiles",
       "hash": "e80971a26e79bf5e7a84c6f20c7cd11cbc042c4316307ab02e794a21972cba83",
@@ -15529,12 +15619,62 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.middle-tiles.recognition": {
+      "value": "Every number is 4, 5 or 6 and no honor is present.",
+      "hash": "cc2823c96de98e9aab178914f27edeaf11ef37d0aef078c00e992772e22ddf41",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 140
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.mixed-double-chow.exclusions": {
+      "value": "Mixed Triple Chow replaces combinations formed solely from its required three sets.",
+      "hash": "7252bd3c546ddb10ffa646f8a9bec6c1bbda73d17f75c26cd31bcf5836869ea4",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 361
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.mixed-double-chow.family": {
+      "value": "Small combinations",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 359
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.mixed-double-chow.name": {
       "value": "Mixed Double Chow",
       "hash": "b92b9744a18ffc0e6d4f3464a4a6724e9f0849fd73391a4e6631a1559c7d665c",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 358
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.mixed-double-chow.recognition": {
+      "value": "Use two sequences with the same numbers in different suits.",
+      "hash": "6513979f1d5a24444bd1a2121c8d2dd9bce2494ac78a19e845793c1e051a5701",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 360
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-chows.exclusions": {
+      "value": "Do not reuse the same required combination as another instance of this pattern.",
+      "hash": "a3587263c0ce17a27852fd6aab0314cfa4d373ce8709424f61e469f12914f7e0",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 261
       },
       "placeholders": [],
       "status": "approved"
@@ -15559,12 +15699,62 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.mixed-shifted-chows.recognition": {
+      "value": "Use three sequences in different suits whose starting numbers advance by one.",
+      "hash": "3d57fdf06131161ffc4ad2bd9dcc37ef7f1dc24d445a0e0db3c12cef8bbeac38",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 260
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-pungs.exclusions": {
+      "value": "The three suits can be assigned in any order; the numbered steps must remain consecutive.",
+      "hash": "06a57e061c6f91a7b467b43c6e959b89b3828bf40baa9730fba8906755d0638d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 221
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-pungs.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 219
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.mixed-shifted-pungs.name": {
       "value": "Mixed Shifted Pungs",
       "hash": "9b391c54a3d97cfc083385786c1c673bb230a239822a243c3f6919214f18dd2e",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 218
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-pungs.recognition": {
+      "value": "Use three triplets in three different suits, with numbers stepping upward by one.",
+      "hash": "e5c52f93cbc4a5500be9c0a90b1bd7f9b1245fc291a4c11862db6d8b4da52132",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 220
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.mixed-straight.exclusions": {
+      "value": "All three suits must be different. These sets are considered together under the non-repeat rules.",
+      "hash": "5e3601ded24d13164cfc488a51d54c44e0234951341c4da381663fe9de3eb006",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 206
       },
       "placeholders": [],
       "status": "approved"
@@ -15589,6 +15779,26 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.mixed-straight.recognition": {
+      "value": "Use 123 in one suit, 456 in a second and 789 in the third.",
+      "hash": "085d27bb908b76b2e2e6a356461bb57ac09c4c9f068ce61f9ee80a4e38d10200",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 205
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.mixed-triple-chow.exclusions": {
+      "value": "Excludes Mixed Double Chow for pairs within the required trio.",
+      "hash": "2cd4e04203f7123d329a89d2ef6578d239ae52aa134de09743a4f303898900f8",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 216
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.mixed-triple-chow.family": {
       "value": "Sequences",
       "hash": "ff4eaa5e6020142cc2a0db212eb951133ebbdcc55e4985c8bd67b95ecbb167f0",
@@ -15609,12 +15819,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.mixed-triple-chow.recognition": {
+      "value": "Use the same numbered sequence in each of the three suits.",
+      "hash": "1a6c54618548d6a7e14388c6fa3a6db74b5c0b421cc63aff625600250854e9a3",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 215
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.nine-gates.exclusions": {
+      "value": "Requires the concealed nine-way base before winning; replaces Full Flush, Concealed Hand and the implied terminal-triplet award.",
+      "hash": "6da2a4d391f7df4414d790d53ba11f6a24c90f8a60e2b5a53ec70f3748d520f1",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 31
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.nine-gates.family": {
+      "value": "Special structures",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.nine-gates.name": {
       "value": "Nine Gates",
       "hash": "b05400aa5b60f80ffae1511a39d0dc52d7c35c0d0471181dea1c781883406c6d",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 28
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.nine-gates.recognition": {
+      "value": "Hold a concealed single-suit 1112345678999 structure completed by one extra tile of that suit.",
+      "hash": "666d1895a3b13058d14db1108da70c6e718876d0e80d92f6da6ee2d91d601bf7",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 30
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.no-honors.exclusions": {
+      "value": "Many larger composition patterns and All Chows already imply this and exclude the extra point.",
+      "hash": "a0f9d2d875c11cbaee1bedcead07bb97c5821c3626890b77af0bb7972a0b47c9",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 391
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.no-honors.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 389
       },
       "placeholders": [],
       "status": "approved"
@@ -15629,12 +15899,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.no-honors.recognition": {
+      "value": "The entire hand contains only numbered suits.",
+      "hash": "593ac1c03f8a3b6aa1ec17ceec58f9fce243b969234fac44aacde3af68f46ff5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 390
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.one-voided-suit.exclusions": {
+      "value": "Full Flush, Half Flush and other specified patterns already imply missing suits and exclude this award.",
+      "hash": "fbd4d4ef8939b2095691edeabe28be103cedd6fd19f37badb72fb4998537a17f",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 386
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.one-voided-suit.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 384
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.one-voided-suit.name": {
       "value": "One Voided Suit",
       "hash": "a61f810c0b5ec462d91eaeaef5b4c328907a0baa9d69d3fc1a10c27577a0a2b0",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 383
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.one-voided-suit.recognition": {
+      "value": "Use exactly two of the three numbered suits; honors may also appear.",
+      "hash": "5cd49935ba2828bf3388380ada36e5a3791834d122d35e2d4000d48c00fb1536",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 385
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.out-with-replacement-tile.exclusions": {
+      "value": "Excludes Self-Drawn. If that replacement is a flower, the later flower replacement does not receive this award.",
+      "hash": "3f994f70740c395ce758799a624943569f291dc94ae9beff5b517919f202f7b5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 241
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.out-with-replacement-tile.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 239
       },
       "placeholders": [],
       "status": "approved"
@@ -15649,12 +15979,62 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.out-with-replacement-tile.recognition": {
+      "value": "Win immediately on the ordinary replacement taken for a declared quad.",
+      "hash": "2d65c21d955e31ce626e5395e324c21053336a83cb471594e1252b1629b32d1b",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 240
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.outside-hand.exclusions": {
+      "value": "A sequence qualifies only as 123 or 789. All Terminals, All Honors and All Terminals and Honors replace it.",
+      "hash": "05a6682f8f257d0e8e2db9943d5f7400ff372e0bdcf5f58386da7288fb4ed109",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 286
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.outside-hand.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 284
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.outside-hand.name": {
       "value": "Outside Hand",
       "hash": "eb66585679a4e0251bdf909ed3ebce05f026f9b9946db05761693b2a3f97a3ea",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 283
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.outside-hand.recognition": {
+      "value": "Every set and the pair contains a terminal or an honor.",
+      "hash": "51643c35ffdf5bd582ed22124c7e1c943c31e7fcbe35f8aa57fccbc0e1a8ebf5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 285
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.prevalent-wind.exclusions": {
+      "value": "Can combine with Seat Wind for the same set when both winds are the same. Do not add a terminal/honor-triplet point for that same award.",
+      "hash": "fda39faa89ae9adca0d743c46328082df0ec60cd32aa4b4c608d06f5372b9d67",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 311
       },
       "placeholders": [],
       "status": "approved"
@@ -15679,6 +16059,36 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.prevalent-wind.recognition": {
+      "value": "Have a triplet or quad matching the current round wind.",
+      "hash": "395a27380ad22f7ba77b38c90ffae67f59cfe7e8455b57ef4d3c7b6938288cfa",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 310
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.pung-of-terminals-or-honors.exclusions": {
+      "value": "Dragons, seat winds and round winds use their own awards. Higher wind or terminal/honor patterns may exclude this point.",
+      "hash": "21fb06f50c2a30cf7b19320a361feb4de1c88ef51d46dcb46a6b06269b9a1658",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 376
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.pung-of-terminals-or-honors.family": {
+      "value": "Small combinations",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 374
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.pung-of-terminals-or-honors.name": {
       "value": "Pung of Terminals or Honors",
       "hash": "1fa53c370ef156f816c56d751027ea29d2cbfabefad485faa9e4e37f9c83e125",
@@ -15689,12 +16099,62 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.pung-of-terminals-or-honors.recognition": {
+      "value": "Have a terminal triplet or a non-scoring wind triplet.",
+      "hash": "9285a6ed3d5806404480b8297aaed8290f994446a8adfa9fba6c3ab2e0b8389e",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 375
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.pure-double-chow.exclusions": {
+      "value": "The two sets cannot be counted as the same combination twice. Larger identical-sequence patterns replace their implied lower awards.",
+      "hash": "3942162a77f60fd2ee8442dc9718d2cea1ce1f18bc591ef0a0b614072bbcec49",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 356
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.pure-double-chow.family": {
+      "value": "Small combinations",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 354
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.pure-double-chow.name": {
       "value": "Pure Double Chow",
       "hash": "61a43a084e6c4801c456b84444bc3bac283b94aac92b963b56dbcd22afed2957",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 353
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.pure-double-chow.recognition": {
+      "value": "Use two identical sequences in the same suit.",
+      "hash": "29ac6a58c66070ce58fba55ff300ad0f713a6dee5ffeb134a9a5d0d8fe02b210",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 355
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.pure-shifted-chows.exclusions": {
+      "value": "The same required sequences cannot be split into other repeated combination awards.",
+      "hash": "dce063ba7521550f6ff5d2171acc63efb8f6b07bd9f2812bdba7a81b16829c19",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 161
       },
       "placeholders": [],
       "status": "approved"
@@ -15719,12 +16179,62 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.pure-shifted-chows.recognition": {
+      "value": "Use three sequences in one suit whose starts advance consistently by one or two.",
+      "hash": "90deea7605c258a817d9a8ebf1516d18426ee920685bccfe21fc46a284476e59",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 160
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.pure-shifted-pungs.exclusions": {
+      "value": "Do not reinterpret the same tiles as a triple sequence in the same scoring arrangement.",
+      "hash": "09c8e1d48ae9d4a40665a238dd2249cccc5470e5eeec49cff9f82edad40f6aca",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 131
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.pure-shifted-pungs.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 129
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.pure-shifted-pungs.name": {
       "value": "Pure Shifted Pungs",
       "hash": "1e66dfdd5e1ebbbf51fc3ed60b513abe115b43b09fed3c67dca28e71a9ff26a0",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 128
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.pure-shifted-pungs.recognition": {
+      "value": "Use three triplets in one suit with consecutive numbers.",
+      "hash": "7aab1df3801f38623bc8485a445e1033568f4bf7bf8729e6712e2e636655c581",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 130
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.pure-straight.exclusions": {
+      "value": "The three required sequences do not also earn Short Straight or Two Terminal Chows.",
+      "hash": "1536a9fedea83c374ade2c7be0afa6e27ab578b4f843939c71055344ff91359d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 151
       },
       "placeholders": [],
       "status": "approved"
@@ -15749,6 +16259,26 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.pure-straight.recognition": {
+      "value": "Use 123, 456 and 789 sequences in one suit.",
+      "hash": "b5ffcc1f88a1d8590f9f2e320b46e24d8d7f5da242c7012fa92f4d3f0d0164d1",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 150
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.pure-terminal-chows.exclusions": {
+      "value": "Excludes Full Flush, All Chows, Pure Double Chow, Two Terminal Chows and No Honors.",
+      "hash": "726b4eaeadfa9513e96700371e4d38ea5331b78f24e3cea1e8cc1a3bb997c7f5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 76
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.pure-terminal-chows.family": {
       "value": "Sequences",
       "hash": "ff4eaa5e6020142cc2a0db212eb951133ebbdcc55e4985c8bd67b95ecbb167f0",
@@ -15765,6 +16295,26 @@
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 73
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.pure-terminal-chows.recognition": {
+      "value": "In one suit, use two 123 sequences, two 789 sequences and a pair of 5s.",
+      "hash": "58c0fbc212a8be7a9bbaca96bb263a2a324bd99e07474512158bd9dee0442166",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 75
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.pure-triple-chow.exclusions": {
+      "value": "Excludes Pure Double Chow and cannot also treat those same tiles as shifted triplets.",
+      "hash": "0f063ef098ed9985f63231497513e6700c579bd09130d764a285f8d3c643a0a2",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 126
       },
       "placeholders": [],
       "status": "approved"
@@ -15789,6 +16339,26 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.pure-triple-chow.recognition": {
+      "value": "Use three identical sequences in the same suit.",
+      "hash": "db46db262aa62ec65019dd6adaf8dad2cc87891b569efaafa7bfd8fe3c325bba",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 125
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.quadruple-chow.exclusions": {
+      "value": "Excludes Pure Triple Chow, Pure Double Chow and Tile Hog for the same tiles.",
+      "hash": "d07d9f1edf7dc5a085886b9494a7c67a836288d088bae78b6622b7fcc34a6f0a",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 81
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.quadruple-chow.family": {
       "value": "Sequences",
       "hash": "ff4eaa5e6020142cc2a0db212eb951133ebbdcc55e4985c8bd67b95ecbb167f0",
@@ -15809,6 +16379,36 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.quadruple-chow.recognition": {
+      "value": "Use four identical sequences in the same suit.",
+      "hash": "4da6c2e3cf972bac1813403eeb0ecc447e43bb6f3d9410e534faa62bf2d0a760",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 80
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.reversible-tiles.exclusions": {
+      "value": "The allowed kinds refer to the conventional tile faces. Excludes One Voided Suit.",
+      "hash": "2f169474038c0d3304d6969d9b515485a994a1ff0c5ed1f07751db96d95191cb",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 211
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.reversible-tiles.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 209
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.reversible-tiles.name": {
       "value": "Reversible Tiles",
       "hash": "1687851bdfc3ce43ca84bc5e7f3e6280e018b23c78f0bea5d826359654101a5a",
@@ -15819,12 +16419,62 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.reversible-tiles.recognition": {
+      "value": "Use only 1, 2, 3, 4, 5, 8, 9 circles, 2, 4, 5, 6, 8, 9 bamboo and white dragons.",
+      "hash": "1c0140d55a8ff52249a848dd60e585c0562359cbda6d7860379f13d68542a71f",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 210
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.robbing-the-kong.exclusions": {
+      "value": "Excludes Last Tile. A concealed quad cannot be robbed.",
+      "hash": "24dcc6a0bdaff73b75cd3eb9356ef5db57d9566b41404b7d420af64dccc1b724",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 246
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.robbing-the-kong.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 244
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.robbing-the-kong.name": {
       "value": "Robbing The Kong",
       "hash": "b208e86a753562a9bcc248f4206ab5c457d432565f4abb90637ce0a310b33f5c",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 243
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.robbing-the-kong.recognition": {
+      "value": "Win on the tile another player adds to a melded triplet to make it a quad.",
+      "hash": "897e1747c652dd816b238479487b08a783536307a70e7631641e052268e3d9f8",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 245
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.seat-wind.exclusions": {
+      "value": "Use the seat at decision time. It can combine with Prevalent Wind when both are the same wind.",
+      "hash": "c9397a56a9cce4501aa502c65b9222869862469b313a45006eea850e92de855e",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 316
       },
       "placeholders": [],
       "status": "approved"
@@ -15849,12 +16499,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.seat-wind.recognition": {
+      "value": "Have a triplet or quad matching your seat wind during this hand.",
+      "hash": "f70bc2158ecfdb937e671fbc2024ea7e0e801122c0c5b2ead298a3d8414e758a",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 315
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.self-drawn.exclusions": {
+      "value": "Fully Concealed Hand, Last Tile Draw and Out with Replacement Tile replace this one-point award when applicable.",
+      "hash": "aa636c13bab7dd0b0871afd0991efde83b96a85824c6fe908eb5577c8a888500",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 411
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.self-drawn.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 409
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.self-drawn.name": {
       "value": "Self-Drawn",
       "hash": "b5896e15cddfff87d713c615f89a29df2bc7ad1b1de2aca1967dd63542705ad8",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 408
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.self-drawn.recognition": {
+      "value": "Win on a tile you draw from the wall yourself.",
+      "hash": "4f6aa8351e632df7d8825c7e64853268ffba219c81b77c590419b5023c68e750",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 410
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.seven-pairs.exclusions": {
+      "value": "Excludes Concealed Hand and Single Wait. A self-draw can still add Fully Concealed Hand.",
+      "hash": "268374804ee9ea3fa7cf1f4f87d5a4177aac15282ab03889092bbe1a7a370ace",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 106
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.seven-pairs.family": {
+      "value": "Special structures",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 104
       },
       "placeholders": [],
       "status": "approved"
@@ -15869,12 +16579,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.seven-pairs.recognition": {
+      "value": "Make seven pairs with no declared sets. Four identical tiles may supply two pairs in MCR.",
+      "hash": "186c43c9e5cbedd61726d020c3b34238fd26f0fd9bf2764996ecb13e300cefa8",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 105
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.seven-shifted-pairs.exclusions": {
+      "value": "Replaces Seven Pairs, Full Flush, Concealed Hand, Single Wait, No Honors and One Voided Suit.",
+      "hash": "c970103d50fe23a50377986728fad110fc94b721482f1aa351b5c19960bd2377",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 41
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.seven-shifted-pairs.family": {
+      "value": "Special structures",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 39
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.seven-shifted-pairs.name": {
       "value": "Seven Shifted Pairs",
       "hash": "cfe9c3c03248a8e76f72cd607ad445f3d504f64d9be53d81c50581785b4b0a32",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 38
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.seven-shifted-pairs.recognition": {
+      "value": "Make seven pairs of consecutive numbers within one suit.",
+      "hash": "ce3a00d65fbda981ecad14ef9180d8bd456a304759259cbee0dbb79bdc5df36e",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 40
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.short-straight.exclusions": {
+      "value": "Pure Straight and larger shifted-sequence patterns replace the lower combinations they imply.",
+      "hash": "b95095389a6fc116dee15e1de47056067d6aad4b028d50bf28cdf26cef37b6d6",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 366
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.short-straight.family": {
+      "value": "Small combinations",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 364
       },
       "placeholders": [],
       "status": "approved"
@@ -15889,12 +16659,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.short-straight.recognition": {
+      "value": "Use two sequences in one suit to cover six consecutive numbers, such as 234 and 567.",
+      "hash": "d35e8422ea63c6dc27396deed6808d495fee947bc0bbacc7f7167b196376b7d6",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 365
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.thirteen-orphans.exclusions": {
+      "value": "Concealed special structure; excludes All Types, Concealed Hand and Single Wait.",
+      "hash": "ec1c1a6aa5df5f80bff56c0a443704593f0028bb4d843d1ab3274db4179c3e9d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 46
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.thirteen-orphans.family": {
+      "value": "Special structures",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 44
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.thirteen-orphans.name": {
       "value": "Thirteen Orphans",
       "hash": "e0905cee68717d9b987e0c18e74e0aea186a70e87358f0990341d916617585e3",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 43
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.thirteen-orphans.recognition": {
+      "value": "Collect every terminal and honor kind, then duplicate one of those thirteen kinds.",
+      "hash": "269db2b80ca5614d79c2eae7a9b04ee3e4e744e710fb6fa9591a166ecd5e199f",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 45
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.three-concealed-pungs.exclusions": {
+      "value": "A thrown tile completing one of these triplets makes that triplet melded for this count. Excludes the two-concealed-triplets pattern.",
+      "hash": "a0b7cffcdcc5838ee096f98679e9695cf03459d3b693b13b9521e9024d13f82c",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 176
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.three-concealed-pungs.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 174
       },
       "placeholders": [],
       "status": "approved"
@@ -15909,12 +16739,62 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.three-concealed-pungs.recognition": {
+      "value": "Have three triplets or quads completed without claiming their final tile.",
+      "hash": "74d61b3c3eb52160797d983c6d1756cebabc95f8ebddd5dd54bec2eb2492417c",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 175
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.three-kongs.exclusions": {
+      "value": "Replaces the smaller three-quad combinations it is made from; concealment may contribute where the rules permit.",
+      "hash": "8b83ac21822a748faf361d0c78512f6201830a8bf6e5538cfacd480672b90a3a",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 96
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.three-kongs.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 94
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.three-kongs.name": {
       "value": "Three Kongs",
       "hash": "a464c994aa80d73249197d822399b85762fc595a75de094ba668202728056c58",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 93
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.three-kongs.recognition": {
+      "value": "Declare three quads, concealed or melded.",
+      "hash": "a59fcf7cd1e3bfb816722d68b95cfed3ba5b987c8d9d252be22775ec19675d96",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 95
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.three-suited-terminal-chows.exclusions": {
+      "value": "Excludes All Chows, Mixed Double Chow, Two Terminal Chows and No Honors.",
+      "hash": "60314d805d0694fb5391d7373698d37963fd8a4a9e328064b89b885c1fa5f586",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 156
       },
       "placeholders": [],
       "status": "approved"
@@ -15939,12 +16819,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.three-suited-terminal-chows.recognition": {
+      "value": "Use 123 and 789 in each of two suits, with a pair of 5s in the third suit.",
+      "hash": "d8fbd2a5063dab578940e5c81d92e167ad59828c78a4053133e656d3b867b257",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 155
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.tile-hog.exclusions": {
+      "value": "Count different four-copy kinds separately, except when a higher pattern explicitly includes those copies.",
+      "hash": "7f64196e9c9372ac99f0bed58a2a3da315c8df91870172c72dfd3b21998a198c",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 331
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.tile-hog.family": {
+      "value": "Small combinations",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.tile-hog.name": {
       "value": "Tile Hog",
       "hash": "8e69614dbfe09549c8be20c6417b3baa8b05ef17ab1b7d35e827da6f905d3147",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 328
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.tile-hog.recognition": {
+      "value": "Use all four copies of a kind within the hand without declaring them as a quad.",
+      "hash": "d9243a8bebcce053155b738491decf9d3c3e9f9f66baf17f5e7e77d07678e954",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 330
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.triple-pung.exclusions": {
+      "value": "Excludes the double-triplet combination for pairs drawn from the required three sets.",
+      "hash": "020abcd856199a8a6ec9933981c40c02cb361bf4a4da8d0717621f1a13bf00f9",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 171
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.triple-pung.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 169
       },
       "placeholders": [],
       "status": "approved"
@@ -15959,6 +16899,36 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.triple-pung.recognition": {
+      "value": "Use triplets or quads of the same number in all three suits.",
+      "hash": "03952f03e5d0bd276aac1519100a7637b7ebb5e396286cfbed94f337b0fc7e56",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 170
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.two-concealed-kongs.exclusions": {
+      "value": "Worth eight fan together. Do not also count the two individual concealed quad awards.",
+      "hash": "1d8ea522e0cec52c75841afa88a10d9622cf190948c1320d7a9c3b033b06bea7",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 276
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.two-concealed-kongs.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 274
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.two-concealed-kongs.name": {
       "value": "Two Concealed Kongs",
       "hash": "8c4af044f8b53483267ce7315ac2b1ecb44807c571a2f13224fadfe0d4ea79b7",
@@ -15969,12 +16939,62 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.two-concealed-kongs.recognition": {
+      "value": "Declare two concealed quads.",
+      "hash": "47266da70189b627430e3c148679d0c4a4863cc4e496295330e1f405466b5267",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 275
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.two-concealed-pungs.exclusions": {
+      "value": "A triplet completed by a thrown tile counts as melded for this count. The three- and four-concealed-triplets patterns replace it.",
+      "hash": "37366f83c3c79c7ebaa8e3912e47257c481fc08d158d2201e733198eab195fba",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 341
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.two-concealed-pungs.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 339
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.two-concealed-pungs.name": {
       "value": "Two Concealed Pungs",
       "hash": "bd98d81d21f0983016c3eeb164312e15d0c5a99f8a32ac6369b8a9ffabab06cf",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 338
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.two-concealed-pungs.recognition": {
+      "value": "Complete two triplets or quads without taking their completing tile from another player.",
+      "hash": "91419a4f901de362dbd38222e464d78a1df5fe8ce418299aa6652ad8e249a214",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 340
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.two-dragons-pungs.exclusions": {
+      "value": "Replaces the two individual dragon triplet awards. Little or Big Three Dragons replaces this combination.",
+      "hash": "02455608fda89fd595ddc54831c2191a224413a9346406c5b5ae8b046b4bd6e1",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 281
       },
       "placeholders": [],
       "status": "approved"
@@ -15999,12 +17019,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.two-dragons-pungs.recognition": {
+      "value": "Have triplets or quads of two different dragons.",
+      "hash": "d7329e1f2f4bc5fe7ce3b0cd5851862b1fad36362488be6a2b8112492d4bf22d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 280
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.two-melded-kongs.exclusions": {
+      "value": "Replaces the two individual melded quad awards; larger quad combinations may replace it. One concealed quad together with one melded quad scores six fan together instead of the two individual awards; that combination is not a separate named pattern.",
+      "hash": "a82b99c3de7ec4a137a7a14fd0e9cdcd684b970ec579c8918a73ac3342932b55",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 296
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.two-melded-kongs.family": {
+      "value": "Triplets and quads",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 294
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.two-melded-kongs.name": {
       "value": "Two Melded Kongs",
       "hash": "4a72ddd438cd21ceaa5596072b955fec821c85289cd9d53033bd83f4c0e2f8a5",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 293
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.two-melded-kongs.recognition": {
+      "value": "Declare two melded quads, whether claimed directly or made by adding a fourth tile to a melded triplet.",
+      "hash": "b395b7a134eac94a8a70e182def745708a1da84fe48b035de3b8def6afe3defb",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 295
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.two-terminal-chows.exclusions": {
+      "value": "Pure Straight or a terminal-sequence special pattern can replace this included combination.",
+      "hash": "02827287eed6c1dc1e671d9ff80d4d3bdfcc86700ec39c669f9ff36e9a3ac89a",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 371
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.two-terminal-chows.family": {
+      "value": "Small combinations",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 369
       },
       "placeholders": [],
       "status": "approved"
@@ -16019,12 +17099,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.two-terminal-chows.recognition": {
+      "value": "Have 123 and 789 sequences in the same suit.",
+      "hash": "69d66ab0158f542619ce4a0b00fc7617ab25f5cef8d69256da6b64c90889f820",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 370
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.unique-wait-closed.exclusions": {
+      "value": "Use the actual winning tile and pre-win structure, rather than a convenient later rearrangement. Only one wait-type point is used.",
+      "hash": "580a5d4aa26998759dff77acb81ad646a69af2901e26abd224a660b2a7310d6e",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 401
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.unique-wait-closed.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 399
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.unique-wait-closed.name": {
       "value": "Unique Wait (Closed)",
       "hash": "6b21b182a065906b167d0a6fe5b3768f711390cf518635694e2e84a6f4c786a8",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 398
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.unique-wait-closed.recognition": {
+      "value": "Win on the middle tile of a sequence, with no other winning kind available.",
+      "hash": "d7678ae39b14971d29d52f685c8380bde5b25690b62e664e4dc26f1606674bd4",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 400
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.unique-wait-edge.exclusions": {
+      "value": "A different legal completion elsewhere in the hand disqualifies the unique wait. Only one wait-type point is used.",
+      "hash": "c084d2dca8cd4959ae24209c2364223942d9ab343545efc4257fbceef8fa1fc2",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 396
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.unique-wait-edge.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 394
       },
       "placeholders": [],
       "status": "approved"
@@ -16039,12 +17179,72 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.unique-wait-edge.recognition": {
+      "value": "Win with 3 completing 12, or 7 completing 89, when it is the hand’s only winning kind.",
+      "hash": "17e235b1210bdae60d06c0ed8c2fae158c8899b548be0c405ede0fe390a6d671",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 395
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.unique-wait-single.exclusions": {
+      "value": "Melded Hand, Seven Pairs, Thirteen Orphans and certain higher patterns exclude this point.",
+      "hash": "9963e7163e0553b02ff0ce732e8e5952af83f23b9e5764c2126be1f3bc5a19c6",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 406
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.unique-wait-single.family": {
+      "value": "Concealment and winning",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 404
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.unique-wait-single.name": {
       "value": "Unique Wait (Single)",
       "hash": "b12506e0297c29f48093c2524dca091337e9bf6806d791c957901e5c7cefd53c",
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 403
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.unique-wait-single.recognition": {
+      "value": "Win by completing the pair when this is the hand’s only winning kind.",
+      "hash": "249877c71e8927c9e2938aac7f303679b38bdfcf9da4b4662366ca669609e77c",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 405
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.upper-four.exclusions": {
+      "value": "Excludes No Honors. Upper Tiles replaces it if only 7–9 appear.",
+      "hash": "58daa3d11c88000c56e2de76c15c0e0778f5819b72d2c6c0bfeb3da2b81e693d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 191
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.upper-four.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 189
       },
       "placeholders": [],
       "status": "approved"
@@ -16059,6 +17259,36 @@
       "placeholders": [],
       "status": "approved"
     },
+    "learn.mcr.guide.pattern.upper-four.recognition": {
+      "value": "Every number is 6, 7, 8 or 9 and no honors appear.",
+      "hash": "aeb3a3e0b2aec0f36d37c34b621cc7398e1eab28911ff0f6e375e572b16a3fd2",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 190
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.upper-tiles.exclusions": {
+      "value": "Excludes Upper Four and No Honors.",
+      "hash": "ab2828dabee905403c7f0a57185366730a77eb6aa74dc435510ae596639437d4",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 136
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "learn.mcr.guide.pattern.upper-tiles.family": {
+      "value": "Tile composition",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 134
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "learn.mcr.guide.pattern.upper-tiles.name": {
       "value": "Upper Tiles",
       "hash": "37e276b795f73d54d70a0ea0bc3e0323ebf448fe7d1acbcb29209849139249c7",
@@ -16069,672 +17299,12 @@
       "placeholders": [],
       "status": "approved"
     },
-    "learn.mcr.guide.pure-straight-and-larger-shifted-sequence-patter": {
-      "value": "Pure Straight and larger shifted-sequence patterns replace the lower combinations they imply.",
-      "hash": "b95095389a6fc116dee15e1de47056067d6aad4b028d50bf28cdf26cef37b6d6",
+    "learn.mcr.guide.pattern.upper-tiles.recognition": {
+      "value": "Every number is 7, 8 or 9 and no honor is present.",
+      "hash": "c7bdcfd8f0a60bac145b1fabf36c09edf0bbac1d6da32a539978a0df4df393aa",
       "source": {
         "file": "education/mcr-guide.ts",
-        "line": 366
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.pure-straight-or-a-terminal-sequence-special-pat": {
-      "value": "Pure Straight or a terminal-sequence special pattern can replace this included combination.",
-      "hash": "02827287eed6c1dc1e671d9ff80d4d3bdfcc86700ec39c669f9ff36e9a3ac89a",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 371
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.replaces-little-four-winds-big-three-winds-the-a": {
-      "value": "Replaces Little Four Winds, Big Three Winds, the all-triplets pattern, wind awards and terminal/honor-triplet awards.",
-      "hash": "31fcfcf15e3eef598decea8a518d7133a5526be611777a26247ca5d65886e25d",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 16
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.replaces-little-three-dragons-the-two-dragon-tri": {
-      "value": "Replaces Little Three Dragons, the two-dragon-triplets pattern and the individual dragon triplet awards.",
-      "hash": "fa327fe8e8384527ad7f82956a8d4daa6e6c737cb8b7adc951f1a6fae557ac23",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 21
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.replaces-seven-pairs-full-flush-concealed-hand-s": {
-      "value": "Replaces Seven Pairs, Full Flush, Concealed Hand, Single Wait, No Honors and One Voided Suit.",
-      "hash": "c970103d50fe23a50377986728fad110fc94b721482f1aa351b5c19960bd2377",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 41
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.replaces-the-smaller-three-quad-combinations-it": {
-      "value": "Replaces the smaller three-quad combinations it is made from; concealment may contribute where the rules permit.",
-      "hash": "8b83ac21822a748faf361d0c78512f6201830a8bf6e5538cfacd480672b90a3a",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 96
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.replaces-the-two-individual-dragon-triplet-award": {
-      "value": "Replaces the two individual dragon triplet awards. Little or Big Three Dragons replaces this combination.",
-      "hash": "02455608fda89fd595ddc54831c2191a224413a9346406c5b5ae8b046b4bd6e1",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 281
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.replaces-the-two-individual-melded-quad-awards-l": {
-      "value": "Replaces the two individual melded quad awards; larger quad combinations may replace it. One concealed quad together with one melded quad scores six fan together instead of the two individual awards; that combination is not a separate named pattern.",
-      "hash": "a82b99c3de7ec4a137a7a14fd0e9cdcd684b970ec579c8918a73ac3342932b55",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 296
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.requires-the-concealed-nine-way-base-before-winn": {
-      "value": "Requires the concealed nine-way base before winning; replaces Full Flush, Concealed Hand and the implied terminal-triplet award.",
-      "hash": "6da2a4d391f7df4414d790d53ba11f6a24c90f8a60e2b5a53ec70f3748d520f1",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 31
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.small-combinations": {
-      "value": "Small combinations",
-      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 329
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.special-honor-and-knitted-hands-and-thirteen-orp": {
-      "value": "Special honor-and-knitted hands and Thirteen Orphans already imply these categories and exclude this award.",
-      "hash": "721499cb7897ce386831ba8d4197a3280a7c2aa3f6db753b1080c39fadb7ad4f",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 266
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.special-structures": {
-      "value": "Special structures",
-      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 29
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.the-allowed-kinds-refer-to-the-conventional-tile": {
-      "value": "The allowed kinds refer to the conventional tile faces. Excludes One Voided Suit.",
-      "hash": "2f169474038c0d3304d6969d9b515485a994a1ff0c5ed1f07751db96d95191cb",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 211
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.the-entire-hand-contains-only-numbered-suits": {
-      "value": "The entire hand contains only numbered suits.",
-      "hash": "593ac1c03f8a3b6aa1ec17ceec58f9fce243b969234fac44aacde3af68f46ff5",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 390
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.the-four-sets-are-all-triplets-or-quads-with-one": {
-      "value": "The four sets are all triplets or quads, with one pair.",
-      "hash": "7b44a12602c64be72b806a83cd5057a1f0607f705377f3ee9a36cc855be9737d",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 250
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.the-nine-knitted-tiles-are-a-special-body-not-th": {
-      "value": "The nine knitted tiles are a special body, not three ordinary sequences. At most one ordinary set may be declared.",
-      "hash": "d417fbe7db62a85327bf24c326d17d708de4e8510b03e95fb93ab4b870d2bfa1",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 186
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.the-same-required-sequences-cannot-be-split-into": {
-      "value": "The same required sequences cannot be split into other repeated combination awards.",
-      "hash": "dce063ba7521550f6ff5d2171acc63efb8f6b07bd9f2812bdba7a81b16829c19",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 161
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.the-three-required-sequences-do-not-also-earn-sh": {
-      "value": "The three required sequences do not also earn Short Straight or Two Terminal Chows.",
-      "hash": "1536a9fedea83c374ade2c7be0afa6e27ab578b4f843939c71055344ff91359d",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 151
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.the-three-suits-can-be-assigned-in-any-order-the": {
-      "value": "The three suits can be assigned in any order; the numbered steps must remain consecutive.",
-      "hash": "06a57e061c6f91a7b467b43c6e959b89b3828bf40baa9730fba8906755d0638d",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 221
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.the-thrown-tile-must-be-the-last-one-thrown-in-t": {
-      "value": "The thrown tile must be the last one thrown in the hand, not merely the fourth visible copy.",
-      "hash": "ac002d1d5dec893745054028d065fc174e33462df2c5d8fce9b6a6b5a0d9e831",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 236
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.the-triple-triplet-pattern-replaces-the-double-t": {
-      "value": "The triple-triplet pattern replaces the double-triplet combinations it is made from.",
-      "hash": "7f18f24c7ad8d392fa5a5c44375673009f00465a18a522c54a01a41a7b6d6c54",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 336
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.the-two-concealed-quads-pattern-replaces-two-ind": {
-      "value": "The two-concealed-quads pattern replaces two individual awards. The fourth tile is not counted again as Tile Hog.",
-      "hash": "b47cedb4324f78781d55281d3da73a411f2346bb37fb5c9881a5e617b00a6967",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 346
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.the-two-sets-cannot-be-counted-as-the-same-combi": {
-      "value": "The two sets cannot be counted as the same combination twice. Larger identical-sequence patterns replace their implied lower awards.",
-      "hash": "3942162a77f60fd2ee8442dc9718d2cea1ce1f18bc591ef0a0b614072bbcec49",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 356
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.tile-composition": {
-      "value": "Tile composition",
-      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 24
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.triplets-and-quads": {
-      "value": "Triplets and quads",
-      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 34
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-123-456-and-789-sequences-in-one-suit": {
-      "value": "Use 123, 456 and 789 sequences in one suit.",
-      "hash": "b5ffcc1f88a1d8590f9f2e320b46e24d8d7f5da242c7012fa92f4d3f0d0164d1",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 150
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-123-and-789-in-each-of-two-suits-with-a-pair": {
-      "value": "Use 123 and 789 in each of two suits, with a pair of 5s in the third suit.",
-      "hash": "d8fbd2a5063dab578940e5c81d92e167ad59828c78a4053133e656d3b867b257",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 155
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-123-in-one-suit-456-in-a-second-and-789-in-t": {
-      "value": "Use 123 in one suit, 456 in a second and 789 in the third.",
-      "hash": "085d27bb908b76b2e2e6a356461bb57ac09c4c9f068ce61f9ee80a4e38d10200",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 205
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-147-in-one-suit-258-in-another-and-369-in-th": {
-      "value": "Use 147 in one suit, 258 in another and 369 in the third, plus an ordinary set and pair.",
-      "hash": "5916fccd4fa0e2540f6eeb144e93ccf2b189f7796234c3400a0e284f8db53f68",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 185
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-all-four-copies-of-a-kind-within-the-hand-wi": {
-      "value": "Use all four copies of a kind within the hand without declaring them as a quad.",
-      "hash": "d9243a8bebcce053155b738491decf9d3c3e9f9f66baf17f5e7e77d07678e954",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 330
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-all-seven-different-honors-and-seven-distinc": {
-      "value": "Use all seven different honors and seven distinct suited tiles from a knitted 147/258/369 suit assignment.",
-      "hash": "3b044d7e79ae4f5cd240103655175b28ea8f98babcbe3924d77f24d3bb7e9cd7",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 110
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-exactly-one-numbered-suit-and-no-honors": {
-      "value": "Use exactly one numbered suit and no honors.",
-      "hash": "3057d9154a2edda9cb91239ed4361f697e03d713bf4c19fd1ce8c168413dbef8",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 120
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-exactly-two-of-the-three-numbered-suits-hono": {
-      "value": "Use exactly two of the three numbered suits; honors may also appear.",
-      "hash": "5cd49935ba2828bf3388380ada36e5a3791834d122d35e2d4000d48c00fb1536",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 385
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-four-identical-sequences-in-the-same-suit": {
-      "value": "Use four identical sequences in the same suit.",
-      "hash": "4da6c2e3cf972bac1813403eeb0ecc447e43bb6f3d9410e534faa62bf2d0a760",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 80
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-four-sequences-and-a-pair-of-suited-tiles": {
-      "value": "Use four sequences and a pair of suited tiles.",
-      "hash": "caead8681355963a7f410d26fcf92e7624f78ef110b1930ef57c3e67a5ae6ad4",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 325
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-four-sequences-in-one-suit-with-starting-num": {
-      "value": "Use four sequences in one suit with starting numbers separated consistently by one or by two.",
-      "hash": "131a0b0a835e58827b58d9051a470ed26d39184cf609a81b5880bac19bec60b7",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 90
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-four-triplets-in-one-suit-whose-numbers-adva": {
-      "value": "Use four triplets in one suit whose numbers advance by one each time.",
-      "hash": "1a0eb80c9e506dded982b9b8148bb60dbd56e1961f62508f916c93a58aa3b8cf",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 85
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-fourteen-distinct-tiles-drawn-from-a-knitted": {
-      "value": "Use fourteen distinct tiles drawn from a knitted suit assignment and the seven honors.",
-      "hash": "b1ee897261be232445ec840b530601ef6ef169f3985f801ee784b3d79a623980",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 180
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-one-numbered-suit-together-with-honors": {
-      "value": "Use one numbered suit together with honors.",
-      "hash": "cbe8cc8db9fe6f9629478bb204b83c75cec620b2ffea5f690291fb1db6c89d4b",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 255
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-only-1-2-3-4-5-8-9-circles-2-4-5-6-8-9-bambo": {
-      "value": "Use only 1, 2, 3, 4, 5, 8, 9 circles, 2, 4, 5, 6, 8, 9 bamboo and white dragons.",
-      "hash": "1c0140d55a8ff52249a848dd60e585c0562359cbda6d7860379f13d68542a71f",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 210
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-only-2-3-4-6-and-8-bamboo-and-green-dragons": {
-      "value": "Use only 2, 3, 4, 6 and 8 bamboo and green dragons.",
-      "hash": "8d8dc4574c2bb59457a5303cc483a442f64fee5616507e1679639a896bc2398c",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 25
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-only-suited-1s-suited-9s-winds-and-dragons-w": {
-      "value": "Use only suited 1s, suited 9s, winds and dragons, with both suited and honor tiles present.",
-      "hash": "39c1c5ded9939befb6702083bde7f5c1c49bff42639084ec4d1b58fbc296cea7",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 100
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-the-actual-winning-tile-and-pre-win-structur": {
-      "value": "Use the actual winning tile and pre-win structure, rather than a convenient later rearrangement. Only one wait-type point is used.",
-      "hash": "580a5d4aa26998759dff77acb81ad646a69af2901e26abd224a660b2a7310d6e",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 401
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-the-same-numbered-sequence-in-each-of-the-th": {
-      "value": "Use the same numbered sequence in each of the three suits.",
-      "hash": "1a6c54618548d6a7e14388c6fa3a6db74b5c0b421cc63aff625600250854e9a3",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 215
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-the-seat-at-decision-time-it-can-combine-wit": {
-      "value": "Use the seat at decision time. It can combine with Prevalent Wind when both are the same wind.",
-      "hash": "c9397a56a9cce4501aa502c65b9222869862469b313a45006eea850e92de855e",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 316
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-three-identical-sequences-in-the-same-suit": {
-      "value": "Use three identical sequences in the same suit.",
-      "hash": "db46db262aa62ec65019dd6adaf8dad2cc87891b569efaafa7bfd8fe3c325bba",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 125
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-three-sequences-in-different-suits-whose-sta": {
-      "value": "Use three sequences in different suits whose starting numbers advance by one.",
-      "hash": "3d57fdf06131161ffc4ad2bd9dcc37ef7f1dc24d445a0e0db3c12cef8bbeac38",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 260
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-three-sequences-in-one-suit-whose-starts-adv": {
-      "value": "Use three sequences in one suit whose starts advance consistently by one or two.",
-      "hash": "90deea7605c258a817d9a8ebf1516d18426ee920685bccfe21fc46a284476e59",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 160
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-three-triplets-in-one-suit-with-consecutive": {
-      "value": "Use three triplets in one suit with consecutive numbers.",
-      "hash": "7aab1df3801f38623bc8485a445e1033568f4bf7bf8729e6712e2e636655c581",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 130
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-three-triplets-in-three-different-suits-with": {
-      "value": "Use three triplets in three different suits, with numbers stepping upward by one.",
-      "hash": "e5c52f93cbc4a5500be9c0a90b1bd7f9b1245fc291a4c11862db6d8b4da52132",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 220
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-three-wind-triplets-or-quads-and-the-fourth": {
-      "value": "Use three wind triplets or quads and the fourth wind as the pair.",
-      "hash": "6c3e794f9a98ed6ac98f55b9e8bfe8d3b4ddeeb4a5c7efc3362e4391a04805bd",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 55
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-triplets-or-quads-of-the-same-number-in-all": {
-      "value": "Use triplets or quads of the same number in all three suits.",
-      "hash": "03952f03e5d0bd276aac1519100a7637b7ebb5e396286cfbed94f337b0fc7e56",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 170
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-two-dragon-triplets-or-quads-and-a-pair-of-t": {
-      "value": "Use two dragon triplets or quads and a pair of the third dragon.",
-      "hash": "5de5ac3dcaa6869aedfe7fd76b7d5948d19e1e4bfc8b36d73b2332617db1ce9b",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 60
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-two-identical-sequences-in-the-same-suit": {
-      "value": "Use two identical sequences in the same suit.",
-      "hash": "29ac6a58c66070ce58fba55ff300ad0f713a6dee5ffeb134a9a5d0d8fe02b210",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 355
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-two-sequences-in-one-suit-to-cover-six-conse": {
-      "value": "Use two sequences in one suit to cover six consecutive numbers, such as 234 and 567.",
-      "hash": "d35e8422ea63c6dc27396deed6808d495fee947bc0bbacc7f7167b196376b7d6",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 365
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.use-two-sequences-with-the-same-numbers-in-diffe": {
-      "value": "Use two sequences with the same numbers in different suits.",
-      "hash": "6513979f1d5a24444bd1a2121c8d2dd9bce2494ac78a19e845793c1e051a5701",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 360
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.visibility-comes-from-tiles-everyone-can-see-not": {
-      "value": "Visibility comes from tiles everyone can see, not hidden hands or the wall. Robbing a quad excludes it.",
-      "hash": "95010ab25e83bb20cb0620b909098eb2a8cbf3d84d0d46fee2705f3ae523ad21",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 301
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.win-by-completing-the-pair-when-this-is-the-hand": {
-      "value": "Win by completing the pair when this is the hand’s only winning kind.",
-      "hash": "249877c71e8927c9e2938aac7f303679b38bdfcf9da4b4662366ca669609e77c",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 405
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.win-immediately-on-the-ordinary-replacement-take": {
-      "value": "Win immediately on the ordinary replacement taken for a declared quad.",
-      "hash": "2d65c21d955e31ce626e5395e324c21053336a83cb471594e1252b1629b32d1b",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 240
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.win-on-a-tile-you-draw-from-the-wall-yourself": {
-      "value": "Win on a tile you draw from the wall yourself.",
-      "hash": "4f6aa8351e632df7d8825c7e64853268ffba219c81b77c590419b5023c68e750",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 410
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.win-on-the-last-thrown-tile-of-the-hand-thrown-a": {
-      "value": "Win on the last thrown tile of the hand, thrown after the last tile was drawn from the wall.",
-      "hash": "45c06521a94b7b0e056a57bc78eb9499cb88d0ea053525136ca09ec485c92179",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 235
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.win-on-the-middle-tile-of-a-sequence-with-no-oth": {
-      "value": "Win on the middle tile of a sequence, with no other winning kind available.",
-      "hash": "d7678ae39b14971d29d52f685c8380bde5b25690b62e664e4dc26f1606674bd4",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 400
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.win-on-the-tile-another-player-adds-to-a-melded": {
-      "value": "Win on the tile another player adds to a melded triplet to make it a quad.",
-      "hash": "897e1747c652dd816b238479487b08a783536307a70e7631641e052268e3d9f8",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 245
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.win-with-3-completing-12-or-7-completing-89-when": {
-      "value": "Win with 3 completing 12, or 7 completing 89, when it is the hand’s only winning kind.",
-      "hash": "17e235b1210bdae60d06c0ed8c2fae158c8899b548be0c405ede0fe390a6d671",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 395
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.win-with-a-valid-structure-that-earns-no-other-n": {
-      "value": "Win with a valid structure that earns no other non-flower pattern.",
-      "hash": "204fdcf0d40eb795a64f97a98089d10d4c772f0a94627ef0257d7c2e662abb61",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 225
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.win-with-the-fourth-copy-when-the-other-three-co": {
-      "value": "Win with the fourth copy when the other three copies are already visible before the win.",
-      "hash": "643c39f68a5392f807c56d59e6fc90ce775fd0a0a0d443fe3be5496b025d654b",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 300
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "learn.mcr.guide.worth-eight-fan-together-do-not-also-count-the-t": {
-      "value": "Worth eight fan together. Do not also count the two individual concealed quad awards.",
-      "hash": "1d8ea522e0cec52c75841afa88a10d9622cf190948c1320d7a9c3b033b06bea7",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 276
+        "line": 135
       },
       "placeholders": [],
       "status": "approved"
@@ -26550,7 +27120,7 @@
       "hash": "dc4a3b3a935ebb706831f8f18a0bb56c776ef283619780d7c058ebcd2fdc2df3",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 318
+        "line": 324
       },
       "placeholders": [],
       "status": "approved"
@@ -26580,7 +27150,7 @@
       "hash": "99bc0811c4c9f862e6d705a5b79a4c2d9f8cc32d84e53692ee93eab7c5c243ae",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 342
+        "line": 348
       },
       "placeholders": [],
       "status": "approved"
@@ -26613,7 +27183,7 @@
       "hash": "9bc3516b784aceb156fb7e182b697e3f2aae96fa300e13aaad39085a986f02a6",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 370
+        "line": 376
       },
       "placeholders": [],
       "status": "approved"
@@ -26633,7 +27203,7 @@
       "hash": "0bca43add105642fdb94db6ebf99746a60816f346bf3cd31ee9a3cbe6f8f3281",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 340
+        "line": 346
       },
       "placeholders": [],
       "status": "approved"
@@ -26656,7 +27226,7 @@
       "hash": "6e2b26d9de4033b952bd242f69b798420ee887151b937f394efc23252c78af74",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 351
+        "line": 357
       },
       "placeholders": [],
       "status": "approved"
@@ -26666,7 +27236,7 @@
       "hash": "fd8ea0a29a653cac0de113a4dce5875e61def5197251debfeb9e58855fe9e298",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 436
+        "line": 442
       },
       "placeholders": [],
       "status": "approved"
@@ -26686,7 +27256,7 @@
       "hash": "b05f5312f52ea4878e6aea261af94d91ecd31ac339d6c2a9f1c4b7eae65caea4",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 372
+        "line": 378
       },
       "placeholders": [],
       "status": "approved"
@@ -26696,7 +27266,7 @@
       "hash": "27636f08d4dcb21adb5efb25b0ec61a73ba3eec91049c0288f981238e4a4a581",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 353
+        "line": 359
       },
       "placeholders": [],
       "status": "approved"
@@ -26706,7 +27276,7 @@
       "hash": "cabbcb70d6181880ab073373526a0c6c6e19e654d5efb84953f80e240277b4e8",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 445
+        "line": 451
       },
       "placeholders": [],
       "status": "approved"
@@ -26726,7 +27296,7 @@
       "hash": "a193b67fe0a1a01d0cde7b84d0a87e9994cd1147b56bfd3ed5bf8f60f8b2489c",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 443
+        "line": 449
       },
       "placeholders": [],
       "status": "approved"
@@ -26736,7 +27306,7 @@
       "hash": "92f19534d8c5411570e603431055706c77573719bc31c19b6e5219457bc1065e",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 401
+        "line": 407
       },
       "placeholders": [
         "0",
@@ -26760,7 +27330,7 @@
       "hash": "42ca0a4130a8ffbf849c2133c3396f862c850bd76f6f880798a001d161dfab60",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 391
+        "line": 397
       },
       "placeholders": [],
       "status": "approved"
@@ -26806,7 +27376,7 @@
       "hash": "331251cf2525ef16e194747e91d7326840d31f7ccf156479a0abcad93208c5ff",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 309
+        "line": 315
       },
       "placeholders": [
         "0",
@@ -26840,7 +27410,7 @@
       "hash": "69a503bfee86704bbfdc30b2e3ca0a612742837f688000a7801ad5e54e0d06e5",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 437
+        "line": 443
       },
       "placeholders": [
         "0"
