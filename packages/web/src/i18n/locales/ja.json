@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-19T20:13:51.596Z",
-    "keyCount": 3978,
+    "generatedAt": "2026-11-19T23:17:51.886Z",
+    "keyCount": 3975,
     "model": "google/gemini-2.5-flash",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -36757,26 +36757,6 @@
       },
       "placeholders": []
     },
-    "ui.app.a-riichi-stick-is-a-1-000-point-stake-a-player-p": {
-      "value": "リーチ棒は、プレイヤーがリーチを宣言したときに支払う1,000点分の賭け金です。勝者は場に出ているリーチ棒をすべて獲得します。",
-      "hash": "f7157ffc54f48d2f4261da5cd268b497b35b8c74905c84df8bf82af4f5b41427",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4481
-      },
-      "placeholders": []
-    },
-    "ui.app.a-yakuman-is-the-highest-value-kind-of-hand-it-p": {
-      "value": "役満は最も価値の高い役です。固定された高額な点数が支払われます。",
-      "hash": "07f53e579f0f60d0d526349d6f58a2aaf8ae82b455f7153e427ce783e987259c",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4467
-      },
-      "placeholders": []
-    },
     "ui.app.abortive-draw": {
       "value": "途中流局",
       "hash": "148db81748ba6ed2209fc5e53e18464015f25de4b2e36618a6a096365d04991f",
@@ -37670,16 +37650,6 @@
       },
       "placeholders": []
     },
-    "ui.app.han-count-the-hands-scoring-patterns-and-bonus-d": {
-      "value": "翻は手牌の役とドラのボーナスを数えます。符は手牌の形によるミニポイントです。翻と符を合わせて点数を決定します。",
-      "hash": "3cf2e9efea2414cf6c268fda175cf75c393f6de81f7377140f3c740df694a69f",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4468
-      },
-      "placeholders": []
-    },
     "ui.app.hand-discard-tedashi": {
       "value": "手出し",
       "hash": "fcfd066f0efae0922f297954d3a5dc930be8c1fd3629e25fddc2328a51c84c4d",
@@ -37759,19 +37729,6 @@
         "line": 4560
       },
       "placeholders": []
-    },
-    "ui.app.honba-the-repeat-counter-stands-at-0-each-honba": {
-      "value": "本場 — 連荘カウンターは{0}です。各本場は和了った手牌に300点を追加します。",
-      "hash": "1cecc206ca88cc02dce792aad1b525f29f90f545b0b6933a13bc113a6b4b5613",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4469
-      },
-      "placeholders": [
-        "0"
-      ],
-      "dynamic": true
     },
     "ui.app.honchantai": {
       "value": "混全帯么九",
@@ -39046,16 +39003,6 @@
       },
       "placeholders": []
     },
-    "ui.app.ron-winning-on-a-tile-another-player-discarded-o": {
-      "value": "ロン: 他のプレイヤーが捨てた牌で和了すること。捨てたプレイヤーのみが支払います。タイトルの風は和了者の自風です。",
-      "hash": "74a904e136c94425e6b98da29ef77069683c2f724878d97e094cd0b81f0ed74d",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4420
-      },
-      "placeholders": []
-    },
     "ui.app.round": {
       "value": "局",
       "hash": "cd9558acfc386bd3e1fb14da5d4ed7e9338f80fa29fc2447c36c94667c406295",
@@ -39535,16 +39482,6 @@
       ],
       "dynamic": true
     },
-    "ui.app.the-dora-indicator-points-to-a-bonus-tile-the-ti": {
-      "value": "ドラ表示牌はボーナスタイルを示します。表示牌から数えて1つ先の同じ種類の牌がドラとなり、和了した手牌では翻数が加算されます。",
-      "hash": "c18ff6be8326000e263b0191d6b1a7cc649f8982a195c9162ef1c49c8bb9ee23",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4488
-      },
-      "placeholders": []
-    },
     "ui.app.the-face-up-tile-in-the-middle-of-the-table-the": {
       "value": "テーブル中央の表向きの牌、表示牌は{0}です。その1つ先の牌がドラです。",
       "hash": "ed7cc25c18b0edfe622868adc39d2557087e4418f917581f66049e68da4e709a",
@@ -39754,16 +39691,6 @@
       ],
       "dynamic": true
     },
-    "ui.app.tsumo-winning-on-a-tile-you-drew-yourself-all-th": {
-      "value": "ツモ：自分で引いた牌で和了すること。3人の対戦相手全員が支払います。タイトルの風は、和了者の自風です。",
-      "hash": "12e44d24ebd2f6695ad9b9617e6a9fa029bed168c245ef5560639f1d7d9b2840",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4421
-      },
-      "placeholders": []
-    },
     "ui.app.uradora-indicator": {
       "value": "裏ドラ表示牌",
       "hash": "aacfe5f35ce545a211feb47763ccbde1a2f2a820b7193b88400f853dfec815ba",
@@ -39771,16 +39698,6 @@
       "source": {
         "file": "app.ts",
         "line": 4493
-      },
-      "placeholders": []
-    },
-    "ui.app.uradora-indicators-sit-hidden-under-the-dora-ind": {
-      "value": "裏ドラ表示牌はドラ表示牌の下に隠されています。リーチした手牌が和了した場合にのみ公開され、それぞれの表示牌から1つ先の牌もボーナスタイルとなります。",
-      "hash": "8719a17450ae0224b4041a3ab1f51b199fec5c04b2686aa3dbbc32ae5191bff4",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4496
       },
       "placeholders": []
     },
@@ -40851,6 +40768,59 @@
       "source": {
         "file": "tile-info.ts",
         "line": 112
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "review.board.coachs-pick": {
+      "value": "コーチのおすすめ",
+      "hash": "443b61918c335f57aa11779f0406e10d160f883094afefe2909ca95a2cb63c29",
+      "status": "draft",
+      "source": {
+        "file": "board-review-ui.ts",
+        "line": 181
+      },
+      "placeholders": []
+    },
+    "review.board.your-discard": {
+      "value": "あなたの捨て牌",
+      "hash": "45d80bdcf00bcf705be5f2a569228d40f3c25f50772a9c456517cdf9f33b9bbb",
+      "status": "draft",
+      "source": {
+        "file": "board-review-ui.ts",
+        "line": 180
+      },
+      "placeholders": []
+    },
+    "review.board.your-discard-is-outlined-the-coachs-pick-is-ringed": {
+      "value": "あなたの捨て牌は枠線で囲まれ、コーチのおすすめはリングで囲まれています。",
+      "hash": "c1515c43642d0f80dabdbbec950d325d3c3290e5bfe1c8206bb8081861efd6e9",
+      "status": "draft",
+      "source": {
+        "file": "review-ui.ts",
+        "line": 277
+      },
+      "placeholders": []
+    },
+    "ui.app.all-three-opponents-pay": {
+      "value": "3人全員が支払います",
+      "hash": "e5e84d0ffd19022d8b1b343f8451e6008109adc1aed01ad7f214b47053f158bd",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 4708
+      },
+      "placeholders": []
+    },
+    "ui.app.honba-0": {
+      "value": "{0}本場",
+      "hash": "89246ba303970ec1779353e412e5161a40e0240852e6c44a368543e0fb63500f",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 4758
       },
       "placeholders": [
         "0"

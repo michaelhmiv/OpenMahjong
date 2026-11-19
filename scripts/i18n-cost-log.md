@@ -146,3 +146,9 @@ was removed again after each run, as in the PR #87 top-up.
 | ko top-up (154 keys kept) | google/gemini-2.5-flash | 5782 | 2461 | $0.0079 | 0 |
 
 Total list-price cost: **$0.0204**.
+
+PR3 (table & sheets) rebase top-up, 2026-11-19: 5 new keys (Board Review
+chosen/advised labels + condensed win-sheet strings) drafted in all 4
+locales — zh-Hans $0.0002, zh-Hant $0.0002, ja $0.0005, ko $0.0005;
+total $0.0015. The driver-drafted "Improve this translation" entry was
+removed again per the PR #87 trap.

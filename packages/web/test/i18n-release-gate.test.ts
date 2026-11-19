@@ -46,7 +46,7 @@ describe("release gate with the core 5 shipped", () => {
       expect(lang.shipped, `${locale} must be shipped`).toBe(true);
       expect(lang.approved, `${locale} must have zero approved strings`).toBe(0);
       expect(lang.percentApproved, `${locale} must be 0% approved`).toBe(0);
-      expect(lang.draft, `${locale} must hold drafts`).toBe(3978);
+      expect(lang.draft, `${locale} must hold drafts`).toBe(3975);
       // Exactly one missing key: the intentionally-English "Improve
       // this translation" link (design §1.1) — it renders in English
       // in every locale because the guide it opens is in English.
@@ -67,7 +67,7 @@ describe("release gate with the core 5 shipped", () => {
       expect(
         Object.keys(baseline!.locales[locale]).length,
         `${locale} baseline coverage`,
-      ).toBe(3979);
+      ).toBe(3976);
     }
   });
 

@@ -2,8 +2,8 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T23:04:22.988Z",
-    "keyCount": 3979,
+    "generatedAt": "2026-11-19T23:16:39.576Z",
+    "keyCount": 3976,
     "namespaces": {
       "calc.compact": 14,
       "calc.riichi": 90,
@@ -56,7 +56,7 @@
       "play.variant": 74,
       "review.a-speed-tradeoff": 1,
       "review.back": 1,
-      "review.board": 65,
+      "review.board": 68,
       "review.call-decision": 1,
       "review.call-decision-2": 1,
       "review.called": 1,
@@ -153,7 +153,7 @@
       "review.your-discard-leaves-0-shanten-and-1-unseen-impro": 1,
       "review.your-hand-at-this-decision": 1,
       "tools.inperson": 130,
-      "ui.app": 362,
+      "ui.app": 356,
       "ui.stats": 12,
       "ui.tiles": 9
     },
@@ -33980,7 +33980,7 @@
       "hash": "c8beaf9602df5576dcfc5a0dbfe4b05526f57cf2a8668f6ebe5c7825afa7c868",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 36
+        "line": 37
       },
       "placeholders": [],
       "status": "approved"
@@ -33990,7 +33990,7 @@
       "hash": "1c80ab389c2dc0dc2c1724fd896f69469a37272f9c42c47b06e315cd350095d0",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 103
+        "line": 104
       },
       "placeholders": [],
       "status": "approved"
@@ -34000,7 +34000,7 @@
       "hash": "3bb8faf30715b01cb7e0fb7cdd033bcbf5912a57f46289bb2090d470b6f3c610",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 225
+        "line": 274
       },
       "placeholders": [],
       "status": "approved"
@@ -34010,7 +34010,17 @@
       "hash": "08b566e03e2c3ed2d89a6ac810ffa4c25b553854bdfed04ba1749e7ac7bc80c6",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 311
+        "line": 367
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "review.board.coachs-pick": {
+      "value": "Coach's pick",
+      "hash": "443b61918c335f57aa11779f0406e10d160f883094afefe2909ca95a2cb63c29",
+      "source": {
+        "file": "board-review-ui.ts",
+        "line": 181
       },
       "placeholders": [],
       "status": "approved"
@@ -34020,7 +34030,7 @@
       "hash": "afa2d79673c42c29d1d3f46fc28cc0c6ad4391f093ec8e0d1c7939d6d4806e08",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 147
+        "line": 163
       },
       "placeholders": [],
       "status": "approved"
@@ -34030,7 +34040,7 @@
       "hash": "66ff9a95463b5ef0c6d478e1c16c11ce47b649e04fd176a635a5097f9a6d7700",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 164
+        "line": 198
       },
       "placeholders": [
         "0",
@@ -34147,7 +34157,7 @@
       "hash": "27f18ca3c72eb04b2c11c41ca7fba1a9d70980128616352a07fd72a9d0804932",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 47
+        "line": 48
       },
       "placeholders": [],
       "status": "approved"
@@ -34157,7 +34167,7 @@
       "hash": "dfd4d5762e271706106da26e34cb21b078599a3163a0e181b315e84e5c939129",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 199
+        "line": 248
       },
       "placeholders": [],
       "status": "approved"
@@ -34167,7 +34177,7 @@
       "hash": "5c412a262086b9701cda06302f6667f9265b1807d0368fcec6cc03bf64fc250b",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 170
+        "line": 217
       },
       "placeholders": [],
       "status": "approved"
@@ -34187,7 +34197,7 @@
       "hash": "a2abaee9e81712d67e5c75db65289005baea7bfb812ada5b3944b408dbef2a4b",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 37
+        "line": 38
       },
       "placeholders": [],
       "status": "approved"
@@ -34207,7 +34217,7 @@
       "hash": "fa18c06733fbbf4138ea8591d50949c1ecd653d0fbf13278a3439ee5afa14c49",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 106
+        "line": 107
       },
       "placeholders": [],
       "status": "approved"
@@ -34237,7 +34247,7 @@
       "hash": "7d66fb4e67cbc9385bfc685f9a08d634b4ccf4671a3664c04e1c3eedb5f632cb",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 122
+        "line": 123
       },
       "placeholders": [],
       "status": "approved"
@@ -34257,7 +34267,7 @@
       "hash": "6b7204778686145fbdd0951b9815c72adce7e8e6bd67adfd299e23088622fe54",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 73
+        "line": 74
       },
       "placeholders": [],
       "status": "approved"
@@ -34277,7 +34287,7 @@
       "hash": "2848ace818f4b143531af5177341ddcfb01e19b780000a970920f17822ec2992",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 300
+        "line": 353
       },
       "placeholders": [],
       "status": "approved"
@@ -34287,7 +34297,7 @@
       "hash": "993986df2954fc63d4441becfbd139535b0fcbe370ed9b8859d53aa5b93a0a3e",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 83
+        "line": 84
       },
       "placeholders": [],
       "status": "approved"
@@ -34297,7 +34307,7 @@
       "hash": "e2e110d774cad5e3609880be25fd16d216ca7f16f7be6905cf53ccef9a449c3e",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 41
+        "line": 42
       },
       "placeholders": [],
       "status": "approved"
@@ -34307,7 +34317,7 @@
       "hash": "2e96e71a73fe3289ef7ec8fb2f4d967268408991aa2a9351880a6173fc20edc4",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 130
+        "line": 131
       },
       "placeholders": [],
       "status": "approved"
@@ -34327,7 +34337,7 @@
       "hash": "f2502902671c99482427df4d51d84af1e7ee10cefd5c83db3e4e54f834f00b02",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 43
+        "line": 44
       },
       "placeholders": [],
       "status": "approved"
@@ -34337,7 +34347,7 @@
       "hash": "9948287605a481d8713f9e3142e8eadf972d95f59f0a33833ed39d09861b87c7",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 127
+        "line": 128
       },
       "placeholders": [],
       "status": "approved"
@@ -34347,7 +34357,7 @@
       "hash": "880dbf6cdade586cd9b1959f7c697045fe6ff13d1bdef78a08964236998d3f9d",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 125
+        "line": 126
       },
       "placeholders": [],
       "status": "approved"
@@ -34377,7 +34387,7 @@
       "hash": "d9618c7347cf14ed2827a320f4561a8dc3bcda88adb5118dbf5bdd593c2d55bd",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 311
+        "line": 367
       },
       "placeholders": [],
       "status": "approved"
@@ -34387,7 +34397,7 @@
       "hash": "133da80b78e67dc739b44fe36a27cb8513a8249d54faeb38144f1dd6c5e5676b",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 126
+        "line": 127
       },
       "placeholders": [],
       "status": "approved"
@@ -34397,7 +34407,7 @@
       "hash": "c025f0e0e895f5bbd705ca38c0808e35f48c32e50ee32484acbe69be87ad94cb",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 124
+        "line": 125
       },
       "placeholders": [],
       "status": "approved"
@@ -34407,7 +34417,7 @@
       "hash": "3773b85c684d1349734181fc3664d782cc21dd649c7c7a086c0b0a97a7ed7700",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 209
+        "line": 258
       },
       "placeholders": [],
       "status": "approved"
@@ -34427,7 +34437,7 @@
       "hash": "78666d24e97805427f9e303263851998fec68d0e25ca6935564fedc513d2f3c5",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 114
+        "line": 115
       },
       "placeholders": [],
       "status": "approved"
@@ -34437,7 +34447,7 @@
       "hash": "8298c6294f6610e51c3fe71eb0d2f45ff55511cec1e4b71d41cb3097a977d379",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 298
+        "line": 351
       },
       "placeholders": [],
       "status": "approved"
@@ -34447,7 +34457,7 @@
       "hash": "3c7b9b5fb54c4b5b931cf0125b8891b44cffa6bf5a0b9873ef87c76d023fe14e",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 189
+        "line": 237
       },
       "placeholders": [],
       "status": "approved"
@@ -34457,7 +34467,7 @@
       "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 226
+        "line": 275
       },
       "placeholders": [],
       "status": "approved"
@@ -34467,7 +34477,7 @@
       "hash": "5289d5fc0d4e14f3970e33f7de43602f7671253df780272563845de96be25305",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 46
+        "line": 47
       },
       "placeholders": [],
       "status": "approved"
@@ -34477,7 +34487,7 @@
       "hash": "0740f4bade2a0a5b3c5d4f09aac7cc9aca2eba6907e144e2c02a226b70e4bfa7",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 206
+        "line": 255
       },
       "placeholders": [],
       "status": "approved"
@@ -34487,7 +34497,7 @@
       "hash": "f22d1483f26c6a2737765c1d4eb7a824d2a7692bd6ce6c5768998b22c4792bbf",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 70
+        "line": 71
       },
       "placeholders": [],
       "status": "approved"
@@ -34497,7 +34507,7 @@
       "hash": "ea6d1b2a3aaae0a8c2999005ac0e5b8d666fe497e2275c8ae8d3ac0ca085c8d7",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 69
+        "line": 70
       },
       "placeholders": [],
       "status": "approved"
@@ -34507,7 +34517,7 @@
       "hash": "c607845347a92b2623ac67eebd8eea6594c66ccb2d691582e88573d31e271d45",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 45
+        "line": 46
       },
       "placeholders": [],
       "status": "approved"
@@ -34517,7 +34527,7 @@
       "hash": "217139c7f446ff91be5d9651b8f1e87aa8100d2a7cfe950bb7a05aee06c2289a",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 208
+        "line": 257
       },
       "placeholders": [],
       "status": "approved"
@@ -34527,7 +34537,7 @@
       "hash": "3f4f403ebf048f81d31da5f384c96937610468108d84cbbfc3f112e566ebaade",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 55
+        "line": 56
       },
       "placeholders": [
         "0",
@@ -34541,7 +34551,7 @@
       "hash": "cd55a9d95751fb9bb9e4a0988dd7ae3b08c7b49d0a28ba51cd94d9bafe6a27d0",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 76
+        "line": 77
       },
       "placeholders": [
         "0",
@@ -34555,7 +34565,7 @@
       "hash": "d0b43be319b7c03366c4bb36dc396909251d95c7e613f13b10206710523df2b6",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 189
+        "line": 237
       },
       "placeholders": [
         "0",
@@ -34586,7 +34596,7 @@
       "hash": "65856f89e032682605f2cb086a739aa95192b095d3bbdfafa9cc873b49d1e0f1",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 60
+        "line": 61
       },
       "placeholders": [
         "0",
@@ -34600,7 +34610,7 @@
       "hash": "b717883aa3880c7f315c6b8dae4d4b23ce965a5b0f8f45247ad6c6108beb4689",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 57
+        "line": 58
       },
       "placeholders": [
         "0"
@@ -34613,7 +34623,7 @@
       "hash": "c93a5a01d9ff5c07345ff800a03b1f12fe239fe2ffa6553f347101e63c16081d",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 175
+        "line": 222
       },
       "placeholders": [
         "0"
@@ -34626,7 +34636,7 @@
       "hash": "56df64e6ed2dcf5788f8bf994dcf604e9e72086fa2b2576d426c94ccea176c65",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 174
+        "line": 221
       },
       "placeholders": [
         "0",
@@ -34653,7 +34663,7 @@
       "hash": "08b041935798fbf6fd6ff51099ffedb140a475889986d14f5559ff8e7fc571dd",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 55
+        "line": 56
       },
       "placeholders": [],
       "status": "approved"
@@ -34663,7 +34673,27 @@
       "hash": "c7e89fc8f2c435515eae3c5dc2193321bc6874e2cae70c534221b8206d94ca6f",
       "source": {
         "file": "board-review-ui.ts",
-        "line": 189
+        "line": 237
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "review.board.your-discard": {
+      "value": "Your discard",
+      "hash": "45d80bdcf00bcf705be5f2a569228d40f3c25f50772a9c456517cdf9f33b9bbb",
+      "source": {
+        "file": "board-review-ui.ts",
+        "line": 180
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "review.board.your-discard-is-outlined-the-coachs-pick-is-ringed": {
+      "value": "Your discard is outlined; the coach's pick is ringed.",
+      "hash": "c1515c43642d0f80dabdbbec950d325d3c3290e5bfe1c8206bb8081861efd6e9",
+      "source": {
+        "file": "review-ui.ts",
+        "line": 277
       },
       "placeholders": [],
       "status": "approved"
@@ -34683,7 +34713,7 @@
       "hash": "2637c532f047d7f656f116462a44ebea6307500f0ac9a873497d7ffc43199f97",
       "source": {
         "file": "review-ui.ts",
-        "line": 276
+        "line": 292
       },
       "placeholders": [],
       "status": "approved"
@@ -34790,7 +34820,7 @@
       "hash": "1202a631aff59b810c157519288f3afa63118af8e4be707cf9d69db88f1cfbb4",
       "source": {
         "file": "review-ui.ts",
-        "line": 290
+        "line": 306
       },
       "placeholders": [],
       "status": "approved"
@@ -34853,7 +34883,7 @@
       "hash": "81a1f41757228d01513d593312186f73a4166f3aa5b7a0ad613f87a24f1d764e",
       "source": {
         "file": "review-ui.ts",
-        "line": 290
+        "line": 306
       },
       "placeholders": [],
       "status": "approved"
@@ -34906,7 +34936,7 @@
       "hash": "a708df92c9e46229e8f1cd50d8b7d172bda33fc24c8d96d7e9dabf6eba73baa2",
       "source": {
         "file": "review-ui.ts",
-        "line": 278
+        "line": 294
       },
       "placeholders": [],
       "status": "approved"
@@ -34916,7 +34946,7 @@
       "hash": "0fb1c7fbb6338fa841d6e9305c7f61c720a20e187fd25d66debcd2d3917c3086",
       "source": {
         "file": "review-ui.ts",
-        "line": 277
+        "line": 293
       },
       "placeholders": [],
       "status": "approved"
@@ -35660,7 +35690,7 @@
       "hash": "025677904541bb905828e990a61f228bdfce30d72311226d2bff446c8e19553b",
       "source": {
         "file": "review-ui.ts",
-        "line": 263
+        "line": 279
       },
       "placeholders": [],
       "status": "approved"
@@ -35710,7 +35740,7 @@
       "hash": "42940db79110d519eafed93b464826979b4d6e8bedd12ab6c70082d045a48ee8",
       "source": {
         "file": "review-ui.ts",
-        "line": 277
+        "line": 293
       },
       "placeholders": [],
       "status": "approved"
@@ -35730,7 +35760,7 @@
       "hash": "f9e551e18926b4b9a7348e1abd2ad8fec3c63ae7556e3aadc3c10379af8eaf23",
       "source": {
         "file": "review-ui.ts",
-        "line": 290
+        "line": 306
       },
       "placeholders": [
         "0",
@@ -35744,7 +35774,7 @@
       "hash": "3e17bb3ff2e981fb8a3322b8ee624703ee042136a5ff45117f176915d8e29f34",
       "source": {
         "file": "review-ui.ts",
-        "line": 272
+        "line": 288
       },
       "placeholders": [],
       "status": "approved"
@@ -35764,7 +35794,7 @@
       "hash": "17782e9a08ee7f6ea8e1b2faab4b84bc314fd6f96ad3fab184b7b4f323711ca0",
       "source": {
         "file": "review-ui.ts",
-        "line": 288
+        "line": 304
       },
       "placeholders": [],
       "status": "approved"
@@ -35774,7 +35804,7 @@
       "hash": "2864be6d22cea7ffe46e33f6ca8dec7bb835cec9a70bf10af88cb08b364ae13f",
       "source": {
         "file": "review-ui.ts",
-        "line": 288
+        "line": 304
       },
       "placeholders": [],
       "status": "approved"
@@ -35784,7 +35814,7 @@
       "hash": "294417928dc0e61bda4639435d1b1bd2ae8738a22fd3327ce8f3765a4754894f",
       "source": {
         "file": "review-ui.ts",
-        "line": 288
+        "line": 304
       },
       "placeholders": [],
       "status": "approved"
@@ -35804,7 +35834,7 @@
       "hash": "1c5794cf735da27fc47262f749b2a18ed761af4ea4cfaac6e0e4581ee5691713",
       "source": {
         "file": "review-ui.ts",
-        "line": 276
+        "line": 292
       },
       "placeholders": [],
       "status": "approved"
@@ -35814,7 +35844,7 @@
       "hash": "fe030a9c7ba3defd03a5c428e915f60e80eabcaa0fa990f6b477d91b3577beb4",
       "source": {
         "file": "review-ui.ts",
-        "line": 277
+        "line": 293
       },
       "placeholders": [],
       "status": "approved"
@@ -35824,7 +35854,7 @@
       "hash": "eb57cb34742a1088f2bda808a91291515888b6a7bc008b51f6732c256497a34a",
       "source": {
         "file": "review-ui.ts",
-        "line": 290
+        "line": 306
       },
       "placeholders": [],
       "status": "approved"
@@ -36054,7 +36084,7 @@
       "hash": "008aaa47401960689db080490e02a13673dce8cab7f4e587560b14eb593959e4",
       "source": {
         "file": "review-ui.ts",
-        "line": 280
+        "line": 296
       },
       "placeholders": [],
       "status": "approved"
@@ -36064,7 +36094,7 @@
       "hash": "0013bedd2eed5d5fecc14d31e323e1f5bc4df88be52336d10a8d3fbf050249e2",
       "source": {
         "file": "review-ui.ts",
-        "line": 281
+        "line": 297
       },
       "placeholders": [],
       "status": "approved"
@@ -36074,7 +36104,7 @@
       "hash": "a0c46c3acc18c3c19544b95483024c79b6d63431fdaf2ae672da3404902bc9bc",
       "source": {
         "file": "review-ui.ts",
-        "line": 282
+        "line": 298
       },
       "placeholders": [],
       "status": "approved"
@@ -36104,7 +36134,7 @@
       "hash": "ba691ba042bcedd9a61a36f5969026bc95859dccdc7e47f24e6bce35673baf2f",
       "source": {
         "file": "review-ui.ts",
-        "line": 278
+        "line": 294
       },
       "placeholders": [],
       "status": "approved"
@@ -36162,7 +36192,7 @@
       "hash": "c064a67ca93abbeefcf93dfe9d1e85c00d116e151dcc132b233f14c5c1539141",
       "source": {
         "file": "review-ui.ts",
-        "line": 277
+        "line": 293
       },
       "placeholders": [
         "0",
@@ -36274,7 +36304,7 @@
       "hash": "bd5125e3aca7529ebeaa3453317565335e63fa27454e8bf368cb311a04d4b3ad",
       "source": {
         "file": "review-ui.ts",
-        "line": 290
+        "line": 306
       },
       "placeholders": [
         "0"
@@ -36287,7 +36317,7 @@
       "hash": "56863fab04a7bd740aeda8bfd4f63ba4d3773bd81e05ae5a360e1506a356eb9f",
       "source": {
         "file": "review-ui.ts",
-        "line": 263
+        "line": 279
       },
       "placeholders": [
         "0",
@@ -36301,7 +36331,7 @@
       "hash": "7cad2d592a7065fa31a10737dcb03fe472afd2aa6ca54d53593db3a9d78fbc91",
       "source": {
         "file": "review-ui.ts",
-        "line": 263
+        "line": 279
       },
       "placeholders": [
         "0",
@@ -36330,7 +36360,7 @@
       "hash": "28639602e0d10e5989887b520304cfbc7cd29412ebe9edd4f775e472c8806096",
       "source": {
         "file": "review-ui.ts",
-        "line": 264
+        "line": 280
       },
       "placeholders": [
         "0"
@@ -36367,7 +36397,7 @@
       "hash": "891362f00f7022f39cc8e9d826e60a927fe5b394a09cdbdd3a1f56982ca88a03",
       "source": {
         "file": "review-ui.ts",
-        "line": 278
+        "line": 294
       },
       "placeholders": [
         "0"
@@ -36400,7 +36430,7 @@
       "hash": "58c94b7d0e72160284a50ef6b81b7714e901d359e5e42e41fff75906406eb61e",
       "source": {
         "file": "review-ui.ts",
-        "line": 272
+        "line": 288
       },
       "placeholders": [
         "0"
@@ -36413,7 +36443,7 @@
       "hash": "272e9938ddff65dd1b678d4918bad57cf5bc557ff415329d235509b575be36fa",
       "source": {
         "file": "review-ui.ts",
-        "line": 276
+        "line": 292
       },
       "placeholders": [
         "0"
@@ -37859,26 +37889,6 @@
       "placeholders": [],
       "status": "approved"
     },
-    "ui.app.a-riichi-stick-is-a-1-000-point-stake-a-player-p": {
-      "value": "A riichi stick is a 1,000-point stake a player paid when declaring riichi. The winner collects the sticks on the table.",
-      "hash": "f7157ffc54f48d2f4261da5cd268b497b35b8c74905c84df8bf82af4f5b41427",
-      "source": {
-        "file": "app.ts",
-        "line": 4772
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "ui.app.a-yakuman-is-the-highest-value-kind-of-hand-it-p": {
-      "value": "A yakuman is the highest-value kind of hand. It pays a fixed large amount.",
-      "hash": "07f53e579f0f60d0d526349d6f58a2aaf8ae82b455f7153e427ce783e987259c",
-      "source": {
-        "file": "app.ts",
-        "line": 4758
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
     "ui.app.abortive-draw": {
       "value": "Abortive draw",
       "hash": "148db81748ba6ed2209fc5e53e18464015f25de4b2e36618a6a096365d04991f",
@@ -37975,6 +37985,16 @@
       "source": {
         "file": "app.ts",
         "line": 4590
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "ui.app.all-three-opponents-pay": {
+      "value": "All three opponents pay",
+      "hash": "e5e84d0ffd19022d8b1b343f8451e6008109adc1aed01ad7f214b47053f158bd",
+      "source": {
+        "file": "app.ts",
+        "line": 4708
       },
       "placeholders": [],
       "status": "approved"
@@ -38457,7 +38477,7 @@
       "hash": "98f44027339bffda465fcae4ee59aa16c90aeeb6dd743c3c41cf16807a4d2444",
       "source": {
         "file": "app.ts",
-        "line": 4776
+        "line": 4769
       },
       "placeholders": [],
       "status": "approved"
@@ -38597,7 +38617,7 @@
       "hash": "76f1052429da30434e3518d533ab20e18ee643ef7827bba3a921b784b5281ddd",
       "source": {
         "file": "app.ts",
-        "line": 4801
+        "line": 4792
       },
       "placeholders": [],
       "status": "approved"
@@ -38772,16 +38792,6 @@
       "placeholders": [],
       "status": "approved"
     },
-    "ui.app.han-count-the-hands-scoring-patterns-and-bonus-d": {
-      "value": "Han count the hand's scoring patterns and bonus dora. Fu are minipoints from the hand's shape. Han and fu together set the points.",
-      "hash": "3cf2e9efea2414cf6c268fda175cf75c393f6de81f7377140f3c740df694a69f",
-      "source": {
-        "file": "app.ts",
-        "line": 4759
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
     "ui.app.hand-discard-tedashi": {
       "value": "Hand discard (tedashi)",
       "hash": "fcfd066f0efae0922f297954d3a5dc930be8c1fd3629e25fddc2328a51c84c4d",
@@ -38797,7 +38807,7 @@
       "hash": "bab8f57ec4f7642f99601f03ea00d3bdd64762e82310196a4dc18013ab494504",
       "source": {
         "file": "app.ts",
-        "line": 4795
+        "line": 4786
       },
       "placeholders": [],
       "status": "approved"
@@ -38847,7 +38857,7 @@
       "hash": "e8199a62f65a255cfd092724fd6c2c2fba445f30e99f17ba3a177bb6613e6712",
       "source": {
         "file": "app.ts",
-        "line": 4843
+        "line": 4838
       },
       "placeholders": [],
       "status": "approved"
@@ -38862,12 +38872,12 @@
       "placeholders": [],
       "status": "approved"
     },
-    "ui.app.honba-the-repeat-counter-stands-at-0-each-honba": {
-      "value": "Honba — the repeat counter — stands at {0}. Each honba adds 300 points to a winning hand.",
-      "hash": "1cecc206ca88cc02dce792aad1b525f29f90f545b0b6933a13bc113a6b4b5613",
+    "ui.app.honba-0": {
+      "value": "Honba {0}",
+      "hash": "89246ba303970ec1779353e412e5161a40e0240852e6c44a368543e0fb63500f",
       "source": {
         "file": "app.ts",
-        "line": 4760
+        "line": 4758
       },
       "placeholders": [
         "0"
@@ -39550,7 +39560,7 @@
       "hash": "c0b5f3134d31447db3ef9a1d1512878db23eb2daf4fbb578f031c481ce6ce8b5",
       "source": {
         "file": "app.ts",
-        "line": 4804
+        "line": 4795
       },
       "placeholders": [
         "0"
@@ -39858,7 +39868,7 @@
       "hash": "5ef30d27f8bc261c9af7c5220ebca9e22ad51e60ff89bbdccceeb7102e21a32f",
       "source": {
         "file": "app.ts",
-        "line": 4849
+        "line": 4844
       },
       "placeholders": [],
       "status": "approved"
@@ -40064,7 +40074,7 @@
       "hash": "472e71f04cdf408ee2bc7c9c9d1d766216dd8f58b66d87c2a7caf2503987ce72",
       "source": {
         "file": "app.ts",
-        "line": 4854
+        "line": 4849
       },
       "placeholders": [],
       "status": "approved"
@@ -40124,7 +40134,7 @@
       "hash": "f8f60686136587f4d3b08b1fbcf4c43f695b4d11e1c24afffdc46f019c7c1086",
       "source": {
         "file": "app.ts",
-        "line": 4768
+        "line": 4764
       },
       "placeholders": [],
       "status": "approved"
@@ -40155,16 +40165,6 @@
       "source": {
         "file": "app.ts",
         "line": 3249
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "ui.app.ron-winning-on-a-tile-another-player-discarded-o": {
-      "value": "Ron: winning on a tile another player discarded. Only the player who discarded it pays. The wind in the title is the winner's seat wind.",
-      "hash": "74a904e136c94425e6b98da29ef77069683c2f724878d97e094cd0b81f0ed74d",
-      "source": {
-        "file": "app.ts",
-        "line": 4709
       },
       "placeholders": [],
       "status": "approved"
@@ -40612,7 +40612,7 @@
       "hash": "0276ee1751ca22e76715f2d3b6c8a25e56a2b50405650b4636ec9f17a439e1a3",
       "source": {
         "file": "app.ts",
-        "line": 4807
+        "line": 4798
       },
       "placeholders": [
         "0"
@@ -40647,16 +40647,6 @@
       ],
       "status": "approved",
       "dynamic": true
-    },
-    "ui.app.the-dora-indicator-points-to-a-bonus-tile-the-ti": {
-      "value": "The dora indicator points to a bonus tile: the tile one step on from the indicator, in the same suit, is a dora, worth extra han in a winning hand.",
-      "hash": "c18ff6be8326000e263b0191d6b1a7cc649f8982a195c9162ef1c49c8bb9ee23",
-      "source": {
-        "file": "app.ts",
-        "line": 4779
-      },
-      "placeholders": [],
-      "status": "approved"
     },
     "ui.app.the-face-up-tile-in-the-middle-of-the-table-the": {
       "value": "The face-up tile in the middle of the table, the indicator, is the {0}; the tile one step above is a dora.",
@@ -40716,7 +40706,7 @@
       "hash": "28d10f3390476d7c57195fa063eada592637c5f685da3ecc982eaaf68a5f3045",
       "source": {
         "file": "app.ts",
-        "line": 4797
+        "line": 4788
       },
       "placeholders": [],
       "status": "approved"
@@ -40867,32 +40857,12 @@
       "status": "approved",
       "dynamic": true
     },
-    "ui.app.tsumo-winning-on-a-tile-you-drew-yourself-all-th": {
-      "value": "Tsumo: winning on a tile you drew yourself. All three opponents pay. The wind in the title is the winner's seat wind.",
-      "hash": "12e44d24ebd2f6695ad9b9617e6a9fa029bed168c245ef5560639f1d7d9b2840",
-      "source": {
-        "file": "app.ts",
-        "line": 4710
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
     "ui.app.uradora-indicator": {
       "value": "Uradora indicator",
       "hash": "aacfe5f35ce545a211feb47763ccbde1a2f2a820b7193b88400f853dfec815ba",
       "source": {
         "file": "app.ts",
-        "line": 4784
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "ui.app.uradora-indicators-sit-hidden-under-the-dora-ind": {
-      "value": "Uradora indicators sit hidden under the dora indicators. They are revealed only when a riichi hand wins, and the tile one step on from each is also a bonus tile.",
-      "hash": "8719a17450ae0224b4041a3ab1f51b199fec5c04b2686aa3dbbc32ae5191bff4",
-      "source": {
-        "file": "app.ts",
-        "line": 4787
+        "line": 4776
       },
       "placeholders": [],
       "status": "approved"
@@ -41029,7 +40999,7 @@
       "hash": "46552f3d3b31177196a0e8653d3db79b5ccb91ce6876b0a6f3f153c28e33d473",
       "source": {
         "file": "app.ts",
-        "line": 4811
+        "line": 4802
       },
       "placeholders": [
         "0",
@@ -41109,7 +41079,7 @@
       "hash": "e6f36eec2093006bbf6bbc44f8ec977484c54a5de9d810ebd450fb4a63646468",
       "source": {
         "file": "app.ts",
-        "line": 4768
+        "line": 4764
       },
       "placeholders": [
         "0"
@@ -41190,7 +41160,7 @@
       "hash": "6fbe857a5827014e3e73396f203e77929afdd60b838ebc56c5136eb47fa62eef",
       "source": {
         "file": "app.ts",
-        "line": 4730
+        "line": 4729
       },
       "placeholders": [
         "0"
@@ -41203,7 +41173,7 @@
       "hash": "f7aaba6c0f6ca69acefcdaa8d020b8751cd7228620b2e7577832b68751f2d627",
       "source": {
         "file": "app.ts",
-        "line": 4743
+        "line": 4742
       },
       "placeholders": [
         "0",
@@ -41303,7 +41273,7 @@
       "hash": "b5164c95d2720465dda8d87b7b6d95afb632d43dd2e0ba1a286870c69f1de0f2",
       "source": {
         "file": "app.ts",
-        "line": 4765
+        "line": 4761
       },
       "placeholders": [
         "0"
@@ -41330,7 +41300,7 @@
       "hash": "a20fd80f5358d78dbbd5347802220954a5a45e34228578393c12808bae262ddc",
       "source": {
         "file": "app.ts",
-        "line": 4843
+        "line": 4838
       },
       "placeholders": [
         "0"
@@ -41557,7 +41527,7 @@
       "hash": "0c74a2a1e29b10a82e105d6beb3e4df568427dfb23b3de3d2bcef58eaa436d78",
       "source": {
         "file": "app.ts",
-        "line": 4730
+        "line": 4729
       },
       "placeholders": [],
       "status": "approved"
@@ -41567,7 +41537,7 @@
       "hash": "9a340fb83bc141faa7d62b30ed43cd83d647f01091a831f7cc17f82a354ff747",
       "source": {
         "file": "app.ts",
-        "line": 4751
+        "line": 4750
       },
       "placeholders": [
         "0"
@@ -41590,7 +41560,7 @@
       "hash": "d65fd9e27abaf422686efbda4daedc250d628d6dd56720a7b62c47eb830d7991",
       "source": {
         "file": "app.ts",
-        "line": 4811
+        "line": 4802
       },
       "placeholders": [],
       "status": "approved"
