@@ -48,26 +48,64 @@ try {
     await p.getByRole("heading", { name: "My games" }).waitFor();
     csrf[i] = (await request(i, "me")).csrf;
   }
+  // Lobby geometry (QC rule, multiplayer-ui-v1): the duo buttons are
+  // equal in width AND height; Create custom room is smaller on
+  // every dimension than one duo button.
+  {
+    const host = pages[0];
+    const box = async (name) =>
+      host.getByRole("button", { name }).boundingBox();
+    const friendly = await box("Find Friendly game");
+    const ranked = await box("Sign in for Ranked");
+    const create = await box("Create custom room");
+    assert.ok(friendly && ranked && create, "lobby actions render");
+    assert.equal(friendly.height, ranked.height, "duo heights equal");
+    assert.equal(friendly.width, ranked.width, "duo widths equal");
+    assert.ok(create.width < friendly.width, "Create narrower than a duo button");
+    assert.ok(create.height < friendly.height, "Create shorter than a duo button");
+    // Queue flow: guest -> lobby -> Friendly queue sheet -> leave.
+    await host.getByRole("button", { name: "Find Friendly game" }).click();
+    await host.getByRole("heading", { name: "Finding a table" }).waitFor();
+    await host.getByRole("button", { name: "Leave", exact: true }).click();
+    await host.getByRole("heading", { name: "My games" }).waitFor();
+  }
   for (const variant of ["riichi", "hong-kong", "mcr", "taiwanese"]) {
     if (variant === "riichi" && length === "full") continue;
     const host = pages[0];
     await host.goto(web + "/#/online");
+    const variantLabels = {
+      riichi: "Riichi",
+      "hong-kong": "Hong Kong Old Style",
+      mcr: "MCR",
+      taiwanese: "Taiwanese",
+    };
+    const lengthLabels =
+      variant === "riichi"
+        ? { east: "East only", south: "East + South" }
+        : { east: "East", south: "East + South", full: "Four rounds" };
+    const paceLabels = {
+      correspondence: "Correspondence",
+      live: "Live · 5+20",
+      relaxed: "Relaxed · 10+40",
+    };
     await host
-      .getByRole("combobox", { name: "Rules", exact: true })
-      .selectOption(variant);
+      .getByRole("radio", { name: variantLabels[variant], exact: true })
+      .click();
     await host
-      .getByRole("combobox", { name: "Pace", exact: true })
-      .selectOption(pace);
+      .getByRole("radio", { name: paceLabels[pace], exact: true })
+      .click();
     await host
-      .getByRole("combobox", { name: "Length", exact: true })
-      .selectOption(length);
+      .getByRole("radio", { name: lengthLabels[length], exact: true })
+      .click();
     await host.getByRole("button", { name: "Create custom room" }).click();
     const invite = await host.getByLabel("Invite link").inputValue();
     const id = new URL(host.url()).hash.split("/").at(-1);
     for (const p of pages.slice(1)) {
       await p.goto(invite);
+      // Join-by-link lands as a sheet over the lobby, facts first.
+      await p.getByRole("heading", { name: "Room invitation" }).waitFor();
       await p.getByRole("button", { name: "Join room", exact: true }).click();
-      await p.getByRole("button", { name: "Ready", exact: true }).click();
+      await p.getByRole("button", { name: "Ready up", exact: true }).click();
     }
     await host.getByRole("button", { name: "Start match" }).click();
     await host.getByRole("heading", { name: "Your move" }).waitFor();
@@ -162,9 +200,15 @@ try {
     await host.getByRole("heading", { name: "Waiting room" }).waitFor();
     const rematch = host.url().split("/").at(-1);
     assert.notEqual(rematch, id);
-    host.once("dialog", (dialog) => dialog.accept());
-    await host.getByRole("button", { name: "Leave waiting room" }).click();
+    await host.getByRole("button", { name: "Leave", exact: true }).click();
     await host.getByRole("heading", { name: "My games" }).waitFor();
+    if (pace === "correspondence") {
+      // Correspondence games are rows in My games on the lobby.
+      await host
+        .locator(".iprow", { hasText: "Correspondence" })
+        .first()
+        .waitFor();
+    }
     console.log(
       [variant, length, pace].join(" ") +
         " completed across four private browsers in " +

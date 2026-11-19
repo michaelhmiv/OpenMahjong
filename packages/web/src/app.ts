@@ -1133,8 +1133,16 @@ export class App {
       else this.startVariantGame(this.variantChoice);
     });
     body.append(play);
-    const online = h("a", { class: "pillbtn", href: "#/online" }, "Play online");
-    body.append(online);
+    // Solo/Online segment (multiplayer UI v1, Option B — Michael
+    // picked the Play-tab integrated lobby, 2026-11-18): the Online
+    // segment hands over to the online app, which renders this same
+    // Play surface with Online selected and the lobby below it.
+    const modeSeg = h("div", { class: "seg play-mode-seg", role: "radiogroup", "aria-label": "Play mode", style: "width:100%; max-width:334px; margin:14px 0 0;" });
+    const soloBtn = h("button", { type: "button", class: "on", role: "radio", "aria-checked": "true" }, "Solo");
+    const onlineBtn = h("button", { type: "button", role: "radio", "aria-checked": "false" }, "Online");
+    onlineBtn.addEventListener("click", () => { location.hash = "/online"; });
+    modeSeg.append(soloBtn, onlineBtn);
+    body.append(modeSeg);
     const tableTools = h("button", { class:"pillbtn table-tools-entry" }, tx("ui.app.in-person-calculator-and-scorekeeper", "In-person calculator and scorekeeper"));
     tableTools.addEventListener("click", () => { this.tableSessionId = undefined; this.showScreen("tables"); });
     body.append(tableTools);
