@@ -1031,8 +1031,8 @@ export class App {
    * retired) over the fan of the section-4 hand, the motif row in
    * the fresh state or the Continue card when a game is in progress,
    * the length seg, the guided row, one-tap Play, the record strip
-   * when the account has stats, the one-time import offer, and the
-   * tile-back wall over the reserved AdSense slot. Sign-in lives on
+   * when the account has at least one finished game, and the
+   * one-time import offer. Sign-in lives on
    * the More tab; the old hub's identity chip, Last game / Learn
    * progress cards, secondary row, and quiet row are retired (their
    * content lives on the Games and Learn tabs now).
@@ -1137,7 +1137,7 @@ export class App {
     // picked the Play-tab integrated lobby, 2026-11-18): the Online
     // segment hands over to the online app, which renders this same
     // Play surface with Online selected and the lobby below it.
-    const modeSeg = h("div", { class: "seg play-mode-seg", role: "radiogroup", "aria-label": tx("ui.app.play-mode", "Play mode"), style: "width:100%; max-width:334px; margin:14px 0 0;" });
+    const modeSeg = h("div", { class: "seg play-mode-seg", role: "radiogroup", "aria-label": tx("ui.app.play-mode", "Play mode") });
     const soloBtn = h("button", { type: "button", class: "on", role: "radio", "aria-checked": "true" }, tx("ui.app.solo", "Solo"));
     const onlineBtn = h("button", { type: "button", role: "radio", "aria-checked": "false" }, tx("ui.app.online", "Online"));
     onlineBtn.addEventListener("click", () => { location.hash = "/online"; });
@@ -1147,22 +1147,29 @@ export class App {
     tableTools.addEventListener("click", () => { this.tableSessionId = undefined; this.showScreen("tables"); });
     body.append(tableTools);
 
+    // Record strip (Play cleanup v1 ruling, 2026-11-19): it renders
+    // only when the signed-in account has at least one finished
+    // game. At zero games it is absent, exactly as for signed-out
+    // visitors — an empty record is noise, and the full record
+    // lives on the Games tab.
     if (this.user && this.statsSums && this.variantChoice === "riichi") {
       const strip = formatRecordStrip(this.statsSums);
-      const part = (label: string, value: string): HTMLElement => {
-        const s = h("span", {}, tx("ui.app.v-0", `${label}`, label) + " ");
-        s.append(h("b", {}, value));
-        return s;
-      };
-      const rs = h("div", { class: "recstrip" });
-      rs.append(
-        part(tx("ui.app.games", "Games"), String(strip.games)),
-        h("span", { class: "sep" }, "·"),
-        part(tx("ui.app.won", "Won"), String(strip.wins)),
-        h("span", { class: "sep" }, "·"),
-        part(tx("ui.app.avg-place", "Avg place"), strip.avgPlace),
-      );
-      body.append(rs);
+      if (strip.games >= 1) {
+        const part = (label: string, value: string): HTMLElement => {
+          const s = h("span", {}, tx("ui.app.v-0", `${label}`, label) + " ");
+          s.append(h("b", {}, value));
+          return s;
+        };
+        const rs = h("div", { class: "recstrip" });
+        rs.append(
+          part(tx("ui.app.games", "Games"), String(strip.games)),
+          h("span", { class: "sep" }, "·"),
+          part(tx("ui.app.won", "Won"), String(strip.wins)),
+          h("span", { class: "sep" }, "·"),
+          part(tx("ui.app.avg-place", "Avg place"), strip.avgPlace),
+        );
+        body.append(rs);
+      }
     }
 
     if (this.importOfferCount > 0) {
@@ -1185,7 +1192,6 @@ export class App {
     }
 
     body.append(h("div", { class: "spacer" }));
-    body.append(this.wallEl());
     // AdSense banner (adsense-slot-v1): last element of the Play
     // flow. adSlotEl returns null while ADSENSE_CONFIG is empty, so
     // the shipped tab is unchanged until both ids are configured.
@@ -1243,24 +1249,6 @@ export class App {
     right.append(winds, h("span", { class: "cap" }, tx("ui.app.winds", "Winds")));
     row.append(left, right);
     return row;
-  }
-
-  /** The tile-back wall at the Play tab's foot (rendering 01). QC
-   *  note N3: row 2 drops one back so its brick offset never pushes
-   *  a tile past the stage edge. */
-  private wallEl(): HTMLElement {
-    const wall = h("div", { class: "wall", "aria-hidden": "true" });
-    const mkRow = (count: number, cls: string) => {
-      const row = h("div", { class: `wrow ${cls}` });
-      for (let i = 0; i < count; i++) {
-        const t = h("span", { class: "tile" });
-        t.innerHTML = `<svg viewBox="0 0 40 56"><use href="#t-back"/></svg>`;
-        row.append(t);
-      }
-      return row;
-    };
-    wall.append(mkRow(16, "r1"), mkRow(15, "r2"));
-    return wall;
   }
 
   /** Guided mode row (renderings 01/03): the pre-game on/off choice
