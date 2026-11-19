@@ -1,17 +1,17 @@
 {
   "model": "qwen/qwen-plus",
   "locale": "zh-Hans",
-  "generatedAt": "2026-11-19T13:56:18.846Z",
-  "keysDraftedTotal": 3782,
-  "keysAttempted": 28,
+  "generatedAt": "2026-11-19T14:39:07.763Z",
+  "keysDraftedTotal": 3798,
+  "keysAttempted": 17,
   "failures": [],
   "glossaryFlags": [],
   "tileRefFlags": [],
   "usage": {
-    "promptTokens": 929,
-    "completionTokens": 512,
-    "costUsd": 0.0006409000000000001,
+    "promptTokens": 1417,
+    "completionTokens": 1048,
+    "costUsd": 0.0011858600000000002,
     "calls": 1
   },
-  "costUsd": 0.0006409000000000001
+  "costUsd": 0.0011858600000000002
 }

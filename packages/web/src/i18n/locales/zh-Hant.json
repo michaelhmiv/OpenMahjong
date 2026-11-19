@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-19T13:56:29.882Z",
-    "keyCount": 3781,
+    "generatedAt": "2026-11-19T14:39:29.596Z",
+    "keyCount": 3797,
     "model": "qwen/qwen-plus",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -38841,6 +38841,166 @@
       "source": {
         "file": "variant-education-ui.ts",
         "line": 325
+      },
+      "placeholders": []
+    },
+    "ui.app.a-game-ends-early-tobi-as-soon-as-any-player-is": {
+      "value": "一局結束後，只要任一玩家點數低於零，整場遊戲即提前結束（跳滿）。",
+      "hash": "263e4971ce8483231259fe30d2e6c21424bfb4a85ff50d52355464c9d19caab5",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1635
+      },
+      "placeholders": []
+    },
+    "ui.app.abortive-draws-are-on-kyuushu-kyuuhai-nine-diffe": {
+      "value": "流局條件啟用：九種九牌（起手摸牌含九張不同字牌或幺九牌）、四風連打（四家首張打出相同風牌）、四立直（四人皆立直）、四槓散了（兩家以上共進行四次槓）。該局重開，本場數加一，莊家續莊。",
+      "hash": "eeb98841821c5bbfa15348e7733d1222b2d748c983be9af2c5a916f227c5b157",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1660
+      },
+      "placeholders": []
+    },
+    "ui.app.chankan-robbing-a-kan-applies-to-shouminkan-agai": {
+      "value": "搶槓（搶槓和）適用於明槓；對暗槓僅限國士無雙可搶。",
+      "hash": "78ef42cbdcfc44f585c7ae2f2370b7a83e2fdcab07b8220b98e2731749465bf3",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1644
+      },
+      "placeholders": []
+    },
+    "ui.app.chi-may-only-be-called-from-the-player-on-your-l": {
+      "value": "吃只能對左側玩家打出的牌宣告；碰與槓可對任一玩家打出的牌宣告。",
+      "hash": "9856a939de979db6ef397141d21405c4dda15c46ff654b65bf866d40c472d10d",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1642
+      },
+      "placeholders": []
+    },
+    "ui.app.double-ron-does-not-pay-twice-atama-hane-head-bu": {
+      "value": "雙榮和不重複支付：頭跳（依出牌者順序，最接近出牌者的和牌者獨得全部點數）。",
+      "hash": "eb774872d6d8f8e8a25071eec6d0bec234610384db54c6dfbbc2393b9dc4c67b",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1643
+      },
+      "placeholders": []
+    },
+    "ui.app.exhaustive-draw-tenpai-players-split-3-000-from": {
+      "value": "荒牌流局：聽牌者均分未聽牌者各付的 3,000 點；若某玩家所打之牌全為幺九牌或字牌且全程無副露，則觸發流局滿貫，視同滿貫自摸計分。",
+      "hash": "04483054436e36c054378bda93c0949b7c7429bcaac93c6332d77698a4107e48",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1659
+      },
+      "placeholders": []
+    },
+    "ui.app.furiten-applies-in-all-three-forms-discard-furit": {
+      "value": "振聽適用於三種形式：捨牌振聽、暫時振聽（放過可和牌張後，須待自己再摸一張牌才解除）、立直振聽（立直後放過可和牌張即永久振聽）。",
+      "hash": "47d63c3054bf267ebae5e2b1d9f605b3fdba8f425c46dccaa0a56edf3c6da9e7",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1650
+      },
+      "placeholders": []
+    },
+    "ui.app.if-the-dealer-repeats-on-the-final-hand-the-game": {
+      "value": "若最終局莊家續莊，則遊戲延長至出現非續莊之局（不可因和牌而終止）為止。",
+      "hash": "3a452ab93bb0022e883d61de122f2f168a8c5772524f4c1a53a5e230b489e910",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1637
+      },
+      "placeholders": []
+    },
+    "ui.app.ippatsu-and-double-riichi-count-after-riichi-you": {
+      "value": "一發與雙立直有效。立直後須打出所摸之牌；暗槓僅允許在槓後待牌不變之情況下進行。",
+      "hash": "6361ceaf7e6fe1b79a95f21283ffb009cbe2fd27127166c8e95840862fe3000c",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1649
+      },
+      "placeholders": []
+    },
+    "ui.app.kiriage-mangan-is-off-4-han-30-fu-is-7-700-deale": {
+      "value": "切上滿貫關閉：4 番 30 符為 7,700 點（莊家 11,600 點），3 番 60 符亦為 7,700 點——不向上進位至滿貫。",
+      "hash": "42c0cc3f7e6a4c4369ea865766d6597c54ff7be51ef8273a1949353f11fd2046",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1655
+      },
+      "placeholders": []
+    },
+    "ui.app.one-indicator-at-the-start-each-kan-flips-one-mo": {
+      "value": "起始僅一張寶牌指示牌；每次槓（無論明暗）各增加一張指示牌（暗槓於嶺上牌前翻開，明槓於嶺上牌後翻開）。立直和牌時，指示牌下方之裏寶牌同步揭開。",
+      "hash": "2c9cc5175644d0aac06dc43891cc2d1bfcd133814ce536cf7ea45c5be7325cf7",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1654
+      },
+      "placeholders": []
+    },
+    "ui.app.open-mahjong-plays-modern-online-standard-riichi": {
+      "value": "Open Mahjong 採用現代線上標準立直麻將規則。引擎所做之所有規則判定皆列於此。",
+      "hash": "5718c50cdf16543704d7947cd0cf7020e7e0022e9de704144e469f0f4bde8da5",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1631
+      },
+      "placeholders": []
+    },
+    "ui.app.red-fives-aka-dora-are-in-one-each-of-5m-5p-5s-o": {
+      "value": "紅五（即寶牌）各一張：5m、5p、5s。開放門前清斷幺九。",
+      "hash": "9e33dbeacf1f258ac4dccebdd26d970492cab53a6d0319700ce7082995294cd6",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1641
+      },
+      "placeholders": []
+    },
+    "ui.app.riichi-costs-1-000-points-needs-a-closed-tenpai": {
+      "value": "立直需支付 1,000 點，且須為門前清聽牌、持有至少 1,000 點，且牌牆剩餘牌數不少於 4 張。",
+      "hash": "7e0dbecda9240344f0b50f22142802b7630e39b6e286cda2b9290db2e05f8360",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1648
+      },
+      "placeholders": []
+    },
+    "ui.app.riichi-sticks-left-on-the-table-when-the-game-en": {
+      "value": "遊戲結束時桌上剩餘之立直棒歸第一名玩家。",
+      "hash": "fc19686bcb859015d9ee706bdf8c366dbab290595ed461687f2fd4bc6680f4d9",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1636
+      },
+      "placeholders": []
+    },
+    "ui.app.start-25-000-points-return-30-000-uma-15-5-5-15": {
+      "value": "起始點數 25,000，返還點數 30,000。馬分為 +15 / +5 / −5 / −15；奧卡 20 點歸第一名。名次相同者平分其所佔名次之馬分（及奧卡）。",
+      "hash": "01fd49fc30106003306a35be066d273e85bcf07fd2621e1c204e07fc39435917",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1634
       },
       "placeholders": []
     }

@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-19T13:56:37.836Z",
-    "keyCount": 3781,
+    "generatedAt": "2026-11-19T14:39:43.768Z",
+    "keyCount": 3797,
     "model": "google/gemini-2.5-flash",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -38841,6 +38841,166 @@
       "source": {
         "file": "variant-education-ui.ts",
         "line": 325
+      },
+      "placeholders": []
+    },
+    "ui.app.a-game-ends-early-tobi-as-soon-as-any-player-is": {
+      "value": "한 국이 끝날 때 어떤 플레이어라도 점수가 0점 미만이 되면 게임이 일찍 종료됩니다 (토비).",
+      "hash": "263e4971ce8483231259fe30d2e6c21424bfb4a85ff50d52355464c9d19caab5",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1635
+      },
+      "placeholders": []
+    },
+    "ui.app.abortive-draws-are-on-kyuushu-kyuuhai-nine-diffe": {
+      "value": "유국은 다음의 경우에 발생합니다: 큐슈 큐하이 (첫 쯔모에 9종류의 야오츄패), 스폰 렌다 (첫 4개의 버림패가 모두 같은 바람패), 스차 리치 (4명 리치), 스카이칸 (2명 이상의 플레이어가 4번 깡). 해당 국은 혼바가 하나 추가되어 다시 시작하며, 딜러는 연장합니다.",
+      "hash": "eeb98841821c5bbfa15348e7733d1222b2d748c983be9af2c5a916f227c5b157",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1660
+      },
+      "placeholders": []
+    },
+    "ui.app.chankan-robbing-a-kan-applies-to-shouminkan-agai": {
+      "value": "찬깡(깡을 뺏는 것)은 쇼밍깡에 적용됩니다. 안깡에 대해서는 코쿠시만 뺏을 수 있습니다.",
+      "hash": "78ef42cbdcfc44f585c7ae2f2370b7a83e2fdcab07b8220b98e2731749465bf3",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1644
+      },
+      "placeholders": []
+    },
+    "ui.app.chi-may-only-be-called-from-the-player-on-your-l": {
+      "value": "치는 왼쪽 플레이어의 버림패에만 할 수 있습니다. 퐁과 깡은 누구에게나 할 수 있습니다.",
+      "hash": "9856a939de979db6ef397141d21405c4dda15c46ff654b65bf866d40c472d10d",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1642
+      },
+      "placeholders": []
+    },
+    "ui.app.double-ron-does-not-pay-twice-atama-hane-head-bu": {
+      "value": "더블 론은 두 번 지불하지 않습니다: 아타마하네 (머리 튀기) — 버린 사람에게서 가장 가까운 순서의 승자가 모든 것을 가져갑니다.",
+      "hash": "eb774872d6d8f8e8a25071eec6d0bec234610384db54c6dfbbc2393b9dc4c67b",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1643
+      },
+      "placeholders": []
+    },
+    "ui.app.exhaustive-draw-tenpai-players-split-3-000-from": {
+      "value": "유국: 텐파이 플레이어는 노텐 플레이어로부터 3,000점을 나눠 받습니다. 나가시 만간은 플레이어의 버림패가 모두 야오츄패이고 아무도 울지 않았을 때, 만간 쯔모로 지불됩니다.",
+      "hash": "04483054436e36c054378bda93c0949b7c7429bcaac93c6332d77698a4107e48",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1659
+      },
+      "placeholders": []
+    },
+    "ui.app.furiten-applies-in-all-three-forms-discard-furit": {
+      "value": "후리텐은 세 가지 형태로 적용됩니다: 버림패 후리텐, 일시적 후리텐 (오름패를 지나치면 다음 쯔모까지 론이 불가능), 리치 후리텐 (리치 후 오름패를 지나치면 영구적).",
+      "hash": "47d63c3054bf267ebae5e2b1d9f605b3fdba8f425c46dccaa0a56edf3c6da9e7",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1650
+      },
+      "placeholders": []
+    },
+    "ui.app.if-the-dealer-repeats-on-the-final-hand-the-game": {
+      "value": "마지막 국에서 딜러가 연장하면, 딜러 연장 없이 국이 끝날 때까지 게임이 연장됩니다 (아가리야메 없음).",
+      "hash": "3a452ab93bb0022e883d61de122f2f168a8c5772524f4c1a53a5e230b489e910",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1637
+      },
+      "placeholders": []
+    },
+    "ui.app.ippatsu-and-double-riichi-count-after-riichi-you": {
+      "value": "잇파츠와 더블 리치는 인정됩니다. 리치 후에는 쯔모한 패를 버려야 합니다. 안깡은 대기패가 변하지 않는 경우에만 허용됩니다.",
+      "hash": "6361ceaf7e6fe1b79a95f21283ffb009cbe2fd27127166c8e95840862fe3000c",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1649
+      },
+      "placeholders": []
+    },
+    "ui.app.kiriage-mangan-is-off-4-han-30-fu-is-7-700-deale": {
+      "value": "키리아게 만간은 OFF입니다: 4판 30부는 7,700점 (딜러 11,600점), 3판 60부는 7,700점 — 만간으로 올림하지 않습니다.",
+      "hash": "42c0cc3f7e6a4c4369ea865766d6597c54ff7be51ef8273a1949353f11fd2046",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1655
+      },
+      "placeholders": []
+    },
+    "ui.app.one-indicator-at-the-start-each-kan-flips-one-mo": {
+      "value": "시작 시 도라 표시패는 하나입니다. 각 깡은 하나를 더 뒤집습니다 (안깡은 린샹 쯔모 전에 뒤집고, 오픈 깡은 린샹 쯔모 후에 뒤집습니다). 리치로 오르면 도라 표시패 아래에 우라도라가 공개됩니다.",
+      "hash": "2c9cc5175644d0aac06dc43891cc2d1bfcd133814ce536cf7ea45c5be7325cf7",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1654
+      },
+      "placeholders": []
+    },
+    "ui.app.open-mahjong-plays-modern-online-standard-riichi": {
+      "value": "오픈 마작은 현대 온라인 표준 리치 마작을 플레이합니다. 엔진이 선택하는 모든 규칙은 여기에 나열되어 있습니다.",
+      "hash": "5718c50cdf16543704d7947cd0cf7020e7e0022e9de704144e469f0f4bde8da5",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1631
+      },
+      "placeholders": []
+    },
+    "ui.app.red-fives-aka-dora-are-in-one-each-of-5m-5p-5s-o": {
+      "value": "적5통 (아카도라)은 5만, 5통, 5삭에 각각 하나씩 있습니다. 오픈 탄야오는 허용됩니다.",
+      "hash": "9e33dbeacf1f258ac4dccebdd26d970492cab53a6d0319700ce7082995294cd6",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1641
+      },
+      "placeholders": []
+    },
+    "ui.app.riichi-costs-1-000-points-needs-a-closed-tenpai": {
+      "value": "리치는 1,000점이 필요하며, 멘젠 텐파이 상태여야 하고, 최소 1,000점 이상을 가지고 있어야 하며, 왕패에 최소 4개의 패가 남아 있어야 합니다.",
+      "hash": "7e0dbecda9240344f0b50f22142802b7630e39b6e286cda2b9290db2e05f8360",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1648
+      },
+      "placeholders": []
+    },
+    "ui.app.riichi-sticks-left-on-the-table-when-the-game-en": {
+      "value": "게임 종료 시 테이블에 남아있는 리치봉은 1등 플레이어에게 돌아갑니다.",
+      "hash": "fc19686bcb859015d9ee706bdf8c366dbab290595ed461687f2fd4bc6680f4d9",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1636
+      },
+      "placeholders": []
+    },
+    "ui.app.start-25-000-points-return-30-000-uma-15-5-5-15": {
+      "value": "시작 점수 25,000점; 반환 점수 30,000점. 우마 +15 / +5 / −5 / −15, 오카 20은 1등에게. 동점인 경우 해당 순위의 우마 (및 오카)를 나눠 가집니다.",
+      "hash": "01fd49fc30106003306a35be066d273e85bcf07fd2621e1c204e07fc39435917",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1634
       },
       "placeholders": []
     }

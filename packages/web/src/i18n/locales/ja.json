@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-19T13:56:33.903Z",
-    "keyCount": 3781,
+    "generatedAt": "2026-11-19T14:40:18.619Z",
+    "keyCount": 3797,
     "model": "google/gemini-2.5-flash",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -38840,6 +38840,166 @@
       "source": {
         "file": "variant-education-ui.ts",
         "line": 325
+      },
+      "placeholders": []
+    },
+    "ui.app.a-game-ends-early-tobi-as-soon-as-any-player-is": {
+      "value": "いずれかのプレイヤーの点数が0点未満になった場合、その半荘は飛びにより終了します。",
+      "hash": "263e4971ce8483231259fe30d2e6c21424bfb4a85ff50d52355464c9d19caab5",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1635
+      },
+      "placeholders": []
+    },
+    "ui.app.chankan-robbing-a-kan-applies-to-shouminkan-agai": {
+      "value": "槍槓は小明槓に対して適用されます。暗槓に対しては国士無双のみ槍槓が可能です。",
+      "hash": "78ef42cbdcfc44f585c7ae2f2370b7a83e2fdcab07b8220b98e2731749465bf3",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1644
+      },
+      "placeholders": []
+    },
+    "ui.app.chi-may-only-be-called-from-the-player-on-your-l": {
+      "value": "チーは左のプレイヤーからのみ可能です。ポンとカンは誰からでも可能です。",
+      "hash": "9856a939de979db6ef397141d21405c4dda15c46ff654b65bf866d40c472d10d",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1642
+      },
+      "placeholders": []
+    },
+    "ui.app.double-ron-does-not-pay-twice-atama-hane-head-bu": {
+      "value": "ダブルロンは頭ハネとなり、放銃者から見てツモ順が近いプレイヤーのみが和了となります。",
+      "hash": "eb774872d6d8f8e8a25071eec6d0bec234610384db54c6dfbbc2393b9dc4c67b",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1643
+      },
+      "placeholders": []
+    },
+    "ui.app.exhaustive-draw-tenpai-players-split-3-000-from": {
+      "value": "流局時、聴牌しているプレイヤーはノーテンのプレイヤーから3,000点を受け取ります。流し満貫は、プレイヤーの捨て牌がすべて么九牌で、かつ鳴かれていない場合に満貫ツモとして扱われます。",
+      "hash": "04483054436e36c054378bda93c0949b7c7429bcaac93c6332d77698a4107e48",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1659
+      },
+      "placeholders": []
+    },
+    "ui.app.furiten-applies-in-all-three-forms-discard-furit": {
+      "value": "フリテンは3つの形式すべてに適用されます。捨て牌フリテン、一時的フリテン（アガリ牌を見逃した場合、次のツモまでロンできない）、リーチフリテン（リーチ後に見逃した場合、永続的にフリテン）。",
+      "hash": "47d63c3054bf267ebae5e2b1d9f605b3fdba8f425c46dccaa0a56edf3c6da9e7",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1650
+      },
+      "placeholders": []
+    },
+    "ui.app.if-the-dealer-repeats-on-the-final-hand-the-game": {
+      "value": "オーラスで親が連荘した場合、親が流れるまでゲームは続行されます（アガリやめなし）。",
+      "hash": "3a452ab93bb0022e883d61de122f2f168a8c5772524f4c1a53a5e230b489e910",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1637
+      },
+      "placeholders": []
+    },
+    "ui.app.ippatsu-and-double-riichi-count-after-riichi-you": {
+      "value": "一発とダブルリーチは有効です。リーチ後はツモった牌をそのまま捨てます。暗槓は待ちが変わらない場合にのみ可能です。",
+      "hash": "6361ceaf7e6fe1b79a95f21283ffb009cbe2fd27127166c8e95840862fe3000c",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1649
+      },
+      "placeholders": []
+    },
+    "ui.app.kiriage-mangan-is-off-4-han-30-fu-is-7-700-deale": {
+      "value": "切り上げ満貫は無効です。4翻30符は7,700点（親11,600点）、3翻60符は7,700点となり、満貫には切り上げられません。",
+      "hash": "42c0cc3f7e6a4c4369ea865766d6597c54ff7be51ef8273a1949353f11fd2046",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1655
+      },
+      "placeholders": []
+    },
+    "ui.app.one-indicator-at-the-start-each-kan-flips-one-mo": {
+      "value": "ドラ表示牌は最初1枚です。カンごとに1枚追加されます（暗槓は嶺上牌をツモる前にめくられ、明槓は嶺上牌をツモった後にめくられます）。リーチで和了した場合、ドラ表示牌の下に裏ドラが表示されます。",
+      "hash": "2c9cc5175644d0aac06dc43891cc2d1bfcd133814ce536cf7ea45c5be7325cf7",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1654
+      },
+      "placeholders": []
+    },
+    "ui.app.open-mahjong-plays-modern-online-standard-riichi": {
+      "value": "Open Mahjongは現代のオンライン標準リーチ麻雀をプレイします。エンジンが選択するすべてのルールはここに記載されています。",
+      "hash": "5718c50cdf16543704d7947cd0cf7020e7e0022e9de704144e469f0f4bde8da5",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1631
+      },
+      "placeholders": []
+    },
+    "ui.app.red-fives-aka-dora-are-in-one-each-of-5m-5p-5s-o": {
+      "value": "赤五（赤ドラ）は、5m、5p、5sにそれぞれ1枚ずつ入っています。オープンタンヤオは有効です。",
+      "hash": "9e33dbeacf1f258ac4dccebdd26d970492cab53a6d0319700ce7082995294cd6",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1641
+      },
+      "placeholders": []
+    },
+    "ui.app.riichi-costs-1-000-points-needs-a-closed-tenpai": {
+      "value": "リーチは1,000点かかります。門前聴牌であること、1,000点以上の点数があること、王牌に4枚以上の牌が残っていることが必要です。",
+      "hash": "7e0dbecda9240344f0b50f22142802b7630e39b6e286cda2b9290db2e05f8360",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1648
+      },
+      "placeholders": []
+    },
+    "ui.app.riichi-sticks-left-on-the-table-when-the-game-en": {
+      "value": "ゲーム終了時に場に残ったリーチ棒は、1位のプレイヤーのものとなります。",
+      "hash": "fc19686bcb859015d9ee706bdf8c366dbab290595ed461687f2fd4bc6680f4d9",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1636
+      },
+      "placeholders": []
+    },
+    "ui.app.start-25-000-points-return-30-000-uma-15-5-5-15": {
+      "value": "開始点数25,000点、返し点数30,000点。ウマは+15 / +5 / −5 / −15、オカは20点が1位に与えられます。同着の場合、ウマ（とオカ）は該当順位のプレイヤーで分けられます。",
+      "hash": "01fd49fc30106003306a35be066d273e85bcf07fd2621e1c204e07fc39435917",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1634
+      },
+      "placeholders": []
+    },
+    "ui.app.abortive-draws-are-on-kyuushu-kyuuhai-nine-diffe": {
+      "value": "流局は有効です: 九種九牌 (配牌時に9種類以上の么九牌がある場合)、四風連打 (4人全員が同じ風牌を最初に捨てた場合)、四家立直 (4人全員がリーチした場合)、四開槓 (2人以上のプレイヤーが合計4回カンした場合)。手牌は本場を1つ増やして再開され、親は続行します。",
+      "hash": "eeb98841821c5bbfa15348e7733d1222b2d748c983be9af2c5a916f227c5b157",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1660
       },
       "placeholders": []
     }

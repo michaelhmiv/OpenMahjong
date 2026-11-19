@@ -2,8 +2,8 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T14:18:14.145Z",
-    "keyCount": 3782,
+    "generatedAt": "2026-11-19T14:42:00.843Z",
+    "keyCount": 3798,
     "namespaces": {
       "calc.compact": 14,
       "calc.riichi": 90,
@@ -125,7 +125,7 @@
       "review.your-discard-leaves-0-shanten-and-1-unseen-impro": 1,
       "review.your-hand-at-this-decision": 1,
       "tools.inperson": 130,
-      "ui.app": 341,
+      "ui.app": 357,
       "ui.stats": 11,
       "ui.tiles": 9
     },
@@ -28022,7 +28022,7 @@
       "hash": "dc4a3b3a935ebb706831f8f18a0bb56c776ef283619780d7c058ebcd2fdc2df3",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 365
+        "line": 378
       },
       "placeholders": [],
       "status": "approved"
@@ -28032,7 +28032,7 @@
       "hash": "86cfa5c34050fff77baf26f5eb331b98c110077e25a10df0a33b9775a2a99192",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 259
+        "line": 272
       },
       "placeholders": [],
       "status": "approved"
@@ -28042,7 +28042,7 @@
       "hash": "76900f1bfd16c8d4dd3d25e6f46638d7165aee23883ccea6bfe071c514421769",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 152
+        "line": 165
       },
       "placeholders": [],
       "status": "approved"
@@ -28052,7 +28052,7 @@
       "hash": "99bc0811c4c9f862e6d705a5b79a4c2d9f8cc32d84e53692ee93eab7c5c243ae",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 389
+        "line": 402
       },
       "placeholders": [],
       "status": "approved"
@@ -28062,7 +28062,7 @@
       "hash": "59b5b25c3f1225bbc759f0a5877604948e64e3484f2e56aafef146d98cd32a61",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 274
+        "line": 287
       },
       "placeholders": [],
       "status": "approved"
@@ -28072,7 +28072,7 @@
       "hash": "31fbef162594de01bab0cd525c51f74de7bcb15063029fa1a54b2cf5944c80d8",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 325
+        "line": 338
       },
       "placeholders": [],
       "status": "approved"
@@ -28082,7 +28082,7 @@
       "hash": "3dc3f86cf0986d4df60c2257fb307d6309d05268ad0a4dcc945e6602aa7aa65e",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 308
+        "line": 321
       },
       "placeholders": [
         "0"
@@ -28095,7 +28095,7 @@
       "hash": "9bc3516b784aceb156fb7e182b697e3f2aae96fa300e13aaad39085a986f02a6",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 417
+        "line": 430
       },
       "placeholders": [],
       "status": "approved"
@@ -28105,7 +28105,7 @@
       "hash": "96ffe8b6aa8329369ea446f893400269347942037927529f6c2d0a2d91ab4b1f",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 338
+        "line": 351
       },
       "placeholders": [],
       "status": "approved"
@@ -28115,7 +28115,7 @@
       "hash": "0bca43add105642fdb94db6ebf99746a60816f346bf3cd31ee9a3cbe6f8f3281",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 387
+        "line": 400
       },
       "placeholders": [],
       "status": "approved"
@@ -28125,7 +28125,7 @@
       "hash": "1f5c3e6c2677e436037e236890119dcc0406e6a32e9d06a7ae1849965d3581dc",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 197
+        "line": 210
       },
       "placeholders": [
         "0"
@@ -28138,7 +28138,7 @@
       "hash": "6e2b26d9de4033b952bd242f69b798420ee887151b937f394efc23252c78af74",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 398
+        "line": 411
       },
       "placeholders": [],
       "status": "approved"
@@ -28148,7 +28148,7 @@
       "hash": "fd8ea0a29a653cac0de113a4dce5875e61def5197251debfeb9e58855fe9e298",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 483
+        "line": 496
       },
       "placeholders": [],
       "status": "approved"
@@ -28158,7 +28158,7 @@
       "hash": "ee075885c9281f770f489778da89da5adc9cdd68600c3523b85b89e312399e60",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 325
+        "line": 338
       },
       "placeholders": [],
       "status": "approved"
@@ -28168,7 +28168,7 @@
       "hash": "d3857b12b4cea2bc5d8ea0b8c2ce9cc3d5dc426e0bf3ea06394ddb906e6d60a0",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 153
+        "line": 166
       },
       "placeholders": [],
       "status": "approved"
@@ -28178,7 +28178,7 @@
       "hash": "b05f5312f52ea4878e6aea261af94d91ecd31ac339d6c2a9f1c4b7eae65caea4",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 419
+        "line": 432
       },
       "placeholders": [],
       "status": "approved"
@@ -28188,7 +28188,7 @@
       "hash": "27636f08d4dcb21adb5efb25b0ec61a73ba3eec91049c0288f981238e4a4a581",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 400
+        "line": 413
       },
       "placeholders": [],
       "status": "approved"
@@ -28198,7 +28198,7 @@
       "hash": "cabbcb70d6181880ab073373526a0c6c6e19e654d5efb84953f80e240277b4e8",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 492
+        "line": 505
       },
       "placeholders": [],
       "status": "approved"
@@ -28208,7 +28208,7 @@
       "hash": "70f32e53ef5c7e21cb65f28d00d633bb1937ca14496792fc2436dfa12476803f",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 339
+        "line": 352
       },
       "placeholders": [],
       "status": "approved"
@@ -28218,7 +28218,7 @@
       "hash": "a193b67fe0a1a01d0cde7b84d0a87e9994cd1147b56bfd3ed5bf8f60f8b2489c",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 490
+        "line": 503
       },
       "placeholders": [],
       "status": "approved"
@@ -28228,7 +28228,7 @@
       "hash": "92f19534d8c5411570e603431055706c77573719bc31c19b6e5219457bc1065e",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 448
+        "line": 461
       },
       "placeholders": [
         "0",
@@ -28242,7 +28242,7 @@
       "hash": "5467ab3c1f1231cfabd173a4bb1d692757cc4f01db9c2a0bbab1529ff729aa80",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 318
+        "line": 331
       },
       "placeholders": [],
       "status": "approved"
@@ -28252,7 +28252,7 @@
       "hash": "42ca0a4130a8ffbf849c2133c3396f862c850bd76f6f880798a001d161dfab60",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 438
+        "line": 451
       },
       "placeholders": [],
       "status": "approved"
@@ -28262,7 +28262,7 @@
       "hash": "cfac7bd36ea121f7ad7c0c1efb99d21e4e3bf1ddf3f99f880408fa4d46fbbca4",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 236
+        "line": 249
       },
       "placeholders": [
         "0"
@@ -28275,7 +28275,7 @@
       "hash": "b502772a2728e4f817d4d01dd96a5c31408ccb646b1a86dad4fabb9c6627b34d",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 226
+        "line": 239
       },
       "placeholders": [],
       "status": "approved"
@@ -28285,7 +28285,7 @@
       "hash": "47ca8c9fbe202d894e57247cc7c0c4e5fc0c22f6ae584989f9b799e216627e49",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 317
+        "line": 330
       },
       "placeholders": [
         "0"
@@ -28298,7 +28298,7 @@
       "hash": "331251cf2525ef16e194747e91d7326840d31f7ccf156479a0abcad93208c5ff",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 356
+        "line": 369
       },
       "placeholders": [
         "0",
@@ -28312,7 +28312,7 @@
       "hash": "d8a0796bfb49607f52211796d6f8a799e6cb5ab6c536b69788f1e79199fd4308",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 149
+        "line": 162
       },
       "placeholders": [],
       "status": "approved"
@@ -28322,7 +28322,7 @@
       "hash": "0628db9457a72006675dc108877779fadd44cc8e051ed5a648681313bfeea0eb",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 149
+        "line": 162
       },
       "placeholders": [],
       "status": "approved"
@@ -28332,7 +28332,7 @@
       "hash": "69a503bfee86704bbfdc30b2e3ca0a612742837f688000a7801ad5e54e0d06e5",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 484
+        "line": 497
       },
       "placeholders": [
         "0"
@@ -35995,6 +35995,16 @@
       "placeholders": [],
       "status": "approved"
     },
+    "ui.app.a-game-ends-early-tobi-as-soon-as-any-player-is": {
+      "value": "A game ends early (tobi) as soon as any player is below zero at the end of a hand.",
+      "hash": "263e4971ce8483231259fe30d2e6c21424bfb4a85ff50d52355464c9d19caab5",
+      "source": {
+        "file": "app.ts",
+        "line": 1635
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "ui.app.a-riichi-opponent-could-win-off-it-it-is-still-t": {
       "value": "A riichi opponent could win off it — it is still the best move toward winning.",
       "hash": "90586767b1187e281e887b1249d2439a6c5a3dbfa4a20ee31e1516d736780ef2",
@@ -36031,6 +36041,16 @@
       "source": {
         "file": "app.ts",
         "line": 234
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "ui.app.abortive-draws-are-on-kyuushu-kyuuhai-nine-diffe": {
+      "value": "Abortive draws are on: kyuushu kyuuhai (nine different terminals/honors on your first draw), suufon renda (all four first discards the same wind), suucha riichi (four riichi), and suukaikan (four kan by two or more players). The hand restarts with one more honba; the dealer repeats.",
+      "hash": "eeb98841821c5bbfa15348e7733d1222b2d748c983be9af2c5a916f227c5b157",
+      "source": {
+        "file": "app.ts",
+        "line": 1660
       },
       "placeholders": [],
       "status": "approved"
@@ -36210,6 +36230,16 @@
       "placeholders": [],
       "status": "approved"
     },
+    "ui.app.chankan-robbing-a-kan-applies-to-shouminkan-agai": {
+      "value": "Chankan (robbing a kan) applies to shouminkan; against an ankan only kokushi may rob.",
+      "hash": "78ef42cbdcfc44f585c7ae2f2370b7a83e2fdcab07b8220b98e2731749465bf3",
+      "source": {
+        "file": "app.ts",
+        "line": 1644
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "ui.app.chi": {
       "value": "Chi",
       "hash": "0878b9867b874985a3507b4a8aed0789b23507585ee88388f0b1ecc44aa01fd0",
@@ -36239,6 +36269,16 @@
       "source": {
         "file": "app.ts",
         "line": 3930
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "ui.app.chi-may-only-be-called-from-the-player-on-your-l": {
+      "value": "Chi may only be called from the player on your left. Pon and kan from anyone.",
+      "hash": "9856a939de979db6ef397141d21405c4dda15c46ff654b65bf866d40c472d10d",
+      "source": {
+        "file": "app.ts",
+        "line": 1642
       },
       "placeholders": [],
       "status": "approved"
@@ -36588,6 +36628,16 @@
       "placeholders": [],
       "status": "approved"
     },
+    "ui.app.double-ron-does-not-pay-twice-atama-hane-head-bu": {
+      "value": "Double ron does not pay twice: atama-hane (head bump) — the winner nearest the discarder in turn order takes all.",
+      "hash": "eb774872d6d8f8e8a25071eec6d0bec234610384db54c6dfbbc2393b9dc4c67b",
+      "source": {
+        "file": "app.ts",
+        "line": 1643
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "ui.app.draw-one-or-claim-one-an-opponent-discards-with": {
       "value": "Draw one, or claim one an opponent discards with the Ron button, and the hand is complete.",
       "hash": "d8c585b31dcd6638e617afc9152f09c4d374e8a44ebe3f0789e7732b16669c6c",
@@ -36698,6 +36748,16 @@
       "placeholders": [],
       "status": "approved"
     },
+    "ui.app.exhaustive-draw-tenpai-players-split-3-000-from": {
+      "value": "Exhaustive draw: tenpai players split 3,000 from noten players. Nagashi mangan pays as a mangan tsumo instead, when a player's discards are all terminals/honors and none were called.",
+      "hash": "04483054436e36c054378bda93c0949b7c7429bcaac93c6332d77698a4107e48",
+      "source": {
+        "file": "app.ts",
+        "line": 1659
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "ui.app.final-results": {
       "value": "Final results",
       "hash": "b8a5a9b45cbbfe1e884e6fdb146d87acf0c77b3f4182f95f0151f2340361bb08",
@@ -36754,6 +36814,16 @@
       "source": {
         "file": "app.ts",
         "line": 1668
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "ui.app.furiten-applies-in-all-three-forms-discard-furit": {
+      "value": "Furiten applies in all three forms: discard furiten, temporary furiten (passing a winning tile blocks ron until your next draw), and riichi furiten (permanent after passing in riichi).",
+      "hash": "47d63c3054bf267ebae5e2b1d9f605b3fdba8f425c46dccaa0a56edf3c6da9e7",
+      "source": {
+        "file": "app.ts",
+        "line": 1650
       },
       "placeholders": [],
       "status": "approved"
@@ -37001,6 +37071,16 @@
       "placeholders": [],
       "status": "approved"
     },
+    "ui.app.if-the-dealer-repeats-on-the-final-hand-the-game": {
+      "value": "If the dealer repeats on the final hand, the game extends until a hand ends without a dealer repeat (no agari-yame).",
+      "hash": "3a452ab93bb0022e883d61de122f2f168a8c5772524f4c1a53a5e230b489e910",
+      "source": {
+        "file": "app.ts",
+        "line": 1637
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "ui.app.if-this-policy-changes-the-new-version-will-be-p": {
       "value": "If this policy changes, the new version will be posted on this page with an updated date.",
       "hash": "f78c35d842f7d14b87cf9287f01df1e742995af5699da42550874f70d89a9cfa",
@@ -37147,6 +37227,16 @@
       "placeholders": [],
       "status": "approved"
     },
+    "ui.app.ippatsu-and-double-riichi-count-after-riichi-you": {
+      "value": "Ippatsu and double riichi count. After riichi you discard what you draw; an ankan is allowed only if it leaves your waits unchanged.",
+      "hash": "6361ceaf7e6fe1b79a95f21283ffb009cbe2fd27127166c8e95840862fe3000c",
+      "source": {
+        "file": "app.ts",
+        "line": 1649
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "ui.app.it-is-the-only-discard-that-leaves-the-hand-read": {
       "value": "It is the only discard that leaves the hand ready.",
       "hash": "9bd93da6e70a406408d4b924e09dce7c682321b8ca7fdbc7be6d132fb0bcc556",
@@ -37249,6 +37339,16 @@
       "source": {
         "file": "app.ts",
         "line": 3908
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "ui.app.kiriage-mangan-is-off-4-han-30-fu-is-7-700-deale": {
+      "value": "Kiriage mangan is OFF: 4 han 30 fu is 7,700 (dealer 11,600), 3 han 60 fu is 7,700 — no rounding up to mangan.",
+      "hash": "42c0cc3f7e6a4c4369ea865766d6597c54ff7be51ef8273a1949353f11fd2046",
+      "source": {
+        "file": "app.ts",
+        "line": 1655
       },
       "placeholders": [],
       "status": "approved"
@@ -37710,6 +37810,16 @@
       "placeholders": [],
       "status": "approved"
     },
+    "ui.app.one-indicator-at-the-start-each-kan-flips-one-mo": {
+      "value": "One indicator at the start; each kan flips one more (ankan flips before the rinshan draw; open kans flip after it). Uradora are revealed under the indicators when a riichi hand wins.",
+      "hash": "2c9cc5175644d0aac06dc43891cc2d1bfcd133814ce536cf7ea45c5be7325cf7",
+      "source": {
+        "file": "app.ts",
+        "line": 1654
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "ui.app.one-is-the-0": {
       "value": "one is the {0}",
       "hash": "832963b9f7071758e78ea2d9e9b886f7af7852353a2c46c6f8916b4577607243",
@@ -37795,6 +37905,16 @@
       "source": {
         "file": "app.ts",
         "line": 1705
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "ui.app.open-mahjong-plays-modern-online-standard-riichi": {
+      "value": "Open Mahjong plays modern online-standard riichi mahjong. Every rules choice the engine makes is listed here.",
+      "hash": "5718c50cdf16543704d7947cd0cf7020e7e0022e9de704144e469f0f4bde8da5",
+      "source": {
+        "file": "app.ts",
+        "line": 1631
       },
       "placeholders": [],
       "status": "approved"
@@ -37982,6 +38102,16 @@
       "placeholders": [],
       "status": "approved"
     },
+    "ui.app.red-fives-aka-dora-are-in-one-each-of-5m-5p-5s-o": {
+      "value": "Red fives (aka dora) are in: one each of 5m, 5p, 5s. Open tanyao is allowed.",
+      "hash": "9e33dbeacf1f258ac4dccebdd26d970492cab53a6d0319700ce7082995294cd6",
+      "source": {
+        "file": "app.ts",
+        "line": 1641
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "ui.app.reduced-motion": {
       "value": "Reduced motion",
       "hash": "1fd516a548812c4b2c253ad9cea1ae0178a761f8ae5a04bc4d1c623674f283f2",
@@ -38085,6 +38215,16 @@
       "placeholders": [],
       "status": "approved"
     },
+    "ui.app.riichi-costs-1-000-points-needs-a-closed-tenpai": {
+      "value": "Riichi costs 1,000 points, needs a closed tenpai hand, at least 1,000 points, and at least 4 tiles left in the wall.",
+      "hash": "7e0dbecda9240344f0b50f22142802b7630e39b6e286cda2b9290db2e05f8360",
+      "source": {
+        "file": "app.ts",
+        "line": 1648
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "ui.app.riichi-discard": {
       "value": "Riichi + discard",
       "hash": "de992cecedfac8756c2c3744808b2b076327aaa3d36bc2fdab813fed57cb7203",
@@ -38101,6 +38241,16 @@
       "source": {
         "file": "app.ts",
         "line": 4763
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "ui.app.riichi-sticks-left-on-the-table-when-the-game-en": {
+      "value": "Riichi sticks left on the table when the game ends go to the first-place player.",
+      "hash": "fc19686bcb859015d9ee706bdf8c366dbab290595ed461687f2fd4bc6680f4d9",
+      "source": {
+        "file": "app.ts",
+        "line": 1636
       },
       "placeholders": [],
       "status": "approved"
@@ -38415,6 +38565,16 @@
       "source": {
         "file": "app.ts",
         "line": 1632
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "ui.app.start-25-000-points-return-30-000-uma-15-5-5-15": {
+      "value": "Start 25,000 points; return 30,000. Uma +15 / +5 / −5 / −15, oka 20 to first place. Tied seats split the uma (and oka) of the ranks they occupy.",
+      "hash": "01fd49fc30106003306a35be066d273e85bcf07fd2621e1c204e07fc39435917",
+      "source": {
+        "file": "app.ts",
+        "line": 1634
       },
       "placeholders": [],
       "status": "approved"

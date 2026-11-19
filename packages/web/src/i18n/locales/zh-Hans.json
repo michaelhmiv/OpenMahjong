@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-19T13:56:18.826Z",
-    "keyCount": 3781,
+    "generatedAt": "2026-11-19T14:39:07.736Z",
+    "keyCount": 3797,
     "model": "qwen/qwen-plus",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -38841,6 +38841,166 @@
       "source": {
         "file": "variant-education-ui.ts",
         "line": 325
+      },
+      "placeholders": []
+    },
+    "ui.app.a-game-ends-early-tobi-as-soon-as-any-player-is": {
+      "value": "一局牌在某位玩家手牌分数低于零时立即结束（跳满）。",
+      "hash": "263e4971ce8483231259fe30d2e6c21424bfb4a85ff50d52355464c9d19caab5",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1635
+      },
+      "placeholders": []
+    },
+    "ui.app.abortive-draws-are-on-kyuushu-kyuuhai-nine-diffe": {
+      "value": "流局条件启用：九种幺九（起手14张牌中含九种不同的幺九牌或字牌）、四风连打（庄家起始四次打出同一风牌）、四立直（四人全部立直）、四杠散了（两名或以上玩家合计开杠四次）。该局重开，本场数加一，庄家连庄。",
+      "hash": "eeb98841821c5bbfa15348e7733d1222b2d748c983be9af2c5a916f227c5b157",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1660
+      },
+      "placeholders": []
+    },
+    "ui.app.chankan-robbing-a-kan-applies-to-shouminkan-agai": {
+      "value": "抢杠（抢杠和）适用于明杠；仅国士无双可抢暗杠。",
+      "hash": "78ef42cbdcfc44f585c7ae2f2370b7a83e2fdcab07b8220b98e2731749465bf3",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1644
+      },
+      "placeholders": []
+    },
+    "ui.app.chi-may-only-be-called-from-the-player-on-your-l": {
+      "value": "吃只能对上家打出的牌进行；碰与杠可对任意一家打出的牌进行。",
+      "hash": "9856a939de979db6ef397141d21405c4dda15c46ff654b65bf866d40c472d10d",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1642
+      },
+      "placeholders": []
+    },
+    "ui.app.double-ron-does-not-pay-twice-atama-hane-head-bu": {
+      "value": "双荣和不重复计分：头跳（按出牌者顺位顺序，离其最近的和牌者独得全部点数）。",
+      "hash": "eb774872d6d8f8e8a25071eec6d0bec234610384db54c6dfbbc2393b9dc4c67b",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1643
+      },
+      "placeholders": []
+    },
+    "ui.app.exhaustive-draw-tenpai-players-split-3-000-from": {
+      "value": "荒牌流局：听牌者平分未听牌者各支付的3,000点；流局满贯按满贯自摸计分（当某玩家所打全部牌均为幺九牌或字牌且无人鸣牌时成立）。",
+      "hash": "04483054436e36c054378bda93c0949b7c7429bcaac93c6332d77698a4107e48",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1659
+      },
+      "placeholders": []
+    },
+    "ui.app.furiten-applies-in-all-three-forms-discard-furit": {
+      "value": "振听适用于全部三种情形：舍牌振听、临时振听（放弃可荣和的牌后，直至自己摸牌前不得荣和）、立直振听（立直后放弃可和牌，即永久振听）。",
+      "hash": "47d63c3054bf267ebae5e2b1d9f605b3fdba8f425c46dccaa0a56edf3c6da9e7",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1650
+      },
+      "placeholders": []
+    },
+    "ui.app.if-the-dealer-repeats-on-the-final-hand-the-game": {
+      "value": "若最后一局出现连庄，则游戏继续，直至出现非连庄且有和牌的一局为止（不适用“和了即终局”规则）。",
+      "hash": "3a452ab93bb0022e883d61de122f2f168a8c5772524f4c1a53a5e230b489e910",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1637
+      },
+      "placeholders": []
+    },
+    "ui.app.ippatsu-and-double-riichi-count-after-riichi-you": {
+      "value": "一发与双立直有效。立直后须打出所摸之牌；暗杠仅允许在杠后待牌不变的前提下进行。",
+      "hash": "6361ceaf7e6fe1b79a95f21283ffb009cbe2fd27127166c8e95840862fe3000c",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1649
+      },
+      "placeholders": []
+    },
+    "ui.app.kiriage-mangan-is-off-4-han-30-fu-is-7-700-deale": {
+      "value": "取消切上满贯：4番30符为7,700点（庄家11,600点），3番60符亦为7,700点——不向上进位至满贯。",
+      "hash": "42c0cc3f7e6a4c4369ea865766d6597c54ff7be51ef8273a1949353f11fd2046",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1655
+      },
+      "placeholders": []
+    },
+    "ui.app.one-indicator-at-the-start-each-kan-flips-one-mo": {
+      "value": "开局仅一张宝牌指示牌；每次开杠额外翻出一张（暗杠在岭上牌摸牌前翻出；明杠在岭上牌摸牌后翻出）。立直和牌时，指示牌下方的里宝牌同时公开。",
+      "hash": "2c9cc5175644d0aac06dc43891cc2d1bfcd133814ce536cf7ea45c5be7325cf7",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1654
+      },
+      "placeholders": []
+    },
+    "ui.app.open-mahjong-plays-modern-online-standard-riichi": {
+      "value": "Open Mahjong 采用现代线上标准的立直麻将规则。引擎所作的所有规则判定均在此列出。",
+      "hash": "5718c50cdf16543704d7947cd0cf7020e7e0022e9de704144e469f0f4bde8da5",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1631
+      },
+      "placeholders": []
+    },
+    "ui.app.red-fives-aka-dora-are-in-one-each-of-5m-5p-5s-o": {
+      "value": "赤五（红宝牌）各一张：5m、5p、5s。允许开裸单吊（无役纯全带幺九）。",
+      "hash": "9e33dbeacf1f258ac4dccebdd26d970492cab53a6d0319700ce7082995294cd6",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1641
+      },
+      "placeholders": []
+    },
+    "ui.app.riichi-costs-1-000-points-needs-a-closed-tenpai": {
+      "value": "立直需支付1,000点，且必须满足：手牌为门前清听牌、剩余点数不少于1,000点、牌墙剩余牌数不少于4张。",
+      "hash": "7e0dbecda9240344f0b50f22142802b7630e39b6e286cda2b9290db2e05f8360",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1648
+      },
+      "placeholders": []
+    },
+    "ui.app.riichi-sticks-left-on-the-table-when-the-game-en": {
+      "value": "游戏结束时桌上剩余的立直棒归第一名玩家所有。",
+      "hash": "fc19686bcb859015d9ee706bdf8c366dbab290595ed461687f2fd4bc6680f4d9",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1636
+      },
+      "placeholders": []
+    },
+    "ui.app.start-25-000-points-return-30-000-uma-15-5-5-15": {
+      "value": "初始点数25,000点；返点30,000点。名次点（乌玛）为+15 / +5 / −5 / −15；头名另加20点（oka）。名次并列者平分所占名次对应的乌玛（及oka）点数。",
+      "hash": "01fd49fc30106003306a35be066d273e85bcf07fd2621e1c204e07fc39435917",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1634
       },
       "placeholders": []
     }

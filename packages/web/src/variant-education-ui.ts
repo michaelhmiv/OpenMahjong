@@ -19,7 +19,7 @@ import {
 } from "./education/variant-progress.js";
 import { trackLessonCompleted, trackLessonStarted } from "./analytics.js";
 import { tileIndexEl } from "./tile-index.js";
-import { slugify, t, tx } from "./i18n/index.js";
+import { keyStatus, slugify, t, tx } from "./i18n/index.js";
 
 /** Derived keys for lesson content. The lesson DATA files are the
  *  extractor's source of truth (see scripts/extract-i18n.mjs): a
@@ -33,8 +33,16 @@ import { slugify, t, tx } from "./i18n/index.js";
 function lessonTopic(lesson: VariantLesson): string {
   return lesson.id.slice(lesson.id.indexOf("-") + 1);
 }
+/** t() with the data string as fallback for unminted content. Every
+ *  shipped lesson is minted (the derived-keys test proves it), but the
+ *  runner also renders synthetic lessons (tests, previews) whose
+ *  strings have no keys — for those a missing key must degrade to the
+ *  data text, never leak a key id onto the screen. */
+function dt(key: string, fallback: string): string {
+  return keyStatus(key) === "missing" ? fallback : t(key);
+}
 function lessonTitle(lesson: VariantLesson): string {
-  return t(`learn.${lesson.variant}.${lessonTopic(lesson)}.title`);
+  return dt(`learn.${lesson.variant}.${lessonTopic(lesson)}.title`, lesson.title);
 }
 function questionText(
   lesson: VariantLesson,
@@ -51,13 +59,18 @@ function questionText(
     lesson.variant === "hong-kong"
       ? q.id
       : q.id.slice(q.id.indexOf("-") + 1);
-  return t(
+  const fallback = field.startsWith("choice")
+    ? (q.kind === "choice" ? q.choices[Number(field.slice(6))] ?? "" : "")
+    : q[field as "prompt" | "explanation" | "hint"];
+  return dt(
     `learn.${lesson.variant}.${lessonTopic(lesson)}.q-${qid}.${field}`,
+    fallback,
   );
 }
 function stepText(lesson: VariantLesson, step: number): string {
-  return t(
+  return dt(
     `learn.${lesson.variant}.${lessonTopic(lesson)}.step${String(step + 1).padStart(2, "0")}.text`,
+    lesson.steps[step]?.text ?? "",
   );
 }
 
@@ -346,10 +359,10 @@ export function mountVariantEducation(
         // so the reference reads in the session locale. Search matches
         // the displayed (translated) text.
         const slug = slugify(p.name);
-        const name = t(`learn.mcr.guide.pattern.${slug}.name`);
-        const family = t(`learn.mcr.guide.pattern.${slug}.family`);
-        const description = t(`learn.mcr.guide.pattern.${slug}.recognition`);
-        const restrictions = t(`learn.mcr.guide.pattern.${slug}.exclusions`);
+        const name = dt(`learn.mcr.guide.pattern.${slug}.name`, p.name);
+        const family = dt(`learn.mcr.guide.pattern.${slug}.family`, p.family);
+        const description = dt(`learn.mcr.guide.pattern.${slug}.recognition`, p.description);
+        const restrictions = dt(`learn.mcr.guide.pattern.${slug}.exclusions`, p.restrictions);
         if (!`${name} ${family} ${description}`.toLowerCase().includes(search.value.toLowerCase())) continue;
         const d = el("details");
         d.append(
