@@ -1,0 +1,131 @@
+/* Multiplayer UI v1 (approved renderings multiplayer-ui-v1, Michael
+   2026-11-18; governing design skill: Impeccable). This sheet replaces
+   PR #87's rejected online.css wholesale. The base is the frames'
+   own composition CSS, composed from the shipped styles.css +
+   medium.css grammar: new classes only where the shipped grammar
+   has no element for an online state; every value is a design-rules
+   token or a shipped value. The solo app's sheets (styles.css,
+   medium.css, compact.css) load before this file via main.ts and
+   carry the shared grammar (.seg, .pillbtn, .sheet, .hrow, .iprow,
+   .chip, .center, the table zones). */
+
+/* The online root reuses the app shell: #app centres the #stage the
+   solo app scales; nothing of the old light shell remains. */
+#app.online-root {
+  background: var(--page);
+}
+
+/* Drilled-in screen header (medium R13 grammar): bare back glyph and
+   the Fraunces title on one optical line. */
+.mp-head { height: 52px; flex: 0 0 52px; display: flex; align-items: center; gap: 6px; padding: 0 14px 0 8px; }
+.mp-back { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: none; border: none; color: var(--ink); font-size: 30px; font-weight: 600; line-height: 1; font-family: "Figtree", sans-serif; cursor: pointer; }
+.mp-head h1 { font-family: "Fraunces", Georgia, serif; font-size: 20px; font-weight: 600; line-height: 1.2; }
+.mp-head .spacer { flex: 1; }
+.mp-scroll { flex: 1; overflow-y: auto; padding: 2px 22px 26px; }
+.mp-seg-sm button { font-size: 12px; min-width: 0; padding: 0 9px; white-space: nowrap; }
+/* Online setup panel: the Play screen's panel + segment grammar. */
+.mp-panel { background: var(--panel); border-radius: 20px; padding: 16px; margin-top: 10px; }
+.mp-panel .seg { margin: 0 0 12px; }
+.mp-panel .seg:last-child { margin-bottom: 0; }
+.mp-seclab { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin: 0 0 8px; }
+.mp-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+.mp-actions .pillbtn { width: 100%; }
+/* The two queue entries sit side by side at equal size with
+   squared-off (6px) corners; Create custom room is a smaller centred
+   action under them, with a friends icon.
+   QC rule (multiplayer-ui-v1 QC, 2026-11-19): the duo must be equal
+   in HEIGHT as well as width. The shipped medium layer fixes
+   .pillbtn.ghost at 40px against the base 48px, so both duo buttons
+   carry an explicit 48px height here — never the ghost default.
+   Create custom room is capped at 150px wide: one duo button
+   measures 162px in the 334px lobby column, so Create is smaller
+   on every dimension (150px wide, 44px tall, 13.5px type). */
+.mp-duo { display: flex; gap: 10px; }
+.mp-actions .mp-duo .pillbtn { flex: 1 1 0; width: auto; min-width: 0; height: 48px; border-radius: 6px; padding: 0 10px; font-size: 14px; white-space: nowrap; }
+.mp-actions .mp-duo .pillbtn.ghost { height: 48px; }
+.mp-actions .pillbtn.mp-create { width: auto; max-width: 150px; align-self: center; height: 44px; border-radius: 6px; padding: 0 18px; font-size: 13.5px; gap: 8px; }
+.mp-create svg { width: 18px; height: 18px; flex: 0 0 auto; }
+.mp-note { font-size: 12.5px; color: var(--dim); line-height: 1.45; margin-top: 10px; }
+.mp-toggle { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 0 2px; }
+.mp-toggle .lab { font-size: 14px; font-weight: 600; line-height: 1.35; }
+/* My games / public seats rows ride .hrow/.iprow; the your-move pill
+   and dot are the shipped .ippill/.ipdot. */
+.mp-filter { display: flex; gap: 18px; padding: 2px 0 4px; }
+.mp-filter button { background: none; border: none; color: var(--dim); font-size: 13.5px; font-weight: 600; min-height: 44px; padding: 0 2px; font-family: inherit; cursor: pointer; }
+.mp-filter button.on { color: var(--ink); box-shadow: inset 0 -2px 0 var(--state); }
+.mp-identity { display: flex; align-items: center; gap: 12px; padding: 14px 0 0; border-top: 1px solid var(--line); margin-top: 16px; }
+.mp-identity .who { flex: 1; min-width: 0; }
+.mp-identity .who .n { font-size: 15px; font-weight: 600; }
+.mp-identity .who .s { font-size: 12px; color: var(--dim); margin-top: 1px; }
+/* Sheets and cards over a dimmed surface reuse .sheet/.overlay/.card. */
+.mp-scrim { position: absolute; inset: 0; background: rgba(6, 12, 9, 0.55); z-index: 4; }
+.mp-field { width: 100%; height: 48px; border: none; border-radius: 10px; background: var(--bg); color: var(--ink); font: inherit; font-size: 15px; padding: 0 14px; }
+.mp-field::placeholder { color: var(--dim); }
+.mp-code { background: var(--bg); border-radius: 12px; padding: 16px; text-align: center; font-size: 24px; font-weight: 800; letter-spacing: 0.14em; margin-top: 12px; overflow-wrap: anywhere; }
+.mp-facts { margin-top: 6px; }
+.mp-facts .row { display: flex; justify-content: space-between; font-size: 14px; padding: 7px 0; border-top: 1px solid var(--line); }
+.mp-facts .row .k { color: var(--dim); }
+.mp-facts .row .v { font-weight: 600; }
+/* Waiting seats: medium tile objects (design rules section 15). */
+.mp-seat { display: flex; align-items: center; gap: 12px; background: var(--tint); color: var(--on-tint); border-radius: 6px; box-shadow: var(--tint-lit), var(--tint-shadow); padding: 9px 12px; margin-top: 8px; }
+.mp-seat .wch { width: 34px; height: 46px; flex: 0 0 34px; background: var(--face); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #22252b; box-shadow: 0 1px 2px rgba(0,0,0,0.35); }
+.mp-seat .wch.dealer { box-shadow: inset 0 0 0 2px var(--chun), 0 1px 2px rgba(0,0,0,0.35); }
+.mp-seat .wch.dealer .kj { color: var(--chun); }
+.mp-seat .who { flex: 1; min-width: 0; }
+.mp-seat .who .n { font-size: 15px; font-weight: 600; }
+.mp-seat .who .s { font-size: 12px; color: var(--tint-sub); margin-top: 1px; }
+.mp-seat .st { font-size: 13px; font-weight: 700; }
+.mp-seat .st.wait { color: var(--tint-sub); font-weight: 600; }
+.mp-seat .mini { height: 36px; border: none; border-radius: 6px; background: var(--panel); color: var(--ink); font-size: 13px; font-weight: 600; padding: 0 12px; position: relative; font-family: inherit; cursor: pointer; }
+.mp-seat .mini::after { content: ""; position: absolute; inset: -6px 0; }
+.mp-seat .pillbtn.mp-ready { height: 44px; padding: 0 16px; flex: 0 0 auto; }
+.mp-invite { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+.mp-invite .lnk { flex: 1; min-width: 0; font-size: 12.5px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: none; border: none; font-family: inherit; padding: 0; }
+.mp-invite .mini { height: 36px; border: none; border-radius: 6px; background: var(--bg); color: var(--ink); font-size: 13px; font-weight: 600; padding: 0 12px; font-family: inherit; cursor: pointer; }
+.mp-sheet-actions { display: flex; gap: 10px; margin-top: 16px; }
+.mp-sheet-actions .pillbtn { flex: 1 1 0; }
+/* Table furniture additions. */
+.mp-clockrow { display: flex; align-items: baseline; gap: 7px; margin-top: 5px; }
+.mp-clockrow .who { font-size: 12px; color: var(--dim); }
+.mp-clockrow .who.you { color: var(--ink); font-weight: 700; }
+.mp-clockrow .t { font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.mp-netstrip { background: var(--panel-hi); color: var(--ink); font-size: 12.5px; font-weight: 600; text-align: center; padding: 6px 10px; border-radius: 10px; margin: 2px 2px 0; }
+.mp-lastline { font-size: 12.5px; color: var(--dim); text-align: center; padding: 4px 10px 0; }
+.mp-coverbar { display: flex; align-items: center; gap: 12px; background: var(--panel-hi); border-radius: 14px; padding: 10px 12px 10px 14px; margin: 0 2px 10px; }
+.mp-coverbar .txt { flex: 1; font-size: 13.5px; font-weight: 600; line-height: 1.35; }
+.mp-coverbar .txt .s { display: block; font-size: 12px; font-weight: 500; color: var(--dim); margin-top: 1px; }
+.mp-coverbar .pillbtn { height: 44px; padding: 0 16px; flex: 0 0 auto; }
+.chip .bot { color: var(--ink); font-weight: 700; }
+/* Online chips add the display name after the wind kanji; names
+   truncate at chip width instead of colliding with the score. */
+.chip .nm { display: inline-block; max-width: 86px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
+/* A riichi player's chip carries the point stick itself (the shipped
+   .stick object at chip scale) instead of the word, so wind + name +
+   state + score fit the band row. */
+.mp-stick { display: inline-block; width: 22px; height: 7px; background: var(--face); border-radius: 3px; position: relative; vertical-align: 2px; }
+.mp-stick::after { content: ""; position: absolute; left: 50%; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--decisive); transform: translate(-50%, -50%); }
+/* Results rating block. */
+.mp-rating { background: var(--panel); border-radius: 20px; padding: 14px 16px; margin-top: 16px; }
+.mp-rating .row { display: flex; align-items: baseline; gap: 10px; font-size: 14.5px; padding: 6px 0; border-top: 1px solid var(--line); }
+.mp-rating .row:first-of-type { border-top: none; }
+.mp-rating .who { flex: 1; font-weight: 600; }
+.mp-rating .chg { font-weight: 800; }
+.mp-unrated { font-size: 13.5px; color: var(--dim); margin-top: 14px; line-height: 1.45; }
+
+/* ---- Build additions (states the stills settle, the app lives) -- */
+/* The lobby body scrolls: Option B's surface carries setup, public
+   seats, My games and the identity row on one Play-tab body. */
+.mp-lobby { overflow-y: auto; overflow-x: hidden; }
+.mp-lobby .mp-lobby-col { width: 100%; max-width: 334px; margin: 0 auto; }
+.mp-lobby .mp-wide { width: 100%; }
+.online-error { background: var(--panel); color: var(--ink); border-radius: 10px; padding: 10px 14px; font-size: 13.5px; line-height: 1.45; margin-top: 10px; }
+.online-error:empty { display: none; }
+/* Hand tiles that discard are real buttons in the shipped tile
+   markup; the button chrome is stripped so the tile object shows. */
+.handrow button.mp-pick { background: none; border: none; padding: 0; margin: 0; font: inherit; cursor: pointer; display: inline-flex; }
+.handrow.mp-dim { opacity: 0.55; }
+/* The review (Analyze) screen is the shipped Board review surface;
+   it mounts inside a drilled-in screen with its own scroll. */
+.mp-review { flex: 1; overflow-y: auto; }
+.online-tile { display: inline-block; vertical-align: middle; width: 1.3rem; }
+.online-tile svg { display: block; width: 100%; }

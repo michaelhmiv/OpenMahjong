@@ -5,6 +5,7 @@ import type {
   CallAction,
   CallContext,
   GameEvent,
+  HandBoundary,
   GameEventType,
   MeldState,
   Policy,
@@ -399,6 +400,23 @@ export class VariantGame implements VariantPublicState {
     this.adapter.onCall?.(this, seat, request.context, action as CallAction);
     return action as CallAction;
   }
+  viewFor(seat: number): VariantPublicView {
+    return this.adapter.publicView(this, seat);
+  }
+
+  claimContexts(current: CallContext, seat: number): CallContext[] {
+    const { tile, fromSeat } = current;
+    if (seat === fromSeat) return [];
+    const robbed = current.phase === "chankan";
+    const canWin = !!this.winning(seat, tile, false, false, robbed);
+    const contexts = [this.adapter.callContext(this, seat, fromSeat, tile, robbed ? "chankan" : "ron", canWin)];
+    if (!robbed) {
+      contexts.push(this.adapter.callContext(this, seat, fromSeat, tile, "pon-kan", false));
+      contexts.push(this.adapter.callContext(this, seat, fromSeat, tile, "chi", false));
+    }
+    return contexts;
+  }
+
   private settleWin(
     seat: number,
     from: number,
@@ -615,11 +633,24 @@ export class VariantGame implements VariantPublicState {
     }
     return null;
   }
-  *play(): Generator<
+  handBoundary(): HandBoundary {
+    return {serial:this.serial,scores:this.players.map(p=>p.score),dealer:this.dealer,
+      roundWind:this.roundWind,kyoku:this.kyoku,repeats:this.dealerRepeats,sticks:0};
+  }
+
+  *play(boundary?: HandBoundary): Generator<
     VariantRequest,
     VariantGameResult,
     TurnAction | CallAction
   > {
+    if (boundary) {
+      this.serial=boundary.serial;
+      this.players.forEach((p,i)=>{p.score=boundary.scores[i]!;});
+      this.dealer=boundary.dealer;
+      this.roundWind=boundary.roundWind;
+      this.kyoku=boundary.kyoku;
+      this.dealerRepeats=boundary.repeats;
+    }
     if (this.events.length)
       throw new Error("A variant game can only be started once");
     this.emit("game-start", {

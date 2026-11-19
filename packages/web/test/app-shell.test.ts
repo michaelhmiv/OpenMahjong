@@ -198,16 +198,26 @@ describe("app shell: Play variant picker (segment control)", () => {
     expect(segButtons().map((b) => b.tabIndex)).toEqual([-1, -1, 0, -1]);
     // Downstream: the length seg switches to the variant lengths and
     // the motif caption follows the variant (Flowers, not Dora).
-    const lengthSeg = root.querySelectorAll("#screen-home .seg:not(.play-variant-seg) button");
+    const lengthSeg = root.querySelectorAll("#screen-home .seg:not(.play-variant-seg):not(.play-mode-seg) button");
     expect([...lengthSeg].map((b) => b.textContent)).toEqual(["East", "East + South", "Four rounds"]);
     expect(root.querySelector("#screen-home .motifrow .cap")?.textContent).toBe("Flowers");
     // And back: Riichi restores the riichi lengths and Dora caption.
     segButtons()[0]!.click();
     await settle();
     expect(checkedLabel()).toBe("Riichi");
-    const riichiSeg = root.querySelectorAll("#screen-home .seg:not(.play-variant-seg) button");
+    const riichiSeg = root.querySelectorAll("#screen-home .seg:not(.play-variant-seg):not(.play-mode-seg) button");
     expect([...riichiSeg].map((b) => b.textContent)).toEqual(["East only", "East + South"]);
     expect(root.querySelector("#screen-home .motifrow .cap")?.textContent).toBe("Dora");
+  });
+
+  it("the Play tab carries the Solo/Online segment with Solo selected (multiplayer UI v1, Option B)", async () => {
+    new App(root);
+    await settle();
+    const modeSeg = root.querySelectorAll("#screen-home .play-mode-seg button");
+    expect([...modeSeg].map((b) => b.textContent)).toEqual(["Solo", "Online"]);
+    expect(modeSeg[0]!.classList.contains("on")).toBe(true);
+    expect(modeSeg[0]!.getAttribute("aria-checked")).toBe("true");
+    expect(modeSeg[1]!.getAttribute("aria-checked")).toBe("false");
   });
 
   it("arrow keys move the selection and focus follows", async () => {

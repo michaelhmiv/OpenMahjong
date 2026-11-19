@@ -11,7 +11,7 @@ export interface ReviewUIOptions {
   readonly review: DecisionReview;
   readonly renderTile: (tile: Tile) => HTMLElement;
   readonly onBack: () => void;
-  readonly onPractice: (position: ReviewDecision, skills: readonly SkillId[]) => void;
+  readonly onPractice?: (position: ReviewDecision, skills: readonly SkillId[]) => void;
   readonly onInspectTable?: (position: ReviewDecision) => void;
   /** Board review supplies the surrounding navigation. */
   readonly embedded?: boolean;
@@ -286,7 +286,7 @@ export function mountReview(container: HTMLElement, options: ReviewUIOptions): R
       if (moments.available) content.append(momentPanels(position, moments));
       content.append(publicTable(position));
       const practiceLabel = position.kind === "call" ? tx("review.practice-hand-building", "Practice hand building") : advice ? tx("review.practice-tile-efficiency", "Practice tile efficiency") : tx("review.practice-this-concept", "Practice this concept");
-      const practice = button(practiceLabel, "primary", () => options.onPractice(position, skillsFor(position)), "practice"); practice.disabled = position.engineVersion === 1; content.append(practice);
+      if (options.onPractice) { const practice = button(practiceLabel, "primary", () => options.onPractice?.(position, skillsFor(position)), "practice"); practice.disabled = position.engineVersion === 1; content.append(practice); }
       content.append(node("p", "source", position.engineVersion === 1 ? tx("review.historical-engine-1-display-only", "Historical engine 1 · display only") : position.variant ? tx("review.v-0-heuristic-advice", `${position.variant} · Heuristic advice`, position.variant) : tx("review.openmahjong-riichi-0-1", `OpenMahjong riichi · ${advice?.analysis.analysisVersion ?? tx("review.exact-legal-context", "exact legal context")}${options.review.complete ? "" : " " + tx("review.recorded-prefix", "· recorded prefix")}`, advice?.analysis.analysisVersion ?? tx("review.exact-legal-context", "exact legal context"), options.review.complete ? "" : " " + tx("review.recorded-prefix", "· recorded prefix"))));
     }
     if (options.embedded) shell.append(content);

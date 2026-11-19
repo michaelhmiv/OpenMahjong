@@ -1,17 +1,17 @@
 {
   "model": "google/gemini-2.5-flash",
   "locale": "ko",
-  "generatedAt": "2026-11-19T14:43:39.924Z",
-  "keysDraftedTotal": 3802,
-  "keysAttempted": 5,
+  "generatedAt": "2026-11-19T16:09:57.846Z",
+  "keysDraftedTotal": 3808,
+  "keysAttempted": 7,
   "failures": [],
   "glossaryFlags": [],
   "tileRefFlags": [],
   "usage": {
-    "promptTokens": 507,
-    "completionTokens": 73,
-    "costUsd": 0.0003346,
+    "promptTokens": 572,
+    "completionTokens": 144,
+    "costUsd": 0.0005316,
     "calls": 1
   },
-  "costUsd": 0.0003346
+  "costUsd": 0.0005316
 }

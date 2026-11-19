@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-19T14:43:37.921Z",
-    "keyCount": 3801,
+    "generatedAt": "2026-11-19T16:09:55.210Z",
+    "keyCount": 3807,
     "model": "google/gemini-2.5-flash",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -39040,6 +39040,66 @@
       "source": {
         "file": "app.ts",
         "line": 1627
+      },
+      "placeholders": []
+    },
+    "review.board.coach-advice-uses-only-what-you-knew-at-each-dec": {
+      "value": "コーチのアドバイスは、各決定時にあなたが知っていた情報のみを使用します。",
+      "hash": "08b566e03e2c3ed2d89a6ac810ffa4c25b553854bdfed04ba1749e7ac7bc80c6",
+      "status": "draft",
+      "source": {
+        "file": "board-review-ui.ts",
+        "line": 311
+      },
+      "placeholders": []
+    },
+    "review.board.hide-opponents-hands": {
+      "value": "対戦相手の手牌を隠す",
+      "hash": "2848ace818f4b143531af5177341ddcfb01e19b780000a970920f17822ec2992",
+      "status": "draft",
+      "source": {
+        "file": "board-review-ui.ts",
+        "line": 300
+      },
+      "placeholders": []
+    },
+    "review.board.reveal-all-hands": {
+      "value": "全ての手牌を表示",
+      "hash": "8298c6294f6610e51c3fe71eb0d2f45ff55511cec1e4b71d41cb3097a977d379",
+      "status": "draft",
+      "source": {
+        "file": "board-review-ui.ts",
+        "line": 298
+      },
+      "placeholders": []
+    },
+    "ui.app.online": {
+      "value": "オンライン",
+      "hash": "0d21bd52022ca7f7e97109d28d327da1e68cc0bedd9713b2dc2b49d3aa104392",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1142
+      },
+      "placeholders": []
+    },
+    "ui.app.play-mode": {
+      "value": "プレイモード",
+      "hash": "70295fab9629ba90affd7350690559c9868edcb76b99ee1fef412c7a3fe96d44",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1140
+      },
+      "placeholders": []
+    },
+    "ui.app.solo": {
+      "value": "ソロ",
+      "hash": "a6db480094950db2d05e772472f669cdee70c7fe22fe107a3cb97891424bbd19",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1141
       },
       "placeholders": []
     }

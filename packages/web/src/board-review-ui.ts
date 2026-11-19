@@ -89,9 +89,10 @@ export function mountBoardReview(
   options: {
     timeline: BoardTimeline;
     handIndex?: number;
+    allowReveal?: boolean;
     renderTile: (tile: Tile) => HTMLElement;
     onBack: () => void;
-    onPractice: (position: ReviewDecision, skills: readonly SkillId[]) => void;
+    onPractice?: (position: ReviewDecision, skills: readonly SkillId[]) => void;
   },
 ): ReviewUIController {
   const { timeline } = options;
@@ -108,6 +109,7 @@ export function mountBoardReview(
     option.value = String(hand.index);
     handSelect.append(option);
   }
+  let revealHands = false;
   const board = el("div", "", "review-board");
   board.setAttribute("aria-label", tx("review.board.recorded-table-player-perspective", "Recorded table, player perspective"));
   const status = el("p", "", "timeline-status");
@@ -131,7 +133,7 @@ export function mountBoardReview(
     review: timeline.data.review,
     renderTile: options.renderTile,
     onBack: options.onBack,
-    onPractice: options.onPractice,
+    ...(options.onPractice ? {onPractice:options.onPractice} : {}),
     embedded: true,
   });
   let cursor = timeline.hands[options.handIndex ?? 0]?.start ?? 0;
@@ -190,7 +192,7 @@ export function mountBoardReview(
           player.handIds
             .map((id) => model.resolveTile(id))
             .sort((a, b) => a.type - b.type || a.id - b.id),
-          relative !== 0,
+          relative !== 0 && !revealHands,
         ),
       );
       if (player.flowers.length)
@@ -208,7 +210,7 @@ export function mountBoardReview(
           ),
           tiles(
             meld.tiles,
-            relative !== 0 &&
+            !revealHands && relative !== 0 &&
               meld.kind === "ankan" &&
               model.variant !== "riichi" &&
               variantAdapter(model.variant).concealedQuadsFaceDown,
@@ -244,6 +246,8 @@ export function mountBoardReview(
       timeline.decisionsByEvent.get(timeline.data.events[cursor]!.seq)?.[0] ??
       -1;
     selectedPosition = timeline.data.review.positions[positionIndex] ?? null;
+    if (selectedPosition?.controller==="bot") status.textContent += " · Bot decision";
+    if (selectedPosition?.controller==="clock") status.textContent += " · Clock default";
     adviceHost.hidden = !selectedPosition;
     if (selectedPosition) advice.goToDecision(positionIndex);
     prevDecision.disabled = !timeline.data.review.positions.some(
@@ -290,11 +294,21 @@ export function mountBoardReview(
   jumps.addEventListener("change", () => {
     if (jumps.value !== "") seek(Number(jumps.value));
   });
+  if (options.allowReveal) {
+    const reveal = button(tx("review.board.reveal-all-hands", "Reveal all hands"), () => {
+      revealHands = !revealHands;
+      reveal.textContent = revealHands ? tx("review.board.hide-opponents-hands", "Hide opponents’ hands") : tx("review.board.reveal-all-hands", "Reveal all hands");
+      reveal.setAttribute("aria-pressed", String(revealHands));
+      seek(cursor);
+    });
+    reveal.setAttribute("aria-pressed", "false");
+    controls.append(reveal);
+  }
   main.append(
     handSelect,
     el(
       "p",
-      tx("review.board.opponents-concealed-tiles-stay-face-down-coach-a", "Opponents’ concealed tiles stay face-down. Coach advice uses only what you knew at each decision."),
+      options.allowReveal ? tx("review.board.coach-advice-uses-only-what-you-knew-at-each-dec", "Coach advice uses only what you knew at each decision.") : tx("review.board.opponents-concealed-tiles-stay-face-down-coach-a", "Opponents’ concealed tiles stay face-down. Coach advice uses only what you knew at each decision."),
       "dim",
     ),
     board,

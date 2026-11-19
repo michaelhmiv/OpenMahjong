@@ -7,6 +7,8 @@
 
 import { createServer } from "node:http";
 import { Pool } from "pg";
+import { OnlineHttp } from "./online/http.js";
+import { OnlineTables } from "./online/service.js";
 import { createApp } from "./app.js";
 import { googleRedirectUri, loadConfig } from "./config.js";
 import { createGoogleClient } from "./google.js";
@@ -19,6 +21,7 @@ async function main(): Promise<void> {
   const config = loadConfig();
 
   let store: Store;
+  let online: OnlineHttp | undefined;
   if (config.databaseUrl) {
     const pool = new Pool({ connectionString: config.databaseUrl });
     const applied = await runMigrations(pool);
@@ -26,6 +29,43 @@ async function main(): Promise<void> {
       console.log(`[server] applied migrations: ${applied.join(", ")}`);
     }
     store = new PgStore(pool);
+    const tables = new OnlineTables(pool, {
+      custom: process.env.ONLINE_CUSTOM !== "off",
+      friendly: process.env.ONLINE_FRIENDLY !== "off",
+      // Ranked launches enabled (Michael, 2026-11-18): on unless
+      // explicitly switched off, the same default shape as the
+      // custom and friendly switches beside it.
+      ranked: process.env.ONLINE_RANKED !== "off",
+    });
+    online = new OnlineHttp(tables);
+    if (process.env.ONLINE_METRICS === "on") {
+      const delivery = online;
+      let measuring = false;
+      setInterval(async () => {
+        if (measuring) return;
+        measuring = true;
+        try {
+          const counts = await pool.query(`SELECT origin,variant,length,pace,state,count(*)::int AS tables,
+            CASE WHEN state='waiting' THEN floor(extract(epoch FROM clock_timestamp()-min(created_at)))::int END AS oldest_wait_seconds
+            FROM online_rooms WHERE state IN ('playing','waiting') GROUP BY origin,variant,length,pace,state`);
+          console.log(JSON.stringify({event:"online-minute",...delivery.takeMetrics(),formats:counts.rows}));
+        } catch { console.error("[online] metrics unavailable"); }
+        finally { measuring = false; }
+      },60000).unref();
+    }
+    await tables.heartbeat();
+    let lastHeartbeat=Date.now();
+    let ticking = false;
+    setInterval(async () => {
+      if (ticking) return;
+      ticking = true;
+      try {
+        if (Date.now()-lastHeartbeat>=3000) { await tables.heartbeat(); await tables.matchWaiting(); lastHeartbeat=Date.now(); }
+        await tables.tick();
+      }
+      catch { console.error("[online] match timer transaction failed"); }
+      finally { ticking = false; }
+    }, 500).unref();
   } else {
     console.warn(
       "[server] DATABASE_URL is not set — using the in-memory store; " +
@@ -49,7 +89,7 @@ async function main(): Promise<void> {
     );
   }
 
-  const server = createServer(createApp({ store, google, config }));
+  const server = createServer(createApp({ store, google, config, online }));
   server.listen(config.port, () => {
     console.log(`[server] listening on port ${config.port}`);
   });

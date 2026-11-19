@@ -162,6 +162,12 @@ export type CallAction =
   | { readonly type: "daiminkan" }
   | { readonly type: "chi"; readonly tileIds: readonly [number, number] };
 
+export type DecisionRequest =
+  | { kind: "turn"; view: PlayerView; context: TurnContext }
+  | { kind: "call"; view: PlayerView; context: CallContext };
+
+type Decisions<T> = Generator<DecisionRequest, T, TurnAction | CallAction>;
+
 export interface Policy {
   turn(view: PlayerView, ctx: TurnContext): TurnAction;
   call(view: PlayerView, ctx: CallContext): CallAction;
@@ -307,13 +313,26 @@ interface PlayerState {
   waits: TileType[];
 }
 
+/** Durable state immediately before dealing a hand. Tile-level state is
+ * reconstructed by replaying the accepted decisions within that hand. */
+export interface HandBoundary {
+  serial: number;
+  scores: number[];
+  dealer: number;
+  roundWind: number;
+  kyoku: number;
+  repeats: number;
+  sticks: number;
+}
+
 export interface GameOptions {
   /** Explicit supported house-rule profile (default OpenMahjong riichi v1). */
   readonly ruleset?: RulesetReference;
   readonly seed: number | string;
   readonly length?: GameLength;
   /** One policy for all seats, or one per seat. */
-  readonly policies: Policy | readonly Policy[];
+  readonly policies?: Policy | readonly Policy[];
+  readonly wallFactory?: (serial: number) => Wall;
   /** Test hook: explicit walls, one per hand, consumed in order before
    *  falling back to seeded walls. */
   readonly walls?: readonly Wall[];
@@ -339,6 +358,7 @@ export class Game {
   private seq = 0;
 
   private readonly policies: Policy[];
+  private readonly wallFactory: GameOptions["wallFactory"];
   private readonly length: GameLength;
   private readonly seed: number | string;
   private readonly wallQueue: Wall[];
@@ -371,6 +391,7 @@ export class Game {
   constructor(options: GameOptions) {
     resolveRuleset(options.ruleset);
     this.seed = options.seed;
+    this.wallFactory = options.wallFactory;
     this.length = options.length ?? "south";
     if (!["east", "south"].includes(this.length)) throw new Error("length must be east or south");
     this.wallQueue = (options.walls ?? []).map((wall) => {
@@ -389,8 +410,8 @@ export class Game {
       throw new Error("initialScores must have 4 finite integer entries");
     }
     const p = options.policies;
-    this.policies = Array.isArray(p) ? [...p] : [p, p, p, p];
-    if (this.policies.length !== 4) throw new Error("policies must be one policy or 4");
+    this.policies = !p ? [] : Array.isArray(p) ? [...p] : [p, p, p, p];
+    if (p && this.policies.length !== 4) throw new Error("policies must be one policy or 4");
   }
 
   // -- events ---------------------------------------------------------------
@@ -507,10 +528,36 @@ export class Game {
 
   // -- top level ----------------------------------------------------------------
   run(): GameResult {
+    if (this.policies.length !== 4) throw new Error("Four seat policies required");
+    const game = this.play();
+    let next = game.next();
+    while (!next.done) {
+      const req = next.value;
+      const policy = this.policies[req.view.seat]!;
+      next = game.next(req.kind === "turn" ? policy.turn(req.view, req.context) : policy.call(req.view, req.context));
+    }
+    return next.value;
+  }
+
+  handBoundary(): HandBoundary {
+    return {serial:this.handSerial,scores:[...this.scores],dealer:this.dealer,
+      roundWind:this.roundWind,kyoku:this.kyoku,repeats:this.honba,sticks:this.sticks};
+  }
+
+  *play(boundary?: HandBoundary): Decisions<GameResult> {
+    if (boundary) {
+      this.handSerial=boundary.serial;
+      this.scores=[...boundary.scores];
+      this.dealer=boundary.dealer;
+      this.roundIndex=boundary.roundWind-27;
+      this.kyoku=boundary.kyoku;
+      this.honba=boundary.repeats;
+      this.sticks=boundary.sticks;
+    }
     this.emit("game-start", { length: this.length, seed: String(this.seed), ruleset: { id: DEFAULT_RULESET.id, version: DEFAULT_RULESET.version } });
-    let handsPlayed = 0;
+    let handsPlayed = this.handSerial;
     while (!this.gameOver) {
-      this.playHand();
+      yield* this.playHand();
       handsPlayed++;
     }
     if (this.sticks > 0) {
@@ -537,7 +584,10 @@ export class Game {
   }
 
   private setupHand(): void {
-    this.wall = this.wallQueue.shift() ?? createWall(`${String(this.seed)}:hand:${this.handSerial}`);
+    if (this.wallFactory) {
+      this.wall = this.wallFactory(this.handSerial);
+      validateWall(this.wall);
+    } else this.wall = this.wallQueue.shift() ?? createWall(`${String(this.seed)}:hand:${this.handSerial}`);
     this.handSerial++;
     this.livePtr = 0;
     this.rinshanUsed = 0;
@@ -597,7 +647,7 @@ export class Game {
   }
 
   // -- hand flow ---------------------------------------------------------------
-  private playHand(): void {
+  private *playHand(): Decisions<void> {
     this.setupHand();
     let actor: Seat = this.dealer;
     let needsDraw = true;
@@ -624,7 +674,7 @@ export class Game {
       let declareRiichi = false;
       decision: for (;;) {
         const ctx = this.turnContext(player, drawnTile, rinshanDraw);
-        const action = this.policies[actor]!.turn(this.viewFor(actor), copyTurnContext(ctx));
+        const action = (yield { kind: "turn", view: this.viewFor(actor), context: copyTurnContext(ctx) }) as TurnAction;
         switch (action.type) {
           case "tsumo": {
             if (!ctx.canTsumo) throw new Error(`Seat ${actor}: tsumo declared but not legal`);
@@ -646,7 +696,7 @@ export class Game {
             if (action.type === "shouminkan") {
               // Chankan window: other players may rob the added tile.
               const addedTile = player.tiles.find((t) => t.type === action.tileType);
-              const robber = this.chankanWindow(player, action.tileType);
+              const robber = yield* this.chankanWindow(player, action.tileType);
               if (robber) {
                 this.resolveRon(robber, action.tileType, actor, {
                   chankan: true,
@@ -694,7 +744,7 @@ export class Game {
       });
       this.analyze(player);
 
-      const outcome = this.resolveDiscardWindow(actor, discardTile!, declareRiichi);
+      const outcome = yield* this.resolveDiscardWindow(actor, discardTile!, declareRiichi);
       if (outcome.kind !== "none") {
         if (outcome.kind === "handOver") return;
         // A call happened: the caller acts next.
@@ -835,6 +885,22 @@ export class Game {
 
   /** Score a hypothetical win, or null if it is not a legal win (furiten,
    *  not tenpai, or no yaku). */
+  /** All private choices on this discard, before any answers are committed. */
+  claimContexts(current: CallContext, seat: Seat): CallContext[] {
+    if (seat === current.fromSeat) return [];
+    const player = this.players[seat]!;
+    const { tile, fromSeat } = current;
+    if (current.phase === "chankan") return [this.callContext(player, tile, fromSeat, "chankan")];
+    const contexts = [this.callContext(player, tile, fromSeat, "ron")];
+    const fourthDeclaration = this.riichiCount === 3 && !this.players[fromSeat]!.riichi &&
+      this.players[fromSeat]!.discards.at(-1)?.riichiDeclaration;
+    if (!fourthDeclaration && !this.pendingSuucha && !this.pendingSuukaikan) {
+      contexts.push(this.callContext(player, tile, fromSeat, "call", false, "pon-kan"));
+      contexts.push(this.callContext(player, tile, fromSeat, "call", false, "chi"));
+    }
+    return contexts;
+  }
+
   private tryScore(
     player: PlayerState,
     winTileType: TileType,
@@ -959,13 +1025,13 @@ export class Game {
 
   /** Chankan window after a shouminkan declaration. Returns the robbing
    *  player (head-bump order) or null. The kan has NOT been applied yet. */
-  private chankanWindow(kanPlayer: PlayerState, tileType: TileType): PlayerState | null {
+  private *chankanWindow(kanPlayer: PlayerState, tileType: TileType): Decisions<PlayerState | null> {
     for (let i = 1; i <= 3; i++) {
       const seat = (kanPlayer.seat + i) % 4;
       const player = this.players[seat]!;
       const ctx = this.callContext(player, { id: -1, type: tileType, red: false }, kanPlayer.seat, "chankan");
       if (!ctx.canRon) continue;
-      const action = this.policies[seat]!.call(this.viewFor(seat), copyCallContext(ctx));
+      const action = (yield { kind: "call", view: this.viewFor(seat), context: copyCallContext(ctx) }) as CallAction;
       if (action.type === "ron") return player;
       if (action.type !== "pass") {
         throw new Error(`Seat ${seat}: ${action.type} not allowed in the chankan window`);
@@ -978,11 +1044,11 @@ export class Game {
   }
 
   // -- the discard window ---------------------------------------------------------
-  private resolveDiscardWindow(
+  private *resolveDiscardWindow(
     discarder: Seat,
     tile: Tile,
     declareRiichi = false,
-  ): { kind: "none" } | { kind: "handOver" } | { kind: "call"; seat: Seat; drawnTile: Tile | null } {
+  ): Decisions<{ kind: "none" } | { kind: "handOver" } | { kind: "call"; seat: Seat; drawnTile: Tile | null }> {
     // Ron pass — turn order from the discarder; first declaration takes the
     // head bump. A pass on a legal ron sets (riichi-)furiten.
     for (let i = 1; i <= 3; i++) {
@@ -998,7 +1064,7 @@ export class Game {
         }
         continue;
       }
-      const action = this.policies[seat]!.call(this.viewFor(seat), copyCallContext(ctx));
+      const action = (yield { kind: "call", view: this.viewFor(seat), context: copyCallContext(ctx) }) as CallAction;
       if (action.type === "ron") {
         this.resolveRon(player, tile.type, discarder, {
           houtei: this.liveRemaining() === 0,
@@ -1045,7 +1111,7 @@ export class Game {
       const player = this.players[seat]!;
       const ctx = this.callContext(player, tile, discarder, "call", false, "pon-kan");
       if (!ctx.canPon && !ctx.canKan) continue;
-      const action = this.policies[seat]!.call(this.viewFor(seat), copyCallContext(ctx));
+      const action = (yield { kind: "call", view: this.viewFor(seat), context: copyCallContext(ctx) }) as CallAction;
       if (action.type === "pon") {
         if (!ctx.canPon) throw new Error(`Seat ${seat}: pon not legal`);
         this.formCallMeld(player, discarder, tile, "pon");
@@ -1070,7 +1136,7 @@ export class Game {
       const player = this.players[seat]!;
       const ctx = this.callContext(player, tile, discarder, "call", false, "chi");
       if (ctx.chiOptions.length > 0) {
-        const action = this.policies[seat]!.call(this.viewFor(seat), copyCallContext(ctx));
+        const action = (yield { kind: "call", view: this.viewFor(seat), context: copyCallContext(ctx) }) as CallAction;
         if (action.type === "chi") {
           const wanted = [...action.tileIds].sort().join(",");
           const ok = ctx.chiOptions.some((o) => [...o].sort().join(",") === wanted);

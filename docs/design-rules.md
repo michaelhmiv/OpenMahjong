@@ -602,3 +602,65 @@ not extend the §2 quarantine inside the app. The master is
 the glyph as an embedded path (no font dependency). Exploration record:
 ~/workspace/mahjong-prep/renderings/app-icon-v1/ (concepts 01–13, QC rounds
 1–6).
+
+## 20. Multiplayer (Play-tab Online lobby, table furniture, paces)
+
+Approved 2026-11-18 (renderings `multiplayer-ui-v1`, QC-passed;
+owner picked Option B on 2026-11-18 and ruled the revisions and the
+clock presets the same evening). The multiplayer front end is built
+entirely from the shipped surfaces; PR #87's separate online page
+structure and its light shell are retired.
+
+- **The lobby is the Play tab.** A Solo/Online segment on the Play
+  tab swaps the body: the Online body is one scrolling surface —
+  the Play picker grammar (Rules / Length / Pace segments), the
+  queue actions, the offer-my-seats switch, public Friendly seats
+  as rows, My games (your-move first; All / Your move / Waiting
+  filter; correspondence games are rows here, there is no separate
+  correspondence surface), and the identity row (guests carry the
+  recovery-code replacement there). There is no separate Online
+  screen and no standalone lobby page.
+- **Queue actions.** "Find Friendly game" and the Ranked entry
+  ("Find Ranked game", or "Sign in for Ranked" for guests) sit side
+  by side at equal size — equal width AND equal height (48px,
+  set explicitly on both: the medium layer's 40px ghost height must
+  never shrink the Ranked half of the duo), squared-off at 6px.
+  "Create custom room" is subordinate on every dimension: centred
+  below the duo, 44px tall, 13.5px type, a friends/person icon, and
+  a width capped below one duo button's width (150px against the
+  duo's 162px in the 334px lobby column).
+- **States fold into sheets.** Guest entry and the recovery code,
+  join-by-invite-link (the room's facts as label/value rows), the
+  waiting room (host, guest, Friendly queue and Ranked queue are
+  one sheet in four states; seats are medium tile objects per §15),
+  and the Friendly room offer (a card) all live over the lobby.
+  No state gets its own page.
+- **Pace presets (ruled).** Live is 5+20 — 5 seconds per move plus
+  a 20-second reserve that refills each hand; Ranked runs at the
+  Live pace only and launches enabled (no gate). The casual Relaxed
+  sub-format doubles both numbers (10+40). There is no Unlimited
+  live pace. Correspondence is untimed. The claim window is a flat
+  5 seconds at every timed pace and never draws on the reserve.
+- **The online table is the solo table.** The shipped four-sided
+  table DOM and geometry, unchanged; online states integrate into
+  its furniture only: the clock is a single named row inside the
+  center panel under the dora row (the player to move + remaining
+  time in tabular figures; "Your move" / "Your claim" for the
+  viewer; correspondence reads "Correspondence · No time limit");
+  a riichi player's chip carries the riichi point stick itself
+  instead of the word; a bot-covered opponent's chip gains "· Bot"
+  (the full wording lives in that seat's Focus Frame); your own
+  cover is a "Reconnecting…" strip under the header plus a cover
+  bar where the prompt row sits ("A bot is playing your seat" +
+  "Reclaim my seat", your hand visible and dimmed); correspondence
+  proposes ending by agreement from the hand control row. No
+  stacked seat list, no second table.
+- **Results.** The solo results grammar (standings table) plus,
+  for rated games, a rating block (before → after per player); a
+  rating voided by the server shows the unrated line with the
+  server-supplied reason instead. Friendly results offer a rematch.
+  Analyze is the existing Board review, unchanged.
+- **Copy.** Factual only (§7 applies in full): no copy states the
+  ranked abandonment settlement (unruled) and nothing says Ranked
+  is closed or opening later. "Bot" never "AI".
+
