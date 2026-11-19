@@ -447,7 +447,15 @@ export async function onlineApp(root: HTMLElement) {
       sheet.remove();
     };
     scrim.onclick = () => close();
-    screen.append(scrim, sheet);
+    // An inert lobby screen (signed-out state) is aria-hidden, so a
+    // sheet appended inside it leaves the accessibility tree and can
+    // never be reached — mount beside it instead; .sheet/.mp-scrim
+    // are absolutely positioned against the same .screens box.
+    const host =
+      screen.getAttribute("aria-hidden") === "true" && screen.parentElement
+        ? screen.parentElement
+        : screen;
+    host.append(scrim, sheet);
     return close;
   }
 
