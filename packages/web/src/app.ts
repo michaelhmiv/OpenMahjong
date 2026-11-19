@@ -4463,13 +4463,16 @@ export class App {
     );
     for (const b of view.buttons) {
       const btn = h("button", { class: `pillbtn ${b.cls}` });
-      btn.append(h("span", {}, b.label));
+      // Shared module-scope buttons (CONTINUE/BACK) carry their en.json
+      // key; render-time buttons carry the label directly.
+      const label = b.key ? t(b.key) : b.label;
+      btn.append(h("span", {}, label));
       if (b.faces) {
         btn.classList.add("callopt");
         btn.append(chiFacesEl(b.faces.map((f) => ({ tile: tileById(f.id), ...(f.side ? { side: true as const } : {}) }))));
         btn.setAttribute(
           "aria-label",
-          tx("ui.app.v-0-1-4", `${b.label} — ${b.faces.map((f) => tileLabel(tileById(f.id))).join(", ")}`, b.label, b.faces.map((f) => tileLabel(tileById(f.id))).join(", ")),
+          tx("ui.app.v-0-1-4", `${label} — ${b.faces.map((f) => tileLabel(tileById(f.id))).join(", ")}`, label, b.faces.map((f) => tileLabel(tileById(f.id))).join(", ")),
         );
       }
       btn.addEventListener("click", () => this.lessonAct({ kind: "button", id: b.id }));
