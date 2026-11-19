@@ -35,6 +35,13 @@ jobs:
       # skip the test suite, and it stays visible in the advisory
       # report until upstream ships a fix.
       - run: npm run check:security
+      # i18n gates (brief-i18n-v1 Phase 1): the English key file must be
+      # exactly what the extractor produces from current sources, and
+      # every shipped locale must be 100% approved on new/changed
+      # strings. Both run after the build so a stale key file or a
+      # failing gate blocks the PR like any other test failure.
+      - run: node scripts/extract-i18n.mjs --check
+      - run: node scripts/i18n-coverage.mjs --gate
       # Same suite as `npm test`, with worker parallelism capped: the
       # suite contains several minute-long game-simulation files, and
       # with a worker per core the vitest progress RPC starves past its

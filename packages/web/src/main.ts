@@ -1,4 +1,5 @@
 import { App } from "./app.js";
+import { initI18n } from "./i18n/index.js";
 import { initAnalytics } from "./analytics.js";
 import "./styles.css";
 import "./learning.css";
@@ -13,6 +14,10 @@ import "./compact.css";
 
 const root = document.getElementById("app");
 if (!root) throw new Error("Missing #app root element");
+// Phase 1 i18n: resolve the locale (remembered choice, else browser
+// detection among shipped locales — English only for now) before the
+// app renders, so every t() call below sees the active locale.
+initI18n();
 new App(root);
 
 // Google Analytics ships dark: with ANALYTICS_CONFIG empty this is
