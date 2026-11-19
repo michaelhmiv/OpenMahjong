@@ -254,6 +254,33 @@ describe("approval gate (no self-approval)", () => {
     expect(failures.length).toBeGreaterThan(0);
   });
 
+  it("R5: a deleted entry whose English key is also gone passes (source removal)", () => {
+    const { failures } = analyzeApprovalDiff({
+      baseFiles: { ja: { keys: { "a.gone": entry("訳", "draft") } } },
+      headFiles: { ja: { keys: {} } },
+      enKeys, glossary,
+    });
+    expect(failures).toEqual([]);
+  });
+
+  it("source locale (en): value changed + approved is out of R1 scope", () => {
+    const { failures } = analyzeApprovalDiff({
+      baseFiles: { en: { keys: { "a.one": entry("Old wording.", "approved") } } },
+      headFiles: { en: { keys: { "a.one": entry("New wording.", "approved") } } },
+      enKeys, glossary,
+    });
+    expect(failures).toEqual([]);
+  });
+
+  it("source locale (en): a deleted entry passes (source removal)", () => {
+    const { failures } = analyzeApprovalDiff({
+      baseFiles: { en: { keys: { "a.one": entry("Wording.", "approved") } } },
+      headFiles: { en: { keys: {} } },
+      enKeys, glossary,
+    });
+    expect(failures).toEqual([]);
+  });
+
   it("R4: a changed value that drops the locked form fails", () => {
     const failures = checkLockedForms(
       [{ locale: "ja", key: "a.one", enValue: "Declare Pon to open your hand.", newValue: "開いた手札を宣言する。" }],

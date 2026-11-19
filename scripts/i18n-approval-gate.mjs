@@ -24,6 +24,23 @@
  *       "pung" exception: keys whose English source contains "pung" skip
  *       the Pon-form requirement until the pung-vs-Pon ruling lands
  *       (community-review-design.md §1.4).
+ *   R5  a translation entry deleted while its English key still exists
+ *       at head fails: a locale must not silently drop a live string
+ *       (a missing entry counts against the locale in the dashboard).
+ *       An entry deleted together with its English key is a source
+ *       removal and passes — the string left the inventory, and the
+ *       build job's extraction check guarantees en.json matches the
+ *       source, so a still-referenced string cannot leave this way.
+ *
+ * Scope: R1–R3 and R5 govern the translation locales. The source locale
+ * (en) is out of scope for them: its entries are `approved` by
+ * construction (en IS the source), and English wording changes are
+ * ordinary source changes policed by the extraction check and by the
+ * release gate's staleness machinery, not by self-approval rules. (This
+ * scope was made explicit when PR #93's rewire re-keyed the MCR guide
+ * and de-inventoried extractor artifacts — CSS class names swept in as
+ * strings — and the unscoped deletion guard flagged all 198 source
+ * removals as translation drops.)
  *
  * The script reads only the diff and local files; it makes no network
  * calls and sends no data anywhere. Git authorship is a tripwire, not a
@@ -48,6 +65,11 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..");
 const I18N_DIR = join(ROOT, "packages", "web", "src", "i18n");
 const LOCALES_DIR = join(I18N_DIR, "locales");
+
+/** The source locale (mirrors SOURCE_LOCALE in
+ *  packages/web/src/i18n/index.ts). Its entries are the source of truth,
+ *  so the review-status rules below do not apply to it. */
+const SOURCE_LOCALE = "en";
 
 /** Locked terms whose English form is distinctive enough to check by
  *  word match. The four bare wind names are excluded: "East" / "South" /
@@ -133,15 +155,22 @@ export function analyzeApprovalDiff({
     if (!base) continue; // new locale file: every key is new, R1/R2 need a base to compare; a brand-new locale ships as draft and is gated by coverage, not by this script.
     const baseKeys = base.keys ?? {};
     const headKeys = head.keys ?? {};
+    const isSource = locale === SOURCE_LOCALE;
     const keyIds = new Set([...Object.keys(baseKeys), ...Object.keys(headKeys)]);
     for (const key of [...keyIds].sort()) {
       const b = baseKeys[key];
       const h = headKeys[key];
       if (!h) {
-        failures.push(`${locale} ${key}: entry deleted in this PR — restore it (a missing entry counts against the locale in the dashboard; delete the English key instead if the string is gone).`);
+        // R5: a translation entry may only disappear together with its
+        // English key (a source removal). The source locale's own
+        // deletions are source removals by definition.
+        if (!isSource && key in enKeys) {
+          failures.push(`${locale} ${key}: entry deleted in this PR while its English key still exists — restore it (a missing entry counts against the locale in the dashboard; if the string is gone, remove the English key instead so the removal is a source removal).`);
+        }
         continue;
       }
       if (!b) continue; // brand-new key in this locale: no base to compare; coverage + placeholder gates cover it.
+      if (isSource) continue; // R1–R3 govern translations, not the source locale (see Scope in the header).
       const valueChanged = h.value !== b.value;
       const statusChanged = h.status !== b.status;
       if (valueChanged) {
