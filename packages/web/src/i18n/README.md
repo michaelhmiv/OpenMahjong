@@ -76,7 +76,9 @@ loop, in order, in the build job:
    community-reviewed on new/changed strings (re-baselined at the
    rewire release; see below).
 
-Render files (the 20 scanned by the wiring check) resolve strings in
+Render files (the 21 scanned by the wiring check — online.ts joined
+with the PR2 online-i18n wiring, audit F24: the whole Online surface
+now resolves through tx() under the `online.*` namespace, 154 keys) resolve strings in
 two ways. Direct literals go through `tx("key", "English source")` —
 the extractor records the fallback as the key's English source. Data
 files are never touched: lesson data, curriculum, the MCR guide, and

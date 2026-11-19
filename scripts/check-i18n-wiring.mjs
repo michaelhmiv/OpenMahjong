@@ -77,6 +77,7 @@ const RENDER_FILES = [
   "practice-ui.ts",
   "moment-text.ts",
   "hand-groups.ts",
+  "online.ts",
 ];
 
 function literalValue(node) {

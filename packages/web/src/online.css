@@ -43,15 +43,16 @@
 .mp-duo { display: flex; gap: 10px; }
 .mp-actions .mp-duo .pillbtn { flex: 1 1 0; width: auto; min-width: 0; height: 48px; border-radius: 6px; padding: 0 10px; font-size: 14px; white-space: nowrap; }
 .mp-actions .mp-duo .pillbtn.ghost { height: 48px; }
-.mp-actions .pillbtn.mp-create { width: auto; max-width: 150px; align-self: center; height: 44px; border-radius: 6px; padding: 0 18px; font-size: 13.5px; gap: 8px; }
-.mp-create svg { width: 18px; height: 18px; flex: 0 0 auto; }
+.mp-actions .pillbtn.mp-create { width: auto; max-width: 150px; align-self: center; height: 44px; border-radius: 6px; padding: 0 6px; font-size: 13.5px; gap: 6px; white-space: nowrap; }
+.mp-create svg { width: 17px; height: 17px; flex: 0 0 auto; }
+.mp-create span { white-space: nowrap; }
 .mp-note { font-size: 12.5px; color: var(--dim); line-height: 1.45; margin-top: 10px; }
 .mp-toggle { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 0 2px; }
 .mp-toggle .lab { font-size: 14px; font-weight: 600; line-height: 1.35; }
 /* My games / public seats rows ride .hrow/.iprow; the your-move pill
    and dot are the shipped .ippill/.ipdot. */
 .mp-filter { display: flex; gap: 18px; padding: 2px 0 4px; }
-.mp-filter button { background: none; border: none; color: var(--dim); font-size: 13.5px; font-weight: 600; min-height: 44px; padding: 0 2px; font-family: inherit; cursor: pointer; }
+.mp-filter button { background: none; border: none; color: var(--dim); font-size: 13.5px; font-weight: 600; min-height: 44px; min-width: 48px; padding: 0 2px; font-family: inherit; cursor: pointer; text-align: center; }
 .mp-filter button.on { color: var(--ink); box-shadow: inset 0 -2px 0 var(--state); }
 .mp-identity { display: flex; align-items: center; gap: 12px; padding: 14px 0 0; border-top: 1px solid var(--line); margin-top: 16px; }
 .mp-identity .who { flex: 1; min-width: 0; }
@@ -67,7 +68,7 @@
 .mp-facts .row .k { color: var(--dim); }
 .mp-facts .row .v { font-weight: 600; }
 /* Waiting seats: medium tile objects (design rules section 15). */
-.mp-seat { display: flex; align-items: center; gap: 12px; background: var(--tint); color: var(--on-tint); border-radius: 6px; box-shadow: var(--tint-lit), var(--tint-shadow); padding: 9px 12px; margin-top: 8px; }
+.mp-seat { display: flex; align-items: center; gap: 12px; background: var(--tint); color: var(--on-tint); border-radius: 6px; box-shadow: var(--tint-lit), var(--tint-shadow); padding: 7px 12px; margin-top: 8px; }
 .mp-seat .wch { width: 34px; height: 46px; flex: 0 0 34px; background: var(--face); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #22252b; box-shadow: 0 1px 2px rgba(0,0,0,0.35); }
 .mp-seat .wch.dealer { box-shadow: inset 0 0 0 2px var(--chun), 0 1px 2px rgba(0,0,0,0.35); }
 .mp-seat .wch.dealer .kj { color: var(--chun); }
@@ -76,19 +77,24 @@
 .mp-seat .who .s { font-size: 12px; color: var(--tint-sub); margin-top: 1px; }
 .mp-seat .st { font-size: 13px; font-weight: 700; }
 .mp-seat .st.wait { color: var(--tint-sub); font-weight: 600; }
-.mp-seat .mini { height: 36px; border: none; border-radius: 6px; background: var(--panel); color: var(--ink); font-size: 13px; font-weight: 600; padding: 0 12px; position: relative; font-family: inherit; cursor: pointer; }
-.mp-seat .mini::after { content: ""; position: absolute; inset: -6px 0; }
+.mp-seat .mini { height: 44px; border: none; border-radius: 6px; background: var(--panel); color: var(--ink); font-size: 13px; font-weight: 600; padding: 0 12px; position: relative; font-family: inherit; cursor: pointer; }
 .mp-seat .pillbtn.mp-ready { height: 44px; padding: 0 16px; flex: 0 0 auto; }
 .mp-invite { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
-.mp-invite .lnk { flex: 1; min-width: 0; font-size: 12.5px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: none; border: none; font-family: inherit; padding: 0; }
-.mp-invite .mini { height: 36px; border: none; border-radius: 6px; background: var(--bg); color: var(--ink); font-size: 13px; font-weight: 600; padding: 0 12px; font-family: inherit; cursor: pointer; }
+.mp-invite .lnk { flex: 1; min-width: 0; min-height: 44px; font-size: 12.5px; color: var(--dim); white-space: normal; overflow-wrap: anywhere; line-height: 1.4; background: none; border: none; font-family: inherit; padding: 0; }
+.mp-invite .mini { height: 44px; border: none; border-radius: 6px; background: var(--bg); color: var(--ink); font-size: 13px; font-weight: 600; padding: 0 12px; font-family: inherit; cursor: pointer; flex: 0 0 auto; }
 .mp-sheet-actions { display: flex; gap: 10px; margin-top: 16px; }
-.mp-sheet-actions .pillbtn { flex: 1 1 0; }
+.mp-sheet-actions .pillbtn { flex: 1 1 0; height: 48px; }
+.mp-sheet-actions .pillbtn.ghost { height: 48px; }
 /* Table furniture additions. */
 .mp-clockrow { display: flex; align-items: baseline; gap: 7px; margin-top: 5px; }
 .mp-clockrow .who { font-size: 12px; color: var(--dim); }
 .mp-clockrow .who.you { color: var(--ink); font-weight: 700; }
 .mp-clockrow .t { font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+/* C20: the correspondence row is one phrase ("Correspondence · No
+   time limit", design rules section 20) on one line — never a narrow
+   two-line column stretching the centre panel. */
+.mp-clockrow.corr { justify-content: center; }
+.mp-clockrow.corr .who { font-size: 12.5px; white-space: nowrap; }
 .mp-netstrip { background: var(--panel-hi); color: var(--ink); font-size: 12.5px; font-weight: 600; text-align: center; padding: 6px 10px; border-radius: 10px; margin: 2px 2px 0; }
 .mp-lastline { font-size: 12.5px; color: var(--dim); text-align: center; padding: 4px 10px 0; }
 .mp-coverbar { display: flex; align-items: center; gap: 12px; background: var(--panel-hi); border-radius: 14px; padding: 10px 12px 10px 14px; margin: 0 2px 10px; }
@@ -97,8 +103,23 @@
 .mp-coverbar .pillbtn { height: 44px; padding: 0 16px; flex: 0 0 auto; }
 .chip .bot { color: var(--ink); font-weight: 700; }
 /* Online chips add the display name after the wind kanji; names
-   truncate at chip width instead of colliding with the score. */
-.chip .nm { display: inline-block; max-width: 86px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
+   truncate at chip width instead of colliding with the score.
+   B6 fix: the band row is a space-between flex whose centre chip is
+   absolutely centred — with realistic (up to 32-char) names the side
+   chips grew past the screen edges and the centre chip overlapped
+   them. The side chips now share the row as flex items that can
+   shrink (min-width: 0), the centre chip is capped to the middle
+   third, and the name ellipsises INSIDE its chip as a last resort. */
+.bandtop .chip { min-width: 0; display: flex; align-items: center; gap: 4px; }
+.bandtop .chip:first-child { flex: 0 1 auto; margin-right: auto; }
+.bandtop .chip:last-child { flex: 0 1 auto; margin-left: auto; }
+/* The shared sheet centres the middle chip absolutely (.chip.west);
+   in the online band that is what overlapped its neighbours — here
+   it sits in the flex row like the others and shrinks with them. */
+.bandtop .chip.west { position: static; transform: none; flex: 0 1 auto; }
+.chip .nm { display: inline-block; min-width: 0; max-width: 86px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
+.bandtop .chip .nm { flex: 0 1 auto; }
+.bandtop .chip b { flex: 0 0 auto; }
 /* A riichi player's chip carries the point stick itself (the shipped
    .stick object at chip scale) instead of the word, so wind + name +
    state + score fit the band row. */
@@ -129,3 +150,25 @@
 .mp-review { flex: 1; overflow-y: auto; }
 .online-tile { display: inline-block; vertical-align: middle; width: 1.3rem; }
 .online-tile svg { display: block; width: 100%; }
+/* F22 (online part): the online table's utility controls reach the
+   44px floor as real height, not just the shared invisible expansion
+   (the solo table keeps its shipped 32px visual — separate slice). */
+.handctl { flex-wrap: wrap; row-gap: 2px; }
+.handctl button { min-height: 44px; white-space: nowrap; }
+/* F17: the Friendly offer card's countdown — the offer lapses 45s
+   after the server issues it; the remaining time is stated on the
+   card in tabular figures. */
+.mp-offer-clock { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink); margin-top: 8px; }
+/* N11: sheet text links (Recover a guest seat) carry a real target:
+   the shared .linkbtn already sets min-height 44px, but the guest
+   sheet overrode it inline; the class rule here restores the floor
+   for links inside online sheets. */
+.sheet .linkbtn { min-height: 44px; display: inline-flex; align-items: center; }
+/* Lobby row + sheet helpers (moved out of inline style strings). */
+.mp-grow { flex: 1; min-width: 0; }
+.mp-rowtitle { font-size: 15px; font-weight: 600; }
+.mp-rowsub { font-size: 12.5px; color: var(--dim); margin-top: 2px; }
+.mp-note-lg { font-size: 13.5px; margin-top: 10px; }
+.mp-joinp { font-size: 15px; margin-top: 10px; }
+.mp-readout { font-size: 15px; color: var(--ink); font-weight: 600; }
+.mp-backdrop { position: absolute; inset: 0; overflow: hidden; }

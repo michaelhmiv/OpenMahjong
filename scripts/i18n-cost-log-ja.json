@@ -1,17 +1,22 @@
 {
   "model": "google/gemini-2.5-flash",
   "locale": "ja",
-  "generatedAt": "2026-11-19T16:09:55.242Z",
-  "keysDraftedTotal": 3808,
-  "keysAttempted": 7,
-  "failures": [],
+  "generatedAt": "2026-11-19T20:13:51.812Z",
+  "keysDraftedTotal": 3961,
+  "keysAttempted": 1,
+  "failures": [
+    {
+      "key": "online.lobby.host-seats-open",
+      "reason": "placeholders differ: en {0,1,2} vs translation {0,1}"
+    }
+  ],
   "glossaryFlags": [],
   "tileRefFlags": [],
   "usage": {
-    "promptTokens": 571,
-    "completionTokens": 144,
-    "costUsd": 0.0005313,
+    "promptTokens": 470,
+    "completionTokens": 30,
+    "costUsd": 0.000216,
     "calls": 1
   },
-  "costUsd": 0.0005313
+  "costUsd": 0.000216
 }

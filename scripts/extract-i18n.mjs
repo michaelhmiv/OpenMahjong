@@ -145,6 +145,7 @@ const FILE_NAMESPACES = {
   "app.ts": "ui.app",
   "records.ts": "ui.stats",
   "hand-groups.ts": "play.groups",
+  "online.ts": "online",
 };
 
 /** Files scanned for UI strings (relative to packages/web/src). */
@@ -171,6 +172,9 @@ const CONTENT_PAGES = [
 const EXCLUDED_VALUES = new Set([
   // Tile/hand notation rendered as data, not prose (kept untranslated by design).
   "123456789m", "123456789p", "123456789s", "1234567z",
+  // online.ts fan-tile inline style (PR2 online i18n): a CSS cssText
+  // template, not prose — code data by construction.
+  "left:{0}px;top:18px;z-index:{1};transform:translateY({2}px) rotate({3}deg)",
 ]);
 
 // ---------------------------------------------------------------------------
