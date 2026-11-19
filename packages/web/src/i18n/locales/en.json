@@ -2,8 +2,8 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T14:42:00.843Z",
-    "keyCount": 3798,
+    "generatedAt": "2026-11-19T14:43:13.890Z",
+    "keyCount": 3802,
     "namespaces": {
       "calc.compact": 14,
       "calc.riichi": 90,
@@ -125,7 +125,7 @@
       "review.your-discard-leaves-0-shanten-and-1-unseen-impro": 1,
       "review.your-hand-at-this-decision": 1,
       "tools.inperson": 130,
-      "ui.app": 357,
+      "ui.app": 361,
       "ui.stats": 11,
       "ui.tiles": 9
     },
@@ -36065,6 +36065,16 @@
       "placeholders": [],
       "status": "approved"
     },
+    "ui.app.about-2": {
+      "value": "About",
+      "hash": "4efca0d10c5feb8e9b35eb1d994f2905bb71714e6a271f511d713b539ea5faa1",
+      "source": {
+        "file": "app.ts",
+        "line": 1665
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "ui.app.account": {
       "value": "ACCOUNT",
       "hash": "2d75b76b2dcf4656014ada57d47e6e3029029a298dab024a74b91858c68e44e2",
@@ -38072,6 +38082,16 @@
       "placeholders": [],
       "status": "approved"
     },
+    "ui.app.privacy": {
+      "value": "Privacy",
+      "hash": "54a57c3147c49f33de5898b87084ad2b14c4ab308f762454bf92aca907478ad5",
+      "source": {
+        "file": "app.ts",
+        "line": 1682
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
     "ui.app.quiet-tile-clicks-only-no-music-no-voices": {
       "value": "Quiet tile clicks only. No music, no voices.",
       "hash": "e18d72f4ec362eaba0c663bc8552a16beab8aa9b8c96e3ab472f43fc2c618da4",
@@ -38174,6 +38194,16 @@
       ],
       "status": "approved",
       "dynamic": true
+    },
+    "ui.app.review": {
+      "value": "Review",
+      "hash": "aff0766a5290e117b8433c351bae7b7b23bed682b2369bd822d88a647cc58512",
+      "source": {
+        "file": "app.ts",
+        "line": 3994
+      },
+      "placeholders": [],
+      "status": "approved"
     },
     "ui.app.review-game": {
       "value": "Review game",
@@ -38291,6 +38321,16 @@
       "source": {
         "file": "app.ts",
         "line": 3448
+      },
+      "placeholders": [],
+      "status": "approved"
+    },
+    "ui.app.rules": {
+      "value": "Rules",
+      "hash": "4228aeb07c410ffc9d15b458bf7c2bf8d9dfa7af632f2c339e69f8cb54654da3",
+      "source": {
+        "file": "app.ts",
+        "line": 1627
       },
       "placeholders": [],
       "status": "approved"

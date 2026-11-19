@@ -1624,7 +1624,7 @@ export class App {
   }
 
   private buildTextScreens(): void {
-    this.textScreen("rules", "Rules", (page) => {
+    this.textScreen("rules", tx("ui.app.rules", "Rules"), (page) => {
       const p = (text: string) => h("p", {}, text);
       const li = (text: string) => h("li", {}, text);
       page.append(
@@ -1662,7 +1662,7 @@ export class App {
       );
     });
 
-    this.textScreen("about", "About", (page) => {
+    this.textScreen("about", tx("ui.app.about-2", "About"), (page) => {
       page.append(
         h("p", {}, tx("ui.app.open-mahjong-is-a-free-open-source-mahjong-platf", "Open Mahjong is a free, open-source mahjong platform. Play Riichi, Hong Kong Old Style, MCR or Taiwanese against CPU opponents, study games, and keep an in-person score ledger.")),
         h("p", {}, tx("ui.app.free-forever-as-a-guest-your-settings-and-game-h", "Free forever. As a guest, your settings and game history live only in this browser. Signed in, they are saved to your account.")),
@@ -1679,7 +1679,7 @@ export class App {
       );
     });
 
-    this.textScreen("privacy", "Privacy", (page) => {
+    this.textScreen("privacy", tx("ui.app.privacy", "Privacy"), (page) => {
       page.append(
         h("p", {}, tx("ui.app.last-updated-november-17-2026", "Last updated: November 17, 2026.")),
         h("h3", {}, tx("ui.app.playing-as-a-guest", "Playing as a guest")),
@@ -1836,7 +1836,7 @@ export class App {
     page.append(langRow);
 
     page.append(h("div", { class: "sec-label" }, tx("ui.app.about", "ABOUT")));
-    for (const [label, screen] of [["Rules", "rules"], ["About", "about"], ["Privacy", "privacy"]] as [string, ScreenName][]) {
+    for (const [label, screen] of [[tx("ui.app.rules", "Rules"), "rules"], [tx("ui.app.about-2", "About"), "about"], [tx("ui.app.privacy", "Privacy"), "privacy"]] as [string, ScreenName][]) {
       const b = h("button", { class: "hrow" });
       b.append(h("span", { class: "ttl2" }, label));
       b.insertAdjacentHTML(
@@ -3991,7 +3991,7 @@ export class App {
     this.reviewUI?.destroy();
     const screen = this.screens.get("review")!;
     if (!this.reviewData || !this.reviewTimeline) {
-      this.textScreen("review", "Review", (page) => page.append(h("p", {}, tx("ui.app.open-a-finished-game-in-games-then-select-a-hand", "Open a finished game in Games, then select a hand to review its board."))));
+      this.textScreen("review", tx("ui.app.review", "Review"), (page) => page.append(h("p", {}, tx("ui.app.open-a-finished-game-in-games-then-select-a-hand", "Open a finished game in Games, then select a hand to review its board."))));
       return;
     }
     this.reviewUI = mountBoardReview(screen, { timeline: this.reviewTimeline, handIndex: this.reviewHandIndex,

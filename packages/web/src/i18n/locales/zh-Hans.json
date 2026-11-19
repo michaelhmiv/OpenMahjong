@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-19T14:39:07.736Z",
-    "keyCount": 3797,
+    "generatedAt": "2026-11-19T14:43:33.016Z",
+    "keyCount": 3801,
     "model": "qwen/qwen-plus",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -39001,6 +39001,46 @@
       "source": {
         "file": "app.ts",
         "line": 1634
+      },
+      "placeholders": []
+    },
+    "ui.app.about-2": {
+      "value": "关于",
+      "hash": "4efca0d10c5feb8e9b35eb1d994f2905bb71714e6a271f511d713b539ea5faa1",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1665
+      },
+      "placeholders": []
+    },
+    "ui.app.privacy": {
+      "value": "隐私政策",
+      "hash": "54a57c3147c49f33de5898b87084ad2b14c4ab308f762454bf92aca907478ad5",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1682
+      },
+      "placeholders": []
+    },
+    "ui.app.review": {
+      "value": "评分",
+      "hash": "aff0766a5290e117b8433c351bae7b7b23bed682b2369bd822d88a647cc58512",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 3994
+      },
+      "placeholders": []
+    },
+    "ui.app.rules": {
+      "value": "规则",
+      "hash": "4228aeb07c410ffc9d15b458bf7c2bf8d9dfa7af632f2c339e69f8cb54654da3",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1627
       },
       "placeholders": []
     }

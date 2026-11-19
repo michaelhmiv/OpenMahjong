@@ -1,24 +1,17 @@
 {
   "model": "google/gemini-2.5-flash",
   "locale": "ko",
-  "generatedAt": "2026-11-19T14:39:43.804Z",
-  "keysDraftedTotal": 3798,
-  "keysAttempted": 17,
+  "generatedAt": "2026-11-19T14:43:39.924Z",
+  "keysDraftedTotal": 3802,
+  "keysAttempted": 5,
   "failures": [],
   "glossaryFlags": [],
-  "tileRefFlags": [
-    {
-      "key": "ui.app.red-fives-aka-dora-are-in-one-each-of-5m-5p-5s-o",
-      "problems": [
-        "tile references differ: en [5m,5p,5s] vs translation []"
-      ]
-    }
-  ],
+  "tileRefFlags": [],
   "usage": {
-    "promptTokens": 1515,
-    "completionTokens": 1267,
-    "costUsd": 0.003622,
+    "promptTokens": 507,
+    "completionTokens": 73,
+    "costUsd": 0.0003346,
     "calls": 1
   },
-  "costUsd": 0.003622
+  "costUsd": 0.0003346
 }

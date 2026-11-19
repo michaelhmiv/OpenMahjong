@@ -66,6 +66,10 @@ spend is **$1.2877** ($1.2847 bulk + $0.0030 top-up).
 | zh-Hans rules-screen top-up (17 keys) | qwen/qwen-plus | 1,417 | 1,048 | $0.0012 | 0 |
 | zh-Hant rules-screen top-up (17 keys) | qwen/qwen-plus | 1,420 | 1,099 | $0.0012 | 0 |
 | ja rules re-roll (2 keys) | google/gemini-2.5-flash | 565 | 141 | $0.0005 | 0 |
+| ja text-screen titles (5 keys) | google/gemini-2.5-flash | 506 | 70 | $0.0003 | 0 |
+| ko text-screen titles (5 keys) | google/gemini-2.5-flash | 507 | 73 | $0.0003 | 0 |
+| zh-Hans text-screen titles (5 keys) | qwen/qwen-plus | 496 | 52 | $0.0002 | 0 |
+| zh-Hant text-screen titles (5 keys) | qwen/qwen-plus | 499 | 55 | $0.0002 | 0 |
 
 Rules-screen top-up notes (render-verification find, same PR): the Rules
 screen's intro + 15 bullets sat behind local `p`/`li` helpers in app.ts

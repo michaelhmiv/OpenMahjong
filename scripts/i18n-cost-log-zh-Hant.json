@@ -1,24 +1,17 @@
 {
   "model": "qwen/qwen-plus",
   "locale": "zh-Hant",
-  "generatedAt": "2026-11-19T14:39:29.616Z",
-  "keysDraftedTotal": 3798,
-  "keysAttempted": 17,
+  "generatedAt": "2026-11-19T14:43:35.941Z",
+  "keysDraftedTotal": 3802,
+  "keysAttempted": 5,
   "failures": [],
-  "glossaryFlags": [
-    {
-      "key": "ui.app.furiten-applies-in-all-three-forms-discard-furit",
-      "problems": [
-        "locked term \"Ron\" rendered without draft form \"榮和\""
-      ]
-    }
-  ],
+  "glossaryFlags": [],
   "tileRefFlags": [],
   "usage": {
-    "promptTokens": 1420,
-    "completionTokens": 1099,
-    "costUsd": 0.00122642,
+    "promptTokens": 499,
+    "completionTokens": 55,
+    "costUsd": 0.00017264000000000003,
     "calls": 1
   },
-  "costUsd": 0.00122642
+  "costUsd": 0.00017264000000000003
 }

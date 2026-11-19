@@ -171,7 +171,7 @@ describe("content pages: /learn/ cannot drift from the lesson data", () => {
 describe("content pages: /riichi/ cannot drift from the app's Rules screen", () => {
   function appRules(): { intro: string; sections: { heading: string; bullets: string[] }[] } {
     const appTs = readFileSync(resolve(process.cwd(), `${WEB}/src/app.ts`), "utf8");
-    const start = appTs.indexOf('this.textScreen("rules", "Rules"');
+    const start = appTs.indexOf('this.textScreen("rules", tx("ui.app.rules", "Rules"');
     expect(start).toBeGreaterThan(-1);
     const rest = appTs.slice(start);
     const end = rest.indexOf("this.textScreen(", 10);
