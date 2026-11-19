@@ -52,7 +52,7 @@ export function mountGameDetail(
     row.append(
       el(
         "span",
-        tx("review.board.v-0-1", `${entry.rank}. ${entry.seat === timeline.data.humanSeat ? tx("review.board.you", "You") : tx("review.board.player-0", `Player ${entry.seat + 1}`, entry.seat + 1)}`, entry.rank, entry.seat === timeline.data.humanSeat ? tx("review.board.you", "You") : tx("review.board.player-0", `Player ${entry.seat + 1}`, entry.seat + 1)),
+        tx("review.board.v-0-1", `${entry.rank}. ${entry.seat === timeline.data.humanSeat ? tx("review.board.you", "You") : WINDS[(entry.seat - timeline.data.humanSeat + 4) % 4]}`, entry.rank, entry.seat === timeline.data.humanSeat ? tx("review.board.you", "You") : WINDS[(entry.seat - timeline.data.humanSeat + 4) % 4]),
       ),
       el("b", tx("review.board.v-0-points", `${entry.score.toLocaleString("en-US")} points`, entry.score.toLocaleString("en-US"))),
       el(

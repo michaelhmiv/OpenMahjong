@@ -55,9 +55,10 @@ Gold may appear ONLY on:
 - the "Start ›" / "Continue ›" card CTAs
 - the signed-in identity avatar fill
 - the table's dealer-wind label ("East · You")
-- a static content page's single app-entry button fill (the Play
-  role extended to document pages; §18 — one per page, label in
-  on-gold `#1c2a20`)
+- a static content page's app-entry button fills (the Play role
+  extended to document pages; §18 — two per page since the
+  full-audit fix round (F14): one in the site header, one in the
+  closing panel, label in on-gold `#1c2a20`)
 
 Gold must NEVER appear on: body text, stats, scores, labels, pills,
 history rows, settings rows, or state styles. State styles — selection
@@ -590,9 +591,11 @@ not govern them), and they follow the shipped `/privacy` pattern:
   lessons or riichi rules change, the pages must change with them
   or the tests fail.
 - **Gold on static pages.** Gold appears only as the wordmark and
-  as the fill of the page's single app-entry button — the §2 Play
-  role extended to a document page's one app-entry action
-  (ratified with this section). Body links are cream with a
+  as the fill of the page's app-entry buttons — the §2 Play role
+  extended to a document page's app-entry actions (ratified with
+  this section; a second, header app-entry was licensed by the
+  full-audit fix round, F14, so a reader can enter the app before
+  the end of a long page). Body links are cream with a
   dim-sage underline decoration, never gold; the current-page nav
   state is a state-green inset underline. State green is never a
   text colour on these pages (it measures 4.39:1 on felt — above

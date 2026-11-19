@@ -317,15 +317,21 @@ describe("content pages: gold discipline (design rules sections 2 and 18)", () =
       const html = pageHtml(route).toLowerCase();
       expect(html.includes("#d9b45c"), `${route} hard-codes gold`).toBe(false);
       expect(html.includes("var(--gold)"), `${route} references gold`).toBe(false);
-      // Exactly one app-entry button per page (the one gold fill).
-      expect(pageHtml(route).split('class="playbtn"').length - 1).toBe(1);
+      // Two app-entry buttons per page (header + closing panel; the
+      // header entry was licensed by the full-audit fix round, F14 —
+      // both are the same .playbtn gold fill, no other gold).
+      expect(pageHtml(route).split('class="playbtn"').length - 1).toBe(2);
     }
   });
 
   it("/privacy links are cream, not gold (the section 18 correction)", () => {
     const privacy = pubFile("privacy/index.html");
     expect(privacy.toLowerCase()).not.toContain("#d9b45c");
-    expect(privacy).toContain("color: #f3efe3");
+    // F13: /privacy rides the shared static system (pages.css carries
+    // the cream-link treatment) with the site header and wordmark.
+    expect(privacy).toContain('<link rel="stylesheet" href="/pages.css">');
+    expect(privacy).toContain('class="wordmark"');
+    expect(privacy).toContain('class="sitenav"');
   });
 
   it("the home shell uses no gold at all", () => {

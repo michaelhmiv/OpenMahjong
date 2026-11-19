@@ -299,11 +299,12 @@ describe("switcher in the app (core 5 ship)", () => {
     const notes = [...root.querySelectorAll("#screen-language .i18n-note")].map(
       (el) => el.textContent,
     );
-    expect(notes).toHaveLength(3);
-    expect(notes[0]).toContain("/ja/");
+    // C7: footnotes condensed to the essential lines — the choice/
+    // memory note and the machine-translation note; the wave-2
+    // roadmap paragraph is gone.
+    expect(notes).toHaveLength(2);
+    expect(notes[0]).toContain("remembered");
     expect(notes[1]).toContain("machine translated");
-    expect(notes[2]).toContain("More languages are coming:");
-    expect(notes[2]).toContain("Vietnamese");
     // Back returns to More; tapping the current locale does too.
     root.querySelector<HTMLButtonElement>("#screen-language .i18n-back")?.click();
     await settle();
@@ -347,7 +348,7 @@ describe("machine-translation marking (ruling Nov 19, 2026)", () => {
     }
   });
 
-  it("marks machine-translated locales now that the core 4 ship: mark + 3 footnotes", async () => {
+  it("marks machine-translated locales now that the core 4 ship: mark + 2 footnotes", async () => {
     bootGuest();
     await settle();
     root.querySelector<HTMLButtonElement>('.tabbtn[data-tab="more"]')?.click();
@@ -365,7 +366,7 @@ describe("machine-translation marking (ruling Nov 19, 2026)", () => {
     );
     expect(
       [...root.querySelectorAll("#screen-language .i18n-note")],
-    ).toHaveLength(3);
+    ).toHaveLength(2);
   });
 });
 

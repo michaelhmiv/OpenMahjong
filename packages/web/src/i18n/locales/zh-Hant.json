@@ -5,7 +5,7 @@
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
     "generatedAt": "2026-11-19T20:12:21.585Z",
-    "keyCount": 3961,
+    "keyCount": 3981,
     "model": "qwen/qwen-plus",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -40693,6 +40693,206 @@
         "line": 517
       },
       "placeholders": []
+    },
+    "pages.calculator.22": {
+      "value": "隱私權政策",
+      "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
+      "status": "draft",
+      "source": {
+        "file": "public/public/calculator/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.hong-kong.48": {
+      "value": "隱私權政策",
+      "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
+      "status": "draft",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.learn.20": {
+      "value": "隱私權政策",
+      "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
+      "status": "draft",
+      "source": {
+        "file": "public/public/learn/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.mcr.48": {
+      "value": "隱私權政策",
+      "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
+      "status": "draft",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.privacy.23": {
+      "value": "我們不會販售個人資料。您的資訊僅由 Google（用於登入與廣告）及 Railway（用於主機託管）處理，目的 solely 為提供本服務。",
+      "hash": "1d4c9e4ce187e42fed80bf7d8429df5e42b97aaf6a652df0d23122bbafd532d0",
+      "status": "draft",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.privacy.24": {
+      "value": "刪除",
+      "hash": "3f1e41fa5f7f38cb32b48960fba429dca64f1e5998c87a763640253667015ec1",
+      "status": "draft",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.privacy.25": {
+      "value": "點選「更多」→「刪除帳號」，將永久刪除您的帳號及其所有關聯資料。訪客資料可透過清除瀏覽器的網站資料予以移除。",
+      "hash": "47c576c1a64623978288a84b35e64b1160a8556504cf182e66cab9ff641a978f",
+      "status": "draft",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.privacy.26": {
+      "value": "兒童",
+      "hash": "3583a358a585b13b6d6228f12d2baf3ef937fcf50bed4a521b70f95a520bc933",
+      "status": "draft",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.privacy.27": {
+      "value": "Open Mahjong 並非針對 13 歲以下兒童設計。",
+      "hash": "205ab312bb5f599c94822999a622b6fe7510805b3e4728cf602e02f97347de80",
+      "status": "draft",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.privacy.28": {
+      "value": "變更",
+      "hash": "bbd4b6a86bc65b6ac8e79e97afc61499158edb40f7bb404c70637b46d80a7ad2",
+      "status": "draft",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.privacy.29": {
+      "value": "若本政策有所變更，新版內容將公布於本頁面，並註明更新日期。",
+      "hash": "f78c35d842f7d14b87cf9287f01df1e742995af5699da42550874f70d89a9cfa",
+      "status": "draft",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.privacy.30": {
+      "value": "聯絡方式",
+      "hash": "2b5c3d26721ae9c350cf3009318b626f0fc8a90b4a2ac0ca8099c05aa849282e",
+      "status": "draft",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.privacy.31": {
+      "value": "玩開放麻將。免費，在瀏覽器中，無需安裝。",
+      "hash": "6bd4faff13dd0a970cb46414b5354058a7129e53bfee7f98142bdaab4b8e9b20",
+      "status": "draft",
+      "placeholders": [],
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      }
+    },
+    "pages.privacy.32": {
+      "value": "玩開放麻將",
+      "hash": "fa8286e160feee9ef094a84167ab4a3e302fa8ac3d7291c4bf33c9db5388e095",
+      "status": "draft",
+      "placeholders": [],
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      }
+    },
+    "pages.privacy.33": {
+      "value": "Open Mahjong 採用 GNU Affero 通用公共授權條款第 3 版（AGPLv3）開放原始碼並免費提供。",
+      "hash": "c013936017c0a266c5b09109fb8ebb1cbe8dfecf1eba697e09207ac5a5f104ca",
+      "status": "draft",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.privacy.34": {
+      "value": "GitHub 原始碼",
+      "hash": "11506c59ef233e41a5eb53323bb917f041858f7844487435a6eba02689fcb5f4",
+      "status": "draft",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.privacy.35": {
+      "value": "隱私權政策",
+      "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
+      "status": "draft",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.riichi.46": {
+      "value": "隱私權政策",
+      "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
+      "status": "draft",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "pages.taiwanese.48": {
+      "value": "隱私權政策",
+      "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
+      "status": "draft",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": []
+    },
+    "ui.stats.v-1-game": {
+      "value": "1局",
+      "hash": "bb59a3ee02fc34404db57f5772f4cae4c2f097da8d40c0bd795c12b86430ff1b",
+      "status": "draft",
+      "placeholders": [],
+      "source": {
+        "file": "records.ts",
+        "line": 278
+      }
     }
   }
 }

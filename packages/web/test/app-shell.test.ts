@@ -272,7 +272,7 @@ describe("app shell: Learn sections", () => {
     await settle();
     // No native disclosure/progress elements anywhere on Learn.
     expect(root.querySelectorAll("#screen-learn details, #screen-learn summary, #screen-learn progress").length).toBe(0);
-    for (const title of ["Hong Kong Old Style", "MCR (Mahjong Competition Rules)", "Taiwanese"]) {
+    for (const title of ["Hong Kong Old Style", "MCR", "Taiwanese"]) {
       const section = sectionByTitle(title);
       expect(section, title).toBeTruthy();
       expect(section.querySelector(".sechead")?.getAttribute("aria-expanded")).toBe("true");
@@ -315,9 +315,9 @@ describe("app shell: Learn sections", () => {
     await settle();
     tab("learn").click();
     await settle();
-    sectionByTitle("MCR (Mahjong Competition Rules)").querySelector<HTMLButtonElement>(".sechead")?.click();
+    sectionByTitle("MCR").querySelector<HTMLButtonElement>(".sechead")?.click();
     await settle();
-    expect(sectionByTitle("MCR (Mahjong Competition Rules)").querySelectorAll(".lrow").length).toBe(0);
+    expect(sectionByTitle("MCR").querySelectorAll(".lrow").length).toBe(0);
     expect(JSON.parse(localStorage.getItem("openmahjong.learn.collapsed.v1") ?? "[]")).toEqual(["mcr"]);
     expect(sectionByTitle("Riichi").querySelectorAll(".lrow").length).toBe(11);
   });
