@@ -24,12 +24,14 @@ an unrecorded token, font, or layout value in code is a defect.
 | Ground glow centre | `#1b3029` | Radial behind the home wordmark zone only; mid stop `#182b23` |
 | Page surround | `#0d1812` | Outside the stage on wide screens |
 | Panel | `#1f352b` | Cards, sheets, center panel; borderless, radius 20px |
-| Segment selected | `#2e4a3a` | Lifted green, cream text |
+| Panel-hi | `#2e4a3a` | Lifted green: primary pill fills and raised panel surfaces — NOT segment selection |
+| Segment selected | `#c2d1be` | The §15 face tint, on-tint ink `#1c2a20` (ruled 2026-11-19: §15 governs selected states; this corrects the earlier naming of panel-hi here — the app already rendered the tint) |
 | Line | `#3a5a47` | Hairlines where unavoidable |
 | Ink | `#f3efe3` | Primary text (warm cream) |
 | Dim | `#a9bda9` | Secondary text (sage-cream) |
 | Gold | `#d9b45c` | See §2 — quarantined |
 | On-gold text | `#1c2a20` | Text on gold fills (e.g. Play label) |
+| Calculator Confirm disabled text | `#4d4630` | SINGLE USE ONLY: disabled text on the gold calculator Confirm in `medium.css` (§16). The shipped `--dim` measured 1.01:1 on gold; this muted dark olive measures 4.76:1 (calc-v7 QC fix). Not a general text colour; no other surface may use it |
 | Decisive | `#d63c2e` | Ron / Riichi / Tsumo, riichi markers, latest-discard ring. Flat 2px ring, never a glow |
 | Tile face | `#f6f1e4` | Unchanged since v5 |
 | Tile back | `#33503f` | Edge `#223528` |
@@ -310,8 +312,8 @@ records the shell the renderings specify.)
 
 - The app is a bottom-nav shell with FOUR tab roots: Play, Learn,
   Games, More. The tab bar is 83px including its border; the active
-  tab is a panel-hi pill with a cream label and a state-green icon.
-  Gold never appears in the tab bar.
+  tab is a face-tint pill (§15, `#c2d1be`) with an on-tint label and
+  a state-green icon. Gold never appears in the tab bar.
 - NAV LAW: the tab bar exists ONLY on the four tab roots. Every
   drilled-in screen — the live game, a lesson, Review, Practice,
   results, Rules, About, Privacy — renders WITHOUT the tab bar and
@@ -323,13 +325,28 @@ records the shell the renderings specify.)
   section 7), the section-4 fan, the motif row in the fresh state,
   the Continue card when a game is in progress, the variant segment
   control, the length segment control, the guided row, Play, the
-  record strip when the account has stats, the tile-back wall, and
-  the AdSense slot at the foot (section 2's geometry unchanged).
+  Solo/Online segment (§20), the in-person calculator entry (§14),
+  the record strip when the account has at least one finished game
+  (at zero games it does not render, exactly as for signed-out
+  visitors; the full record lives on Games), and the AdSense slot
+  at the foot (section 2's geometry unchanged). The tile-back wall
+  that shipped at the Play foot is REMOVED (Play cleanup v1,
+  2026-11-19): the section-4 fan is the screen's one tile moment.
   Sign-in lives on More, never on Play. The variant picker is a
   `.seg` control with content-sized segments and 12px labels — the
   four shipped names (Riichi, Hong Kong Old Style, MCR, Taiwanese)
   do not fit four-across at the segment control's 14px (approved
   rendering play-picker-v1, option B, 2026-11-17).
+- Play stack discipline (Play cleanup v1, approved 2026-11-19):
+  one column, one rhythm. Every block in the Play stack takes the
+  full column width (334px at the 390 stage); no centred pills or
+  content-width strays. Blocks inside a group sit 10px apart and
+  groups are separated by 18px — the groups are the game card (or
+  motif row), then setup (variant, length, guided), then action
+  (Play, Solo/Online, calculator). Segment margins are zeroed
+  inside the stack; all spacing comes from the rhythm. No block
+  flex-shrinks: the spacers alone absorb the slack (audit B1/B2 —
+  the Play button must hold its full 56px in every state).
 - Learn organizes lessons in collapsible per-variant sections
   (today: Riichi), each with its own progress bar (state green,
   section 2). Hong Kong, MCR, and Taiwanese sections slot into the

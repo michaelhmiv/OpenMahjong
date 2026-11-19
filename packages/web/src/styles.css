@@ -118,12 +118,16 @@ header.bar .word { font-size: 12px; letter-spacing: 0.14em; color: var(--dim); f
 }
 .seg button.on { background: var(--panel-hi); color: var(--ink); font-weight: 700; }
 /* Play is the one gold-filled button (design rules section 2);
-   ID+class specificity beats the generic .pillbtn.primary rule. */
+   ID+class specificity beats the generic .pillbtn.primary rule.
+   Play cleanup v1 (2026-11-19): full column width like every other
+   block in the stack, 18px above it (the between-group rhythm),
+   and flex-none — audit B1: as a plain flex item it squashed to
+   21px tall in the game-in-progress state. */
 #screen-home .play {
-  width: 220px; height: 56px; font-size: 17px; border-radius: 28px;
+  width: 100%; height: 56px; font-size: 17px; border-radius: 28px;
   background: var(--gold); color: var(--on-gold);
   font-family: "Fraunces", Georgia, serif; font-weight: 600;
-  margin-top: 14px;
+  margin-top: 18px; flex: 0 0 auto;
 }
 
 /* ------------------------------------------------------------------ */
@@ -150,7 +154,7 @@ header.bar .word { font-size: 12px; letter-spacing: 0.14em; color: var(--dim); f
 .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .recstrip {
   display: flex; gap: 14px; background: var(--panel); border-radius: 999px;
-  padding: 10px 18px; margin-top: 22px; font-size: 13px; color: var(--dim);
+  padding: 10px 18px; margin-top: 10px; font-size: 13px; color: var(--dim);
 }
 .recstrip b { color: var(--ink); font-weight: 700; }
 .recstrip .sep { color: var(--dim); }
@@ -793,24 +797,40 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 .playbody { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 0 28px; overflow: hidden; }
 .playbody .spacer { flex: 1; }
 
+/* Play cleanup v1 (approved 2026-11-19; audit B1/B2/B3, C1/C2):
+   one column, one rhythm. Every block in the solo Play stack takes
+   the full column width (334px at the 390 stage); blocks inside a
+   group sit 10px apart, groups 18px apart (card-or-motif → variant /
+   length / guided → Play / Solo-Online / calculator). The shipped
+   .seg margin (26px above, 14px below) is zeroed inside the stack;
+   all spacing comes from the rhythm. No block may flex-shrink —
+   that is what squashed the Play button (B1) and clipped the
+   wordmark (B2) in the game-in-progress state; the spacers alone
+   absorb the slack. The Online lobby shares .playbody (§20) and
+   keeps its own spacing via online.css, so these rules are scoped
+   to the solo stack with :not(.mp-lobby). */
+.playbody:not(.mp-lobby) > :not(.spacer) { flex: 0 0 auto; }
+.playbody:not(.mp-lobby) .seg { margin: 0; }
+.playbody:not(.mp-lobby) > .seg { width: 100%; margin-top: 10px; }
+.playbody:not(.mp-lobby) > .seg button { flex: 1 1 0; min-width: 0; }
+.playbody .contcard { margin-top: 10px; }
+.playbody .growrow { max-width: none; margin-top: 10px; }
+/* The Solo/Online segment keeps its approved Option B form (§20);
+   its width/margin live here, not in an inline style. */
+.playbody .play-mode-seg { width: 100%; max-width: none; margin-top: 10px; }
+.playbody .table-tools-entry { width: 100%; }
+
 /* The dealt-hand fan: the section-4 winning hand, fanned. */
-.fanwrap { position: relative; width: 390px; margin: 12px -28px 0; height: 88px; flex: 0 0 auto; }
+.fanwrap { position: relative; width: 390px; margin: 10px -28px 0; height: 88px; flex: 0 0 auto; }
 .fanwrap::after { content: ""; position: absolute; left: 24px; right: 24px; bottom: 0; height: 12px; background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0) 70%); }
 .t-fan { width: 33px; height: 46px; position: absolute; transform-origin: 50% 100%; }
 .t-fan .edge { position: absolute; left: 1px; right: 1px; bottom: -3px; height: 6px; background: #d2c8ad; border-radius: 0 0 3px 3px; z-index: -1; }
 
 /* Motif row under the fan: dora indicator + the four winds. */
-.motifrow { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 4px; padding: 0 6px; flex: 0 0 auto; }
+.motifrow { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 6px; padding: 0 6px; flex: 0 0 auto; }
 .motif { display: flex; align-items: center; gap: 8px; }
 .motif .cap { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); }
 .motif .winds { display: flex; gap: 1.5px; }
-
-/* The wall: two stacked rows of tile backs along the bottom. */
-.wall { margin: 0 -28px; padding-top: 14px; flex: 0 0 auto; }
-.wall .wrow { display: flex; justify-content: center; gap: 1.5px; }
-.wall .wrow.r2 { margin-top: -7px; transform: translateX(11px); }
-.wall .wrow.r2 .tile svg { filter: brightness(0.86) drop-shadow(0 1px 1px rgba(0, 0, 0, 0.45)); }
-.wall .tile { width: 22px; height: 31px; }
 
 /* Continue card (extends .infocard). QC: button UA styles drop
    tabular figures, so they are re-asserted here and on history

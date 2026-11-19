@@ -91,6 +91,32 @@ describe("App boot", () => {
     expect(root.querySelector("#screen-more")?.textContent).toContain("Signed in with Google");
   });
 
+  it("hides the record strip for a signed-in account with zero finished games", async () => {
+    // Play cleanup v1 ruling (2026-11-19): the strip renders only
+    // when the account has at least one finished game; at zero it
+    // is absent, exactly as for signed-out visitors.
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (url: unknown) => {
+        const u = String(url);
+        if (u.endsWith("/api/me")) {
+          return jsonResponse({ user: { name: "Michael M" }, csrfToken: "tok" });
+        }
+        if (u.endsWith("/api/stats")) {
+          return jsonResponse({
+            games: 0, wins: 0, placementSum: 0, hands: 0, riichi: 0,
+            dealIns: 0, handsWon: 0, winPoints: 0, since: null,
+          });
+        }
+        if (u.endsWith("/api/games")) return jsonResponse({ games: [] });
+        return jsonResponse({}, false);
+      }),
+    );
+    new App(root);
+    await settle();
+    expect(root.querySelector("#screen-home .recstrip")).toBeNull();
+  });
+
   it("offers the one-time import when the account is empty and local games exist", async () => {
     localStorage.setItem(
       "openmahjong.history.v1",

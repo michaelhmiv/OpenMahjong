@@ -332,6 +332,12 @@
   color: var(--dim);
   margin-bottom: 8px;
 }
+/* Play cleanup v1 (2026-11-19): the setup group (variant, length,
+   guided) starts 18px below the card-or-motif group — the stack's
+   between-group rhythm (see styles.css). */
+.playbody .play-variant-label {
+  margin-top: 18px;
+}
 .play-variant {
   display: block;
   width: 100%;

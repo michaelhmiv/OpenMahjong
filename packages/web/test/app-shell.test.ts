@@ -133,9 +133,9 @@ describe("app shell: Play states", () => {
     expect(root.querySelectorAll("#screen-home .fanwrap .t-fan").length).toBe(14);
     expect(root.querySelector("#screen-home .motifrow")).not.toBeNull();
     expect(root.querySelector("#screen-home .contcard")).toBeNull();
-    expect(root.querySelector("#screen-home .wall .wrow.r1")?.children.length).toBe(16);
-    // QC N3: row 2 drops one back so the brick offset cannot clip.
-    expect(root.querySelector("#screen-home .wall .wrow.r2")?.children.length).toBe(15);
+    // Play cleanup v1 (2026-11-19): the tile-back wall is removed —
+    // the section-4 fan is the screen's one tile moment.
+    expect(root.querySelector("#screen-home .wall")).toBeNull();
     expect(document.body.textContent).not.toContain("Free forever. Open source mahjong.");
   });
 
@@ -218,6 +218,11 @@ describe("app shell: Play variant picker (segment control)", () => {
     expect(modeSeg[0]!.classList.contains("on")).toBe(true);
     expect(modeSeg[0]!.getAttribute("aria-checked")).toBe("true");
     expect(modeSeg[1]!.getAttribute("aria-checked")).toBe("false");
+    // Play cleanup v1: the segment's width/margin live in the CSS
+    // cascade, not in an inline style.
+    expect(root.querySelector("#screen-home .play-mode-seg")?.getAttribute("style")).toBeNull();
+    // And the tile-back wall stays removed in this state too.
+    expect(root.querySelector("#screen-home .wall")).toBeNull();
   });
 
   it("arrow keys move the selection and focus follows", async () => {
