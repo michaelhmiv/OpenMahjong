@@ -64,6 +64,7 @@ function main() {
           if (!entry) { missing++; return "missing"; }
           if (entry.hash !== enEntry.hash) { stale++; return "stale"; }
           if (entry.status === "approved") { approved++; return "approved"; }
+          if (entry.status === "reviewed") { reviewed++; return "reviewed"; }
           if (entry.status === "draft") { draft++; return "draft"; }
           stale++;
           return "stale";
@@ -111,8 +112,12 @@ function main() {
     "forms. Status per string: draft / reviewed / approved.",
     "",
     "**No native reviewers have been sourced yet.** Nothing in this queue",
-    "is approved, and nothing ships until a native speaker per language",
-    "has reviewed and approved 100% of the strings (release gate).",
+    "is approved. The core 5 SHIP as machine translations anyway (owner",
+    "ruling Nov 19, 2026: SHIP NOW, community reviews later) — marked",
+    "\"Machine translated\" in the app — and community review follows:",
+    "a reviewer reads a string in context and marks it `reviewed`, a",
+    "native speaker marks it `approved`. The release gate measures only",
+    "keys changed after the ship baseline (see baseline.json).",
     "",
     "| locale | total | draft | reviewed | approved | missing | stale | glossary drafts |",
     "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
@@ -122,13 +127,13 @@ function main() {
     "",
     "- **\"pung\" vs locked \"Pon\":** 96 keys contain \"pung\" in the",
     "  English source (75 American lessons, 17 MCR, 2 calculator, 2",
-    "  play) — the Phase 1 README said 61, which does not match the",
-    "  current extraction; 96 is the measured count. Drafts render",
-    "  \"pung\" occurrences with the Pon draft form (e.g. \"Open triplet",
-    "  (pung / pon)\" -> 明刻（碰）). Michael to rule whether \"pung\"",
-    "  occurrences are the same term as \"Pon\" before reviewers lock",
-    "  the glossary. (The locked glossary's own note for Pon already",
-    "  reads \"A three-of-a-kind meld (pung)\".)",
+    "  play). Michael ruled Nov 19, 2026: do NOT consolidate — research",
+    "  what each language uses. Applied in the drafts (see",
+    "  `~/workspace/mahjong-prep/pung-pon-research.md`): every language",
+    "  splits the CALL word from the MELD NOUN, and all 96 keys are noun",
+    "  uses (zh 碰/刻子, ja ポン/刻子, ko 퐁/커쯔). The locked glossary",
+    "  still cannot express call-vs-noun (one form per language); that",
+    "  shape change is a follow-up, not a blocker.",
     "- **index.html meta \"against the CPU\" vs \"Bot\":** flagged, not",
     "  reworded. The meta description still says \"against the CPU\"; the",
     "  glossary locks \"Bot\" for the in-app opponent. No key uses the",

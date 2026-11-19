@@ -46,7 +46,7 @@ const TYPES = {
 // asserts the three agree. Per-language static pages (e.g. /ja/learn/)
 // are a ship-step item: until they exist, a shipped locale's unmatched
 // paths serve the app shell below, never another language's static page.
-const SHIPPED_LOCALES = ["en"];
+const SHIPPED_LOCALES = ["en", "zh-Hans", "zh-Hant", "ja", "ko"];
 
 // MIME types worth compressing (binary formats like png/woff2 already are).
 const COMPRESSIBLE = new Set([

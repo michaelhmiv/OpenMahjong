@@ -5,9 +5,11 @@ import enData from "../src/i18n/locales/en.json";
 /**
  * Placeholder-mismatch gate (brief-i18n-v1 Phase 1, CI layer 1):
  * placeholders / numbers / tile references must match across locales.
- * With only English shipped this passes trivially on real data — so the
- * gate is proven with seeded mismatch fixtures below (mutation evidence
- * is recorded in the PR body).
+ * The shipped draft locales are checked by the coverage dashboard's
+ * placeholder scan (approved entries) and by the translate driver's
+ * per-batch validation — so the gate itself is proven here with
+ * seeded mismatch fixtures below (mutation evidence is recorded in
+ * the PR body).
  */
 
 describe("placeholder extraction", () => {

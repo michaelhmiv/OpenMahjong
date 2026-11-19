@@ -16,8 +16,10 @@ import enData from "../src/i18n/locales/en.json";
 
 /**
  * Runtime loader (brief-i18n-v1 Phase 1): locale resolution, English
- * fallback, per-key status, interpolation. English is the only shipped
- * locale, so every lookup resolves to the English source string.
+ * fallback, per-key status, interpolation. The core 5 ship (PR #90):
+ * English plus the four machine-translated locales, whose draft
+ * entries display under the display rule (isDisplayable) with the
+ * language-level "Machine translated" marking.
  *
  * Activation paths are the URL locale and the remembered choice only:
  * the approved Track B design forbids a silent browser-detection
@@ -60,8 +62,9 @@ describe("resolveLocale", () => {
     expect(resolveLocale(["ko", "ja"], ["en", "ja", "ko"])).toBe("ko");
   });
 
-  it("resolves everything to English while only English ships", () => {
-    expect(resolveLocale(["ja-JP", "zh-CN", "ko-KR"])).toBe("en");
+  it("resolves to the matching shipped locale now that the core 5 ship", () => {
+    expect(resolveLocale(["ja-JP", "zh-CN", "ko-KR"])).toBe("ja");
+    expect(resolveLocale(["fr-FR", "de"])).toBe("en");
   });
 });
 
@@ -75,9 +78,15 @@ describe("keyStatus", () => {
     expect(keyStatus("no.such.key")).toBe("missing");
   });
 
-  it("reports missing for an untranslated locale", () => {
-    expect(keyStatus("ui.app.play", "ja")).toBe("missing");
-    expect(keyStatus("ui.app.play", "zh-Hans")).toBe("missing");
+  it("reports draft for the shipped machine-translated locales", () => {
+    // The real ja/ko/zh files are registered at import (PR #90 ship):
+    // every entry is a draft, so keyStatus is "draft", not "missing".
+    expect(keyStatus("ui.app.play", "ja")).toBe("draft");
+    expect(keyStatus("ui.app.play", "zh-Hans")).toBe("draft");
+  });
+
+  it("reports missing for an unregistered locale", () => {
+    expect(keyStatus("ui.app.play", "xx")).toBe("missing");
   });
 });
 
@@ -103,6 +112,19 @@ describe("t() lookup with English fallback", () => {
     expect(getCurrentLocale()).toBe("ko");
     expect(t("ui.app.play")).toBe("Play");
     expect(keyStatus("ui.app.play", "ko")).toBe("missing");
+  });
+
+  it("shows a draft in a machine-translated shipped locale", () => {
+    // Display rule (PR #90): a draft shows in a locale listed in
+    // MACHINE_TRANSLATED_LOCALES. The real ja file is registered at
+    // import, so the shipped draft renders — marked at the language
+    // level by the switcher, never passed off as reviewed copy.
+    localStorage.setItem("openmahjong.locale.v1", "ja");
+    initI18n({ available: ["en", "ja"] });
+    expect(getCurrentLocale()).toBe("ja");
+    expect(keyStatus("ui.app.play", "ja")).toBe("draft");
+    expect(t("ui.app.play")).toBe("プレイ");
+    expect(t("ui.app.learn")).toBe("学ぶ");
   });
 
   it("shows a translation only when it is approved and current", () => {
@@ -165,8 +187,10 @@ describe("initI18n", () => {
     expect(getCurrentLocale()).toBe("ja");
   });
 
-  it("makes no network call and never leaves English in Phase 1", () => {
+  it("makes no network call and stays English on a bare first visit", () => {
     // The loader imports static JSON only; initI18n is pure resolution.
+    // With no URL locale and no remembered choice, first visit is
+    // English — detection never activates a locale (Track B design).
     initI18n();
     expect(getCurrentLocale()).toBe("en");
     expect(t("ui.app.play")).toBe("Play");
@@ -176,6 +200,6 @@ describe("initI18n", () => {
 describe("shipped-locale agreement", () => {
   it("the loader and the coverage script ship the same locales", () => {
     expect([...SHIPPED_LOCALES]).toEqual([...COVERAGE_SHIPPED]);
-    expect(SHIPPED_LOCALES).toEqual(["en"]);
+    expect(SHIPPED_LOCALES).toEqual(["en", "zh-Hans", "zh-Hant", "ja", "ko"]);
   });
 });

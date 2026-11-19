@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-19T04:01:57.564Z",
-    "keyCount": 3716,
+    "generatedAt": "2026-11-19T11:41:25.547Z",
+    "keyCount": 3729,
     "model": "qwen/qwen-plus",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -38207,6 +38207,144 @@
         "0"
       ],
       "dynamic": true
+    },
+    "ui.app.language": {
+      "value": "語言",
+      "hash": "a4fe65264ef7dbb38d104b1e81eb3350f3142f3d16f32bdec39b1d9b42c1b8d1",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 478
+      },
+      "placeholders": []
+    },
+    "ui.app.language.machine-note": {
+      "value": "非英語語言為機器翻譯，尚待社群審核。",
+      "hash": "e55eb04d40a4c673abf8c50587bcf1dfcca463019d8d20bea46e2248902cb4d7",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1863
+      },
+      "placeholders": []
+    },
+    "ui.app.language.machine-translated": {
+      "value": "機器翻譯",
+      "hash": "e174e770c127019b4d28075fcc6006bd2018ec42326b51c23a831e8b6ce7ec04",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1841
+      },
+      "placeholders": []
+    },
+    "ui.app.language.section": {
+      "value": "語言",
+      "hash": "1287750a09b1318a49ce204ca46f7d260a091f850197193c5e9caa07a1f80fee",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1773
+      },
+      "placeholders": []
+    },
+    "ui.app.language.sheet.dismiss": {
+      "value": "忽略",
+      "hash": "48845bff334a50a59aaecf499f28a7a24c3b4b891b8b18a9f1169ad8e8a6b261",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 447
+      },
+      "placeholders": []
+    },
+    "ui.app.language.sheet.fine": {
+      "value": "您可稍後於「更多」→「語言」中變更。",
+      "hash": "f4a95cc1c7b3c76ab13d93e05806b5142232e3e476b3a5d902d343378734bb23",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 468
+      },
+      "placeholders": []
+    },
+    "ui.app.language.sheet.machine": {
+      "value": "{0} 為機器翻譯，尚待社群審核。",
+      "hash": "1b1fd247c899b0efef77c5fe825709a5dd1c14395c8c7c382d209355d790ca97",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 475
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "ui.app.language.sheet.stay": {
+      "value": "繼續使用英文",
+      "hash": "dda43c1f791aa01cc7d30787034952cc7eeea541b26d103f771b0a5778bef510",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 459
+      },
+      "placeholders": []
+    },
+    "ui.app.language.sheet.sub": {
+      "value": "您的瀏覽器設定為 {0}。是否將 Open Mahjong 切換為 {0}？",
+      "hash": "dc8c70651df28a1d5dd427ce1781b60a28192b8b43ff03ff6da603a07f2dc122",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 466
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "ui.app.language.sheet.title": {
+      "value": "以 {0} 顯示？",
+      "hash": "2246e841097303411cded7a3a5cdfece19ba8aeb703a47b634bc1f43f2d46fc0",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 465
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "ui.app.language.sheet.use": {
+      "value": "使用 {0}",
+      "hash": "8ed7565b02db8801cc51252f741ebc89a8a1d7b08f7ba644f4d636b998fc8b1c",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 453
+      },
+      "placeholders": [
+        "0"
+      ]
+    },
+    "ui.app.language.url-note": {
+      "value": "切換語言會開啟對應的網址（例如日文為 /ja/）。您的選擇將被記住；瀏覽器語言僅於首次造訪時使用。",
+      "hash": "2d90357c9e5b161a52246d14b3b5577095ccd7ecb65544e2155e2789c6c311d3",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1861
+      },
+      "placeholders": []
+    },
+    "ui.app.language.wave2-note": {
+      "value": "即將支援更多語言：越南文、泰文、印尼文、法文、德文與西班牙文。",
+      "hash": "d13b892fcedc460ee8bcc270689e99607b8d84a27f03843dd87dc3720b3a37e8",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1865
+      },
+      "placeholders": []
     }
   }
 }

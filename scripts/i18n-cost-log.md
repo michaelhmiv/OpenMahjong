@@ -20,10 +20,10 @@ provider-reported total is the authoritative actual spend.
 
 | Language | Model | Keys | Cost | Notes |
 | --- | --- | --- | --- | --- |
-| zh-Hans | qwen/qwen-plus | 3,716 | $0.1549 | Smoke $0.0032 (120 keys) + full $0.1517. 0 failures. |
-| zh-Hant | qwen/qwen-plus | 3,716 | $0.1650 | Full $0.1647 (3 failures) + recovery $0.0003. |
-| ja | google/gemini-2.5-flash | 3,716 | $0.4703 | Full $0.4678 (16 failures) + recovery $0.0024 + one-off $0.0001. |
-| ko | google/gemini-2.5-flash | 3,716 | $0.4897 | Full $0.4766 (72 failures, incl. one 429'd batch) + recovery $0.0131. |
+| zh-Hans | qwen/qwen-plus | 3,729 | $0.1553 | Smoke $0.0032 (120 keys) + full $0.1517 + ship top-up $0.0004 (13 keys). 0 failures. |
+| zh-Hant | qwen/qwen-plus | 3,729 | $0.1654 | Full $0.1647 (3 failures) + recovery $0.0003 + ship top-up $0.0004 (13 keys). |
+| ja | google/gemini-2.5-flash | 3,729 | $0.4714 | Full $0.4678 (16 failures) + recovery $0.0024 + one-off $0.0001 + ship top-up $0.0011 (13 keys). |
+| ko | google/gemini-2.5-flash | 3,729 | $0.4908 | Full $0.4766 (72 failures, incl. one 429'd batch) + recovery $0.0131 + ship top-up $0.0011 (13 keys). |
 | Benchmark (all 4) | mixed | 40 × 8 runs | $0.0235 | Provider `cost`-field sum $0.0233. Detail: `scripts/i18n-benchmark.md`. |
 
 ## Run-by-run
@@ -40,6 +40,23 @@ provider-reported total is the authoritative actual spend.
 | ja one-off | google/gemini-2.5-flash | 147 | 37 | $0.0001 | 0 (targeted retry with explicit instruction) |
 | ko full | google/gemini-2.5-flash | 175,527 | 169,594 | $0.4766 | 72 (one 60-key batch 429'd by Google + 11 empty + 1 placeholder slip) |
 | ko recovery | google/gemini-2.5-flash | 5,624 | 4,572 | $0.0131 | 0 |
+
+## Ship top-up — 13 switcher keys (PR #90 landing, 2026-11-19)
+
+PR #91 added 13 switcher/sheet keys to `en.json` after the bulk drafts
+were written, so every draft locale was missing them and the release
+gate (correctly) failed on 13 new/changed keys per locale. The driver
+re-ran with translation memory — only the 13 missing keys per locale
+were billed. All four runs: 0 failures, 0 glossary flags, 0 tile-ref
+flags. Per-language totals above are now 3,729 keys; program actual
+spend is **$1.2877** ($1.2847 bulk + $0.0030 top-up).
+
+| Run | Model | In tokens | Out tokens | Cost | Failures |
+| --- | --- | --- | --- | --- | --- |
+| ja top-up (13 keys) | google/gemini-2.5-flash | 731 | 334 | $0.0011 | 0 |
+| ko top-up (13 keys) | google/gemini-2.5-flash | 732 | 365 | $0.0011 | 0 |
+| zh-Hans top-up (13 keys) | qwen/qwen-plus | 676 | 261 | $0.0004 | 0 |
+| zh-Hant top-up (13 keys) | qwen/qwen-plus | 679 | 282 | $0.0004 | 0 |
 
 ## Notes
 

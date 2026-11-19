@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
+// @vitest-environment jsdom
 import {
   keyStatus,
   registerLocale,
   resetI18nForTests,
   t,
+  tForLocale,
   initI18n,
   getCurrentLocale,
 } from "../src/i18n/index.js";
@@ -23,6 +25,12 @@ import enData from "../src/i18n/locales/en.json";
  * gone; the loader tests activate the same way. "xx-lesson-changed"
  * is a registration-only fixture for the explicit-locale keyStatus
  * check in the last test.
+ *
+ * Display rule (PR #90 ship step): a draft shows only in a
+ * machine-translated ship locale ("ja" is one), so the draft-never-
+ * shows case below is proven with "fr" — a locale that is neither
+ * shipped nor machine-translated — activated through the remembered
+ * choice, and a companion test proves a ja draft DOES show.
  */
 
 const EN_KEYS = (enData as { keys: Record<string, { value: string; hash: string }> }).keys;
@@ -37,6 +45,23 @@ function fixtureLocale(
   });
   initI18n({ pathname: "/ja/", available: ["en", "ja"] });
   expect(getCurrentLocale()).toBe("ja");
+}
+
+/** Register a fixture under a non-shipped, non-machine-translated
+ *  locale id. It cannot be activated through initI18n (remembered
+ *  choices and URL prefixes only accept supported locales), so the
+ *  draft-never-shows case below proves the rule through keyStatus()
+ *  with an explicit locale and tForLocale() — the same isDisplayable()
+ *  gate t() uses. */
+function fixtureLocaleUnshipped(
+  locale: string,
+  key: string,
+  entry: { value: string; hash: string; status: "approved" | "draft" | "stale" },
+) {
+  registerLocale(locale, {
+    meta: { locale, status: "in-progress" },
+    keys: { [key]: entry },
+  });
 }
 
 describe("stale-key gate", () => {
@@ -64,12 +89,21 @@ describe("stale-key gate", () => {
     resetI18nForTests();
   });
 
-  it("a draft translation is never shown, even with a matching hash", () => {
+  it("a draft translation is never shown in a locale that is not machine translated, even with a matching hash", () => {
+    resetI18nForTests();
+    const en = EN_KEYS["ui.app.play"]!;
+    fixtureLocaleUnshipped("fr", "ui.app.play", { value: "Jouer?", hash: en.hash, status: "draft" });
+    expect(keyStatus("ui.app.play", "fr")).toBe("draft");
+    expect(tForLocale("ui.app.play", "fr", "Play")).toBe("Play");
+    resetI18nForTests();
+  });
+
+  it("a draft translation IS shown in a machine-translated shipped locale", () => {
     resetI18nForTests();
     const en = EN_KEYS["ui.app.play"]!;
     fixtureLocale("ui.app.play", { value: "Jouer?", hash: en.hash, status: "draft" });
     expect(keyStatus("ui.app.play")).toBe("draft");
-    expect(t("ui.app.play")).toBe("Play");
+    expect(t("ui.app.play")).toBe("Jouer?");
     resetI18nForTests();
   });
 

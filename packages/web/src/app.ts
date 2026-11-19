@@ -509,29 +509,33 @@ type TabRoot = "home" | "learn" | "games" | "more";
 const TAB_ROOTS: readonly TabRoot[] = ["home", "learn", "games", "more"];
 
 /** Tab bar definitions (app shell, renderings 01-06): labels and
- *  icon geometry are the approved mocks', verbatim. */
-const TAB_DEFS: { name: TabRoot; label: string; icon: string }[] = [
+ *  icon geometry are the approved mocks', verbatim. Labels are keys,
+ *  resolved with t() when the tab bar is built (in the App
+ *  constructor, after main.ts runs initI18n) — never at module scope:
+ *  module-scope t() runs at import time, before initI18n, so it
+ *  would always render English. */
+const TAB_DEFS: { name: TabRoot; key: string; icon: string }[] = [
   {
     name: "home",
     // Phase 1 i18n wiring: tab labels come from the key file. In English
     // these resolve to exactly the previous literals ("Play", "Learn",
     // "Games", "More") — byte-identical output, no visible change.
-    label: t("ui.app.play"),
+    key: "ui.app.play",
     icon: `<rect x="5" y="3" width="14" height="18" rx="3"/><circle cx="9.2" cy="9.2" r="1.7" style="fill:currentColor;stroke:none"/><circle cx="14.8" cy="9.2" r="1.7" style="fill:currentColor;stroke:none"/><circle cx="12" cy="15" r="1.7" style="fill:currentColor;stroke:none"/>`,
   },
   {
     name: "learn",
-    label: t("ui.app.learn"),
+    key: "ui.app.learn",
     icon: `<path d="M12 6.2C10.2 4.7 8 4.2 4 4.2v13.6c4 0 6.2.5 8 2 1.8-1.5 4-2 8-2V4.2c-4 0-6.2.5-8 2z"/><path d="M12 6.2v13.6"/>`,
   },
   {
     name: "games",
-    label: t("ui.app.games"),
+    key: "ui.app.games",
     icon: `<path d="M9 5.5h11M9 12h11M9 18.5h11"/><circle cx="4.5" cy="5.5" r="1.3" style="fill:currentColor;stroke:none"/><circle cx="4.5" cy="12" r="1.3" style="fill:currentColor;stroke:none"/><circle cx="4.5" cy="18.5" r="1.3" style="fill:currentColor;stroke:none"/>`,
   },
   {
     name: "more",
-    label: t("ui.app.more"),
+    key: "ui.app.more",
     icon: `<path d="M3.5 8h9M18 8h2.5M3.5 16h3M12 16h8.5"/><circle cx="15.2" cy="8" r="2.3"/><circle cx="9.2" cy="16" r="2.3"/>`,
   },
 ];
@@ -806,7 +810,7 @@ export class App {
     for (const def of TAB_DEFS) {
       const b = h("button", { class: "tabbtn", "data-tab": def.name });
       b.innerHTML = `<svg viewBox="0 0 24 24">${def.icon}</svg>`;
-      b.append(h("span", {}, def.label));
+      b.append(h("span", {}, t(def.key)));
       b.addEventListener("click", () => this.showScreen(def.name));
       this.tabBtns.push(b);
       this.tabbar.append(b);
