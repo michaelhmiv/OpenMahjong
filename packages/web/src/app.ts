@@ -48,6 +48,7 @@ import {
   SOURCE_LOCALE,
   firstVisitDetectedLocale,
   getCurrentLocale,
+  improveTranslationUrl,
   isMachineTranslated,
   localeMeta,
   pathForLocale,
@@ -482,6 +483,30 @@ export function buildFirstVisitSheet(
 // ---------------------------------------------------------------------------
 // App
 // ---------------------------------------------------------------------------
+
+/**
+ * "Improve this translation" link (community review path,
+ * ~/workspace/mahjong-prep/community-review-design.md §1). Rendered in the
+ * More tab footer, below the AGPL line, only when the current locale is
+ * not English — in English there is no translation to improve. It opens
+ * the contributor guide (docs/translating.md on GitHub), which names the
+ * exact locale file per language and the no-git web-editor flow. The
+ * label is a literal here like the other unwired strings in this file:
+ * the extractor inventories it into en.json and Phase 2 wiring picks it
+ * up; in a draft locale it renders in English, which is the honest
+ * rendering for a guide written in English. Returns null in English.
+ * Same external-link pattern as the About screen (target _blank,
+ * rel noreferrer) and the same .footer treatment as the AGPL line.
+ */
+export function buildImproveTranslationLink(): HTMLAnchorElement | null {
+  const url = improveTranslationUrl(getCurrentLocale());
+  if (!url) return null;
+  return h(
+    "a",
+    { href: url, target: "_blank", rel: "noreferrer" },
+    "Improve this translation",
+  );
+}
 
 type ScreenName =
   | "home"
@@ -1801,6 +1826,12 @@ export class App {
     page.append(
       h("div", { class: "footer" }, "Open source under AGPLv3 · github.com/michaelhmiv/OpenMahjong"),
     );
+    const improveLink = buildImproveTranslationLink();
+    if (improveLink) {
+      const improveFooter = h("div", { class: "footer" });
+      improveFooter.append(improveLink);
+      page.append(improveFooter);
+    }
   }
 
   /**

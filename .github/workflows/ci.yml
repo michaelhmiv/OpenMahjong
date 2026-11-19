@@ -59,6 +59,30 @@ jobs:
         continue-on-error: true
         run: npm run check:security:dev
 
+  # i18n community review: no self-approval (community-review-design.md
+  # §3). A correction PR must not mark its own wording reviewed/approved,
+  # and a status flip must come from someone other than the wording's
+  # author. Runs on pull requests (base/head SHAs) and on pushes to main
+  # (before/after SHAs); skipped for a push that creates the branch
+  # (before is all zeros — no base to diff against). Full history is
+  # fetched so the R3 blame check can run; without it R3 degrades to a
+  # warning and R1/R2 still enforce.
+  i18n-approval-gate:
+    if: github.event_name == 'pull_request' || github.event.before != '0000000000000000000000000000000000000000'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: No-self-approval gate for translation PRs
+        env:
+          GATE_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          GATE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node scripts/i18n-approval-gate.mjs --base "$GATE_BASE" --head "$GATE_HEAD"
+
   # A3 completion (brief §13): the full 10,000-game AI-vs-AI soak. The
   # fast gate above runs the same test file with its default count
   # (120 games); this job runs the brief's full count, split across an
