@@ -297,13 +297,22 @@ try {
     assert.deepEqual(sections, ["ACCOUNT", "SETTINGS", "LANGUAGE", "ABOUT"]);
     await page.locator('#screen-more .hrow', { hasText: "Language" }).click();
     const rows = await page.locator("#screen-language .i18n-row").allInnerTexts();
-    assert.deepEqual(rows, ["English"]);
+    // Core 5 shipped as machine translations (owner ruling Nov 19, 2026):
+    // every non-English row carries the machine-translation mark.
+    assert.deepEqual(rows, [
+      "English",
+      "日本語\nJapanese · Machine translated",
+      "한국어\nKorean · Machine translated",
+      "简体中文\nSimplified Chinese · Machine translated",
+      "繁體中文\nTraditional Chinese · Machine translated",
+    ]);
     assert.equal(await page.locator("#screen-language .i18n-row.cur").count(), 1);
     assert.equal(await page.locator("#screen-language .i18n-check").count(), 1);
     const notes = await page.locator("#screen-language .i18n-note").allInnerTexts();
-    assert.equal(notes.length, 2);
+    assert.equal(notes.length, 3);
     assert.match(notes[0], /\/ja\//);
-    assert.match(notes[1], /More languages are coming/);
+    assert.match(notes[1], /machine translated/i);
+    assert.match(notes[2], /More languages are coming/);
     await capture(page, "language");
     await page.getByRole("button", { name: "Back", exact: true }).click();
     return { sections, rows };
