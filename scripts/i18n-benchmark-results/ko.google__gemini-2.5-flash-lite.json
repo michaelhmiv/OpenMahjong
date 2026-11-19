@@ -1,0 +1,317 @@
+{
+  "model": "google/gemini-2.5-flash-lite",
+  "locale": "ko",
+  "sampleKeys": 40,
+  "usage": {
+    "prompt_tokens": 2004,
+    "completion_tokens": 1749,
+    "total_tokens": 3753,
+    "cost": 0.000891,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0009,
+      "upstream_inference_prompt_cost": 0.0002004,
+      "upstream_inference_completions_cost": 0.0006996
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "costUsd": 0.0009,
+  "results": [
+    {
+      "key": "ui.app.play",
+      "en": "Play",
+      "translated": "플레이",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "ui.app.learn",
+      "en": "Learn",
+      "translated": "배우기",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "ui.app.games",
+      "en": "Games",
+      "translated": "게임",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "ui.app.more",
+      "en": "More",
+      "translated": "더보기",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "play.groups.triplet",
+      "en": "Triplet",
+      "translated": "트리플렛",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "play.groups.sequence",
+      "en": "Sequence",
+      "translated": "시퀀스",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step01.text",
+      "en": "Mahjong is played with tiles. A tile's face tells you what it is: this face shows five circles, so this tile is the 5 of dots.",
+      "translated": "마작은 타일로 플레이합니다. 타일의 앞면은 무엇인지 알려줍니다: 이 앞면은 원 다섯 개를 보여주므로, 이 타일은 점수 5입니다.",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step02.text",
+      "en": "Tiles come in three suits — three groups of tiles that share one kind of face. The first suit is dots, numbered 1 to 9. Read a dots tile by counting its circles: the number of circles is the tile's number.",
+      "translated": "타일은 세 가지 슈트 — 타일의 앞면 종류가 같은 세 그룹 — 로 나뉩니다. 첫 번째 슈트는 점수로, 1부터 9까지 번호가 매겨져 있습니다. 점수 타일을 읽으려면 원의 수를 세세요: 원의 수가 타일의 숫자입니다.",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step03.text",
+      "en": "Tap every dots tile — the tiles whose faces are made of circles.",
+      "translated": "모든 점수 타일을 탭하세요 — 원으로 된 앞면을 가진 타일들입니다.",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step04.text",
+      "en": "The second suit is bamboo, numbered 1 to 9. Read a bamboo tile by counting its green sticks: the number of sticks is the tile's number. One exception: the 1 of bamboo, first in this row, is a picture of a bird — it has no sticks to count.",
+      "translated": "두 번째 슈트는 대나무로, 1부터 9까지 번호가 매겨져 있습니다. 대나무 타일을 읽으려면 녹색 막대의 수를 세세요: 막대의 수가 타일의 숫자입니다. 한 가지 예외: 이 줄의 첫 번째 대나무 1은 새 그림이며 — 셀 막대가 없습니다.",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step05.text",
+      "en": "Tap every bamboo tile — the tiles with the green sticks.",
+      "translated": "모든 대나무 타일을 탭하세요 — 녹색 막대가 있는 타일들입니다.",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step06.text",
+      "en": "The third suit is characters, numbered 1 to 9. A characters tile has a two-part face: the dark character on top is the number, and the red character below is the suit's mark — it means ten thousand, and it is the same on every characters tile. The top characters are numbers written in Chinese: one line is 1, two lines are 2, three lines are 3. This row runs 1 to 9, left to right.",
+      "translated": "세 번째 슈트는 문자이며, 1부터 9까지 번호가 매겨져 있습니다. 문자 타일은 두 부분으로 된 앞면을 가지고 있습니다: 위에 있는 어두운 문자는 숫자이고, 아래에 있는 붉은 문자는 슈트의 표시입니다 — 만을 의미하며, 모든 문자 타일에서 동일합니다. 위의 문자는 중국어로 된 숫자입니다: 한 줄은 1, 두 줄은 2, 세 줄은 3입니다. 이 줄은 왼쪽에서 오른쪽으로 1부터 9까지 이어집니다.",
+      "validation": [],
+      "glossary": [
+        "locked term \"Chi\" rendered without draft form \"치\""
+      ]
+    },
+    {
+      "key": "learn.riichi.tu1.step07.text",
+      "en": "Here are all nine characters tiles again, labelled in order: 1, 2, 3, 4, 5, 6, 7, 8, 9, left to right. To read a characters tile, look only at the small dark character on top — that character is the number. The red mark below is the same on all nine, so it never tells you the number. For 1, 2, and 3 you can count the lines; for the rest, match the top character against this labelled row until the faces are familiar.",
+      "translated": "여기 아홉 개의 문자 타일이 순서대로 표시되어 있습니다: 왼쪽부터 오른쪽으로 1, 2, 3, 4, 5, 6, 7, 8, 9. 문자 타일을 읽으려면, 위에 있는 작은 어두운 문자만 보세요 — 그 문자가 숫자입니다. 아래의 붉은 표시는 아홉 개 모두 동일하므로 숫자를 알려주지 않습니다. 1, 2, 3은 줄 수를 셀 수 있습니다. 나머지는 앞면이 익숙해질 때까지 위의 문자를 이 표시된 줄과 비교하세요.",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu1.step08.text",
+      "en": "Two characters faces are easy to mix up: the 6 and the 9. Here they are side by side — the 6 on the left, the 9 on the right. Compare only the top characters: the 6's top character ends in two separate short legs at the bottom, while the 9's top character is one long stroke that bends down and ends in a hook, with nothing separate below it. No drill in this lesson uses a 6 or a 9 until you have seen them side by side like this.",
+      "translated": "두 개의 문자 앞면은 혼동하기 쉽습니다: 6과 9입니다. 여기 나란히 있습니다 — 왼쪽이 6, 오른쪽이 9입니다. 위의 문자만 비교하세요: 6의 위쪽 문자는 아래쪽에 두 개의 분리된 짧은 다리로 끝나지만, 9의 위쪽 문자는 아래로 구부러져 갈고리로 끝나는 긴 획 하나이며, 아래에는 분리된 것이 없습니다. 이 레슨에서는 6이나 9를 이렇게 나란히 보기 전에는 사용하지 않습니다.",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.add-declared-meld",
+      "en": "Add declared meld",
+      "translated": "선언된 멜드 추가",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.dora-indicator",
+      "en": "Dora indicator",
+      "translated": "도라 표시기",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.riichi-deposit-0-s-1-000-points-go-to-1-as-winne",
+      "en": "Riichi deposit: {0}’s 1,000 points go to {1} as winner.",
+      "translated": "리치 보증금: {0}의 1,000점이 {1}에게 승자로 돌아갑니다.",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.open-triplet-pung-pon",
+      "en": "Open triplet (pung / pon)",
+      "translated": "오픈 트리플렛 (퐁)",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.han",
+      "en": "Han",
+      "translated": "판",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.fu",
+      "en": "Fu",
+      "translated": "부",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.riichi.add-0-1",
+      "en": "Add {0}{1}",
+      "translated": "{0}{1} 추가",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "calc.compact.decrease-0",
+      "en": "Decrease {0}",
+      "translated": "{0} 감소",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "review.board.board-review",
+      "en": "Board review",
+      "translated": "보드 검토",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "review.board.back-to-games",
+      "en": "Back to Games",
+      "translated": "게임으로 돌아가기",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "review.board.concealed-tile",
+      "en": "Concealed tile",
+      "translated": "숨겨진 타일",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "review.board.event-0-1",
+      "en": "Event {0} · {1}",
+      "translated": "이벤트 {0} · {1}",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "review.board.event.call",
+      "en": "calls {0}",
+      "translated": "{0} 호출",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "review.board.event.discard",
+      "en": "discards",
+      "translated": "버림",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.ron",
+      "en": "Ron",
+      "translated": "론",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tsumo",
+      "en": "Tsumo",
+      "translated": "쯔모",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.pon",
+      "en": "Pon",
+      "translated": "퐁",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.kan",
+      "en": "Kan",
+      "translated": "깡",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.chi",
+      "en": "Chi",
+      "translated": "치",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "ui.app.a-riichi-stick-is-a-1-000-point-stake-a-player-p",
+      "en": "A riichi stick is a 1,000-point stake a player paid when declaring riichi. The winner collects the sticks on the table.",
+      "translated": "리치 스틱은 플레이어가 리치를 선언할 때 지불한 1,000점의 판돈입니다. 승자는 테이블에 있는 스틱을 가져갑니다.",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "ui.app.a-yakuman-is-the-highest-value-kind-of-hand-it-p",
+      "en": "A yakuman is the highest-value kind of hand. It pays a fixed large amount.",
+      "translated": "야쿠만은 가장 높은 가치의 핸드 종류입니다. 고정된 큰 금액을 지급합니다.",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu5.step05.text",
+      "en": "One rule limits ron: furiten. If one of your waits is a tile you discarded earlier yourself — a tile now sitting in your own pond — then you are in furiten, and you cannot ron at all, not even on a different wait. You can still win by tsumo. Furiten ends when your waits change.",
+      "translated": "론에는 규칙이 있습니다: 후리텐. 당신의 기다리는 타일 중 하나가 이전에 당신이 버린 타일 — 당신 자신의 연못에 있는 타일 — 이라면, 당신은 후리텐이며, 다른 기다리는 타일이라도 전혀 론할 수 없습니다. 쯔모로는 여전히 이길 수 있습니다. 기다리는 타일이 바뀌면 후리텐은 끝납니다.",
+      "validation": [],
+      "glossary": [
+        "locked term \"Fu\" rendered without draft form \"부\""
+      ]
+    },
+    {
+      "key": "learn.riichi.tu8.step08.text",
+      "en": "If the dealer wins a hand, or a hand is drawn with the dealer tenpai, the same dealer deals the next hand, and the honba count rises by one. Honba are a bonus counter: each honba adds 300 points to the next winning hand. An East-only game runs from East 1 to East 4; an East/South game continues through South 4. A game ends early if any player's score falls below zero.",
+      "translated": "딜러가 핸드를 이기거나, 딜러가 텐파이 상태에서 핸드가 무승부되면, 같은 딜러가 다음 핸드를 딜링하고, 혼바 횟수가 1 증가합니다. 혼바는 보너스 카운터입니다: 각 혼바는 다음 승리 핸드에 300점을 추가합니다. 동풍 게임은 동 1부터 동 4까지 진행됩니다; 동서 게임은 남 4까지 계속됩니다. 플레이어의 점수가 0점 미만으로 떨어지면 게임은 조기에 종료됩니다.",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.riichi.tu7.step01.text",
+      "en": "A complete shape is not enough to win. The hand must also contain at least one yaku — a scoring pattern in the tiles. Each yaku is worth han, the units a hand's value is counted in; the next lesson turns han into points. Dora are not yaku: each dora adds 1 han as a bonus, but a hand with dora and no yaku still cannot win. This lesson introduces the patterns a beginner meets first.",
+      "translated": "완전한 모양만으로는 이길 수 없습니다. 핸드에는 최소한 하나의 야쿠 — 타일의 점수 패턴 — 가 있어야 합니다. 각 야쿠는 판의 가치를 계산하는 단위인 판의 가치가 있습니다; 다음 레슨에서 판을 점수로 변환합니다. 도라는 야쿠가 아닙니다: 각 도라는 보너스로 1판을 추가하지만, 도라만 있고 야쿠가 없는 핸드는 여전히 이길 수 없습니다. 이 레슨에서는 초보자가 처음 만나는 패턴을 소개합니다.",
+      "validation": [],
+      "glossary": []
+    },
+    {
+      "key": "learn.american.pcard.hand.BK-1.description",
+      "en": "Pungs of 1s and 9s in two suits, and a pair of 1s in the third — nothing but the two ends of the suits.",
+      "translated": "두 슈트의 1과 9의 퐁, 그리고 세 번째 슈트의 1 쌍 — 슈트의 양 끝만 있습니다.",
+      "validation": [
+        "tile references differ: en [1s,1s,9s] vs translation []"
+      ],
+      "glossary": []
+    },
+    {
+      "key": "review.terms.dora",
+      "en": "Dora are bonus tiles worth one extra han each. Each dora indicator on the table names the tile after it in sequence as dora.",
+      "translated": "도라는 매번 1판의 추가 가치를 갖는 보너스 타일입니다. 테이블의 각 도라 표시기는 그 뒤의 타일을 순서대로 도라로 지정합니다.",
+      "validation": [],
+      "glossary": []
+    }
+  ]
+}

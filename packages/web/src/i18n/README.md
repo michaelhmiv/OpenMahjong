@@ -159,6 +159,56 @@ loader still falls back to English for `draft` entries, so #90 must
 resolve it before the locales render in anything but English; the
 switcher itself is ready either way.
 
+## Machine drafts (Phase 2 Track A)
+
+- `locales/zh-Hans.json`, `zh-Hant.json`, `ja.json`, `ko.json` now hold
+  machine drafts for all 3,716 keys: every entry is `status: "draft"`
+  with the English source hash recorded. Drafts are data, not live —
+  the loader only ever shows `approved` entries, and the draft files
+  are not registered with it, so the app still renders English exactly
+  as before.
+- Models (benchmarked first on a fixed 40-string sample — see
+  `scripts/i18n-benchmark.md`): Qwen `qwen/qwen-plus` for both Chinese
+  locales, Gemini `google/gemini-2.5-flash` for Japanese and Korean.
+  Gemini Flash-Lite failed the benchmark on meaning fidelity in both
+  languages (a dots tile rendered as a characters tile) and was rejected.
+  Total benchmark spend $0.0235; bulk spend per language is logged in
+  `scripts/i18n-cost-log-<locale>.json` and summarised in
+  `scripts/i18n-cost-log.md`.
+- Driver: `node scripts/i18n-translate.mjs translate --model <slug>
+  --locale <locale>` (key via `OPENROUTER_API_KEY`; the ruled source is
+  Pi's credential store — see the script header. The custom.openrouter
+  connector's key is broken and is never used). Translation memory:
+  keys already drafted from the same English hash are never re-billed.
+- Review queue: `~/workspace/mahjong-prep/i18n-review-queue/` — per
+  language, every draft grouped by namespace with the English source
+  alongside, plus draft glossary forms and a status file. No native
+  reviewers sourced yet; nothing is approved.
+- Draft glossary forms live in `scripts/i18n-translate.mjs`
+  (`DRAFT_GLOSSARY`) and in the review queue. The locked glossary
+  (`glossary.json`) stays `null` for every non-English locale until a
+  native speaker decides each form — a draft that renders a locked term
+  differently is a defect to fix in the draft pass, not something to ship.
+
+## Routing + detection (Phase 2 Track A)
+
+- One URL per locale: English at the root, `/ja/`, `/zh-Hant/`, etc.
+  for the rest (`localeFromPath` / `pathForLocale` in `index.ts`).
+  `packages/web/server.mjs` serves the app shell for a locale prefix
+  only when that locale is shipped; unshipped locales stay 404, so a
+  crawler is never served English content at `/ja/`.
+- Detection precedence: URL path locale > remembered choice
+  (`localStorage`, key `openmahjong.locale.v1`) > browser language list
+  (`resolveLocale`), each among shipped locales. A path locale for an
+  unshipped locale still resolves to English.
+- `applyLocaleDocumentTags(locale)` (called from `main.ts`) sets
+  `<html lang>`, the canonical URL, and hreflang alternates for shipped
+  locales only. With only English shipped this is lang="en" and the
+  root canonical — English behaviour is unchanged.
+- No visible language switcher in this track — that is Track B,
+  design-gated. Per-language static pages (e.g. `/ja/learn/`) are a
+  ship-step item.
+
 ## Known gaps / ambiguities (flagged, not silently dropped)
 
 - Thrown error messages outside the calculator / in-person `safe()`

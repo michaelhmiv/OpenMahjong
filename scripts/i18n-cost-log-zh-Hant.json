@@ -1,0 +1,17 @@
+{
+  "model": "qwen/qwen-plus",
+  "locale": "zh-Hant",
+  "generatedAt": "2026-11-19T04:01:57.587Z",
+  "keysDraftedTotal": 3716,
+  "keysAttempted": 3,
+  "failures": [],
+  "glossaryFlags": [],
+  "tileRefFlags": [],
+  "usage": {
+    "promptTokens": 618,
+    "completionTokens": 199,
+    "costUsd": 0.0003159,
+    "calls": 1
+  },
+  "costUsd": 0.0003159
+}

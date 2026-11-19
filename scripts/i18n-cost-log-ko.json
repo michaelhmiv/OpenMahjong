@@ -1,0 +1,17 @@
+{
+  "model": "google/gemini-2.5-flash",
+  "locale": "ko",
+  "generatedAt": "2026-11-19T04:02:29.105Z",
+  "keysDraftedTotal": 3716,
+  "keysAttempted": 72,
+  "failures": [],
+  "glossaryFlags": [],
+  "tileRefFlags": [],
+  "usage": {
+    "promptTokens": 5624,
+    "completionTokens": 4572,
+    "costUsd": 0.0131172,
+    "calls": 4
+  },
+  "costUsd": 0.0131172
+}
