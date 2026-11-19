@@ -2,7 +2,7 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T13:32:34.377Z",
+    "generatedAt": "2026-11-19T13:35:22.375Z",
     "keyCount": 3698,
     "namespaces": {
       "calc.compact": 14,
@@ -18664,7 +18664,7 @@
       "hash": "6d3b491cc4b3b8c942decedece5f1f363e8f996b489f995acb320c18f73b3ca5",
       "source": {
         "file": "practice-ui.ts",
-        "line": 29
+        "line": 30
       },
       "placeholders": [],
       "status": "approved"
@@ -18674,7 +18674,7 @@
       "hash": "cb7f91644dc2d5372d4289d69e2be622bfc450b3a6431f3f5b509fcccec4caad",
       "source": {
         "file": "practice-ui.ts",
-        "line": 27
+        "line": 28
       },
       "placeholders": [],
       "status": "approved"
@@ -18684,7 +18684,7 @@
       "hash": "9ea9bd2122aab52abe105861f214b7a8ac29fddbcdacaffc9f105d0f0ed072ad",
       "source": {
         "file": "practice-ui.ts",
-        "line": 29
+        "line": 30
       },
       "placeholders": [],
       "status": "approved"
@@ -18694,7 +18694,7 @@
       "hash": "eee9ab13b28da9a13a81b45bfae2f8dde59f76acf53c67647aca098308d1dea2",
       "source": {
         "file": "practice-ui.ts",
-        "line": 28
+        "line": 29
       },
       "placeholders": [],
       "status": "approved"
@@ -18704,7 +18704,7 @@
       "hash": "51df8e0927d99fb9964cbb7c8eb8a81145f3bca4a5bc4bc3cb7c80d119da8b42",
       "source": {
         "file": "practice-ui.ts",
-        "line": 27
+        "line": 28
       },
       "placeholders": [],
       "status": "approved"
@@ -18714,7 +18714,7 @@
       "hash": "47115a10b451c0864a97cd7fe4b39fcb837d764e808058c75792aa4547aa3564",
       "source": {
         "file": "practice-ui.ts",
-        "line": 28
+        "line": 29
       },
       "placeholders": [],
       "status": "approved"
@@ -18724,7 +18724,7 @@
       "hash": "a0e2370b626369e8436f9189f58ea9e137ecb60345b3197eb86f3c75c908e42b",
       "source": {
         "file": "practice-ui.ts",
-        "line": 28
+        "line": 29
       },
       "placeholders": [],
       "status": "approved"
@@ -18734,7 +18734,7 @@
       "hash": "4b13fd65dff5358a6d5b357d8e45652050921c8e8d6ffc953a048f721985c4a3",
       "source": {
         "file": "practice-ui.ts",
-        "line": 29
+        "line": 30
       },
       "placeholders": [],
       "status": "approved"
@@ -18764,7 +18764,7 @@
       "hash": "86cfa5c34050fff77baf26f5eb331b98c110077e25a10df0a33b9775a2a99192",
       "source": {
         "file": "practice-ui.ts",
-        "line": 212
+        "line": 213
       },
       "placeholders": [],
       "status": "approved"
@@ -18774,7 +18774,7 @@
       "hash": "76900f1bfd16c8d4dd3d25e6f46638d7165aee23883ccea6bfe071c514421769",
       "source": {
         "file": "practice-ui.ts",
-        "line": 176
+        "line": 177
       },
       "placeholders": [],
       "status": "approved"
@@ -18784,7 +18784,7 @@
       "hash": "caedaad6ddf2452c4a085a175e8e7ee16b9528783007a05947ef110f6a6eee45",
       "source": {
         "file": "practice-ui.ts",
-        "line": 285
+        "line": 286
       },
       "placeholders": [],
       "status": "approved"
@@ -18794,7 +18794,7 @@
       "hash": "59b5b25c3f1225bbc759f0a5877604948e64e3484f2e56aafef146d98cd32a61",
       "source": {
         "file": "practice-ui.ts",
-        "line": 271
+        "line": 272
       },
       "placeholders": [],
       "status": "approved"
@@ -18804,7 +18804,7 @@
       "hash": "fb72ebf9a9490fbfdf953fb2733ad45a782d211d29cceeeeec0fd3b0035cd787",
       "source": {
         "file": "practice-ui.ts",
-        "line": 132
+        "line": 133
       },
       "placeholders": [],
       "status": "approved"
@@ -18814,7 +18814,7 @@
       "hash": "c852ca80fd97feb8c71e62ac0e6c9c70becb2a4c159e0a6bfb7e10ad81cc1e59",
       "source": {
         "file": "practice-ui.ts",
-        "line": 221
+        "line": 222
       },
       "placeholders": [],
       "status": "approved"
@@ -18824,7 +18824,7 @@
       "hash": "aca01a1a3a27d35c264a8104b0f2817aa31a8a29f8eec1e6cceddc6ac208c723",
       "source": {
         "file": "practice-ui.ts",
-        "line": 239
+        "line": 240
       },
       "placeholders": [],
       "status": "approved"
@@ -18834,7 +18834,7 @@
       "hash": "307376c906fa0186b0b1c28e4fae76c0c8ed27054755475d1f79a8df3c3a4f13",
       "source": {
         "file": "practice-ui.ts",
-        "line": 132
+        "line": 133
       },
       "placeholders": [],
       "status": "approved"
@@ -18844,7 +18844,7 @@
       "hash": "9bc3516b784aceb156fb7e182b697e3f2aae96fa300e13aaad39085a986f02a6",
       "source": {
         "file": "practice-ui.ts",
-        "line": 192
+        "line": 193
       },
       "placeholders": [],
       "status": "approved"
@@ -18854,7 +18854,7 @@
       "hash": "b2fda6119abb07976b92e4a55d948519be371f869c5189695f870e7390abe202",
       "source": {
         "file": "practice-ui.ts",
-        "line": 180
+        "line": 181
       },
       "placeholders": [],
       "status": "approved"
@@ -18864,7 +18864,7 @@
       "hash": "99381358976ad85d152e52cbbab05726315a01c262ab5d73c00c4b94f8546cf6",
       "source": {
         "file": "practice-ui.ts",
-        "line": 33
+        "line": 34
       },
       "placeholders": [],
       "status": "approved"
@@ -18874,7 +18874,7 @@
       "hash": "9582eefb83def373d8f5c29e1ad9f57b150b14c0d6df08ab193d66e336af7500",
       "source": {
         "file": "practice-ui.ts",
-        "line": 221
+        "line": 222
       },
       "placeholders": [],
       "status": "approved"
@@ -18884,7 +18884,7 @@
       "hash": "ee075885c9281f770f489778da89da5adc9cdd68600c3523b85b89e312399e60",
       "source": {
         "file": "practice-ui.ts",
-        "line": 271
+        "line": 272
       },
       "placeholders": [],
       "status": "approved"
@@ -18894,7 +18894,7 @@
       "hash": "49365f077495fa21df3fabc4f5bc2cdbcb083f4eedffd89bfb63de3751c0093d",
       "source": {
         "file": "practice-ui.ts",
-        "line": 181
+        "line": 182
       },
       "placeholders": [],
       "status": "approved"
@@ -18904,7 +18904,7 @@
       "hash": "47283f7901e65a70b8aece85837ee5ba4ccf961e9a3aa191d694d9b4f607a017",
       "source": {
         "file": "practice-ui.ts",
-        "line": 277
+        "line": 278
       },
       "placeholders": [],
       "status": "approved"
@@ -18914,7 +18914,7 @@
       "hash": "d3857b12b4cea2bc5d8ea0b8c2ce9cc3d5dc426e0bf3ea06394ddb906e6d60a0",
       "source": {
         "file": "practice-ui.ts",
-        "line": 202
+        "line": 203
       },
       "placeholders": [],
       "status": "approved"
@@ -18924,7 +18924,7 @@
       "hash": "e42051d8fb97b06777242cb603e4efc01c084e222c43b5759af66200d9ceee05",
       "source": {
         "file": "practice-ui.ts",
-        "line": 186
+        "line": 187
       },
       "placeholders": [],
       "status": "approved"
@@ -18934,7 +18934,7 @@
       "hash": "b05f5312f52ea4878e6aea261af94d91ecd31ac339d6c2a9f1c4b7eae65caea4",
       "source": {
         "file": "practice-ui.ts",
-        "line": 184
+        "line": 185
       },
       "placeholders": [],
       "status": "approved"
@@ -18944,7 +18944,7 @@
       "hash": "e87c94b2792702af59b5862d8e5d2326bfdf4870ecefe53ac5f49fad85440a06",
       "source": {
         "file": "practice-ui.ts",
-        "line": 283
+        "line": 284
       },
       "placeholders": [],
       "status": "approved"
@@ -18954,7 +18954,7 @@
       "hash": "6519a8e11318c3dbf0cd97bb5348cbdbb897270459bb49938e503cf18c5bd67d",
       "source": {
         "file": "practice-ui.ts",
-        "line": 284
+        "line": 285
       },
       "placeholders": [],
       "status": "approved"
@@ -18964,7 +18964,7 @@
       "hash": "4823595f2ab4c100d330671138b3ad09f4d25dd434c8dc88b9f0c343ce63b09f",
       "source": {
         "file": "practice-ui.ts",
-        "line": 33
+        "line": 34
       },
       "placeholders": [],
       "status": "approved"
@@ -18974,7 +18974,7 @@
       "hash": "eca924069d1aaa9ac152ae99f43da6d030571383634f5906ba0358b177009a18",
       "source": {
         "file": "practice-ui.ts",
-        "line": 289
+        "line": 290
       },
       "placeholders": [],
       "status": "approved"
@@ -18984,7 +18984,7 @@
       "hash": "4ff9529a3abb351e4086e6a10f43668f6245cb5856874c4fd2ab42b59ec5364a",
       "source": {
         "file": "practice-ui.ts",
-        "line": 211
+        "line": 212
       },
       "placeholders": [],
       "status": "approved"
@@ -18994,19 +18994,20 @@
       "hash": "5d348f18de17707e281376a72db25aa5d1f451b10a7a17889f8996dfb3e42016",
       "source": {
         "file": "practice-ui.ts",
-        "line": 166
+        "line": 167
       },
       "placeholders": [
         "0"
       ],
-      "status": "approved"
+      "status": "approved",
+      "dynamic": true
     },
     "learn.practice.ui.show-explanation": {
       "value": "Show explanation",
       "hash": "57673cd034d8f5d4a5b9fe67f0338a1fbf6644c95684045d7cff130758fb3036",
       "source": {
         "file": "practice-ui.ts",
-        "line": 264
+        "line": 265
       },
       "placeholders": [],
       "status": "approved"
@@ -19016,7 +19017,7 @@
       "hash": "5467ab3c1f1231cfabd173a4bb1d692757cc4f01db9c2a0bbab1529ff729aa80",
       "source": {
         "file": "practice-ui.ts",
-        "line": 255
+        "line": 256
       },
       "placeholders": [],
       "status": "approved"
@@ -19026,7 +19027,7 @@
       "hash": "4d9669246f80ce5c0df106c3d0ab2034ac0633c303ff10e2f130c4945ee43e76",
       "source": {
         "file": "practice-ui.ts",
-        "line": 259
+        "line": 260
       },
       "placeholders": [],
       "status": "approved"
@@ -19036,7 +19037,7 @@
       "hash": "d8b8392e2c542950ca64867168e4ef87d4ad606882d5898f826b51c6d553988f",
       "source": {
         "file": "practice-ui.ts",
-        "line": 239
+        "line": 240
       },
       "placeholders": [],
       "status": "approved"
@@ -19046,7 +19047,7 @@
       "hash": "825cd71d697a0f9fa2d1ff396228468ea31d24404b6b2cc36a9dea02d29f9a90",
       "source": {
         "file": "practice-ui.ts",
-        "line": 260
+        "line": 261
       },
       "placeholders": [],
       "status": "approved"
@@ -19056,7 +19057,7 @@
       "hash": "8391da809dd9ca6b46bd1d406cd1e6298334ec421ec1292451c9e2acc2fd10e4",
       "source": {
         "file": "practice-ui.ts",
-        "line": 170
+        "line": 171
       },
       "placeholders": [
         "0",
@@ -19070,7 +19071,7 @@
       "hash": "4234b0726e9c821868854cb419575dc46eaf4753492dd4599de68a1bb5b355fd",
       "source": {
         "file": "practice-ui.ts",
-        "line": 280
+        "line": 281
       },
       "placeholders": [
         "0",
@@ -19086,7 +19087,7 @@
       "hash": "85433704457811a4bd8e572eed1ea4b76a0f4cd0febac55fde0494193fb135d6",
       "source": {
         "file": "practice-ui.ts",
-        "line": 201
+        "line": 202
       },
       "placeholders": [
         "0",
@@ -19101,7 +19102,7 @@
       "hash": "aef172233b19304ca14379905a4cb703d204ff1a474994dff2a5219018abee8f",
       "source": {
         "file": "practice-ui.ts",
-        "line": 260
+        "line": 261
       },
       "placeholders": [
         "0"
@@ -19114,7 +19115,7 @@
       "hash": "201c0fe99975f9a10e79e5743c43dc1e80abaf52123367f08dc131843077a9b5",
       "source": {
         "file": "practice-ui.ts",
-        "line": 209
+        "line": 210
       },
       "placeholders": [],
       "status": "approved"
@@ -19124,7 +19125,7 @@
       "hash": "eb7081c7c48070f287b9318311c2cb80a6df2a8f065aaedad204a7dcde9bfec5",
       "source": {
         "file": "practice-ui.ts",
-        "line": 33
+        "line": 34
       },
       "placeholders": [],
       "status": "approved"
@@ -19134,7 +19135,7 @@
       "hash": "9f0e6ad63076b7efa70aa78ca55d8aa356ba7626248b7ff8d4bea054590f3a91",
       "source": {
         "file": "practice-ui.ts",
-        "line": 206
+        "line": 207
       },
       "placeholders": [
         "0"
@@ -19147,7 +19148,7 @@
       "hash": "186028ec28766fa1c6e9a6900181fe1e5076c2dbd51779b82ba84adef341dabb",
       "source": {
         "file": "practice-ui.ts",
-        "line": 227
+        "line": 228
       },
       "placeholders": [],
       "status": "approved"
@@ -19157,7 +19158,7 @@
       "hash": "f45d30ecee236a7e44aafafc2ba585f26b3a1ae6c22556321f7fc4ca1ca0283f",
       "source": {
         "file": "practice-ui.ts",
-        "line": 227
+        "line": 228
       },
       "placeholders": [],
       "status": "approved"
@@ -19167,7 +19168,7 @@
       "hash": "1d942cc9a8c4a05743f4543b8600292442e934970191cc5a465e88b6da384769",
       "source": {
         "file": "practice-ui.ts",
-        "line": 279
+        "line": 280
       },
       "placeholders": [],
       "status": "approved"
@@ -19207,7 +19208,7 @@
       "hash": "3cf7349dded9a84f90c1ae885ce15375fc2246fe4eea00d001c233673a104850",
       "source": {
         "file": "practice-ui.ts",
-        "line": 32
+        "line": 33
       },
       "placeholders": [],
       "status": "approved"
@@ -19217,7 +19218,7 @@
       "hash": "b703db52fa9d35a96273dfec6e792b48f4888012fc9e5658031058529afc04e2",
       "source": {
         "file": "practice-ui.ts",
-        "line": 31
+        "line": 32
       },
       "placeholders": [],
       "status": "approved"
@@ -19227,7 +19228,7 @@
       "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
       "source": {
         "file": "practice-ui.ts",
-        "line": 31
+        "line": 32
       },
       "placeholders": [],
       "status": "approved"
@@ -19237,7 +19238,7 @@
       "hash": "4a0e60a07e1acae8489d45ceadcbce6bec23adec210ed6cd8f8216a5bf96305e",
       "source": {
         "file": "practice-ui.ts",
-        "line": 31
+        "line": 32
       },
       "placeholders": [],
       "status": "approved"
@@ -19247,7 +19248,7 @@
       "hash": "c31420e31f7b3c59a7da5f3c091487d7b4ae9013e9648def9f667fff6fe3b5b4",
       "source": {
         "file": "practice-ui.ts",
-        "line": 32
+        "line": 33
       },
       "placeholders": [],
       "status": "approved"

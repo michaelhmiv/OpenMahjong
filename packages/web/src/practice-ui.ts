@@ -6,6 +6,7 @@ import { CURATED_EXERCISES, checkPracticeAnswer, validateExercise,
 import { loadPracticeProgress, mergePracticeProgress, parsePracticeProgress, savePracticeProgress,
   recommendExercises, skillEvidence, type PracticeAttempt, type PracticeProgress } from "./education/practice-progress.js";
 import { newGameId } from "./records.js";
+import { tx } from "./i18n/index.js";
 
 export const PRACTICE_SESSION_KEY = "openmahjong.practice-session.v1";
 export interface PracticeViewOptions {
@@ -129,7 +130,7 @@ export function createPracticeView(options: PracticeViewOptions): HTMLElement {
     if ((exercise.kind === "shape" && typeof scalar !== "boolean") ||
       ((exercise.kind === "shanten" || exercise.kind === "scoring") &&
         (typeof scalar !== "number" || !Number.isSafeInteger(scalar)))) {
-      validationMessage = exercise.kind === "shape" ? "Choose a shape answer first." : "Enter a whole number before checking.";
+      validationMessage = exercise.kind === "shape" ? tx("learn.practice.ui.choose-a-shape-answer-first", "Choose a shape answer first.") : tx("learn.practice.ui.enter-a-whole-number-before-checking", "Enter a whole number before checking.");
       render(); return;
     }
     feedback = checkPracticeAnswer(exercise, answer());
@@ -163,34 +164,34 @@ export function createPracticeView(options: PracticeViewOptions): HTMLElement {
   const selection = (value: number | string, label: string, type?: number): HTMLButtonElement => {
     const item = button("", "answer", () => toggle(value));
     item.dataset["answer"] = String(value);
-    item.setAttribute("aria-label", `Select ${label}`);
+    item.setAttribute("aria-label", tx("learn.practice.ui.select-0", `Select ${label}`, label));
     item.setAttribute("aria-pressed", String(selected.has(value)));
     item.disabled = completed;
     if (type !== undefined) { const graphic = tile(type); graphic.setAttribute("aria-hidden", "true"); item.append(graphic); }
-    item.append(el("span", "", `${label}${selected.has(value) ? " ✓" : ""}`));
+    item.append(el("span", "", tx("learn.practice.ui.v-0-1", `${label}${selected.has(value) ? " ✓" : ""}`, label, selected.has(value) ? " ✓" : "")));
     return item;
   };
   function render(): void {
     root.replaceChildren(); root.dataset["exerciseId"] = exercise.id;
     const header = el("header", "learning-header");
-    const back = button("‹", "back", options.onBack); back.setAttribute("aria-label", "Back");
+    const back = button("‹", "back", options.onBack); back.setAttribute("aria-label", tx("learn.practice.ui.back", "Back"));
     const help = button("?", "help", () => { assisted = true; saveSession();
       const explanation = root.querySelector<HTMLDetailsElement>(".practice-explanation");
       if (explanation) { explanation.open = true; explanation.querySelector("summary")?.focus(); }
-    }); help.setAttribute("aria-label", "Explain this exercise");
-    header.append(back, el("div", "wordmark", "OPEN MAHJONG"), help);
+    }); help.setAttribute("aria-label", tx("learn.practice.ui.explain-this-exercise", "Explain this exercise"));
+    header.append(back, el("div", "wordmark", tx("learn.practice.ui.open-mahjong", "OPEN MAHJONG")), help);
     root.append(header);
     const content = el("section", "learning-content content");
-    content.tabIndex = 0; content.setAttribute("aria-label", "Practice exercise");
+    content.tabIndex = 0; content.setAttribute("aria-label", tx("learn.practice.ui.practice-exercise", "Practice exercise"));
     const selectors = el("div", "practice-selectors");
-    const categoryLabel = el("label", "", "Practice category");
-    const category = el("select"); category.setAttribute("aria-label", "Practice category");
-    for (const skill of skills) { const option = el("option", "", NAMES[skill] ?? skill); option.value = skill; category.append(option); }
+    const categoryLabel = el("label", "", tx("learn.practice.ui.practice-category", "Practice category"));
+    const category = el("select"); category.setAttribute("aria-label", tx("learn.practice.ui.practice-category", "Practice category"));
+    for (const skill of skills) { const option = el("option", "", tx(`learn.practice.skill.${skill}`, NAMES[skill] ?? skill)); option.value = skill; category.append(option); }
     category.value = exercise.skill;
     category.addEventListener("change", () => start(exercises.find((entry) => entry.skill === category.value)!));
     categoryLabel.append(category);
-    const exerciseLabel = el("label", "", "Exercise");
-    const choose = el("select"); choose.setAttribute("aria-label", "Exercise");
+    const exerciseLabel = el("label", "", tx("learn.practice.ui.exercise", "Exercise"));
+    const choose = el("select"); choose.setAttribute("aria-label", tx("learn.practice.ui.exercise", "Exercise"));
     for (const entry of exercises.filter((entry) => entry.skill === exercise.skill)) {
       const option = el("option", "", entry.id.replace(/-/g, " ")); option.value = entry.id; choose.append(option);
     }
@@ -198,33 +199,33 @@ export function createPracticeView(options: PracticeViewOptions): HTMLElement {
     choose.addEventListener("change", () => start(exercises.find((entry) => entry.id === choose.value)!));
     exerciseLabel.append(choose); selectors.append(categoryLabel, exerciseLabel); content.append(selectors);
     const group = exercises.filter((entry) => entry.skill === exercise.skill);
-    content.append(el("div", "eyebrow", `${(NAMES[exercise.skill] ?? exercise.skill).toUpperCase()} · EXERCISE ${group.indexOf(exercise) + 1} OF ${group.length}`),
-      el("h1", "", NAMES[exercise.skill] ?? "Practice"), el("p", "intro", exercise.prompt));
+    content.append(el("div", "eyebrow", tx("learn.practice.ui.v-0-exercise-1-of-2", `${tx(`learn.practice.skill.${exercise.skill}`, NAMES[exercise.skill] ?? exercise.skill).toUpperCase()} · EXERCISE ${group.indexOf(exercise) + 1} OF ${group.length}`, tx(`learn.practice.skill.${exercise.skill}`, NAMES[exercise.skill] ?? exercise.skill).toUpperCase(), group.indexOf(exercise) + 1, group.length)),
+      el("h1", "", tx(`learn.practice.skill.${exercise.skill}`, NAMES[exercise.skill] ?? "Practice")), el("p", "intro", exercise.prompt));
     if ("position" in exercise) {
       const counts = "counts" in exercise.position ? exercise.position.counts : exercise.position.handCounts;
       const types = counts.flatMap((count, type) => Array.from({ length: count }, () => type));
-      content.append(hand(types, `YOUR ${types.length} TILES`));
+      content.append(hand(types, tx("learn.practice.ui.your-0-tiles", `YOUR ${types.length} TILES`, types.length)));
       if (exercise.kind === "ukeire") {
         const visible = exercise.position.visibleOutsideHand.flatMap((count, type) => Array.from({ length: count }, () => type));
-        if (visible.length) content.append(hand(visible, "VISIBLE OUTSIDE YOUR HAND"));
+        if (visible.length) content.append(hand(visible, tx("learn.practice.ui.visible-outside-your-hand", "VISIBLE OUTSIDE YOUR HAND")));
       }
-    } else if (exercise.kind === "defense") content.append(hand(exercise.discarded, "RIICHI OPPONENT'S DISCARDS"));
-    const answers = el("div", "answers"); answers.setAttribute("aria-label", "Answer choices");
+    } else if (exercise.kind === "defense") content.append(hand(exercise.discarded, tx("learn.practice.ui.riichi-opponents-discards", "RIICHI OPPONENT'S DISCARDS")));
+    const answers = el("div", "answers"); answers.setAttribute("aria-label", tx("learn.practice.ui.answer-choices", "Answer choices"));
     if (exercise.kind === "recognition") exercise.tiles.forEach((type, index) => answers.append(selection(index, tileLabel(type), type)));
     else if (exercise.kind === "waits" || exercise.kind === "ukeire") {
       for (let type = 0; type < 34; type++) if (!completed || selected.has(type)) answers.append(selection(type, tileLabel(type), type));
     } else if (exercise.kind === "defense") exercise.candidates.forEach((type) => answers.append(selection(type, tileLabel(type), type)));
     else if (exercise.kind === "yaku") {
-      for (const [id, name] of Object.entries(YAKU)) answers.append(selection(id, name));
+      for (const [id, name] of Object.entries(YAKU)) answers.append(selection(id, tx(`learn.practice.yaku.${id}`, name)));
     } else if (exercise.kind === "shape") {
       for (const value of [true, false]) {
-        const item = button(value ? "Complete shape" : "Incomplete shape", "answer", () => {
+        const item = button(value ? tx("learn.practice.ui.complete-shape", "Complete shape") : tx("learn.practice.ui.incomplete-shape", "Incomplete shape"), "answer", () => {
           if (completed) return; scalar = value; feedback = null; saveSession(); render();
         });
         item.setAttribute("aria-pressed", String(scalar === value)); item.disabled = completed; answers.append(item);
       }
     } else {
-      const label = el("label", "numeric-answer", exercise.kind === "scoring" ? "Your answer (points)" : "Your answer (shanten)");
+      const label = el("label", "numeric-answer", exercise.kind === "scoring" ? tx("learn.practice.ui.your-answer-points", "Your answer (points)") : tx("learn.practice.ui.your-answer-shanten", "Your answer (shanten)"));
       const input = el("input"); input.type = "number"; input.step = "1";
       input.setAttribute("aria-label", label.textContent!); input.inputMode = "numeric";
       input.value = typeof scalar === "number" ? String(scalar) : ""; input.disabled = completed;
@@ -236,7 +237,7 @@ export function createPracticeView(options: PracticeViewOptions): HTMLElement {
     if (validationMessage) { const message = el("p", "dim", validationMessage); message.setAttribute("role", "alert"); content.append(message); }
     if (feedback) {
       const box = el("div", "card feedback"); box.tabIndex = -1; box.setAttribute("role", "status"); box.setAttribute("aria-live", "polite");
-      box.append(el("h2", "", feedback.correct ? "Correct" : "Try again"));
+      box.append(el("h2", "", feedback.correct ? tx("learn.practice.ui.correct", "Correct") : tx("learn.practice.ui.try-again", "Try again")));
       if (feedback.correct) {
         // The explanation names the answer, so it renders only once
         // the exercise is answered correctly. While it is still open,
@@ -252,41 +253,41 @@ export function createPracticeView(options: PracticeViewOptions): HTMLElement {
         if (typeof feedback.extraPicks === "number" && typeof feedback.missingPicks === "number") {
           if (exercise.kind === "recognition" || exercise.kind === "waits" ||
             exercise.kind === "ukeire" || exercise.kind === "defense") {
-            box.append(el("p", "dim", "Tap a picked tile again to un-pick it."));
+            box.append(el("p", "dim", tx("learn.practice.ui.tap-a-picked-tile-again-to-un-pick-it", "Tap a picked tile again to un-pick it.")));
           }
         }
       }
-      if (exercise.kind === "waits") box.append(el("p", "dim", "This checks the hand's shape. A legal win also needs a yaku and must satisfy furiten rules."));
-      if (typeof feedback.facts["unseenImprovingCopies"] === "number") box.append(el("p", "dim", `${feedback.facts["unseenImprovingCopies"]} unseen improving copies; their actual locations are unknown.`));
+      if (exercise.kind === "waits") box.append(el("p", "dim", tx("learn.practice.ui.this-checks-the-hands-shape-a-legal-win-also-nee", "This checks the hand's shape. A legal win also needs a yaku and must satisfy furiten rules.")));
+      if (typeof feedback.facts[tx("learn.practice.ui.unseenimprovingcopies", "unseenImprovingCopies")] === "number") box.append(el("p", "dim", tx("learn.practice.ui.v-0-unseen-improving-copies-their-actual-locations", `${feedback.facts[tx("learn.practice.ui.unseenimprovingcopies", "unseenImprovingCopies")]} unseen improving copies; their actual locations are unknown.`, feedback.facts[tx("learn.practice.ui.unseenimprovingcopies", "unseenImprovingCopies")])));
       content.append(box);
     }
     const details = el("details", "practice-explanation");
-    const summary = el("summary", "", "Show explanation");
+    const summary = el("summary", "", tx("learn.practice.ui.show-explanation", "Show explanation"));
     // The browser queues `toggle`; record assistance in the opening click
     // itself so a quick subsequent submission cannot be counted independent.
     summary.addEventListener("click", () => { if (!details.open) { assisted = true; saveSession(); } });
     details.append(summary, el("p", "", exercise.explanation));
     details.addEventListener("toggle", () => { if (details.open) { assisted = true; saveSession(); } });
     content.append(details);
-    const primary = button(completed ? "Next exercise" : "Check answer", "primary", completed ? () => {
+    const primary = button(completed ? tx("learn.practice.ui.next-exercise", "Next exercise") : tx("learn.practice.ui.check-answer", "Check answer"), "primary", completed ? () => {
       const group = exercises.filter((entry) => entry.skill === exercise.skill);
       start(group[(group.indexOf(exercise) + 1) % group.length]!);
     } : submit);
     if (completed) primary.dataset["practiceNext"] = "true";
     content.append(primary);
-    content.append(el("p", "source", "OpenMahjong riichi · exact rules check"));
+    content.append(el("p", "source", tx("learn.practice.ui.openmahjong-riichi-exact-rules-check", "OpenMahjong riichi · exact rules check")));
     const evidence = skillEvidence(progress).find((entry) => entry.skill === exercise.skill)!;
-    const stats = el("details", "practice-evidence"); stats.append(el("summary", "", "Your practice evidence"));
-    stats.append(el("p", "dim", `${evidence.unassistedCorrect} correct of ${evidence.unassistedFirstAttempts} independent first responses · ${evidence.assistedAttempts} assisted · ${evidence.retries} retries. Lesson completion is separate from this evidence.`));
+    const stats = el("details", "practice-evidence"); stats.append(el("summary", "", tx("learn.practice.ui.your-practice-evidence", "Your practice evidence")));
+    stats.append(el("p", "dim", tx("learn.practice.ui.v-0-correct-of-1-independent-first-responses-2-ass", `${evidence.unassistedCorrect} correct of ${evidence.unassistedFirstAttempts} independent first responses · ${evidence.assistedAttempts} assisted · ${evidence.retries} retries. Lesson completion is separate from this evidence.`, evidence.unassistedCorrect, evidence.unassistedFirstAttempts, evidence.assistedAttempts, evidence.retries)));
     const recommended = recommendExercises(exercises.filter((entry) => entry.id !== exercise.id), progress,
       Math.max(0, Math.floor(now())), 1)[0];
-    stats.append(el("p", "dim", "Recommendations prioritize due reviews, then unseen exercises. Every exercise remains available in the selectors."));
-    if (recommended) stats.append(button("Recommended practice", "primary", () => start(recommended)));
-    stats.append(el("p", "dim", "Browser-only progress can be lost when site data is removed. Accuracy is practice evidence, not a competitive skill rating."));
+    stats.append(el("p", "dim", tx("learn.practice.ui.recommendations-prioritize-due-reviews-then-unse", "Recommendations prioritize due reviews, then unseen exercises. Every exercise remains available in the selectors.")));
+    if (recommended) stats.append(button(tx("learn.practice.ui.recommended-practice", "Recommended practice"), "primary", () => start(recommended)));
+    stats.append(el("p", "dim", tx("learn.practice.ui.browser-only-progress-can-be-lost-when-site-data", "Browser-only progress can be lost when site data is removed. Accuracy is practice evidence, not a competitive skill rating.")));
     content.append(stats);
     const supplement = options.renderSupplement?.();
     if (supplement) content.append(supplement);
-    if (options.onReview) content.append(button("Return to review", "primary", options.onReview));
+    if (options.onReview) content.append(button(tx("learn.practice.ui.return-to-review", "Return to review"), "primary", options.onReview));
     root.append(content);
   }
   saveSession(); render(); return root;

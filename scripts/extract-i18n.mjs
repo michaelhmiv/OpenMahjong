@@ -705,6 +705,15 @@ function extractSourceFile(rel, absPath) {
       // misattributes it and collides when the values differ
       // (rewire PR: nested tx() composition, e.g. a translated
       // sentence whose ${...} branch is itself a tx() call).
+      // A literal that IS a direct argument of tx()/tForLocale() but
+      // is not the fallback (the key — including a computed key
+      // template such as `learn.practice.skill.${skill}` — or the
+      // locale) belongs to that call and is never display text on its
+      // own: return without claiming it, so an outer helper rule
+      // (practice-ui el's labelled arg 2) cannot mint a key for it
+      // (rewire PR: the key template was inventoried as
+      // learn.practice.ui.learn-practice-skill-0). A literal nested
+      // deeper than a direct argument still falls through below.
       if (call.name === "tx" || call.name === "tForLocale") {
         const fallbackIdx = call.name === "tx" ? 1 : 2;
         if (call.node.arguments[fallbackIdx] === node) {
@@ -726,7 +735,14 @@ function extractSourceFile(rel, absPath) {
           }
           return;
         }
+        if (call.node.arguments.includes(node)) return;
         continue;
+      }
+      // t("key", ...args): the key and the interpolation values are
+      // code, not display text — a literal key id must never be
+      // inventoried (same rule as tx() above, for the key argument).
+      if (call.name === "t" && call.node.arguments.includes(node)) {
+        return;
       }
       // h(tag, attrs, ...children): string children are UI text. The
       // literal may be nested inside a child argument (a ternary choosing
