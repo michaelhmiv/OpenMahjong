@@ -599,6 +599,14 @@ const LEARN_SECTIONS: { id: string; key: string; title: string; modules: typeof 
   { id: "riichi", key: "learn.riichi.section-title", title: "Riichi", modules: MODULES },
 ];
 
+/** A variant release's display name in the session locale
+ *  (`common.variant.<slug>` — "Hong Kong Old Style" renders 香港旧式 in
+ *  ja, 香港老式规则 in zh-Hans, and so on). The raw release name is
+ *  English; rendering it raw is the same bug the rewire fixes. */
+function releaseName(release: { name: string }): string {
+  return t(`common.variant.${slugify(release.name)}`);
+}
+
 /** Live state of an in-progress game, derived from its saved record
  *  by the engine — the only source the Continue card and the Games
  *  in-progress row may read. */
@@ -1064,7 +1072,7 @@ export class App {
       const picker = h("div", { class: "seg play-variant-seg", role: "radiogroup", "aria-label": tx("ui.app.play-variant", "Play variant") });
       const choices: [VariantId | "riichi", string][] = [
         ["riichi", tx("ui.app.riichi", "Riichi")],
-        ...releases.map(v => [v.id, v.name] as [VariantId | "riichi", string]),
+        ...releases.map(v => [v.id, releaseName(v)] as [VariantId | "riichi", string]),
       ];
       const choose = (id: VariantId | "riichi") => {
         if (this.variantChoice === id) return;
@@ -1275,13 +1283,14 @@ export class App {
       if (runner.result) return null;
       const model = foldEvents(runner.events, runner.humanSeat, runner.chiHints);
       const human = model.players[runner.humanSeat]!;
+      const release = saved.v === 3 ? VARIANT_RELEASES.find(v => v.id === saved.variant) : undefined;
       const ranked = [...model.players].sort(
         (a, b) => b.score - a.score || a.seatWind - b.seatWind,
       );
       const byWind = [...model.players].sort((a, b) => a.seatWind - b.seatWind);
       return {
         round: tx("ui.app.v-0-1-3", `${WIND_NAMES[model.roundWind]} ${model.kyoku}`, WIND_NAMES[model.roundWind], model.kyoku),
-        lengthLabel: tx("ui.app.v-0-1", `${saved.v === 3 ? (VARIANT_RELEASES.find(v=>v.id===saved.variant)?.name ?? saved.variant) + " · " : ""}${saved.length === "full" ? "Four rounds" : saved.length === "south" ? "East + South" : tx("ui.app.east-only", "East only")}`, saved.v === 3 ? (VARIANT_RELEASES.find(v=>v.id===saved.variant)?.name ?? saved.variant) + " · " : "", saved.length === "full" ? "Four rounds" : saved.length === "south" ? "East + South" : tx("ui.app.east-only", "East only")),
+        lengthLabel: tx("ui.app.v-0-1", `${saved.v === 3 ? (release?.name ?? saved.variant) + " · " : ""}${saved.length === "full" ? "Four rounds" : saved.length === "south" ? "East + South" : tx("ui.app.east-only", "East only")}`, saved.v === 3 ? (release ? releaseName(release) : saved.variant) + " · " : "", saved.length === "full" ? "Four rounds" : saved.length === "south" ? "East + South" : tx("ui.app.east-only", "East only")),
         standing: `You are ${placementLabel(ranked.indexOf(human) + 1)}`,
         humanScore: human.score,
         scores: byWind.map((p) => ({
@@ -2015,7 +2024,7 @@ export class App {
     page.append(h("h2", {}, tx("ui.app.games", "Games")));
     if (VARIANT_RELEASES.some(v=>v.released)) {
       const picker=h("select",{"aria-label":tx("ui.app.games-variant", "Games variant"),class:"play-variant"});
-      for (const [id,name] of [["riichi",tx("ui.app.riichi", "Riichi")],...VARIANT_RELEASES.filter(v=>v.released).map(v=>[v.id,v.name])]) picker.append(h("option",{value:id!},name!));
+      for (const [id,name] of [["riichi",tx("ui.app.riichi", "Riichi")],...VARIANT_RELEASES.filter(v=>v.released).map(v=>[v.id,releaseName(v)])]) picker.append(h("option",{value:id!},name!));
       picker.value=selectedVariant;picker.addEventListener("change",()=>{this.historyVariant=picker.value as VariantId | "riichi";void this.renderGames();});page.append(picker);
     }
     const east = rows.filter((r) => r.length === "east").length;
@@ -4182,7 +4191,7 @@ export class App {
       "data-section": release.id,
     });
     head.append(
-      h("span", { class: "secttl" }, release.id === "mcr" ? tx("ui.app.mcr-mahjong-competition-rules", "MCR (Mahjong Competition Rules)") : release.name),
+      h("span", { class: "secttl" }, release.id === "mcr" ? tx("ui.app.mcr-mahjong-competition-rules", "MCR (Mahjong Competition Rules)") : releaseName(release)),
       h("span", { class: "seccount" }, tx("ui.app.v-0-of-1-lessons-done", `${doneCount} of ${lessons.length} lessons done`, doneCount, lessons.length)),
     );
     head.insertAdjacentHTML(
@@ -4204,7 +4213,7 @@ export class App {
     fill.style.width = `${lessons.length ? Math.round((doneCount / lessons.length) * 100) : 0}%`;
     bar.append(fill);
     wrap.append(bar);
-    const practice = h("button", { class: "pillbtn" }, tx("ui.app.practice-0", `Practice ${release.name}`, release.name));
+    const practice = h("button", { class: "pillbtn" }, tx("ui.app.practice-0", `Practice ${release.name}`, releaseName(release)));
     practice.addEventListener("click", () => {
       this.variantLearningId = release.id;
       this.variantPracticeMode = true;

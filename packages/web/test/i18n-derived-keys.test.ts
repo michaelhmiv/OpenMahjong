@@ -17,6 +17,7 @@ import cardData from "../src/education/practice-card.json" with {
   type: "json",
 };
 import { mcrPatternGuide } from "../src/education/mcr-guide.js";
+import { mcrPatterns } from "@openmahjong/engine";
 
 /**
  * Derived-key coverage (brief-i18n-v1 rewire, CI layer 2): the renderers
@@ -165,6 +166,18 @@ describe("derived keys: MCR guide and releases", () => {
         `learn.mcr.guide.pattern.${slug}.exclusions`,
         p.restrictions,
       );
+    }
+  });
+
+  it("every engine MCR win pattern name resolves to its guide key", () => {
+    // The variant-table win breakdown renders pattern names through the
+    // guide keys (variant-table-ui.ts patternName). The guide is built
+    // from mcrPatterns(), so the names must match exactly — a mismatch
+    // would render a key id on the table (t() returns the key on a miss).
+    const patterns = mcrPatterns();
+    expect(patterns.length).toBe(81);
+    for (const p of patterns) {
+      expectKey(`learn.mcr.guide.pattern.${slugify(p.name)}.name`, p.name);
     }
   });
 

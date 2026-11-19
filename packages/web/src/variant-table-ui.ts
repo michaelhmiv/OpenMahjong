@@ -11,7 +11,7 @@ import type { Decision } from "./runner.js";
 import { renderVariantPublicBoard } from "./variant-board-ui.js";
 import type { Settings } from "./settings.js";
 import type { ClickKind } from "./sound.js";
-import { t, tx } from "./i18n/index.js";
+import { keyStatus, slugify, t, tx } from "./i18n/index.js";
 
 const WINDS = ["East", "South", "West", "North"];
 /** Variant id -> { key, label }. Module scope (built before initI18n),
@@ -358,6 +358,16 @@ export function mountVariantTable(
     controls.replaceChildren();
     coach.replaceChildren();
     if (paused) {
+      // MCR win patterns have guide keys (learn.mcr.guide.pattern.<slug>.name);
+      // Hong Kong / Taiwanese patterns have no standalone keys yet, so
+      // their English engine names render as-is (follow-up: mint keys).
+      // The keyStatus guard keeps a future engine pattern from leaking a
+      // key id onto the screen — t() returns the key itself on a miss.
+      const patternName = (name: string): string => {
+        if (runner.variant !== "mcr") return name;
+        const key = `learn.mcr.guide.pattern.${slugify(name)}.name`;
+        return keyStatus(key) === "missing" ? name : t(key);
+      };
       const breakdown = el("section", "", "card variant-breakdown");
       if (model.lastWin) {
         const win = model.lastWin;
@@ -369,7 +379,7 @@ export function mountVariantTable(
           ),
         );
         for (const p of win.patterns ?? [])
-          breakdown.append(el("p", tx("play.variant.v-0-1", `${p.name} · ${p.units}`, p.name, p.units)));
+          breakdown.append(el("p", tx("play.variant.v-0-1", `${p.name} · ${p.units}`, patternName(p.name), p.units)));
         if (runner.variant === "hong-kong")
           breakdown.append(
             el(
