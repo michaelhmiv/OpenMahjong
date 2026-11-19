@@ -179,14 +179,25 @@ export function mountInPerson(
           "dim",
         ),
       );
+    const savedSessions = readTables(options.accountId);
     main.append(
       el(
         "p",
         tx("tools.inperson.manual-calculation-and-scorekeeping-work-offline", "Manual calculation and scorekeeping work offline. Sessions use points; agree any monetary stakes at your table."),
         "dim",
       ),
+    );
+    // Empty state at zero saved sessions (audit C17): starting a
+    // session is the screen's primary verb (the sheet-tinted
+    // .primary); the one-off calculator is the quieter panel
+    // button, so the two no longer carry equal weight.
+    if (!savedSessions.length)
+      main.append(
+        el("p", tx("tools.inperson.no-sessions-yet", "No sessions yet."), "dim"),
+      );
+    main.append(
       button(tx("tools.inperson.new-table-session", "New table session"), setup),
-      button(tx("tools.inperson.one-off-hand-calculator", "One-off hand calculator"), showStandalone),
+      button(tx("tools.inperson.one-off-hand-calculator", "One-off hand calculator"), showStandalone, ""),
     );
     if (options.accountId) {
       main.append(
@@ -353,8 +364,11 @@ export function mountInPerson(
   }
   function payments(
     values: readonly { from: number; to: number; amount: number }[],
+    boxed = true,
   ): HTMLElement {
-    const box = el("div", "", "payment-lines");
+    // Ledger entries pass boxed=false: their payment line is a
+    // plain divider-list row, not the deep-tint block (audit C14).
+    const box = el("div", "", boxed ? "payment-lines" : "payment-lines cx-ledger-pay");
     for (const p of values)
       box.append(
         el(
@@ -577,6 +591,10 @@ export function mountInPerson(
         ),
       );
     main.append(el("h2", tx("tools.inperson.hand-ledger", "Hand ledger")));
+    if (!totals.rows.length)
+      main.append(
+        el("p", tx("tools.inperson.no-hands-recorded-yet", "No hands recorded yet."), "dim"),
+      );
     for (const row of totals.rows) {
       const card = el("section", "", "card ledger-row");
       card.append(
@@ -593,14 +611,14 @@ export function mountInPerson(
       );
       if (row.event.kind === "win")
         for (const draft of row.event.wins)
-          card.append(payments(calculateDraft(draft).payments));
+          card.append(payments(calculateDraft(draft).payments, false));
       if (row.event.kind === "penalty")
-        card.append(el("p", row.event.reason), payments(row.event.payments));
+        card.append(el("p", row.event.reason), payments(row.event.payments, false));
       card.append(
         el(
           "p",
           row.delta
-            .map((delta, i) => tx("tools.inperson.v-0-1-2-2", `${name(i)} ${delta > 0 ? "+" : ""}${delta}`, name(i), delta > 0 ? "+" : "", delta))
+            .map((delta, i) => tx("tools.inperson.v-0-1-2-2", `${name(i)} ${delta > 0 ? "+" : ""}${delta}`, name(i), delta > 0 ? "+" : delta < 0 ? "-" : "", Math.abs(delta).toLocaleString("en-US")))
             .join(" · "),
           "dim",
         ),
@@ -939,11 +957,20 @@ export function mountInPerson(
   function renderSettlement(host: HTMLElement): void {
     if (!current) return;
     const result = sessionSettlement(current.session);
+    // Competition ranking is kept ("1., 2., 2., 4."), but a shared
+    // rank is labelled so it does not read as a numbering error
+    // (audit B8).
+    const rankCounts = new Map<number, number>();
+    for (const entry of result.standings)
+      rankCounts.set(entry.rank, (rankCounts.get(entry.rank) ?? 0) + 1);
     for (const entry of result.standings)
       host.append(
         el(
           "p",
-          tx("tools.inperson.v-0-1-2-points-3-4-5", `${entry.rank}. ${name(entry.seat)} · ${entry.score.toLocaleString("en-US")} points · ${entry.points > 0 ? "+" : ""}${formatStandingsPoints(entry.points)}${current.session.settings.settlement === "openmahjong" ? " " + tx("tools.inperson.rank-settlement", "rank settlement") : " " + tx("tools.inperson.net-points", "net points")}`, entry.rank, name(entry.seat), entry.score.toLocaleString("en-US"), entry.points > 0 ? "+" : "", formatStandingsPoints(entry.points), current.session.settings.settlement === "openmahjong" ? " " + tx("tools.inperson.rank-settlement", "rank settlement") : " " + tx("tools.inperson.net-points", "net points")),
+          tx("tools.inperson.v-0-1-2-points-3-4-5", `${entry.rank}. ${name(entry.seat)} · ${entry.score.toLocaleString("en-US")} points · ${entry.points > 0 ? "+" : ""}${formatStandingsPoints(entry.points)}${current.session.settings.settlement === "openmahjong" ? " " + tx("tools.inperson.rank-settlement", "rank settlement") : " " + tx("tools.inperson.net-points", "net points")}`, entry.rank, name(entry.seat), entry.score.toLocaleString("en-US"), entry.points > 0 ? "+" : "", formatStandingsPoints(entry.points), current.session.settings.settlement === "openmahjong" ? " " + tx("tools.inperson.rank-settlement", "rank settlement") : " " + tx("tools.inperson.net-points", "net points")) +
+            ((rankCounts.get(entry.rank) ?? 0) > 1
+              ? " " + tx("tools.inperson.tied", "· Tied")
+              : ""),
           "card",
         ),
       );

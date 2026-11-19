@@ -231,3 +231,44 @@ describe("medium surface system: board review dealer mark", () => {
     root.remove();
   });
 });
+
+describe("compact calculator audit fixes (full-audit-v1 PR4)", () => {
+  const compact = readFileSync(
+    resolve(process.cwd(), `${WEB}/src/compact.css`),
+    "utf8",
+  );
+  const compactRules = rules(compact);
+  const cxBy = (sel: string) => compactRules.filter((r) => r.selector === sel);
+
+  it("F7: seat tiles pad to the §16 ≈70px rendered height", () => {
+    const seat = cxBy(
+      ".learning-shell.table-tools .tools-content .cx-seat",
+    )[0]!;
+    expect(seat.body).toContain("padding: 7px 12px");
+    expect(seat.body).toContain("min-height: 70px");
+  });
+
+  it("B10: the action row wraps labels inside their own button", () => {
+    const action = cxBy(
+      ".learning-shell.table-tools .tools-content button.cx-action",
+    )[0]!;
+    expect(action.body).toContain("white-space: normal");
+    expect(action.body).not.toContain("nowrap");
+  });
+
+  it("F20/N5: selected seat chips wear the face tint and chips stay single-line", () => {
+    const sel = cxBy(
+      ".learning-shell.table-tools .tools-content button.cx-seatchip.sel",
+    ).at(-1)!;
+    expect(sel.body).toContain("background: var(--tint)");
+    const chip = cxBy(
+      ".learning-shell.table-tools .tools-content button.cx-seatchip",
+    )[0]!;
+    expect(chip.body).toContain("white-space: nowrap");
+  });
+
+  it("C14: ledger payment lines are de-boxed in compact.css", () => {
+    const ledger = cxBy(".table-tools .payment-lines.cx-ledger-pay")[0]!;
+    expect(ledger.body).toContain("background: transparent");
+  });
+});

@@ -514,3 +514,46 @@ describe("offline account copy identity", () => {
     expect(readTables("account-a")).toEqual([]);
   });
 });
+
+describe("calculator audit fixes (full-audit-v1 PR4)", () => {
+  it("C17/C18: calculator home and a fresh scorekeeper carry empty states", () => {
+    mount();
+    expect(root.textContent).toContain("No sessions yet.");
+    // Starting a session is the primary verb; the one-off
+    // calculator is not a .primary button.
+    expect(buttonByText("New table session").className).toContain("primary");
+    expect(buttonByText("One-off hand calculator").className).not.toContain(
+      "primary",
+    );
+    click("New table session");
+    click("Start scorekeeper");
+    expect(root.textContent).toContain("Hand ledger");
+    expect(root.textContent).toContain("No hands recorded yet.");
+  });
+
+  it("B8/F19/C14: tied settlement ranks are labelled, ledger deltas use separators, ledger payments are de-boxed", () => {
+    // Record a 12,000 discard win so two seats stay tied at 25,000.
+    mount();
+    click("New table session");
+    click("Start scorekeeper");
+    click("Player 1 · 25,000 points");
+    click("On a discard");
+    click("Player 2 · South");
+    click("5");
+    click("Show payments");
+    click("Confirm and add to table");
+    const row = root.querySelector(".ledger-row");
+    expect(row).not.toBeNull();
+    expect(row!.querySelector(".payment-lines")!.classList).toContain(
+      "cx-ledger-pay",
+    );
+    expect(row!.textContent).toContain("Player 1 +12,000");
+    expect(row!.textContent).toContain("Player 2 -12,000");
+    expect(row!.textContent).not.toContain("+12000");
+    click("Settlement");
+    expect(root.textContent).toContain("2. Player 3 · 25,000 points");
+    expect(root.textContent).toContain("· Tied");
+    // The untied ranks carry no Tied label: exactly two tied rows.
+    expect(root.textContent!.match(/· Tied/g)).toHaveLength(2);
+  });
+});

@@ -269,7 +269,7 @@ export function mountRiichiCalculator(
       );
       screen.append(panel);
     } else {
-      const panel = el("section", "", "cx-panel");
+      const panel = el("section", "", "cx-panel cx-value-panel");
       hanCtl = cxStepperChips({
         label: tx("calc.riichi.han", "Han"),
         value: hanVal,
@@ -320,6 +320,17 @@ export function mountRiichiCalculator(
       );
     }
     screen.append(live);
+    // The primary verb comes first: with the tiles escalation
+    // interposed above it, "Show payments" fell below the fold
+    // at 390×844 (audit B7). The escalation follows it.
+    if (!opts.standalone)
+      screen.append(
+        btn(
+          tx("calc.riichi.show-payments", "Show payments"),
+          () => opts.safe(() => renderPreview(fastDraft())),
+          "primary",
+        ),
+      );
     if (variant === "riichi") {
       screen.append(
         btn(tx("calc.riichi.score-it-from-the-tiles", "Score it from the tiles"), () => renderTiles(), "cx-quiet"),
@@ -330,14 +341,6 @@ export function mountRiichiCalculator(
         ),
       );
     }
-    if (!opts.standalone)
-      screen.append(
-        btn(
-          tx("calc.riichi.show-payments", "Show payments"),
-          () => opts.safe(() => renderPreview(fastDraft())),
-          "primary",
-        ),
-      );
     paintLive();
 
     function paintLive(): void {
