@@ -5,7 +5,7 @@
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
     "generatedAt": "2026-11-19T11:41:25.547Z",
-    "keyCount": 3729,
+    "keyCount": 3700,
     "model": "qwen/qwen-plus",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -29466,60 +29466,6 @@
       },
       "placeholders": []
     },
-    "play.variant.band": {
-      "value": "帶",
-      "hash": "65f15ce8fee25b248445eedc63cd9a82094e35965e4ed552e195029a9311d474",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 110
-      },
-      "placeholders": []
-    },
-    "play.variant.bandtop": {
-      "value": "帶頂",
-      "hash": "032c7310afdcc332badaeb16bf5cf58d6bfdba92222d6089154945de0ca560f5",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 111
-      },
-      "placeholders": []
-    },
-    "play.variant.cell": {
-      "value": "格",
-      "hash": "39d02b42938b2b75d027ebeb25c9d1fd0b71b6e0453e217a2e85cedc7e4637b4",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 64
-      },
-      "placeholders": []
-    },
-    "play.variant.center": {
-      "value": "中心",
-      "hash": "f179a509d32bd92c923f236324daef85551c03a761bf0188be286a585281b4ac",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 133
-      },
-      "placeholders": []
-    },
-    "play.variant.chip-0-1": {
-      "value": "chip{0}{1}",
-      "hash": "c3f73aedad136ad512c11265d4b5e3ce63ee57cfa1c315b29c7245e52ca86d81",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 116
-      },
-      "placeholders": [
-        "0",
-        "1"
-      ],
-      "dynamic": true
-    },
     "play.variant.close": {
       "value": "關閉",
       "hash": "7d9eb7acb13e24625c404401d8e88b2350e32162455885f18276cf802f7701ed",
@@ -29636,16 +29582,6 @@
       "source": {
         "file": "variant-table-ui.ts",
         "line": 398
-      },
-      "placeholders": []
-    },
-    "play.variant.flip": {
-      "value": "翻面",
-      "hash": "4e448897946ead9e39e8c61c2994b2ada30968ed9d14ac21ebaba710d823db64",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 58
       },
       "placeholders": []
     },
@@ -29772,16 +29708,6 @@
       },
       "placeholders": []
     },
-    "play.variant.meld": {
-      "value": "副露",
-      "hash": "cfe6a6676d638dfdd7bf0966b975f991224e8ee30b29f8b5bc3de7c0ff48c03c",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 80
-      },
-      "placeholders": []
-    },
     "play.variant.move-unavailable": {
       "value": "此動作不可用",
       "hash": "7971e5ed64b1d69fcfe8833b1e06c6fc7ddea65574f1febd287ed2291cca292d",
@@ -29852,16 +29778,6 @@
       },
       "placeholders": []
     },
-    "play.variant.opp-hand": {
-      "value": "對手手牌",
-      "hash": "de6df9f5d6f6500d9bec6f1c099105b49137831eee1ed3eb77161427815205fe",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 103
-      },
-      "placeholders": []
-    },
     "play.variant.pass": {
       "value": "跳過",
       "hash": "ebdf8cc00bc4d9ceee633c56c63b49955769a92ca060825c9b08e4af61326e2b",
@@ -29884,39 +29800,6 @@
         "0"
       ],
       "dynamic": true
-    },
-    "play.variant.pond-0": {
-      "value": "牌河{0}",
-      "hash": "088e51bb39c1da5c62f8203147e064434837435d60a040e3fd1ba87fef246186",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 58
-      },
-      "placeholders": [
-        "0"
-      ],
-      "dynamic": true
-    },
-    "play.variant.pondwrap": {
-      "value": "牌河捲動",
-      "hash": "d8b6bcfb6f9adf8d094d07ce720d376ed5f008dadb5c1cee807b1b05acd57d2a",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 106
-      },
-      "placeholders": []
-    },
-    "play.variant.pondwrap-variant-my-pond": {
-      "value": "牌河捲動變體—我的牌河",
-      "hash": "9f5d838ce634d7a82147a4571a4f6e12b13054cc25366fe45944d67472d10e6b",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 156
-      },
-      "placeholders": []
     },
     "play.variant.recorded-moves-are-being-shown": {
       "value": "正在顯示已記錄的動作…",
@@ -29950,26 +29833,6 @@
         "0"
       ],
       "dynamic": true
-    },
-    "play.variant.rname": {
-      "value": "rname",
-      "hash": "51d2a1cee0095f95af9119f50be96813a37e2d84e52f7f485f7e93e254541f6d",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 138
-      },
-      "placeholders": []
-    },
-    "play.variant.round": {
-      "value": "圈",
-      "hash": "a97b0931730e83fbf9284ff00a4c5f7a4eef2189dddb89319a6dfa5871e28923",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 135
-      },
-      "placeholders": []
     },
     "play.variant.select-0": {
       "value": "選擇 {0}",
@@ -30033,19 +29896,6 @@
       },
       "placeholders": []
     },
-    "play.variant.sidehand-0": {
-      "value": "旁觀手牌 {0}",
-      "hash": "45eed3e3c9548919a9db977402cb45ac8cac119c61afa6fc869cacf9fd3b57d9",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 129
-      },
-      "placeholders": [
-        "0"
-      ],
-      "dynamic": true
-    },
     "play.variant.sound": {
       "value": "音效",
       "hash": "46124e023603420f8670526e3eb9a603935e8916cb8e0428ea84bbe42d85d297",
@@ -30053,39 +29903,6 @@
       "source": {
         "file": "variant-table-ui.ts",
         "line": 145
-      },
-      "placeholders": []
-    },
-    "play.variant.sp-0": {
-      "value": "sp {0}",
-      "hash": "cb75fb1c1459ec7cc4e3b659cbbfe621708bf79ee854ead5b4acf432db42033a",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 59
-      },
-      "placeholders": [
-        "0"
-      ],
-      "dynamic": true
-    },
-    "play.variant.stage-mid": {
-      "value": "中段",
-      "hash": "8b9104ebc04cb5d77a6acd5430e6d1e0ad4a68a9f101c54cbe3ff97c234d152f",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 124
-      },
-      "placeholders": []
-    },
-    "play.variant.sub": {
-      "value": "副",
-      "hash": "ddc6e2b224d0fd821669202258386936fc9ce2899e215eec6322b95f8dd96d6a",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 141
       },
       "placeholders": []
     },
@@ -30139,16 +29956,6 @@
       },
       "placeholders": []
     },
-    "play.variant.tile-t-back": {
-      "value": "牌 t-back",
-      "hash": "c53df300e73501c3da128666bfced0471237b04b0efdd96b8390df00e97b2551",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 12
-      },
-      "placeholders": []
-    },
     "play.variant.triplet-claim-for-three-of-a-kind": {
       "value": "刻子 — 三張相同牌之宣告",
       "hash": "f13d2b8f1efeb42af8afd8167cf1962c14d5de7b24d6a87ca10585484507ec28",
@@ -30166,16 +29973,6 @@
       "source": {
         "file": "variant-table-ui.ts",
         "line": 521
-      },
-      "placeholders": []
-    },
-    "play.variant.turn": {
-      "value": "回合",
-      "hash": "9b473845f684444f80a26586ae298d2ba491752cc70b893cc653d943b6fa2ac2",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 116
       },
       "placeholders": []
     },
@@ -30334,59 +30131,6 @@
       ],
       "dynamic": true
     },
-    "play.variant.variant-board-sets": {
-      "value": "變體—牌桌設定組",
-      "hash": "31f1f2d51c26999f4965116300932e21bb1652d427c73a55d858b79d8d53c7de",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 78
-      },
-      "placeholders": []
-    },
-    "play.variant.variant-large": {
-      "value": "變體—大版面",
-      "hash": "cb68ca5f3c42f6bf15bcc61b599d7c9a9964000f3441fba4643dfd969479b93c",
-      "status": "draft",
-      "source": {
-        "file": "variant-table-ui.ts",
-        "line": 157
-      },
-      "placeholders": []
-    },
-    "play.variant.variant-public-board-variant-v4-0": {
-      "value": "公開牌桌變體—v4{0}",
-      "hash": "9ece2c5a781b98c8b1afddc3f37094e0c523e5cc59a557fae49464edd4ac40c1",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 97
-      },
-      "placeholders": [
-        "0"
-      ],
-      "dynamic": true
-    },
-    "play.variant.variant-side-sets": {
-      "value": "變體—側邊設定組",
-      "hash": "f93b7a8fcc5ca2245b62f189944a0723e81d9ef34289cd8ec3299aa494a4c0a4",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 153
-      },
-      "placeholders": []
-    },
-    "play.variant.west": {
-      "value": "西",
-      "hash": "76a796208b71779c0331e79e8ac17df979c7d2c5bd10b491c94bd1e16d422088",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 116
-      },
-      "placeholders": []
-    },
     "play.variant.why-this-move": {
       "value": "為什麼要這麼打？",
       "hash": "e87af575f41f53efb20e1da998c48d671a87c54607cfbc97b816d6d4adc5f558",
@@ -30424,16 +30168,6 @@
       "source": {
         "file": "variant-table-ui.ts",
         "line": 512
-      },
-      "placeholders": []
-    },
-    "play.variant.wind": {
-      "value": "風",
-      "hash": "9b58e68145a79ca0e19957f3e5c88fd92ff2e28a7bd09ed30ee365fc4f9aafe0",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 136
       },
       "placeholders": []
     },
@@ -30487,16 +30221,6 @@
       "source": {
         "file": "variant-table-ui.ts",
         "line": 193
-      },
-      "placeholders": []
-    },
-    "play.variant.zone-top": {
-      "value": "區域頂端",
-      "hash": "bdb3c30d64a68868b9f811ea0fbb9681651689c4fecab76b1856c64eec72b4d5",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 102
       },
       "placeholders": []
     },
@@ -33223,26 +32947,6 @@
       },
       "placeholders": []
     },
-    "tools.inperson.cx-action-cx-action-settle": {
-      "value": "cx-action cx-action-settle",
-      "hash": "c8abf9fddca1cec60d8aab19d899afb77aafdf6781f50bbb39c2754f04c078f8",
-      "status": "draft",
-      "source": {
-        "file": "in-person-ui.ts",
-        "line": 492
-      },
-      "placeholders": []
-    },
-    "tools.inperson.cx-choice-on": {
-      "value": "cx-choice on",
-      "hash": "d8f2f6155fac24a06cdaa751263b2b0554da144da93765927d472066bfd7af5e",
-      "status": "draft",
-      "source": {
-        "file": "in-person-ui.ts",
-        "line": 670
-      },
-      "placeholders": []
-    },
     "tools.inperson.dealer-repeats-0": {
       "value": "· 庄家重複 {0}",
       "hash": "442bc2b0ceb66478a1cac7f72684916a4b9f307f5b6a45dce82b45fa0d83d499",
@@ -34539,16 +34243,6 @@
       "source": {
         "file": "app.ts",
         "line": 3343
-      },
-      "placeholders": []
-    },
-    "ui.app.aria-label": {
-      "value": "aria 標籤",
-      "hash": "66ba2129a90d4a5810ec62bcf19ac63372c4ca9f44becbd2cf588b101cc8228d",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 280
       },
       "placeholders": []
     },

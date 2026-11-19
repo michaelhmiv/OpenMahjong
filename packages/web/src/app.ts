@@ -371,7 +371,7 @@ function chiOptionFaces(called: Tile, handTiles: readonly Tile[]): { tile: Tile;
 function tileControl(el: HTMLElement, key: string, label: string, action: () => void, selected = false): void {
   el.setAttribute("role", "button");
   el.tabIndex = 0;
-  el.setAttribute(tx("ui.app.aria-label", "aria-label"), label);
+  el.setAttribute("aria-label", label);
   el.setAttribute("aria-pressed", String(selected));
   el.dataset["controlKey"] = key;
   el.querySelectorAll("[role=img]").forEach((img) => img.setAttribute("aria-hidden", "true"));
@@ -401,7 +401,7 @@ function focusByKey(key: string | undefined): void {
 function accessibleDialog(dialog: HTMLElement, label: string, close: () => void): void {
   dialog.setAttribute("role", "dialog");
   dialog.setAttribute("aria-modal", "true");
-  dialog.setAttribute(tx("ui.app.aria-label", "aria-label"), label);
+  dialog.setAttribute("aria-label", label);
   dialog.tabIndex = -1;
   const controls = () => [...dialog.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), [tabindex="0"]')];
   dialog.addEventListener("keydown", (event) => {
@@ -1720,7 +1720,7 @@ export class App {
       const lab = h("div", {});
       lab.append(h("div", { class: "lab" }, label), h("div", { class: "note" }, note));
       wrap.append(lab, control);
-      control.querySelector("input")?.setAttribute(tx("ui.app.aria-label", "aria-label"), label);
+      control.querySelector("input")?.setAttribute("aria-label", label);
       return wrap;
     };
     const toggle = (on: boolean, disabled: boolean, onChange: (v: boolean) => void) => {
@@ -4424,7 +4424,7 @@ export class App {
       if (inspectable) {
         w.classList.add("stripinspect");
         w.setAttribute("role", "button");
-        w.setAttribute(tx("ui.app.aria-label", "aria-label"), tx("ui.app.inspect-the-0", `Inspect the ${tileLabel(tile)}`, tileLabel(tile)));
+        w.setAttribute("aria-label", tx("ui.app.inspect-the-0", `Inspect the ${tileLabel(tile)}`, tileLabel(tile)));
         w.addEventListener("click", () => {
           if (this.lessonIndexRevealed.has(key)) this.lessonIndexRevealed.delete(key);
           else this.lessonIndexRevealed.add(key);
@@ -4468,7 +4468,7 @@ export class App {
         btn.classList.add("callopt");
         btn.append(chiFacesEl(b.faces.map((f) => ({ tile: tileById(f.id), ...(f.side ? { side: true as const } : {}) }))));
         btn.setAttribute(
-          tx("ui.app.aria-label", "aria-label"),
+          "aria-label",
           tx("ui.app.v-0-1-4", `${b.label} — ${b.faces.map((f) => tileLabel(tileById(f.id))).join(", ")}`, b.label, b.faces.map((f) => tileLabel(tileById(f.id))).join(", ")),
         );
       }

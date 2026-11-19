@@ -93,11 +93,15 @@ const FILE_HELPERS = {
   // show(title) sets the screen title; variant-table-ui toggle(label, get,
   // set) labels a switch (app.ts toggle(value, ...) is different);
   // variant-board-ui inspect(node, label, seat) labels a discard inspector.
+  // Its el(tag, className) takes NO display text at all — the 2nd arg is a
+  // CSS class (band, cell, pondwrap, ...), so an empty index list keeps
+  // the extractor from minting keys for class names (rewire PR: 25
+  // class-name keys had to be removed).
   "in-person-ui.ts": new Map([["start", [0]]]),
   "riichi-calculator-ui.ts": new Map([["show", [0]]]),
   "variant-calculator-ui.ts": new Map([["show", [0]]]),
   "variant-table-ui.ts": new Map([["toggle", [0]]]),
-  "variant-board-ui.ts": new Map([["inspect", [1]]]),
+  "variant-board-ui.ts": new Map([["inspect", [1]], ["el", []]]),
 };
 
 /** Lesson-builder calls: (id, title, steps). */
@@ -410,9 +414,14 @@ function extractSourceFile(rel, absPath) {
       let call = null;
       if (ts.isCallExpression(node)) {
         const callee = node.expression;
-        if (ts.isIdentifier(callee)) call = { name: callee.text, node };
+        // `bare` distinguishes a local helper call (toggle(...)) from a
+        // method call (shell.classList.toggle(...)): FILE_HELPERS entries
+        // describe local helpers, so they must only match bare calls
+        // (rewire PR: classList.toggle("variant-large") was claimed as
+        // a labelled arg of the local toggle(label, get, set) helper).
+        if (ts.isIdentifier(callee)) call = { name: callee.text, node, bare: true };
         else if (ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.name)) {
-          call = { name: callee.name.text, node };
+          call = { name: callee.name.text, node, bare: false };
         }
       }
       const caseClause =
@@ -470,6 +479,17 @@ function extractSourceFile(rel, absPath) {
     let propNode = null;
     for (let i = ancestors.length - 2; i >= 0; i--) {
       const a = ancestors[i].node;
+      // The literal IS the property name (e.g. "aria-label" in
+      // `"aria-label": tileLabel(tile)`) — an attribute name, not a
+      // value. Stop here; it is not display text (rewire PR: the
+      // name was inventoried as ui.app.aria-label).
+      if (
+        ts.isPropertyAssignment(a) &&
+        ancestors[i + 1] &&
+        ancestors[i + 1].node === a.name
+      ) {
+        break;
+      }
       if (ts.isPropertyAssignment(a) && ts.isIdentifier(a.name)) {
         propName = a.name.text;
         propNode = a;
@@ -723,10 +743,14 @@ function extractSourceFile(rel, absPath) {
         return;
       }
       // Local label helpers (per-file signatures override the global map).
-      // A literal inside a NON-labelled argument (e.g. a button callback
-      // that sets status text) is not the helper's label — fall through
-      // to the other rules instead of dropping it.
-      const helperIdx = FILE_HELPERS[rel]?.get(call.name) ?? LABEL_HELPERS.get(call.name);
+      // FILE_HELPERS entries describe local helpers, so they only match
+      // bare calls — a method of the same name (classList.toggle) is not
+      // the local helper. A literal inside a NON-labelled argument (e.g.
+      // a button callback that sets status text) is not the helper's
+      // label — fall through to the other rules instead of dropping it.
+      const helperIdx =
+        (a.call.bare ? FILE_HELPERS[rel]?.get(call.name) : undefined) ??
+        LABEL_HELPERS.get(call.name);
       if (helperIdx) {
         const idx = call.node.arguments.indexOf(a.child);
         if (helperIdx.includes(idx)) {
@@ -848,6 +872,18 @@ function extractSourceFile(rel, absPath) {
           ts.isReturnStatement(a) ||
           ts.isThrowStatement(a) ||
           ts.isNewExpression(a)
+        ) {
+          break;
+        }
+        // `host.className = `...`` is a CSS class list, not prose — the
+        // literal belongs to that assignment, so stop the walk here
+        // (rewire PR: variant-board-ui "variant-public-board
+        // variant-v4{0}" was inventoried as a UI string).
+        if (
+          ts.isBinaryExpression(a) &&
+          a.operatorToken.kind === ts.SyntaxKind.EqualsToken &&
+          ts.isPropertyAccessExpression(a.left) &&
+          a.left.name.text === "className"
         ) {
           break;
         }

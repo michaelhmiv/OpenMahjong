@@ -78,7 +78,7 @@ export function mountVariantTable(
   const shell = el(
       "div",
       "",
-      `learning-shell variant-table${options.largeTiles ? " " + tx("play.variant.variant-large", "variant-large") : ""}`,
+      `learning-shell variant-table${options.largeTiles ? " variant-large" : ""}`,
     ),
     header = el("header"),
     main = el("main", "", "variant-table-content");
@@ -159,7 +159,7 @@ export function mountVariantTable(
       () => largeTiles,
       (v) => {
         largeTiles = v;
-        shell.classList.toggle(tx("play.variant.variant-large", "variant-large"), v);
+        shell.classList.toggle("variant-large", v);
         options.onSettings?.({ largeTiles: v });
         render();
       },

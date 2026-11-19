@@ -2,6 +2,7 @@
  * stays in the adapter; this module only projects the recorded table. */
 import { variantAdapter, tileTypeName, type Tile } from "@openmahjong/engine";
 import type { TableModel } from "./model.js";
+import { tx } from "./i18n/index.js";
 const WINDS = ["East", "South", "West", "North"];
 function el(tag: string, className = ""): HTMLElement {
   const e = document.createElement(tag);
@@ -11,7 +12,7 @@ function el(tag: string, className = ""): HTMLElement {
 function back(): HTMLElement {
   const b = el("span", "tile t-back");
   b.setAttribute("role", "img");
-  b.setAttribute("aria-label", "Concealed tile");
+  b.setAttribute("aria-label", tx("play.variant.concealed-tile", "Concealed tile"));
   b.innerHTML =
     '<svg viewBox="0 0 40 56" aria-hidden="true"><use href="#t-back"/></svg>';
   return b;
@@ -69,7 +70,7 @@ export function renderVariantPublicBoard(
     if (model.players[seat]!.pond.some((d) => !d.called))
       inspect(
         node,
-        `Inspect ${WINDS[model.players[seat]!.seatWind - 27]} discards`,
+        tx("play.variant.inspect-0-discards", `Inspect ${WINDS[model.players[seat]!.seatWind - 27]} discards`, WINDS[model.players[seat]!.seatWind - 27]),
         seat,
       );
     return node;
@@ -116,7 +117,7 @@ export function renderVariantPublicBoard(
         `chip${seat === top ? " west" : ""}${model.currentTurn === seat ? " turn" : ""}`,
       );
     label.textContent = `${WINDS[p.seatWind - 27]} · ${p.score.toLocaleString("en-US")}`;
-    label.setAttribute("aria-label", `${label.textContent} · Inspect player`);
+    label.setAttribute("aria-label", tx("play.variant.v-0-inspect-player", `${label.textContent} · Inspect player`, label.textContent));
     label.addEventListener("click", () => onFrame(seat));
     labels.append(label);
   }
@@ -139,11 +140,11 @@ export function renderVariantPublicBoard(
   name.textContent = `${WINDS[model.roundWind - 27]} ${model.kyoku}`;
   round.append(wind, name);
   const sub = el("p", "sub");
-  sub.textContent = `${model.wallRemaining} tiles left`;
+  sub.textContent = tx("play.variant.v-0-tiles-left", `${model.wallRemaining} tiles left`, model.wallRemaining);
   center.append(round, sub);
   if (model.honba) {
     const repeat = el("p", "sub");
-    repeat.textContent = `Repeat ${model.honba}`;
+    repeat.textContent = tx("play.variant.repeat-0", `Repeat ${model.honba}`, model.honba);
     center.append(repeat);
   }
   center.addEventListener("click", () => onFrame("center"));

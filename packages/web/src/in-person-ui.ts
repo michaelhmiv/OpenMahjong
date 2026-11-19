@@ -494,7 +494,7 @@ export function mountInPerson(
     if (active) {
       const row = el("div", "", "cx-actions");
       const settleBtn = button(tx("tools.inperson.settlement", "Settlement"), finish);
-      settleBtn.className = tx("tools.inperson.cx-action-cx-action-settle", "cx-action cx-action-settle");
+      settleBtn.className = "cx-action cx-action-settle";
       row.append(
         actionBtn(tx("tools.inperson.drawn-hand", "Drawn hand"), () => eventForm("draw")),
         actionBtn(tx("tools.inperson.penalty", "Penalty"), () => eventForm("penalty")),
@@ -514,7 +514,7 @@ export function mountInPerson(
     } else {
       const row = el("div", "", "cx-actions cx-actions-2");
       const settleBtn = button(tx("tools.inperson.settlement", "Settlement"), finish);
-      settleBtn.className = tx("tools.inperson.cx-action-cx-action-settle", "cx-action cx-action-settle");
+      settleBtn.className = "cx-action cx-action-settle";
       if (!sealed) {
         undoBtn.className = "cx-action";
         row.append(undoBtn);
@@ -672,7 +672,7 @@ export function mountInPerson(
               }),
             "",
           );
-          cont.className = tx("tools.inperson.cx-choice-on", "cx-choice on");
+          cont.className = "cx-choice on";
           return cont;
         })(),
       );
