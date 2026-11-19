@@ -202,7 +202,12 @@ export function analyzeApprovalDiff({
 // ---------------------------------------------------------------------------
 
 function git(repo, args) {
-  return execFileSync("git", ["-C", repo, ...args], { encoding: "utf8" });
+  // maxBuffer: locale files are megabytes (en.json is ~1.9 MB); the
+  // 1 MB default would make `git show` throw and the file look deleted.
+  return execFileSync("git", ["-C", repo, ...args], {
+    encoding: "utf8",
+    maxBuffer: 64 * 1024 * 1024,
+  });
 }
 
 function gitOrNull(repo, args) {
