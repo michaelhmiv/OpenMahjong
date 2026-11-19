@@ -2,7 +2,7 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T13:20:30.981Z",
+    "generatedAt": "2026-11-19T13:21:22.429Z",
     "keyCount": 3727,
     "namespaces": {
       "calc.compact": 14,
@@ -29822,7 +29822,7 @@
       "hash": "5457c54af0debbd5c4cf429aa8e91d77b8cf64e03f8bdf57d8eabb1583242fc5",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 440
+        "line": 445
       },
       "placeholders": [],
       "status": "approved"
@@ -29832,7 +29832,7 @@
       "hash": "7ff9a5ff94a2a9e2f6018ce04b625b30a97f91e468aa153941089025b43e8c63",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 549
+        "line": 554
       },
       "placeholders": [],
       "status": "approved"
@@ -29842,7 +29842,7 @@
       "hash": "6f82b6e2bebc799e44c718ce1e7ed70245a37dbbebb1a542505f1bef048c651d",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 550
+        "line": 555
       },
       "placeholders": [],
       "status": "approved"
@@ -29852,7 +29852,7 @@
       "hash": "287a166a179f102343446d4eb5b2c11343f85e657768a551252b72b455f34c3b",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 469
+        "line": 474
       },
       "placeholders": [
         "0"
@@ -29865,7 +29865,7 @@
       "hash": "f25f0a934602ab89f3f2257d1dc536a46064f4095d0ac482efc9517bc29343ed",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 81
+        "line": 86
       },
       "placeholders": [],
       "status": "approved"
@@ -29929,7 +29929,7 @@
       "hash": "7d9eb7acb13e24625c404401d8e88b2350e32162455885f18276cf802f7701ed",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 180
+        "line": 185
       },
       "placeholders": [],
       "status": "approved"
@@ -29939,7 +29939,7 @@
       "hash": "40ecfcf8a3f83ac76b26eb65c3e12879cb09f6448d3fbe34f7b93fa399ea3b83",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 500
+        "line": 505
       },
       "placeholders": [
         "0"
@@ -29952,7 +29952,7 @@
       "hash": "06133857356b083634f574a14130c077d2625a54a7b3f9b825c263a7f8a8d6e9",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 463
+        "line": 468
       },
       "placeholders": [
         "0"
@@ -29965,7 +29965,7 @@
       "hash": "ff977edc4e051f8849dc18ed032af1615d540da34da9aceb7bd6b111a5ad02f7",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 121
+        "line": 126
       },
       "placeholders": [],
       "status": "approved"
@@ -29985,7 +29985,7 @@
       "hash": "80042063926d2de54c4b9883995ad70611f8b77bdee73a07ce7fb44d31e8e73f",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 447
+        "line": 452
       },
       "placeholders": [
         "0"
@@ -29998,7 +29998,7 @@
       "hash": "91e94fa7ec5f62b0b7014cd8e5e5b31deba2ab556be78ee913e1a9a85261d69c",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 372
+        "line": 377
       },
       "placeholders": [],
       "status": "approved"
@@ -30008,7 +30008,7 @@
       "hash": "8142ab0c0c5ac569c20455abe13b591b3d313d637741f159fcc34fba10aa0ee6",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 379
+        "line": 384
       },
       "placeholders": [],
       "status": "approved"
@@ -30018,7 +30018,7 @@
       "hash": "2d8e2eb36bb630354bfff4f65130fb2bb6a20d47e349fafa376355bf7fb23ce6",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 237
+        "line": 242
       },
       "placeholders": [],
       "status": "approved"
@@ -30028,7 +30028,7 @@
       "hash": "e29a7f31cac05abc97e12380c8e7bfaf5fef0839fd58dbcb8e81b0036eabf04a",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 363
+        "line": 368
       },
       "placeholders": [],
       "status": "approved"
@@ -30038,7 +30038,7 @@
       "hash": "27f18ca3c72eb04b2c11c41ca7fba1a9d70980128616352a07fd72a9d0804932",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 398
+        "line": 403
       },
       "placeholders": [],
       "status": "approved"
@@ -30058,7 +30058,7 @@
       "hash": "f24e49ddd8633a0eb3eb21d07179a74a75d1df666c474cca96816774d251313b",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 277
+        "line": 282
       },
       "placeholders": [],
       "status": "approved"
@@ -30068,7 +30068,7 @@
       "hash": "d2e89818927777723ec2dd934ec7bbb93e0d9ef8618b63ab751d168200dc8c76",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 414
+        "line": 419
       },
       "placeholders": [],
       "status": "approved"
@@ -30078,7 +30078,7 @@
       "hash": "615aef002bf397573ca43167d95581d96f37fa990db85389d45d4ddc70f3313b",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 426
+        "line": 431
       },
       "placeholders": [],
       "status": "approved"
@@ -30088,7 +30088,7 @@
       "hash": "6cb0c8987de2454b7649e04f5454e1b832a7092b35b55c515ba82cbfe218d5ec",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 483
+        "line": 488
       },
       "placeholders": [],
       "status": "approved"
@@ -30098,7 +30098,7 @@
       "hash": "fb64975d468598396b79712441682d35cf8640b4a670cabc9ca72242b198851f",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 171
+        "line": 176
       },
       "placeholders": [],
       "status": "approved"
@@ -30108,7 +30108,7 @@
       "hash": "388b409705f27d2ba520abf4ca9289b466ba203a9bb66fbea9b0869466f3b85d",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 474
+        "line": 479
       },
       "placeholders": [],
       "status": "approved"
@@ -30118,7 +30118,7 @@
       "hash": "e3d302188d4b21872b53b175b46bf2dec2ae64bd24aa2320aa7065ff85f34450",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 17
+        "line": 22
       },
       "placeholders": [],
       "status": "approved"
@@ -30128,7 +30128,7 @@
       "hash": "bb56a261f4cd78b0b07fc30b6270064a8c169859ff2e101fbc77f7fadfa62594",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 234
+        "line": 239
       },
       "placeholders": [],
       "status": "approved"
@@ -30151,7 +30151,7 @@
       "hash": "87085f94d456bb7ef188dfab296e06f319f67ab4fe1068056d0b9e4a31aafa46",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 153
+        "line": 158
       },
       "placeholders": [],
       "status": "approved"
@@ -30161,7 +30161,7 @@
       "hash": "d6b206585b93da356fd144c08eac7446eb126bb4d2adf6970f9b97bb9c149dd5",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 18
+        "line": 23
       },
       "placeholders": [],
       "status": "approved"
@@ -30171,7 +30171,7 @@
       "hash": "f917713a240092f2a78e713af235d55bba68f3d6eae7b6cb4bce0f1d9307a67b",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 236
+        "line": 241
       },
       "placeholders": [],
       "status": "approved"
@@ -30191,7 +30191,7 @@
       "hash": "7971e5ed64b1d69fcfe8833b1e06c6fc7ddea65574f1febd287ed2291cca292d",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 268
+        "line": 273
       },
       "placeholders": [],
       "status": "approved"
@@ -30201,7 +30201,7 @@
       "hash": "169de4c242d46540fcff9bb5787e66e054962fc7538c86225c332528116db856",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 399
+        "line": 404
       },
       "placeholders": [],
       "status": "approved"
@@ -30211,7 +30211,7 @@
       "hash": "95f04249688939186131586e830338dd56304c3aafb88f059c2afa8389610477",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 392
+        "line": 397
       },
       "placeholders": [],
       "status": "approved"
@@ -30221,7 +30221,7 @@
       "hash": "ca7981b46ecf2c1787b6d76d81d9fd7fa0ca95842e2fcc2a452869891a9334d1",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 137
+        "line": 142
       },
       "placeholders": [],
       "status": "approved"
@@ -30231,7 +30231,7 @@
       "hash": "130011756125313c72f2cab730db4347e2841526d236a89cb25f38789fa49229",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 137
+        "line": 142
       },
       "placeholders": [],
       "status": "approved"
@@ -30241,7 +30241,7 @@
       "hash": "9d8f58e4d3d27938a3ad1c89d109f39186e00b52105db804426a8c04e54e3ef6",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 529
+        "line": 534
       },
       "placeholders": [],
       "status": "approved"
@@ -30251,7 +30251,7 @@
       "hash": "c635cb59dd6b71a8bf9eda25c2e651231ea1292945f0ba36a2696c5f374df530",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 530
+        "line": 535
       },
       "placeholders": [],
       "status": "approved"
@@ -30271,7 +30271,7 @@
       "hash": "ebdf8cc00bc4d9ceee633c56c63b49955769a92ca060825c9b08e4af61326e2b",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 544
+        "line": 549
       },
       "placeholders": [],
       "status": "approved"
@@ -30281,7 +30281,7 @@
       "hash": "3da8a3487f6d4b31eda46e37c7e00451ec62b40c938812c697540959af33eda2",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 422
+        "line": 427
       },
       "placeholders": [
         "0"
@@ -30327,7 +30327,7 @@
       "hash": "3b923d5ad24ca55ca4d9b54f5c65c10ca8524822c35a6f05b78ef1ebc7169df0",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 410
+        "line": 415
       },
       "placeholders": [],
       "status": "approved"
@@ -30337,7 +30337,7 @@
       "hash": "1fd516a548812c4b2c253ad9cea1ae0178a761f8ae5a04bc4d1c623674f283f2",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 163
+        "line": 168
       },
       "placeholders": [],
       "status": "approved"
@@ -30380,19 +30380,20 @@
       "hash": "5d348f18de17707e281376a72db25aa5d1f451b10a7a17889f8996dfb3e42016",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 217
+        "line": 222
       },
       "placeholders": [
         "0"
       ],
-      "status": "approved"
+      "status": "approved",
+      "dynamic": true
     },
     "play.variant.select-a-tile-then-discard": {
       "value": "Select a tile, then discard.",
       "hash": "aa9bcc19d1b06e6aca21b9c60aa72cd5b6bf09d89ff493cdfc01e90c826b2a6b",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 441
+        "line": 446
       },
       "placeholders": [],
       "status": "approved"
@@ -30402,7 +30403,7 @@
       "hash": "04bcedab50700b0ad3bfa4ff25b229acbbcb512b994e44eafcc8d2e6ba2801ce",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 446
+        "line": 451
       },
       "placeholders": [],
       "status": "approved"
@@ -30412,7 +30413,7 @@
       "hash": "6ea28cec74cb8048a3a5f0208ba650f14d4b73c234bb760690a58098311da937",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 538
+        "line": 543
       },
       "placeholders": [],
       "status": "approved"
@@ -30422,7 +30423,7 @@
       "hash": "ac17e467d576d8f0c97f294b18ebfc3919cc5fcdb2034bac6b123c8779be3cdc",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 537
+        "line": 542
       },
       "placeholders": [],
       "status": "approved"
@@ -30432,7 +30433,7 @@
       "hash": "2c54dccc35c31917f6df341845c57670e3b00072a4d0fbd0262aaedff2dd24f8",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 474
+        "line": 479
       },
       "placeholders": [],
       "status": "approved"
@@ -30455,7 +30456,7 @@
       "hash": "46124e023603420f8670526e3eb9a603935e8916cb8e0428ea84bbe42d85d297",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 145
+        "line": 150
       },
       "placeholders": [],
       "status": "approved"
@@ -30498,7 +30499,7 @@
       "hash": "9651c3c70f4db257fcb512f86d7c59b95e9d9d3a2cf14674d416260267697ae7",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 195
+        "line": 200
       },
       "placeholders": [],
       "status": "approved"
@@ -30508,7 +30509,7 @@
       "hash": "12d37f55b490f14f7dd38a2fa9070072aab92c32c8fbba28cfc90b46e4431112",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 83
+        "line": 88
       },
       "placeholders": [],
       "status": "approved"
@@ -30518,7 +30519,7 @@
       "hash": "f4ddd195cab04430d4595e18bd75fd48df4a0dfb3a7a28c6b2fcf3582762d49d",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 363
+        "line": 368
       },
       "placeholders": [],
       "status": "approved"
@@ -30528,7 +30529,7 @@
       "hash": "4590eb3a55fc3aafe45893f2c057598e04ea249cb7d924e3417735726abaff01",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 19
+        "line": 24
       },
       "placeholders": [],
       "status": "approved"
@@ -30538,7 +30539,7 @@
       "hash": "7f920848b827fcb0dd7a0329a2029ee85f034e9b17d7c49649e01b214c1611de",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 393
+        "line": 398
       },
       "placeholders": [],
       "status": "approved"
@@ -30558,7 +30559,7 @@
       "hash": "f13d2b8f1efeb42af8afd8167cf1962c14d5de7b24d6a87ca10585484507ec28",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 520
+        "line": 525
       },
       "placeholders": [],
       "status": "approved"
@@ -30568,7 +30569,7 @@
       "hash": "55515182cacf3fe8f9f934b3160eedfa3499043cd401c82da6e5fbe20a3b6297",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 521
+        "line": 526
       },
       "placeholders": [],
       "status": "approved"
@@ -30588,7 +30589,7 @@
       "hash": "cd55a9d95751fb9bb9e4a0988dd7ae3b08c7b49d0a28ba51cd94d9bafe6a27d0",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 137
+        "line": 142
       },
       "placeholders": [
         "0",
@@ -30602,7 +30603,7 @@
       "hash": "10866a9df5f8be5be75c79314de01412b0b35db060b06fdc333c1d9cd82d73c0",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 363
+        "line": 368
       },
       "placeholders": [
         "0",
@@ -30616,7 +30617,7 @@
       "hash": "7e5199c7b6650337bfc3df663da26d46ff6dc125384c0ebacb3d617ba57f44dd",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 422
+        "line": 427
       },
       "placeholders": [
         "0",
@@ -30633,7 +30634,7 @@
       "hash": "d7bdb2992179c97a53f3608d09b1a65768756107b5221d0cf1487e8604d4bb75",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 274
+        "line": 279
       },
       "placeholders": [
         "0",
@@ -30660,7 +30661,7 @@
       "hash": "0bcf44a53cc1164732b8a8704c6a5654601bb5a59233fc78b066e3cf162e1ea7",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 387
+        "line": 392
       },
       "placeholders": [
         "0",
@@ -30674,7 +30675,7 @@
       "hash": "b131a820a7c75480364ed584eec21ac9d086340a072d6570326f90a34cd50b14",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 196
+        "line": 201
       },
       "placeholders": [
         "0"
@@ -30687,7 +30688,7 @@
       "hash": "31a17e04213b3ff5bbf2c0244135c9c96ca7cc8beb149853a1a6e3473df5d2f0",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 243
+        "line": 248
       },
       "placeholders": [
         "0",
@@ -30701,7 +30702,7 @@
       "hash": "da35775d5aaf3eb287fb27f965f0821b56b8d3a8ae74e015a6bfe7b813f5faf6",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 229
+        "line": 234
       },
       "placeholders": [
         "0",
@@ -30729,7 +30730,7 @@
       "hash": "327638db9eef74b35453d755350e7a74942e121662f900dcdf07d7cfa7f1409e",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 319
+        "line": 324
       },
       "placeholders": [
         "0",
@@ -30753,7 +30754,7 @@
       "hash": "cb68ca5f3c42f6bf15bcc61b599d7c9a9964000f3441fba4643dfd969479b93c",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 157
+        "line": 81
       },
       "placeholders": [],
       "status": "approved"
@@ -30796,7 +30797,7 @@
       "hash": "e87af575f41f53efb20e1da998c48d671a87c54607cfbc97b816d6d4adc5f558",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 481
+        "line": 486
       },
       "placeholders": [],
       "status": "approved"
@@ -30806,7 +30807,7 @@
       "hash": "5ad960ee851a74b45bc580b895edf59d45683d0a9ff86c1c8916e681d9062800",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 511
+        "line": 516
       },
       "placeholders": [],
       "status": "approved"
@@ -30816,7 +30817,7 @@
       "hash": "76a6c28a22981d8e43a6dafc7dc1991c5cd6bab88d15a53fd215e163b2122fdb",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 459
+        "line": 464
       },
       "placeholders": [],
       "status": "approved"
@@ -30826,7 +30827,7 @@
       "hash": "e402a2888bd62653c8ce7d34ee5b50e19357ff67d2c696868a551067e234fea0",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 512
+        "line": 517
       },
       "placeholders": [],
       "status": "approved"
@@ -30846,7 +30847,7 @@
       "hash": "870289c81c32b9ed41643548c506b925d3645ae4f41ad4295de96b8f2599bbc9",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 360
+        "line": 365
       },
       "placeholders": [
         "0"
@@ -30859,7 +30860,7 @@
       "hash": "08b041935798fbf6fd6ff51099ffedb140a475889986d14f5559ff8e7fc571dd",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 422
+        "line": 427
       },
       "placeholders": [],
       "status": "approved"
@@ -30869,7 +30870,7 @@
       "hash": "4ffcbf57995135e2aa65721d34bab11fb7c6b4c4238a2c8d6065ae2b23d7a9aa",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 437
+        "line": 442
       },
       "placeholders": [],
       "status": "approved"
@@ -30879,7 +30880,7 @@
       "hash": "78491e9991a1e2c2b9a41d50d87eb3dd8c3f4c859e530f0e39b4bff62534242b",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 94
+        "line": 99
       },
       "placeholders": [],
       "status": "approved"
@@ -30889,7 +30890,7 @@
       "hash": "9de3e4f92af405a6c72dbcf82e8190eb892c7e064ee97e48785217161563a47b",
       "source": {
         "file": "variant-table-ui.ts",
-        "line": 193
+        "line": 198
       },
       "placeholders": [],
       "status": "approved"
