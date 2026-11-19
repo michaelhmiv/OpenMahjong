@@ -383,9 +383,15 @@
 }
 .variant-table header h1,
 .variant-education header h1 {
+  font-family: "Fraunces", Georgia, serif;
   font-size: 21px;
+  font-weight: 600;
+  line-height: 1.2;
   margin: 0;
+  flex: 1;
+  text-align: center;
 }
+.variant-education .variant-hspacer { width: 44px; flex: 0 0 44px; }
 .variant-table-content,
 .variant-education-content {
   flex: 1;
@@ -609,6 +615,13 @@
   width: 25px;
   height: 35px;
 }
+/* F4 / §11: teaching-strip tiles that are tappable (stripinspect)
+   keep their 25x35 face but carry an expanded invisible hit area. */
+.variant-example-tiles .stripinspect { position: relative; }
+.variant-example-tiles .stripinspect::after { content: ""; position: absolute; inset: -5px -9px; }
+/* Tile-pick choice buttons already meet the floor via min-height;
+   guarantee the full 44px width as well. */
+.variant-tile-pick .variant-tile-choice { min-width: 44px; min-height: 44px; }
 /* Group segmentation in lesson rows: where the face changes, a
    wider gap opens, so a row reads as its groups (a pung, then a
    kong) instead of one unbroken string of tiles. */

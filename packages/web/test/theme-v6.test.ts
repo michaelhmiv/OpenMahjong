@@ -53,6 +53,7 @@ describe("theme v6: gold discipline (design rules section 2)", () => {
   const GOLD_ALLOWLIST = new Set([
     ":root", // the token definition itself
     ".wordmark",
+    "header.bar .word", // the drilled-in screens' wordmark (N4: gold, as the app wordmark)
     "#screen-home .play",
     ".infocard .ic-cta",
     ".avatar",

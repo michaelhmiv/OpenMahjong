@@ -197,7 +197,8 @@ export function mountAmericanCard(
     title.textContent = tx("learn.american.ui.practice-card", "Practice Card");
     const sheet = el("div", "", "amc-sheet");
     sheet.append(el("div", t("learn.american.pcard.title"), "amc-cardtitle"));
-    sheet.append(el("p", t("learn.american.pcard.label"), "amc-label"));
+    // C5: the Practice Card label prints once, at the panel foot
+    // (the .amc-footlabel below) — not again under the title.
     for (const section of cardSections()) {
       const hands = sectionHands(section.id);
       const row = el("button", "", "amc-sec-row");

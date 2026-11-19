@@ -275,7 +275,7 @@ export function formatStatsView(
     id: "avg-placement",
     value: sums.games > 0 ? (sums.placementSum / sums.games).toFixed(1) : "—",
     label: tx("ui.stats.avg-placement", "Avg placement"),
-    sample: tx("ui.stats.v-0-games", `${sums.games} games`, sums.games),
+    sample: sums.games === 1 ? tx("ui.stats.v-1-game", "1 game") : tx("ui.stats.v-0-games", `${sums.games} games`, sums.games),
   });
   if (opts.handStats) {
     blocks.push({

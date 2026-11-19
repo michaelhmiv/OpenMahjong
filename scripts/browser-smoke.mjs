@@ -309,10 +309,10 @@ try {
     assert.equal(await page.locator("#screen-language .i18n-row.cur").count(), 1);
     assert.equal(await page.locator("#screen-language .i18n-check").count(), 1);
     const notes = await page.locator("#screen-language .i18n-note").allInnerTexts();
-    assert.equal(notes.length, 3);
-    assert.match(notes[0], /\/ja\//);
+    // C7: footnotes condensed to the two essential lines.
+    assert.equal(notes.length, 2);
+    assert.match(notes[0], /remembered/);
     assert.match(notes[1], /machine translated/i);
-    assert.match(notes[2], /More languages are coming/);
     await capture(page, "language");
     await page.getByRole("button", { name: "Back", exact: true }).click();
     return { sections, rows };

@@ -46,7 +46,7 @@ describe("privacy policy: Advertising section in both mirrors", () => {
       resolve(process.cwd(), `${WEB}/public/privacy/index.html`),
       "utf8",
     );
-    expect(html).toContain("<h3>Advertising</h3>");
+    expect(html).toContain("<h2>Advertising</h2>"); // F13: /privacy rides pages.css, whose section heads are h2
     expect(html).toContain("Google AdSense");
     expect(html).toContain("non-personalized");
     expect(html).toContain("https://policies.google.com/technologies/partner-sites");

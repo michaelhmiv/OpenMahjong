@@ -1753,7 +1753,7 @@ export class App {
         h("div", { class: "note" }, tx("ui.app.signed-in-with-google", "Signed in with Google")),
       );
       acct.append(who);
-      const outBtn = h("button", { class: "pillbtn ghost" }, tx("ui.app.sign-out", "Sign out"));
+      const outBtn = h("button", { class: "pillbtn ghost acctbtn" }, tx("ui.app.sign-out", "Sign out"));
       outBtn.addEventListener("click", () => void this.signOutFlow());
       idRow.append(acct, outBtn);
       page.append(idRow);
@@ -1764,7 +1764,7 @@ export class App {
         h("div", { class: "lab" }, tx("ui.app.delete-account", "Delete account")),
         h("div", { class: "note" }, tx("ui.app.removes-your-profile-game-history-and-stats-this", "Removes your profile, game history, and stats. This cannot be undone.")),
       );
-      const delBtn = h("button", { class: "pillbtn ghost" }, tx("ui.app.delete", "Delete"));
+      const delBtn = h("button", { class: "pillbtn ghost acctbtn" }, tx("ui.app.delete", "Delete"));
       delBtn.addEventListener("click", () => {
         // Two-step confirm in place: the first tap arms the button.
         if (delBtn.dataset["confirm"] === "1") {
@@ -1777,7 +1777,7 @@ export class App {
       delRow.append(delLab, delBtn);
       page.append(delRow);
     } else {
-      const signInBtn = h("button", { class: "pillbtn ghost" }, tx("ui.app.sign-in-with-google", "Sign in with Google"));
+      const signInBtn = h("button", { class: "pillbtn ghost acctbtn" }, tx("ui.app.sign-in-with-google", "Sign in with Google"));
       signInBtn.addEventListener("click", () => {
         try {
           sessionStorage.setItem(SIGN_IN_PENDING_KEY, "1");
@@ -1792,22 +1792,22 @@ export class App {
 
     page.append(h("div", { class: "sec-label" }, tx("ui.app.settings", "SETTINGS")));
     page.append(
-      row(tx("ui.app.sound", "Sound"), tx("ui.app.quiet-tile-clicks-only-no-music-no-voices", "Quiet tile clicks only. No music, no voices."), toggle(this.settings.sound, false, (v) => {
+      row(tx("ui.app.sound", "Sound"), tx("ui.app.quiet-tile-clicks-only-no-music-no-voices", "Quiet tile clicks only."), toggle(this.settings.sound, false, (v) => {
         this.settings = { ...this.settings, sound: v };
         this.sound.enabled = v;
         this.persistSettings();
       })),
-      row(tx("ui.app.reduced-motion", "Reduced motion"), tx("ui.app.collapses-animation-to-near-instant-your-operati", "Collapses animation to near-instant. Your operating system's reduced-motion setting is always respected too."), toggle(this.settings.motion === "reduced", false, (v) => {
+      row(tx("ui.app.reduced-motion", "Reduced motion"), tx("ui.app.collapses-animation-to-near-instant-your-operati", "Collapses animation to near-instant."), toggle(this.settings.motion === "reduced", false, (v) => {
         this.settings = { ...this.settings, motion: v ? "reduced" : "standard" };
         this.persistSettings();
       })),
-      row(tx("ui.app.large-tiles", "Large tiles"), tx("ui.app.hand-tiles-step-up-to-28px-in-two-rows-of-seven", "Hand tiles step up to 28px in two rows of seven; ponds step down to 22px; the panel type grows. The approved large layout (table-large-v1)."), toggle(this.settings.largeTiles, false, (v) => {
+      row(tx("ui.app.large-tiles", "Large tiles"), tx("ui.app.hand-tiles-step-up-to-28px-in-two-rows-of-seven", "Hand tiles step up to 28px in two rows of seven; ponds step down to 22px."), toggle(this.settings.largeTiles, false, (v) => {
         this.settings = { ...this.settings, largeTiles: v };
         this.persistSettings();
         this.applyTheme();
         if (this.runner) this.renderTable();
       })),
-      row(tx("ui.app.guided-mode", "Guided mode"), tx("ui.app.hints-and-explanations-on-the-table-during-cpu-g", "Hints and explanations on the table during CPU games. The same switch is on the Play tab and in the in-game menu."), toggle(this.settings.guided, false, (v) => {
+      row(tx("ui.app.guided-mode", "Guided mode"), tx("ui.app.hints-and-explanations-on-the-table-during-cpu-g", "Hints and explanations on the table during CPU games."), toggle(this.settings.guided, false, (v) => {
         this.settings = { ...this.settings, guided: v };
         this.persistSettings();
         if (this.runner) this.renderTable();
@@ -1914,11 +1914,10 @@ export class App {
     // locales it covers.
     const anyMachineTranslated = shippedLocaleMeta().some((m) => isMachineTranslated(m.id));
     page.append(
-      h("p", { class: "i18n-note" }, tx("ui.app.language.url-note", "Switching languages opens the matching page address — for example, /ja/ for Japanese. Your choice is remembered; the browser language is only used on your first visit.")),
+      h("p", { class: "i18n-note" }, tx("ui.app.language.url-note", "Your choice is remembered; the browser language is only used on your first visit.")),
       ...(anyMachineTranslated
         ? [h("p", { class: "i18n-note" }, tx("ui.app.language.machine-note", "Non-English languages are machine translated and awaiting community review."))]
         : []),
-      h("p", { class: "i18n-note" }, tx("ui.app.language.wave2-note", "More languages are coming: Vietnamese, Thai, Indonesian, French, German, and Spanish.")),
     );
     el.append(page);
   }
@@ -2035,12 +2034,16 @@ export class App {
     if (summary) page.append(this.inProgressRowEl(summary));
     if (rows.length > 0) page.append(this.distCardEl(rows));
     const grid = h("div", { class: "statgrid" });
-    for (const b of formatStatsView(sums, { handStats }).filter(b => selectedVariant === "riichi" || b.id !== "riichi-rate")) {
+    const statBlocks = formatStatsView(sums, { handStats }).filter(b => selectedVariant === "riichi" || b.id !== "riichi-rate");
+    statBlocks.forEach((b, i) => {
       const st = h("div", { class: "stat" });
+      // C13: an odd final block spans both columns, so its bottom
+      // rule spans the grid instead of stopping mid-page.
+      if (i === statBlocks.length - 1 && statBlocks.length % 2 === 1) st.style.gridColumn = "1 / -1";
       st.append(h("div", { class: "v" }, b.value), h("div", { class: "l" }, b.label));
       if (b.sample) st.append(h("div", { class: "s" }, b.sample));
       grid.append(st);
-    }
+    });
     page.append(grid);
     if (rows.length === 0) {
       page.append(h("p", { class: "dim" }, tx("ui.app.no-games-recorded-yet", "No games recorded yet.")));
@@ -2069,6 +2072,9 @@ export class App {
     const names = ["1st", "2nd", "3rd", "4th"];
     const colors = ["var(--state)", "var(--dim)", "var(--line)", "var(--panel-hi)"];
     counts.forEach((c, i) => {
+      // C12: zero-count placements get no segment and no label, so a
+      // single-segment bar reads as that segment alone, full width.
+      if (c === 0) return;
       const seg = h("i", { style: `flex:${c};background:${colors[i]}` });
       bar.append(seg);
       const lab = h("span", { style: `flex:${c}` }, tx("ui.app.v-0-2", `${names[i]} ·`, names[i]) + " ");
@@ -4190,7 +4196,7 @@ export class App {
       "data-section": release.id,
     });
     head.append(
-      h("span", { class: "secttl" }, release.id === "mcr" ? tx("ui.app.mcr-mahjong-competition-rules", "MCR (Mahjong Competition Rules)") : releaseName(release)),
+      h("span", { class: "secttl" }, release.id === "mcr" ? tx("ui.app.mcr-mahjong-competition-rules", "MCR") : releaseName(release)),
       h("span", { class: "seccount" }, tx("ui.app.v-0-of-1-lessons-done", `${doneCount} of ${lessons.length} lessons done`, doneCount, lessons.length)),
     );
     head.insertAdjacentHTML(
@@ -4303,9 +4309,10 @@ export class App {
         row.append(st);
       } else if (isActive) {
         row.append(h("span", { class: "st now" }, tx("ui.app.in-progress-2", "In progress")));
-      } else {
-        row.append(h("span", { class: "st" }, tx("ui.app.v-0-min", `${mod.minutes} min`, mod.minutes)));
       }
+      // C4: no duration span on any variant's rows — variant lessons
+      // carry no minutes metadata, so Riichi rows show the same
+      // fields (number, title, status) as every other variant.
       row.insertAdjacentHTML(
         "beforeend",
         `<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>`,

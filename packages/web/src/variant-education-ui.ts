@@ -163,7 +163,11 @@ export function mountVariantEducation(
   );
   const back = button("‹", options.onBack);
   back.setAttribute("aria-label", tx("learn.variant.ui.back", "Back"));
-  header.append(back, el("h1", options.practice ? tx("learn.variant.ui.practice", "Practice") : lessonTitle(lesson)));
+  // F3: a 44px trailing spacer balances the back button so the
+  // Fraunces title centres on the screen axis (the American Card
+  // header grammar), not on the remaining space.
+  const hspacer = el("span", "", "variant-hspacer");
+  header.append(back, el("h1", options.practice ? tx("learn.variant.ui.practice", "Practice") : lessonTitle(lesson)), hspacer);
   shell.append(header, main);
   container.replaceChildren(shell);
   function persist(next: VariantLearningProgress): void {

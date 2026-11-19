@@ -119,7 +119,7 @@ describe("practice card views", () => {
     document.body.innerHTML = "";
   });
 
-  it("sections sheet: label at head and foot, nine rows, key, print", () => {
+  it("sections sheet: label at foot only, nine rows, key, print", () => {
     const ui = mountAmericanCard(container, { onBack });
     const sheet = container.querySelector(".amc-sheet")!;
     expect(container.querySelector(".amc-title")?.textContent).toBe(
@@ -128,10 +128,9 @@ describe("practice card views", () => {
     expect(sheet.querySelector(".amc-cardtitle")?.textContent).toBe(
       PRACTICE_CARD.title,
     );
-    // The label sits on the card surface itself, top and foot.
-    expect(sheet.querySelector(".amc-label")?.textContent).toBe(
-      PRACTICE_CARD_LABEL,
-    );
+    // C5: the label prints once, at the panel foot — the head copy
+    // under the title was a duplicate of the foot label.
+    expect(sheet.querySelector(".amc-label")).toBeNull();
     expect(sheet.querySelector(".amc-footlabel")?.textContent).toBe(
       PRACTICE_CARD_LABEL,
     );
