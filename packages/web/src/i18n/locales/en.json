@@ -2,7 +2,7 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T13:17:05.579Z",
+    "generatedAt": "2026-11-19T13:18:05.420Z",
     "keyCount": 3727,
     "namespaces": {
       "calc.compact": 14,
@@ -297,20 +297,21 @@
       "hash": "6e1aedf87021ed4b7eb9591c45660716b067461520987580519e39b676990e7d",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 659
+        "line": 660
       },
       "placeholders": [
         "0",
         "1"
       ],
-      "status": "approved"
+      "status": "approved",
+      "dynamic": true
     },
     "calc.riichi.add-another-simultaneous-winner": {
       "value": "Add another simultaneous winner",
       "hash": "62c7dcc7873a403f44c2e4043cc6ff7fa41999ce36137b866319306d0f685d7f",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 862
+        "line": 863
       },
       "placeholders": [],
       "status": "approved"
@@ -320,7 +321,7 @@
       "hash": "8dcce94d00c2c698108258b83fef7cf6407a3228c9d53a86acb44d0ae1e3cfad",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 674
+        "line": 675
       },
       "placeholders": [],
       "status": "approved"
@@ -330,7 +331,7 @@
       "hash": "37629e87d8939caee9e3ee25b198bc29ba403c30bdfead6017a3038d72441be9",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 698
+        "line": 699
       },
       "placeholders": [],
       "status": "approved"
@@ -340,7 +341,7 @@
       "hash": "063f0e84139e195eb96e1160b5f0c1e85dca8298a4a868fe2a95b245654540f5",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 670
+        "line": 671
       },
       "placeholders": [],
       "status": "approved"
@@ -350,7 +351,7 @@
       "hash": "41bb6368afaaf9a2c6a96a520c19c0c6c5edb097391e5090fc66eed49e52aa6b",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 554
+        "line": 555
       },
       "placeholders": [],
       "status": "approved"
@@ -360,7 +361,7 @@
       "hash": "2ac60550506531c04e2db782dcdfe5ff7c68bea44b5ee51771d8b3fd5272cebe",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 842
+        "line": 843
       },
       "placeholders": [],
       "status": "approved"
@@ -370,7 +371,7 @@
       "hash": "8db81320df98b43c1a4ebd434b2774f6d6d9408c994cbe98c3ada85cd588e82f",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 650
+        "line": 651
       },
       "placeholders": [],
       "status": "approved"
@@ -380,7 +381,7 @@
       "hash": "b3ebbadbc40585d9575d9b1bd6abfce9afdae0cd490dad38f1d1a62870c45623",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 677
+        "line": 678
       },
       "placeholders": [],
       "status": "approved"
@@ -390,7 +391,7 @@
       "hash": "c2a8c63a67bed9eda28910e3493bda34d4495f6a67d06acbcae9ac360247e9cf",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 240
+        "line": 241
       },
       "placeholders": [],
       "status": "approved"
@@ -400,7 +401,7 @@
       "hash": "24f3b1f6ce42d48b291f62abaa2366b2a76e4990aa1ffec0c1b060cd6df9cfc3",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 239
+        "line": 240
       },
       "placeholders": [],
       "status": "approved"
@@ -410,7 +411,7 @@
       "hash": "f1df27bf3516720aca0fd7f1b5965d62756f20128c10f8db35e0a3bd1e166f99",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 241
+        "line": 242
       },
       "placeholders": [],
       "status": "approved"
@@ -420,7 +421,7 @@
       "hash": "4596629d26504211328f3a27be14348e03b4b8abe14c8a3b24e7eb05b9b5e4fc",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 180
+        "line": 181
       },
       "placeholders": [
         "0"
@@ -433,7 +434,7 @@
       "hash": "68854161cf077ebfea22dfb4e64046866ae5efa42780329578a72adf7a1da2c9",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 178
+        "line": 179
       },
       "placeholders": [],
       "status": "approved"
@@ -443,7 +444,7 @@
       "hash": "6186744788b56dae12cc13dbb0b784e3c12169030b1ec2bea04d712ba24cb02c",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 267
+        "line": 268
       },
       "placeholders": [],
       "status": "approved"
@@ -453,7 +454,7 @@
       "hash": "af77d63b3093c71010a98eb5cf397ec580acc12f5c636857c4f69a4de8eb0f5c",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 754
+        "line": 755
       },
       "placeholders": [],
       "status": "approved"
@@ -463,7 +464,7 @@
       "hash": "99014c0516dec84dbbf72ee3795ed1c18c9583a139778502650b6cfab043ce30",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 552
+        "line": 553
       },
       "placeholders": [],
       "status": "approved"
@@ -473,7 +474,7 @@
       "hash": "d558459d1b87e6bea00aee4a725e4a568482cc9f23a482509200de07810a8acc",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 541
+        "line": 542
       },
       "placeholders": [],
       "status": "approved"
@@ -483,7 +484,7 @@
       "hash": "3e4126ecfb910ce8a84e1faad0fe4d4d52c9c8b6444ae967a092611a5ac58de0",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 852
+        "line": 853
       },
       "placeholders": [],
       "status": "approved"
@@ -493,7 +494,7 @@
       "hash": "07250c86a8b1c934a6eecadf302f1e32c3b46b45a30e8e18fe7b8dd7b33f7926",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 851
+        "line": 852
       },
       "placeholders": [],
       "status": "approved"
@@ -503,7 +504,7 @@
       "hash": "1e5c8b3191f7c2bd397cafb35c805472a93b13e724669e52ebbf1dec229eadb7",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 779
+        "line": 778
       },
       "placeholders": [],
       "status": "approved"
@@ -513,7 +514,7 @@
       "hash": "fe241b15fafd542f0b1ca2e66d8c6c56c00fdf558901090ae87413e3831b9e4a",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 542
+        "line": 543
       },
       "placeholders": [],
       "status": "approved"
@@ -523,7 +524,7 @@
       "hash": "fb73b43bfddf7069463b4f38e5c3cbf07295b06c51703b9876b0ccc5f4ffdfdc",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 671
+        "line": 672
       },
       "placeholders": [],
       "status": "approved"
@@ -533,7 +534,7 @@
       "hash": "d2d86d3ee8c90bc6b55ef7054eb60b52ef5dc52afe4e271b2ebda2d748b10e2c",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 606
+        "line": 607
       },
       "placeholders": [],
       "status": "approved"
@@ -543,7 +544,7 @@
       "hash": "72f2c80cb1f0bd40a85fc4ee38f21af5aaa200107741d99759dbc448291d8988",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 195
+        "line": 196
       },
       "placeholders": [],
       "status": "approved"
@@ -553,7 +554,7 @@
       "hash": "98f44027339bffda465fcae4ee59aa16c90aeeb6dd743c3c41cf16807a4d2444",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 543
+        "line": 544
       },
       "placeholders": [],
       "status": "approved"
@@ -563,7 +564,7 @@
       "hash": "659b15b24fbe62119b6b1e9cb5007eb4ef6e8756b25957e0afcc332f04fc58c0",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 620
+        "line": 621
       },
       "placeholders": [],
       "status": "approved"
@@ -573,7 +574,7 @@
       "hash": "4c0dbea42e20233a0ac046cc10f7f6be5c36d72cdd40f3eb482cf2dcebffc51e",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 516
+        "line": 517
       },
       "placeholders": [],
       "status": "approved"
@@ -583,7 +584,7 @@
       "hash": "ad95039f97ef67908dfd0d38fd5b4150862df75b565127b907db85035e39195b",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 680
+        "line": 681
       },
       "placeholders": [
         "0"
@@ -596,7 +597,7 @@
       "hash": "ba6c23db49d60cb5564c260ec7d545dace26d3558673019c38d9af76fecfaccf",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 746
+        "line": 747
       },
       "placeholders": [],
       "status": "approved"
@@ -606,7 +607,7 @@
       "hash": "cfb66d8e8936909aee638faf2c2b618c52b56b27421f633f7d8ce3069006341e",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 261
+        "line": 262
       },
       "placeholders": [],
       "status": "approved"
@@ -616,7 +617,7 @@
       "hash": "e6888d1e1558e90559638833420602b57caf6b29ac81e234e7e224b042fee689",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 327
+        "line": 328
       },
       "placeholders": [],
       "status": "approved"
@@ -626,7 +627,7 @@
       "hash": "bdf75e99dfe5f7e152adbb0be7087262cc8da191282e01ed40a0af3d813db84b",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 667
+        "line": 668
       },
       "placeholders": [],
       "status": "approved"
@@ -636,7 +637,7 @@
       "hash": "2e6cad7a7a82bda4c825a831c935bddb30bee55ba5958cc9620e153e5aa5746d",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 790
+        "line": 791
       },
       "placeholders": [
         "0",
@@ -651,7 +652,7 @@
       "hash": "6e07df4c7bb96cfdf0917b70cd4e7042bdeea3e72bcf8d9a0bb53d9dc6ba0dac",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 316
+        "line": 317
       },
       "placeholders": [],
       "status": "approved"
@@ -661,7 +662,7 @@
       "hash": "bdf22f2607ca0be410138aad7c3ad677dfd848b8dff45eff5f2f7df420023138",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 284
+        "line": 285
       },
       "placeholders": [],
       "status": "approved"
@@ -671,7 +672,7 @@
       "hash": "861af54f72de981d8816869134af5063bd5f8358771a189f0344fb4d112d3bad",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 273
+        "line": 274
       },
       "placeholders": [],
       "status": "approved"
@@ -681,7 +682,7 @@
       "hash": "39c5cc484c73e4737fb5c924c5f86013659d5082101bf8ed0bd0d7de28872e35",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 246
+        "line": 247
       },
       "placeholders": [],
       "status": "approved"
@@ -691,7 +692,7 @@
       "hash": "8ba7571f7a832b0034e6c925121df2b041dfaefd161560b210802ab0bba6fa94",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 246
+        "line": 247
       },
       "placeholders": [],
       "status": "approved"
@@ -701,7 +702,7 @@
       "hash": "07bda4d5f666ea2caf536b686da441c9949a56774b945c0722db2835f2f4d81f",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 407
+        "line": 408
       },
       "placeholders": [
         "0"
@@ -714,7 +715,7 @@
       "hash": "71c003457767b7b57382dbee830c963bf81cadfbcc3c37149a762a2a810eaa14",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 811
+        "line": 812
       },
       "placeholders": [
         "0",
@@ -728,7 +729,7 @@
       "hash": "c7851607b1a83e0d6a4145c4c74a1dc707fa8576a4f3dc34de4701e2d23e2834",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 812
+        "line": 813
       },
       "placeholders": [
         "0",
@@ -742,7 +743,7 @@
       "hash": "ed25dcc4765940d6c8b5dd1403d62eeea6d5a674cbaac7f78b56c5dc63641ced",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 168
+        "line": 169
       },
       "placeholders": [],
       "status": "approved"
@@ -752,7 +753,7 @@
       "hash": "b10c8cc8e9f79c18980bb5209260a49b83bb3f74e1394269972847b6e398a2fc",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 177
+        "line": 178
       },
       "placeholders": [],
       "status": "approved"
@@ -762,7 +763,7 @@
       "hash": "921900d078c41600bcfed3fb8db0888ed3dc3ce16574ec59a700207ff10cd844",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 141
+        "line": 142
       },
       "placeholders": [],
       "status": "approved"
@@ -772,7 +773,7 @@
       "hash": "3c1744c5868674ee12a2387c63038a9e389fe388ee305fa1e1edeffb8b44a036",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 249
+        "line": 250
       },
       "placeholders": [],
       "status": "approved"
@@ -782,7 +783,7 @@
       "hash": "ced264fc64b61238ebbe554af678c9bf9aae73060182b2a5d4f38746e9cff589",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 517
+        "line": 518
       },
       "placeholders": [],
       "status": "approved"
@@ -792,7 +793,7 @@
       "hash": "253be9c52efdd319e62e9335e2c930a15a2dcbe71ed474f6cb98faa499a94334",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 553
+        "line": 554
       },
       "placeholders": [],
       "status": "approved"
@@ -802,7 +803,7 @@
       "hash": "dcf15fb5c1a5e3b1ac7a8aa15eb4209fc42e5f19b28c1cb3e648413656a307c6",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 550
+        "line": 551
       },
       "placeholders": [],
       "status": "approved"
@@ -812,7 +813,7 @@
       "hash": "9cacbbf6954519e8e6fccaf6889e72d72068f60c42bde3a87ece03364d334bdf",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 551
+        "line": 552
       },
       "placeholders": [],
       "status": "approved"
@@ -822,7 +823,7 @@
       "hash": "3da8a3487f6d4b31eda46e37c7e00451ec62b40c938812c697540959af33eda2",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 136
+        "line": 137
       },
       "placeholders": [
         "0"
@@ -835,7 +836,7 @@
       "hash": "e92f3445bd4a60821b651886fde2f5500f76b257676d1b006c967ff03b1aec19",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 264
+        "line": 265
       },
       "placeholders": [],
       "status": "approved"
@@ -845,7 +846,7 @@
       "hash": "b088bcaa092f4ee31458ae18af2547106b1bb53c6ef82a4897ca0726959735e2",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 844
+        "line": 845
       },
       "placeholders": [],
       "status": "approved"
@@ -855,7 +856,7 @@
       "hash": "b1f51a511f1da0cd348b8f8598db32e61cb963e5fc69e2b41485bf99590ed75a",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 659
+        "line": 660
       },
       "placeholders": [],
       "status": "approved"
@@ -865,19 +866,20 @@
       "hash": "dfbfd0da8890920dca12a78a08210bc467df81e904dbca2aad7e005ac10e1e00",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 599
+        "line": 600
       },
       "placeholders": [
         "0"
       ],
-      "status": "approved"
+      "status": "approved",
+      "dynamic": true
     },
     "calc.riichi.remove-meld": {
       "value": "Remove meld",
       "hash": "60c5e38dde51c4376aebc8b851c4863c7ff3db52548e77876be76106b99cf7cf",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 612
+        "line": 613
       },
       "placeholders": [],
       "status": "approved"
@@ -887,7 +889,7 @@
       "hash": "955174e3e9890fc53bc2e2e2df3cf57617657b1b8a9191def02fa863100ec0f7",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 200
+        "line": 201
       },
       "placeholders": [],
       "status": "approved"
@@ -897,7 +899,7 @@
       "hash": "a6f0a113302d4db5e029e3a6769a650b501f29c64dd5afeaf90852a322985cca",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 515
+        "line": 516
       },
       "placeholders": [],
       "status": "approved"
@@ -907,7 +909,7 @@
       "hash": "24273c44f244bc4f48f4a241e294b5d385f3985723072c028227da93939b421e",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 822
+        "line": 823
       },
       "placeholders": [
         "0",
@@ -921,7 +923,7 @@
       "hash": "3642e09186f53c24941df28b851fef2d14213819d3b6b80a1eb1925074aadfa0",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 818
+        "line": 819
       },
       "placeholders": [
         "0",
@@ -935,7 +937,7 @@
       "hash": "d24ca137a0a2c8aa8d6c6caa6fc50d53cbfcb8bdfc83b05e93b0f4bebca85ba7",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 826
+        "line": 827
       },
       "placeholders": [
         "0",
@@ -949,7 +951,7 @@
       "hash": "d911111c438404b954d67ad7d04f7772f7efbc8829a61c73b25f73974eca4404",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 324
+        "line": 325
       },
       "placeholders": [],
       "status": "approved"
@@ -959,7 +961,7 @@
       "hash": "92278484399c5577f8e2e2eed808c15fa9238fa3effdb6b655d96595a14247c1",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 437
+        "line": 145
       },
       "placeholders": [],
       "status": "approved"
@@ -969,7 +971,7 @@
       "hash": "599ab6241de98e5010822e2cba018841a4f290175100a512701570bf5d0db358",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 518
+        "line": 519
       },
       "placeholders": [],
       "status": "approved"
@@ -979,7 +981,7 @@
       "hash": "561965b1697d372e8dde5ace9db65b8a2e69e095e960abc9d504b6ce37130a51",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 143
+        "line": 144
       },
       "placeholders": [],
       "status": "approved"
@@ -989,7 +991,7 @@
       "hash": "35d77d06ad266be8d0dd88d2cb78c5a99b1c2babf91e12026f17895c0312e5f4",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 335
+        "line": 336
       },
       "placeholders": [],
       "status": "approved"
@@ -999,7 +1001,7 @@
       "hash": "d5adaa3ce682f2741c2b49ece5c118b01f80d16acee73fdfcf5f15419d19c05a",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 172
+        "line": 173
       },
       "placeholders": [],
       "status": "approved"
@@ -1009,7 +1011,7 @@
       "hash": "b7506383003901efb6f3f159e519841af59188b4780e3347c3d12be2a9f3419d",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 634
+        "line": 635
       },
       "placeholders": [],
       "status": "approved"
@@ -1019,7 +1021,7 @@
       "hash": "70c1341a0ecbafb1b99a26993b9e098af502f73326fa90e89d71c3263c138d36",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 544
+        "line": 545
       },
       "placeholders": [],
       "status": "approved"
@@ -1029,7 +1031,7 @@
       "hash": "87b48ae7d01d1c9bd3edbc3fb4a6457222cb60b61a7018a186d9122f4f055838",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 622
+        "line": 623
       },
       "placeholders": [],
       "status": "approved"
@@ -1039,7 +1041,7 @@
       "hash": "80d6d3699a5a90ea9bb97214991951e9973ab2f9f843624175791894bc7d85a0",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 585
+        "line": 586
       },
       "placeholders": [
         "0"
@@ -1052,7 +1054,7 @@
       "hash": "47b2c3bebcd6f881659771ac0ffb63f22287cc34c733502d7bc689452fb6eaf4",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 198
+        "line": 199
       },
       "placeholders": [
         "0"
@@ -1065,7 +1067,7 @@
       "hash": "ed1b0e7a8d399aba78fbe091dfcc32289c183958d6505fa9e5b18830b93933bd",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 405
+        "line": 406
       },
       "placeholders": [
         "0",
@@ -1080,7 +1082,7 @@
       "hash": "f572de52bc5e9785a2bf59602c47d0a1a60c0b1b25e461684d9c1d8a6dc4513f",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 791
+        "line": 792
       },
       "placeholders": [
         "0",
@@ -1097,7 +1099,7 @@
       "hash": "0bcf44a53cc1164732b8a8704c6a5654601bb5a59233fc78b066e3cf162e1ea7",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 361
+        "line": 362
       },
       "placeholders": [
         "0",
@@ -1111,7 +1113,7 @@
       "hash": "5d584f1f4b4c7d835c61a4c5fd3f392bb9d38c0a91111b9efad602f1625d5235",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 384
+        "line": 385
       },
       "placeholders": [
         "0",
@@ -1125,7 +1127,7 @@
       "hash": "fac88e67ae659415d9de07e651b4ec0a3764999853e3bf54ebb0505e244d3efe",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 787
+        "line": 788
       },
       "placeholders": [
         "0"
@@ -1138,7 +1140,7 @@
       "hash": "c66b0f3760ef2dcc5d66c661482fe0fd494527c6b73f8f0f4ac0ca88d3413fb1",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 379
+        "line": 380
       },
       "placeholders": [
         "0",
@@ -1153,7 +1155,7 @@
       "hash": "63f7c4b1bcd4db46a0e1c883c04e7db5c82a622c101956bca545848e46f90a4c",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 786
+        "line": 787
       },
       "placeholders": [
         "0"
@@ -1166,7 +1168,7 @@
       "hash": "96a174f3a9f1668bceadf90940f6c2ea885772e7cae59b2aae6a6fe4e220b114",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 784
+        "line": 785
       },
       "placeholders": [
         "0",
@@ -1180,7 +1182,7 @@
       "hash": "e3e46805ed18b39488f5af0e0325f25611756f82f4b9452127c23c6c4cf5b957",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 378
+        "line": 379
       },
       "placeholders": [
         "0",
@@ -1196,7 +1198,7 @@
       "hash": "05bdb7a78230930687c6c7ab729887709f955280fb418cb903c1ecc2a571c23c",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 405
+        "line": 406
       },
       "placeholders": [
         "0"
@@ -1209,7 +1211,7 @@
       "hash": "d538f43732e89381f0ee018071b28a687d1982b7ea83c7bb4ea3d29feea4f968",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 521
+        "line": 522
       },
       "placeholders": [],
       "status": "approved"
@@ -1219,7 +1221,7 @@
       "hash": "5486d8fa510350234bf050cbe9cac8bc6b0c19c4852f3f8edbb25f1d4e4e7c05",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 520
+        "line": 521
       },
       "placeholders": [],
       "status": "approved"
@@ -1229,7 +1231,7 @@
       "hash": "10693d05514769150279cd6a24dff23c956bd99a96f1cbe26047291d2f61b0a7",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 519
+        "line": 520
       },
       "placeholders": [],
       "status": "approved"
@@ -1239,7 +1241,7 @@
       "hash": "6f7ee37c8b42ad65d7feeb20fb3fc9509d8a52410d08c04342e5379a31fc58f3",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 522
+        "line": 523
       },
       "placeholders": [],
       "status": "approved"
@@ -1249,7 +1251,7 @@
       "hash": "cd4aeb59ca8eff37d5281af393fd81268db9caffff9ebfedb6c2a204ceb83a77",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 433
+        "line": 434
       },
       "placeholders": [],
       "status": "approved"
@@ -1259,7 +1261,7 @@
       "hash": "105dc74a45e3688b4bcc374d001c6166d063ea77117c8daf7199893cd02b297e",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 433
+        "line": 191
       },
       "placeholders": [],
       "status": "approved"
@@ -1269,7 +1271,7 @@
       "hash": "78574fa82e5930d82445e3809b4d8e0b5a7db9d3e31d856683f3cec04245ecd8",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 688
+        "line": 689
       },
       "placeholders": [],
       "status": "approved"
@@ -1279,7 +1281,7 @@
       "hash": "afd9e4c36356693779b8491b7cc222578aa15f6db817c0b152a8f77cea0ec9b8",
       "source": {
         "file": "riichi-calculator-ui.ts",
-        "line": 296
+        "line": 297
       },
       "placeholders": [],
       "status": "approved"
