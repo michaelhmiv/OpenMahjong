@@ -2,8 +2,8 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T21:49:51.866Z",
-    "keyCount": 3962,
+    "generatedAt": "2026-11-19T23:04:22.988Z",
+    "keyCount": 3979,
     "namespaces": {
       "calc.compact": 14,
       "calc.riichi": 90,
@@ -44,19 +44,19 @@
       "online.waiting": 15,
       "online.wind": 4,
       "online.wordmark": 1,
-      "pages.calculator": 21,
-      "pages.hong-kong": 47,
-      "pages.learn": 19,
-      "pages.mcr": 47,
-      "pages.privacy": 22,
-      "pages.riichi": 45,
+      "pages.calculator": 22,
+      "pages.hong-kong": 48,
+      "pages.learn": 20,
+      "pages.mcr": 48,
+      "pages.privacy": 35,
+      "pages.riichi": 46,
       "pages.root": 17,
-      "pages.taiwanese": 47,
+      "pages.taiwanese": 48,
       "play.groups": 6,
       "play.variant": 74,
       "review.a-speed-tradeoff": 1,
       "review.back": 1,
-      "review.board": 66,
+      "review.board": 65,
       "review.call-decision": 1,
       "review.call-decision-2": 1,
       "review.called": 1,
@@ -153,8 +153,8 @@
       "review.your-discard-leaves-0-shanten-and-1-unseen-impro": 1,
       "review.your-hand-at-this-decision": 1,
       "tools.inperson": 130,
-      "ui.app": 364,
-      "ui.stats": 11,
+      "ui.app": 362,
+      "ui.stats": 12,
       "ui.tiles": 9
     },
     "note": "English is the source. Translation memory is keyed by each key's hash: an unchanged string is never re-translated. Keys marked dynamic contain {n} placeholders filled at runtime."
@@ -7799,7 +7799,7 @@
       "hash": "46391e0a67f2217d078e6013a859f4fb05d5e1296ac8cb603bf2d2c6302c05e5",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 226
+        "line": 227
       },
       "placeholders": [],
       "status": "approved"
@@ -7809,7 +7809,7 @@
       "hash": "a70005c2d4f94ecb837dc6645981c862c1d18e602c0fe10c645a7fba239e7343",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 246
+        "line": 247
       },
       "placeholders": [],
       "status": "approved"
@@ -7853,7 +7853,7 @@
       "hash": "cb85174f8eb04f88555491a748fa12a59b647ca98dc053fa616a5f5428a86041",
       "source": {
         "file": "american-card-ui.ts",
-        "line": 220
+        "line": 221
       },
       "placeholders": [],
       "status": "approved"
@@ -28050,7 +28050,7 @@
       "hash": "dc4a3b3a935ebb706831f8f18a0bb56c776ef283619780d7c058ebcd2fdc2df3",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 378
+        "line": 382
       },
       "placeholders": [],
       "status": "approved"
@@ -28060,7 +28060,7 @@
       "hash": "86cfa5c34050fff77baf26f5eb331b98c110077e25a10df0a33b9775a2a99192",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 272
+        "line": 276
       },
       "placeholders": [],
       "status": "approved"
@@ -28080,7 +28080,7 @@
       "hash": "99bc0811c4c9f862e6d705a5b79a4c2d9f8cc32d84e53692ee93eab7c5c243ae",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 402
+        "line": 406
       },
       "placeholders": [],
       "status": "approved"
@@ -28090,7 +28090,7 @@
       "hash": "59b5b25c3f1225bbc759f0a5877604948e64e3484f2e56aafef146d98cd32a61",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 287
+        "line": 291
       },
       "placeholders": [],
       "status": "approved"
@@ -28100,7 +28100,7 @@
       "hash": "31fbef162594de01bab0cd525c51f74de7bcb15063029fa1a54b2cf5944c80d8",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 338
+        "line": 342
       },
       "placeholders": [],
       "status": "approved"
@@ -28110,7 +28110,7 @@
       "hash": "3dc3f86cf0986d4df60c2257fb307d6309d05268ad0a4dcc945e6602aa7aa65e",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 321
+        "line": 325
       },
       "placeholders": [
         "0"
@@ -28123,7 +28123,7 @@
       "hash": "9bc3516b784aceb156fb7e182b697e3f2aae96fa300e13aaad39085a986f02a6",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 430
+        "line": 434
       },
       "placeholders": [],
       "status": "approved"
@@ -28133,7 +28133,7 @@
       "hash": "96ffe8b6aa8329369ea446f893400269347942037927529f6c2d0a2d91ab4b1f",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 351
+        "line": 355
       },
       "placeholders": [],
       "status": "approved"
@@ -28143,7 +28143,7 @@
       "hash": "0bca43add105642fdb94db6ebf99746a60816f346bf3cd31ee9a3cbe6f8f3281",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 400
+        "line": 404
       },
       "placeholders": [],
       "status": "approved"
@@ -28153,7 +28153,7 @@
       "hash": "1f5c3e6c2677e436037e236890119dcc0406e6a32e9d06a7ae1849965d3581dc",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 210
+        "line": 214
       },
       "placeholders": [
         "0"
@@ -28166,7 +28166,7 @@
       "hash": "6e2b26d9de4033b952bd242f69b798420ee887151b937f394efc23252c78af74",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 411
+        "line": 415
       },
       "placeholders": [],
       "status": "approved"
@@ -28176,7 +28176,7 @@
       "hash": "fd8ea0a29a653cac0de113a4dce5875e61def5197251debfeb9e58855fe9e298",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 496
+        "line": 500
       },
       "placeholders": [],
       "status": "approved"
@@ -28186,7 +28186,7 @@
       "hash": "ee075885c9281f770f489778da89da5adc9cdd68600c3523b85b89e312399e60",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 338
+        "line": 342
       },
       "placeholders": [],
       "status": "approved"
@@ -28196,7 +28196,7 @@
       "hash": "d3857b12b4cea2bc5d8ea0b8c2ce9cc3d5dc426e0bf3ea06394ddb906e6d60a0",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 166
+        "line": 170
       },
       "placeholders": [],
       "status": "approved"
@@ -28206,7 +28206,7 @@
       "hash": "b05f5312f52ea4878e6aea261af94d91ecd31ac339d6c2a9f1c4b7eae65caea4",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 432
+        "line": 436
       },
       "placeholders": [],
       "status": "approved"
@@ -28216,7 +28216,7 @@
       "hash": "27636f08d4dcb21adb5efb25b0ec61a73ba3eec91049c0288f981238e4a4a581",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 413
+        "line": 417
       },
       "placeholders": [],
       "status": "approved"
@@ -28226,7 +28226,7 @@
       "hash": "cabbcb70d6181880ab073373526a0c6c6e19e654d5efb84953f80e240277b4e8",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 505
+        "line": 509
       },
       "placeholders": [],
       "status": "approved"
@@ -28236,7 +28236,7 @@
       "hash": "70f32e53ef5c7e21cb65f28d00d633bb1937ca14496792fc2436dfa12476803f",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 352
+        "line": 356
       },
       "placeholders": [],
       "status": "approved"
@@ -28246,7 +28246,7 @@
       "hash": "a193b67fe0a1a01d0cde7b84d0a87e9994cd1147b56bfd3ed5bf8f60f8b2489c",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 503
+        "line": 507
       },
       "placeholders": [],
       "status": "approved"
@@ -28256,7 +28256,7 @@
       "hash": "92f19534d8c5411570e603431055706c77573719bc31c19b6e5219457bc1065e",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 461
+        "line": 465
       },
       "placeholders": [
         "0",
@@ -28270,7 +28270,7 @@
       "hash": "5467ab3c1f1231cfabd173a4bb1d692757cc4f01db9c2a0bbab1529ff729aa80",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 331
+        "line": 335
       },
       "placeholders": [],
       "status": "approved"
@@ -28280,7 +28280,7 @@
       "hash": "42ca0a4130a8ffbf849c2133c3396f862c850bd76f6f880798a001d161dfab60",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 451
+        "line": 455
       },
       "placeholders": [],
       "status": "approved"
@@ -28290,7 +28290,7 @@
       "hash": "cfac7bd36ea121f7ad7c0c1efb99d21e4e3bf1ddf3f99f880408fa4d46fbbca4",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 249
+        "line": 253
       },
       "placeholders": [
         "0"
@@ -28303,7 +28303,7 @@
       "hash": "b502772a2728e4f817d4d01dd96a5c31408ccb646b1a86dad4fabb9c6627b34d",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 239
+        "line": 243
       },
       "placeholders": [],
       "status": "approved"
@@ -28313,7 +28313,7 @@
       "hash": "47ca8c9fbe202d894e57247cc7c0c4e5fc0c22f6ae584989f9b799e216627e49",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 330
+        "line": 334
       },
       "placeholders": [
         "0"
@@ -28326,7 +28326,7 @@
       "hash": "331251cf2525ef16e194747e91d7326840d31f7ccf156479a0abcad93208c5ff",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 369
+        "line": 373
       },
       "placeholders": [
         "0",
@@ -28360,7 +28360,7 @@
       "hash": "69a503bfee86704bbfdc30b2e3ca0a612742837f688000a7801ad5e54e0d06e5",
       "source": {
         "file": "variant-education-ui.ts",
-        "line": 497
+        "line": 501
       },
       "placeholders": [
         "0"
@@ -30058,6 +30058,17 @@
       "page": "/calculator/"
     },
     "pages.calculator.10": {
+      "value": "Play Open Mahjong",
+      "hash": "fa8286e160feee9ef094a84167ab4a3e302fa8ac3d7291c4bf33c9db5388e095",
+      "source": {
+        "file": "public/public/calculator/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/calculator/"
+    },
+    "pages.calculator.11": {
       "value": "Mahjong score calculators",
       "hash": "82bd970232ebd14e143bde897f712afb6fca74cb5d035efe570e369bc6166148",
       "source": {
@@ -30068,7 +30079,7 @@
       "status": "approved",
       "page": "/calculator/"
     },
-    "pages.calculator.11": {
+    "pages.calculator.12": {
       "value": "Score tools for mahjong played in person. A scorekeeper keeps a session's scores, hand ledger, and settlement; the hand calculator works out a single hand. No account is needed to use them.",
       "hash": "d080022fa14830459dd6dd8684cb629460e05a54e3f4208b2de8c3e5a0b23582",
       "source": {
@@ -30079,7 +30090,7 @@
       "status": "approved",
       "page": "/calculator/"
     },
-    "pages.calculator.12": {
+    "pages.calculator.13": {
       "value": "Scorekeepers",
       "hash": "7a497072dd64c6e618a3a078af86dd83ebd57a04173b7de96cb382f4d1d6a550",
       "source": {
@@ -30090,7 +30101,7 @@
       "status": "approved",
       "page": "/calculator/"
     },
-    "pages.calculator.13": {
+    "pages.calculator.14": {
       "value": "Single-hand tools",
       "hash": "c1d9de363562b48333aeac9ce64473f9649f78b6518276ae64ce22a73b77eb68",
       "source": {
@@ -30101,20 +30112,9 @@
       "status": "approved",
       "page": "/calculator/"
     },
-    "pages.calculator.14": {
-      "value": "Open the calculators. Start a scorekeeper session or work out one hand, in the browser, with nothing to install.",
-      "hash": "f929878f4d3841ed8dbcf5d9ea05d91d90d2d84d28f4337ea76cf427cd0da982",
-      "source": {
-        "file": "public/public/calculator/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/calculator/"
-    },
     "pages.calculator.15": {
-      "value": "Open the calculators",
-      "hash": "0931633717dafa1dd85a789fe00daee2f34e101fd38c4e71ca0ff9d56db4e26b",
+      "value": "Play Open Mahjong. Start a scorekeeper session or work out one hand, in the browser, with nothing to install.",
+      "hash": "83f8ca30e6e163b2468fbb11aea5957406ec1e3f22adbc9ccce3a38e8fa29c43",
       "source": {
         "file": "public/public/calculator/index.html",
         "line": 1
@@ -30124,6 +30124,17 @@
       "page": "/calculator/"
     },
     "pages.calculator.16": {
+      "value": "Play Open Mahjong",
+      "hash": "fa8286e160feee9ef094a84167ab4a3e302fa8ac3d7291c4bf33c9db5388e095",
+      "source": {
+        "file": "public/public/calculator/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/calculator/"
+    },
+    "pages.calculator.17": {
       "value": "Riichi rules Stakes, calls, riichi, dora, and draws, in full.",
       "hash": "15810bb7311fe483e78cb774dac33cd6119a68613c0918e0d00d3af2b62bacf9",
       "source": {
@@ -30134,7 +30145,7 @@
       "status": "approved",
       "page": "/calculator/"
     },
-    "pages.calculator.17": {
+    "pages.calculator.18": {
       "value": "Hong Kong Old Style rules Fan scoring, the three-fan minimum, flowers, and payments.",
       "hash": "fd35238a4bbd7bb989d351fa872247b139ee92ba6f1961b93c7cf0fc1163b4c9",
       "source": {
@@ -30145,7 +30156,7 @@
       "status": "approved",
       "page": "/calculator/"
     },
-    "pages.calculator.18": {
+    "pages.calculator.19": {
       "value": "Mahjong lessons 52 interactive lessons across the four variants and American training.",
       "hash": "beb475777244fd6699ba0cb3d017761a23cb477ad5d01b713707ca37700ef56b",
       "source": {
@@ -30156,7 +30167,7 @@
       "status": "approved",
       "page": "/calculator/"
     },
-    "pages.calculator.19": {
+    "pages.calculator.20": {
       "value": "Open Mahjong is free and open source under the GNU Affero General Public License v3 (AGPLv3).",
       "hash": "c013936017c0a266c5b09109fb8ebb1cbe8dfecf1eba697e09207ac5a5f104ca",
       "source": {
@@ -30167,7 +30178,7 @@
       "status": "approved",
       "page": "/calculator/"
     },
-    "pages.calculator.20": {
+    "pages.calculator.21": {
       "value": "Source on GitHub",
       "hash": "11506c59ef233e41a5eb53323bb917f041858f7844487435a6eba02689fcb5f4",
       "source": {
@@ -30178,7 +30189,7 @@
       "status": "approved",
       "page": "/calculator/"
     },
-    "pages.calculator.21": {
+    "pages.calculator.22": {
       "value": "Privacy policy",
       "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
       "source": {
@@ -30289,347 +30300,6 @@
       "page": "/hong-kong/"
     },
     "pages.hong-kong.10": {
-      "value": "Hong Kong Old Style rules",
-      "hash": "e07d0030828e8e57ea312b20c76ce6e76916191234cce4f10a0fdcf80f288ee8",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.11": {
-      "value": "Hong Kong Old Style is scored in fan. A hand needs at least three fan to win, and its fan total converts into the amounts the other players pay.",
-      "hash": "bb7fcbdc7f2373d479e948521efa79c48553589423a0dde44d50dd28ea2607ee",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.12": {
-      "value": "CONTENTS",
-      "hash": "eabe6aca2f0dcdbddb32c8f06e6edfa1b78618efaf57d677950d443b91d99175",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.13": {
-      "value": "The tiles",
-      "hash": "602b7b63cd087685215ed643dc8dbeb70323ad1cae3d146c195a3e4ec2efccc4",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.14": {
-      "value": "The winning shape",
-      "hash": "d0f30c502952d5f48ea0d53844c07e338109d5d669da04951f991debc6f643c4",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.15": {
-      "value": "Fan and the minimum",
-      "hash": "8df295f65a7df5d22dffaf0371650abab4322e6cc9ff2f7a5eca4c46d01e660b",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.16": {
-      "value": "Flowers and seasons",
-      "hash": "dfd4d5762e271706106da26e34cb21b078599a3163a0e181b315e84e5c939129",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.17": {
-      "value": "Payments",
-      "hash": "632e1c5839411a1009ef268e992c4b183cb1d5381b198eac0f8323213a61ed82",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.18": {
-      "value": "The match",
-      "hash": "2a31eec450f408cf42cd2571a768c750846d4262c6a5242c59605447f725d80b",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.19": {
-      "value": "The tiles",
-      "hash": "602b7b63cd087685215ed643dc8dbeb70323ad1cae3d146c195a3e4ec2efccc4",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.20": {
-      "value": "The set has 144 tiles: four copies of each of the 34 ordinary kinds — 27 numbered kinds (1 to 9 in characters, circles, and bamboo) and seven honors (the four winds and three dragons) — plus eight bonus tiles.",
-      "hash": "8436b048817599470c4cf01399c9184aba05e8cc694d7657414c88e7046d8a38",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.21": {
-      "value": "The eight bonus tiles are the four plants (plum, orchid, chrysanthemum, bamboo plant) and the four seasons (spring, summer, autumn, winter), numbered 1 to 4.",
-      "hash": "dfc020325019a47eeb898b8d966847842264933b7bc188aa516d6b14003c8eb1",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.22": {
-      "value": "The 1 and the 9 of a numbered suit are its terminals. An honor has no number and can only match copies of itself.",
-      "hash": "b27043849acc03059fa75777c69e8fd3eeae2336e57329f6bd2912b28ef19f3a",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.23": {
-      "value": "The winning shape",
-      "hash": "d0f30c502952d5f48ea0d53844c07e338109d5d669da04951f991debc6f643c4",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.24": {
-      "value": "A complete hand is four sets and a pair. A set is a sequence of three numbers in one suit, a triplet of one kind, or a quad.",
-      "hash": "8297ce1faf15f9a0f53075bcd083a6f9d069ef9575655c7e4197f790f92e5597",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.25": {
-      "value": "A complete shape is not enough on its own: the hand must also reach the table's fan minimum before it may win.",
-      "hash": "1f58635e0541d14e89752fd8cbd9cf5aca8f28a2b182bb9367f901225755e79b",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.26": {
-      "value": "Fan and the minimum",
-      "hash": "8df295f65a7df5d22dffaf0371650abab4322e6cc9ff2f7a5eca4c46d01e660b",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.27": {
-      "value": "The score of a winning hand is counted in fan. Each pattern a hand contains, and each circumstance of how it was won, earns a stated number of fan, and the fan are added together.",
-      "hash": "1e73ced44656a9e9b0447b1e4c179d11427801415d6351d77184b0e3abf45cdf",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.28": {
-      "value": "This table requires at least three fan to win. A complete two-fan hand must keep playing.",
-      "hash": "d28140118ba49689b697d33e87b4ee8afae1c64f4b31d2d14a2ec9dcd3d78834",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.29": {
-      "value": "Winning on a tile you drew yourself earns one extra fan. Holding no bonus tiles at all also earns one fan.",
-      "hash": "560576c29629e0be4f1b4435d136f23355c1aabb1ca32f9481328b64d753a40d",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.30": {
-      "value": "Flowers and seasons",
-      "hash": "dfd4d5762e271706106da26e34cb21b078599a3163a0e181b315e84e5c939129",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.31": {
-      "value": "A bonus tile is never kept as part of your hand. When one appears, it is placed face-up beside your hand and you take another tile instead.",
-      "hash": "efde23184493491425d0db8a9cc6154e66752de4db55605c46aee23f523aa9cf",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.32": {
-      "value": "Bonus tiles you hold are counted in the hand's score when you win.",
-      "hash": "9efbe6e02c4e55b5f8daa148b8b0338db6b53a1cb986182c75e7f21c5b02af48",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.33": {
-      "value": "Payments",
-      "hash": "632e1c5839411a1009ef268e992c4b183cb1d5381b198eac0f8323213a61ed82",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.34": {
-      "value": "Fan convert to base points: three fan is 8 base points, rising through 16, 24, 32, 48, 64 and 96 to 128 at ten fan. Fan are capped at ten.",
-      "hash": "2b204db7777256cce0063eec748948f5d4b81cd3e2388efdf69f8bf8ffd68cc8",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.35": {
-      "value": "On a discard win, the table's payment split decides the discarder's share: the discarder pays two shares and each other opponent one, or the discarder pays all three shares.",
-      "hash": "5151983a58e9b77adb74b717d4a58ba73c3a01aefdb0ced1397b6ee056cef5a3",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.36": {
-      "value": "The match",
-      "hash": "2a31eec450f408cf42cd2571a768c750846d4262c6a5242c59605447f725d80b",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.37": {
-      "value": "A full match runs four rounds in order: East, South, West, and North. The dealer holds the East seat for the hand.",
-      "hash": "fcbb01f632e40b5333da30a8097c22b67f4bd212b3201ab27d8d119c25a4317b",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.38": {
-      "value": "When the dealer wins, the same dealer deals again and the hand is a repeat. After any other result, including a drawn hand, the deal passes to the next player.",
-      "hash": "11789aa8524e4d2b0adc64c4e675c1c5d2674d4b30d680ec3e216cb431b5742d",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.39": {
-      "value": "Every player starts a match with 1,000 points. Payments only move points between the four players, so the scores always add up to 4,000. A shorter match — only the East round, or East and South — uses exactly the same hand rules.",
-      "hash": "abd18b2cc181afa4096e78a8cb86c47ee96e46bb54095e77412cbd6b9a063bcc",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.40": {
-      "value": "Play Hong Kong Old Style. Games are against the CPU, with guided hints that explain each recommended move.",
-      "hash": "773611d4512751fbc9e57e54ffd47885aebad91bb170aa06e2c037b2c953b93d",
-      "source": {
-        "file": "public/public/hong-kong/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/hong-kong/"
-    },
-    "pages.hong-kong.41": {
       "value": "Play Hong Kong",
       "hash": "342eba8e80037ef8a2df8ee7670d7f2d9aa5f368dc10b5e3be9e671584a55218",
       "source": {
@@ -30640,7 +30310,359 @@
       "status": "approved",
       "page": "/hong-kong/"
     },
+    "pages.hong-kong.11": {
+      "value": "Hong Kong Old Style rules",
+      "hash": "e07d0030828e8e57ea312b20c76ce6e76916191234cce4f10a0fdcf80f288ee8",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.12": {
+      "value": "Hong Kong Old Style is scored in fan. A hand needs at least three fan to win, and its fan total converts into the amounts the other players pay.",
+      "hash": "bb7fcbdc7f2373d479e948521efa79c48553589423a0dde44d50dd28ea2607ee",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.13": {
+      "value": "CONTENTS",
+      "hash": "eabe6aca2f0dcdbddb32c8f06e6edfa1b78618efaf57d677950d443b91d99175",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.14": {
+      "value": "The tiles",
+      "hash": "602b7b63cd087685215ed643dc8dbeb70323ad1cae3d146c195a3e4ec2efccc4",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.15": {
+      "value": "The winning shape",
+      "hash": "d0f30c502952d5f48ea0d53844c07e338109d5d669da04951f991debc6f643c4",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.16": {
+      "value": "Fan and the minimum",
+      "hash": "8df295f65a7df5d22dffaf0371650abab4322e6cc9ff2f7a5eca4c46d01e660b",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.17": {
+      "value": "Flowers and seasons",
+      "hash": "dfd4d5762e271706106da26e34cb21b078599a3163a0e181b315e84e5c939129",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.18": {
+      "value": "Payments",
+      "hash": "632e1c5839411a1009ef268e992c4b183cb1d5381b198eac0f8323213a61ed82",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.19": {
+      "value": "The match",
+      "hash": "2a31eec450f408cf42cd2571a768c750846d4262c6a5242c59605447f725d80b",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.20": {
+      "value": "The tiles",
+      "hash": "602b7b63cd087685215ed643dc8dbeb70323ad1cae3d146c195a3e4ec2efccc4",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.21": {
+      "value": "The set has 144 tiles: four copies of each of the 34 ordinary kinds — 27 numbered kinds (1 to 9 in characters, circles, and bamboo) and seven honors (the four winds and three dragons) — plus eight bonus tiles.",
+      "hash": "8436b048817599470c4cf01399c9184aba05e8cc694d7657414c88e7046d8a38",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.22": {
+      "value": "The eight bonus tiles are the four plants (plum, orchid, chrysanthemum, bamboo plant) and the four seasons (spring, summer, autumn, winter), numbered 1 to 4.",
+      "hash": "dfc020325019a47eeb898b8d966847842264933b7bc188aa516d6b14003c8eb1",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.23": {
+      "value": "The 1 and the 9 of a numbered suit are its terminals. An honor has no number and can only match copies of itself.",
+      "hash": "b27043849acc03059fa75777c69e8fd3eeae2336e57329f6bd2912b28ef19f3a",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.24": {
+      "value": "The winning shape",
+      "hash": "d0f30c502952d5f48ea0d53844c07e338109d5d669da04951f991debc6f643c4",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.25": {
+      "value": "A complete hand is four sets and a pair. A set is a sequence of three numbers in one suit, a triplet of one kind, or a quad.",
+      "hash": "8297ce1faf15f9a0f53075bcd083a6f9d069ef9575655c7e4197f790f92e5597",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.26": {
+      "value": "A complete shape is not enough on its own: the hand must also reach the table's fan minimum before it may win.",
+      "hash": "1f58635e0541d14e89752fd8cbd9cf5aca8f28a2b182bb9367f901225755e79b",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.27": {
+      "value": "Fan and the minimum",
+      "hash": "8df295f65a7df5d22dffaf0371650abab4322e6cc9ff2f7a5eca4c46d01e660b",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.28": {
+      "value": "The score of a winning hand is counted in fan. Each pattern a hand contains, and each circumstance of how it was won, earns a stated number of fan, and the fan are added together.",
+      "hash": "1e73ced44656a9e9b0447b1e4c179d11427801415d6351d77184b0e3abf45cdf",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.29": {
+      "value": "This table requires at least three fan to win. A complete two-fan hand must keep playing.",
+      "hash": "d28140118ba49689b697d33e87b4ee8afae1c64f4b31d2d14a2ec9dcd3d78834",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.30": {
+      "value": "Winning on a tile you drew yourself earns one extra fan. Holding no bonus tiles at all also earns one fan.",
+      "hash": "560576c29629e0be4f1b4435d136f23355c1aabb1ca32f9481328b64d753a40d",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.31": {
+      "value": "Flowers and seasons",
+      "hash": "dfd4d5762e271706106da26e34cb21b078599a3163a0e181b315e84e5c939129",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.32": {
+      "value": "A bonus tile is never kept as part of your hand. When one appears, it is placed face-up beside your hand and you take another tile instead.",
+      "hash": "efde23184493491425d0db8a9cc6154e66752de4db55605c46aee23f523aa9cf",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.33": {
+      "value": "Bonus tiles you hold are counted in the hand's score when you win.",
+      "hash": "9efbe6e02c4e55b5f8daa148b8b0338db6b53a1cb986182c75e7f21c5b02af48",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.34": {
+      "value": "Payments",
+      "hash": "632e1c5839411a1009ef268e992c4b183cb1d5381b198eac0f8323213a61ed82",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.35": {
+      "value": "Fan convert to base points: three fan is 8 base points, rising through 16, 24, 32, 48, 64 and 96 to 128 at ten fan. Fan are capped at ten.",
+      "hash": "2b204db7777256cce0063eec748948f5d4b81cd3e2388efdf69f8bf8ffd68cc8",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.36": {
+      "value": "On a discard win, the table's payment split decides the discarder's share: the discarder pays two shares and each other opponent one, or the discarder pays all three shares.",
+      "hash": "5151983a58e9b77adb74b717d4a58ba73c3a01aefdb0ced1397b6ee056cef5a3",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.37": {
+      "value": "The match",
+      "hash": "2a31eec450f408cf42cd2571a768c750846d4262c6a5242c59605447f725d80b",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.38": {
+      "value": "A full match runs four rounds in order: East, South, West, and North. The dealer holds the East seat for the hand.",
+      "hash": "fcbb01f632e40b5333da30a8097c22b67f4bd212b3201ab27d8d119c25a4317b",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.39": {
+      "value": "When the dealer wins, the same dealer deals again and the hand is a repeat. After any other result, including a drawn hand, the deal passes to the next player.",
+      "hash": "11789aa8524e4d2b0adc64c4e675c1c5d2674d4b30d680ec3e216cb431b5742d",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.40": {
+      "value": "Every player starts a match with 1,000 points. Payments only move points between the four players, so the scores always add up to 4,000. A shorter match — only the East round, or East and South — uses exactly the same hand rules.",
+      "hash": "abd18b2cc181afa4096e78a8cb86c47ee96e46bb54095e77412cbd6b9a063bcc",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.41": {
+      "value": "Play Hong Kong Old Style. Games are against the CPU, with guided hints that explain each recommended move.",
+      "hash": "773611d4512751fbc9e57e54ffd47885aebad91bb170aa06e2c037b2c953b93d",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
     "pages.hong-kong.42": {
+      "value": "Play Hong Kong",
+      "hash": "342eba8e80037ef8a2df8ee7670d7f2d9aa5f368dc10b5e3be9e671584a55218",
+      "source": {
+        "file": "public/public/hong-kong/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/hong-kong/"
+    },
+    "pages.hong-kong.43": {
       "value": "Hong Kong lessons The 10 interactive lessons, from the tiles to a full match.",
       "hash": "0003c3a8a685221bc1b337eb7e7ede9ddbb260339deb69915824e0802a5c0254",
       "source": {
@@ -30651,7 +30673,7 @@
       "status": "approved",
       "page": "/hong-kong/"
     },
-    "pages.hong-kong.43": {
+    "pages.hong-kong.44": {
       "value": "Score calculators A Hong Kong scorekeeper for games played in person.",
       "hash": "1d85c183245f9605205ef0b7731a57323d79060fd252747be3f3b9705c99a90e",
       "source": {
@@ -30662,7 +30684,7 @@
       "status": "approved",
       "page": "/hong-kong/"
     },
-    "pages.hong-kong.44": {
+    "pages.hong-kong.45": {
       "value": "Riichi rules Stakes, calls, riichi, dora, and draws, in full.",
       "hash": "15810bb7311fe483e78cb774dac33cd6119a68613c0918e0d00d3af2b62bacf9",
       "source": {
@@ -30673,7 +30695,7 @@
       "status": "approved",
       "page": "/hong-kong/"
     },
-    "pages.hong-kong.45": {
+    "pages.hong-kong.46": {
       "value": "Open Mahjong is free and open source under the GNU Affero General Public License v3 (AGPLv3).",
       "hash": "c013936017c0a266c5b09109fb8ebb1cbe8dfecf1eba697e09207ac5a5f104ca",
       "source": {
@@ -30684,7 +30706,7 @@
       "status": "approved",
       "page": "/hong-kong/"
     },
-    "pages.hong-kong.46": {
+    "pages.hong-kong.47": {
       "value": "Source on GitHub",
       "hash": "11506c59ef233e41a5eb53323bb917f041858f7844487435a6eba02689fcb5f4",
       "source": {
@@ -30695,7 +30717,7 @@
       "status": "approved",
       "page": "/hong-kong/"
     },
-    "pages.hong-kong.47": {
+    "pages.hong-kong.48": {
       "value": "Privacy policy",
       "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
       "source": {
@@ -30806,6 +30828,17 @@
       "page": "/learn/"
     },
     "pages.learn.10": {
+      "value": "Play Open Mahjong",
+      "hash": "fa8286e160feee9ef094a84167ab4a3e302fa8ac3d7291c4bf33c9db5388e095",
+      "source": {
+        "file": "public/public/learn/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/learn/"
+    },
+    "pages.learn.11": {
       "value": "Mahjong lessons",
       "hash": "455b4b45447f26d7948254fd2c85fab55cfed27854d3e2cc8166cbd5a0afd17f",
       "source": {
@@ -30816,7 +30849,7 @@
       "status": "approved",
       "page": "/learn/"
     },
-    "pages.learn.11": {
+    "pages.learn.12": {
       "value": "52 interactive lessons, played on the real table. Each track teaches one variant from its tiles onward: the four playable tracks end in a full game, and the American training track ends in table drills.",
       "hash": "3dcf3c3a82d496ba711876fc86ac2670a2544b335fcad42721b3be55106c8f9a",
       "source": {
@@ -30827,7 +30860,7 @@
       "status": "approved",
       "page": "/learn/"
     },
-    "pages.learn.12": {
+    "pages.learn.13": {
       "value": "Training only: lessons and a practice card. There is no American game to play.",
       "hash": "817e1d1a2b179ca7a820cd0ab3a50e3b0c84aaa49661c402d778105c9750f428",
       "source": {
@@ -30838,7 +30871,7 @@
       "status": "approved",
       "page": "/learn/"
     },
-    "pages.learn.13": {
+    "pages.learn.14": {
       "value": "Start the lessons. Lessons run in the app, on the real table, with the same tiles and rules as the games.",
       "hash": "32bef1895e16910b142b642cdb1251cac26403206539f8d43d8832286f81e53b",
       "source": {
@@ -30849,7 +30882,7 @@
       "status": "approved",
       "page": "/learn/"
     },
-    "pages.learn.14": {
+    "pages.learn.15": {
       "value": "Open the lessons",
       "hash": "2685d7b3fadc355d169a8626b3a6dad009f0b73b355ee726bcd05c903864cb6a",
       "source": {
@@ -30860,7 +30893,7 @@
       "status": "approved",
       "page": "/learn/"
     },
-    "pages.learn.15": {
+    "pages.learn.16": {
       "value": "Riichi rules Stakes, calls, riichi, dora, and draws, in full.",
       "hash": "15810bb7311fe483e78cb774dac33cd6119a68613c0918e0d00d3af2b62bacf9",
       "source": {
@@ -30871,7 +30904,7 @@
       "status": "approved",
       "page": "/learn/"
     },
-    "pages.learn.16": {
+    "pages.learn.17": {
       "value": "Score calculators Scorekeepers and a hand calculator for games played in person.",
       "hash": "844b10e8d2140dbb0f397f69a3062b017a5db6a10fa5ea2c03b6e2285da94021",
       "source": {
@@ -30882,7 +30915,7 @@
       "status": "approved",
       "page": "/learn/"
     },
-    "pages.learn.17": {
+    "pages.learn.18": {
       "value": "Open Mahjong is free and open source under the GNU Affero General Public License v3 (AGPLv3).",
       "hash": "c013936017c0a266c5b09109fb8ebb1cbe8dfecf1eba697e09207ac5a5f104ca",
       "source": {
@@ -30893,7 +30926,7 @@
       "status": "approved",
       "page": "/learn/"
     },
-    "pages.learn.18": {
+    "pages.learn.19": {
       "value": "Source on GitHub",
       "hash": "11506c59ef233e41a5eb53323bb917f041858f7844487435a6eba02689fcb5f4",
       "source": {
@@ -30904,7 +30937,7 @@
       "status": "approved",
       "page": "/learn/"
     },
-    "pages.learn.19": {
+    "pages.learn.20": {
       "value": "Privacy policy",
       "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
       "source": {
@@ -31015,347 +31048,6 @@
       "page": "/mcr/"
     },
     "pages.mcr.10": {
-      "value": "Mahjong Competition Rules (MCR)",
-      "hash": "660d9e590ddf3aa6d9d0393bc591e89133c177ab9875ae63667a448cfb430ce0",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.11": {
-      "value": "MCR is scored in fan, counted from the named patterns a finished hand contains. A hand needs at least eight fan from its patterns to win; flower and season points are added after that minimum is met.",
-      "hash": "2f315515a27cd8db200a7dd2eddd114ecbb0ee2a4a548d08494ef991fb4326a7",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.12": {
-      "value": "CONTENTS",
-      "hash": "eabe6aca2f0dcdbddb32c8f06e6edfa1b78618efaf57d677950d443b91d99175",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.13": {
-      "value": "The tiles",
-      "hash": "602b7b63cd087685215ed643dc8dbeb70323ad1cae3d146c195a3e4ec2efccc4",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.14": {
-      "value": "The winning shape",
-      "hash": "d0f30c502952d5f48ea0d53844c07e338109d5d669da04951f991debc6f643c4",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.15": {
-      "value": "Patterns and fan",
-      "hash": "48adec99500631d44912c45621649a799ca72fac597b3dbad36f554a1b0ebc41",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.16": {
-      "value": "Flowers and seasons",
-      "hash": "dfd4d5762e271706106da26e34cb21b078599a3163a0e181b315e84e5c939129",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.17": {
-      "value": "Payments",
-      "hash": "632e1c5839411a1009ef268e992c4b183cb1d5381b198eac0f8323213a61ed82",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.18": {
-      "value": "The match",
-      "hash": "2a31eec450f408cf42cd2571a768c750846d4262c6a5242c59605447f725d80b",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.19": {
-      "value": "The tiles",
-      "hash": "602b7b63cd087685215ed643dc8dbeb70323ad1cae3d146c195a3e4ec2efccc4",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.20": {
-      "value": "The set has 144 tiles: four copies of each of the 34 ordinary kinds — 27 numbered kinds (1 to 9 in characters, circles, and bamboo) and seven honors (the four winds and three dragons) — plus eight flower and season tiles.",
-      "hash": "19eff892be5cadee352394271e236b88b00e9533bd60ebb3b229e90811cf98f8",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.21": {
-      "value": "The 1 and the 9 of a numbered suit are its terminals; the numbers from 2 to 8 are simples. An honor has no number and can only match copies of itself.",
-      "hash": "1b85c86789021e66250ee41aa1f68d2dccac6b4dec4beb0daad85a1a157d482e",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.22": {
-      "value": "The winning shape",
-      "hash": "d0f30c502952d5f48ea0d53844c07e338109d5d669da04951f991debc6f643c4",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.23": {
-      "value": "A normal winning hand has fourteen tiles: four sets and a pair. A set is a sequence of three numbers in one suit, a triplet of one kind, or a quad; a declared quad draws a replacement tile.",
-      "hash": "7c9a4f09ef922d0ac41a3aa2062577882c888c1d2aeb95fa7ce4176f049e50db",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.24": {
-      "value": "Three special structures win without four sets and a pair: seven pairs, thirteen orphans, and the knitted hands.",
-      "hash": "04f8eda1cf4c81aea515eef811d0f6022645afa12455ff3d48a24398967b710f",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.25": {
-      "value": "Patterns and fan",
-      "hash": "48adec99500631d44912c45621649a799ca72fac597b3dbad36f554a1b0ebc41",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.26": {
-      "value": "A pattern is a named feature of a finished hand. The scoring list has 81 patterns, grouped in families: honors, triplets and quads, sequences, tile composition, special structures, concealment and winning, and small combinations.",
-      "hash": "199a42de273ed4b4c1a471691379cf74b2ab6f9e2855d042d2a50a2c53577dac",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.27": {
-      "value": "Every pattern is worth a set number of fan, and a hand's fan is the sum of its patterns. When patterns overlap, each pattern is counted once: a higher pattern replaces the lower patterns it is made from.",
-      "hash": "78b5ca83e349677892a45f5bbda8a86b9526205cbad11718a4fcbf713f5c6e1b",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.28": {
-      "value": "A finished hand can only be declared a win if its patterns add up to at least eight fan. A finished hand that contains no pattern at all is awarded Chicken Hand, worth exactly eight fan, so it can win after all.",
-      "hash": "0b8c613e7bf8efdc854c7326f634fa935e540052a438f8f04d1ab4a471a94a2e",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.29": {
-      "value": "Flowers and seasons",
-      "hash": "dfd4d5762e271706106da26e34cb21b078599a3163a0e181b315e84e5c939129",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.30": {
-      "value": "When you draw a flower or a season, you show it beside your tiles and immediately draw a replacement, so it never takes a place among the tiles you are building with.",
-      "hash": "ada829df6bc282bbd4f103da9d1052c3ebdb28f5ecf08836cda8a3ff595ae460",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.31": {
-      "value": "Each flower or season you show adds one point to a winning hand, but only after the hand has reached the eight-fan minimum from its patterns; flower points never help a hand reach the minimum.",
-      "hash": "fdfa30cd384da1de123440a1c5441d58a2d3ac3d511b1431b6f663e414fcb155",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.32": {
-      "value": "Payments",
-      "hash": "632e1c5839411a1009ef268e992c4b183cb1d5381b198eac0f8323213a61ed82",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.33": {
-      "value": "Every player who did not win pays 8 base points toward the win.",
-      "hash": "4ec52907400a9fbee63fb0d5f8320901fa008bcd90e70b5a6e4fdc605c2bcf87",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.34": {
-      "value": "On a win from another player's thrown tile, that player — the discarder — also pays the full hand value, the hand's fan plus its flower points; the other two players pay only the base. On a self-draw win, every opponent pays the base plus the hand value.",
-      "hash": "77620c2f411f53ad87f24da0dd8ee174b817f8c8338eb2b0595344bab440666e",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.35": {
-      "value": "Being the dealer makes no difference to any of these amounts; the deal carries no multiplier.",
-      "hash": "1136ef8a859ebbac7e02a21b31d98d8c0606073b3ee8863a8930b3f0827171b1",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.36": {
-      "value": "The match",
-      "hash": "2a31eec450f408cf42cd2571a768c750846d4262c6a5242c59605447f725d80b",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.37": {
-      "value": "A full match has four rounds — East, South, West and North — and each round has four hands, one with each player as dealer. Shorter matches that stop after the East round, or after East and South, use exactly the same rules for every hand.",
-      "hash": "324a2667cf709f503384cdfda71e5a63f36a6b66657e643884d90f1529056511",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.38": {
-      "value": "The deal passes to the next player after every hand; the dealer never keeps the deal for a repeat hand.",
-      "hash": "228df2404a0fd7c59955ac0512343e9c9333fd7de5fb96f04c9d9284840b4e9b",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.39": {
-      "value": "Every player starts a match with a score of zero. Payments move points from the players who lost a hand to the player who won it, so the four scores always add up to zero.",
-      "hash": "0edae39035a0fd89c8fd5bc5dcfa177360cd57edd280f311d2cfdd064befafd9",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.40": {
-      "value": "Play MCR. Games are against the CPU, with guided hints that explain each recommended move.",
-      "hash": "916b49a53d30bd011d8894c01d328c6cdbb808830ca79ace522f938ec84c7b7f",
-      "source": {
-        "file": "public/public/mcr/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/mcr/"
-    },
-    "pages.mcr.41": {
       "value": "Play MCR",
       "hash": "20ac9ad7867dfee734114c1ead7f868fd9a49fe395f5d363f271641ef83d935d",
       "source": {
@@ -31366,7 +31058,359 @@
       "status": "approved",
       "page": "/mcr/"
     },
+    "pages.mcr.11": {
+      "value": "Mahjong Competition Rules (MCR)",
+      "hash": "660d9e590ddf3aa6d9d0393bc591e89133c177ab9875ae63667a448cfb430ce0",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.12": {
+      "value": "MCR is scored in fan, counted from the named patterns a finished hand contains. A hand needs at least eight fan from its patterns to win; flower and season points are added after that minimum is met.",
+      "hash": "2f315515a27cd8db200a7dd2eddd114ecbb0ee2a4a548d08494ef991fb4326a7",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.13": {
+      "value": "CONTENTS",
+      "hash": "eabe6aca2f0dcdbddb32c8f06e6edfa1b78618efaf57d677950d443b91d99175",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.14": {
+      "value": "The tiles",
+      "hash": "602b7b63cd087685215ed643dc8dbeb70323ad1cae3d146c195a3e4ec2efccc4",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.15": {
+      "value": "The winning shape",
+      "hash": "d0f30c502952d5f48ea0d53844c07e338109d5d669da04951f991debc6f643c4",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.16": {
+      "value": "Patterns and fan",
+      "hash": "48adec99500631d44912c45621649a799ca72fac597b3dbad36f554a1b0ebc41",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.17": {
+      "value": "Flowers and seasons",
+      "hash": "dfd4d5762e271706106da26e34cb21b078599a3163a0e181b315e84e5c939129",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.18": {
+      "value": "Payments",
+      "hash": "632e1c5839411a1009ef268e992c4b183cb1d5381b198eac0f8323213a61ed82",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.19": {
+      "value": "The match",
+      "hash": "2a31eec450f408cf42cd2571a768c750846d4262c6a5242c59605447f725d80b",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.20": {
+      "value": "The tiles",
+      "hash": "602b7b63cd087685215ed643dc8dbeb70323ad1cae3d146c195a3e4ec2efccc4",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.21": {
+      "value": "The set has 144 tiles: four copies of each of the 34 ordinary kinds — 27 numbered kinds (1 to 9 in characters, circles, and bamboo) and seven honors (the four winds and three dragons) — plus eight flower and season tiles.",
+      "hash": "19eff892be5cadee352394271e236b88b00e9533bd60ebb3b229e90811cf98f8",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.22": {
+      "value": "The 1 and the 9 of a numbered suit are its terminals; the numbers from 2 to 8 are simples. An honor has no number and can only match copies of itself.",
+      "hash": "1b85c86789021e66250ee41aa1f68d2dccac6b4dec4beb0daad85a1a157d482e",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.23": {
+      "value": "The winning shape",
+      "hash": "d0f30c502952d5f48ea0d53844c07e338109d5d669da04951f991debc6f643c4",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.24": {
+      "value": "A normal winning hand has fourteen tiles: four sets and a pair. A set is a sequence of three numbers in one suit, a triplet of one kind, or a quad; a declared quad draws a replacement tile.",
+      "hash": "7c9a4f09ef922d0ac41a3aa2062577882c888c1d2aeb95fa7ce4176f049e50db",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.25": {
+      "value": "Three special structures win without four sets and a pair: seven pairs, thirteen orphans, and the knitted hands.",
+      "hash": "04f8eda1cf4c81aea515eef811d0f6022645afa12455ff3d48a24398967b710f",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.26": {
+      "value": "Patterns and fan",
+      "hash": "48adec99500631d44912c45621649a799ca72fac597b3dbad36f554a1b0ebc41",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.27": {
+      "value": "A pattern is a named feature of a finished hand. The scoring list has 81 patterns, grouped in families: honors, triplets and quads, sequences, tile composition, special structures, concealment and winning, and small combinations.",
+      "hash": "199a42de273ed4b4c1a471691379cf74b2ab6f9e2855d042d2a50a2c53577dac",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.28": {
+      "value": "Every pattern is worth a set number of fan, and a hand's fan is the sum of its patterns. When patterns overlap, each pattern is counted once: a higher pattern replaces the lower patterns it is made from.",
+      "hash": "78b5ca83e349677892a45f5bbda8a86b9526205cbad11718a4fcbf713f5c6e1b",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.29": {
+      "value": "A finished hand can only be declared a win if its patterns add up to at least eight fan. A finished hand that contains no pattern at all is awarded Chicken Hand, worth exactly eight fan, so it can win after all.",
+      "hash": "0b8c613e7bf8efdc854c7326f634fa935e540052a438f8f04d1ab4a471a94a2e",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.30": {
+      "value": "Flowers and seasons",
+      "hash": "dfd4d5762e271706106da26e34cb21b078599a3163a0e181b315e84e5c939129",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.31": {
+      "value": "When you draw a flower or a season, you show it beside your tiles and immediately draw a replacement, so it never takes a place among the tiles you are building with.",
+      "hash": "ada829df6bc282bbd4f103da9d1052c3ebdb28f5ecf08836cda8a3ff595ae460",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.32": {
+      "value": "Each flower or season you show adds one point to a winning hand, but only after the hand has reached the eight-fan minimum from its patterns; flower points never help a hand reach the minimum.",
+      "hash": "fdfa30cd384da1de123440a1c5441d58a2d3ac3d511b1431b6f663e414fcb155",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.33": {
+      "value": "Payments",
+      "hash": "632e1c5839411a1009ef268e992c4b183cb1d5381b198eac0f8323213a61ed82",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.34": {
+      "value": "Every player who did not win pays 8 base points toward the win.",
+      "hash": "4ec52907400a9fbee63fb0d5f8320901fa008bcd90e70b5a6e4fdc605c2bcf87",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.35": {
+      "value": "On a win from another player's thrown tile, that player — the discarder — also pays the full hand value, the hand's fan plus its flower points; the other two players pay only the base. On a self-draw win, every opponent pays the base plus the hand value.",
+      "hash": "77620c2f411f53ad87f24da0dd8ee174b817f8c8338eb2b0595344bab440666e",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.36": {
+      "value": "Being the dealer makes no difference to any of these amounts; the deal carries no multiplier.",
+      "hash": "1136ef8a859ebbac7e02a21b31d98d8c0606073b3ee8863a8930b3f0827171b1",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.37": {
+      "value": "The match",
+      "hash": "2a31eec450f408cf42cd2571a768c750846d4262c6a5242c59605447f725d80b",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.38": {
+      "value": "A full match has four rounds — East, South, West and North — and each round has four hands, one with each player as dealer. Shorter matches that stop after the East round, or after East and South, use exactly the same rules for every hand.",
+      "hash": "324a2667cf709f503384cdfda71e5a63f36a6b66657e643884d90f1529056511",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.39": {
+      "value": "The deal passes to the next player after every hand; the dealer never keeps the deal for a repeat hand.",
+      "hash": "228df2404a0fd7c59955ac0512343e9c9333fd7de5fb96f04c9d9284840b4e9b",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.40": {
+      "value": "Every player starts a match with a score of zero. Payments move points from the players who lost a hand to the player who won it, so the four scores always add up to zero.",
+      "hash": "0edae39035a0fd89c8fd5bc5dcfa177360cd57edd280f311d2cfdd064befafd9",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.41": {
+      "value": "Play MCR. Games are against the CPU, with guided hints that explain each recommended move.",
+      "hash": "916b49a53d30bd011d8894c01d328c6cdbb808830ca79ace522f938ec84c7b7f",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
     "pages.mcr.42": {
+      "value": "Play MCR",
+      "hash": "20ac9ad7867dfee734114c1ead7f868fd9a49fe395f5d363f271641ef83d935d",
+      "source": {
+        "file": "public/public/mcr/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/mcr/"
+    },
+    "pages.mcr.43": {
       "value": "MCR lessons The 10 interactive lessons, from the tiles to a full game.",
       "hash": "53c90669b722cca4a761e4f3e6f3f6f39340dc835e14b5edff085017f9dee251",
       "source": {
@@ -31377,7 +31421,7 @@
       "status": "approved",
       "page": "/mcr/"
     },
-    "pages.mcr.43": {
+    "pages.mcr.44": {
       "value": "Score calculators An MCR scorekeeper for games played in person.",
       "hash": "bf14096c2acc78da315c4e47d584bebb81d019b8a94c7fefc056ef2a6078333f",
       "source": {
@@ -31388,7 +31432,7 @@
       "status": "approved",
       "page": "/mcr/"
     },
-    "pages.mcr.44": {
+    "pages.mcr.45": {
       "value": "Taiwanese rules Sixteen-tile hands, tai scoring, flowers, and the dealer bonus.",
       "hash": "94985b2e522ee5538934682d4889e55a322a38a32c6b542acab6109509667940",
       "source": {
@@ -31399,7 +31443,7 @@
       "status": "approved",
       "page": "/mcr/"
     },
-    "pages.mcr.45": {
+    "pages.mcr.46": {
       "value": "Open Mahjong is free and open source under the GNU Affero General Public License v3 (AGPLv3).",
       "hash": "c013936017c0a266c5b09109fb8ebb1cbe8dfecf1eba697e09207ac5a5f104ca",
       "source": {
@@ -31410,7 +31454,7 @@
       "status": "approved",
       "page": "/mcr/"
     },
-    "pages.mcr.46": {
+    "pages.mcr.47": {
       "value": "Source on GitHub",
       "hash": "11506c59ef233e41a5eb53323bb917f041858f7844487435a6eba02689fcb5f4",
       "source": {
@@ -31421,7 +31465,7 @@
       "status": "approved",
       "page": "/mcr/"
     },
-    "pages.mcr.47": {
+    "pages.mcr.48": {
       "value": "Privacy policy",
       "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
       "source": {
@@ -31455,6 +31499,94 @@
       "page": "/privacy/"
     },
     "pages.privacy.03": {
+      "value": "OPEN MAHJONG",
+      "hash": "49365f077495fa21df3fabc4f5bc2cdbcb083f4eedffd89bfb63de3751c0093d",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/privacy/"
+    },
+    "pages.privacy.04": {
+      "value": "Riichi",
+      "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/privacy/"
+    },
+    "pages.privacy.05": {
+      "value": "Hong Kong",
+      "hash": "1ed8c7e56c947bebc0cfcf88c4ea0f02c944568f71df893a99970e4f0c78cddc",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/privacy/"
+    },
+    "pages.privacy.06": {
+      "value": "MCR",
+      "hash": "d6b206585b93da356fd144c08eac7446eb126bb4d2adf6970f9b97bb9c149dd5",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/privacy/"
+    },
+    "pages.privacy.07": {
+      "value": "Taiwanese",
+      "hash": "4590eb3a55fc3aafe45893f2c057598e04ea249cb7d924e3417735726abaff01",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/privacy/"
+    },
+    "pages.privacy.08": {
+      "value": "Calculator",
+      "hash": "668b80455fdbae2f6816c7d0d542c0238d627b3da0454e14388bd429713590e1",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/privacy/"
+    },
+    "pages.privacy.09": {
+      "value": "Privacy",
+      "hash": "54a57c3147c49f33de5898b87084ad2b14c4ab308f762454bf92aca907478ad5",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/privacy/"
+    },
+    "pages.privacy.10": {
+      "value": "Play Open Mahjong",
+      "hash": "fa8286e160feee9ef094a84167ab4a3e302fa8ac3d7291c4bf33c9db5388e095",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/privacy/"
+    },
+    "pages.privacy.11": {
       "value": "Privacy Policy",
       "hash": "506ff394621596dd88138642eddfc1e41833b3ae92d95e5c77c94327098abd9a",
       "source": {
@@ -31465,7 +31597,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.04": {
+    "pages.privacy.12": {
       "value": "Open Mahjong — last updated: November 17, 2026.",
       "hash": "19bb67cbf2c92538a95ecb22f3ade46b6652f279eac7513a7b103aaccbe8fd9c",
       "source": {
@@ -31476,7 +31608,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.05": {
+    "pages.privacy.13": {
       "value": "Playing as a guest",
       "hash": "1994348dc1fe4fa1a2b043792287950ec0d31bf812072f31c7f808cdc8fdd451",
       "source": {
@@ -31487,7 +31619,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.06": {
+    "pages.privacy.14": {
       "value": "Games you play as a guest, your settings, and your game history are stored only in your browser on your device. They are not sent to our servers.",
       "hash": "5d1ca226b90739870747e623629dce051af8f22606221cdead9b0216d25f52c1",
       "source": {
@@ -31498,7 +31630,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.07": {
+    "pages.privacy.15": {
       "value": "Accounts",
       "hash": "8a7c8b67fe8bde8bb31f62db5896a1cd8c7bfa29ff7b86554a1ad2958c166e92",
       "source": {
@@ -31509,7 +31641,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.08": {
+    "pages.privacy.16": {
       "value": "If you sign in with Google, we store your Google account identifier, the display name and profile photo from your Google profile, the date you created your account, records of your finished games (date, game length, placement, score, the game's move record, and game statistics), and your settings, so they follow you between devices. We do not receive or store your email address or your Google password.",
       "hash": "26a8b3309a1397493a3be5de276c516b8bca13456d6a0f5b6aec9bbd5c11c0ae",
       "source": {
@@ -31520,7 +31652,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.09": {
+    "pages.privacy.17": {
       "value": "If you choose private sync for an in-person session, we also store its player names, entered completed hands, scoring corrections, ledger and settlement. These sessions are separate from CPU statistics. Local-only sessions stay on your device; conflicting offline copies are preserved for your review.",
       "hash": "ccd74baa05922feec99723e3225cdb9203eec8e3883d15e0bcace46dedd4c61c",
       "source": {
@@ -31531,7 +31663,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.10": {
+    "pages.privacy.18": {
       "value": "Cookies",
       "hash": "141395eb35564fe50baa1839eb43315ec1880ae19f53b926611a483029a5a603",
       "source": {
@@ -31542,7 +31674,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.11": {
+    "pages.privacy.19": {
       "value": "We use one cookie to keep you signed in. Advertising cookies are described in the Advertising section below.",
       "hash": "624bdaaecdb2537f2994223ae1de17069bfea1c033ec28ccdcd38a2331746590",
       "source": {
@@ -31553,7 +31685,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.12": {
+    "pages.privacy.20": {
       "value": "Advertising",
       "hash": "7c50f8a38a76f3e1389408aa461bb70fba5fffa03afd8cd40f2b269de5a4000c",
       "source": {
@@ -31564,7 +31696,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.13": {
+    "pages.privacy.21": {
       "value": "This site uses Google AdSense to display ads. Google and its partners use cookies to serve and measure ads. The ads shown on this site are non-personalized: they are based on the content of the page and general location, not on your visits to other sites. Google describes how it uses information from sites that use its services at policies.google.com/technologies/partner-sites . You can review and control ad settings at adssettings.google.com .",
       "hash": "5c2909aa99b8552d5ed49ddf9d35657fb308c31ef2928b9158b339fd2190c789",
       "source": {
@@ -31575,7 +31707,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.14": {
+    "pages.privacy.22": {
       "value": "Sharing",
       "hash": "bbedc70e985fe0b6b32c173bf2676cab7d103138c05397f2835d821715b48a89",
       "source": {
@@ -31586,7 +31718,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.15": {
+    "pages.privacy.23": {
       "value": "We do not sell personal information. Your information is processed by Google (sign-in and advertising) and Railway (hosting) only to operate the service.",
       "hash": "1d4c9e4ce187e42fed80bf7d8429df5e42b97aaf6a652df0d23122bbafd532d0",
       "source": {
@@ -31597,7 +31729,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.16": {
+    "pages.privacy.24": {
       "value": "Deletion",
       "hash": "3f1e41fa5f7f38cb32b48960fba429dca64f1e5998c87a763640253667015ec1",
       "source": {
@@ -31608,7 +31740,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.17": {
+    "pages.privacy.25": {
       "value": "More, then Delete account, permanently deletes your account and everything stored with it. Guest data can be removed by clearing your browser's site data.",
       "hash": "47c576c1a64623978288a84b35e64b1160a8556504cf182e66cab9ff641a978f",
       "source": {
@@ -31619,7 +31751,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.18": {
+    "pages.privacy.26": {
       "value": "Children",
       "hash": "3583a358a585b13b6d6228f12d2baf3ef937fcf50bed4a521b70f95a520bc933",
       "source": {
@@ -31630,7 +31762,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.19": {
+    "pages.privacy.27": {
       "value": "Open Mahjong is not directed to children under 13.",
       "hash": "205ab312bb5f599c94822999a622b6fe7510805b3e4728cf602e02f97347de80",
       "source": {
@@ -31641,7 +31773,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.20": {
+    "pages.privacy.28": {
       "value": "Changes",
       "hash": "bbd4b6a86bc65b6ac8e79e97afc61499158edb40f7bb404c70637b46d80a7ad2",
       "source": {
@@ -31652,7 +31784,7 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.21": {
+    "pages.privacy.29": {
       "value": "If this policy changes, the new version will be posted on this page with an updated date.",
       "hash": "f78c35d842f7d14b87cf9287f01df1e742995af5699da42550874f70d89a9cfa",
       "source": {
@@ -31663,9 +31795,64 @@
       "status": "approved",
       "page": "/privacy/"
     },
-    "pages.privacy.22": {
+    "pages.privacy.30": {
       "value": "Contact",
       "hash": "2b5c3d26721ae9c350cf3009318b626f0fc8a90b4a2ac0ca8099c05aa849282e",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/privacy/"
+    },
+    "pages.privacy.31": {
+      "value": "Play Open Mahjong. Free, in the browser, with nothing to install.",
+      "hash": "6bd4faff13dd0a970cb46414b5354058a7129e53bfee7f98142bdaab4b8e9b20",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/privacy/"
+    },
+    "pages.privacy.32": {
+      "value": "Play Open Mahjong",
+      "hash": "fa8286e160feee9ef094a84167ab4a3e302fa8ac3d7291c4bf33c9db5388e095",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/privacy/"
+    },
+    "pages.privacy.33": {
+      "value": "Open Mahjong is free and open source under the GNU Affero General Public License v3 (AGPLv3).",
+      "hash": "c013936017c0a266c5b09109fb8ebb1cbe8dfecf1eba697e09207ac5a5f104ca",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/privacy/"
+    },
+    "pages.privacy.34": {
+      "value": "Source on GitHub",
+      "hash": "11506c59ef233e41a5eb53323bb917f041858f7844487435a6eba02689fcb5f4",
+      "source": {
+        "file": "public/public/privacy/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/privacy/"
+    },
+    "pages.privacy.35": {
+      "value": "Privacy policy",
+      "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
       "source": {
         "file": "public/public/privacy/index.html",
         "line": 1
@@ -31774,325 +31961,6 @@
       "page": "/riichi/"
     },
     "pages.riichi.10": {
-      "value": "Riichi mahjong rules",
-      "hash": "db172010b6d981b2c4859161e89e95cc005f0de378a8ab4a59cb328254bd704f",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.11": {
-      "value": "Open Mahjong plays modern online-standard riichi mahjong. Every rules choice the engine makes is listed here.",
-      "hash": "5718c50cdf16543704d7947cd0cf7020e7e0022e9de704144e469f0f4bde8da5",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.12": {
-      "value": "CONTENTS",
-      "hash": "eabe6aca2f0dcdbddb32c8f06e6edfa1b78618efaf57d677950d443b91d99175",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.13": {
-      "value": "Stakes and settlement",
-      "hash": "697df19cf0b830779ab48bb4015c6471b3095984e095cb132647a72b625a0354",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.14": {
-      "value": "Hands and calls",
-      "hash": "e6b267e8e0e2040280000dcbab6b7785c9a666a72568318837a8c277f7a71f74",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.15": {
-      "value": "Riichi",
-      "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.16": {
-      "value": "Dora",
-      "hash": "3174efdaff7d059b46c35cdd556908c72d2317293c479751f4995844a5ccc93d",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.17": {
-      "value": "Draws",
-      "hash": "e0b3a2a5d741e464082a898e085d3304c566a4d9e42ea7106f62f83c040e1443",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.18": {
-      "value": "Stakes and settlement",
-      "hash": "697df19cf0b830779ab48bb4015c6471b3095984e095cb132647a72b625a0354",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.19": {
-      "value": "Start 25,000 points; return 30,000. Uma +15 / +5 / −5 / −15, oka 20 to first place. Tied seats split the uma (and oka) of the ranks they occupy.",
-      "hash": "01fd49fc30106003306a35be066d273e85bcf07fd2621e1c204e07fc39435917",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.20": {
-      "value": "A game ends early (tobi) as soon as any player is below zero at the end of a hand.",
-      "hash": "263e4971ce8483231259fe30d2e6c21424bfb4a85ff50d52355464c9d19caab5",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.21": {
-      "value": "Riichi sticks left on the table when the game ends go to the first-place player.",
-      "hash": "fc19686bcb859015d9ee706bdf8c366dbab290595ed461687f2fd4bc6680f4d9",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.22": {
-      "value": "If the dealer repeats on the final hand, the game extends until a hand ends without a dealer repeat (no agari-yame).",
-      "hash": "3a452ab93bb0022e883d61de122f2f168a8c5772524f4c1a53a5e230b489e910",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.23": {
-      "value": "Hands and calls",
-      "hash": "e6b267e8e0e2040280000dcbab6b7785c9a666a72568318837a8c277f7a71f74",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.24": {
-      "value": "Red fives (aka dora) are in: one each of 5m, 5p, 5s. Open tanyao is allowed.",
-      "hash": "9e33dbeacf1f258ac4dccebdd26d970492cab53a6d0319700ce7082995294cd6",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.25": {
-      "value": "Chi may only be called from the player on your left. Pon and kan from anyone.",
-      "hash": "9856a939de979db6ef397141d21405c4dda15c46ff654b65bf866d40c472d10d",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.26": {
-      "value": "Double ron does not pay twice: atama-hane (head bump) — the winner nearest the discarder in turn order takes all.",
-      "hash": "eb774872d6d8f8e8a25071eec6d0bec234610384db54c6dfbbc2393b9dc4c67b",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.27": {
-      "value": "Chankan (robbing a kan) applies to shouminkan; against an ankan only kokushi may rob.",
-      "hash": "78ef42cbdcfc44f585c7ae2f2370b7a83e2fdcab07b8220b98e2731749465bf3",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.28": {
-      "value": "Riichi",
-      "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.29": {
-      "value": "Riichi costs 1,000 points, needs a closed tenpai hand, at least 1,000 points, and at least 4 tiles left in the wall.",
-      "hash": "7e0dbecda9240344f0b50f22142802b7630e39b6e286cda2b9290db2e05f8360",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.30": {
-      "value": "Ippatsu and double riichi count. After riichi you discard what you draw; an ankan is allowed only if it leaves your waits unchanged.",
-      "hash": "6361ceaf7e6fe1b79a95f21283ffb009cbe2fd27127166c8e95840862fe3000c",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.31": {
-      "value": "Furiten applies in all three forms: discard furiten, temporary furiten (passing a winning tile blocks ron until your next draw), and riichi furiten (permanent after passing in riichi).",
-      "hash": "47d63c3054bf267ebae5e2b1d9f605b3fdba8f425c46dccaa0a56edf3c6da9e7",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.32": {
-      "value": "Dora",
-      "hash": "3174efdaff7d059b46c35cdd556908c72d2317293c479751f4995844a5ccc93d",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.33": {
-      "value": "One indicator at the start; each kan flips one more (ankan flips before the rinshan draw; open kans flip after it). Uradora are revealed under the indicators when a riichi hand wins.",
-      "hash": "2c9cc5175644d0aac06dc43891cc2d1bfcd133814ce536cf7ea45c5be7325cf7",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.34": {
-      "value": "Kiriage mangan is OFF: 4 han 30 fu is 7,700 (dealer 11,600), 3 han 60 fu is 7,700 — no rounding up to mangan.",
-      "hash": "42c0cc3f7e6a4c4369ea865766d6597c54ff7be51ef8273a1949353f11fd2046",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.35": {
-      "value": "Draws",
-      "hash": "e0b3a2a5d741e464082a898e085d3304c566a4d9e42ea7106f62f83c040e1443",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.36": {
-      "value": "Exhaustive draw: tenpai players split 3,000 from noten players. Nagashi mangan pays as a mangan tsumo instead, when a player's discards are all terminals/honors and none were called.",
-      "hash": "04483054436e36c054378bda93c0949b7c7429bcaac93c6332d77698a4107e48",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.37": {
-      "value": "Abortive draws are on: kyuushu kyuuhai (nine different terminals/honors on your first draw), suufon renda (all four first discards the same wind), suucha riichi (four riichi), and suukaikan (four kan by two or more players). The hand restarts with one more honba; the dealer repeats.",
-      "hash": "eeb98841821c5bbfa15348e7733d1222b2d748c983be9af2c5a916f227c5b157",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.38": {
-      "value": "Play riichi. Games are against the CPU, East-only or East and South, with guided hints that explain each recommended move.",
-      "hash": "85edf5e3083d3f13968036f1d66408ee4a0d1c5d93198451d89f9a92d2c77212",
-      "source": {
-        "file": "public/public/riichi/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/riichi/"
-    },
-    "pages.riichi.39": {
       "value": "Play riichi",
       "hash": "4d0842bbb5a5ab9be464c41804dbdf0bb07db7b02249a1c7234341077470f743",
       "source": {
@@ -32103,7 +31971,337 @@
       "status": "approved",
       "page": "/riichi/"
     },
+    "pages.riichi.11": {
+      "value": "Riichi mahjong rules",
+      "hash": "db172010b6d981b2c4859161e89e95cc005f0de378a8ab4a59cb328254bd704f",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.12": {
+      "value": "Open Mahjong plays modern online-standard riichi mahjong. Every rules choice the engine makes is listed here.",
+      "hash": "5718c50cdf16543704d7947cd0cf7020e7e0022e9de704144e469f0f4bde8da5",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.13": {
+      "value": "CONTENTS",
+      "hash": "eabe6aca2f0dcdbddb32c8f06e6edfa1b78618efaf57d677950d443b91d99175",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.14": {
+      "value": "Stakes and settlement",
+      "hash": "697df19cf0b830779ab48bb4015c6471b3095984e095cb132647a72b625a0354",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.15": {
+      "value": "Hands and calls",
+      "hash": "e6b267e8e0e2040280000dcbab6b7785c9a666a72568318837a8c277f7a71f74",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.16": {
+      "value": "Riichi",
+      "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.17": {
+      "value": "Dora",
+      "hash": "3174efdaff7d059b46c35cdd556908c72d2317293c479751f4995844a5ccc93d",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.18": {
+      "value": "Draws",
+      "hash": "e0b3a2a5d741e464082a898e085d3304c566a4d9e42ea7106f62f83c040e1443",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.19": {
+      "value": "Stakes and settlement",
+      "hash": "697df19cf0b830779ab48bb4015c6471b3095984e095cb132647a72b625a0354",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.20": {
+      "value": "Start 25,000 points; return 30,000. Uma +15 / +5 / −5 / −15, oka 20 to first place. Tied seats split the uma (and oka) of the ranks they occupy.",
+      "hash": "01fd49fc30106003306a35be066d273e85bcf07fd2621e1c204e07fc39435917",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.21": {
+      "value": "A game ends early (tobi) as soon as any player is below zero at the end of a hand.",
+      "hash": "263e4971ce8483231259fe30d2e6c21424bfb4a85ff50d52355464c9d19caab5",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.22": {
+      "value": "Riichi sticks left on the table when the game ends go to the first-place player.",
+      "hash": "fc19686bcb859015d9ee706bdf8c366dbab290595ed461687f2fd4bc6680f4d9",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.23": {
+      "value": "If the dealer repeats on the final hand, the game extends until a hand ends without a dealer repeat (no agari-yame).",
+      "hash": "3a452ab93bb0022e883d61de122f2f168a8c5772524f4c1a53a5e230b489e910",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.24": {
+      "value": "Hands and calls",
+      "hash": "e6b267e8e0e2040280000dcbab6b7785c9a666a72568318837a8c277f7a71f74",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.25": {
+      "value": "Red fives (aka dora) are in: one each of 5m, 5p, 5s. Open tanyao is allowed.",
+      "hash": "9e33dbeacf1f258ac4dccebdd26d970492cab53a6d0319700ce7082995294cd6",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.26": {
+      "value": "Chi may only be called from the player on your left. Pon and kan from anyone.",
+      "hash": "9856a939de979db6ef397141d21405c4dda15c46ff654b65bf866d40c472d10d",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.27": {
+      "value": "Double ron does not pay twice: atama-hane (head bump) — the winner nearest the discarder in turn order takes all.",
+      "hash": "eb774872d6d8f8e8a25071eec6d0bec234610384db54c6dfbbc2393b9dc4c67b",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.28": {
+      "value": "Chankan (robbing a kan) applies to shouminkan; against an ankan only kokushi may rob.",
+      "hash": "78ef42cbdcfc44f585c7ae2f2370b7a83e2fdcab07b8220b98e2731749465bf3",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.29": {
+      "value": "Riichi",
+      "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.30": {
+      "value": "Riichi costs 1,000 points, needs a closed tenpai hand, at least 1,000 points, and at least 4 tiles left in the wall.",
+      "hash": "7e0dbecda9240344f0b50f22142802b7630e39b6e286cda2b9290db2e05f8360",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.31": {
+      "value": "Ippatsu and double riichi count. After riichi you discard what you draw; an ankan is allowed only if it leaves your waits unchanged.",
+      "hash": "6361ceaf7e6fe1b79a95f21283ffb009cbe2fd27127166c8e95840862fe3000c",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.32": {
+      "value": "Furiten applies in all three forms: discard furiten, temporary furiten (passing a winning tile blocks ron until your next draw), and riichi furiten (permanent after passing in riichi).",
+      "hash": "47d63c3054bf267ebae5e2b1d9f605b3fdba8f425c46dccaa0a56edf3c6da9e7",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.33": {
+      "value": "Dora",
+      "hash": "3174efdaff7d059b46c35cdd556908c72d2317293c479751f4995844a5ccc93d",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.34": {
+      "value": "One indicator at the start; each kan flips one more (ankan flips before the rinshan draw; open kans flip after it). Uradora are revealed under the indicators when a riichi hand wins.",
+      "hash": "2c9cc5175644d0aac06dc43891cc2d1bfcd133814ce536cf7ea45c5be7325cf7",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.35": {
+      "value": "Kiriage mangan is OFF: 4 han 30 fu is 7,700 (dealer 11,600), 3 han 60 fu is 7,700 — no rounding up to mangan.",
+      "hash": "42c0cc3f7e6a4c4369ea865766d6597c54ff7be51ef8273a1949353f11fd2046",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.36": {
+      "value": "Draws",
+      "hash": "e0b3a2a5d741e464082a898e085d3304c566a4d9e42ea7106f62f83c040e1443",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.37": {
+      "value": "Exhaustive draw: tenpai players split 3,000 from noten players. Nagashi mangan pays as a mangan tsumo instead, when a player's discards are all terminals/honors and none were called.",
+      "hash": "04483054436e36c054378bda93c0949b7c7429bcaac93c6332d77698a4107e48",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.38": {
+      "value": "Abortive draws are on: kyuushu kyuuhai (nine different terminals/honors on your first draw), suufon renda (all four first discards the same wind), suucha riichi (four riichi), and suukaikan (four kan by two or more players). The hand restarts with one more honba; the dealer repeats.",
+      "hash": "eeb98841821c5bbfa15348e7733d1222b2d748c983be9af2c5a916f227c5b157",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.39": {
+      "value": "Play riichi. Games are against the CPU, East-only or East and South, with guided hints that explain each recommended move.",
+      "hash": "85edf5e3083d3f13968036f1d66408ee4a0d1c5d93198451d89f9a92d2c77212",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
     "pages.riichi.40": {
+      "value": "Play riichi",
+      "hash": "4d0842bbb5a5ab9be464c41804dbdf0bb07db7b02249a1c7234341077470f743",
+      "source": {
+        "file": "public/public/riichi/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/riichi/"
+    },
+    "pages.riichi.41": {
       "value": "Riichi lessons The 11 interactive lessons, from the tiles to a first full game.",
       "hash": "3bd3d86dff5896d6446c2bb320c5c17f51ede4cd398403ae5e59a975fa6fa639",
       "source": {
@@ -32114,7 +32312,7 @@
       "status": "approved",
       "page": "/riichi/"
     },
-    "pages.riichi.41": {
+    "pages.riichi.42": {
       "value": "Score calculators Scorekeepers and a hand calculator for games played in person.",
       "hash": "844b10e8d2140dbb0f397f69a3062b017a5db6a10fa5ea2c03b6e2285da94021",
       "source": {
@@ -32125,7 +32323,7 @@
       "status": "approved",
       "page": "/riichi/"
     },
-    "pages.riichi.42": {
+    "pages.riichi.43": {
       "value": "Hong Kong Old Style rules Fan scoring, the three-fan minimum, flowers, and payments.",
       "hash": "fd35238a4bbd7bb989d351fa872247b139ee92ba6f1961b93c7cf0fc1163b4c9",
       "source": {
@@ -32136,7 +32334,7 @@
       "status": "approved",
       "page": "/riichi/"
     },
-    "pages.riichi.43": {
+    "pages.riichi.44": {
       "value": "Open Mahjong is free and open source under the GNU Affero General Public License v3 (AGPLv3).",
       "hash": "c013936017c0a266c5b09109fb8ebb1cbe8dfecf1eba697e09207ac5a5f104ca",
       "source": {
@@ -32147,7 +32345,7 @@
       "status": "approved",
       "page": "/riichi/"
     },
-    "pages.riichi.44": {
+    "pages.riichi.45": {
       "value": "Source on GitHub",
       "hash": "11506c59ef233e41a5eb53323bb917f041858f7844487435a6eba02689fcb5f4",
       "source": {
@@ -32158,7 +32356,7 @@
       "status": "approved",
       "page": "/riichi/"
     },
-    "pages.riichi.45": {
+    "pages.riichi.46": {
       "value": "Privacy policy",
       "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
       "source": {
@@ -32456,347 +32654,6 @@
       "page": "/taiwanese/"
     },
     "pages.taiwanese.10": {
-      "value": "Taiwanese mahjong rules",
-      "hash": "9c5744a5fe9be24670e85b6f7a762fa997e88080953aca7b888aa2d9cc1b59a0",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.11": {
-      "value": "Taiwanese mahjong is played with sixteen-tile hands and scored in tai. A complete hand of five sets and a pair can win at any tai count — there is no minimum, and no ready hand needs to be announced before winning.",
-      "hash": "dfb0d1595da8561a8bafefc2db229ae9c56c48779c606b507e5aa8cd40f271ad",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.12": {
-      "value": "CONTENTS",
-      "hash": "eabe6aca2f0dcdbddb32c8f06e6edfa1b78618efaf57d677950d443b91d99175",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.13": {
-      "value": "The tiles",
-      "hash": "602b7b63cd087685215ed643dc8dbeb70323ad1cae3d146c195a3e4ec2efccc4",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.14": {
-      "value": "The sixteen-tile hand",
-      "hash": "512c63fe541755bba840649b85e1038a06e93be62de338847e14607aba8f02f8",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.15": {
-      "value": "Tai and scoring",
-      "hash": "b2ef530f87810ff405667573fc3785f41251848b74a355b47e0a1ab560b83e06",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.16": {
-      "value": "Flowers",
-      "hash": "a3b6cb52ce986ff4ca5baa8a1051a42b2748d06b0f33b93a75a87add2a7d74d2",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.17": {
-      "value": "Payments",
-      "hash": "632e1c5839411a1009ef268e992c4b183cb1d5381b198eac0f8323213a61ed82",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.18": {
-      "value": "The match",
-      "hash": "2a31eec450f408cf42cd2571a768c750846d4262c6a5242c59605447f725d80b",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.19": {
-      "value": "The tiles",
-      "hash": "602b7b63cd087685215ed643dc8dbeb70323ad1cae3d146c195a3e4ec2efccc4",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.20": {
-      "value": "The set has 144 tiles: four copies of each of the 34 ordinary kinds — 27 numbered kinds (1 to 9 in characters, circles, and bamboo) and seven honors (the four winds and three dragons) — plus eight flower tiles.",
-      "hash": "63301a532fb3ca9bca4bdcf546f8bd77d38408e4a8696c38cb1940d8ed58bc93",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.21": {
-      "value": "The eight flower tiles are the four plants (plum, orchid, chrysanthemum, bamboo plant) and the four seasons (spring, summer, autumn, winter). Together they are called flowers.",
-      "hash": "f3591873c2deda74cdb88f7cc95d17bb180ca006766c9ed1b86a6ccbf26a3f62",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.22": {
-      "value": "The sixteen-tile hand",
-      "hash": "512c63fe541755bba840649b85e1038a06e93be62de338847e14607aba8f02f8",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.23": {
-      "value": "Each player is dealt sixteen tiles, and the dealer one more. A winning hand is five sets and a pair, completed by the seventeenth tile.",
-      "hash": "279ef609dc23c50d3f60fe8f57e9593375d59f8a2ba25afea90ba00a74cf3404",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.24": {
-      "value": "A set is a sequence of three numbers in one suit, a triplet of one kind, or a quad; a declared quad draws a replacement tile.",
-      "hash": "09ef32464c45bd7d5ef597e4e2e125a2b29292c930f8d4edf0f33b4033b9b2f2",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.25": {
-      "value": "A discard may be claimed for a sequence only by the player whose turn comes next, and for a triplet or a quad from any seat. A claimed tile cannot be swapped back in the discard right after the claim.",
-      "hash": "bf095df693e6b0ee2ffb894cd61055006fa708aa65ecd54ca934c450c5b08d69",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.26": {
-      "value": "Tai and scoring",
-      "hash": "b2ef530f87810ff405667573fc3785f41251848b74a355b47e0a1ab560b83e06",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.27": {
-      "value": "A hand's score is counted in tai. Each award a hand earns — each flower, each wind or dragon triplet, the way the hand was kept and won — adds tai, and the tai are added together; where a bigger award contains a smaller one, the bigger replaces the smaller instead of stacking.",
-      "hash": "cefd3bec500919d169d0d5060dc4b4a6599cc3cb44ba001dd957acbbfdb11bb0",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.28": {
-      "value": "There is no minimum tai: a complete hand with no tai at all can still win, and still collects the base payment.",
-      "hash": "97858f786bc789d397c186ab248b12ef8b3a75f98dd8f831ca95014e9fa05cc9",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.29": {
-      "value": "Flowers",
-      "hash": "a3b6cb52ce986ff4ca5baa8a1051a42b2748d06b0f33b93a75a87add2a7d74d2",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.30": {
-      "value": "A flower never joins a set or the pair. When one comes to you, you set it aside face-up beside your hand and draw another tile in its place, so your hand keeps its proper size.",
-      "hash": "8df82564b9ad0588885d01e93189b52e600ea63c64086ca746c8c96efbc0e238",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.31": {
-      "value": "Every flower earns one tai when you win, whichever plant or season it is.",
-      "hash": "436de9b0ca41360fc524e9a439962dae0bc5d7359129dae9c0587711e3ac15a5",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.32": {
-      "value": "Payments",
-      "hash": "632e1c5839411a1009ef268e992c4b183cb1d5381b198eac0f8323213a61ed82",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.33": {
-      "value": "Each payment is the base of 30 points plus 10 points for each of the hand's tai.",
-      "hash": "4bcc7e479952b5bb32825fc90ee720cbda8a3cd3e57630b104bb762eb51d7b97",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.34": {
-      "value": "A win on a discard is paid by the discarder alone. A self-draw win is paid by all three opponents.",
-      "hash": "a45485267417fcaa70c9f80f28d820693704fd409dc524666cb0c2a9178485b3",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.35": {
-      "value": "Any payment that involves the dealer — the dealer paying, or the dealer winning — adds a dealer bonus to that payment only: one extra tai, plus two more for each time the dealer has repeated.",
-      "hash": "ac98aefcbb610d7ec90377d44eb295d7b3e0d0adf39131d34d7918aa49812964",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.36": {
-      "value": "The match",
-      "hash": "2a31eec450f408cf42cd2571a768c750846d4262c6a5242c59605447f725d80b",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.37": {
-      "value": "A full game runs through four rounds — East, South, West and North — and in each round every player deals once in turn.",
-      "hash": "1bdfd0371e3009a42e95105f93c316f78804475e4b5b8257dca4c9122e975795",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.38": {
-      "value": "The dealer repeats after winning a hand and after a drawn hand, and each repeat raises the repeat count used in that dealer's payments. A win by a player who is not the dealer passes the deal and resets the repeat count to zero; at this table the deal passes after ten repeats even if the dealer wins again.",
-      "hash": "9b8ca2507912eddcdd71d8aa4b3081f1ef20193901879a92d4fd929e09848e5b",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.39": {
-      "value": "Each player starts the game with 1,000 points. Payments move points from the players who pay to the player who won, so after every hand the four scores still add up to 4,000.",
-      "hash": "067fadf5901d1c37e6085bbcea6bde53bf9e43fb9320d013abae555e70d2f277",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.40": {
-      "value": "Play Taiwanese. Games are against the CPU, with guided hints that explain each recommended move.",
-      "hash": "8f7e5a78ff9a372ed48d01930395bc7fb8caffe29e2cd6ad7bd2abd26f32afcd",
-      "source": {
-        "file": "public/public/taiwanese/index.html",
-        "line": 1
-      },
-      "placeholders": [],
-      "status": "approved",
-      "page": "/taiwanese/"
-    },
-    "pages.taiwanese.41": {
       "value": "Play Taiwanese",
       "hash": "b4fc2df2bc6f7f1277e7335a90ea1bd826fd818df23f4545263656732f0d6bea",
       "source": {
@@ -32807,7 +32664,359 @@
       "status": "approved",
       "page": "/taiwanese/"
     },
+    "pages.taiwanese.11": {
+      "value": "Taiwanese mahjong rules",
+      "hash": "9c5744a5fe9be24670e85b6f7a762fa997e88080953aca7b888aa2d9cc1b59a0",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.12": {
+      "value": "Taiwanese mahjong is played with sixteen-tile hands and scored in tai. A complete hand of five sets and a pair can win at any tai count — there is no minimum, and no ready hand needs to be announced before winning.",
+      "hash": "dfb0d1595da8561a8bafefc2db229ae9c56c48779c606b507e5aa8cd40f271ad",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.13": {
+      "value": "CONTENTS",
+      "hash": "eabe6aca2f0dcdbddb32c8f06e6edfa1b78618efaf57d677950d443b91d99175",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.14": {
+      "value": "The tiles",
+      "hash": "602b7b63cd087685215ed643dc8dbeb70323ad1cae3d146c195a3e4ec2efccc4",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.15": {
+      "value": "The sixteen-tile hand",
+      "hash": "512c63fe541755bba840649b85e1038a06e93be62de338847e14607aba8f02f8",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.16": {
+      "value": "Tai and scoring",
+      "hash": "b2ef530f87810ff405667573fc3785f41251848b74a355b47e0a1ab560b83e06",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.17": {
+      "value": "Flowers",
+      "hash": "a3b6cb52ce986ff4ca5baa8a1051a42b2748d06b0f33b93a75a87add2a7d74d2",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.18": {
+      "value": "Payments",
+      "hash": "632e1c5839411a1009ef268e992c4b183cb1d5381b198eac0f8323213a61ed82",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.19": {
+      "value": "The match",
+      "hash": "2a31eec450f408cf42cd2571a768c750846d4262c6a5242c59605447f725d80b",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.20": {
+      "value": "The tiles",
+      "hash": "602b7b63cd087685215ed643dc8dbeb70323ad1cae3d146c195a3e4ec2efccc4",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.21": {
+      "value": "The set has 144 tiles: four copies of each of the 34 ordinary kinds — 27 numbered kinds (1 to 9 in characters, circles, and bamboo) and seven honors (the four winds and three dragons) — plus eight flower tiles.",
+      "hash": "63301a532fb3ca9bca4bdcf546f8bd77d38408e4a8696c38cb1940d8ed58bc93",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.22": {
+      "value": "The eight flower tiles are the four plants (plum, orchid, chrysanthemum, bamboo plant) and the four seasons (spring, summer, autumn, winter). Together they are called flowers.",
+      "hash": "f3591873c2deda74cdb88f7cc95d17bb180ca006766c9ed1b86a6ccbf26a3f62",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.23": {
+      "value": "The sixteen-tile hand",
+      "hash": "512c63fe541755bba840649b85e1038a06e93be62de338847e14607aba8f02f8",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.24": {
+      "value": "Each player is dealt sixteen tiles, and the dealer one more. A winning hand is five sets and a pair, completed by the seventeenth tile.",
+      "hash": "279ef609dc23c50d3f60fe8f57e9593375d59f8a2ba25afea90ba00a74cf3404",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.25": {
+      "value": "A set is a sequence of three numbers in one suit, a triplet of one kind, or a quad; a declared quad draws a replacement tile.",
+      "hash": "09ef32464c45bd7d5ef597e4e2e125a2b29292c930f8d4edf0f33b4033b9b2f2",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.26": {
+      "value": "A discard may be claimed for a sequence only by the player whose turn comes next, and for a triplet or a quad from any seat. A claimed tile cannot be swapped back in the discard right after the claim.",
+      "hash": "bf095df693e6b0ee2ffb894cd61055006fa708aa65ecd54ca934c450c5b08d69",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.27": {
+      "value": "Tai and scoring",
+      "hash": "b2ef530f87810ff405667573fc3785f41251848b74a355b47e0a1ab560b83e06",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.28": {
+      "value": "A hand's score is counted in tai. Each award a hand earns — each flower, each wind or dragon triplet, the way the hand was kept and won — adds tai, and the tai are added together; where a bigger award contains a smaller one, the bigger replaces the smaller instead of stacking.",
+      "hash": "cefd3bec500919d169d0d5060dc4b4a6599cc3cb44ba001dd957acbbfdb11bb0",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.29": {
+      "value": "There is no minimum tai: a complete hand with no tai at all can still win, and still collects the base payment.",
+      "hash": "97858f786bc789d397c186ab248b12ef8b3a75f98dd8f831ca95014e9fa05cc9",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.30": {
+      "value": "Flowers",
+      "hash": "a3b6cb52ce986ff4ca5baa8a1051a42b2748d06b0f33b93a75a87add2a7d74d2",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.31": {
+      "value": "A flower never joins a set or the pair. When one comes to you, you set it aside face-up beside your hand and draw another tile in its place, so your hand keeps its proper size.",
+      "hash": "8df82564b9ad0588885d01e93189b52e600ea63c64086ca746c8c96efbc0e238",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.32": {
+      "value": "Every flower earns one tai when you win, whichever plant or season it is.",
+      "hash": "436de9b0ca41360fc524e9a439962dae0bc5d7359129dae9c0587711e3ac15a5",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.33": {
+      "value": "Payments",
+      "hash": "632e1c5839411a1009ef268e992c4b183cb1d5381b198eac0f8323213a61ed82",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.34": {
+      "value": "Each payment is the base of 30 points plus 10 points for each of the hand's tai.",
+      "hash": "4bcc7e479952b5bb32825fc90ee720cbda8a3cd3e57630b104bb762eb51d7b97",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.35": {
+      "value": "A win on a discard is paid by the discarder alone. A self-draw win is paid by all three opponents.",
+      "hash": "a45485267417fcaa70c9f80f28d820693704fd409dc524666cb0c2a9178485b3",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.36": {
+      "value": "Any payment that involves the dealer — the dealer paying, or the dealer winning — adds a dealer bonus to that payment only: one extra tai, plus two more for each time the dealer has repeated.",
+      "hash": "ac98aefcbb610d7ec90377d44eb295d7b3e0d0adf39131d34d7918aa49812964",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.37": {
+      "value": "The match",
+      "hash": "2a31eec450f408cf42cd2571a768c750846d4262c6a5242c59605447f725d80b",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.38": {
+      "value": "A full game runs through four rounds — East, South, West and North — and in each round every player deals once in turn.",
+      "hash": "1bdfd0371e3009a42e95105f93c316f78804475e4b5b8257dca4c9122e975795",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.39": {
+      "value": "The dealer repeats after winning a hand and after a drawn hand, and each repeat raises the repeat count used in that dealer's payments. A win by a player who is not the dealer passes the deal and resets the repeat count to zero; at this table the deal passes after ten repeats even if the dealer wins again.",
+      "hash": "9b8ca2507912eddcdd71d8aa4b3081f1ef20193901879a92d4fd929e09848e5b",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.40": {
+      "value": "Each player starts the game with 1,000 points. Payments move points from the players who pay to the player who won, so after every hand the four scores still add up to 4,000.",
+      "hash": "067fadf5901d1c37e6085bbcea6bde53bf9e43fb9320d013abae555e70d2f277",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.41": {
+      "value": "Play Taiwanese. Games are against the CPU, with guided hints that explain each recommended move.",
+      "hash": "8f7e5a78ff9a372ed48d01930395bc7fb8caffe29e2cd6ad7bd2abd26f32afcd",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
     "pages.taiwanese.42": {
+      "value": "Play Taiwanese",
+      "hash": "b4fc2df2bc6f7f1277e7335a90ea1bd826fd818df23f4545263656732f0d6bea",
+      "source": {
+        "file": "public/public/taiwanese/index.html",
+        "line": 1
+      },
+      "placeholders": [],
+      "status": "approved",
+      "page": "/taiwanese/"
+    },
+    "pages.taiwanese.43": {
       "value": "Taiwanese lessons The 10 interactive lessons, from the tiles to the whole game.",
       "hash": "14a5f477571ec1f8efdf84f66517d74d5e8a6972d91be42659f5eba7216b1e79",
       "source": {
@@ -32818,7 +33027,7 @@
       "status": "approved",
       "page": "/taiwanese/"
     },
-    "pages.taiwanese.43": {
+    "pages.taiwanese.44": {
       "value": "Score calculators A Taiwanese scorekeeper for games played in person.",
       "hash": "adf953fd0c88459efd54d4fde94588a718008ce4a4629f4fdba2c1810e93b0c3",
       "source": {
@@ -32829,7 +33038,7 @@
       "status": "approved",
       "page": "/taiwanese/"
     },
-    "pages.taiwanese.44": {
+    "pages.taiwanese.45": {
       "value": "MCR rules Pattern scoring, the eight-fan minimum, flowers, and payments.",
       "hash": "e02eb97c30e21f55ca5a188fabf77baf192aaf498fcab048c7a52f732fb2c9b4",
       "source": {
@@ -32840,7 +33049,7 @@
       "status": "approved",
       "page": "/taiwanese/"
     },
-    "pages.taiwanese.45": {
+    "pages.taiwanese.46": {
       "value": "Open Mahjong is free and open source under the GNU Affero General Public License v3 (AGPLv3).",
       "hash": "c013936017c0a266c5b09109fb8ebb1cbe8dfecf1eba697e09207ac5a5f104ca",
       "source": {
@@ -32851,7 +33060,7 @@
       "status": "approved",
       "page": "/taiwanese/"
     },
-    "pages.taiwanese.46": {
+    "pages.taiwanese.47": {
       "value": "Source on GitHub",
       "hash": "11506c59ef233e41a5eb53323bb917f041858f7844487435a6eba02689fcb5f4",
       "source": {
@@ -32862,7 +33071,7 @@
       "status": "approved",
       "page": "/taiwanese/"
     },
-    "pages.taiwanese.47": {
+    "pages.taiwanese.48": {
       "value": "Privacy policy",
       "hash": "ba445cff3898a3f24f415f90fbef1c8169ea21949a40680c5e1c5975843d1b5e",
       "source": {
@@ -34172,19 +34381,6 @@
       },
       "placeholders": [],
       "status": "approved"
-    },
-    "review.board.player-0": {
-      "value": "Player {0}",
-      "hash": "3da8a3487f6d4b31eda46e37c7e00451ec62b40c938812c697540959af33eda2",
-      "source": {
-        "file": "board-review-ui.ts",
-        "line": 55
-      },
-      "placeholders": [
-        "0"
-      ],
-      "status": "approved",
-      "dynamic": true
     },
     "review.board.previous-decision": {
       "value": "Previous decision",
@@ -37658,7 +37854,7 @@
       "hash": "90586767b1187e281e887b1249d2439a6c5a3dbfa4a20ee31e1516d736780ef2",
       "source": {
         "file": "app.ts",
-        "line": 3672
+        "line": 3678
       },
       "placeholders": [],
       "status": "approved"
@@ -37668,7 +37864,7 @@
       "hash": "f7157ffc54f48d2f4261da5cd268b497b35b8c74905c84df8bf82af4f5b41427",
       "source": {
         "file": "app.ts",
-        "line": 4765
+        "line": 4772
       },
       "placeholders": [],
       "status": "approved"
@@ -37678,7 +37874,7 @@
       "hash": "07f53e579f0f60d0d526349d6f58a2aaf8ae82b455f7153e427ce783e987259c",
       "source": {
         "file": "app.ts",
-        "line": 4751
+        "line": 4758
       },
       "placeholders": [],
       "status": "approved"
@@ -37758,7 +37954,7 @@
       "hash": "675224aa49bfceae130e4c0d586976216cd8a429bf71b15c22426ad75c90adcb",
       "source": {
         "file": "app.ts",
-        "line": 3154
+        "line": 3160
       },
       "placeholders": [],
       "status": "approved"
@@ -37778,7 +37974,7 @@
       "hash": "b0027db426c1ce358f1cb52425f1b99576ff751bd2165c2957b2cd5b76162d6a",
       "source": {
         "file": "app.ts",
-        "line": 4583
+        "line": 4590
       },
       "placeholders": [],
       "status": "approved"
@@ -37788,7 +37984,7 @@
       "hash": "8e1a0cef46f5b7b6382d9d2b07418873f1ef7f22e6ead974c06ee3f9b14c3463",
       "source": {
         "file": "app.ts",
-        "line": 3733
+        "line": 3739
       },
       "placeholders": [
         "0",
@@ -37803,7 +37999,7 @@
       "hash": "108fc9678505a834ef84cf742daff66a26c757e23501b0ab08b34fc89bfd792d",
       "source": {
         "file": "app.ts",
-        "line": 2053
+        "line": 2056
       },
       "placeholders": [],
       "status": "approved"
@@ -37813,7 +38009,7 @@
       "hash": "0b42aaa6593b2ccd993db5306c85cb758e6f39ba7e93caa8a792b99979fce466",
       "source": {
         "file": "app.ts",
-        "line": 3617
+        "line": 3623
       },
       "placeholders": [],
       "status": "approved"
@@ -37823,7 +38019,7 @@
       "hash": "9d8fe19dfde65ed41e981a1b5c606bc52ee3285626c6cb5b24dad33004d03c9c",
       "source": {
         "file": "app.ts",
-        "line": 3622
+        "line": 3628
       },
       "placeholders": [],
       "status": "approved"
@@ -37833,7 +38029,7 @@
       "hash": "06812ceebde17b05541286cb178287d6590b2ec584e68d1800870d63ffaebdbb",
       "source": {
         "file": "app.ts",
-        "line": 2051
+        "line": 2054
       },
       "placeholders": [],
       "status": "approved"
@@ -37863,7 +38059,7 @@
       "hash": "19766ed6ccb2f4a32778eed80d1928d2c87a18d7c275ccb163ec6709d3eb2e27",
       "source": {
         "file": "app.ts",
-        "line": 3272
+        "line": 3278
       },
       "placeholders": [],
       "status": "approved"
@@ -37903,7 +38099,7 @@
       "hash": "0878b9867b874985a3507b4a8aed0789b23507585ee88388f0b1ecc44aa01fd0",
       "source": {
         "file": "app.ts",
-        "line": 3250
+        "line": 3256
       },
       "placeholders": [],
       "status": "approved"
@@ -37913,7 +38109,7 @@
       "hash": "20e27337d8ab69791f567a6e6fae5b60fb0b221aff563b7f25ad123a875c692d",
       "source": {
         "file": "app.ts",
-        "line": 3862
+        "line": 3868
       },
       "placeholders": [
         "0"
@@ -37926,7 +38122,7 @@
       "hash": "e1d14216648118936ff6453a776d6ecd561ebebee2cd65aaa6eb4a21c2a1574d",
       "source": {
         "file": "app.ts",
-        "line": 3928
+        "line": 3934
       },
       "placeholders": [],
       "status": "approved"
@@ -37996,7 +38192,7 @@
       "hash": "55bd313c1d6877723ca2a1fb811fef28d81ad05f45b2c0dd6550f6247d8ca419",
       "source": {
         "file": "app.ts",
-        "line": 3820
+        "line": 3826
       },
       "placeholders": [],
       "status": "approved"
@@ -38016,14 +38212,14 @@
       "hash": "7d9eb7acb13e24625c404401d8e88b2350e32162455885f18276cf802f7701ed",
       "source": {
         "file": "app.ts",
-        "line": 2637
+        "line": 2643
       },
       "placeholders": [],
       "status": "approved"
     },
     "ui.app.collapses-animation-to-near-instant-your-operati": {
-      "value": "Collapses animation to near-instant. Your operating system's reduced-motion setting is always respected too.",
-      "hash": "4c2a683cbf80bf4d08e7e7dfb7134451f8c8c9e2536e3fbbf9d54f3aa5248412",
+      "value": "Collapses animation to near-instant.",
+      "hash": "4081ba0056c49bb8b6b7d7b5b7b0e00a071118a1854a24a5036e6d69d8515ee4",
       "source": {
         "file": "app.ts",
         "line": 1800
@@ -38036,7 +38232,7 @@
       "hash": "f766b1a5836b481cf6d36b9f091d2a8743d7af541f5a9f66968bd5db6b13343f",
       "source": {
         "file": "app.ts",
-        "line": 3764
+        "line": 3770
       },
       "placeholders": [
         "0",
@@ -38053,7 +38249,7 @@
       "hash": "1144fcc6a2f5562ba80f009cf55fdaea58cafb04d5b3416578d9cd0c36b0d767",
       "source": {
         "file": "app.ts",
-        "line": 3766
+        "line": 3772
       },
       "placeholders": [
         "0",
@@ -38067,7 +38263,7 @@
       "hash": "fdb1bcf04d8372d373330939c6d6a162d6c38a5a8cfa1489ce6f0e6bc63886ec",
       "source": {
         "file": "app.ts",
-        "line": 3768
+        "line": 3774
       },
       "placeholders": [
         "0",
@@ -38121,7 +38317,7 @@
       "hash": "bed780b1bd7718a63a040a675133f07c1988e9b022187ec4c1c47b0742d0c93a",
       "source": {
         "file": "app.ts",
-        "line": 3280
+        "line": 3286
       },
       "placeholders": [],
       "status": "approved"
@@ -38151,7 +38347,7 @@
       "hash": "1e5c8b3191f7c2bd397cafb35c805472a93b13e724669e52ebbf1dec229eadb7",
       "source": {
         "file": "app.ts",
-        "line": 3387
+        "line": 3393
       },
       "placeholders": [],
       "status": "approved"
@@ -38161,7 +38357,7 @@
       "hash": "677a3bd5e1a5e7800f61d58da3452c0aa7b15927f1bf6452dd00bc27f794d8f7",
       "source": {
         "file": "app.ts",
-        "line": 3820
+        "line": 3826
       },
       "placeholders": [],
       "status": "approved"
@@ -38201,7 +38397,7 @@
       "hash": "eb1a70e39274bb762b5d7c1adb5debeea2b05e12af28207f21a375b596853273",
       "source": {
         "file": "app.ts",
-        "line": 3894
+        "line": 3900
       },
       "placeholders": [],
       "status": "approved"
@@ -38211,7 +38407,7 @@
       "hash": "92359e88435d7b8323013e83bd3df10885269ebda66cc90e29413d88c86c09b5",
       "source": {
         "file": "app.ts",
-        "line": 3611
+        "line": 3617
       },
       "placeholders": [],
       "status": "approved"
@@ -38221,7 +38417,7 @@
       "hash": "14dd591db26b88981071cf67b3374d811b9e4ca78a32733343cd4f0a61fadeff",
       "source": {
         "file": "app.ts",
-        "line": 3609
+        "line": 3615
       },
       "placeholders": [],
       "status": "approved"
@@ -38231,7 +38427,7 @@
       "hash": "8396e63a22f40bb1263271308ecc2be2841902fff12b7b204f449348a6eac965",
       "source": {
         "file": "app.ts",
-        "line": 3392
+        "line": 3398
       },
       "placeholders": [],
       "status": "approved"
@@ -38241,7 +38437,7 @@
       "hash": "11a6767d5674c7e45f7e00dc525762275b3a48491ad6045427d2609cc496c516",
       "source": {
         "file": "app.ts",
-        "line": 4158
+        "line": 4164
       },
       "placeholders": [],
       "status": "approved"
@@ -38261,7 +38457,7 @@
       "hash": "98f44027339bffda465fcae4ee59aa16c90aeeb6dd743c3c41cf16807a4d2444",
       "source": {
         "file": "app.ts",
-        "line": 4769
+        "line": 4776
       },
       "placeholders": [],
       "status": "approved"
@@ -38271,7 +38467,7 @@
       "hash": "ebc61de808367f2d9dee267edf1db43c941f8a50bd73cef36e61b268be0b485b",
       "source": {
         "file": "app.ts",
-        "line": 3455
+        "line": 3461
       },
       "placeholders": [],
       "status": "approved"
@@ -38301,7 +38497,7 @@
       "hash": "d8c585b31dcd6638e617afc9152f09c4d374e8a44ebe3f0789e7732b16669c6c",
       "source": {
         "file": "app.ts",
-        "line": 3778
+        "line": 3784
       },
       "placeholders": [],
       "status": "approved"
@@ -38311,7 +38507,7 @@
       "hash": "9263f7b83d08f9ff27bd6d224d333b6775d3f26694e49560eaf64351cdfabc58",
       "source": {
         "file": "app.ts",
-        "line": 3406
+        "line": 3412
       },
       "placeholders": [],
       "status": "approved"
@@ -38341,7 +38537,7 @@
       "hash": "03825024559394f1da8bcc3743ca996165add12b3f6fa9665e44104ae4e3e110",
       "source": {
         "file": "app.ts",
-        "line": 2086
+        "line": 2092
       },
       "placeholders": [],
       "status": "approved"
@@ -38371,7 +38567,7 @@
       "hash": "0fa7ce222c07c1268511f8e8895ec246d073af76d0c0e2fe063848b2434b61cc",
       "source": {
         "file": "app.ts",
-        "line": 2086
+        "line": 2092
       },
       "placeholders": [],
       "status": "approved"
@@ -38381,7 +38577,7 @@
       "hash": "4359ce81572019b3bb24bc5fc366df9f3f786265035bc288c7a507e44b465636",
       "source": {
         "file": "app.ts",
-        "line": 3324
+        "line": 3330
       },
       "placeholders": [],
       "status": "approved"
@@ -38391,7 +38587,7 @@
       "hash": "e3a054c7832d2bf3c1b00bc97c62594680dba3ba0d384b4829a386c2206f16b1",
       "source": {
         "file": "app.ts",
-        "line": 3667
+        "line": 3673
       },
       "placeholders": [],
       "status": "approved"
@@ -38401,7 +38597,7 @@
       "hash": "76f1052429da30434e3518d533ab20e18ee643ef7827bba3a921b784b5281ddd",
       "source": {
         "file": "app.ts",
-        "line": 4794
+        "line": 4801
       },
       "placeholders": [],
       "status": "approved"
@@ -38421,7 +38617,7 @@
       "hash": "b8a5a9b45cbbfe1e884e6fdb146d87acf0c77b3f4182f95f0151f2340361bb08",
       "source": {
         "file": "app.ts",
-        "line": 4675
+        "line": 4682
       },
       "placeholders": [],
       "status": "approved"
@@ -38431,7 +38627,7 @@
       "hash": "7804f7a79a9eee323b6e89d3f8287c7d36076f4d76291646295f435b0dec736e",
       "source": {
         "file": "app.ts",
-        "line": 2053
+        "line": 2056
       },
       "placeholders": [],
       "status": "approved"
@@ -38461,7 +38657,7 @@
       "hash": "16a77d6f71c953e7e49eae041f9435275b5ab31386ed09f6180641908545105c",
       "source": {
         "file": "app.ts",
-        "line": 2086
+        "line": 2092
       },
       "placeholders": [],
       "status": "approved"
@@ -38511,7 +38707,7 @@
       "hash": "b80ad1800127e19de69587aae1edfd94e0e79746d475a2022670fa2b53fd897e",
       "source": {
         "file": "app.ts",
-        "line": 2025
+        "line": 2024
       },
       "placeholders": [],
       "status": "approved"
@@ -38531,7 +38727,7 @@
       "hash": "82d004543bc7241c83d8cc9d08e2517a17217e1baeb16ad04a42408c20dcc29e",
       "source": {
         "file": "app.ts",
-        "line": 3502
+        "line": 3508
       },
       "placeholders": [],
       "status": "approved"
@@ -38551,7 +38747,7 @@
       "hash": "5f8d8418f567f51019a0c830c560b7c2a9b6ac9844b634dd98ae6652bcd6f80b",
       "source": {
         "file": "app.ts",
-        "line": 4632
+        "line": 4639
       },
       "placeholders": [],
       "status": "approved"
@@ -38561,7 +38757,7 @@
       "hash": "8a28e9b8a93c132a7871c9824857f730d2ef85962aa1c0533091730dde729278",
       "source": {
         "file": "app.ts",
-        "line": 4632
+        "line": 4639
       },
       "placeholders": [],
       "status": "approved"
@@ -38581,7 +38777,7 @@
       "hash": "3cf2e9efea2414cf6c268fda175cf75c393f6de81f7377140f3c740df694a69f",
       "source": {
         "file": "app.ts",
-        "line": 4752
+        "line": 4759
       },
       "placeholders": [],
       "status": "approved"
@@ -38591,7 +38787,7 @@
       "hash": "fcfd066f0efae0922f297954d3a5dc930be8c1fd3629e25fddc2328a51c84c4d",
       "source": {
         "file": "app.ts",
-        "line": 3408
+        "line": 3414
       },
       "placeholders": [],
       "status": "approved"
@@ -38601,14 +38797,14 @@
       "hash": "bab8f57ec4f7642f99601f03ea00d3bdd64762e82310196a4dc18013ab494504",
       "source": {
         "file": "app.ts",
-        "line": 4788
+        "line": 4795
       },
       "placeholders": [],
       "status": "approved"
     },
     "ui.app.hand-tiles-step-up-to-28px-in-two-rows-of-seven": {
-      "value": "Hand tiles step up to 28px in two rows of seven; ponds step down to 22px; the panel type grows. The approved large layout (table-large-v1).",
-      "hash": "4febbe6c78d4304c1035bd2e7992eb2e3e5e7bf606269bf941d7454161496237",
+      "value": "Hand tiles step up to 28px in two rows of seven; ponds step down to 22px.",
+      "hash": "a1b1668f81f3fd97635c1e218285dbcb7551177a5fa35cda1d180442250f3263",
       "source": {
         "file": "app.ts",
         "line": 1804
@@ -38637,8 +38833,8 @@
       "status": "approved"
     },
     "ui.app.hints-and-explanations-on-the-table-during-cpu-g": {
-      "value": "Hints and explanations on the table during CPU games. The same switch is on the Play tab and in the in-game menu.",
-      "hash": "336ec8dd95e18f517cd5769cf5cf99625ef82b08ce188e2ac7e6b3d9f64fec06",
+      "value": "Hints and explanations on the table during CPU games.",
+      "hash": "f49a3a28cc8b0fae3c2cad42d47d9d3cae188e689ce794944958093e26e9e688",
       "source": {
         "file": "app.ts",
         "line": 1810
@@ -38651,7 +38847,7 @@
       "hash": "e8199a62f65a255cfd092724fd6c2c2fba445f30e99f17ba3a177bb6613e6712",
       "source": {
         "file": "app.ts",
-        "line": 4836
+        "line": 4843
       },
       "placeholders": [],
       "status": "approved"
@@ -38671,7 +38867,7 @@
       "hash": "1cecc206ca88cc02dce792aad1b525f29f90f545b0b6933a13bc113a6b4b5613",
       "source": {
         "file": "app.ts",
-        "line": 4753
+        "line": 4760
       },
       "placeholders": [
         "0"
@@ -38694,7 +38890,7 @@
       "hash": "e3d302188d4b21872b53b175b46bf2dec2ae64bd24aa2320aa7065ff85f34450",
       "source": {
         "file": "app.ts",
-        "line": 2053
+        "line": 2056
       },
       "placeholders": [],
       "status": "approved"
@@ -38827,7 +39023,7 @@
       "hash": "ec29833c7f5c3ae96c0875fa45d179f62d5252036514ab6f2e90c7d4d2e21f96",
       "source": {
         "file": "app.ts",
-        "line": 2051
+        "line": 2054
       },
       "placeholders": [],
       "status": "approved"
@@ -38847,7 +39043,7 @@
       "hash": "c1f88e9d6c4145cf0530ae020155384d5688d70ed82a07a35d783bbc4b32238c",
       "source": {
         "file": "app.ts",
-        "line": 2053
+        "line": 2056
       },
       "placeholders": [],
       "status": "approved"
@@ -38857,7 +39053,7 @@
       "hash": "05a93976b2fff8c8e78c9807e67f6090e8c22699819d6b7dcbfa68123c98669d",
       "source": {
         "file": "app.ts",
-        "line": 2628
+        "line": 2634
       },
       "placeholders": [],
       "status": "approved"
@@ -38867,7 +39063,7 @@
       "hash": "3026a9e45e2804237995a6cdc782a77f1228e9695edbbe83a51f571473dfe22f",
       "source": {
         "file": "app.ts",
-        "line": 4436
+        "line": 4443
       },
       "placeholders": [
         "0"
@@ -38900,7 +39096,7 @@
       "hash": "9bd93da6e70a406408d4b924e09dce7c682321b8ca7fdbc7be6d132fb0bcc556",
       "source": {
         "file": "app.ts",
-        "line": 3618
+        "line": 3624
       },
       "placeholders": [],
       "status": "approved"
@@ -38910,7 +39106,7 @@
       "hash": "39c7c37a992c800faba567c4e36630a019fbe4f6d31ad2ee43022acf4646dac9",
       "source": {
         "file": "app.ts",
-        "line": 3661
+        "line": 3667
       },
       "placeholders": [],
       "status": "approved"
@@ -38920,7 +39116,7 @@
       "hash": "c1c89ccb89f412bf94e54d64b6b30c8e099416e882d8bd414d1585c96fb85c27",
       "source": {
         "file": "app.ts",
-        "line": 3664
+        "line": 3670
       },
       "placeholders": [],
       "status": "approved"
@@ -38960,7 +39156,7 @@
       "hash": "280e734ad97dc30988848d811fa19ed72666533d7be0d93a613471e54ac26a73",
       "source": {
         "file": "app.ts",
-        "line": 3246
+        "line": 3252
       },
       "placeholders": [],
       "status": "approved"
@@ -38970,7 +39166,7 @@
       "hash": "315e4d3fb66faa2259a47ae10006bd28920949edf767eea325e00247c2d10cb9",
       "source": {
         "file": "app.ts",
-        "line": 3880
+        "line": 3886
       },
       "placeholders": [
         "0"
@@ -38983,7 +39179,7 @@
       "hash": "735b0702ae7995094e4210057ab9a3cf367465ffc79e61c951048e4774e29196",
       "source": {
         "file": "app.ts",
-        "line": 3874
+        "line": 3880
       },
       "placeholders": [
         "0"
@@ -38996,7 +39192,7 @@
       "hash": "015cbd564c25c7618d4efd7a8969ff85d897cac43264741c6c9cfcd9b1a8ffc0",
       "source": {
         "file": "app.ts",
-        "line": 3906
+        "line": 3912
       },
       "placeholders": [],
       "status": "approved"
@@ -39036,7 +39232,7 @@
       "hash": "33876f63c5e1596e173f127b8ff278d7ca1d3ab7a3c21695c4926a83330bdc52",
       "source": {
         "file": "app.ts",
-        "line": 3322
+        "line": 3328
       },
       "placeholders": [],
       "status": "approved"
@@ -39170,21 +39366,11 @@
       "status": "approved"
     },
     "ui.app.language.url-note": {
-      "value": "Switching languages opens the matching page address — for example, /ja/ for Japanese. Your choice is remembered; the browser language is only used on your first visit.",
-      "hash": "2d90357c9e5b161a52246d14b3b5577095ccd7ecb65544e2155e2789c6c311d3",
+      "value": "Your choice is remembered; the browser language is only used on your first visit.",
+      "hash": "7dd9763fdef8108cc60b562b5923c961b2d0e8c1935a2d38e2380feb967e07ff",
       "source": {
         "file": "app.ts",
         "line": 1917
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "ui.app.language.wave2-note": {
-      "value": "More languages are coming: Vietnamese, Thai, Indonesian, French, German, and Spanish.",
-      "hash": "d13b892fcedc460ee8bcc270689e99607b8d84a27f03843dd87dc3720b3a37e8",
-      "source": {
-        "file": "app.ts",
-        "line": 1921
       },
       "placeholders": [],
       "status": "approved"
@@ -39214,7 +39400,7 @@
       "hash": "ce78afd0e6a225ecac96a6812b9d192e7eb35889cd5237beb38b50375b79d8dd",
       "source": {
         "file": "app.ts",
-        "line": 4045
+        "line": 4051
       },
       "placeholders": [],
       "status": "approved"
@@ -39224,7 +39410,7 @@
       "hash": "fc6e4a408d56be9670c14ee7be21e1a39c93c2df82f7c95975485e90ca6371c3",
       "source": {
         "file": "app.ts",
-        "line": 4466
+        "line": 4473
       },
       "placeholders": [],
       "status": "approved"
@@ -39234,7 +39420,7 @@
       "hash": "14ed3728682547a0d667784b2cb5dc87df03f7094a954feb658bc7fa0572d231",
       "source": {
         "file": "app.ts",
-        "line": 4402
+        "line": 4409
       },
       "placeholders": [],
       "status": "approved"
@@ -39244,7 +39430,7 @@
       "hash": "6e2b26d9de4033b952bd242f69b798420ee887151b937f394efc23252c78af74",
       "source": {
         "file": "app.ts",
-        "line": 4396
+        "line": 4403
       },
       "placeholders": [],
       "status": "approved"
@@ -39254,7 +39440,7 @@
       "hash": "dc5aa33e9f6e5a4fea7caed35018500b9e5cf703548b2e1b51536275a6930811",
       "source": {
         "file": "app.ts",
-        "line": 4569
+        "line": 4576
       },
       "placeholders": [],
       "status": "approved"
@@ -39264,7 +39450,7 @@
       "hash": "db75b0d0ccca13eeabb65b5040b019997c0a686373d353ccb31979ad265a80af",
       "source": {
         "file": "app.ts",
-        "line": 4046
+        "line": 4052
       },
       "placeholders": [],
       "status": "approved"
@@ -39294,17 +39480,17 @@
       "hash": "d6b206585b93da356fd144c08eac7446eb126bb4d2adf6970f9b97bb9c149dd5",
       "source": {
         "file": "app.ts",
-        "line": 2053
+        "line": 2056
       },
       "placeholders": [],
       "status": "approved"
     },
     "ui.app.mcr-mahjong-competition-rules": {
-      "value": "MCR (Mahjong Competition Rules)",
-      "hash": "8f00f4cddb72eb13044bdc6fac7e57bce126083682a62612b88615c87a076021",
+      "value": "MCR",
+      "hash": "d6b206585b93da356fd144c08eac7446eb126bb4d2adf6970f9b97bb9c149dd5",
       "source": {
         "file": "app.ts",
-        "line": 4193
+        "line": 4199
       },
       "placeholders": [],
       "status": "approved"
@@ -39314,7 +39500,7 @@
       "hash": "cb658b887650186b4cf6c1c89eca177b0bf38194227b90c5916587d4ab4891c7",
       "source": {
         "file": "app.ts",
-        "line": 3412
+        "line": 3418
       },
       "placeholders": [],
       "status": "approved"
@@ -39324,7 +39510,7 @@
       "hash": "99af6606ff9d6cd5154d4d4e9c21e325086d3e904677cdb41d363c8a3480f862",
       "source": {
         "file": "app.ts",
-        "line": 2541
+        "line": 2547
       },
       "placeholders": [],
       "status": "approved"
@@ -39364,7 +39550,7 @@
       "hash": "c0b5f3134d31447db3ef9a1d1512878db23eb2daf4fbb578f031c481ce6ce8b5",
       "source": {
         "file": "app.ts",
-        "line": 4797
+        "line": 4804
       },
       "placeholders": [
         "0"
@@ -39377,7 +39563,7 @@
       "hash": "88faee862d4181024d77153353891b2733f79fe823c1e387e3449a6b41c665b9",
       "source": {
         "file": "app.ts",
-        "line": 4593
+        "line": 4600
       },
       "placeholders": [
         "0"
@@ -39390,7 +39576,7 @@
       "hash": "169de4c242d46540fcff9bb5787e66e054962fc7538c86225c332528116db856",
       "source": {
         "file": "app.ts",
-        "line": 4675
+        "line": 4682
       },
       "placeholders": [],
       "status": "approved"
@@ -39400,7 +39586,7 @@
       "hash": "c49f2278efe9d53b8bbaebc576f1a8c6260883c8598cc08e8472b516bf192c72",
       "source": {
         "file": "app.ts",
-        "line": 3402
+        "line": 3408
       },
       "placeholders": [],
       "status": "approved"
@@ -39410,7 +39596,7 @@
       "hash": "724b8b25ee7a274b90af501f11a1887ddc7718ac3fb14487c9b7d4370cde26d4",
       "source": {
         "file": "app.ts",
-        "line": 2046
+        "line": 2049
       },
       "placeholders": [],
       "status": "approved"
@@ -39420,7 +39606,7 @@
       "hash": "1818e0fb4716383f3271c6091a06e783433ac947711debf2d6921909835c9a44",
       "source": {
         "file": "app.ts",
-        "line": 3669
+        "line": 3675
       },
       "placeholders": [],
       "status": "approved"
@@ -39430,7 +39616,7 @@
       "hash": "c266c51b7452b78e3881283a0a0412527ea25f46cffa041bd14b73d97cab1aa5",
       "source": {
         "file": "app.ts",
-        "line": 3414
+        "line": 3420
       },
       "placeholders": [],
       "status": "approved"
@@ -39450,7 +39636,7 @@
       "hash": "eaeafebfd7a0266f50db12dca739087a440dc6f0324d8812af8583f6868fbac3",
       "source": {
         "file": "app.ts",
-        "line": 4694
+        "line": 4701
       },
       "placeholders": [
         "0"
@@ -39463,7 +39649,7 @@
       "hash": "7469f156c09e819b501a1b2e71cf79d43f4064c3e99adc7fc8bfcbff442e9319",
       "source": {
         "file": "app.ts",
-        "line": 3675
+        "line": 3681
       },
       "placeholders": [],
       "status": "approved"
@@ -39483,7 +39669,7 @@
       "hash": "832963b9f7071758e78ea2d9e9b886f7af7852353a2c46c6f8916b4577607243",
       "source": {
         "file": "app.ts",
-        "line": 3712
+        "line": 3718
       },
       "placeholders": [
         "0"
@@ -39496,7 +39682,7 @@
       "hash": "107a3cc047d796ce5902c258d40c2e6b0dfdf8616390e8cb638f2c45c3820297",
       "source": {
         "file": "app.ts",
-        "line": 3710
+        "line": 3716
       },
       "placeholders": [
         "0"
@@ -39509,7 +39695,7 @@
       "hash": "e9725fc5422b2e1f6f0b6f3b24797dca063c8c44dd806b73135d2a57f411c8a0",
       "source": {
         "file": "app.ts",
-        "line": 3710
+        "line": 3716
       },
       "placeholders": [
         "0"
@@ -39532,7 +39718,7 @@
       "hash": "c702a2093859ba2f14ea02e58e696f129a11947dc73c1ef969d49857c60763e8",
       "source": {
         "file": "app.ts",
-        "line": 3992
+        "line": 3998
       },
       "placeholders": [],
       "status": "approved"
@@ -39602,7 +39788,7 @@
       "hash": "ae26d4ac08c9577600d3bd5e4216327c63d810d698acc680aa058d91487745bb",
       "source": {
         "file": "app.ts",
-        "line": 4298
+        "line": 4304
       },
       "placeholders": [],
       "status": "approved"
@@ -39612,7 +39798,7 @@
       "hash": "ebdf8cc00bc4d9ceee633c56c63b49955769a92ca060825c9b08e4af61326e2b",
       "source": {
         "file": "app.ts",
-        "line": 3255
+        "line": 3261
       },
       "placeholders": [],
       "status": "approved"
@@ -39622,7 +39808,7 @@
       "hash": "e159b06187d369a0615f66ce577582b5c983d4ea59b3a62b702049f61753f0bf",
       "source": {
         "file": "app.ts",
-        "line": 4623
+        "line": 4630
       },
       "placeholders": [],
       "status": "approved"
@@ -39632,7 +39818,7 @@
       "hash": "f3a3e72e509c8623dbcdbeb95e1b6eb1a91ed6c1205ead1c3d8839b38aac6476",
       "source": {
         "file": "app.ts",
-        "line": 3821
+        "line": 3827
       },
       "placeholders": [],
       "status": "approved"
@@ -39652,7 +39838,7 @@
       "hash": "af9851e88266de83f1aedb54518d796dfaa30d1e9769e37f30d9f804808439f3",
       "source": {
         "file": "app.ts",
-        "line": 2066
+        "line": 2069
       },
       "placeholders": [],
       "status": "approved"
@@ -39672,7 +39858,7 @@
       "hash": "5ef30d27f8bc261c9af7c5220ebca9e22ad51e60ff89bbdccceeb7102e21a32f",
       "source": {
         "file": "app.ts",
-        "line": 4842
+        "line": 4849
       },
       "placeholders": [],
       "status": "approved"
@@ -39712,7 +39898,7 @@
       "hash": "d212f995bf6e13c9ca3fbae0dccbfcfe066dcc94c2cf243a6a64a8f5ecd11379",
       "source": {
         "file": "app.ts",
-        "line": 3245
+        "line": 3251
       },
       "placeholders": [],
       "status": "approved"
@@ -39722,7 +39908,7 @@
       "hash": "d3857b12b4cea2bc5d8ea0b8c2ce9cc3d5dc426e0bf3ea06394ddb906e6d60a0",
       "source": {
         "file": "app.ts",
-        "line": 4049
+        "line": 4055
       },
       "placeholders": [],
       "status": "approved"
@@ -39732,7 +39918,7 @@
       "hash": "1329738c68f587d54b0e5dfbd0b9665e9aae1e91dd7a7906b05b64f1b176fdde",
       "source": {
         "file": "app.ts",
-        "line": 4215
+        "line": 4221
       },
       "placeholders": [
         "0"
@@ -39745,7 +39931,7 @@
       "hash": "56bdc791b4c543178e3a8bf9548fedb19c31d6a3ac439dc48c0abfd7f266dc95",
       "source": {
         "file": "app.ts",
-        "line": 4137
+        "line": 4143
       },
       "placeholders": [],
       "status": "approved"
@@ -39761,8 +39947,8 @@
       "status": "approved"
     },
     "ui.app.quiet-tile-clicks-only-no-music-no-voices": {
-      "value": "Quiet tile clicks only. No music, no voices.",
-      "hash": "e18d72f4ec362eaba0c663bc8552a16beab8aa9b8c96e3ab472f43fc2c618da4",
+      "value": "Quiet tile clicks only.",
+      "hash": "a3448e238ddb95fb272a0314c00f765996d63b756ef4845c23c6d743e45b9b11",
       "source": {
         "file": "app.ts",
         "line": 1795
@@ -39775,7 +39961,7 @@
       "hash": "5ab1f6dc36caafc1be6b82aeaac8b0a3689e5fb284f4a56c48b70ccdba5be810",
       "source": {
         "file": "app.ts",
-        "line": 4649
+        "line": 4656
       },
       "placeholders": [],
       "status": "approved"
@@ -39825,7 +40011,7 @@
       "hash": "0e066525566708813d3ccc120342d3d97caa9da865c9732c758fc14f213b643a",
       "source": {
         "file": "app.ts",
-        "line": 4645
+        "line": 4652
       },
       "placeholders": [],
       "status": "approved"
@@ -39855,7 +40041,7 @@
       "hash": "93a9558da164cde25d9874c0e1f0725243814c751518334d5addc8dac5458dd6",
       "source": {
         "file": "app.ts",
-        "line": 3971
+        "line": 3977
       },
       "placeholders": [
         "0"
@@ -39868,7 +40054,7 @@
       "hash": "aff0766a5290e117b8433c351bae7b7b23bed682b2369bd822d88a647cc58512",
       "source": {
         "file": "app.ts",
-        "line": 3992
+        "line": 3998
       },
       "placeholders": [],
       "status": "approved"
@@ -39878,7 +40064,7 @@
       "hash": "472e71f04cdf408ee2bc7c9c9d1d766216dd8f58b66d87c2a7caf2503987ce72",
       "source": {
         "file": "app.ts",
-        "line": 4847
+        "line": 4854
       },
       "placeholders": [],
       "status": "approved"
@@ -39898,7 +40084,7 @@
       "hash": "3c7b9b5fb54c4b5b931cf0125b8891b44cffa6bf5a0b9873ef87c76d023fe14e",
       "source": {
         "file": "app.ts",
-        "line": 2466
+        "line": 2472
       },
       "placeholders": [],
       "status": "approved"
@@ -39908,7 +40094,7 @@
       "hash": "c20ac75ac9f4dd864bd45ca097bbc78fc06cd59299981450342cdd1731055a4b",
       "source": {
         "file": "app.ts",
-        "line": 3696
+        "line": 3702
       },
       "placeholders": [],
       "status": "approved"
@@ -39928,7 +40114,7 @@
       "hash": "de992cecedfac8756c2c3744808b2b076327aaa3d36bc2fdab813fed57cb7203",
       "source": {
         "file": "app.ts",
-        "line": 3888
+        "line": 3894
       },
       "placeholders": [],
       "status": "approved"
@@ -39938,7 +40124,7 @@
       "hash": "f8f60686136587f4d3b08b1fbcf4c43f695b4d11e1c24afffdc46f019c7c1086",
       "source": {
         "file": "app.ts",
-        "line": 4761
+        "line": 4768
       },
       "placeholders": [],
       "status": "approved"
@@ -39968,7 +40154,7 @@
       "hash": "866b3a5cb1cb3d1e83d0ec67609ab8cc88f8d41765b3dc30cc67e3793a7e66a6",
       "source": {
         "file": "app.ts",
-        "line": 3243
+        "line": 3249
       },
       "placeholders": [],
       "status": "approved"
@@ -39978,7 +40164,7 @@
       "hash": "74a904e136c94425e6b98da29ef77069683c2f724878d97e094cd0b81f0ed74d",
       "source": {
         "file": "app.ts",
-        "line": 4702
+        "line": 4709
       },
       "placeholders": [],
       "status": "approved"
@@ -39988,7 +40174,7 @@
       "hash": "cd9558acfc386bd3e1fb14da5d4ed7e9338f80fa29fc2447c36c94667c406295",
       "source": {
         "file": "app.ts",
-        "line": 3446
+        "line": 3452
       },
       "placeholders": [],
       "status": "approved"
@@ -40069,7 +40255,7 @@
       "hash": "04f6dd470606e59bdb6dd539aebae8aba5fc047a061d96104cd1bc6eb62692a2",
       "source": {
         "file": "app.ts",
-        "line": 3154
+        "line": 3160
       },
       "placeholders": [],
       "status": "approved"
@@ -40119,7 +40305,7 @@
       "hash": "d9e126c30581daf3347aa29db53bd94e5e69c4e84e6da520c927b8297e3c9735",
       "source": {
         "file": "app.ts",
-        "line": 3969
+        "line": 3975
       },
       "placeholders": [
         "0"
@@ -40132,7 +40318,7 @@
       "hash": "48967082ccf2935b9cb27ce3335494191b6a541af65471742285339bad94394a",
       "source": {
         "file": "app.ts",
-        "line": 3468
+        "line": 3474
       },
       "placeholders": [],
       "status": "approved"
@@ -40142,7 +40328,7 @@
       "hash": "1290ae5518328aa7ae0ba6100b91987484aa29a4493fecedb70d748c8fca7c7e",
       "source": {
         "file": "app.ts",
-        "line": 3154
+        "line": 3160
       },
       "placeholders": [],
       "status": "approved"
@@ -40232,7 +40418,7 @@
       "hash": "bec69036aa27e7fab7d44cad3909477b76631c39ba46fd7841ea71aae7e5a735",
       "source": {
         "file": "app.ts",
-        "line": 2618
+        "line": 2624
       },
       "placeholders": [],
       "status": "approved"
@@ -40252,7 +40438,7 @@
       "hash": "026e9e725e58d5e3b4a0965bc923ed23e12e89b4e997341c4f26494a0f694c87",
       "source": {
         "file": "app.ts",
-        "line": 4638
+        "line": 4645
       },
       "placeholders": [],
       "status": "approved"
@@ -40262,7 +40448,7 @@
       "hash": "1b0c800b4a34381b57ddf8f8d3dfae546acdc978a5ca42d29eafa2a14d54cbf1",
       "source": {
         "file": "app.ts",
-        "line": 4638
+        "line": 4645
       },
       "placeholders": [],
       "status": "approved"
@@ -40302,7 +40488,7 @@
       "hash": "92f19534d8c5411570e603431055706c77573719bc31c19b6e5219457bc1065e",
       "source": {
         "file": "app.ts",
-        "line": 4471
+        "line": 4478
       },
       "placeholders": [
         "0",
@@ -40376,7 +40562,7 @@
       "hash": "4590eb3a55fc3aafe45893f2c057598e04ea249cb7d924e3417735726abaff01",
       "source": {
         "file": "app.ts",
-        "line": 2053
+        "line": 2056
       },
       "placeholders": [],
       "status": "approved"
@@ -40396,7 +40582,7 @@
       "hash": "f24ff6226e90ce31a109f9a229d28fec8b2264bd4883206fe9389da4c754182c",
       "source": {
         "file": "app.ts",
-        "line": 3821
+        "line": 3827
       },
       "placeholders": [],
       "status": "approved"
@@ -40406,7 +40592,7 @@
       "hash": "71a99e56c41763dae8bd8f7e007bb1ce5bd8a74a254be36b6ff7b18821eda74d",
       "source": {
         "file": "app.ts",
-        "line": 2412
+        "line": 2418
       },
       "placeholders": [],
       "status": "approved"
@@ -40426,7 +40612,7 @@
       "hash": "0276ee1751ca22e76715f2d3b6c8a25e56a2b50405650b4636ec9f17a439e1a3",
       "source": {
         "file": "app.ts",
-        "line": 4800
+        "line": 4807
       },
       "placeholders": [
         "0"
@@ -40439,7 +40625,7 @@
       "hash": "ae7ac2f7df9446f0802b4a82861b278a06b1f873e4adebcbb5c3b46d68709cd3",
       "source": {
         "file": "app.ts",
-        "line": 3649
+        "line": 3655
       },
       "placeholders": [
         "0",
@@ -40454,7 +40640,7 @@
       "hash": "5699e889f0a04688ae0c600b9b35fefdbba4dfa1cbaad5aca57ee8ff6330bf91",
       "source": {
         "file": "app.ts",
-        "line": 3650
+        "line": 3656
       },
       "placeholders": [
         "0"
@@ -40467,7 +40653,7 @@
       "hash": "c18ff6be8326000e263b0191d6b1a7cc649f8982a195c9162ef1c49c8bb9ee23",
       "source": {
         "file": "app.ts",
-        "line": 4772
+        "line": 4779
       },
       "placeholders": [],
       "status": "approved"
@@ -40477,7 +40663,7 @@
       "hash": "ed7cc25c18b0edfe622868adc39d2557087e4418f917581f66049e68da4e709a",
       "source": {
         "file": "app.ts",
-        "line": 3729
+        "line": 3735
       },
       "placeholders": [
         "0"
@@ -40490,7 +40676,7 @@
       "hash": "f0e905c7b80af714dc939fa7b9badd6e90bc25207c2192e258363c42e0104743",
       "source": {
         "file": "app.ts",
-        "line": 3514
+        "line": 3520
       },
       "placeholders": [],
       "status": "approved"
@@ -40500,7 +40686,7 @@
       "hash": "94fc5041ef35fe0a6797000dc36da78b12ec70f21e8119abd9d28a4fe131a30e",
       "source": {
         "file": "app.ts",
-        "line": 4623
+        "line": 4630
       },
       "placeholders": [],
       "status": "approved"
@@ -40510,7 +40696,7 @@
       "hash": "95ba32af60a0307decf32833b8a99db0241c25f487ac1acc69e87f70ace96f68",
       "source": {
         "file": "app.ts",
-        "line": 3549
+        "line": 3555
       },
       "placeholders": [],
       "status": "approved"
@@ -40520,7 +40706,7 @@
       "hash": "fa5d00a72a3baef5c874d68e858c69c3f0024bdbecd15c0a7178fe4839f380d8",
       "source": {
         "file": "app.ts",
-        "line": 3622
+        "line": 3628
       },
       "placeholders": [],
       "status": "approved"
@@ -40530,7 +40716,7 @@
       "hash": "28d10f3390476d7c57195fa063eada592637c5f685da3ecc982eaaf68a5f3045",
       "source": {
         "file": "app.ts",
-        "line": 4790
+        "line": 4797
       },
       "placeholders": [],
       "status": "approved"
@@ -40540,7 +40726,7 @@
       "hash": "76bab47cd20ff316e2bebde5e10548b2b75710045a75867a1ffd639c9ac0fb49",
       "source": {
         "file": "app.ts",
-        "line": 3510
+        "line": 3516
       },
       "placeholders": [],
       "status": "approved"
@@ -40550,7 +40736,7 @@
       "hash": "60b35e53c03e888c7962625825a95c24d26cdf68db6878268c18dd3af103ce75",
       "source": {
         "file": "app.ts",
-        "line": 3599
+        "line": 3605
       },
       "placeholders": [],
       "status": "approved"
@@ -40560,7 +40746,7 @@
       "hash": "e4e1cffe87c3f5bb082ed8e0a402725b8473ab5d10c3b72f36e9357b420d8e72",
       "source": {
         "file": "app.ts",
-        "line": 3512
+        "line": 3518
       },
       "placeholders": [],
       "status": "approved"
@@ -40580,7 +40766,7 @@
       "hash": "8788f96f112befe6689536407035b90f108f0c082a1a4130ce001d9217aa9f9b",
       "source": {
         "file": "app.ts",
-        "line": 4024
+        "line": 4030
       },
       "placeholders": [],
       "status": "approved"
@@ -40600,7 +40786,7 @@
       "hash": "2b7dd63400f34f3d5352e0e5c2b7b5ef263f87e4f3e3aa8abade13eaffb4d0f3",
       "source": {
         "file": "app.ts",
-        "line": 3743
+        "line": 3749
       },
       "placeholders": [],
       "status": "approved"
@@ -40610,7 +40796,7 @@
       "hash": "88c697daa7aa2b8e154d5758ed51f1b521884dc4376e45397e2ea725409e4e70",
       "source": {
         "file": "app.ts",
-        "line": 3743
+        "line": 3749
       },
       "placeholders": [],
       "status": "approved"
@@ -40630,7 +40816,7 @@
       "hash": "d2d1db2a810fad32df7f50a7b9c9595c7b1417177f807949447b4e0256569d66",
       "source": {
         "file": "app.ts",
-        "line": 4109
+        "line": 4115
       },
       "placeholders": [],
       "status": "approved"
@@ -40640,7 +40826,7 @@
       "hash": "1f7f65877a2fcd323640d73706a5d7f6f2cf51ed8476e8a5246a2627057cd505",
       "source": {
         "file": "app.ts",
-        "line": 3016
+        "line": 3022
       },
       "placeholders": [
         "0"
@@ -40663,7 +40849,7 @@
       "hash": "e43342e391d0d27a9b5091293265d6ac37d78c2a3811250d4cffce6a5567dd34",
       "source": {
         "file": "app.ts",
-        "line": 3286
+        "line": 3292
       },
       "placeholders": [],
       "status": "approved"
@@ -40673,7 +40859,7 @@
       "hash": "5360c49d3eb3e0a0a1018e96df6d5e7ba84519ccd2daaacc890be0a2a042a596",
       "source": {
         "file": "app.ts",
-        "line": 4690
+        "line": 4697
       },
       "placeholders": [
         "0"
@@ -40686,7 +40872,7 @@
       "hash": "12e44d24ebd2f6695ad9b9617e6a9fa029bed168c245ef5560639f1d7d9b2840",
       "source": {
         "file": "app.ts",
-        "line": 4703
+        "line": 4710
       },
       "placeholders": [],
       "status": "approved"
@@ -40696,7 +40882,7 @@
       "hash": "aacfe5f35ce545a211feb47763ccbde1a2f2a820b7193b88400f853dfec815ba",
       "source": {
         "file": "app.ts",
-        "line": 4777
+        "line": 4784
       },
       "placeholders": [],
       "status": "approved"
@@ -40706,7 +40892,7 @@
       "hash": "8719a17450ae0224b4041a3ab1f51b199fec5c04b2686aa3dbbc32ae5191bff4",
       "source": {
         "file": "app.ts",
-        "line": 4780
+        "line": 4787
       },
       "placeholders": [],
       "status": "approved"
@@ -40757,7 +40943,7 @@
       "hash": "21ca73aa725638b8e9e359e1cf712f748b68d6ed9e42c7de1ff2ee6f45cd65d2",
       "source": {
         "file": "app.ts",
-        "line": 2053
+        "line": 2056
       },
       "placeholders": [
         "0",
@@ -40772,7 +40958,7 @@
       "hash": "f25b2ceba8a52cadff384afff0abecf443fc5fc2263eb39aa780983f54e8d621",
       "source": {
         "file": "app.ts",
-        "line": 3154
+        "line": 3160
       },
       "placeholders": [
         "0",
@@ -40801,7 +40987,7 @@
       "hash": "fa4816846a52134eaa901ce9be4cdf4f68a2e306e212bbbb9b4588ebf9fca0dc",
       "source": {
         "file": "app.ts",
-        "line": 4484
+        "line": 4491
       },
       "placeholders": [
         "0",
@@ -40829,7 +41015,7 @@
       "hash": "d5105c3f9ebdeaa6715bbb94fb802c58604e3fe1bc9fbea7ec3bb0ccfc058cfd",
       "source": {
         "file": "app.ts",
-        "line": 3770
+        "line": 3776
       },
       "placeholders": [
         "0",
@@ -40843,7 +41029,7 @@
       "hash": "46552f3d3b31177196a0e8653d3db79b5ccb91ce6876b0a6f3f153c28e33d473",
       "source": {
         "file": "app.ts",
-        "line": 4804
+        "line": 4811
       },
       "placeholders": [
         "0",
@@ -40857,7 +41043,7 @@
       "hash": "c0b4d23922216d6d59c56923c65b375ba16b6a7e6bb08272803e6bdfff63bc43",
       "source": {
         "file": "app.ts",
-        "line": 3743
+        "line": 3749
       },
       "placeholders": [
         "0",
@@ -40871,7 +41057,7 @@
       "hash": "091078538691f12a9fbbe34ecd02b964880e6cc592a1fcd1dbad78cb045325b9",
       "source": {
         "file": "app.ts",
-        "line": 2074
+        "line": 2080
       },
       "placeholders": [
         "0"
@@ -40884,7 +41070,7 @@
       "hash": "ec1b0de6d4c2348195a069a214df087bb9c5b105cbda2dae68206875ffff5a6d",
       "source": {
         "file": "app.ts",
-        "line": 2090
+        "line": 2096
       },
       "placeholders": [
         "0"
@@ -40897,7 +41083,7 @@
       "hash": "506ddfb229995d0add313668d06c84e3e7fcab62a9a53772e5626a977558ad8e",
       "source": {
         "file": "app.ts",
-        "line": 2783
+        "line": 2789
       },
       "placeholders": [
         "0"
@@ -40910,7 +41096,7 @@
       "hash": "76d1d61662176d6873880b23b35694149e8395714d96140854a3be3484ee3803",
       "source": {
         "file": "app.ts",
-        "line": 3733
+        "line": 3739
       },
       "placeholders": [
         "0"
@@ -40923,7 +41109,7 @@
       "hash": "e6f36eec2093006bbf6bbc44f8ec977484c54a5de9d810ebd450fb4a63646468",
       "source": {
         "file": "app.ts",
-        "line": 4761
+        "line": 4768
       },
       "placeholders": [
         "0"
@@ -40964,7 +41150,7 @@
       "hash": "80c28e70fc8a8d1bedf029c94c6a741ac625f68b0a8485aad2e65d886c71b0dc",
       "source": {
         "file": "app.ts",
-        "line": 3712
+        "line": 3718
       },
       "placeholders": [
         "0",
@@ -40978,7 +41164,7 @@
       "hash": "ed4b5f98852e71e4b3122c91201d1b8cddd1902e546e0077fe7884d04918ae8d",
       "source": {
         "file": "app.ts",
-        "line": 3653
+        "line": 3659
       },
       "placeholders": [
         "0"
@@ -40991,7 +41177,7 @@
       "hash": "2ad4d72b8cac964038fddd5bfb519d1f706b9eff9bb05a3c86fc3cf15b1b3a90",
       "source": {
         "file": "app.ts",
-        "line": 2031
+        "line": 2030
       },
       "placeholders": [
         "0"
@@ -41004,7 +41190,7 @@
       "hash": "6fbe857a5827014e3e73396f203e77929afdd60b838ebc56c5136eb47fa62eef",
       "source": {
         "file": "app.ts",
-        "line": 4723
+        "line": 4730
       },
       "placeholders": [
         "0"
@@ -41017,7 +41203,7 @@
       "hash": "f7aaba6c0f6ca69acefcdaa8d020b8751cd7228620b2e7577832b68751f2d627",
       "source": {
         "file": "app.ts",
-        "line": 4736
+        "line": 4743
       },
       "placeholders": [
         "0",
@@ -41031,7 +41217,7 @@
       "hash": "f375d67c93d5164351500b649a0d9c22b3593796c97cd9eea062cf1ffad5727d",
       "source": {
         "file": "app.ts",
-        "line": 4138
+        "line": 4144
       },
       "placeholders": [
         "0"
@@ -41044,7 +41230,7 @@
       "hash": "50e5b6cadbd6abcc9fc395fb900d808d91cb5d02f231f2879acbbe39aefbfe27",
       "source": {
         "file": "app.ts",
-        "line": 2780
+        "line": 2786
       },
       "placeholders": [
         "0",
@@ -41058,26 +41244,13 @@
       "hash": "261594c629c11c19f88b2c357c2ddcedb1aa89c097927d13d84420d5eec33740",
       "source": {
         "file": "app.ts",
-        "line": 3447
+        "line": 3453
       },
       "placeholders": [
         "0",
         "1",
         "2",
         "3"
-      ],
-      "status": "approved",
-      "dynamic": true
-    },
-    "ui.app.v-0-min": {
-      "value": "{0} min",
-      "hash": "96d15cf84b61a585c303169c0cf02914bf046268787391b33df3ff8855f28e12",
-      "source": {
-        "file": "app.ts",
-        "line": 4307
-      },
-      "placeholders": [
-        "0"
       ],
       "status": "approved",
       "dynamic": true
@@ -41102,7 +41275,7 @@
       "hash": "4a2374224aaecf15cd8261ef9369f9e9afce920a6d1cf0e6b13b842bb24433cd",
       "source": {
         "file": "app.ts",
-        "line": 4110
+        "line": 4116
       },
       "placeholders": [
         "0",
@@ -41116,7 +41289,7 @@
       "hash": "e30be14fc899bd65d7d8c3041a8d92d44fa853c2e47ac2d81b93fd524333cf5b",
       "source": {
         "file": "app.ts",
-        "line": 3646
+        "line": 3652
       },
       "placeholders": [
         "0",
@@ -41130,7 +41303,7 @@
       "hash": "b5164c95d2720465dda8d87b7b6d95afb632d43dd2e0ba1a286870c69f1de0f2",
       "source": {
         "file": "app.ts",
-        "line": 4758
+        "line": 4765
       },
       "placeholders": [
         "0"
@@ -41143,7 +41316,7 @@
       "hash": "3978be75b5754d11fe2e2f2cceb3e18750f3697bf67693fc595a209b18365905",
       "source": {
         "file": "app.ts",
-        "line": 3387
+        "line": 3393
       },
       "placeholders": [
         "0",
@@ -41157,7 +41330,7 @@
       "hash": "a20fd80f5358d78dbbd5347802220954a5a45e34228578393c12808bae262ddc",
       "source": {
         "file": "app.ts",
-        "line": 4836
+        "line": 4843
       },
       "placeholders": [
         "0"
@@ -41170,7 +41343,7 @@
       "hash": "bd49b4146e261637e32e2b9fcf54561e2b7738c040ae87057f6e8814e723ca19",
       "source": {
         "file": "app.ts",
-        "line": 2031
+        "line": 2030
       },
       "placeholders": [
         "0",
@@ -41187,7 +41360,7 @@
       "hash": "b780533f2496a70cce4144231644a85503f8507e893fd66ede162cb1ec9433f2",
       "source": {
         "file": "app.ts",
-        "line": 3579
+        "line": 3585
       },
       "placeholders": [
         "0",
@@ -41201,7 +41374,7 @@
       "hash": "3c55770083160e44835510d0ecb1d70daf5b0c4ceb8136f97db440a53b3c2ccb",
       "source": {
         "file": "app.ts",
-        "line": 2629
+        "line": 2635
       },
       "placeholders": [
         "0"
@@ -41214,7 +41387,7 @@
       "hash": "0a1251232da50ae5064c58e577fefb56ce968d6b490ed4b2ccd1ffcb1db5164d",
       "source": {
         "file": "app.ts",
-        "line": 3578
+        "line": 3584
       },
       "placeholders": [
         "0",
@@ -41228,7 +41401,7 @@
       "hash": "e8ac9616a7340b94165c5acc33fb015b45c400174b60a62fcc5e4806d582890f",
       "source": {
         "file": "app.ts",
-        "line": 3658
+        "line": 3664
       },
       "placeholders": [
         "0"
@@ -41241,7 +41414,7 @@
       "hash": "8a6b46fde9b835a24527087f47562d0b6f36d1a52e4b13e87350722645bc5f7b",
       "source": {
         "file": "app.ts",
-        "line": 2463
+        "line": 2469
       },
       "placeholders": [
         "0"
@@ -41284,7 +41457,7 @@
       "hash": "94653f6b86e83bdf847f9891f8b16a361f27860f6602fd9240481f4356c99ac6",
       "source": {
         "file": "app.ts",
-        "line": 3740
+        "line": 3746
       },
       "placeholders": [],
       "status": "approved"
@@ -41294,7 +41467,7 @@
       "hash": "e87af575f41f53efb20e1da998c48d671a87c54607cfbc97b816d6d4adc5f558",
       "source": {
         "file": "app.ts",
-        "line": 2646
+        "line": 2652
       },
       "placeholders": [],
       "status": "approved"
@@ -41304,7 +41477,7 @@
       "hash": "9a143d5d2b3c10595e67724f07ac4ab048b04db9b4c645ba55c1c214ec95c38d",
       "source": {
         "file": "app.ts",
-        "line": 3633
+        "line": 3639
       },
       "placeholders": [],
       "status": "approved"
@@ -41384,7 +41557,7 @@
       "hash": "0c74a2a1e29b10a82e105d6beb3e4df568427dfb23b3de3d2bcef58eaa436d78",
       "source": {
         "file": "app.ts",
-        "line": 4723
+        "line": 4730
       },
       "placeholders": [],
       "status": "approved"
@@ -41394,7 +41567,7 @@
       "hash": "9a340fb83bc141faa7d62b30ed43cd83d647f01091a831f7cc17f82a354ff747",
       "source": {
         "file": "app.ts",
-        "line": 4744
+        "line": 4751
       },
       "placeholders": [
         "0"
@@ -41407,7 +41580,7 @@
       "hash": "c7e89fc8f2c435515eae3c5dc2193321bc6874e2cae70c534221b8206d94ca6f",
       "source": {
         "file": "app.ts",
-        "line": 3384
+        "line": 3390
       },
       "placeholders": [],
       "status": "approved"
@@ -41417,7 +41590,7 @@
       "hash": "d65fd9e27abaf422686efbda4daedc250d628d6dd56720a7b62c47eb830d7991",
       "source": {
         "file": "app.ts",
-        "line": 4804
+        "line": 4811
       },
       "placeholders": [],
       "status": "approved"
@@ -41437,7 +41610,7 @@
       "hash": "97a6e2e1df188a407bba6bbedb655460d18dc0b609437aa1f1989eca6ebfcf99",
       "source": {
         "file": "app.ts",
-        "line": 3590
+        "line": 3596
       },
       "placeholders": [],
       "status": "approved"
@@ -41447,7 +41620,7 @@
       "hash": "74812988384397f0ab0991639df52336a6000c57d265231204a936560414ba86",
       "source": {
         "file": "app.ts",
-        "line": 3594
+        "line": 3600
       },
       "placeholders": [
         "0"
@@ -41460,7 +41633,7 @@
       "hash": "566debb40d345000aca7a604f200583f66e6cc348167c7d11be57082d6ee360f",
       "source": {
         "file": "app.ts",
-        "line": 3551
+        "line": 3557
       },
       "placeholders": [],
       "status": "approved"
@@ -41470,7 +41643,7 @@
       "hash": "f25dde8b727119f8f5d00d1f22eed2a854f9c89a53001fc2ca6268956a717551",
       "source": {
         "file": "app.ts",
-        "line": 3586
+        "line": 3592
       },
       "placeholders": [
         "0"
@@ -41493,7 +41666,7 @@
       "hash": "2eccb7b954fee807718e2baa86f8c4a780998d67936b9b5f64ecfe92385b25ca",
       "source": {
         "file": "app.ts",
-        "line": 3583
+        "line": 3589
       },
       "placeholders": [
         "0"
@@ -41506,7 +41679,7 @@
       "hash": "d0452a7b1057334560ead1a4a9c3fc21c7ddd20219691d8000f19c9d04ab4f58",
       "source": {
         "file": "app.ts",
-        "line": 3613
+        "line": 3619
       },
       "placeholders": [],
       "status": "approved"
@@ -41516,7 +41689,7 @@
       "hash": "943d2ae01757368f3a4c4981d46c919fb1a73d972ee76ae9ceed7aeacc2b2df8",
       "source": {
         "file": "app.ts",
-        "line": 3431
+        "line": 3437
       },
       "placeholders": [],
       "status": "approved"
@@ -41526,7 +41699,7 @@
       "hash": "9de3e4f92af405a6c72dbcf82e8190eb892c7e064ee97e48785217161563a47b",
       "source": {
         "file": "app.ts",
-        "line": 2646
+        "line": 2652
       },
       "placeholders": [],
       "status": "approved"
@@ -41536,7 +41709,7 @@
       "hash": "5ea6ad2505364da8eb13244f3bbdea41a7f4c4b9d5815f61131b359a4f32434e",
       "source": {
         "file": "app.ts",
-        "line": 4397
+        "line": 4404
       },
       "placeholders": [],
       "status": "approved"
@@ -41546,7 +41719,7 @@
       "hash": "15b1328456f5234134070d57b18d8c6315ae545a825644e1bb033729b4a8f277",
       "source": {
         "file": "app.ts",
-        "line": 3438
+        "line": 3444
       },
       "placeholders": [],
       "status": "approved"
@@ -41667,6 +41840,16 @@
       ],
       "status": "approved",
       "dynamic": true
+    },
+    "ui.stats.v-1-game": {
+      "value": "1 game",
+      "hash": "bb59a3ee02fc34404db57f5772f4cae4c2f097da8d40c0bd795c12b86430ff1b",
+      "source": {
+        "file": "records.ts",
+        "line": 278
+      },
+      "placeholders": [],
+      "status": "approved"
     },
     "ui.stats.win-rate": {
       "value": "Win rate",
