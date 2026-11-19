@@ -38,6 +38,7 @@ import {
   writeTable,
   type TableCopy,
 } from "./in-person-store.js";
+import { pluralS, tx } from "./i18n/index.js";
 
 function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
@@ -123,7 +124,7 @@ export function mountInPerson(
 ): { destroy(): void } {
   let alive = true,
     current: TableCopy | undefined,
-    pageTitle = "At the table",
+    pageTitle = tx("tools.inperson.at-the-table", "At the table"),
     subBack: (() => void) | undefined,
     flow: WinFlow | undefined;
   const shell = el("div", "", "learning-shell table-tools"),
@@ -136,7 +137,7 @@ export function mountInPerson(
     else if (current) list();
     else options.onBack();
   });
-  back.setAttribute("aria-label", "Back");
+  back.setAttribute("aria-label", tx("tools.inperson.back", "Back"));
   const title = el("h1", pageTitle);
   header.append(back, title);
   shell.append(header, main);
@@ -153,7 +154,7 @@ export function mountInPerson(
       action();
     } catch (e) {
       status.textContent =
-        e instanceof Error ? e.message : "This entry could not be saved";
+        e instanceof Error ? e.message : tx("tools.inperson.this-entry-could-not-be-saved", "This entry could not be saved");
     }
   }
   function save(copy: TableCopy): void {
@@ -164,46 +165,46 @@ export function mountInPerson(
   const name = (seat: number) =>
     current?.session.names[seat] ??
     current?.session.bettorName ??
-    `Player ${seat + 1}`;
+    tx("tools.inperson.player-0", `Player ${seat + 1}`, seat + 1);
   function list(): void {
     current = undefined;
     flow = undefined;
     subBack = undefined;
-    start("At the table");
+    start(tx("tools.inperson.at-the-table", "At the table"));
     if (options.savedAccountCopy)
       main.append(
         el(
           "p",
-          "Account copy saved on this device. Reconnect and sign in to the same account to sync.",
+          tx("tools.inperson.account-copy-saved-on-this-device-reconnect-and", "Account copy saved on this device. Reconnect and sign in to the same account to sync."),
           "dim",
         ),
       );
     main.append(
       el(
         "p",
-        "Manual calculation and scorekeeping work offline. Sessions use points; agree any monetary stakes at your table.",
+        tx("tools.inperson.manual-calculation-and-scorekeeping-work-offline", "Manual calculation and scorekeeping work offline. Sessions use points; agree any monetary stakes at your table."),
         "dim",
       ),
-      button("New table session", setup),
-      button("One-off hand calculator", showStandalone),
+      button(tx("tools.inperson.new-table-session", "New table session"), setup),
+      button(tx("tools.inperson.one-off-hand-calculator", "One-off hand calculator"), showStandalone),
     );
     if (options.accountId) {
       main.append(
-        button("Load private account sessions", () => {
-          status.textContent = "Loading account sessions…";
+        button(tx("tools.inperson.load-private-account-sessions", "Load private account sessions"), () => {
+          status.textContent = tx("tools.inperson.loading-account-sessions", "Loading account sessions…");
           void pullTables(options.accountId!)
             .then(() => {
               if (alive) list();
             })
             .catch(() => {
               status.textContent =
-                "Account unavailable. Local sessions are still available.";
+                tx("tools.inperson.account-unavailable-local-sessions-are-still-ava", "Account unavailable. Local sessions are still available.");
             });
         }),
       );
       if (readTables().length)
         main.append(
-          button("Copy device sessions into this account’s local library", () =>
+          button(tx("tools.inperson.copy-device-sessions-into-this-accounts-local-li", "Copy device sessions into this account’s local library"), () =>
             safe(() => {
               for (const row of readTables())
                 if (
@@ -227,14 +228,14 @@ export function mountInPerson(
       main.append(
         el(
           "p",
-          "Saved on this device. Sign in from More for optional private account carry-over.",
+          tx("tools.inperson.saved-on-this-device-sign-in-from-more-for-optio", "Saved on this device. Sign in from More for optional private account carry-over."),
           "dim",
         ),
       );
     for (const copy of readTables(options.accountId).reverse())
       main.append(
         button(
-          `${copy.session.variant === "american" ? "American payment helper" : copy.session.variant === "hong-kong" ? "Hong Kong Old Style" : copy.session.variant === "mcr" ? "MCR" : copy.session.variant === "taiwanese" ? "Taiwanese" : "Riichi"} · ${copy.session.names.join(", ")} · ${copy.session.finished || riichiBust(copy.session) ? "Finished" : "In progress"}`,
+          tx("tools.inperson.v-0-1-2", `${copy.session.variant === "american" ? tx("tools.inperson.american-payment-helper", "American payment helper") : copy.session.variant === "hong-kong" ? tx("tools.inperson.hong-kong-old-style", "Hong Kong Old Style") : copy.session.variant === "mcr" ? tx("tools.inperson.mcr", "MCR") : copy.session.variant === "taiwanese" ? tx("tools.inperson.taiwanese", "Taiwanese") : tx("tools.inperson.riichi", "Riichi")} · ${copy.session.names.join(", ")} · ${copy.session.finished || riichiBust(copy.session) ? tx("tools.inperson.finished", "Finished") : tx("tools.inperson.in-progress", "In progress")}`, copy.session.variant === "american" ? tx("tools.inperson.american-payment-helper", "American payment helper") : copy.session.variant === "hong-kong" ? tx("tools.inperson.hong-kong-old-style", "Hong Kong Old Style") : copy.session.variant === "mcr" ? tx("tools.inperson.mcr", "MCR") : copy.session.variant === "taiwanese" ? tx("tools.inperson.taiwanese", "Taiwanese") : tx("tools.inperson.riichi", "Riichi"), copy.session.names.join(", "), copy.session.finished || riichiBust(copy.session) ? tx("tools.inperson.finished", "Finished") : tx("tools.inperson.in-progress", "In progress")),
           () => {
             current = copy;
             flow = undefined;
@@ -246,66 +247,66 @@ export function mountInPerson(
   }
   function setup(): void {
     subBack = () => list();
-    start("New table session");
+    start(tx("tools.inperson.new-table-session", "New table session"));
     const form = el("form"),
       preset = select(
         Object.keys(TABLE_PRESETS).map((key) => [
           key,
           key === "taiwanese-every-flower@1"
-            ? "Taiwanese · Every-flower 30/10"
+            ? tx("tools.inperson.taiwanese-every-flower-30-10", "Taiwanese · Every-flower 30/10")
             : key === "mcr-2006@1"
-              ? "MCR · WMO 2006"
+              ? tx("tools.inperson.mcr-wmo-2006", "MCR · WMO 2006")
               : key === "hong-kong-clear@1"
-                ? "Hong Kong Old Style · Clear Chapter"
+                ? tx("tools.inperson.hong-kong-old-style-clear-chapter", "Hong Kong Old Style · Clear Chapter")
                 : key === "american-payments@1"
-                  ? "American · Entered card values"
+                  ? tx("tools.inperson.american-entered-card-values", "American · Entered card values")
                   : key === "riichi-multiple-winners@1"
-                    ? "Riichi · Multiple winners"
-                    : "OpenMahjong Riichi",
+                    ? tx("tools.inperson.riichi-multiple-winners", "Riichi · Multiple winners")
+                    : tx("tools.inperson.openmahjong-riichi", "OpenMahjong Riichi"),
         ]),
         "openmahjong-riichi-table@1",
       );
-    form.append(field("Named preset", preset));
+    form.append(field(tx("tools.inperson.named-preset", "Named preset"), preset));
     const names = SEATS.map((wind, index) => {
-      const i = input(`Player ${index + 1}`, "text");
+      const i = input(tx("tools.inperson.player-0", `Player ${index + 1}`, index + 1), "text");
       i.maxLength = 60;
       i.required = true;
-      form.append(field(`${wind} starting seat · Name`, i));
+      form.append(field(tx("tools.inperson.v-0-starting-seat-name", `${wind} starting seat · Name`, wind), i));
       return i;
     });
     const scores = SEATS.map((wind) => {
       const i = input(25000);
-      form.append(field(`${wind} starting points`, i));
+      form.append(field(tx("tools.inperson.v-0-starting-points", `${wind} starting points`, wind), i));
       return i;
     });
     const multiple = select(
       [
-        ["head-bump", "Nearest winner only"],
-        ["all", "All simultaneous winners"],
+        ["head-bump", tx("tools.inperson.nearest-winner-only", "Nearest winner only")],
+        ["all", tx("tools.inperson.all-simultaneous-winners", "All simultaneous winners")],
       ],
       "head-bump",
     );
     const settlement = select(
       [
-        ["openmahjong", "OpenMahjong rank bonuses"],
-        ["raw", "Point difference only"],
+        ["openmahjong", tx("tools.inperson.openmahjong-rank-bonuses", "OpenMahjong rank bonuses")],
+        ["raw", tx("tools.inperson.point-difference-only", "Point difference only")],
       ],
       "openmahjong",
     );
     const pot = select(
       [
-        ["leader", "Award outstanding deposits to leader"],
-        ["return-deposits", "Return unclaimed deposits"],
+        ["leader", tx("tools.inperson.award-outstanding-deposits-to-leader", "Award outstanding deposits to leader")],
+        ["return-deposits", tx("tools.inperson.return-unclaimed-deposits", "Return unclaimed deposits")],
       ],
       "leader",
     );
     const bettor = input("", "text");
     bettor.maxLength = 60;
     form.append(
-      field("Discard win priority", multiple),
-      field("Final standings", settlement),
-      field("Unclaimed deposits", pot),
-      field("American only · Optional bettor name", bettor),
+      field(tx("tools.inperson.discard-win-priority", "Discard win priority"), multiple),
+      field(tx("tools.inperson.final-standings", "Final standings"), settlement),
+      field(tx("tools.inperson.unclaimed-deposits", "Unclaimed deposits"), pot),
+      field(tx("tools.inperson.american-only-optional-bettor-name", "American only · Optional bettor name"), bettor),
     );
     preset.addEventListener("change", () => {
       const p = TABLE_PRESETS[preset.value as keyof typeof TABLE_PRESETS];
@@ -316,7 +317,7 @@ export function mountInPerson(
       settlement.disabled = p.variant !== "riichi";
       pot.disabled = p.variant !== "riichi";
     });
-    const create = el("button", "Start scorekeeper", "primary");
+    const create = el("button", tx("tools.inperson.start-scorekeeper", "Start scorekeeper"), "primary");
     create.type = "submit";
     form.append(create);
     form.addEventListener("submit", (e) => {
@@ -358,7 +359,7 @@ export function mountInPerson(
       box.append(
         el(
           "p",
-          `${name(p.from)} pays ${name(p.to)} ${p.amount.toLocaleString("en-US")} points`,
+          tx("tools.inperson.v-0-pays-1-2-points", `${name(p.from)} pays ${name(p.to)} ${p.amount.toLocaleString("en-US")} points`, name(p.from), name(p.to), p.amount.toLocaleString("en-US")),
         ),
       );
     return box;
@@ -382,8 +383,8 @@ export function mountInPerson(
   function joinNames(seats: readonly number[]): string {
     const ns = seats.map((s) => name(s));
     if (ns.length <= 1) return ns[0] ?? "";
-    if (ns.length === 2) return `${ns[0]} and ${ns[1]}`;
-    return `${ns.slice(0, -1).join(", ")} and ${ns[ns.length - 1]}`;
+    if (ns.length === 2) return tx("tools.inperson.v-0-and-1", `${ns[0]} and ${ns[1]}`, ns[0], ns[1]);
+    return tx("tools.inperson.v-0-and-1", `${ns.slice(0, -1).join(", ")} and ${ns[ns.length - 1]}`, ns.slice(0, -1).join(", "), ns[ns.length - 1]);
   }
   function showSession(): void {
     if (!current) return;
@@ -391,14 +392,14 @@ export function mountInPerson(
     const session = current.session;
     start(
       session.variant === "american"
-        ? "American scorekeeper"
+        ? tx("tools.inperson.american-scorekeeper", "American scorekeeper")
         : session.variant === "hong-kong"
-          ? "Hong Kong scorekeeper"
+          ? tx("tools.inperson.hong-kong-scorekeeper", "Hong Kong scorekeeper")
           : session.variant === "mcr"
-            ? "MCR scorekeeper"
+            ? tx("tools.inperson.mcr-scorekeeper", "MCR scorekeeper")
             : session.variant === "taiwanese"
-              ? "Taiwanese scorekeeper"
-              : "Riichi scorekeeper",
+              ? tx("tools.inperson.taiwanese-scorekeeper", "Taiwanese scorekeeper")
+              : tx("tools.inperson.riichi-scorekeeper", "Riichi scorekeeper"),
     );
     const totals = recomputeSession(session);
     const busted = riichiBust(session);
@@ -409,23 +410,27 @@ export function mountInPerson(
       const stripMain =
         session.variant === "american"
           ? `Hand ${totals.rows.length + 1}`
-          : `${WIND_NAMES[state.roundWind - 27]} ${state.dealer + 1}${
+          : tx("tools.inperson.v-0-1-2-2", `${WIND_NAMES[state.roundWind - 27]} ${state.dealer + 1}${
               session.variant === "riichi"
-                ? ` · Repeat ${state.honba}`
+                ? " " + tx("tools.inperson.repeat-0", `· Repeat ${state.honba}`, state.honba)
                 : session.variant === "taiwanese" && state.honba > 0
-                  ? ` · Dealer repeats ${state.honba}`
+                  ? " " + tx("tools.inperson.dealer-repeats-0", `· Dealer repeats ${state.honba}`, state.honba)
                   : ""
-            }`;
+            }`, WIND_NAMES[state.roundWind - 27], state.dealer + 1, session.variant === "riichi"
+                ? " " + tx("tools.inperson.repeat-0", `· Repeat ${state.honba}`, state.honba)
+                : session.variant === "taiwanese" && state.honba > 0
+                  ? " " + tx("tools.inperson.dealer-repeats-0", `· Dealer repeats ${state.honba}`, state.honba)
+                  : "");
       let stripSub: string;
       if (session.variant === "riichi") {
-        if (totals.pot <= 0) stripSub = "No riichi sticks";
+        if (totals.pot <= 0) stripSub = tx("tools.inperson.no-riichi-sticks", "No riichi sticks");
         else {
           const deps = depositors(session),
             sticks = totals.pot / 1000;
           stripSub =
             deps.length && Number.isInteger(sticks)
-              ? `${sticks} riichi stick${sticks > 1 ? "s" : ""} · declared by ${joinNames(deps)}`
-              : `${totals.pot.toLocaleString("en-US")} points in outstanding deposits`;
+              ? tx("tools.inperson.v-0-riichi-stick-1-declared-by-2", `${sticks} riichi stick${sticks > 1 ? "s" : ""} · declared by ${joinNames(deps)}`, sticks, pluralS(sticks), joinNames(deps))
+              : tx("tools.inperson.v-0-points-in-outstanding-deposits", `${totals.pot.toLocaleString("en-US")} points in outstanding deposits`, totals.pot.toLocaleString("en-US"));
         }
       } else stripSub = `${name(state.dealer)} deals`;
       main.append(cxStrip(stripMain, stripSub));
@@ -439,7 +444,7 @@ export function mountInPerson(
     }));
     if (active) {
       main.append(
-        el("p", "Tap a seat to record that player’s win.", "cx-instruct"),
+        el("p", tx("tools.inperson.tap-a-seat-to-record-that-players-win", "Tap a seat to record that player’s win."), "cx-instruct"),
       );
       main.append(
         cxSeatGrid(seatInfos, {
@@ -454,7 +459,7 @@ export function mountInPerson(
         main.append(
           el(
             "p",
-            `${flow.staged.length} winner${flow.staged.length > 1 ? "s" : ""} staged on ${name(flow.stagedPayer!)}’s discard. Tap the next winner’s seat, or confirm from the staged winner’s payments.`,
+            tx("tools.inperson.v-0-winner-1-staged-on-2-s-discard-tap-the-next-wi", `${flow.staged.length} winner${flow.staged.length > 1 ? "s" : ""} staged on ${name(flow.stagedPayer!)}’s discard. Tap the next winner’s seat, or confirm from the staged winner’s payments.`, flow.staged.length, pluralS(flow.staged.length), name(flow.stagedPayer!)),
             "cx-staged",
           ),
         );
@@ -466,7 +471,7 @@ export function mountInPerson(
       main.append(
         el(
           "p",
-          "A player fell below zero points, so this Riichi game has ended. No further entries or deposits can be recorded. Corrections and undo remain available, and the final standings and settlement are below.",
+          tx("tools.inperson.a-player-fell-below-zero-points-so-this-riichi-g", "A player fell below zero points, so this Riichi game has ended. No further entries or deposits can be recorded. Corrections and undo remain available, and the final standings and settlement are below."),
           "card",
         ),
       );
@@ -474,25 +479,25 @@ export function mountInPerson(
       main.append(
         el(
           "p",
-          "This session is finished and read-only. Reopen it to make changes.",
+          tx("tools.inperson.this-session-is-finished-and-read-only-reopen-it", "This session is finished and read-only. Reopen it to make changes."),
           "dim",
         ),
       );
-    const undoBtn = button("Undo last", () =>
+    const undoBtn = button(tx("tools.inperson.undo-last", "Undo last"), () =>
       safe(() => {
         save(undoTable(current!));
         showSession();
       }),
     );
-    undoBtn.setAttribute("aria-label", "Undo last entry");
+    undoBtn.setAttribute("aria-label", tx("tools.inperson.undo-last-entry", "Undo last entry"));
     undoBtn.disabled = !nextUndoTarget(session);
     if (active) {
       const row = el("div", "", "cx-actions");
-      const settleBtn = button("Settlement", finish);
+      const settleBtn = button(tx("tools.inperson.settlement", "Settlement"), finish);
       settleBtn.className = "cx-action cx-action-settle";
       row.append(
-        actionBtn("Drawn hand", () => eventForm("draw")),
-        actionBtn("Penalty", () => eventForm("penalty")),
+        actionBtn(tx("tools.inperson.drawn-hand", "Drawn hand"), () => eventForm("draw")),
+        actionBtn(tx("tools.inperson.penalty", "Penalty"), () => eventForm("penalty")),
         undoBtn,
         settleBtn,
       );
@@ -501,14 +506,14 @@ export function mountInPerson(
       if (session.variant === "riichi")
         main.append(
           button(
-            "Record riichi deposit",
+            tx("tools.inperson.record-riichi-deposit", "Record riichi deposit"),
             () => eventForm("deposit"),
             "cx-deposit",
           ),
         );
     } else {
       const row = el("div", "", "cx-actions cx-actions-2");
-      const settleBtn = button("Settlement", finish);
+      const settleBtn = button(tx("tools.inperson.settlement", "Settlement"), finish);
       settleBtn.className = "cx-action cx-action-settle";
       if (!sealed) {
         undoBtn.className = "cx-action";
@@ -516,19 +521,19 @@ export function mountInPerson(
       }
       row.append(settleBtn);
       if (sealed) {
-        const reopen = button("Reopen session", () => safe(reopenSession));
+        const reopen = button(tx("tools.inperson.reopen-session", "Reopen session"), () => safe(reopenSession));
         reopen.className = "cx-action";
         row.append(reopen);
       }
       main.append(row);
     }
     if (busted) {
-      main.append(el("h2", "Final standings and settlement"));
+      main.append(el("h2", tx("tools.inperson.final-standings-and-settlement", "Final standings and settlement")));
       renderSettlement(main);
     }
     if (options.accountId)
       main.append(
-        button("Sync privately to account", () => {
+        button(tx("tools.inperson.sync-privately-to-account", "Sync privately to account"), () => {
           const auth = options.getAuth
             ? options.getAuth()
             : options.csrfToken
@@ -536,10 +541,10 @@ export function mountInPerson(
               : undefined;
           if (!auth || auth.accountId !== options.accountId) {
             status.textContent =
-              "Saved on this device. Reconnect and sign in to the same account to sync.";
+              tx("tools.inperson.saved-on-this-device-reconnect-and-sign-in-to-th", "Saved on this device. Reconnect and sign in to the same account to sync.");
             return;
           }
-          status.textContent = "Syncing…";
+          status.textContent = tx("tools.inperson.syncing", "Syncing…");
           const id = current!.session.id;
           void syncTable(id, auth)
             .then((result) => {
@@ -550,40 +555,40 @@ export function mountInPerson(
               showSession();
               status.textContent =
                 result === "saved"
-                  ? "Saved to your private account."
+                  ? tx("tools.inperson.saved-to-your-private-account", "Saved to your private account.")
                   : result === "conflict"
-                    ? "Conflicting offline edits preserved. Keep both copies to continue."
-                    : "Offline or account unavailable. Your local edits remain saved.";
+                    ? tx("tools.inperson.conflicting-offline-edits-preserved-keep-both-co", "Conflicting offline edits preserved. Keep both copies to continue.")
+                    : tx("tools.inperson.offline-or-account-unavailable-your-local-edits", "Offline or account unavailable. Your local edits remain saved.");
             })
             .catch(
               () =>
                 (status.textContent =
-                  "Sync unavailable. Your local edits remain saved."),
+                  tx("tools.inperson.sync-unavailable-your-local-edits-remain-saved", "Sync unavailable. Your local edits remain saved.")),
             );
         }),
       );
     if (current.conflict)
       main.append(
-        button("Keep both conflicting copies", () =>
+        button(tx("tools.inperson.keep-both-conflicting-copies", "Keep both conflicting copies"), () =>
           safe(() => {
             current = preserveTableConflict(current!, options.accountId!);
             showSession();
           }),
         ),
       );
-    main.append(el("h2", "Hand ledger"));
+    main.append(el("h2", tx("tools.inperson.hand-ledger", "Hand ledger")));
     for (const row of totals.rows) {
       const card = el("section", "", "card ledger-row");
       card.append(
         el(
           "h3",
           row.event.kind === "win"
-            ? "Winning hand"
+            ? tx("tools.inperson.winning-hand", "Winning hand")
             : row.event.kind === "draw"
-              ? "No winner"
+              ? tx("tools.inperson.no-winner", "No winner")
               : row.event.kind === "deposit"
-                ? "Riichi deposit"
-                : "Penalty",
+                ? tx("tools.inperson.riichi-deposit", "Riichi deposit")
+                : tx("tools.inperson.penalty", "Penalty"),
         ),
       );
       if (row.event.kind === "win")
@@ -595,14 +600,14 @@ export function mountInPerson(
         el(
           "p",
           row.delta
-            .map((delta, i) => `${name(i)} ${delta > 0 ? "+" : ""}${delta}`)
+            .map((delta, i) => tx("tools.inperson.v-0-1-2-2", `${name(i)} ${delta > 0 ? "+" : ""}${delta}`, name(i), delta > 0 ? "+" : "", delta))
             .join(" · "),
           "dim",
         ),
       );
       if (!current.session.finished)
         card.append(
-          button("Correct this entry", () =>
+          button(tx("tools.inperson.correct-this-entry", "Correct this entry"), () =>
             row.event.kind === "win"
               ? showCalculator(row.id, row.event.wins)
               : eventForm(row.event.kind, row.id, row.event),
@@ -645,7 +650,7 @@ export function mountInPerson(
     panel.append(
       el(
         "p",
-        `${f.staged.length ? "Next winner" : "Winner"} · ${name(winner)} — ${wind}`,
+        tx("tools.inperson.v-0-1-2-3", `${f.staged.length ? tx("tools.inperson.next-winner", "Next winner") : tx("tools.inperson.winner", "Winner")} · ${name(winner)} — ${wind}`, f.staged.length ? tx("tools.inperson.next-winner", "Next winner") : tx("tools.inperson.winner", "Winner"), name(winner), wind),
         "cx-label",
       ),
     );
@@ -653,12 +658,12 @@ export function mountInPerson(
       panel.append(
         el(
           "p",
-          `On a discard from ${name(f.stagedPayer!)} · the same discard as the staged winner${f.staged.length > 1 ? "s" : ""}.`,
+          tx("tools.inperson.on-a-discard-from-0-the-same-discard-as-the-stag", `On a discard from ${name(f.stagedPayer!)} · the same discard as the staged winner${f.staged.length > 1 ? "s" : ""}.`, name(f.stagedPayer!), pluralS(f.staged.length)),
           "cx-note",
         ),
         (() => {
           const cont = button(
-            "Continue to hand value",
+            tx("tools.inperson.continue-to-hand-value", "Continue to hand value"),
             () =>
               showCalculator(undefined, [], {
                 winner,
@@ -676,15 +681,15 @@ export function mountInPerson(
     const choices = el("div", "", "cx-choices");
     const tsumoBtn = button(
       current!.session.variant === "american"
-        ? "Self-pick / Joker exchange"
-        : "Self-draw",
+        ? tx("tools.inperson.self-pick-joker-exchange", "Self-pick / Joker exchange")
+        : tx("tools.inperson.self-draw", "Self-draw"),
       () =>
         showCalculator(undefined, [], { winner, winType: "tsumo" }),
       "",
     );
     tsumoBtn.className = "cx-choice";
     const ronBtn = button(
-      "On a discard",
+      tx("tools.inperson.on-a-discard", "On a discard"),
       () => {
         flow = { ...f, winType: "ron" };
         showSession();
@@ -696,7 +701,7 @@ export function mountInPerson(
     choices.append(tsumoBtn, ronBtn);
     panel.append(choices);
     if (f.winType === "ron") {
-      panel.append(el("p", "Discarded by", "cx-label"));
+      panel.append(el("p", tx("tools.inperson.discarded-by", "Discarded by"), "cx-label"));
       const others = [0, 1, 2, 3]
         .filter((s) => s !== winner)
         .sort(
@@ -705,7 +710,7 @@ export function mountInPerson(
       const chips = el("div", "", "cx-seatchips c3");
       for (const s of others) {
         const chip = button(
-          `${name(s)} · ${WIND_NAMES[windIndex(s, dealer)]}`,
+          tx("tools.inperson.v-0-1", `${name(s)} · ${WIND_NAMES[windIndex(s, dealer)]}`, name(s), WIND_NAMES[windIndex(s, dealer)]),
           () =>
             showCalculator(undefined, [], {
               winner,
@@ -737,7 +742,7 @@ export function mountInPerson(
   function showStandalone(): void {
     subBack = () => list();
     trackCalculatorUsed();
-    start("Hand calculator");
+    start(tx("tools.inperson.hand-calculator", "Hand calculator"));
     const root = el("div");
     main.append(root);
     mountRiichiCalculator(root, {
@@ -767,12 +772,12 @@ export function mountInPerson(
     subBack = () => showSession();
     start(
       recordId
-        ? "Correct entry"
+        ? tx("tools.inperson.correct-entry", "Correct entry")
         : kind === "draw"
-          ? "Hand without a winner"
+          ? tx("tools.inperson.hand-without-a-winner", "Hand without a winner")
           : kind === "deposit"
-            ? "Riichi deposit"
-            : "Penalty",
+            ? tx("tools.inperson.riichi-deposit", "Riichi deposit")
+            : tx("tools.inperson.penalty", "Penalty"),
     );
     const form = el("form"),
       seats = current.session.names.map((n, i) => [String(i), n] as const);
@@ -782,14 +787,14 @@ export function mountInPerson(
     );
     const reason = select(
       [
-        ["exhaustive", "Wall exhausted"],
-        ["abortive", "Aborted hand"],
+        ["exhaustive", tx("tools.inperson.wall-exhausted", "Wall exhausted")],
+        ["abortive", tx("tools.inperson.aborted-hand", "Aborted hand")],
       ],
       previous?.kind === "draw" ? previous.reason : "exhaustive",
     );
     const ready = current.session.names.map((n, i) =>
       check(
-        `${n} ready (one tile from a complete hand)`,
+        tx("tools.inperson.v-0-ready-one-tile-from-a-complete-hand", `${n} ready (one tile from a complete hand)`, n),
         previous?.kind === "draw" && previous.ready.includes(i),
       ),
     );
@@ -800,51 +805,51 @@ export function mountInPerson(
       );
     note.maxLength = 240;
     const recipients = current.session.names.map((n, i) =>
-      check(`${n} receives payment`, i !== 0),
+      check(tx("tools.inperson.v-0-receives-payment", `${n} receives payment`, n), i !== 0),
     );
     const penaltyType = select(
         [
-          ["custom", "Agreed penalty payments"],
-          ["chombo", "Chombo · Reverse mangan"],
+          ["custom", tx("tools.inperson.agreed-penalty-payments", "Agreed penalty payments")],
+          ["chombo", tx("tools.inperson.chombo-reverse-mangan", "Chombo · Reverse mangan")],
         ],
         "custom",
       ),
       penaltyDealer = derivedSessionState(current.session, recordId).dealer;
-    const wallBet = check("Bettor selected the wall and no player won");
+    const wallBet = check(tx("tools.inperson.bettor-selected-the-wall-and-no-player-won", "Bettor selected the wall and no player won"));
     const wallValue = input(25);
     if (kind === "draw") {
-      form.append(field("How the hand ended", reason));
+      form.append(field(tx("tools.inperson.how-the-hand-ended", "How the hand ended"), reason));
       if (current.session.variant === "riichi")
         form.append(...ready.map((c) => c.node));
       if (current.session.bettorName)
         form.append(
           wallBet.node,
-          field("Lowest value on your physical card", wallValue),
+          field(tx("tools.inperson.lowest-value-on-your-physical-card", "Lowest value on your physical card"), wallValue),
         );
     }
     if (kind === "deposit")
       form.append(
-        field("Player declaring riichi", who),
-        el("p", "Transfers 1,000 points to the outstanding pot."),
+        field(tx("tools.inperson.player-declaring-riichi", "Player declaring riichi"), who),
+        el("p", tx("tools.inperson.transfers-1-000-points-to-the-outstanding-pot", "Transfers 1,000 points to the outstanding pot.")),
       );
     if (kind === "penalty")
       form.append(
         ...(current.session.variant === "riichi"
-          ? [field("Penalty preset", penaltyType)]
+          ? [field(tx("tools.inperson.penalty-preset", "Penalty preset"), penaltyType)]
           : []),
-        field("Paying player", who),
-        field("Points per recipient (agreed payments)", amount),
+        field(tx("tools.inperson.paying-player", "Paying player"), who),
+        field(tx("tools.inperson.points-per-recipient-agreed-payments", "Points per recipient (agreed payments)"), amount),
         ...recipients.map((c) => c.node),
-        field("Reason", note),
+        field(tx("tools.inperson.reason", "Reason"), note),
         el(
           "p",
           current.session.variant === "riichi"
-            ? "Use your table’s agreed penalty. Reverse mangan pays 4,000 to each opponent for an East offender, or 4,000 to East and 2,000 to each other opponent."
-            : "Each checked recipient receives the entered table-agreed penalty.",
+            ? tx("tools.inperson.use-your-tables-agreed-penalty-reverse-mangan-pa", "Use your table’s agreed penalty. Reverse mangan pays 4,000 to each opponent for an East offender, or 4,000 to East and 2,000 to each other opponent.")
+            : tx("tools.inperson.each-checked-recipient-receives-the-entered-tabl", "Each checked recipient receives the entered table-agreed penalty."),
           "dim",
         ),
       );
-    const submit = el("button", "Review entry", "primary");
+    const submit = el("button", tx("tools.inperson.review-entry", "Review entry"), "primary");
     submit.type = "submit";
     form.append(submit);
     const preview = el("div");
@@ -891,7 +896,7 @@ export function mountInPerson(
             ).tsumoPoints!;
           event = {
             kind: "penalty",
-            reason: "Chombo · Reverse mangan",
+            reason: tx("tools.inperson.chombo-reverse-mangan", "Chombo · Reverse mangan"),
             payments: [0, 1, 2, 3]
               .filter((i) => i !== offender)
               .map((i) => ({
@@ -904,12 +909,12 @@ export function mountInPerson(
         const proposed = appendTableEvent(current!, event, recordId);
         const totals = recomputeSession(proposed.session);
         preview.replaceChildren(
-          el("h2", "Confirm points"),
+          el("h2", tx("tools.inperson.confirm-points", "Confirm points")),
           el("p", totals.scores.map((s, i) => `${name(i)} ${s}`).join(" · ")),
           ...(current!.session.variant === "riichi"
-            ? [el("p", `${totals.pot} points in deposits`)]
+            ? [el("p", tx("tools.inperson.v-0-points-in-deposits", `${totals.pot} points in deposits`, totals.pot))]
             : []),
-          button("Confirm and record", () =>
+          button(tx("tools.inperson.confirm-and-record", "Confirm and record"), () =>
             safe(() => record(event, recordId)),
           ),
         );
@@ -938,18 +943,18 @@ export function mountInPerson(
       host.append(
         el(
           "p",
-          `${entry.rank}. ${name(entry.seat)} · ${entry.score.toLocaleString("en-US")} points · ${entry.points > 0 ? "+" : ""}${formatStandingsPoints(entry.points)}${current.session.settings.settlement === "openmahjong" ? " rank settlement" : " net points"}`,
+          tx("tools.inperson.v-0-1-2-points-3-4-5", `${entry.rank}. ${name(entry.seat)} · ${entry.score.toLocaleString("en-US")} points · ${entry.points > 0 ? "+" : ""}${formatStandingsPoints(entry.points)}${current.session.settings.settlement === "openmahjong" ? " " + tx("tools.inperson.rank-settlement", "rank settlement") : " " + tx("tools.inperson.net-points", "net points")}`, entry.rank, name(entry.seat), entry.score.toLocaleString("en-US"), entry.points > 0 ? "+" : "", formatStandingsPoints(entry.points), current.session.settings.settlement === "openmahjong" ? " " + tx("tools.inperson.rank-settlement", "rank settlement") : " " + tx("tools.inperson.net-points", "net points")),
           "card",
         ),
       );
     host.append(
-      el("h2", "Point transfers"),
+      el("h2", tx("tools.inperson.point-transfers", "Point transfers")),
       payments(result.transfers),
       el(
         "p",
         current.session.settings.settlement === "openmahjong"
-          ? "Transfers settle the point balances. Rank bonuses above are a separate standings score."
-          : "These transfers settle each player’s net point balance.",
+          ? tx("tools.inperson.transfers-settle-the-point-balances-rank-bonuses", "Transfers settle the point balances. Rank bonuses above are a separate standings score.")
+          : tx("tools.inperson.these-transfers-settle-each-players-net-point-ba", "These transfers settle each player’s net point balance."),
         "dim",
       ),
     );
@@ -957,23 +962,23 @@ export function mountInPerson(
   function finish(): void {
     if (!current) return;
     subBack = () => showSession();
-    start("Settlement");
+    start(tx("tools.inperson.settlement", "Settlement"));
     renderSettlement(main);
     if (riichiBust(current.session))
       main.append(
         el(
           "p",
-          "This Riichi game ended when a player fell below zero points.",
+          tx("tools.inperson.this-riichi-game-ended-when-a-player-fell-below", "This Riichi game ended when a player fell below zero points."),
           "dim",
         ),
       );
     else if (current.session.finished)
       main.append(
-        button("Reopen session", () => safe(reopenSession)),
+        button(tx("tools.inperson.reopen-session", "Reopen session"), () => safe(reopenSession)),
       );
     else
       main.append(
-        button("Finish session", () =>
+        button(tx("tools.inperson.finish-session", "Finish session"), () =>
           safe(() => {
             save({
               ...current!,
@@ -1008,7 +1013,7 @@ export function mountInPerson(
       session.variant !== "riichi" &&
       session.variant !== "american"
     ) {
-      start(recordId ? "Correct winning hand" : "Hand calculator");
+      start(recordId ? tx("tools.inperson.correct-winning-hand", "Correct winning hand") : tx("tools.inperson.hand-calculator", "Hand calculator"));
       main.append(root);
       mountVariantCalculator(root, {
         session,
@@ -1045,7 +1050,7 @@ export function mountInPerson(
             payer: ctx.payer ?? (ctx.winner === 1 ? 2 : 1),
           }
         : { winner: 0, winType: "ron" as const, payer: 1 });
-    start("Hand value");
+    start(tx("tools.inperson.hand-value", "Hand value"));
     main.append(root);
     mountRiichiCalculator(root, {
       variant,
@@ -1059,8 +1064,8 @@ export function mountInPerson(
             riichiLine: (() => {
               const deps = depositors(session);
               return deps.length === 1 && totals.pot === 1000
-                ? `Declared by ${name(deps[0]!)} · the 1,000-point deposit settles with this hand`
-                : `Declared by ${joinNames(deps)} · the ${totals.pot.toLocaleString("en-US")} points in deposits settle with this hand`;
+                ? tx("tools.inperson.declared-by-0-the-1-000-point-deposit-settles-wi", `Declared by ${name(deps[0]!)} · the 1,000-point deposit settles with this hand`, name(deps[0]!))
+                : tx("tools.inperson.declared-by-0-the-1-points-in-deposits-settle-wi", `Declared by ${joinNames(deps)} · the ${totals.pot.toLocaleString("en-US")} points in deposits settle with this hand`, joinNames(deps), totals.pot.toLocaleString("en-US"));
             })(),
             depositors: depositors(session),
           }

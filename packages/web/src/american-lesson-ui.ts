@@ -34,6 +34,7 @@ import {
   type VariantLearningProgress,
 } from "./education/variant-progress.js";
 import { mountVariantEducation } from "./variant-education-ui.js";
+import { tx } from "./i18n/index.js";
 
 /** The lessons' variant tag. The VariantId union names the three
  *  playable variants and deliberately does not gain a fourth —
@@ -115,7 +116,7 @@ const AMERICAN_HONOR_NAMES: Readonly<Record<number, string>> = {
 export function americanTileLabel(tile: Tile): string {
   if (tile.type < 27) {
     const suit = AMERICAN_SUIT_NAMES[Math.floor(tile.type / 9)]!;
-    return `${(tile.type % 9) + 1} of ${suit}`;
+    return tx("learn.american.ui.v-0-of-1", `${(tile.type % 9) + 1} of ${suit}`, (tile.type % 9) + 1, suit);
   }
   return AMERICAN_HONOR_NAMES[tile.type] ?? `tile ${tile.type}`;
 }
@@ -163,7 +164,7 @@ export function createAmericanLessonMounter(
       renderTile: renderAmericanTile,
       onBack: options.onBack,
       inventory: AMERICAN_TILE_INVENTORY,
-      displayName: "American",
+      displayName: tx("learn.american.section-title", "American"),
       // No onPlay: there is no American game to start.
     });
   };

@@ -249,16 +249,43 @@ export function keyStatus(key: string, locale: string = currentLocale): KeyStatu
   return entry.status;
 }
 
-/** Interpolate positional `{0}`, `{1}`, ... placeholders. Unknown
- *  placeholders are left as-is so a broken template is visible, not silent. */
+/** Interpolate positional `{0}`, `{1}`, ... placeholders. Args are
+ *  `unknown` deliberately: tx() call sites pass a template's own
+ *  interpolations verbatim (array indexing, optional lookups), so the
+ *  type must admit `string | undefined` and friends. An argument that
+ *  was supplied — even undefined — renders exactly as a template
+ *  literal would (String(undefined) === "undefined"), so the English
+ *  output stays byte-identical to the template it replaced. Only a
+ *  placeholder with NO supplied argument is left as-is, so a broken
+ *  template stays visible instead of silently rendering "undefined". */
 export function interpolate(
   template: string,
-  args: readonly (string | number)[] = [],
+  args: readonly unknown[] = [],
 ): string {
   return template.replace(/\{(\d+)\}/g, (m, n) => {
-    const v = args[Number(n)];
-    return v === undefined ? m : String(v);
+    const i = Number(n);
+    if (i >= args.length) return m;
+    return String(args[i]);
   });
+}
+
+/** Key slug for a display string — the runtime twin of slugify() in
+ *  scripts/extract-i18n.mjs. Renderers use it to derive keys for data
+ *  whose English source lives in a module-scope record (MCR pattern
+ *  guide: learn.mcr.guide.pattern.${slugify(name)}.name). The two
+ *  implementations must stay identical; the derived-key coverage test
+ *  (packages/web/test/i18n-keys.test.ts) asserts every derived key
+ *  exists in en.json with the expected English value. */
+export function slugify(value: string): string {
+  const slug = value
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 48)
+    .replace(/-+$/g, "");
+  if (!slug) return "v";
+  return /^[0-9]/.test(slug) ? `v-${slug}` : slug;
 }
 
 /** Whether a key's entry in a locale is shown by the app (display
@@ -283,12 +310,21 @@ export function isDisplayable(key: string, locale: string = currentLocale): bool
  *  (missing, stale, or a draft/reviewed in any other locale) returns
  *  the English source. A key with no English entry at all returns the
  *  key id itself, so the gap is visible. */
-export function t(key: string, ...args: readonly (string | number)[]): string {
+export function t(key: string, ...args: readonly unknown[]): string {
   const en = EN.keys[key];
   if (!en) return key;
   if (!isDisplayable(key)) return interpolate(en.value, args);
   const entry = registry.get(currentLocale)?.keys[key];
   return interpolate(entry?.value ?? en.value, args);
+}
+
+/** The English plural "-s" for templates that carry the plural as an
+ *  arg (`"{0} recorded game{1}"`). Only English marks the plural this
+ *  way — ja/ko/zh don't — so passing a raw "s" leaks Latin letters
+ *  onto their screens ("0記録されたゲームs"). The fallback template
+ *  keeps its own ternary: it renders English. */
+export function pluralS(count: number): string {
+  return currentLocale === SOURCE_LOCALE && count !== 1 ? "s" : "";
 }
 
 /** Translate with an explicit English default: `tx("ui.app.language",
@@ -303,7 +339,7 @@ export function t(key: string, ...args: readonly (string | number)[]): string {
 export function tx(
   key: string,
   fallback: string,
-  ...args: readonly (string | number)[]
+  ...args: readonly unknown[]
 ): string {
   if (!EN.keys[key]) return interpolate(fallback, args);
   return t(key, ...args);
@@ -324,7 +360,7 @@ export function tForLocale(
   key: string,
   locale: string,
   fallback: string,
-  ...args: readonly (string | number)[]
+  ...args: readonly unknown[]
 ): string {
   const en = EN.keys[key];
   if (locale !== SOURCE_LOCALE && en && isDisplayable(key, locale)) {

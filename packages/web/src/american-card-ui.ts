@@ -12,12 +12,12 @@
  */
 import {
   PRACTICE_CARD,
-  PRACTICE_CARD_LABEL,
   cardSections,
   handNotationSpans,
   sectionHands,
   type AmericanHand,
 } from "./education/american-card.js";
+import { pluralS, t, tx } from "./i18n/index.js";
 
 function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
@@ -35,27 +35,40 @@ const CHEV = `<svg class="chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></sv
 /** The notation key rows under the card (frame 02 wording — the
  * card file's own notationKey, shortened for the screen as the
  * approved rendering shortened it). */
-const KEY_ROWS: readonly { k: string; d: string }[] = [
+const KEY_ROWS: readonly { k: string; key: string; d: string }[] = [
   {
     k: "X",
+    key: "learn.american.ui.exposures-allowed-groups-may-be-shown-on-your-ra",
     d: "Exposures allowed — groups may be shown on your rack as you call them.",
   },
   {
     k: "C",
+    key: "learn.american.ui.concealed-only-the-whole-hand-must-be-built-with",
     d: "Concealed only — the whole hand must be built without calling any tile.",
   },
-  { k: "F", d: "A flower. FFF is a pung of flowers." },
+  {
+    k: "F",
+    key: "learn.american.ui.a-flower-fff-is-a-pung-of-flowers",
+    d: "A flower. FFF is a pung of flowers.",
+  },
   {
     k: "D",
+    key: "learn.american.ui.a-dragon-of-one-kind-the-kind-is-named-in-the-ha",
     d: "A dragon of one kind; the kind is named in the hand's description.",
   },
-  { k: "N E W S", d: "The four winds." },
+  {
+    k: "N E W S",
+    key: "learn.american.ui.the-four-winds",
+    d: "The four winds.",
+  },
   {
     k: "Digits",
+    key: "learn.american.ui.a-group-of-number-tiles-of-that-rank-444-is-a-pu",
     d: "A group of number tiles of that rank: 444 is a pung of 4s. A change of color is a change of suit.",
   },
   {
     k: "Jokers",
+    key: "learn.american.ui.never-printed-in-a-pattern-a-joker-may-stand-in",
     d: "Never printed in a pattern. A joker may stand in only inside a group of three or more — never as a single or in a pair.",
   },
 ];
@@ -76,12 +89,12 @@ function handEl(hand: AmericanHand, first: boolean): HTMLElement {
   line.append(
     el("span", hand.exposure, hand.exposure === "C" ? "amc-xc c" : "amc-xc"),
   );
-  block.append(line, el("p", hand.description, "amc-desc"));
+  block.append(line, el("p", t(`learn.american.pcard.hand.${hand.id}.description`), "amc-desc"));
   if (hand.minJokers > 0) {
     block.append(
       el(
         "p",
-        `Needs at least ${hand.minJokers} joker${hand.minJokers === 1 ? "" : "s"}.`,
+        tx("learn.american.ui.needs-at-least-0-joker-1", `Needs at least ${hand.minJokers} joker${hand.minJokers === 1 ? "" : "s"}.`, hand.minJokers, pluralS(hand.minJokers)),
         "amc-joker",
       ),
     );
@@ -96,12 +109,12 @@ function handEl(hand: AmericanHand, first: boolean): HTMLElement {
 export function buildPrintableCard(): HTMLElement {
   const root = el("div", "", "amc-print");
   const page = el("div", "", "p-page");
-  page.append(el("p", PRACTICE_CARD_LABEL, "p-label"));
-  page.append(el("div", PRACTICE_CARD.title, "p-title"));
+  page.append(el("p", t("learn.american.pcard.label"), "p-label"));
+  page.append(el("div", t("learn.american.pcard.title"), "p-title"));
   page.append(
     el(
       "p",
-      `${PRACTICE_CARD.hands.length} hands in ${PRACTICE_CARD.sections.length} sections. Values are points.`,
+      tx("learn.american.ui.v-0-hands-in-1-sections-values-are-points", `${PRACTICE_CARD.hands.length} hands in ${PRACTICE_CARD.sections.length} sections. Values are points.`, PRACTICE_CARD.hands.length, PRACTICE_CARD.sections.length),
       "p-sub",
     ),
   );
@@ -111,8 +124,8 @@ export function buildPrintableCard(): HTMLElement {
     const sec = el("div", "", "p-sec");
     const head = el("div", "", "p-sechead");
     head.append(
-      document.createTextNode(section.name),
-      el("span", `${hands.length} hands`, "ct"),
+      document.createTextNode(t(`learn.american.pcard.section.${section.id}.name`)),
+      el("span", tx("learn.american.ui.v-0-hands", `${hands.length} hands`, hands.length), "ct"),
     );
     sec.append(head);
     for (const hand of hands) {
@@ -128,15 +141,15 @@ export function buildPrintableCard(): HTMLElement {
   const key = el("div", "", "p-key");
   const keyParts: (string | [string])[] = [
     ["X"],
-    " exposures allowed · ",
+    " " + tx("learn.american.ui.exposures-allowed", "exposures allowed ·") + " ",
     ["C"],
-    " concealed only · ",
+    " " + tx("learn.american.ui.concealed-only", "concealed only ·") + " ",
     ["F"],
     " flower · ",
     ["D"],
-    " a dragon of one kind · ",
+    " " + tx("learn.american.ui.a-dragon-of-one-kind", "a dragon of one kind ·") + " ",
     ["N E W S"],
-    " the four winds · digits are groups of that rank (444 = a pung of 4s) · a change of color is a change of suit · jokers are never printed: a joker may stand in only inside a group of three or more, never as a single or in a pair · the number after each hand is its value in points.",
+    " " + tx("learn.american.ui.the-four-winds-digits-are-groups-of-that-rank-44", "the four winds · digits are groups of that rank (444 = a pung of 4s) · a change of color is a change of suit · jokers are never printed: a joker may stand in only inside a group of three or more, never as a single or in a pair · the number after each hand is its value in points."),
   ];
   for (const part of keyParts) {
     key.append(
@@ -144,7 +157,7 @@ export function buildPrintableCard(): HTMLElement {
     );
   }
   page.append(key);
-  page.append(el("p", PRACTICE_CARD_LABEL, "p-footlabel"));
+  page.append(el("p", t("learn.american.pcard.label"), "p-footlabel"));
   root.append(page);
   return root;
 }
@@ -160,11 +173,11 @@ export function mountAmericanCard(
   const header = el("header");
   const back = el("button", "‹");
   back.type = "button";
-  back.setAttribute("aria-label", "Back");
+  back.setAttribute("aria-label", tx("learn.american.ui.back", "Back"));
   const title = el("h1", "", "amc-title");
   header.append(back, title, el("span", "", "amc-hspacer"));
   const main = el("main", "", "learning-content");
-  main.setAttribute("aria-label", "Practice Card");
+  main.setAttribute("aria-label", tx("learn.american.ui.practice-card", "Practice Card"));
   shell.append(header, main);
   container.replaceChildren(shell);
 
@@ -181,17 +194,17 @@ export function mountAmericanCard(
   });
 
   function renderSections(): void {
-    title.textContent = "Practice Card";
+    title.textContent = tx("learn.american.ui.practice-card", "Practice Card");
     const sheet = el("div", "", "amc-sheet");
-    sheet.append(el("div", PRACTICE_CARD.title, "amc-cardtitle"));
-    sheet.append(el("p", PRACTICE_CARD_LABEL, "amc-label"));
+    sheet.append(el("div", t("learn.american.pcard.title"), "amc-cardtitle"));
+    sheet.append(el("p", t("learn.american.pcard.label"), "amc-label"));
     for (const section of cardSections()) {
       const hands = sectionHands(section.id);
       const row = el("button", "", "amc-sec-row");
       row.type = "button";
       row.append(
-        el("span", section.name, "nm"),
-        el("span", `${hands.length} hands`, "ct"),
+        el("span", t(`learn.american.pcard.section.${section.id}.name`), "nm"),
+        el("span", tx("learn.american.ui.v-0-hands", `${hands.length} hands`, hands.length), "ct"),
       );
       row.insertAdjacentHTML("beforeend", CHEV);
       row.addEventListener("click", () => {
@@ -200,20 +213,20 @@ export function mountAmericanCard(
       });
       sheet.append(row);
     }
-    sheet.append(el("p", PRACTICE_CARD_LABEL, "amc-footlabel"));
+    sheet.append(el("p", t("learn.american.pcard.label"), "amc-footlabel"));
     main.append(sheet);
 
     const printRow = el("div", "", "practicerow");
-    const printBtn = el("button", "Print the Practice Card", "pillbtn");
+    const printBtn = el("button", tx("learn.american.ui.print-the-practice-card", "Print the Practice Card"), "pillbtn");
     printBtn.type = "button";
     printBtn.addEventListener("click", () => window.print());
     printRow.append(printBtn);
     main.append(printRow);
 
-    main.append(el("h2", "How to read a hand line", "amc-keyhead"));
+    main.append(el("h2", tx("learn.american.ui.how-to-read-a-hand-line", "How to read a hand line"), "amc-keyhead"));
     for (const row of KEY_ROWS) {
       const keyRow = el("div", "", "amc-keyrow");
-      keyRow.append(el("span", row.k, "k"), el("span", row.d, "d"));
+      keyRow.append(el("span", row.k, "k"), el("span", t(row.key), "d"));
       main.append(keyRow);
     }
   }
@@ -225,18 +238,18 @@ export function mountAmericanCard(
       renderSections();
       return;
     }
-    title.textContent = section.name;
-    main.append(el("p", section.blurb, "amc-blurb"));
+    title.textContent = t(`learn.american.pcard.section.${section.id}.name`);
+    main.append(el("p", t(`learn.american.pcard.section.${section.id}.blurb`), "amc-blurb"));
     main.append(
       el(
         "p",
-        "In each hand line, a change of color is a change of suit. Which suits you use is your choice.",
+        tx("learn.american.ui.in-each-hand-line-a-change-of-color-is-a-change", "In each hand line, a change of color is a change of suit. Which suits you use is your choice."),
         "amc-conv",
       ),
     );
     const sheet = el("div", "", "amc-sheet");
     sectionHands(id).forEach((hand, i) => sheet.append(handEl(hand, i === 0)));
-    sheet.append(el("p", PRACTICE_CARD_LABEL, "amc-footlabel"));
+    sheet.append(el("p", t("learn.american.pcard.label"), "amc-footlabel"));
     main.append(sheet);
   }
 

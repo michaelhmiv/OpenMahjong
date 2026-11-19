@@ -93,11 +93,15 @@ const FILE_HELPERS = {
   // show(title) sets the screen title; variant-table-ui toggle(label, get,
   // set) labels a switch (app.ts toggle(value, ...) is different);
   // variant-board-ui inspect(node, label, seat) labels a discard inspector.
+  // Its el(tag, className) takes NO display text at all — the 2nd arg is a
+  // CSS class (band, cell, pondwrap, ...), so an empty index list keeps
+  // the extractor from minting keys for class names (rewire PR: 25
+  // class-name keys had to be removed).
   "in-person-ui.ts": new Map([["start", [0]]]),
   "riichi-calculator-ui.ts": new Map([["show", [0]]]),
   "variant-calculator-ui.ts": new Map([["show", [0]]]),
   "variant-table-ui.ts": new Map([["toggle", [0]]]),
-  "variant-board-ui.ts": new Map([["inspect", [1]]]),
+  "variant-board-ui.ts": new Map([["inspect", [1]], ["el", []]]),
 };
 
 /** Lesson-builder calls: (id, title, steps). */
@@ -245,7 +249,7 @@ const uiKeysByValue = new Map(); // `${namespace}::${value}` -> key
 const stats = { lesson: 0, ui: 0, page: 0, skippedCode: 0, dynamic: 0 };
 
 function addKey(key, value, file, line, extra = {}) {
-  if (!value || !value.trim() || isCodeData(value.trim())) {
+  if (!value || !value.trim() || (!extra.force && isCodeData(value.trim()))) {
     stats.skippedCode++;
     return null;
   }
@@ -286,6 +290,13 @@ function addStepKey(base, value, file, line, extra = {}) {
 }
 
 function addUiKey(namespace, value, file, line, extra = {}) {
+  // Dedupe on the STORED value: addKey() trims, so the dedupe key, the
+  // slug, and the collision comparison must all use the trimmed value —
+  // otherwise " {0}", "{0} " and "{0}" mint three keys for one string
+  // (ui.app.v-0 vs ui.app.v-0-6 on main), and a tx() fallback that
+  // strips the whitespace reassigns the suffixed key and collides
+  // (rewire PR). First-claims-wins, as before.
+  value = value.trim();
   const dedupe = `${namespace}::${value}`;
   if (uiKeysByValue.has(dedupe)) return uiKeysByValue.get(dedupe);
   let base = `${namespace}.${slugify(value)}`;
@@ -403,9 +414,14 @@ function extractSourceFile(rel, absPath) {
       let call = null;
       if (ts.isCallExpression(node)) {
         const callee = node.expression;
-        if (ts.isIdentifier(callee)) call = { name: callee.text, node };
+        // `bare` distinguishes a local helper call (toggle(...)) from a
+        // method call (shell.classList.toggle(...)): FILE_HELPERS entries
+        // describe local helpers, so they must only match bare calls
+        // (rewire PR: classList.toggle("variant-large") was claimed as
+        // a labelled arg of the local toggle(label, get, set) helper).
+        if (ts.isIdentifier(callee)) call = { name: callee.text, node, bare: true };
         else if (ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.name)) {
-          call = { name: callee.name.text, node };
+          call = { name: callee.name.text, node, bare: false };
         }
       }
       const caseClause =
@@ -463,6 +479,17 @@ function extractSourceFile(rel, absPath) {
     let propNode = null;
     for (let i = ancestors.length - 2; i >= 0; i--) {
       const a = ancestors[i].node;
+      // The literal IS the property name (e.g. "aria-label" in
+      // `"aria-label": tileLabel(tile)`) — an attribute name, not a
+      // value. Stop here; it is not display text (rewire PR: the
+      // name was inventoried as ui.app.aria-label).
+      if (
+        ts.isPropertyAssignment(a) &&
+        ancestors[i + 1] &&
+        ancestors[i + 1].node === a.name
+      ) {
+        break;
+      }
       if (ts.isPropertyAssignment(a) && ts.isIdentifier(a.name)) {
         propName = a.name.text;
         propNode = a;
@@ -504,12 +531,16 @@ function extractSourceFile(rel, absPath) {
       if (q.call === "choice") {
         if (q.argIndex === 1) return void addKey(`${prefix}.prompt`, value, rel, line);
         if (q.argIndex === 2) {
-          // choices array element: index within the array
+          // choices array element: index within the array. A choice
+          // is display text by construction, even a single digit
+          // ("8"): the length-1 code-data skip would drop it, so the
+          // key is forced (rewire PR: choice0 "8" was missing from
+          // en.json and the renderer would have shown the key id).
           const choiceIdx =
             parent && ts.isArrayLiteralExpression(parent)
               ? parent.elements.indexOf(node)
               : 0;
-          return void addKey(`${prefix}.choice${choiceIdx}`, value, rel, line);
+          return void addKey(`${prefix}.choice${choiceIdx}`, value, rel, line, { force: true });
         }
         if (q.argIndex === 4) return void addKey(`${prefix}.explanation`, value, rel, line);
         if (q.argIndex === 5) return void addKey(`${prefix}.hint`, value, rel, line);
@@ -535,6 +566,37 @@ function extractSourceFile(rel, absPath) {
       // the same property name holds SVG path data elsewhere; path data
       // uses only path commands, digits and separators, so exclude it.
       if (propName === "d" && /^[MLCQZAHVmlcqzahv\d\s.,\-e]+$/.test(value)) return;
+      // -- Explicit `key` sibling: a record that carries its own key
+      //    (`{ label: "Continue", key: "learn.riichi.continue" }`,
+      //    LessonButton; `{ title: "Riichi",
+      //    key: "learn.riichi.section-title" }`, LEARN_SECTIONS) claims
+      //    its text literal under that key instead of the slug-derived
+      //    one. The key id is the record's own stable id, so the render
+      //    site resolves it with t(record.key) and the extractor's
+      //    source stays the record's literal. This also covers records
+      //    whose text lives only in module scope, where no tx()
+      //    fallback literal exists to mint the key (rewire PR: the
+      //    Learn section titles).
+      if (propNode && ts.isPropertyAssignment(propNode)) {
+        const owner = propNode.parent;
+        if (owner && ts.isObjectLiteralExpression(owner)) {
+          const keyProp = owner.properties.find(
+            (p) =>
+              ts.isPropertyAssignment(p) &&
+              ts.isIdentifier(p.name) &&
+              p.name.text === "key" &&
+              ts.isStringLiteral(p.initializer),
+          );
+          if (
+            keyProp &&
+            ts.isPropertyAssignment(keyProp) &&
+            ts.isStringLiteral(keyProp.initializer)
+          ) {
+            stats.ui++;
+            return void addKey(keyProp.initializer.text, value, rel, line);
+          }
+        }
+      }
       if (lesson) {
         const stepIdx = stepIndexFor(lesson, pos);
         const base = `${namespace}.${lesson.id}`;
@@ -670,18 +732,51 @@ function extractSourceFile(rel, absPath) {
       // entry (packages/web/src/i18n/index.ts). The key is explicit,
       // never slug-derived. The key id, the locale, and args >= the
       // fallback are not prose, so they are skipped.
+      // The literal must BE the fallback argument itself: a display
+      // fragment nested inside the fallback template's ${...} spans
+      // (or inside a later arg) is NOT the fallback — it is its own
+      // string, inventoried by the rules below under its slug key
+      // (the template-branch rule). Claiming it under the outer key
+      // misattributes it and collides when the values differ
+      // (rewire PR: nested tx() composition, e.g. a translated
+      // sentence whose ${...} branch is itself a tx() call).
+      // A literal that IS a direct argument of tx()/tForLocale() but
+      // is not the fallback (the key — including a computed key
+      // template such as `learn.practice.skill.${skill}` — or the
+      // locale) belongs to that call and is never display text on its
+      // own: return without claiming it, so an outer helper rule
+      // (practice-ui el's labelled arg 2) cannot mint a key for it
+      // (rewire PR: the key template was inventoried as
+      // learn.practice.ui.learn-practice-skill-0). A literal nested
+      // deeper than a direct argument still falls through below.
       if (call.name === "tx" || call.name === "tForLocale") {
         const fallbackIdx = call.name === "tx" ? 1 : 2;
-        const idx = call.node.arguments.indexOf(a.child);
-        if (idx === fallbackIdx) {
+        if (call.node.arguments[fallbackIdx] === node) {
           const keyArg = call.node.arguments[0];
           if (keyArg && ts.isStringLiteral(keyArg)) {
             stats.ui++;
+            // Claim the UI-dedupe slot for the explicit key (first
+            // claim wins): a raw literal with the same trimmed value
+            // elsewhere in this file is the same string, so it must
+            // resolve to this key rather than minting a suffixed twin
+            // (rewire PR: tx() fallbacks strip the extractor-trimmed
+            // whitespace, so without the claim a shadow literal
+            // reassigns the suffix and collides).
+            const slot = `${namespace}::${value.trim()}`;
+            if (!uiKeysByValue.has(slot)) uiKeysByValue.set(slot, keyArg.text);
             return void addKey(keyArg.text, value, rel, line, {
               ...(ts.isTemplateExpression(node) ? { dynamic: true } : {}),
             });
           }
+          return;
         }
+        if (call.node.arguments.includes(node)) return;
+        continue;
+      }
+      // t("key", ...args): the key and the interpolation values are
+      // code, not display text — a literal key id must never be
+      // inventoried (same rule as tx() above, for the key argument).
+      if (call.name === "t" && call.node.arguments.includes(node)) {
         return;
       }
       // h(tag, attrs, ...children): string children are UI text. The
@@ -699,10 +794,14 @@ function extractSourceFile(rel, absPath) {
         return;
       }
       // Local label helpers (per-file signatures override the global map).
-      // A literal inside a NON-labelled argument (e.g. a button callback
-      // that sets status text) is not the helper's label — fall through
-      // to the other rules instead of dropping it.
-      const helperIdx = FILE_HELPERS[rel]?.get(call.name) ?? LABEL_HELPERS.get(call.name);
+      // FILE_HELPERS entries describe local helpers, so they only match
+      // bare calls — a method of the same name (classList.toggle) is not
+      // the local helper. A literal inside a NON-labelled argument (e.g.
+      // a button callback that sets status text) is not the helper's
+      // label — fall through to the other rules instead of dropping it.
+      const helperIdx =
+        (a.call.bare ? FILE_HELPERS[rel]?.get(call.name) : undefined) ??
+        LABEL_HELPERS.get(call.name);
       if (helperIdx) {
         const idx = call.node.arguments.indexOf(a.child);
         if (helperIdx.includes(idx)) {
@@ -827,6 +926,18 @@ function extractSourceFile(rel, absPath) {
         ) {
           break;
         }
+        // `host.className = `...`` is a CSS class list, not prose — the
+        // literal belongs to that assignment, so stop the walk here
+        // (rewire PR: variant-board-ui "variant-public-board
+        // variant-v4{0}" was inventoried as a UI string).
+        if (
+          ts.isBinaryExpression(a) &&
+          a.operatorToken.kind === ts.SyntaxKind.EqualsToken &&
+          ts.isPropertyAccessExpression(a.left) &&
+          a.left.name.text === "className"
+        ) {
+          break;
+        }
         if (
           (ts.isBinaryExpression(a) &&
             a.operatorToken.kind === ts.SyntaxKind.EqualsToken &&
@@ -853,6 +964,54 @@ function extractSourceFile(rel, absPath) {
       }
     }
 
+    // -- mcr-guide.ts pattern reference ------------------------------------
+    // entries: Record<pattern name, [family, recognition, exclusions]>.
+    // The quoted key is the pattern's display name; the tuple elements
+    // are its family, recognition text and exclusions text.
+    if (rel === "education/mcr-guide.ts") {
+      // Tuple element: parent array's parent is the quoted-key property.
+      if (parent && ts.isArrayLiteralExpression(parent)) {
+        const grand = ancestors.length >= 3 ? ancestors[ancestors.length - 3].node : null;
+        if (
+          grand &&
+          ts.isPropertyAssignment(grand) &&
+          ts.isStringLiteral(grand.name)
+        ) {
+          const slug = slugify(grand.name.text);
+          const idx = parent.elements.indexOf(node);
+          const field = ["family", "recognition", "exclusions"][idx] ?? `field${idx}`;
+          stats.lesson++;
+          return void addKey(`learn.mcr.guide.pattern.${slug}.${field}`, value, rel, line);
+        }
+      }
+      // The quoted key itself (property name is a string literal).
+      if (
+        parent &&
+        ts.isPropertyAssignment(parent) &&
+        parent.name === node &&
+        (ts.isArrayLiteralExpression(parent.initializer) ||
+          ts.isObjectLiteralExpression(parent.initializer))
+      ) {
+        const trimmed = value.trim();
+        if (
+          trimmed.length >= 3 &&
+          (/\s/.test(trimmed) || /^[A-Z][A-Za-z'’ -]+$/.test(trimmed))
+        ) {
+          stats.lesson++;
+          return void addKey(
+            `learn.mcr.guide.pattern.${slugify(trimmed)}.name`, value, rel, line,
+          );
+        }
+      }
+    }
+
+    // NOTE: the mcr-guide block above this one must run BEFORE the
+    // bare-list rule: a guide tuple element is also a bare array
+    // element, and the bare-list rule would claim it under a slug
+    // key (learn.mcr.guide.make-a-triplet-...) instead of its
+    // positional pattern key (learn.mcr.guide.pattern.<slug>.family).
+    // File-specific rules that mint positional keys always win
+    // over the generic sentence rules below (rewire PR).
     // -- Bare string-list elements -------------------------------------------
     // A sentence-like element of a string array (e.g. the card key's
     // fragments, " exposures allowed · "). Choice arrays and id lists
@@ -914,47 +1073,6 @@ function extractSourceFile(rel, absPath) {
         ts.isSourceFile(a)
       ) {
         break;
-      }
-    }
-
-    // -- mcr-guide.ts pattern reference ------------------------------------
-    // entries: Record<pattern name, [family, recognition, exclusions]>.
-    // The quoted key is the pattern's display name; the tuple elements
-    // are its family, recognition text and exclusions text.
-    if (rel === "education/mcr-guide.ts") {
-      // Tuple element: parent array's parent is the quoted-key property.
-      if (parent && ts.isArrayLiteralExpression(parent)) {
-        const grand = ancestors.length >= 3 ? ancestors[ancestors.length - 3].node : null;
-        if (
-          grand &&
-          ts.isPropertyAssignment(grand) &&
-          ts.isStringLiteral(grand.name)
-        ) {
-          const slug = slugify(grand.name.text);
-          const idx = parent.elements.indexOf(node);
-          const field = ["family", "recognition", "exclusions"][idx] ?? `field${idx}`;
-          stats.lesson++;
-          return void addKey(`learn.mcr.guide.pattern.${slug}.${field}`, value, rel, line);
-        }
-      }
-      // The quoted key itself (property name is a string literal).
-      if (
-        parent &&
-        ts.isPropertyAssignment(parent) &&
-        parent.name === node &&
-        (ts.isArrayLiteralExpression(parent.initializer) ||
-          ts.isObjectLiteralExpression(parent.initializer))
-      ) {
-        const trimmed = value.trim();
-        if (
-          trimmed.length >= 3 &&
-          (/\s/.test(trimmed) || /^[A-Z][A-Za-z'’ -]+$/.test(trimmed))
-        ) {
-          stats.lesson++;
-          return void addKey(
-            `learn.mcr.guide.pattern.${slugify(trimmed)}.name`, value, rel, line,
-          );
-        }
       }
     }
 

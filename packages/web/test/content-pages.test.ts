@@ -171,7 +171,7 @@ describe("content pages: /learn/ cannot drift from the lesson data", () => {
 describe("content pages: /riichi/ cannot drift from the app's Rules screen", () => {
   function appRules(): { intro: string; sections: { heading: string; bullets: string[] }[] } {
     const appTs = readFileSync(resolve(process.cwd(), `${WEB}/src/app.ts`), "utf8");
-    const start = appTs.indexOf('this.textScreen("rules", "Rules"');
+    const start = appTs.indexOf('this.textScreen("rules", tx("ui.app.rules", "Rules"');
     expect(start).toBeGreaterThan(-1);
     const rest = appTs.slice(start);
     const end = rest.indexOf("this.textScreen(", 10);
@@ -181,7 +181,11 @@ describe("content pages: /riichi/ cannot drift from the app's Rules screen", () 
         c === "n" ? "\n" : c === "t" ? "\t" : c,
       );
     const tokens: { kind: "p" | "h3" | "li"; text: string }[] = [];
-    const re = /h\("h3", \{\}, "((?:[^"\\]|\\.)*)"\)|\b(p|li)\("((?:[^"\\]|\\.)*)"\)/g;
+    // The Rules screen's copy sits in tx() fallbacks since the i18n
+    // rewire (the English source of each key): headings are
+    // h("h3", {}, tx("…", "…")), the intro and bullets are the block's
+    // local p/li helpers called with tx("…", "…").
+    const re = /h\("h3", \{\}, tx\("[^"]*", "((?:[^"\\]|\\.)*)"\)\)|\b(p|li)\(tx\("[^"]*", "((?:[^"\\]|\\.)*)"\)\)/g;
     let m: RegExpExecArray | null;
     while ((m = re.exec(block)) !== null) {
       if (m[1] !== undefined) tokens.push({ kind: "h3", text: unescape(m[1]) });

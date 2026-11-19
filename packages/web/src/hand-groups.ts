@@ -16,6 +16,7 @@
  */
 import type { Tile } from "@openmahjong/engine";
 import { countsOfTiles, shantenChiitoitsuFast, shantenStandardFast } from "@openmahjong/ai";
+import { t } from "./i18n/index.js";
 
 export type HandSegmentKind =
   | "sequence"
@@ -32,13 +33,17 @@ export interface HandSegment {
   readonly tiles: readonly Tile[];
 }
 
-const LABELS: Record<HandSegmentKind, string> = {
-  sequence: "Sequence",
-  triplet: "Triplet",
-  pair: "Pair",
-  waiting: "Waiting",
-  loose: "Loose",
-  "seven-pairs": "Seven pairs",
+/** Segment kind -> { key, label }. Module scope (built before
+ *  initI18n), so it stores the en.json key + the English label (the
+ *  extractor's source) instead of calling t()/tx(); the group builders
+ *  below resolve the key with t(). */
+const LABELS: Record<HandSegmentKind, { key: string; label: string }> = {
+  sequence: { key: "play.groups.sequence", label: "Sequence" },
+  triplet: { key: "play.groups.triplet", label: "Triplet" },
+  pair: { key: "play.groups.pair", label: "Pair" },
+  waiting: { key: "play.groups.waiting", label: "Waiting" },
+  loose: { key: "play.groups.loose", label: "Loose" },
+  "seven-pairs": { key: "play.groups.seven-pairs", label: "Seven pairs" },
 };
 
 interface Group {
@@ -224,7 +229,7 @@ export function decomposeHand(
       shantenChiitoitsuFast(counts) <= shantenStandardFast(counts, 0)
     ) {
       return [
-        { kind: "seven-pairs", label: LABELS["seven-pairs"], tiles: sorted },
+        { kind: "seven-pairs", label: t(LABELS["seven-pairs"].key), tiles: sorted },
       ];
     }
   }
@@ -245,14 +250,14 @@ export function decomposeHand(
   for (const set of sets) {
     segments.push({
       kind: set.kind,
-      label: LABELS[set.kind],
+      label: t(LABELS[set.kind].key),
       tiles: set.types.map(take),
     });
   }
   if (reading.pair) {
     segments.push({
       kind: "pair",
-      label: LABELS.pair,
+      label: t(LABELS.pair.key),
       tiles: reading.pair.types.map(take),
     });
   }
@@ -262,14 +267,14 @@ export function decomposeHand(
   for (const partial of partials) {
     segments.push({
       kind: "waiting",
-      label: LABELS.waiting,
+      label: t(LABELS.waiting.key),
       tiles: partial.types.map(take),
     });
   }
   if (reading.looseTypes.length > 0) {
     segments.push({
       kind: "loose",
-      label: LABELS.loose,
+      label: t(LABELS.loose.key),
       tiles: reading.looseTypes.map(take),
     });
   }

@@ -200,13 +200,16 @@ const RENDERING_SUMS: StatsSums = {
 
 describe("formatStatsView", () => {
   it("formats the rendering's rates with their samples", () => {
+    // Blocks carry a stable id alongside the label: app.ts filters on
+    // the id because labels translate (filtering on the English label
+    // broke in non-English locales).
     expect(formatStatsView(RENDERING_SUMS, { handStats: true })).toEqual([
-      { value: "12", label: "Games played", sample: "Since Nov 11" },
-      { value: "25%", label: "Win rate", sample: "3 of 12 games" },
-      { value: "2.4", label: "Avg placement", sample: "12 games" },
-      { value: "18%", label: "Riichi rate", sample: "23 of 126 hands" },
-      { value: "7%", label: "Deal-in rate", sample: "9 of 126 hands" },
-      { value: "5,840", label: "Avg winning hand", sample: "31 hands won" },
+      { id: "games-played", value: "12", label: "Games played", sample: "Since Nov 11" },
+      { id: "win-rate", value: "25%", label: "Win rate", sample: "3 of 12 games" },
+      { id: "avg-placement", value: "2.4", label: "Avg placement", sample: "12 games" },
+      { id: "riichi-rate", value: "18%", label: "Riichi rate", sample: "23 of 126 hands" },
+      { id: "deal-in-rate", value: "7%", label: "Deal-in rate", sample: "9 of 126 hands" },
+      { id: "avg-winning-hand", value: "5,840", label: "Avg winning hand", sample: "31 hands won" },
     ]);
   });
 

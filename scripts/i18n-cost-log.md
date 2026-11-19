@@ -57,6 +57,31 @@ spend is **$1.2877** ($1.2847 bulk + $0.0030 top-up).
 | ko top-up (13 keys) | google/gemini-2.5-flash | 732 | 365 | $0.0011 | 0 |
 | zh-Hans top-up (13 keys) | qwen/qwen-plus | 676 | 261 | $0.0004 | 0 |
 | zh-Hant top-up (13 keys) | qwen/qwen-plus | 679 | 282 | $0.0004 | 0 |
+| ja rewire top-up (28 keys) | google/gemini-2.5-flash | 1,043 | 605 | $0.0018 | 0 |
+| ko rewire top-up (28 keys) | google/gemini-2.5-flash | 1,044 | 608 | $0.0018 | 0 |
+| zh-Hans rewire top-up (28 keys) | qwen/qwen-plus | 929 | 512 | $0.0006 | 0 |
+| zh-Hant rewire top-up (28 keys) | qwen/qwen-plus | 932 | 515 | $0.0006 | 0 |
+| ja rules-screen top-up (17 keys) | google/gemini-2.5-flash | 1,514 | 1,105 | $0.0032 | 0 |
+| ko rules-screen top-up (17 keys) | google/gemini-2.5-flash | 1,515 | 1,267 | $0.0036 | 0 |
+| zh-Hans rules-screen top-up (17 keys) | qwen/qwen-plus | 1,417 | 1,048 | $0.0012 | 0 |
+| zh-Hant rules-screen top-up (17 keys) | qwen/qwen-plus | 1,420 | 1,099 | $0.0012 | 0 |
+| ja rules re-roll (2 keys) | google/gemini-2.5-flash | 565 | 141 | $0.0005 | 0 |
+| ja text-screen titles (5 keys) | google/gemini-2.5-flash | 506 | 70 | $0.0003 | 0 |
+| ko text-screen titles (5 keys) | google/gemini-2.5-flash | 507 | 73 | $0.0003 | 0 |
+| zh-Hans text-screen titles (5 keys) | qwen/qwen-plus | 496 | 52 | $0.0002 | 0 |
+| zh-Hant text-screen titles (5 keys) | qwen/qwen-plus | 499 | 55 | $0.0002 | 0 |
+
+Rules-screen top-up notes (render-verification find, same PR): the Rules
+screen's intro + 15 bullets sat behind local `p`/`li` helpers in app.ts
+and had never been inventoried as ui.app keys (their values were claimed
+by the pages.riichi.* inventory), so they rendered English in every
+locale. Wired through tx() (+16 keys), translated here. Flags: ja 2
+glossary (term-form), zh-Hant 1 glossary, ko 1 tile-ref — all
+notation/term-form, meanings verified by inspection. One ja bullet
+(abortive draws) came back with a wrong lead clause borrowed from the
+exhaustive-draw bullet; it was re-rolled once (row above) and the
+replacement verified accurate. `ui.app.improve-this-translation` was
+drafted by the runs and removed again — it stays intentionally English.
 
 ## Notes
 

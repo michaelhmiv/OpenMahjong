@@ -30,6 +30,7 @@ import {
   tryCalculate,
   windIndex,
 } from "./compact-calc.js";
+import { tx } from "./i18n/index.js";
 
 function field(label: string, node: HTMLElement): HTMLLabelElement {
   const l = el("label", label, "tool-field");
@@ -82,7 +83,7 @@ export function mountVariantCalculator(
     options.session.variant !== "mcr" &&
     options.session.variant !== "taiwanese"
   )
-    throw new Error("Unsupported variant calculator");
+    throw new Error(tx("calc.variant.unsupported-variant-calculator", "Unsupported variant calculator"));
   const variant = options.session.variant,
     adapter = variantAdapter(variant),
     existing = options.existing;
@@ -127,7 +128,7 @@ export function mountVariantCalculator(
       fn();
     } catch (e) {
       status.textContent =
-        e instanceof Error ? e.message : "Invalid hand entry";
+        e instanceof Error ? e.message : tx("calc.variant.invalid-hand-entry", "Invalid hand entry");
     }
   }
   const show = (title: string): void => {
@@ -135,12 +136,12 @@ export function mountVariantCalculator(
     screen.replaceChildren();
   };
   const names = options.session.names;
-  const name = (seat: number) => names[seat] ?? `Player ${seat + 1}`;
+  const name = (seat: number) => names[seat] ?? tx("calc.variant.player-0", `Player ${seat + 1}`, seat + 1);
   const windName = (seat: number) =>
     WIND_NAMES[windIndex(seat, ctx.dealer)]!;
   const variantLabel =
     variant === "hong-kong"
-      ? "Hong Kong Old Style"
+      ? tx("calc.variant.hong-kong-old-style", "Hong Kong Old Style")
       : variant === "mcr"
         ? "MCR"
         : "Taiwanese";
@@ -167,16 +168,16 @@ export function mountVariantCalculator(
     const rows: [string, string][] = [
       ["Variant", variantLabel],
       ["Winner", `${name(ctx.winner)} · ${windName(ctx.winner)}`],
-      ["Win", ctx.winType === "ron" ? "On a discard" : "Self-draw"],
+      ["Win", ctx.winType === "ron" ? tx("calc.variant.on-a-discard", "On a discard") : "Self-draw"],
     ];
     if (ctx.winType === "ron")
-      rows.push(["Discarded by", `${name(ctx.payer)} · ${windName(ctx.payer)}`]);
-    rows.push(["Dealer", `${name(ctx.dealer)} · East`]);
+      rows.push([tx("calc.variant.discarded-by", "Discarded by"), `${name(ctx.payer)} · ${windName(ctx.payer)}`]);
+    rows.push(["Dealer", tx("calc.variant.v-0-east", `${name(ctx.dealer)} · East`, name(ctx.dealer))]);
     if (variant === "hong-kong")
-      rows.push(["Table minimum", `${hkSettings.minimum} fan`]);
-    if (variant === "mcr") rows.push(["Table minimum", "8 fan"]);
+      rows.push([tx("calc.variant.table-minimum", "Table minimum"), `${hkSettings.minimum} fan`]);
+    if (variant === "mcr") rows.push([tx("calc.variant.table-minimum", "Table minimum"), "8 fan"]);
     if (variant === "taiwanese" && ctx.honba > 0)
-      rows.push(["Dealer repeats", String(ctx.honba)]);
+      rows.push([tx("calc.variant.dealer-repeats", "Dealer repeats"), String(ctx.honba)]);
     return rows;
   }
 
@@ -233,7 +234,7 @@ export function mountVariantCalculator(
           (p) =>
             `${name(p.from)} pays ${name(p.to)} ${p.amount.toLocaleString("en-US")} points`,
         ),
-        big: `${name(ctx.winner)} receives ${total.toLocaleString("en-US")} points`,
+        big: tx("calc.variant.v-0-receives-1-points", `${name(ctx.winner)} receives ${total.toLocaleString("en-US")} points`, name(ctx.winner), total.toLocaleString("en-US")),
       }),
     ];
     if (!result.eligible)
@@ -241,8 +242,8 @@ export function mountVariantCalculator(
         el(
           "p",
           variant === "hong-kong"
-            ? `Hands below ${hkSettings.minimum} fan cannot win at this table.`
-            : "Hands below 8 fan cannot win.",
+            ? tx("calc.variant.hands-below-0-fan-cannot-win-at-this-table", `Hands below ${hkSettings.minimum} fan cannot win at this table.`, hkSettings.minimum)
+            : tx("calc.variant.hands-below-8-fan-cannot-win", "Hands below 8 fan cannot win."),
           "cx-note",
         ),
       );
@@ -250,17 +251,17 @@ export function mountVariantCalculator(
   }
 
   function renderFast(): void {
-    show("Hand value");
+    show(tx("calc.variant.hand-value", "Hand value"));
     fastContext = cxContextPanel(contextRows());
     screen.append(fastContext);
     const panel = el("section", "", "cx-panel");
     const fanCtl = cxStepperChips({
       label:
         variant === "mcr"
-          ? "Fan excluding flowers"
+          ? tx("calc.variant.fan-excluding-flowers", "Fan excluding flowers")
           : variant === "taiwanese"
-            ? "Tai excluding dealer bonus"
-            : "Fan",
+            ? tx("calc.variant.tai-excluding-dealer-bonus", "Tai excluding dealer bonus")
+            : tx("calc.variant.fan", "Fan"),
       value: fanVal,
       min: 0,
       max: 999,
@@ -275,7 +276,7 @@ export function mountVariantCalculator(
     panel.append(fanCtl.node);
     if (variant === "mcr") {
       const flowerCtl = cxStepperChips({
-        label: "Flowers",
+        label: tx("calc.variant.flowers", "Flowers"),
         value: flowerVal,
         min: 0,
         max: 8,
@@ -293,21 +294,21 @@ export function mountVariantCalculator(
       screen.append(
         el(
           "p",
-          "MCR (Mahjong Competition Rules) · Eight fan from patterns are required, not counting flowers. Every player who did not win pays eight base points; the discarder — the player who threw the winning tile — also pays the hand value, which is the hand's fan plus its flower points. On a self-draw win, every opponent pays the hand value plus eight.",
+          tx("calc.variant.mcr-mahjong-competition-rules-eight-fan-from-pat", "MCR (Mahjong Competition Rules) · Eight fan from patterns are required, not counting flowers. Every player who did not win pays eight base points; the discarder — the player who threw the winning tile — also pays the hand value, which is the hand's fan plus its flower points. On a self-draw win, every opponent pays the hand value plus eight."),
           "cx-note",
         ),
       );
     fastLive = el("div");
     screen.append(fastLive);
     screen.append(
-      btn("Score it from the tiles", () => renderTiles(), "cx-quiet"),
+      btn(tx("calc.variant.score-it-from-the-tiles", "Score it from the tiles"), () => renderTiles(), "cx-quiet"),
       el(
         "p",
-        "Enter the tiles instead. The winner and win type carry over.",
+        tx("calc.variant.enter-the-tiles-instead-the-winner-and-win-type", "Enter the tiles instead. The winner and win type carry over."),
         "cx-note",
       ),
       btn(
-        "Show payments",
+        tx("calc.variant.show-payments", "Show payments"),
         () => safe(() => renderPreview(fastDraft())),
         "primary",
       ),
@@ -317,20 +318,20 @@ export function mountVariantCalculator(
 
   function hkSettingsDetails(): HTMLElement {
     const details = el("details", "", "cx-panel");
-    details.append(el("summary", "Supported table settings"));
+    details.append(el("summary", tx("calc.variant.supported-table-settings", "Supported table settings")));
     const min = numInput(hkSettings.minimum),
       cap = numInput(hkSettings.cap),
       scale = select(
         [
-          ["half-spicy", "Half-spicy"],
-          ["full-spicy", "Full-spicy"],
+          ["half-spicy", tx("calc.variant.half-spicy", "Half-spicy")],
+          ["full-spicy", tx("calc.variant.full-spicy", "Full-spicy")],
         ],
         hkSettings.table,
       ),
       split = select(
         [
-          ["clear-chapter", "Discarder pays twice; others once"],
-          ["discarder-all", "Discarder pays three base shares"],
+          ["clear-chapter", tx("calc.variant.discarder-pays-twice-others-once", "Discarder pays twice; others once")],
+          ["discarder-all", tx("calc.variant.discarder-pays-three-base-shares", "Discarder pays three base shares")],
         ],
         hkSettings.split,
       );
@@ -347,18 +348,18 @@ export function mountVariantCalculator(
         paintFastLive();
       });
     details.append(
-      field("Minimum fan", min),
-      field("Fan cap (3–10)", cap),
-      field("Fan conversion", scale),
-      field("Discard payment split", split),
+      field(tx("calc.variant.minimum-fan", "Minimum fan"), min),
+      field(tx("calc.variant.fan-cap-3-10", "Fan cap (3–10)"), cap),
+      field(tx("calc.variant.fan-conversion", "Fan conversion"), scale),
+      field(tx("calc.variant.discard-payment-split", "Discard payment split"), split),
       el(
         "p",
-        "Half-spicy is the fan conversion taught in the lessons: three fan is 8 base points, rising through 16, 24, 32, 48, 64 and 96 to 128 at ten fan. Full-spicy doubles the base points at each fan step instead: three fan is 8, four is 16, five is 32, six is 64, and so on. Under the discard payment split, Discarder pays twice means the player who discarded the winning tile pays two shares and each other opponent pays one; Discarder pays three base shares means that player pays all three shares and the other opponents pay nothing on a discard win.",
+        tx("calc.variant.half-spicy-is-the-fan-conversion-taught-in-the-l", "Half-spicy is the fan conversion taught in the lessons: three fan is 8 base points, rising through 16, 24, 32, 48, 64 and 96 to 128 at ten fan. Full-spicy doubles the base points at each fan step instead: three fan is 8, four is 16, five is 32, six is 64, and so on. Under the discard payment split, Discarder pays twice means the player who discarded the winning tile pays two shares and each other opponent pays one; Discarder pays three base shares means that player pays all three shares and the other opponents pay nothing on a discard win."),
         "cx-note",
       ),
       el(
         "p",
-        "These in-person settings are recorded with this hand and do not change CPU rules.",
+        tx("calc.variant.these-in-person-settings-are-recorded-with-this", "These in-person settings are recorded with this hand and do not change CPU rules."),
         "cx-note",
       ),
     );
@@ -377,11 +378,11 @@ export function mountVariantCalculator(
     base.addEventListener("input", sync);
     unit.addEventListener("input", sync);
     panel.append(
-      field("Base points", base),
-      field("Points per tai", unit),
+      field(tx("calc.variant.base-points", "Base points"), base),
+      field(tx("calc.variant.points-per-tai", "Points per tai"), unit),
       el(
         "p",
-        "Every flower earns one tai, whichever plant or season it is. You do not need to announce a ready hand before you may win. Five sets and a pair. Enter tai without dealer bonuses; the payer lines add 1 + 2 × dealer repeats only to payments involving the dealer.",
+        tx("calc.variant.every-flower-earns-one-tai-whichever-plant-or-se", "Every flower earns one tai, whichever plant or season it is. You do not need to announce a ready hand before you may win. Five sets and a pair. Enter tai without dealer bonuses; the payer lines add 1 + 2 × dealer repeats only to payments involving the dealer."),
         "cx-note",
       ),
     );
@@ -424,13 +425,13 @@ export function mountVariantCalculator(
 
   function renderTiles(): void {
     seedTiles();
-    show("Hand value");
+    show(tx("calc.variant.hand-value", "Hand value"));
     screen.append(cxContextPanel(contextRows()));
     const panel = el("section", "", "cx-panel");
     const target = select(
         [
-          ["hand", "Concealed tiles, including winning tile"],
-          ["meld", "Declared meld"],
+          ["hand", tx("calc.variant.concealed-tiles-including-winning-tile", "Concealed tiles, including winning tile")],
+          ["meld", tx("calc.variant.declared-meld", "Declared meld")],
         ],
         "hand",
       ),
@@ -439,18 +440,18 @@ export function mountVariantCalculator(
           [
             "chi",
             variant === "taiwanese"
-              ? "Open sequence — a run of three in one suit"
-              : "Open sequence (chow)",
+              ? tx("calc.variant.open-sequence-a-run-of-three-in-one-suit", "Open sequence — a run of three in one suit")
+              : tx("calc.variant.open-sequence-chow", "Open sequence (chow)"),
           ],
           [
             "pon",
             variant === "taiwanese"
-              ? "Open triplet — three of a kind"
-              : "Open triplet (pung)",
+              ? tx("calc.variant.open-triplet-three-of-a-kind", "Open triplet — three of a kind")
+              : tx("calc.variant.open-triplet-pung", "Open triplet (pung)"),
           ],
-          ["ankan", "Concealed quad"],
-          ["daiminkan", "Open quad"],
-          ["shouminkan", "Added quad"],
+          ["ankan", tx("calc.variant.concealed-quad", "Concealed quad")],
+          ["daiminkan", tx("calc.variant.open-quad", "Open quad")],
+          ["shouminkan", tx("calc.variant.added-quad", "Added quad")],
         ],
         "chi",
       ),
@@ -467,7 +468,7 @@ export function mountVariantCalculator(
       display.replaceChildren(
         el(
           "p",
-          `${concealed.length} concealed tiles · ${melds.length} declared sets · ${flowers.length} flowers/seasons`,
+          tx("calc.variant.v-0-concealed-tiles-1-declared-sets-2-flowers-seas", `${concealed.length} concealed tiles · ${melds.length} declared sets · ${flowers.length} flowers/seasons`, concealed.length, melds.length, flowers.length),
           "cx-note",
         ),
       );
@@ -478,7 +479,7 @@ export function mountVariantCalculator(
           draw();
         });
         b.className = "tile-choice";
-        b.setAttribute("aria-label", `Remove ${tileTypeName(t.type)}`);
+        b.setAttribute("aria-label", tx("calc.variant.remove-0", `Remove ${tileTypeName(t.type)}`, tileTypeName(t.type)));
         b.append(options.renderTile(t));
         row.append(b);
       });
@@ -492,20 +493,20 @@ export function mountVariantCalculator(
               {
                 chi:
                   variant === "taiwanese"
-                    ? "Open sequence"
-                    : "Open sequence (chow)",
+                    ? tx("calc.variant.open-sequence", "Open sequence")
+                    : tx("calc.variant.open-sequence-chow", "Open sequence (chow)"),
                 pon:
                   variant === "taiwanese"
-                    ? "Open triplet"
-                    : "Open triplet (pung)",
-                ankan: "Concealed quad",
-                daiminkan: "Open quad",
-                shouminkan: "Added quad",
+                    ? tx("calc.variant.open-triplet", "Open triplet")
+                    : tx("calc.variant.open-triplet-pung", "Open triplet (pung)"),
+                ankan: tx("calc.variant.concealed-quad", "Concealed quad"),
+                daiminkan: tx("calc.variant.open-quad", "Open quad"),
+                shouminkan: tx("calc.variant.added-quad", "Added quad"),
               } as Record<string, string>
             )[m.kind] ?? m.kind,
           ),
           ...m.tiles.map(options.renderTile),
-          btn("Remove meld", () => {
+          btn(tx("calc.variant.remove-meld", "Remove meld"), () => {
             melds.splice(i, 1);
             draw();
           }),
@@ -514,12 +515,12 @@ export function mountVariantCalculator(
       });
       const pending = el("div", "", "tool-tile-row");
       pending.append(
-        el("span", "Meld draft"),
+        el("span", tx("calc.variant.meld-draft", "Meld draft")),
         ...meldDraft.map(options.renderTile),
       );
       display.append(
         pending,
-        btn("Clear meld draft", () => {
+        btn(tx("calc.variant.clear-meld-draft", "Clear meld draft"), () => {
           meldDraft.length = 0;
           draw();
         }),
@@ -542,7 +543,7 @@ export function mountVariantCalculator(
             dest.length >=
             (target.value === "meld" ? 4 : adapter.standingTiles + 1)
           )
-            throw new Error("Tile group is full");
+            throw new Error(tx("calc.variant.tile-group-is-full", "Tile group is full"));
           const used = [
             ...concealed,
             ...meldDraft,
@@ -551,13 +552,13 @@ export function mountVariantCalculator(
           const tile = inventory.find(
             (t) => t.type === rep.type && !used.some((u) => u.id === t.id),
           );
-          if (!tile) throw new Error("All four copies have been entered");
+          if (!tile) throw new Error(tx("calc.variant.all-four-copies-have-been-entered", "All four copies have been entered"));
           dest.push(tile);
           draw();
         }),
       );
       b.className = "tile-choice";
-      b.setAttribute("aria-label", `Add ${tileTypeName(rep.type)}`);
+      b.setAttribute("aria-label", tx("calc.variant.add-0", `Add ${tileTypeName(rep.type)}`, tileTypeName(rep.type)));
       b.append(options.renderTile(rep));
       picker.append(b);
     }
@@ -570,7 +571,7 @@ export function mountVariantCalculator(
       });
       b.className = "tile-choice";
       b.dataset["flowerType"] = String(flower.type);
-      b.setAttribute("aria-label", `Flower ${tileTypeName(flower.type)}`);
+      b.setAttribute("aria-label", tx("calc.variant.flower-0", `Flower ${tileTypeName(flower.type)}`, tileTypeName(flower.type)));
       b.append(options.renderTile(flower));
       flowerPicker.append(b);
     }
@@ -579,27 +580,27 @@ export function mountVariantCalculator(
       [
         "replacement",
         variant === "taiwanese"
-          ? "Win on a quad or flower replacement"
-          : "Win on a quad replacement",
+          ? tx("calc.variant.win-on-a-quad-or-flower-replacement", "Win on a quad or flower replacement")
+          : tx("calc.variant.win-on-a-quad-replacement", "Win on a quad replacement"),
       ],
-      ["robbingQuad", "Win by robbing an added quad"],
+      ["robbingQuad", tx("calc.variant.win-by-robbing-an-added-quad", "Win by robbing an added quad")],
       [
         "lastWall",
         variant === "taiwanese"
-          ? "Win by drawing the last tile of the live wall"
-          : "Win on the last live tile or final discard",
+          ? tx("calc.variant.win-by-drawing-the-last-tile-of-the-live-wall", "Win by drawing the last tile of the live wall")
+          : tx("calc.variant.win-on-the-last-live-tile-or-final-discard", "Win on the last live tile or final discard"),
       ],
       [
         "initial",
         variant === "taiwanese"
-          ? "Win on the very first draw of the hand"
-          : "Initial uninterrupted self-draw",
+          ? tx("calc.variant.win-on-the-very-first-draw-of-the-hand", "Win on the very first draw of the hand")
+          : tx("calc.variant.initial-uninterrupted-self-draw", "Initial uninterrupted self-draw"),
       ],
       [
         "lastCopy",
         variant === "taiwanese"
-          ? "Winning tile is the last copy that is not showing"
-          : "Winning tile is the last unexposed copy",
+          ? tx("calc.variant.winning-tile-is-the-last-copy-that-is-not-showin", "Winning tile is the last copy that is not showing")
+          : tx("calc.variant.winning-tile-is-the-last-unexposed-copy", "Winning tile is the last unexposed copy"),
       ],
     ]) {
       const i = numInput("");
@@ -614,15 +615,15 @@ export function mountVariantCalculator(
     panel.append(
       el(
         "p",
-        `Build ${adapter.sets} sets and a pair. Enter concealed tiles including the winning tile, add declared sets separately, and select exposed flowers or seasons.`,
+        tx("calc.variant.build-0-sets-and-a-pair-enter-concealed-tiles-in", `Build ${adapter.sets} sets and a pair. Enter concealed tiles including the winning tile, add declared sets separately, and select exposed flowers or seasons.`, adapter.sets),
         "cx-note",
       ),
-      field("Add tiles to", target),
-      field("Meld type", kind),
+      field(tx("calc.variant.add-tiles-to", "Add tiles to"), target),
+      field(tx("calc.variant.meld-type", "Meld type"), kind),
       display,
-      btn("Add declared meld", () =>
+      btn(tx("calc.variant.add-declared-meld", "Add declared meld"), () =>
         safe(() => {
-          if (melds.length >= adapter.sets) throw new Error("Too many sets");
+          if (melds.length >= adapter.sets) throw new Error(tx("calc.variant.too-many-sets", "Too many sets"));
           declaredGroup({
             kind: kind.value as Meld["kind"],
             tiles: meldDraft.map((t) => t.type),
@@ -636,28 +637,28 @@ export function mountVariantCalculator(
         }),
       ),
       picker,
-      field("Winning tile", winning),
+      field(tx("calc.variant.winning-tile", "Winning tile"), winning),
       ...(variant === "hong-kong"
         ? [
             el(
               "p",
-              "A meld is a set you have shown or declared, such as an open triplet or a quad. Flowers and seasons are the eight bonus tiles: set them apart here, as at the table. The circumstance boxes record how the hand was won: a quad replacement is the extra tile drawn after declaring a quad; robbing an added quad is winning on the fourth tile another player adds to a shown triplet; the last live tile is the last tile left to draw from the wall, and a final discard is the discard that follows it; an initial uninterrupted self-draw is a first-draw win with nothing interrupting the start (a Heavenly Hand for the dealer, an Earthly Hand for another player); the last unexposed copy is the final copy of the winning tile that no player had shown.",
+              tx("calc.variant.a-meld-is-a-set-you-have-shown-or-declared-such", "A meld is a set you have shown or declared, such as an open triplet or a quad. Flowers and seasons are the eight bonus tiles: set them apart here, as at the table. The circumstance boxes record how the hand was won: a quad replacement is the extra tile drawn after declaring a quad; robbing an added quad is winning on the fourth tile another player adds to a shown triplet; the last live tile is the last tile left to draw from the wall, and a final discard is the discard that follows it; an initial uninterrupted self-draw is a first-draw win with nothing interrupting the start (a Heavenly Hand for the dealer, an Earthly Hand for another player); the last unexposed copy is the final copy of the winning tile that no player had shown."),
               "cx-note",
             ),
           ]
         : []),
-      el("h3", "Flowers and seasons"),
+      el("h3", tx("calc.variant.flowers-and-seasons", "Flowers and seasons")),
       flowerPicker,
       circumstance,
     );
     screen.append(panel);
     screen.append(
       btn(
-        "Show payments",
+        tx("calc.variant.show-payments", "Show payments"),
         () =>
           safe(() => {
             if (meldDraft.length)
-              throw new Error("Finish or clear the meld draft");
+              throw new Error(tx("calc.variant.finish-or-clear-the-meld-draft", "Finish or clear the meld draft"));
             const counts = new Array<number>(34).fill(0);
             for (const t of [...concealed, ...melds.flatMap((m) => m.tiles)])
               counts[t.type]!++;
@@ -689,7 +690,7 @@ export function mountVariantCalculator(
         "primary",
       ),
       btn(
-        variant === "taiwanese" ? "Fast tai entry" : "Fast fan entry",
+        variant === "taiwanese" ? tx("calc.variant.fast-tai-entry", "Fast tai entry") : tx("calc.variant.fast-fan-entry", "Fast fan entry"),
         () => renderFast(),
         "cx-quiet",
       ),
@@ -700,7 +701,7 @@ export function mountVariantCalculator(
   // ---- check payments -------------------------------------------------------
   function renderPreview(draft: CalculationDraft): void {
     const result = calculateDraft(draft);
-    show("Check payments");
+    show(tx("calc.variant.check-payments", "Check payments"));
     const deltas = options.previewDeltas
       ? options.previewDeltas(draft)
       : foldPayments(4, result.payments);
@@ -716,8 +717,8 @@ export function mountVariantCalculator(
     ];
     const headSub =
       variant === "mcr"
-        ? `${result.units} points · ${result.qualifyingUnits} fan excluding flowers · ${WIND_NAMES[roundWind - 27]} ${ctx.dealer + 1}`
-        : `${result.units} ${unitWord} · ${WIND_NAMES[roundWind - 27]} ${ctx.dealer + 1}${variant === "taiwanese" && ctx.honba > 0 ? ` · Dealer repeats ${ctx.honba}` : ""}`;
+        ? tx("calc.variant.v-0-points-1-fan-excluding-flowers-2-3", `${result.units} points · ${result.qualifyingUnits} fan excluding flowers · ${WIND_NAMES[roundWind - 27]} ${ctx.dealer + 1}`, result.units, result.qualifyingUnits, WIND_NAMES[roundWind - 27], ctx.dealer + 1)
+        : tx("calc.variant.v-0-1-2-3-4", `${result.units} ${unitWord} · ${WIND_NAMES[roundWind - 27]} ${ctx.dealer + 1}${variant === "taiwanese" && ctx.honba > 0 ? " " + tx("calc.variant.dealer-repeats-0", `· Dealer repeats ${ctx.honba}`, ctx.honba) : ""}`, result.units, unitWord, WIND_NAMES[roundWind - 27], ctx.dealer + 1, variant === "taiwanese" && ctx.honba > 0 ? " " + tx("calc.variant.dealer-repeats-0", `· Dealer repeats ${ctx.honba}`, ctx.honba) : "");
     cxPreview(screen, {
       headMain:
         ctx.winType === "ron"
@@ -726,7 +727,7 @@ export function mountVariantCalculator(
       headSub,
       rows: order.map((s) => ({
         name: name(s),
-        suffix: `· ${windName(s)}${s === ctx.dealer ? " · Dealer" : ""}`,
+        suffix: `· ${windName(s)}${s === ctx.dealer ? " " + tx("calc.variant.dealer", "· Dealer") : ""}`,
         delta: deltas[s]!,
       })),
       paymentLines: result.payments.map(
@@ -737,25 +738,25 @@ export function mountVariantCalculator(
         ? {}
         : {
             ineligibleNote:
-              "Below the table’s minimum fan. Correct the breakdown or continue the hand.",
+              tx("calc.variant.below-the-tables-minimum-fan-correct-the-breakdo", "Below the table’s minimum fan. Correct the breakdown or continue the hand."),
           }),
       corrections: cxCorrections({
         draft,
         result,
         adjustmentLabel:
           variant === "taiwanese"
-            ? "Additional manual tai"
-            : "Additional manual fan",
+            ? tx("calc.variant.additional-manual-tai", "Additional manual tai")
+            : tx("calc.variant.additional-manual-fan", "Additional manual fan"),
         showFu: false,
-        reasonLabel: "Reason for correction",
+        reasonLabel: tx("calc.variant.reason-for-correction", "Reason for correction"),
         onApply: (d) => safe(() => renderPreview(d)),
         safe,
       }),
-      confirmLabel: existing ? "Confirm correction" : "Confirm and add to table",
+      confirmLabel: existing ? tx("calc.variant.confirm-correction", "Confirm correction") : tx("calc.variant.confirm-and-add-to-table", "Confirm and add to table"),
       onConfirm: () =>
         safe(() => {
           if (!result.eligible)
-            throw new Error("Confirm an eligible breakdown first");
+            throw new Error(tx("calc.variant.confirm-an-eligible-breakdown-first", "Confirm an eligible breakdown first"));
           options.onRecord(draft);
         }),
       onEdit: () =>

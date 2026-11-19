@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-19T11:41:18.604Z",
-    "keyCount": 3729,
+    "generatedAt": "2026-11-19T14:43:33.016Z",
+    "keyCount": 3801,
     "model": "qwen/qwen-plus",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -13940,996 +13940,6 @@
       },
       "placeholders": []
     },
-    "learn.mcr.guide.a-different-legal-completion-elsewhere-in-the-ha": {
-      "value": "若牌型中其他位置存在另一种合法听牌方式，则独听不成立。仅计一种听牌类型得分。",
-      "hash": "c084d2dca8cd4959ae24209c2364223942d9ab343545efc4257fbceef8fa1fc2",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 396
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.a-higher-pattern-that-necessarily-requires-all-t": {
-      "value": "若存在更高阶且必然要求全刻子的番种，则按规则取代本番种。",
-      "hash": "cadd6cb71889f09fa3e2033b5a9e2099092afcebc3727bec36120d5697cca858",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 251
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.a-sequence-qualifies-only-as-123-or-789-all-term": {
-      "value": "顺子仅可计为123或789。清老头、字一色、混老头等番种优先取代本番种。",
-      "hash": "05a6682f8f257d0e8e2db9943d5f7400ff372e0bdcf5f58386da7288fb4ed109",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 286
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.a-thrown-tile-completing-a-triplet-makes-that-tr": {
-      "value": "他人打出的牌若组成刻子，则该刻子视为明刻计入本番种计算。但不适用于清一色与门前清番种。",
-      "hash": "96cc08d68c06755da7b4dcb3d456c20024764fd167f74a86b8f1402cf9907286",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 71
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.a-thrown-tile-completing-one-of-these-triplets-m": {
-      "value": "一张被打出的牌若能组成上述刻子之一，则该刻子在此计番中视为副露。不包括双暗刻型。",
-      "hash": "a0b7cffcdcc5838ee096f98679e9695cf03459d3b693b13b9521e9024d13f82c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 176
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.a-triplet-completed-by-a-thrown-tile-counts-as-m": {
-      "value": "由一张被打出的牌组成的刻子，在此计番中视为副露。三暗刻与四暗刻型将取代此计番。",
-      "hash": "37366f83c3c79c7ebaa8e3912e47257c481fc08d158d2201e733198eab195fba",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 341
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.all-three-suits-must-be-different-these-sets-are": {
-      "value": "三种花色必须各不相同。这些组合在“不重复规则”下统一判定。",
-      "hash": "5e3601ded24d13164cfc488a51d54c44e0234951341c4da381663fe9de3eb006",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 206
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.an-honor-pair-disqualifies-this-pattern-excludes": {
-      "value": "字牌对子会使本型失效。不计无字牌。",
-      "hash": "e396967dde4d567f7985c2bcfa05ac176dd375e9ae064763c00dd5041f31e1f7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 326
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.award-exactly-eight-for-this-condition-flowers-m": {
-      "value": "本条件固定计8番。可加计花牌，但若存在其他任何计分要素，则不计鸡和。",
-      "hash": "4bebadaa815e14768293ec87f72ff0f9ef8219a43feb0965272d0988a32195db",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 226
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.both-suited-tiles-and-honors-must-appear-exclude": {
-      "value": "须同时包含数牌与字牌。不计缺一门。",
-      "hash": "2b3e5911c52b20cf7968fb10e264ac5a6e5e1256f2e004f9956800f6af7b33dd",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 256
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.can-combine-with-seat-wind-for-the-same-set-when": {
-      "value": "当自风与场风相同时，可与自风组成同一组；此时不得再为此组额外计幺九字牌刻子番。",
-      "hash": "fda39faa89ae9adca0d743c46328082df0ec60cd32aa4b4c608d06f5372b9d67",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 311
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.claim-all-four-sets-from-other-players-thrown-ti": {
-      "value": "全部四组均通过吃、碰、杠其他玩家打出的牌组成，并以他人打出的牌完成雀头和牌。",
-      "hash": "2767a6bd23f26f83eb64c50085b33dbf2aab8ed1ea3fb3d99b61d129474323fc",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 270
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.collect-every-terminal-and-honor-kind-then-dupli": {
-      "value": "集齐全部13种幺九牌（1m/9m/1p/9p/1s/9s及七种字牌），再从中任选一种复制一张。",
-      "hash": "269db2b80ca5614d79c2eae7a9b04ee3e4e744e710fb6fa9591a166ecd5e199f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 45
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.complete-four-triplets-or-quads-without-taking-t": {
-      "value": "四组均为刻子或杠子，且其完成牌均未从其他玩家处获得（即全部为自摸完成）。",
-      "hash": "2c983eb1a7cdb5dba13c4ae9ef3f2173a93e4b27aacbe66d6e6f9069f1cf402c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 70
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.complete-two-triplets-or-quads-without-taking-th": {
-      "value": "两组为刻子或杠子，且其完成牌均未从其他玩家处获得（即全部为自摸完成）。",
-      "hash": "91419a4f901de362dbd38222e464d78a1df5fe8ce418299aa6652ad8e249a214",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 340
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.concealed-special-structure-excludes-all-types-c": {
-      "value": "门前清特殊牌型；不计混一色、门前清与单骑听牌。",
-      "hash": "ec1c1a6aa5df5f80bff56c0a443704593f0028bb4d843d1ab3274db4179c3e9d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 46
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.concealment-and-winning": {
-      "value": "门前清与和牌",
-      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 224
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.count-different-four-copy-kinds-separately-excep": {
-      "value": "不同种类的四张同牌应分别计番，除非更高阶的役种已明确包含这些牌。",
-      "hash": "7f64196e9c9372ac99f0bed58a2a3da315c8df91870172c72dfd3b21998a198c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 331
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.declare-a-melded-quad-by-claiming-a-thrown-tile": {
-      "value": "通过抢杠或碰后加杠的方式宣布副露杠。",
-      "hash": "7018e17ce102745b08457dea71d00e495c349304222c0907474eb9b8e6b7ad06",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 380
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.declare-four-identical-concealed-tiles-as-a-quad": {
-      "value": "以四张相同的暗牌宣布暗杠，并摸取一张岭上牌。",
-      "hash": "c31b4108d42727d522623aa5942c1aa2c8bd4d953e16f213034bb7fa88fc951a",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 345
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.declare-four-quads-and-complete-the-pair": {
-      "value": "宣布四杠，并以最后一张牌完成雀头和牌。",
-      "hash": "b520f84fb1a4b2cf56e667b342df04a4d259825976d96f2c1130883dc4475c2e",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 35
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.declare-three-quads-concealed-or-melded": {
-      "value": "宣布三杠，可为暗杠或副露杠。",
-      "hash": "a59fcf7cd1e3bfb816722d68b95cfed3ba5b987c8d9d252be22775ec19675d96",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 95
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.declare-two-concealed-quads": {
-      "value": "宣布两个暗杠。",
-      "hash": "47266da70189b627430e3c148679d0c4a4863cc4e496295330e1f405466b5267",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 275
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.declare-two-melded-quads-whether-claimed-directl": {
-      "value": "宣布两个副露杠，无论通过抢杠直接成立，或由碰后加杠形成。",
-      "hash": "b395b7a134eac94a8a70e182def745708a1da84fe48b035de3b8def6afe3defb",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 295
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.do-not-reinterpret-the-same-tiles-as-a-triple-se": {
-      "value": "在同一计分组合中，不得将同一组牌重新解释为顺子。",
-      "hash": "09c8e1d48ae9d4a40665a238dd2249cccc5470e5eeec49cff9f82edad40f6aca",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 131
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.do-not-reuse-the-same-required-combination-as-an": {
-      "value": "不得将同一必需组合重复用于本型的多个实例。",
-      "hash": "a3587263c0ce17a27852fd6aab0314cfa4d373ce8709424f61e469f12914f7e0",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 261
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.dragons-seat-winds-and-round-winds-use-their-own": {
-      "value": "中发白、自风与场风各自独立计番。更高阶的风牌或幺九牌役种可能排除此项番数。",
-      "hash": "21fb06f50c2a30cf7b19320a361feb4de1c88ef51d46dcb46a6b06269b9a1658",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 376
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.draw-the-last-tile-of-the-wall-yourself-and-win": {
-      "value": "自己摸到牌墙最后一张牌并以此和牌。",
-      "hash": "b5c9d92df8186a26eeb32b252954dc1221308f39a9fb6aad887d1c09d90fbb68",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 230
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.each-different-dragon-may-qualify-until-a-larger": {
-      "value": "每种不同的箭牌均可单独计番，直至被更高阶的箭牌组合取代。",
-      "hash": "6b43f964e6f2e7331b38e39025ae7af30d599f1c6fac3418d5fc326683986df2",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 306
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.eighteen-physical-tiles-are-required-replaces-le": {
-      "value": "需十八张实体牌。取代所有低阶杠型、全刻子型与单骑听牌。",
-      "hash": "737752ef753867c93e3a4b9700711321204e815dc97b2377df203d5f3bc0ee10",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 36
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-number-is-1-2-3-or-4-and-no-honors-appear": {
-      "value": "所有数牌点数仅为1、2、3或4，且不含字牌。",
-      "hash": "452c3a5cb2067c47a7b45ecb11b6944c85c3a8987075deed9293d2542c304f4d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 195
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-number-is-1-2-or-3-and-no-honor-is-present": {
-      "value": "所有数牌点数仅为1、2或3，且不含字牌。",
-      "hash": "168ac673eb4c63deec153502f6320f005b934bc996a304b27b1885d7244c6038",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 145
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-number-is-4-5-or-6-and-no-honor-is-present": {
-      "value": "所有数牌点数仅为4、5或6，且不含字牌。",
-      "hash": "cc2823c96de98e9aab178914f27edeaf11ef37d0aef078c00e992772e22ddf41",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 140
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-number-is-6-7-8-or-9-and-no-honors-appear": {
-      "value": "所有数牌点数仅为6、7、8或9，且不含字牌。",
-      "hash": "aeb3a3e0b2aec0f36d37c34b621cc7398e1eab28911ff0f6e375e572b16a3fd2",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 190
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-number-is-7-8-or-9-and-no-honor-is-present": {
-      "value": "所有数牌点数仅为7、8或9，且不含字牌。",
-      "hash": "c7bdcfd8f0a60bac145b1fabf36c09edf0bbac1d6da32a539978a0df4df393aa",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 135
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-set-and-the-pair-contains-a-terminal-or-an": {
-      "value": "每组面子及雀头均含至少一张幺九牌或字牌。",
-      "hash": "51643c35ffdf5bd582ed22124c7e1c943c31e7fcbe35f8aa57fccbc0e1a8ebf5",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 285
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-set-and-the-pair-includes-a-suited-5": {
-      "value": "每组面子及雀头均含一张数牌5。",
-      "hash": "c0b1fd7fc5b6d1bba84df2a9150a20a9800b8be39cd83476c1888943ff444ea4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 165
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-set-is-a-triplet-or-quad-and-every-number": {
-      "value": "每组面子均为刻子或杠子，且所有数牌点数（含雀头）均为偶数。",
-      "hash": "869294f1cd04b400fe8df8c9b240d11b250efdb59cc869a2d1913a6df54bfe2f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 115
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-tile-is-a-suited-1-or-9": {
-      "value": "所有牌均为数牌1或9。",
-      "hash": "04f362799c00dce9c1f48827cf77644df35f03dcec10335eeb7fc15b64264df5",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 50
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-tile-is-a-suited-number-from-2-through-8": {
-      "value": "所有牌均为数牌2至8。",
-      "hash": "6b51269289dea704c807fa253a3407c16897c9f5516df76ef30c7db4681608c2",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 350
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.every-tile-is-a-wind-or-dragon": {
-      "value": "所有牌均为风牌或箭牌。",
-      "hash": "d2f39334f8967253504b4bfc68c155165fe59bc7001d49f45268dff0764b7abb",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 65
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-all-chows-mixed-double-chow-two-termina": {
-      "value": "不计平和、混全带幺、双同顺与无字。",
-      "hash": "60314d805d0694fb5391d7373698d37963fd8a4a9e328064b89b885c1fa5f586",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 156
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-all-simples-and-no-honors": {
-      "value": "不计断幺九与无字。",
-      "hash": "b314dc5afd04625843de3e0a618379bc1055fec897c7c655e3c22f2f1137df99",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 141
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-all-simples-and-no-honors-honor-tiles-c": {
-      "value": "不计断幺九与无字；字牌不可用于满足含5的组合。",
-      "hash": "a526997d7667ea2d338f5605c2049f491a3233fedffa6d163411bdcaef76d918",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 166
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-big-three-winds-and-terminal-honor-trip": {
-      "value": "不计大三元及所需风牌的幺九字牌刻子番。",
-      "hash": "4f07a24fa5730d4485f8cdbafa259ceab21ec37b6c17689fe74dfb17708eba22",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 56
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-concealed-hand-and-self-drawn-certain-s": {
-      "value": "不计门前清与自摸。某些特殊牌型在自摸时仍可加计。",
-      "hash": "e748adee393500dcd00ee14491e78e3d869e3f30c68b87c38c2889c9de398650",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 291
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-concealed-hand-and-single-wait-a-self-d": {
-      "value": "不计门前清与单骑听牌。自摸时仍可加计全不靠。",
-      "hash": "268374804ee9ea3fa7cf1f4f87d5a4177aac15282ab03889092bbe1a7a370ace",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 106
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-full-flush-all-chows-pure-double-chow-t": {
-      "value": "不计清一色、平和、清双同顺、双同顺与无字。",
-      "hash": "726b4eaeadfa9513e96700371e4d38ea5331b78f24e3cea1e8cc1a3bb997c7f5",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 76
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-last-tile-a-concealed-quad-cannot-be-ro": {
-      "value": "不计海底捞月。暗杠不可被抢杠。",
-      "hash": "24dcc6a0bdaff73b75cd3eb9356ef5db57d9566b41404b7d420af64dccc1b724",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 246
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-lower-four-and-no-honors": {
-      "value": "不计小四喜与无字。",
-      "hash": "fcdc4de717d2115961642b9a2c28273406d3ef5156b7c531ad75562abd9c894f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 146
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-mixed-double-chow-for-pairs-within-the": {
-      "value": "不计混双同顺（针对所要求三组中的对子）。",
-      "hash": "2cd4e04203f7123d329a89d2ef6578d239ae52aa134de09743a4f303898900f8",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 216
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-no-honors-lower-tiles-replaces-it-if-on": {
-      "value": "不计无字。若仅含1–3，则由小幺九取代。",
-      "hash": "d3e8fe711c2e3e59342818aac76d358e7f66899248dd12b0596657326e223f35",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 196
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-no-honors-middle-tiles-all-five-and-the": {
-      "value": "不计无字。中张、五门齐及全双刻型已包含此条件，故取代之。",
-      "hash": "23a8b2b4330a2194cd7748425910075190266a52a05b69e1a38411792bcf5d03",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 351
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-no-honors-upper-tiles-replaces-it-if-on": {
-      "value": "不计无字。若仅含7–9，则由大幺九取代。",
-      "hash": "58daa3d11c88000c56e2de76c15c0e0778f5819b72d2c6c0bfeb3da2b81e693d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 191
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-one-voided-suit-and-no-honors-special-h": {
-      "value": "不计缺一门与无字。更高阶特殊役种可取代此项番数。",
-      "hash": "03c86d9445c931308c47b846f520e6f5df9d59f21488d0f5e48d076e2b75871a",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 121
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-pure-double-chow-and-cannot-also-treat": {
-      "value": "不计清双同顺，且不得将相同牌另行解释为移位顺子。",
-      "hash": "0f063ef098ed9985f63231497513e6700c579bd09130d764a285f8d3c643a0a2",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 126
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-pure-shifted-chows-short-straight-and-t": {
-      "value": "不计清移位顺、七对子与双同顺（本结构内已包含）。",
-      "hash": "44c4cdde05c1d49ddb1986960dd1f8dbbe3adc8f34accaf9e4133a054617b2da",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 91
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-pure-triple-chow-pure-double-chow-and-t": {
-      "value": "不计清三同顺、清双同顺与一气通贯（针对相同牌）。",
-      "hash": "d07d9f1edf7dc5a085886b9494a7c67a836288d088bae78b6622b7fcc34a6f0a",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 81
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-self-drawn-a-flower-replacement-is-not": {
-      "value": "不计自摸。补花不算作牌墙最后一张普通牌的摸牌。",
-      "hash": "d65ba814e5999b255281e02cd90b2118ddef0dd2a7d061e5798da71c63d2cdbb",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 231
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-self-drawn-if-that-replacement-is-a-flo": {
-      "value": "不计自摸。若该补花牌为花牌，则后续补花不再计此番。",
-      "hash": "3f994f70740c395ce758799a624943569f291dc94ae9beff5b517919f202f7b5",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 241
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-single-wait-concealed-quads-prevent-thi": {
-      "value": "不计单骑听牌。暗杠使本型无法达成全副露状态。",
-      "hash": "5e94822249d6462e0184beff121024a7e4e0789d894dd8f6169399796d75762f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 271
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-terminal-honor-triplet-awards-for-those": {
-      "value": "不计这些风牌的幺九字牌刻子番；适用的自风与场风番仍可计算。",
-      "hash": "b41e397cde845522b2f237916610116b5d4cc05e8327e6633bc1d5386b3f08d7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 201
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-the-all-triplets-pattern-outside-hand-a": {
-      "value": "不计全刻子、边张、嵌张、单钓将及幺九字牌刻子番。",
-      "hash": "63a6370bb80071c649cb1e21caac859e8c9c16a30058ba632c941c66699be022",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 66
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-the-all-triplets-pattern-outside-hand-t": {
-      "value": "不计全刻子、边张、嵌张、单钓将、幺刻子及无字。",
-      "hash": "b95fc86a52e93c0a7d3201498ee331cb0a190b6895c2e436ec9a2a00a017d25f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 51
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-the-double-triplet-combination-for-pair": {
-      "value": "排除由必需的三组牌构成的对子中的双刻子组合。",
-      "hash": "020abcd856199a8a6ec9933981c40c02cb361bf4a4da8d0717621f1a13bf00f9",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 171
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-the-shifted-triplets-pattern-and-the-al": {
-      "value": "排除连七对（移位刻子）与全刻子两种牌型。",
-      "hash": "80b17aa429e2be7229dacdf141de60627b645d5497b59d99c6e0928168381d6e",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 86
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-the-two-dragon-triplets-pattern-and-the": {
-      "value": "排除双箭刻与单个箭刻所对应的番种。",
-      "hash": "a2fe7bdba3b20e6d51aa717d56cee5bb11c88747aec07e2639574eaa35587932",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 61
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.excludes-upper-four-and-no-honors": {
-      "value": "排除上五与无字。",
-      "hash": "ab2828dabee905403c7f0a57185366730a77eb6aa74dc435510ae596639437d4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 136
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.expose-each-unique-flower-or-season-and-take-its": {
-      "value": "每张未出现过的花牌或季牌均需明示，并取其补花牌；有效和牌后，每张计1分。",
-      "hash": "9ef01983ec9e50aa35b1d32acfed8c0fdc076c344d89ad2e20e2f9d3f2e41abd",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 415
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.flowers-never-help-meet-the-eight-fan-minimum-th": {
-      "value": "花牌不能用于满足八番起和要求，也不计入十四张普通牌型结构位置。",
-      "hash": "8201bbf7f724cc7d1bcd4a82c863f53ba62f06584e5c03ab1c74fcfecb190d95",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 416
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.full-flush-half-flush-and-other-specified-patter": {
-      "value": "清一色、混一色及其他指定牌型已隐含缺一门，故排除本番种。",
-      "hash": "fbd4d4ef8939b2095691edeabe28be103cedd6fd19f37badb72fb4998537a17f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 386
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.fully-concealed-hand-covers-a-concealed-self-dra": {
-      "value": "门前清已涵盖自摸暗杠条件；部分特殊牌型本身即含此条件，故排除本番种。",
-      "hash": "46ac2a0c3b73afdeffb397ec96ebcb93e6ba226d18923b82f5b1dcd9bc4f8d8b",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 321
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.fully-concealed-hand-last-tile-draw-and-out-with": {
-      "value": "门前清、海底捞月、杠上开花在适用时取代此项1分番种。",
-      "hash": "aa636c13bab7dd0b0871afd0991efde83b96a85824c6fe908eb5577c8a888500",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 411
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-123-and-789-sequences-in-the-same-suit": {
-      "value": "同一花色中包含123与789两组顺子。",
-      "hash": "69d66ab0158f542619ce4a0b00fc7617ab25f5cef8d69256da6b64c90889f820",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 370
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-a-terminal-triplet-or-a-non-scoring-wind-tr": {
-      "value": "含一组幺九刻子或一组不计分的风牌刻子。",
-      "hash": "9285a6ed3d5806404480b8297aaed8290f994446a8adfa9fba6c3ab2e0b8389e",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 375
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-a-triplet-or-quad-matching-the-current-roun": {
-      "value": "含一组与本局圈风相同的风牌刻子或杠。",
-      "hash": "395a27380ad22f7ba77b38c90ffae67f59cfe7e8455b57ef4d3c7b6938288cfa",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 310
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-a-triplet-or-quad-matching-your-seat-wind-d": {
-      "value": "含一组与自己门风相同的风牌刻子或杠。",
-      "hash": "f70bc2158ecfdb937e671fbc2024ea7e0e801122c0c5b2ead298a3d8414e758a",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 315
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-a-triplet-or-quad-of-any-one-dragon": {
-      "value": "含一组任意一种箭牌的刻子或杠。",
-      "hash": "0a8d0ae9ce2ccad5eb59bc46589f78022562d7d395181734c423865b3fc306f4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 305
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-three-different-wind-triplets-or-quads": {
-      "value": "含三种不同风牌的刻子或杠。",
-      "hash": "c343d8f0f55f852238e311c73875f21117aad4251ea81ef60f9b6d901f2df4e9",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 200
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-three-triplets-or-quads-completed-without-c": {
-      "value": "三组刻子或杠均未通过吃、碰、杠方式完成最后一张牌。",
-      "hash": "74d61b3c3eb52160797d983c6d1756cebabc95f8ebddd5dd54bec2eb2492417c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 175
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-triplets-or-quads-of-two-different-dragons": {
-      "value": "含两种不同箭牌的刻子或杠。",
-      "hash": "d7329e1f2f4bc5fe7ce3b0cd5851862b1fad36362488be6a2b8112492d4bf22d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 280
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.have-two-triplets-or-quads-of-the-same-number-in": {
-      "value": "在两种不同花色中各含一组同数字的刻子或杠。",
-      "hash": "235c34dd6025f799825455b72bf7f9880eab65978d853b5a0b1180a259b93319",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 335
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.hold-a-concealed-single-suit-1112345678999-struc": {
-      "value": "持有一副暗刻单花色1112345678999结构，由该花色额外一张牌完成。",
-      "hash": "666d1895a3b13058d14db1108da70c6e718876d0e80d92f6da6ee2d91d601bf7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 30
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.in-one-suit-use-two-123-sequences-two-789-sequen": {
-      "value": "在一花色中使用两组123顺子、两组789顺子及一对5。",
-      "hash": "58c0fbc212a8be7a9bbaca96bb263a2a324bd99e07474512158bd9dee0442166",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 75
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.include-characters-circles-bamboo-at-least-one-w": {
-      "value": "须包含万、筒、条三种花色，至少一种风牌，至少一种箭牌。",
-      "hash": "69b640b56c0d3703a7838bf3636cae46eb8c7b98f099aac58d033a5b9f5b15e7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 265
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.keep-every-ordinary-set-concealed-and-win-on-a-t": {
-      "value": "所有普通牌组均保持暗置，并荣和他人打出之牌；允许暗杠。",
-      "hash": "b321b4166268bd28ac37360b524b65afea4a27f3159deaac4b3af835cc82ecef",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 320
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.keep-the-hand-concealed-and-win-by-self-draw-con": {
-      "value": "整副牌保持暗置，并以自摸和牌；允许暗杠。",
-      "hash": "89fe4003c907c386b2b31407975b3cda68fe4b822bb6422c8a926ea609b675db",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 290
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.larger-quad-combinations-replace-the-individual": {
-      "value": "大型杠组合取代其构成的单个番种，不另行支付杠上开花点数。",
-      "hash": "4c6fbf8ae86ebe98ea71e63fda4539600ed7479d4365407ecd81f2e4cb1e8b73",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 381
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.make-a-triplet-or-quad-of-each-of-the-four-winds": {
-      "value": "四组风牌各成一组刻子或杠，并加一对将牌。",
-      "hash": "a344f70401dd3af237ed7b6d6a39aadea2211af87416d96c2a8ebdccba882b41",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 15
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.make-a-triplet-or-quad-of-white-green-and-red-dr": {
-      "value": "白板、绿发、红中各成一组刻子或杠。",
-      "hash": "881fa73135abe59d234d8bc620b3dcf0a7c6cdccfaecb4d0bb63eaa48b8b55e0",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 20
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.make-seven-pairs-of-consecutive-numbers-within-o": {
-      "value": "在一花色中组成七对连续数字的对子。",
-      "hash": "ce3a00d65fbda981ecad14ef9180d8bd456a304759259cbee0dbb79bdc5df36e",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 40
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.make-seven-pairs-with-no-declared-sets-four-iden": {
-      "value": "组成七对，且无任何明副；MCR规则下，四张相同牌可组成两对。",
-      "hash": "186c43c9e5cbedd61726d020c3b34238fd26f0fd9bf2764996ecb13e300cefa8",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 105
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.many-larger-composition-patterns-and-all-chows-a": {
-      "value": "许多大型组合牌型及全带幺已隐含此条件，故排除额外1分。",
-      "hash": "a0f9d2d875c11cbaee1bedcead07bb97c5821c3626890b77af0bb7972a0b47c9",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 391
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.melded-hand-seven-pairs-thirteen-orphans-and-cer": {
-      "value": "碰碰和、七对、十三幺及某些高番牌型排除此项。",
-      "hash": "9963e7163e0553b02ff0ce732e8e5952af83f23b9e5764c2126be1f3bc5a19c6",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 406
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.mixed-triple-chow-replaces-combinations-formed-s": {
-      "value": "混龙取代仅由其所需三组顺子构成的组合。",
-      "hash": "7252bd3c546ddb10ffa646f8a9bec6c1bbda73d17f75c26cd31bcf5836869ea4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 361
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.no-declared-set-excludes-all-types-and-concealed": {
-      "value": "无明副；排除字一色与门前清；若七种字牌全部出现，则以大七星取代。",
-      "hash": "bf3880e5b28ba0d9622cb4d78a67538a90458a64c1b6d50e3247b8c2e32f3ca2",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 181
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.no-numbered-suit-other-than-bamboo-can-appear-do": {
-      "value": "除条子外，不得出现其他数牌花色；不另行计混一色或缺一门。",
-      "hash": "280a29223985c0c950a25faab8f572fe2f83e84f40474859fa5a7afcd3637459",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 26
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.no-repeated-kind-and-no-declared-set-excludes-le": {
-      "value": "无重复种类且无明副；排除小七星与组合龙、字一色及门前清。",
-      "hash": "04974ed0e3c4c2b66190f7217b2aad31ade8c906035bc5b322179959dd2e63b4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 111
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.only-2-4-6-and-8-suited-tiles-may-appear-exclude": {
-      "value": "仅允许出现2、4、6、8数牌；排除全刻子与断幺九。",
-      "hash": "91cf7406e1c3a64ffc353986cc9b03fe6d002720e217c4f4a5bc27a4209425a4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 116
-      },
-      "placeholders": []
-    },
     "learn.mcr.guide.pattern.all-chows.family": {
       "value": "顺子",
       "hash": "ff4eaa5e6020142cc2a0db212eb951133ebbdcc55e4985c8bd67b95ecbb167f0",
@@ -15937,676 +14947,6 @@
       "source": {
         "file": "education/mcr-guide.ts",
         "line": 133
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.pure-straight-and-larger-shifted-sequence-patter": {
-      "value": "清一色与更大的移位顺子型役种，会取代其所包含的较低阶组合。",
-      "hash": "b95095389a6fc116dee15e1de47056067d6aad4b028d50bf28cdf26cef37b6d6",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 366
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.pure-straight-or-a-terminal-sequence-special-pat": {
-      "value": "清一色或老少副等特殊顺子型役种，可取代该组合。",
-      "hash": "02827287eed6c1dc1e671d9ff80d4d3bdfcc86700ec39c669f9ff36e9a3ac89a",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 371
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.replaces-little-four-winds-big-three-winds-the-a": {
-      "value": "取代小四喜、大三元、全刻子、风牌役及字牌/幺九刻子役。",
-      "hash": "31fcfcf15e3eef598decea8a518d7133a5526be611777a26247ca5d65886e25d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 16
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.replaces-little-three-dragons-the-two-dragon-tri": {
-      "value": "取代小三元、双箭刻及各单个箭刻役。",
-      "hash": "fa327fe8e8384527ad7f82956a8d4daa6e6c737cb8b7adc951f1a6fae557ac23",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 21
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.replaces-seven-pairs-full-flush-concealed-hand-s": {
-      "value": "取代七对子、清一色、门前清、单骑听牌、无字牌及缺一门。",
-      "hash": "c970103d50fe23a50377986728fad110fc94b721482f1aa351b5c19960bd2377",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 41
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.replaces-the-smaller-three-quad-combinations-it": {
-      "value": "取代由其构成的三个较小四杠组合；若规则允许，门清可额外计番。",
-      "hash": "8b83ac21822a748faf361d0c78512f6201830a8bf6e5538cfacd480672b90a3a",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 96
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.replaces-the-two-individual-dragon-triplet-award": {
-      "value": "取代两个单独的箭刻役。小三元或大三元可取代该组合。",
-      "hash": "02455608fda89fd595ddc54831c2191a224413a9346406c5b5ae8b046b4bd6e1",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 281
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.replaces-the-two-individual-melded-quad-awards-l": {
-      "value": "取代两个单独的明杠役；更大的四杠组合可取代它。一个暗杠加一个明杠合计计六番，而非两个单独役种；该组合不构成独立命名役种。",
-      "hash": "a82b99c3de7ec4a137a7a14fd0e9cdcd684b970ec579c8918a73ac3342932b55",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 296
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.requires-the-concealed-nine-way-base-before-winn": {
-      "value": "须在和牌前已达成门清九面听；取代清一色、门前清及所含幺九刻子役。",
-      "hash": "6da2a4d391f7df4414d790d53ba11f6a24c90f8a60e2b5a53ec70f3748d520f1",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 31
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.small-combinations": {
-      "value": "小型组合",
-      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 329
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.special-honor-and-knitted-hands-and-thirteen-orp": {
-      "value": "特殊字牌型与十三幺等组合已隐含这些类别，故不另计此役。",
-      "hash": "721499cb7897ce386831ba8d4197a3280a7c2aa3f6db753b1080c39fadb7ad4f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 266
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.special-structures": {
-      "value": "特殊结构",
-      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 29
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-allowed-kinds-refer-to-the-conventional-tile": {
-      "value": "允许的牌型指常规牌面，不含缺一门。",
-      "hash": "2f169474038c0d3304d6969d9b515485a994a1ff0c5ed1f07751db96d95191cb",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 211
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-entire-hand-contains-only-numbered-suits": {
-      "value": "整副手牌仅含数牌花色。",
-      "hash": "593ac1c03f8a3b6aa1ec17ceec58f9fce243b969234fac44aacde3af68f46ff5",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 390
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-four-sets-are-all-triplets-or-quads-with-one": {
-      "value": "四组均为刻子或杠子，另加一对将牌。",
-      "hash": "7b44a12602c64be72b806a83cd5057a1f0607f705377f3ee9a36cc855be9737d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 250
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-nine-knitted-tiles-are-a-special-body-not-th": {
-      "value": "九种编织牌构成特殊牌型，并非三个普通顺子；最多只能声明一组普通牌型。",
-      "hash": "d417fbe7db62a85327bf24c326d17d708de4e8510b03e95fb93ab4b870d2bfa1",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 186
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-same-required-sequences-cannot-be-split-into": {
-      "value": "相同要求的顺子不可拆分为其他重复组合役种。",
-      "hash": "dce063ba7521550f6ff5d2171acc63efb8f6b07bd9f2812bdba7a81b16829c19",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 161
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-three-required-sequences-do-not-also-earn-sh": {
-      "value": "三个指定顺子不同时计短顺子或两般高。",
-      "hash": "1536a9fedea83c374ade2c7be0afa6e27ab578b4f843939c71055344ff91359d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 151
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-three-suits-can-be-assigned-in-any-order-the": {
-      "value": "三种花色可任意分配；数字序号必须保持连续。",
-      "hash": "06a57e061c6f91a7b467b43c6e959b89b3828bf40baa9730fba8906755d0638d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 221
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-thrown-tile-must-be-the-last-one-thrown-in-t": {
-      "value": "所打出的牌必须是本局中最后一张打出的牌，而非仅是第四张可见的同牌。",
-      "hash": "ac002d1d5dec893745054028d065fc174e33462df2c5d8fce9b6a6b5a0d9e831",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 236
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-triple-triplet-pattern-replaces-the-double-t": {
-      "value": "三暗刻役取代其所含的双暗刻组合。",
-      "hash": "7f18f24c7ad8d392fa5a5c44375673009f00465a18a522c54a01a41a7b6d6c54",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 336
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-two-concealed-quads-pattern-replaces-two-ind": {
-      "value": "双暗杠役取代两个单独的暗杠役；第四张牌不再重复计为一气通贯。",
-      "hash": "b47cedb4324f78781d55281d3da73a411f2346bb37fb5c9881a5e617b00a6967",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 346
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.the-two-sets-cannot-be-counted-as-the-same-combi": {
-      "value": "两组不能重复计为同一组合。更大的相同顺子型役种取代其所含的低阶役种。",
-      "hash": "3942162a77f60fd2ee8442dc9718d2cea1ce1f18bc591ef0a0b614072bbcec49",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 356
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.tile-composition": {
-      "value": "牌型构成",
-      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 24
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.triplets-and-quads": {
-      "value": "刻子与杠子",
-      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 34
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-123-456-and-789-sequences-in-one-suit": {
-      "value": "在一色中使用123、456和789三组顺子。",
-      "hash": "b5ffcc1f88a1d8590f9f2e320b46e24d8d7f5da242c7012fa92f4d3f0d0164d1",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 150
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-123-and-789-in-each-of-two-suits-with-a-pair": {
-      "value": "在两种花色中各用123和789，在第三种花色中用一对5。",
-      "hash": "d8fbd2a5063dab578940e5c81d92e167ad59828c78a4053133e656d3b867b257",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 155
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-123-in-one-suit-456-in-a-second-and-789-in-t": {
-      "value": "在一种花色中用123，第二种中用456，第三种中用789。",
-      "hash": "085d27bb908b76b2e2e6a356461bb57ac09c4c9f068ce61f9ee80a4e38d10200",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 205
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-147-in-one-suit-258-in-another-and-369-in-th": {
-      "value": "在一种花色中用147，另一种中用258，第三种中用369，另加一组普通牌型及一对将牌。",
-      "hash": "5916fccd4fa0e2540f6eeb144e93ccf2b189f7796234c3400a0e284f8db53f68",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 185
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-all-four-copies-of-a-kind-within-the-hand-wi": {
-      "value": "在手牌中使用某张牌的全部四张，但不声明为杠。",
-      "hash": "d9243a8bebcce053155b738491decf9d3c3e9f9f66baf17f5e7e77d07678e954",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 330
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-all-seven-different-honors-and-seven-distinc": {
-      "value": "使用全部七种字牌，以及按编织式147/258/369分配所得的七种不同数牌。",
-      "hash": "3b044d7e79ae4f5cd240103655175b28ea8f98babcbe3924d77f24d3bb7e9cd7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 110
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-exactly-one-numbered-suit-and-no-honors": {
-      "value": "仅使用一种数牌花色，且不含字牌。",
-      "hash": "3057d9154a2edda9cb91239ed4361f697e03d713bf4c19fd1ce8c168413dbef8",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 120
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-exactly-two-of-the-three-numbered-suits-hono": {
-      "value": "恰好使用三种数牌花色中的两种；字牌亦可出现。",
-      "hash": "5cd49935ba2828bf3388380ada36e5a3791834d122d35e2d4000d48c00fb1536",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 385
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-four-identical-sequences-in-the-same-suit": {
-      "value": "在同一花色中使用四组完全相同的顺子。",
-      "hash": "4da6c2e3cf972bac1813403eeb0ecc447e43bb6f3d9410e534faa62bf2d0a760",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 80
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-four-sequences-and-a-pair-of-suited-tiles": {
-      "value": "使用四组顺子及一对数牌。",
-      "hash": "caead8681355963a7f410d26fcf92e7624f78ef110b1930ef57c3e67a5ae6ad4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 325
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-four-sequences-in-one-suit-with-starting-num": {
-      "value": "在同一花色中使用四组顺子，起始数字间隔恒为一或二。",
-      "hash": "131a0b0a835e58827b58d9051a470ed26d39184cf609a81b5880bac19bec60b7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 90
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-four-triplets-in-one-suit-whose-numbers-adva": {
-      "value": "在同一花色中使用四组刻子，其数字依次递增一。",
-      "hash": "1a0eb80c9e506dded982b9b8148bb60dbd56e1961f62508f916c93a58aa3b8cf",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 85
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-fourteen-distinct-tiles-drawn-from-a-knitted": {
-      "value": "从编织式花色分配及七种字牌中选出十四种不同牌。",
-      "hash": "b1ee897261be232445ec840b530601ef6ef169f3985f801ee784b3d79a623980",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 180
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-one-numbered-suit-together-with-honors": {
-      "value": "使用一种数牌花色并搭配字牌。",
-      "hash": "cbe8cc8db9fe6f9629478bb204b83c75cec620b2ffea5f690291fb1db6c89d4b",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 255
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-only-1-2-3-4-5-8-9-circles-2-4-5-6-8-9-bambo": {
-      "value": "仅使用筒子1、2、3、4、5、8、9；索子2、4、5、6、8、9；及白板。",
-      "hash": "1c0140d55a8ff52249a848dd60e585c0562359cbda6d7860379f13d68542a71f",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 210
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-only-2-3-4-6-and-8-bamboo-and-green-dragons": {
-      "value": "仅使用索子2、3、4、6、8及绿发。",
-      "hash": "8d8dc4574c2bb59457a5303cc483a442f64fee5616507e1679639a896bc2398c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 25
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-only-suited-1s-suited-9s-winds-and-dragons-w": {
-      "value": "仅使用数牌1、数牌9、风牌及箭牌，且数牌与字牌均需存在。",
-      "hash": "39c1c5ded9939befb6702083bde7f5c1c49bff42639084ec4d1b58fbc296cea7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 100
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-the-actual-winning-tile-and-pre-win-structur": {
-      "value": "须使用实际和牌时的牌及和牌前的手牌结构，不可采用便于计算的后续重组方式。仅计一种听牌类型。",
-      "hash": "580a5d4aa26998759dff77acb81ad646a69af2901e26abd224a660b2a7310d6e",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 401
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-the-same-numbered-sequence-in-each-of-the-th": {
-      "value": "在三种花色中各使用同一数字的顺子。",
-      "hash": "1a6c54618548d6a7e14388c6fa3a6db74b5c0b421cc63aff625600250854e9a3",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 215
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-the-seat-at-decision-time-it-can-combine-wit": {
-      "value": "在听牌时使用门风。当门风与场风相同时，二者可组合计番。",
-      "hash": "c9397a56a9cce4501aa502c65b9222869862469b313a45006eea850e92de855e",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 316
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-three-identical-sequences-in-the-same-suit": {
-      "value": "使用同一花色的三组完全相同的顺子。",
-      "hash": "db46db262aa62ec65019dd6adaf8dad2cc87891b569efaafa7bfd8fe3c325bba",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 125
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-three-sequences-in-different-suits-whose-sta": {
-      "value": "使用三组不同花色的顺子，其起始数字依次递增一。",
-      "hash": "3d57fdf06131161ffc4ad2bd9dcc37ef7f1dc24d445a0e0db3c12cef8bbeac38",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 260
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-three-sequences-in-one-suit-whose-starts-adv": {
-      "value": "使用同一花色的三组顺子，其起始数字以固定步长（一或二）递增。",
-      "hash": "90deea7605c258a817d9a8ebf1516d18426ee920685bccfe21fc46a284476e59",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 160
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-three-triplets-in-one-suit-with-consecutive": {
-      "value": "使用同一花色中数字连续的三组刻子。",
-      "hash": "7aab1df3801f38623bc8485a445e1033568f4bf7bf8729e6712e2e636655c581",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 130
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-three-triplets-in-three-different-suits-with": {
-      "value": "使用三种不同花色的三组刻子，其数字依次递增一。",
-      "hash": "e5c52f93cbc4a5500be9c0a90b1bd7f9b1245fc291a4c11862db6d8b4da52132",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 220
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-three-wind-triplets-or-quads-and-the-fourth": {
-      "value": "使用三组风牌刻子或杠，再以第四种风牌作将牌。",
-      "hash": "6c3e794f9a98ed6ac98f55b9e8bfe8d3b4ddeeb4a5c7efc3362e4391a04805bd",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 55
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-triplets-or-quads-of-the-same-number-in-all": {
-      "value": "在全部三种花色中，使用相同数字的刻子或杠。",
-      "hash": "03952f03e5d0bd276aac1519100a7637b7ebb5e396286cfbed94f337b0fc7e56",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 170
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-two-dragon-triplets-or-quads-and-a-pair-of-t": {
-      "value": "使用两组字牌（发、中、白）刻子或杠，并以第三种字牌作将牌。",
-      "hash": "5de5ac3dcaa6869aedfe7fd76b7d5948d19e1e4bfc8b36d73b2332617db1ce9b",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 60
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-two-identical-sequences-in-the-same-suit": {
-      "value": "使用同一花色的两组完全相同的顺子。",
-      "hash": "29ac6a58c66070ce58fba55ff300ad0f713a6dee5ffeb134a9a5d0d8fe02b210",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 355
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-two-sequences-in-one-suit-to-cover-six-conse": {
-      "value": "使用同一花色的两组顺子覆盖六个连续数字，例如234与567。",
-      "hash": "d35e8422ea63c6dc27396deed6808d495fee947bc0bbacc7f7167b196376b7d6",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 365
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.use-two-sequences-with-the-same-numbers-in-diffe": {
-      "value": "使用不同花色但数字相同的两组顺子。",
-      "hash": "6513979f1d5a24444bd1a2121c8d2dd9bce2494ac78a19e845793c1e051a5701",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 360
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.visibility-comes-from-tiles-everyone-can-see-not": {
-      "value": "可见性来自所有玩家都能看到的牌，而非手牌或牌墙中的隐藏牌。抢杠时该杠不计入可见牌。",
-      "hash": "95010ab25e83bb20cb0620b909098eb2a8cbf3d84d0d46fee2705f3ae523ad21",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 301
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-by-completing-the-pair-when-this-is-the-hand": {
-      "value": "当这是该手牌唯一可和的牌型时，通过组成将牌完成和牌。",
-      "hash": "249877c71e8927c9e2938aac7f303679b38bdfcf9da4b4662366ca669609e77c",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 405
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-immediately-on-the-ordinary-replacement-take": {
-      "value": "在宣布杠后所摸的普通补牌上立即和牌。",
-      "hash": "2d65c21d955e31ce626e5395e324c21053336a83cb471594e1252b1629b32d1b",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 240
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-on-a-tile-you-draw-from-the-wall-yourself": {
-      "value": "通过自己从牌墙摸到的牌和牌。",
-      "hash": "4f6aa8351e632df7d8825c7e64853268ffba219c81b77c590419b5023c68e750",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 410
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-on-the-last-thrown-tile-of-the-hand-thrown-a": {
-      "value": "在本局最后一张被打出的牌上和牌（即在最后一张摸牌之后打出的那张牌）。",
-      "hash": "45c06521a94b7b0e056a57bc78eb9499cb88d0ea053525136ca09ec485c92179",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 235
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-on-the-middle-tile-of-a-sequence-with-no-oth": {
-      "value": "在顺子中间那张牌上和牌，且此时无其他可和方式。",
-      "hash": "d7678ae39b14971d29d52f685c8380bde5b25690b62e664e4dc26f1606674bd4",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 400
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-on-the-tile-another-player-adds-to-a-melded": {
-      "value": "在另一名玩家向已碰出的刻子加牌成杠时打出的那张牌上和牌。",
-      "hash": "897e1747c652dd816b238479487b08a783536307a70e7631641e052268e3d9f8",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 245
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-with-3-completing-12-or-7-completing-89-when": {
-      "value": "当这是该手牌唯一可和的牌型时，以3补全12、或以7补全89和牌。",
-      "hash": "17e235b1210bdae60d06c0ed8c2fae158c8899b548be0c405ede0fe390a6d671",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 395
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-with-a-valid-structure-that-earns-no-other-n": {
-      "value": "以一个有效牌型和牌，且该牌型不触发任何其他非花牌役种。",
-      "hash": "204fdcf0d40eb795a64f97a98089d10d4c772f0a94627ef0257d7c2e662abb61",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 225
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.win-with-the-fourth-copy-when-the-other-three-co": {
-      "value": "当其余三张同牌已在和牌前公开可见时，以第四张同牌和牌。",
-      "hash": "643c39f68a5392f807c56d59e6fc90ce775fd0a0a0d443fe3be5496b025d654b",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 300
-      },
-      "placeholders": []
-    },
-    "learn.mcr.guide.worth-eight-fan-together-do-not-also-count-the-t": {
-      "value": "合计八番。不可额外再计两个暗杠各自的番数。",
-      "hash": "1d8ea522e0cec52c75841afa88a10d9622cf190948c1320d7a9c3b033b06bea7",
-      "status": "draft",
-      "source": {
-        "file": "education/mcr-guide.ts",
-        "line": 276
       },
       "placeholders": []
     },
@@ -29476,60 +27816,6 @@
       },
       "placeholders": []
     },
-    "play.variant.band": {
-      "value": "边",
-      "hash": "65f15ce8fee25b248445eedc63cd9a82094e35965e4ed552e195029a9311d474",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 110
-      },
-      "placeholders": []
-    },
-    "play.variant.bandtop": {
-      "value": "边张",
-      "hash": "032c7310afdcc332badaeb16bf5cf58d6bfdba92222d6089154945de0ca560f5",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 111
-      },
-      "placeholders": []
-    },
-    "play.variant.cell": {
-      "value": "单张",
-      "hash": "39d02b42938b2b75d027ebeb25c9d1fd0b71b6e0453e217a2e85cedc7e4637b4",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 64
-      },
-      "placeholders": []
-    },
-    "play.variant.center": {
-      "value": "中张",
-      "hash": "f179a509d32bd92c923f236324daef85551c03a761bf0188be286a585281b4ac",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 133
-      },
-      "placeholders": []
-    },
-    "play.variant.chip-0-1": {
-      "value": "chip{0}{1}",
-      "hash": "c3f73aedad136ad512c11265d4b5e3ce63ee57cfa1c315b29c7245e52ca86d81",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 116
-      },
-      "placeholders": [
-        "0",
-        "1"
-      ],
-      "dynamic": true
-    },
     "play.variant.close": {
       "value": "关闭",
       "hash": "7d9eb7acb13e24625c404401d8e88b2350e32162455885f18276cf802f7701ed",
@@ -29646,16 +27932,6 @@
       "source": {
         "file": "variant-table-ui.ts",
         "line": 398
-      },
-      "placeholders": []
-    },
-    "play.variant.flip": {
-      "value": "翻牌",
-      "hash": "4e448897946ead9e39e8c61c2994b2ada30968ed9d14ac21ebaba710d823db64",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 58
       },
       "placeholders": []
     },
@@ -29782,16 +28058,6 @@
       },
       "placeholders": []
     },
-    "play.variant.meld": {
-      "value": "副露",
-      "hash": "cfe6a6676d638dfdd7bf0966b975f991224e8ee30b29f8b5bc3de7c0ff48c03c",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 80
-      },
-      "placeholders": []
-    },
     "play.variant.move-unavailable": {
       "value": "操作不可用",
       "hash": "7971e5ed64b1d69fcfe8833b1e06c6fc7ddea65574f1febd287ed2291cca292d",
@@ -29862,16 +28128,6 @@
       },
       "placeholders": []
     },
-    "play.variant.opp-hand": {
-      "value": "对手手牌",
-      "hash": "de6df9f5d6f6500d9bec6f1c099105b49137831eee1ed3eb77161427815205fe",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 103
-      },
-      "placeholders": []
-    },
     "play.variant.pass": {
       "value": "跳过",
       "hash": "ebdf8cc00bc4d9ceee633c56c63b49955769a92ca060825c9b08e4af61326e2b",
@@ -29894,39 +28150,6 @@
         "0"
       ],
       "dynamic": true
-    },
-    "play.variant.pond-0": {
-      "value": "弃牌堆{0}",
-      "hash": "088e51bb39c1da5c62f8203147e064434837435d60a040e3fd1ba87fef246186",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 58
-      },
-      "placeholders": [
-        "0"
-      ],
-      "dynamic": true
-    },
-    "play.variant.pondwrap": {
-      "value": "弃牌堆循环",
-      "hash": "d8b6bcfb6f9adf8d094d07ce720d376ed5f008dadb5c1cee807b1b05acd57d2a",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 106
-      },
-      "placeholders": []
-    },
-    "play.variant.pondwrap-variant-my-pond": {
-      "value": "弃牌堆循环变体—我的弃牌堆",
-      "hash": "9f5d838ce634d7a82147a4571a4f6e12b13054cc25366fe45944d67472d10e6b",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 156
-      },
-      "placeholders": []
     },
     "play.variant.recorded-moves-are-being-shown": {
       "value": "正在播放记录的操作……",
@@ -29960,26 +28183,6 @@
         "0"
       ],
       "dynamic": true
-    },
-    "play.variant.rname": {
-      "value": "轮名",
-      "hash": "51d2a1cee0095f95af9119f50be96813a37e2d84e52f7f485f7e93e254541f6d",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 138
-      },
-      "placeholders": []
-    },
-    "play.variant.round": {
-      "value": "轮",
-      "hash": "a97b0931730e83fbf9284ff00a4c5f7a4eef2189dddb89319a6dfa5871e28923",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 135
-      },
-      "placeholders": []
     },
     "play.variant.select-0": {
       "value": "选择 {0}",
@@ -30043,19 +28246,6 @@
       },
       "placeholders": []
     },
-    "play.variant.sidehand-0": {
-      "value": "旁听手牌 {0}",
-      "hash": "45eed3e3c9548919a9db977402cb45ac8cac119c61afa6fc869cacf9fd3b57d9",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 129
-      },
-      "placeholders": [
-        "0"
-      ],
-      "dynamic": true
-    },
     "play.variant.sound": {
       "value": "音效",
       "hash": "46124e023603420f8670526e3eb9a603935e8916cb8e0428ea84bbe42d85d297",
@@ -30063,39 +28253,6 @@
       "source": {
         "file": "variant-table-ui.ts",
         "line": 145
-      },
-      "placeholders": []
-    },
-    "play.variant.sp-0": {
-      "value": "sp {0}",
-      "hash": "cb75fb1c1459ec7cc4e3b659cbbfe621708bf79ee854ead5b4acf432db42033a",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 59
-      },
-      "placeholders": [
-        "0"
-      ],
-      "dynamic": true
-    },
-    "play.variant.stage-mid": {
-      "value": "中段",
-      "hash": "8b9104ebc04cb5d77a6acd5430e6d1e0ad4a68a9f101c54cbe3ff97c234d152f",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 124
-      },
-      "placeholders": []
-    },
-    "play.variant.sub": {
-      "value": "副",
-      "hash": "ddc6e2b224d0fd821669202258386936fc9ce2899e215eec6322b95f8dd96d6a",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 141
       },
       "placeholders": []
     },
@@ -30149,16 +28306,6 @@
       },
       "placeholders": []
     },
-    "play.variant.tile-t-back": {
-      "value": "牌t回退",
-      "hash": "c53df300e73501c3da128666bfced0471237b04b0efdd96b8390df00e97b2551",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 12
-      },
-      "placeholders": []
-    },
     "play.variant.triplet-claim-for-three-of-a-kind": {
       "value": "刻子 — 三张相同牌的声明",
       "hash": "f13d2b8f1efeb42af8afd8167cf1962c14d5de7b24d6a87ca10585484507ec28",
@@ -30176,16 +28323,6 @@
       "source": {
         "file": "variant-table-ui.ts",
         "line": 521
-      },
-      "placeholders": []
-    },
-    "play.variant.turn": {
-      "value": "回合",
-      "hash": "9b473845f684444f80a26586ae298d2ba491752cc70b893cc653d943b6fa2ac2",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 116
       },
       "placeholders": []
     },
@@ -30344,59 +28481,6 @@
       ],
       "dynamic": true
     },
-    "play.variant.variant-board-sets": {
-      "value": "变体-主面板集合",
-      "hash": "31f1f2d51c26999f4965116300932e21bb1652d427c73a55d858b79d8d53c7de",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 78
-      },
-      "placeholders": []
-    },
-    "play.variant.variant-large": {
-      "value": "变体-大字",
-      "hash": "cb68ca5f3c42f6bf15bcc61b599d7c9a9964000f3441fba4643dfd969479b93c",
-      "status": "draft",
-      "source": {
-        "file": "variant-table-ui.ts",
-        "line": 157
-      },
-      "placeholders": []
-    },
-    "play.variant.variant-public-board-variant-v4-0": {
-      "value": "公开面板变体-v4{0}",
-      "hash": "9ece2c5a781b98c8b1afddc3f37094e0c523e5cc59a557fae49464edd4ac40c1",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 97
-      },
-      "placeholders": [
-        "0"
-      ],
-      "dynamic": true
-    },
-    "play.variant.variant-side-sets": {
-      "value": "变体-侧边面板集合",
-      "hash": "f93b7a8fcc5ca2245b62f189944a0723e81d9ef34289cd8ec3299aa494a4c0a4",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 153
-      },
-      "placeholders": []
-    },
-    "play.variant.west": {
-      "value": "西",
-      "hash": "76a796208b71779c0331e79e8ac17df979c7d2c5bd10b491c94bd1e16d422088",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 116
-      },
-      "placeholders": []
-    },
     "play.variant.why-this-move": {
       "value": "为何选择此操作？",
       "hash": "e87af575f41f53efb20e1da998c48d671a87c54607cfbc97b816d6d4adc5f558",
@@ -30434,16 +28518,6 @@
       "source": {
         "file": "variant-table-ui.ts",
         "line": 512
-      },
-      "placeholders": []
-    },
-    "play.variant.wind": {
-      "value": "风",
-      "hash": "9b58e68145a79ca0e19957f3e5c88fd92ff2e28a7bd09ed30ee365fc4f9aafe0",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 136
       },
       "placeholders": []
     },
@@ -30497,16 +28571,6 @@
       "source": {
         "file": "variant-table-ui.ts",
         "line": 193
-      },
-      "placeholders": []
-    },
-    "play.variant.zone-top": {
-      "value": "区域顶部",
-      "hash": "bdb3c30d64a68868b9f811ea0fbb9681651689c4fecab76b1856c64eec72b4d5",
-      "status": "draft",
-      "source": {
-        "file": "variant-board-ui.ts",
-        "line": 102
       },
       "placeholders": []
     },
@@ -33233,26 +31297,6 @@
       },
       "placeholders": []
     },
-    "tools.inperson.cx-action-cx-action-settle": {
-      "value": "cx-action cx-action-settle",
-      "hash": "c8abf9fddca1cec60d8aab19d899afb77aafdf6781f50bbb39c2754f04c078f8",
-      "status": "draft",
-      "source": {
-        "file": "in-person-ui.ts",
-        "line": 492
-      },
-      "placeholders": []
-    },
-    "tools.inperson.cx-choice-on": {
-      "value": "cx-choice 开启",
-      "hash": "d8f2f6155fac24a06cdaa751263b2b0554da144da93765927d472066bfd7af5e",
-      "status": "draft",
-      "source": {
-        "file": "in-person-ui.ts",
-        "line": 670
-      },
-      "placeholders": []
-    },
     "tools.inperson.dealer-repeats-0": {
       "value": "· 庄家连庄 {0} 次",
       "hash": "442bc2b0ceb66478a1cac7f72684916a4b9f307f5b6a45dce82b45fa0d83d499",
@@ -34552,16 +32596,6 @@
       },
       "placeholders": []
     },
-    "ui.app.aria-label": {
-      "value": "aria 标签",
-      "hash": "66ba2129a90d4a5810ec62bcf19ac63372c4ca9f44becbd2cf588b101cc8228d",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 280
-      },
-      "placeholders": []
-    },
     "ui.app.at-the-table": {
       "value": "牌桌旁",
       "hash": "06812ceebde17b05541286cb178287d6590b2ec584e68d1800870d63ffaebdbb",
@@ -34947,16 +32981,6 @@
       "source": {
         "file": "app.ts",
         "line": 3113
-      },
-      "placeholders": []
-    },
-    "ui.app.dismiss": {
-      "value": "忽略",
-      "hash": "48845bff334a50a59aaecf499f28a7a24c3b4b891b8b18a9f1169ad8e8a6b261",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 1031
       },
       "placeholders": []
     },
@@ -37178,8 +35202,8 @@
       "dynamic": true
     },
     "ui.app.v-0-1-3": {
-      "value": "{0}{1}",
-      "hash": "8391da809dd9ca6b46bd1d406cd1e6298334ec421ec1292451c9e2acc2fd10e4",
+      "value": "{0} {1}",
+      "hash": "10866a9df5f8be5be75c79314de01412b0b35db060b06fdc333c1d9cd82d73c0",
       "status": "draft",
       "source": {
         "file": "app.ts",
@@ -37192,8 +35216,8 @@
       "dynamic": true
     },
     "ui.app.v-0-1-4": {
-      "value": "{0} {1}",
-      "hash": "10866a9df5f8be5be75c79314de01412b0b35db060b06fdc333c1d9cd82d73c0",
+      "value": "{0} — {1}",
+      "hash": "fa4816846a52134eaa901ce9be4cdf4f68a2e306e212bbbb9b4588ebf9fca0dc",
       "status": "draft",
       "source": {
         "file": "app.ts",
@@ -37204,19 +35228,6 @@
         "1"
       ],
       "dynamic": true
-    },
-    "ui.app.v-0-1-5": {
-      "value": "{0} — {1}",
-      "hash": "fa4816846a52134eaa901ce9be4cdf4f68a2e306e212bbbb9b4588ebf9fca0dc",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 4202
-      },
-      "placeholders": [
-        "0",
-        "1"
-      ]
     },
     "ui.app.v-0-1-points": {
       "value": "{0} · {1} 点",
@@ -37327,25 +35338,12 @@
       "dynamic": true
     },
     "ui.app.v-0-6": {
-      "value": "{0}",
-      "hash": "a00644508de97e85263c9d0cd67e63d3c3b5d733bcaddc65b110e501ad5a7b73",
-      "status": "draft",
-      "source": {
-        "file": "app.ts",
-        "line": 3454
-      },
-      "placeholders": [
-        "0"
-      ],
-      "dynamic": true
-    },
-    "ui.app.v-0-7": {
       "value": "+{0}",
       "hash": "e6f36eec2093006bbf6bbc44f8ec977484c54a5de9d810ebd450fb4a63646468",
       "status": "draft",
       "source": {
         "file": "app.ts",
-        "line": 4477
+        "line": 3454
       },
       "placeholders": [
         "0"
@@ -38343,6 +36341,2706 @@
       "source": {
         "file": "app.ts",
         "line": 1865
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-chows.exclusions": {
+      "value": "字牌对子会使本型失效。不计无字牌。",
+      "hash": "e396967dde4d567f7985c2bcfa05ac176dd375e9ae064763c00dd5041f31e1f7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 326
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-chows.recognition": {
+      "value": "使用四组顺子及一对数牌。",
+      "hash": "caead8681355963a7f410d26fcf92e7624f78ef110b1930ef57c3e67a5ae6ad4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 325
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-even-pungs.exclusions": {
+      "value": "仅允许出现2、4、6、8数牌；排除全刻子与断幺九。",
+      "hash": "91cf7406e1c3a64ffc353986cc9b03fe6d002720e217c4f4a5bc27a4209425a4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 116
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-even-pungs.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-even-pungs.recognition": {
+      "value": "每组面子均为刻子或杠子，且所有数牌点数（含雀头）均为偶数。",
+      "hash": "869294f1cd04b400fe8df8c9b240d11b250efdb59cc869a2d1913a6df54bfe2f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 115
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-five.exclusions": {
+      "value": "不计断幺九与无字；字牌不可用于满足含5的组合。",
+      "hash": "a526997d7667ea2d338f5605c2049f491a3233fedffa6d163411bdcaef76d918",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 166
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-five.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-five.recognition": {
+      "value": "每组面子及雀头均含一张数牌5。",
+      "hash": "c0b1fd7fc5b6d1bba84df2a9150a20a9800b8be39cd83476c1888943ff444ea4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 165
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-green.exclusions": {
+      "value": "除条子外，不得出现其他数牌花色；不另行计混一色或缺一门。",
+      "hash": "280a29223985c0c950a25faab8f572fe2f83e84f40474859fa5a7afcd3637459",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 26
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-green.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-green.recognition": {
+      "value": "仅使用索子2、3、4、6、8及绿发。",
+      "hash": "8d8dc4574c2bb59457a5303cc483a442f64fee5616507e1679639a896bc2398c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 25
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-honors.exclusions": {
+      "value": "不计全刻子、边张、嵌张、单钓将及幺九字牌刻子番。",
+      "hash": "63a6370bb80071c649cb1e21caac859e8c9c16a30058ba632c941c66699be022",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 66
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-honors.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-honors.recognition": {
+      "value": "所有牌均为风牌或箭牌。",
+      "hash": "d2f39334f8967253504b4bfc68c155165fe59bc7001d49f45268dff0764b7abb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 65
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-pungs.exclusions": {
+      "value": "若存在更高阶且必然要求全刻子的番种，则按规则取代本番种。",
+      "hash": "cadd6cb71889f09fa3e2033b5a9e2099092afcebc3727bec36120d5697cca858",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 251
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-pungs.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-pungs.recognition": {
+      "value": "四组均为刻子或杠子，另加一对将牌。",
+      "hash": "7b44a12602c64be72b806a83cd5057a1f0607f705377f3ee9a36cc855be9737d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 250
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-simples.exclusions": {
+      "value": "不计无字。中张、五门齐及全双刻型已包含此条件，故取代之。",
+      "hash": "23a8b2b4330a2194cd7748425910075190266a52a05b69e1a38411792bcf5d03",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 351
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-simples.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-simples.recognition": {
+      "value": "所有牌均为数牌2至8。",
+      "hash": "6b51269289dea704c807fa253a3407c16897c9f5516df76ef30c7db4681608c2",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 350
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-terminals-and-honors.exclusions": {
+      "value": "不计全刻子、边张、嵌张、单钓将及幺九字牌刻子番。",
+      "hash": "63a6370bb80071c649cb1e21caac859e8c9c16a30058ba632c941c66699be022",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 66
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-terminals-and-honors.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-terminals-and-honors.recognition": {
+      "value": "仅使用数牌1、数牌9、风牌及箭牌，且数牌与字牌均需存在。",
+      "hash": "39c1c5ded9939befb6702083bde7f5c1c49bff42639084ec4d1b58fbc296cea7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 100
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-terminals.exclusions": {
+      "value": "不计全刻子、边张、嵌张、单钓将、幺刻子及无字。",
+      "hash": "b95fc86a52e93c0a7d3201498ee331cb0a190b6895c2e436ec9a2a00a017d25f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 51
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-terminals.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-terminals.recognition": {
+      "value": "所有牌均为数牌1或9。",
+      "hash": "04f362799c00dce9c1f48827cf77644df35f03dcec10335eeb7fc15b64264df5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 50
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-types.exclusions": {
+      "value": "特殊字牌型与十三幺等组合已隐含这些类别，故不另计此役。",
+      "hash": "721499cb7897ce386831ba8d4197a3280a7c2aa3f6db753b1080c39fadb7ad4f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 266
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-types.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.all-types.recognition": {
+      "value": "须包含万、筒、条三种花色，至少一种风牌，至少一种箭牌。",
+      "hash": "69b640b56c0d3703a7838bf3636cae46eb8c7b98f099aac58d033a5b9f5b15e7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 265
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.big-four-winds.exclusions": {
+      "value": "取代小四喜、大三元、全刻子、风牌役及字牌/幺九刻子役。",
+      "hash": "31fcfcf15e3eef598decea8a518d7133a5526be611777a26247ca5d65886e25d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 16
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.big-four-winds.recognition": {
+      "value": "四组风牌各成一组刻子或杠，并加一对将牌。",
+      "hash": "a344f70401dd3af237ed7b6d6a39aadea2211af87416d96c2a8ebdccba882b41",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 15
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.big-three-dragons.exclusions": {
+      "value": "取代小三元、双箭刻及各单个箭刻役。",
+      "hash": "fa327fe8e8384527ad7f82956a8d4daa6e6c737cb8b7adc951f1a6fae557ac23",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 21
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.big-three-dragons.recognition": {
+      "value": "白板、绿发、红中各成一组刻子或杠。",
+      "hash": "881fa73135abe59d234d8bc620b3dcf0a7c6cdccfaecb4d0bb63eaa48b8b55e0",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 20
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.big-three-winds.exclusions": {
+      "value": "不计这些风牌的幺九字牌刻子番；适用的自风与场风番仍可计算。",
+      "hash": "b41e397cde845522b2f237916610116b5d4cc05e8327e6633bc1d5386b3f08d7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 201
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.big-three-winds.recognition": {
+      "value": "含三种不同风牌的刻子或杠。",
+      "hash": "c343d8f0f55f852238e311c73875f21117aad4251ea81ef60f9b6d901f2df4e9",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 200
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.chicken-hand.exclusions": {
+      "value": "本条件固定计8番。可加计花牌，但若存在其他任何计分要素，则不计鸡和。",
+      "hash": "4bebadaa815e14768293ec87f72ff0f9ef8219a43feb0965272d0988a32195db",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 226
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.chicken-hand.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.chicken-hand.recognition": {
+      "value": "以一个有效牌型和牌，且该牌型不触发任何其他非花牌役种。",
+      "hash": "204fdcf0d40eb795a64f97a98089d10d4c772f0a94627ef0257d7c2e662abb61",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 225
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.concealed-hand.exclusions": {
+      "value": "门前清已涵盖自摸暗杠条件；部分特殊牌型本身即含此条件，故排除本番种。",
+      "hash": "46ac2a0c3b73afdeffb397ec96ebcb93e6ba226d18923b82f5b1dcd9bc4f8d8b",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 321
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.concealed-hand.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.concealed-hand.recognition": {
+      "value": "所有普通牌组均保持暗置，并荣和他人打出之牌；允许暗杠。",
+      "hash": "b321b4166268bd28ac37360b524b65afea4a27f3159deaac4b3af835cc82ecef",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 320
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.concealed-kong.exclusions": {
+      "value": "双暗杠役取代两个单独的暗杠役；第四张牌不再重复计为一气通贯。",
+      "hash": "b47cedb4324f78781d55281d3da73a411f2346bb37fb5c9881a5e617b00a6967",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 346
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.concealed-kong.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.concealed-kong.recognition": {
+      "value": "以四张相同的暗牌宣布暗杠，并摸取一张岭上牌。",
+      "hash": "c31b4108d42727d522623aa5942c1aa2c8bd4d953e16f213034bb7fa88fc951a",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 345
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.double-pung.exclusions": {
+      "value": "三暗刻役取代其所含的双暗刻组合。",
+      "hash": "7f18f24c7ad8d392fa5a5c44375673009f00465a18a522c54a01a41a7b6d6c54",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 336
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.double-pung.family": {
+      "value": "小型组合",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.double-pung.recognition": {
+      "value": "在两种不同花色中各含一组同数字的刻子或杠。",
+      "hash": "235c34dd6025f799825455b72bf7f9880eab65978d853b5a0b1180a259b93319",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 335
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.dragon-pung.exclusions": {
+      "value": "每种不同的箭牌均可单独计番，直至被更高阶的箭牌组合取代。",
+      "hash": "6b43f964e6f2e7331b38e39025ae7af30d599f1c6fac3418d5fc326683986df2",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 306
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.dragon-pung.recognition": {
+      "value": "含一组任意一种箭牌的刻子或杠。",
+      "hash": "0a8d0ae9ce2ccad5eb59bc46589f78022562d7d395181734c423865b3fc306f4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 305
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.flower-tiles.exclusions": {
+      "value": "花牌不能用于满足八番起和要求，也不计入十四张普通牌型结构位置。",
+      "hash": "8201bbf7f724cc7d1bcd4a82c863f53ba62f06584e5c03ab1c74fcfecb190d95",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 416
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.flower-tiles.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.flower-tiles.recognition": {
+      "value": "每张未出现过的花牌或季牌均需明示，并取其补花牌；有效和牌后，每张计1分。",
+      "hash": "9ef01983ec9e50aa35b1d32acfed8c0fdc076c344d89ad2e20e2f9d3f2e41abd",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 415
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-concealed-pungs.exclusions": {
+      "value": "他人打出的牌若组成刻子，则该刻子视为明刻计入本番种计算。但不适用于清一色与门前清番种。",
+      "hash": "96cc08d68c06755da7b4dcb3d456c20024764fd167f74a86b8f1402cf9907286",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 71
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-concealed-pungs.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-concealed-pungs.recognition": {
+      "value": "四组均为刻子或杠子，且其完成牌均未从其他玩家处获得（即全部为自摸完成）。",
+      "hash": "2c983eb1a7cdb5dba13c4ae9ef3f2173a93e4b27aacbe66d6e6f9069f1cf402c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 70
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-kongs.exclusions": {
+      "value": "需十八张实体牌。取代所有低阶杠型、全刻子型与单骑听牌。",
+      "hash": "737752ef753867c93e3a4b9700711321204e815dc97b2377df203d5f3bc0ee10",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 36
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-kongs.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-kongs.recognition": {
+      "value": "宣布四杠，并以最后一张牌完成雀头和牌。",
+      "hash": "b520f84fb1a4b2cf56e667b342df04a4d259825976d96f2c1130883dc4475c2e",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 35
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-chows.exclusions": {
+      "value": "不计清移位顺、七对子与双同顺（本结构内已包含）。",
+      "hash": "44c4cdde05c1d49ddb1986960dd1f8dbbe3adc8f34accaf9e4133a054617b2da",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 91
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-chows.recognition": {
+      "value": "在同一花色中使用四组顺子，起始数字间隔恒为一或二。",
+      "hash": "131a0b0a835e58827b58d9051a470ed26d39184cf609a81b5880bac19bec60b7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 90
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-pungs.exclusions": {
+      "value": "排除连七对（移位刻子）与全刻子两种牌型。",
+      "hash": "80b17aa429e2be7229dacdf141de60627b645d5497b59d99c6e0928168381d6e",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 86
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-pungs.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.four-pure-shifted-pungs.recognition": {
+      "value": "在同一花色中使用四组刻子，其数字依次递增一。",
+      "hash": "1a0eb80c9e506dded982b9b8148bb60dbd56e1961f62508f916c93a58aa3b8cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 85
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.full-flush.exclusions": {
+      "value": "不计缺一门与无字。更高阶特殊役种可取代此项番数。",
+      "hash": "03c86d9445c931308c47b846f520e6f5df9d59f21488d0f5e48d076e2b75871a",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 121
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.full-flush.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.full-flush.recognition": {
+      "value": "仅使用一种数牌花色，且不含字牌。",
+      "hash": "3057d9154a2edda9cb91239ed4361f697e03d713bf4c19fd1ce8c168413dbef8",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 120
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.fully-concealed-hand.exclusions": {
+      "value": "不计门前清与自摸。某些特殊牌型在自摸时仍可加计。",
+      "hash": "e748adee393500dcd00ee14491e78e3d869e3f30c68b87c38c2889c9de398650",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 291
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.fully-concealed-hand.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.fully-concealed-hand.recognition": {
+      "value": "整副牌保持暗置，并以自摸和牌；允许暗杠。",
+      "hash": "89fe4003c907c386b2b31407975b3cda68fe4b822bb6422c8a926ea609b675db",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 290
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.greater-honors-and-knitted-tiles.exclusions": {
+      "value": "无重复种类且无明副；排除小七星与组合龙、字一色及门前清。",
+      "hash": "04974ed0e3c4c2b66190f7217b2aad31ade8c906035bc5b322179959dd2e63b4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 111
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.greater-honors-and-knitted-tiles.family": {
+      "value": "特殊结构",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.greater-honors-and-knitted-tiles.recognition": {
+      "value": "使用全部七种字牌，以及按编织式147/258/369分配所得的七种不同数牌。",
+      "hash": "3b044d7e79ae4f5cd240103655175b28ea8f98babcbe3924d77f24d3bb7e9cd7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 110
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.half-flush.exclusions": {
+      "value": "须同时包含数牌与字牌。不计缺一门。",
+      "hash": "2b3e5911c52b20cf7968fb10e264ac5a6e5e1256f2e004f9956800f6af7b33dd",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 256
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.half-flush.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.half-flush.recognition": {
+      "value": "使用一种数牌花色并搭配字牌。",
+      "hash": "cbe8cc8db9fe6f9629478bb204b83c75cec620b2ffea5f690291fb1db6c89d4b",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 255
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.knitted-straight.exclusions": {
+      "value": "九种编织牌构成特殊牌型，并非三个普通顺子；最多只能声明一组普通牌型。",
+      "hash": "d417fbe7db62a85327bf24c326d17d708de4e8510b03e95fb93ab4b870d2bfa1",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 186
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.knitted-straight.family": {
+      "value": "特殊结构",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.knitted-straight.recognition": {
+      "value": "在一种花色中用147，另一种中用258，第三种中用369，另加一组普通牌型及一对将牌。",
+      "hash": "5916fccd4fa0e2540f6eeb144e93ccf2b189f7796234c3400a0e284f8db53f68",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 185
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile-claim.exclusions": {
+      "value": "所打出的牌必须是本局中最后一张打出的牌，而非仅是第四张可见的同牌。",
+      "hash": "ac002d1d5dec893745054028d065fc174e33462df2c5d8fce9b6a6b5a0d9e831",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 236
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile-claim.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile-claim.recognition": {
+      "value": "在本局最后一张被打出的牌上和牌（即在最后一张摸牌之后打出的那张牌）。",
+      "hash": "45c06521a94b7b0e056a57bc78eb9499cb88d0ea053525136ca09ec485c92179",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 235
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile-draw.exclusions": {
+      "value": "不计自摸。补花不算作牌墙最后一张普通牌的摸牌。",
+      "hash": "d65ba814e5999b255281e02cd90b2118ddef0dd2a7d061e5798da71c63d2cdbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 231
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile-draw.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile-draw.recognition": {
+      "value": "自己摸到牌墙最后一张牌并以此和牌。",
+      "hash": "b5c9d92df8186a26eeb32b252954dc1221308f39a9fb6aad887d1c09d90fbb68",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 230
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile.exclusions": {
+      "value": "可见性来自所有玩家都能看到的牌，而非手牌或牌墙中的隐藏牌。抢杠时该杠不计入可见牌。",
+      "hash": "95010ab25e83bb20cb0620b909098eb2a8cbf3d84d0d46fee2705f3ae523ad21",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 301
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.last-tile.recognition": {
+      "value": "当其余三张同牌已在和牌前公开可见时，以第四张同牌和牌。",
+      "hash": "643c39f68a5392f807c56d59e6fc90ce775fd0a0a0d443fe3be5496b025d654b",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 300
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lesser-honors-and-knitted-tiles.exclusions": {
+      "value": "无明副；排除字一色与门前清；若七种字牌全部出现，则以大七星取代。",
+      "hash": "bf3880e5b28ba0d9622cb4d78a67538a90458a64c1b6d50e3247b8c2e32f3ca2",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 181
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lesser-honors-and-knitted-tiles.family": {
+      "value": "特殊结构",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lesser-honors-and-knitted-tiles.recognition": {
+      "value": "从编织式花色分配及七种字牌中选出十四种不同牌。",
+      "hash": "b1ee897261be232445ec840b530601ef6ef169f3985f801ee784b3d79a623980",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 180
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.little-four-winds.exclusions": {
+      "value": "不计大三元及所需风牌的幺九字牌刻子番。",
+      "hash": "4f07a24fa5730d4485f8cdbafa259ceab21ec37b6c17689fe74dfb17708eba22",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 56
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.little-four-winds.recognition": {
+      "value": "使用三组风牌刻子或杠，再以第四种风牌作将牌。",
+      "hash": "6c3e794f9a98ed6ac98f55b9e8bfe8d3b4ddeeb4a5c7efc3362e4391a04805bd",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 55
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.little-three-dragons.exclusions": {
+      "value": "排除双箭刻与单个箭刻所对应的番种。",
+      "hash": "a2fe7bdba3b20e6d51aa717d56cee5bb11c88747aec07e2639574eaa35587932",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 61
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.little-three-dragons.recognition": {
+      "value": "使用两组字牌（发、中、白）刻子或杠，并以第三种字牌作将牌。",
+      "hash": "5de5ac3dcaa6869aedfe7fd76b7d5948d19e1e4bfc8b36d73b2332617db1ce9b",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 60
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lower-four.exclusions": {
+      "value": "不计无字。若仅含1–3，则由小幺九取代。",
+      "hash": "d3e8fe711c2e3e59342818aac76d358e7f66899248dd12b0596657326e223f35",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 196
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lower-four.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lower-four.recognition": {
+      "value": "所有数牌点数仅为1、2、3或4，且不含字牌。",
+      "hash": "452c3a5cb2067c47a7b45ecb11b6944c85c3a8987075deed9293d2542c304f4d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 195
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lower-tiles.exclusions": {
+      "value": "不计小四喜与无字。",
+      "hash": "fcdc4de717d2115961642b9a2c28273406d3ef5156b7c531ad75562abd9c894f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 146
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lower-tiles.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.lower-tiles.recognition": {
+      "value": "所有数牌点数仅为1、2或3，且不含字牌。",
+      "hash": "168ac673eb4c63deec153502f6320f005b934bc996a304b27b1885d7244c6038",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 145
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.melded-hand.exclusions": {
+      "value": "不计单骑听牌。暗杠使本型无法达成全副露状态。",
+      "hash": "5e94822249d6462e0184beff121024a7e4e0789d894dd8f6169399796d75762f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 271
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.melded-hand.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.melded-hand.recognition": {
+      "value": "全部四组均通过吃、碰、杠其他玩家打出的牌组成，并以他人打出的牌完成雀头和牌。",
+      "hash": "2767a6bd23f26f83eb64c50085b33dbf2aab8ed1ea3fb3d99b61d129474323fc",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 270
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.melded-kong.exclusions": {
+      "value": "大型杠组合取代其构成的单个番种，不另行支付杠上开花点数。",
+      "hash": "4c6fbf8ae86ebe98ea71e63fda4539600ed7479d4365407ecd81f2e4cb1e8b73",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 381
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.melded-kong.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.melded-kong.recognition": {
+      "value": "通过抢杠或碰后加杠的方式宣布副露杠。",
+      "hash": "7018e17ce102745b08457dea71d00e495c349304222c0907474eb9b8e6b7ad06",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 380
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.middle-tiles.exclusions": {
+      "value": "不计断幺九与无字。",
+      "hash": "b314dc5afd04625843de3e0a618379bc1055fec897c7c655e3c22f2f1137df99",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 141
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.middle-tiles.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.middle-tiles.recognition": {
+      "value": "所有数牌点数仅为4、5或6，且不含字牌。",
+      "hash": "cc2823c96de98e9aab178914f27edeaf11ef37d0aef078c00e992772e22ddf41",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 140
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-double-chow.exclusions": {
+      "value": "混龙取代仅由其所需三组顺子构成的组合。",
+      "hash": "7252bd3c546ddb10ffa646f8a9bec6c1bbda73d17f75c26cd31bcf5836869ea4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 361
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-double-chow.family": {
+      "value": "小型组合",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-double-chow.recognition": {
+      "value": "使用不同花色但数字相同的两组顺子。",
+      "hash": "6513979f1d5a24444bd1a2121c8d2dd9bce2494ac78a19e845793c1e051a5701",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 360
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-chows.exclusions": {
+      "value": "不得将同一必需组合重复用于本型的多个实例。",
+      "hash": "a3587263c0ce17a27852fd6aab0314cfa4d373ce8709424f61e469f12914f7e0",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 261
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-chows.recognition": {
+      "value": "使用三组不同花色的顺子，其起始数字依次递增一。",
+      "hash": "3d57fdf06131161ffc4ad2bd9dcc37ef7f1dc24d445a0e0db3c12cef8bbeac38",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 260
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-pungs.exclusions": {
+      "value": "三种花色可任意分配；数字序号必须保持连续。",
+      "hash": "06a57e061c6f91a7b467b43c6e959b89b3828bf40baa9730fba8906755d0638d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 221
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-pungs.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-shifted-pungs.recognition": {
+      "value": "使用三种不同花色的三组刻子，其数字依次递增一。",
+      "hash": "e5c52f93cbc4a5500be9c0a90b1bd7f9b1245fc291a4c11862db6d8b4da52132",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 220
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-straight.exclusions": {
+      "value": "三种花色必须各不相同。这些组合在“不重复规则”下统一判定。",
+      "hash": "5e3601ded24d13164cfc488a51d54c44e0234951341c4da381663fe9de3eb006",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 206
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-straight.recognition": {
+      "value": "在一种花色中用123，第二种中用456，第三种中用789。",
+      "hash": "085d27bb908b76b2e2e6a356461bb57ac09c4c9f068ce61f9ee80a4e38d10200",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 205
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-triple-chow.exclusions": {
+      "value": "不计混双同顺（针对所要求三组中的对子）。",
+      "hash": "2cd4e04203f7123d329a89d2ef6578d239ae52aa134de09743a4f303898900f8",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 216
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.mixed-triple-chow.recognition": {
+      "value": "在三种花色中各使用同一数字的顺子。",
+      "hash": "1a6c54618548d6a7e14388c6fa3a6db74b5c0b421cc63aff625600250854e9a3",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 215
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.nine-gates.exclusions": {
+      "value": "须在和牌前已达成门清九面听；取代清一色、门前清及所含幺九刻子役。",
+      "hash": "6da2a4d391f7df4414d790d53ba11f6a24c90f8a60e2b5a53ec70f3748d520f1",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 31
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.nine-gates.family": {
+      "value": "特殊结构",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.nine-gates.recognition": {
+      "value": "持有一副暗刻单花色1112345678999结构，由该花色额外一张牌完成。",
+      "hash": "666d1895a3b13058d14db1108da70c6e718876d0e80d92f6da6ee2d91d601bf7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 30
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.no-honors.exclusions": {
+      "value": "许多大型组合牌型及全带幺已隐含此条件，故排除额外1分。",
+      "hash": "a0f9d2d875c11cbaee1bedcead07bb97c5821c3626890b77af0bb7972a0b47c9",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 391
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.no-honors.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.no-honors.recognition": {
+      "value": "整副手牌仅含数牌花色。",
+      "hash": "593ac1c03f8a3b6aa1ec17ceec58f9fce243b969234fac44aacde3af68f46ff5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 390
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.one-voided-suit.exclusions": {
+      "value": "清一色、混一色及其他指定牌型已隐含缺一门，故排除本番种。",
+      "hash": "fbd4d4ef8939b2095691edeabe28be103cedd6fd19f37badb72fb4998537a17f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 386
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.one-voided-suit.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.one-voided-suit.recognition": {
+      "value": "恰好使用三种数牌花色中的两种；字牌亦可出现。",
+      "hash": "5cd49935ba2828bf3388380ada36e5a3791834d122d35e2d4000d48c00fb1536",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 385
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.out-with-replacement-tile.exclusions": {
+      "value": "不计自摸。若该补花牌为花牌，则后续补花不再计此番。",
+      "hash": "3f994f70740c395ce758799a624943569f291dc94ae9beff5b517919f202f7b5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 241
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.out-with-replacement-tile.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.out-with-replacement-tile.recognition": {
+      "value": "在宣布杠后所摸的普通补牌上立即和牌。",
+      "hash": "2d65c21d955e31ce626e5395e324c21053336a83cb471594e1252b1629b32d1b",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 240
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.outside-hand.exclusions": {
+      "value": "顺子仅可计为123或789。清老头、字一色、混老头等番种优先取代本番种。",
+      "hash": "05a6682f8f257d0e8e2db9943d5f7400ff372e0bdcf5f58386da7288fb4ed109",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 286
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.outside-hand.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.outside-hand.recognition": {
+      "value": "每组面子及雀头均含至少一张幺九牌或字牌。",
+      "hash": "51643c35ffdf5bd582ed22124c7e1c943c31e7fcbe35f8aa57fccbc0e1a8ebf5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 285
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.prevalent-wind.exclusions": {
+      "value": "当自风与场风相同时，可与自风组成同一组；此时不得再为此组额外计幺九字牌刻子番。",
+      "hash": "fda39faa89ae9adca0d743c46328082df0ec60cd32aa4b4c608d06f5372b9d67",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 311
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.prevalent-wind.recognition": {
+      "value": "含一组与本局圈风相同的风牌刻子或杠。",
+      "hash": "395a27380ad22f7ba77b38c90ffae67f59cfe7e8455b57ef4d3c7b6938288cfa",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 310
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pung-of-terminals-or-honors.exclusions": {
+      "value": "中发白、自风与场风各自独立计番。更高阶的风牌或幺九牌役种可能排除此项番数。",
+      "hash": "21fb06f50c2a30cf7b19320a361feb4de1c88ef51d46dcb46a6b06269b9a1658",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 376
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pung-of-terminals-or-honors.family": {
+      "value": "小型组合",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pung-of-terminals-or-honors.recognition": {
+      "value": "含一组幺九刻子或一组不计分的风牌刻子。",
+      "hash": "9285a6ed3d5806404480b8297aaed8290f994446a8adfa9fba6c3ab2e0b8389e",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 375
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-double-chow.exclusions": {
+      "value": "两组不能重复计为同一组合。更大的相同顺子型役种取代其所含的低阶役种。",
+      "hash": "3942162a77f60fd2ee8442dc9718d2cea1ce1f18bc591ef0a0b614072bbcec49",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 356
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-double-chow.family": {
+      "value": "小型组合",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-double-chow.recognition": {
+      "value": "使用同一花色的两组完全相同的顺子。",
+      "hash": "29ac6a58c66070ce58fba55ff300ad0f713a6dee5ffeb134a9a5d0d8fe02b210",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 355
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-shifted-chows.exclusions": {
+      "value": "相同要求的顺子不可拆分为其他重复组合役种。",
+      "hash": "dce063ba7521550f6ff5d2171acc63efb8f6b07bd9f2812bdba7a81b16829c19",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 161
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-shifted-chows.recognition": {
+      "value": "使用同一花色的三组顺子，其起始数字以固定步长（一或二）递增。",
+      "hash": "90deea7605c258a817d9a8ebf1516d18426ee920685bccfe21fc46a284476e59",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 160
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-shifted-pungs.exclusions": {
+      "value": "在同一计分组合中，不得将同一组牌重新解释为顺子。",
+      "hash": "09c8e1d48ae9d4a40665a238dd2249cccc5470e5eeec49cff9f82edad40f6aca",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 131
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-shifted-pungs.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-shifted-pungs.recognition": {
+      "value": "使用同一花色中数字连续的三组刻子。",
+      "hash": "7aab1df3801f38623bc8485a445e1033568f4bf7bf8729e6712e2e636655c581",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 130
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-straight.exclusions": {
+      "value": "三个指定顺子不同时计短顺子或两般高。",
+      "hash": "1536a9fedea83c374ade2c7be0afa6e27ab578b4f843939c71055344ff91359d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 151
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-straight.recognition": {
+      "value": "在一色中使用123、456和789三组顺子。",
+      "hash": "b5ffcc1f88a1d8590f9f2e320b46e24d8d7f5da242c7012fa92f4d3f0d0164d1",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 150
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-terminal-chows.exclusions": {
+      "value": "不计清一色、平和、清双同顺、双同顺与无字。",
+      "hash": "726b4eaeadfa9513e96700371e4d38ea5331b78f24e3cea1e8cc1a3bb997c7f5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 76
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-terminal-chows.recognition": {
+      "value": "在一花色中使用两组123顺子、两组789顺子及一对5。",
+      "hash": "58c0fbc212a8be7a9bbaca96bb263a2a324bd99e07474512158bd9dee0442166",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 75
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-triple-chow.exclusions": {
+      "value": "不计清双同顺，且不得将相同牌另行解释为移位顺子。",
+      "hash": "0f063ef098ed9985f63231497513e6700c579bd09130d764a285f8d3c643a0a2",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 126
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.pure-triple-chow.recognition": {
+      "value": "使用同一花色的三组完全相同的顺子。",
+      "hash": "db46db262aa62ec65019dd6adaf8dad2cc87891b569efaafa7bfd8fe3c325bba",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 125
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.quadruple-chow.exclusions": {
+      "value": "不计清三同顺、清双同顺与一气通贯（针对相同牌）。",
+      "hash": "d07d9f1edf7dc5a085886b9494a7c67a836288d088bae78b6622b7fcc34a6f0a",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 81
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.quadruple-chow.recognition": {
+      "value": "在同一花色中使用四组完全相同的顺子。",
+      "hash": "4da6c2e3cf972bac1813403eeb0ecc447e43bb6f3d9410e534faa62bf2d0a760",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 80
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.reversible-tiles.exclusions": {
+      "value": "允许的牌型指常规牌面，不含缺一门。",
+      "hash": "2f169474038c0d3304d6969d9b515485a994a1ff0c5ed1f07751db96d95191cb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 211
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.reversible-tiles.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.reversible-tiles.recognition": {
+      "value": "仅使用筒子1、2、3、4、5、8、9；索子2、4、5、6、8、9；及白板。",
+      "hash": "1c0140d55a8ff52249a848dd60e585c0562359cbda6d7860379f13d68542a71f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 210
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.robbing-the-kong.exclusions": {
+      "value": "不计海底捞月。暗杠不可被抢杠。",
+      "hash": "24dcc6a0bdaff73b75cd3eb9356ef5db57d9566b41404b7d420af64dccc1b724",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 246
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.robbing-the-kong.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.robbing-the-kong.recognition": {
+      "value": "在另一名玩家向已碰出的刻子加牌成杠时打出的那张牌上和牌。",
+      "hash": "897e1747c652dd816b238479487b08a783536307a70e7631641e052268e3d9f8",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 245
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seat-wind.exclusions": {
+      "value": "在听牌时使用门风。当门风与场风相同时，二者可组合计番。",
+      "hash": "c9397a56a9cce4501aa502c65b9222869862469b313a45006eea850e92de855e",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 316
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seat-wind.recognition": {
+      "value": "含一组与自己门风相同的风牌刻子或杠。",
+      "hash": "f70bc2158ecfdb937e671fbc2024ea7e0e801122c0c5b2ead298a3d8414e758a",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 315
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.self-drawn.exclusions": {
+      "value": "门前清、海底捞月、杠上开花在适用时取代此项1分番种。",
+      "hash": "aa636c13bab7dd0b0871afd0991efde83b96a85824c6fe908eb5577c8a888500",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 411
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.self-drawn.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.self-drawn.recognition": {
+      "value": "通过自己从牌墙摸到的牌和牌。",
+      "hash": "4f6aa8351e632df7d8825c7e64853268ffba219c81b77c590419b5023c68e750",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 410
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seven-pairs.exclusions": {
+      "value": "不计门前清与单骑听牌。自摸时仍可加计全不靠。",
+      "hash": "268374804ee9ea3fa7cf1f4f87d5a4177aac15282ab03889092bbe1a7a370ace",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 106
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seven-pairs.family": {
+      "value": "特殊结构",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seven-pairs.recognition": {
+      "value": "组成七对，且无任何明副；MCR规则下，四张相同牌可组成两对。",
+      "hash": "186c43c9e5cbedd61726d020c3b34238fd26f0fd9bf2764996ecb13e300cefa8",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 105
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seven-shifted-pairs.exclusions": {
+      "value": "取代七对子、清一色、门前清、单骑听牌、无字牌及缺一门。",
+      "hash": "c970103d50fe23a50377986728fad110fc94b721482f1aa351b5c19960bd2377",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 41
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seven-shifted-pairs.family": {
+      "value": "特殊结构",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.seven-shifted-pairs.recognition": {
+      "value": "在一花色中组成七对连续数字的对子。",
+      "hash": "ce3a00d65fbda981ecad14ef9180d8bd456a304759259cbee0dbb79bdc5df36e",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 40
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.short-straight.exclusions": {
+      "value": "清一色与更大的移位顺子型役种，会取代其所包含的较低阶组合。",
+      "hash": "b95095389a6fc116dee15e1de47056067d6aad4b028d50bf28cdf26cef37b6d6",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 366
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.short-straight.family": {
+      "value": "小型组合",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.short-straight.recognition": {
+      "value": "使用同一花色的两组顺子覆盖六个连续数字，例如234与567。",
+      "hash": "d35e8422ea63c6dc27396deed6808d495fee947bc0bbacc7f7167b196376b7d6",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 365
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.thirteen-orphans.exclusions": {
+      "value": "门前清特殊牌型；不计混一色、门前清与单骑听牌。",
+      "hash": "ec1c1a6aa5df5f80bff56c0a443704593f0028bb4d843d1ab3274db4179c3e9d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 46
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.thirteen-orphans.family": {
+      "value": "特殊结构",
+      "hash": "b6b059b785a6a11f2ee71391c5e843698a6de9d926c955de05b7b1dd70c8888c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.thirteen-orphans.recognition": {
+      "value": "集齐全部13种幺九牌（1m/9m/1p/9p/1s/9s及七种字牌），再从中任选一种复制一张。",
+      "hash": "269db2b80ca5614d79c2eae7a9b04ee3e4e744e710fb6fa9591a166ecd5e199f",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 45
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-concealed-pungs.exclusions": {
+      "value": "一张被打出的牌若能组成上述刻子之一，则该刻子在此计番中视为副露。不包括双暗刻型。",
+      "hash": "a0b7cffcdcc5838ee096f98679e9695cf03459d3b693b13b9521e9024d13f82c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 176
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-concealed-pungs.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-concealed-pungs.recognition": {
+      "value": "三组刻子或杠均未通过吃、碰、杠方式完成最后一张牌。",
+      "hash": "74d61b3c3eb52160797d983c6d1756cebabc95f8ebddd5dd54bec2eb2492417c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 175
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-kongs.exclusions": {
+      "value": "取代由其构成的三个较小四杠组合；若规则允许，门清可额外计番。",
+      "hash": "8b83ac21822a748faf361d0c78512f6201830a8bf6e5538cfacd480672b90a3a",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 96
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-kongs.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-kongs.recognition": {
+      "value": "宣布三杠，可为暗杠或副露杠。",
+      "hash": "a59fcf7cd1e3bfb816722d68b95cfed3ba5b987c8d9d252be22775ec19675d96",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 95
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-suited-terminal-chows.exclusions": {
+      "value": "不计平和、混全带幺、双同顺与无字。",
+      "hash": "60314d805d0694fb5391d7373698d37963fd8a4a9e328064b89b885c1fa5f586",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 156
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.three-suited-terminal-chows.recognition": {
+      "value": "在两种花色中各用123和789，在第三种花色中用一对5。",
+      "hash": "d8fbd2a5063dab578940e5c81d92e167ad59828c78a4053133e656d3b867b257",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 155
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.tile-hog.exclusions": {
+      "value": "不同种类的四张同牌应分别计番，除非更高阶的役种已明确包含这些牌。",
+      "hash": "7f64196e9c9372ac99f0bed58a2a3da315c8df91870172c72dfd3b21998a198c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 331
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.tile-hog.family": {
+      "value": "小型组合",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.tile-hog.recognition": {
+      "value": "在手牌中使用某张牌的全部四张，但不声明为杠。",
+      "hash": "d9243a8bebcce053155b738491decf9d3c3e9f9f66baf17f5e7e77d07678e954",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 330
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.triple-pung.exclusions": {
+      "value": "排除由必需的三组牌构成的对子中的双刻子组合。",
+      "hash": "020abcd856199a8a6ec9933981c40c02cb361bf4a4da8d0717621f1a13bf00f9",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 171
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.triple-pung.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.triple-pung.recognition": {
+      "value": "在全部三种花色中，使用相同数字的刻子或杠。",
+      "hash": "03952f03e5d0bd276aac1519100a7637b7ebb5e396286cfbed94f337b0fc7e56",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 170
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-concealed-kongs.exclusions": {
+      "value": "合计八番。不可额外再计两个暗杠各自的番数。",
+      "hash": "1d8ea522e0cec52c75841afa88a10d9622cf190948c1320d7a9c3b033b06bea7",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 276
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-concealed-kongs.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-concealed-kongs.recognition": {
+      "value": "宣布两个暗杠。",
+      "hash": "47266da70189b627430e3c148679d0c4a4863cc4e496295330e1f405466b5267",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 275
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-concealed-pungs.exclusions": {
+      "value": "由一张被打出的牌组成的刻子，在此计番中视为副露。三暗刻与四暗刻型将取代此计番。",
+      "hash": "37366f83c3c79c7ebaa8e3912e47257c481fc08d158d2201e733198eab195fba",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 341
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-concealed-pungs.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-concealed-pungs.recognition": {
+      "value": "两组为刻子或杠子，且其完成牌均未从其他玩家处获得（即全部为自摸完成）。",
+      "hash": "91419a4f901de362dbd38222e464d78a1df5fe8ce418299aa6652ad8e249a214",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 340
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-dragons-pungs.exclusions": {
+      "value": "取代两个单独的箭刻役。小三元或大三元可取代该组合。",
+      "hash": "02455608fda89fd595ddc54831c2191a224413a9346406c5b5ae8b046b4bd6e1",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 281
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-dragons-pungs.recognition": {
+      "value": "含两种不同箭牌的刻子或杠。",
+      "hash": "d7329e1f2f4bc5fe7ce3b0cd5851862b1fad36362488be6a2b8112492d4bf22d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 280
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-melded-kongs.exclusions": {
+      "value": "取代两个单独的明杠役；更大的四杠组合可取代它。一个暗杠加一个明杠合计计六番，而非两个单独役种；该组合不构成独立命名役种。",
+      "hash": "a82b99c3de7ec4a137a7a14fd0e9cdcd684b970ec579c8918a73ac3342932b55",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 296
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-melded-kongs.family": {
+      "value": "刻子与杠子",
+      "hash": "e278e58fd52ca0e1a6060ce73fb3725a0926d3cea5b101cba7933ede156f27e5",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-melded-kongs.recognition": {
+      "value": "宣布两个副露杠，无论通过抢杠直接成立，或由碰后加杠形成。",
+      "hash": "b395b7a134eac94a8a70e182def745708a1da84fe48b035de3b8def6afe3defb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 295
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-terminal-chows.exclusions": {
+      "value": "清一色或老少副等特殊顺子型役种，可取代该组合。",
+      "hash": "02827287eed6c1dc1e671d9ff80d4d3bdfcc86700ec39c669f9ff36e9a3ac89a",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 371
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-terminal-chows.family": {
+      "value": "小型组合",
+      "hash": "eeb18ca8b4140ba0cf409989a2e2ff6dac5897bed6a5d360fc4e2c806ec89bbb",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 329
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.two-terminal-chows.recognition": {
+      "value": "同一花色中包含123与789两组顺子。",
+      "hash": "69d66ab0158f542619ce4a0b00fc7617ab25f5cef8d69256da6b64c90889f820",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 370
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-closed.exclusions": {
+      "value": "须使用实际和牌时的牌及和牌前的手牌结构，不可采用便于计算的后续重组方式。仅计一种听牌类型。",
+      "hash": "580a5d4aa26998759dff77acb81ad646a69af2901e26abd224a660b2a7310d6e",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 401
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-closed.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-closed.recognition": {
+      "value": "在顺子中间那张牌上和牌，且此时无其他可和方式。",
+      "hash": "d7678ae39b14971d29d52f685c8380bde5b25690b62e664e4dc26f1606674bd4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 400
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-edge.exclusions": {
+      "value": "若牌型中其他位置存在另一种合法听牌方式，则独听不成立。仅计一种听牌类型得分。",
+      "hash": "c084d2dca8cd4959ae24209c2364223942d9ab343545efc4257fbceef8fa1fc2",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 396
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-edge.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-edge.recognition": {
+      "value": "当这是该手牌唯一可和的牌型时，以3补全12、或以7补全89和牌。",
+      "hash": "17e235b1210bdae60d06c0ed8c2fae158c8899b548be0c405ede0fe390a6d671",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 395
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-single.exclusions": {
+      "value": "碰碰和、七对、十三幺及某些高番牌型排除此项。",
+      "hash": "9963e7163e0553b02ff0ce732e8e5952af83f23b9e5764c2126be1f3bc5a19c6",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 406
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-single.family": {
+      "value": "门前清与和牌",
+      "hash": "0aec654b7ba64aa72af8553db54e717005a8121293c5da7ab254e3b08825e5cf",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 224
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.unique-wait-single.recognition": {
+      "value": "当这是该手牌唯一可和的牌型时，通过组成将牌完成和牌。",
+      "hash": "249877c71e8927c9e2938aac7f303679b38bdfcf9da4b4662366ca669609e77c",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 405
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.upper-four.exclusions": {
+      "value": "不计无字。若仅含7–9，则由大幺九取代。",
+      "hash": "58daa3d11c88000c56e2de76c15c0e0778f5819b72d2c6c0bfeb3da2b81e693d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 191
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.upper-four.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.upper-four.recognition": {
+      "value": "所有数牌点数仅为6、7、8或9，且不含字牌。",
+      "hash": "aeb3a3e0b2aec0f36d37c34b621cc7398e1eab28911ff0f6e375e572b16a3fd2",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 190
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.upper-tiles.exclusions": {
+      "value": "排除上五与无字。",
+      "hash": "ab2828dabee905403c7f0a57185366730a77eb6aa74dc435510ae596639437d4",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 136
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.upper-tiles.family": {
+      "value": "牌型构成",
+      "hash": "f5c27ea513d22ceb04f352e9cf8dacb8b8436558bd7e778671f1390a66b3378d",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 24
+      },
+      "placeholders": []
+    },
+    "learn.mcr.guide.pattern.upper-tiles.recognition": {
+      "value": "所有数牌点数仅为7、8或9，且不含字牌。",
+      "hash": "c7bdcfd8f0a60bac145b1fabf36c09edf0bbac1d6da32a539978a0df4df393aa",
+      "status": "draft",
+      "source": {
+        "file": "education/mcr-guide.ts",
+        "line": 135
+      },
+      "placeholders": []
+    },
+    "learn.american.card.q-rn4-pairs.choice0": {
+      "value": "0",
+      "hash": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 280
+      },
+      "placeholders": []
+    },
+    "learn.american.card.q-rn4-pairs.choice1": {
+      "value": "1",
+      "hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 280
+      },
+      "placeholders": []
+    },
+    "learn.american.card.q-rn4-pairs.choice2": {
+      "value": "2",
+      "hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 280
+      },
+      "placeholders": []
+    },
+    "learn.american.card.q-rn4-pairs.choice3": {
+      "value": "3",
+      "hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 280
+      },
+      "placeholders": []
+    },
+    "learn.american.drills.q-ib2-flowers.choice0": {
+      "value": "3",
+      "hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 1069
+      },
+      "placeholders": []
+    },
+    "learn.american.drills.q-ib2-flowers.choice1": {
+      "value": "4",
+      "hash": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 1069
+      },
+      "placeholders": []
+    },
+    "learn.american.drills.q-ib2-flowers.choice2": {
+      "value": "5",
+      "hash": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 1069
+      },
+      "placeholders": []
+    },
+    "learn.american.drills.q-ib2-flowers.choice3": {
+      "value": "8",
+      "hash": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 1069
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-qt3-jokers.choice0": {
+      "value": "1",
+      "hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 876
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-qt3-jokers.choice1": {
+      "value": "2",
+      "hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 876
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-qt3-jokers.choice2": {
+      "value": "3",
+      "hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 876
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-qt3-jokers.choice3": {
+      "value": "4",
+      "hash": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 876
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-quint-jokers.choice0": {
+      "value": "1",
+      "hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 850
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-quint-jokers.choice1": {
+      "value": "2",
+      "hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 850
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-quint-jokers.choice2": {
+      "value": "3",
+      "hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 850
+      },
+      "placeholders": []
+    },
+    "learn.american.jokers.q-quint-jokers.choice3": {
+      "value": "4",
+      "hash": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 850
+      },
+      "placeholders": []
+    },
+    "learn.american.picking.q-ev1-held.choice0": {
+      "value": "8",
+      "hash": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 643
+      },
+      "placeholders": []
+    },
+    "learn.american.picking.q-ev1-held.choice1": {
+      "value": "9",
+      "hash": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 643
+      },
+      "placeholders": []
+    },
+    "learn.american.picking.q-ev1-to-go.choice0": {
+      "value": "2",
+      "hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 662
+      },
+      "placeholders": []
+    },
+    "learn.american.picking.q-ev1-to-go.choice1": {
+      "value": "3",
+      "hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 662
+      },
+      "placeholders": []
+    },
+    "learn.american.picking.q-ev1-to-go.choice2": {
+      "value": "4",
+      "hash": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 662
+      },
+      "placeholders": []
+    },
+    "learn.american.picking.q-ev1-to-go.choice3": {
+      "value": "5",
+      "hash": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+      "status": "draft",
+      "source": {
+        "file": "education/american-lessons.ts",
+        "line": 662
+      },
+      "placeholders": []
+    },
+    "learn.american.section-title": {
+      "value": "美国麻将",
+      "hash": "0baaf6f25d1c5da82d9e4a3229cd45bd99e151c41dce518d7c7e526d86283f24",
+      "status": "draft",
+      "source": {
+        "file": "american-lesson-ui.ts",
+        "line": 167
+      },
+      "placeholders": []
+    },
+    "learn.hong-kong.payments.q-hk-discard-payment.choice0": {
+      "value": "8",
+      "hash": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+      "status": "draft",
+      "source": {
+        "file": "education/variant-content.ts",
+        "line": 894
+      },
+      "placeholders": []
+    },
+    "learn.riichi.section-title": {
+      "value": "立直",
+      "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 599
+      },
+      "placeholders": []
+    },
+    "learn.variant.ui.continue": {
+      "value": "继续",
+      "hash": "31fbef162594de01bab0cd525c51f74de7bcb15063029fa1a54b2cf5944c80d8",
+      "status": "draft",
+      "source": {
+        "file": "variant-education-ui.ts",
+        "line": 325
+      },
+      "placeholders": []
+    },
+    "learn.variant.ui.next-exercise": {
+      "value": "下一题",
+      "hash": "ee075885c9281f770f489778da89da5adc9cdd68600c3523b85b89e312399e60",
+      "status": "draft",
+      "source": {
+        "file": "variant-education-ui.ts",
+        "line": 325
+      },
+      "placeholders": []
+    },
+    "ui.app.a-game-ends-early-tobi-as-soon-as-any-player-is": {
+      "value": "一局牌在某位玩家手牌分数低于零时立即结束（跳满）。",
+      "hash": "263e4971ce8483231259fe30d2e6c21424bfb4a85ff50d52355464c9d19caab5",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1635
+      },
+      "placeholders": []
+    },
+    "ui.app.abortive-draws-are-on-kyuushu-kyuuhai-nine-diffe": {
+      "value": "流局条件启用：九种幺九（起手14张牌中含九种不同的幺九牌或字牌）、四风连打（庄家起始四次打出同一风牌）、四立直（四人全部立直）、四杠散了（两名或以上玩家合计开杠四次）。该局重开，本场数加一，庄家连庄。",
+      "hash": "eeb98841821c5bbfa15348e7733d1222b2d748c983be9af2c5a916f227c5b157",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1660
+      },
+      "placeholders": []
+    },
+    "ui.app.chankan-robbing-a-kan-applies-to-shouminkan-agai": {
+      "value": "抢杠（抢杠和）适用于明杠；仅国士无双可抢暗杠。",
+      "hash": "78ef42cbdcfc44f585c7ae2f2370b7a83e2fdcab07b8220b98e2731749465bf3",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1644
+      },
+      "placeholders": []
+    },
+    "ui.app.chi-may-only-be-called-from-the-player-on-your-l": {
+      "value": "吃只能对上家打出的牌进行；碰与杠可对任意一家打出的牌进行。",
+      "hash": "9856a939de979db6ef397141d21405c4dda15c46ff654b65bf866d40c472d10d",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1642
+      },
+      "placeholders": []
+    },
+    "ui.app.double-ron-does-not-pay-twice-atama-hane-head-bu": {
+      "value": "双荣和不重复计分：头跳（按出牌者顺位顺序，离其最近的和牌者独得全部点数）。",
+      "hash": "eb774872d6d8f8e8a25071eec6d0bec234610384db54c6dfbbc2393b9dc4c67b",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1643
+      },
+      "placeholders": []
+    },
+    "ui.app.exhaustive-draw-tenpai-players-split-3-000-from": {
+      "value": "荒牌流局：听牌者平分未听牌者各支付的3,000点；流局满贯按满贯自摸计分（当某玩家所打全部牌均为幺九牌或字牌且无人鸣牌时成立）。",
+      "hash": "04483054436e36c054378bda93c0949b7c7429bcaac93c6332d77698a4107e48",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1659
+      },
+      "placeholders": []
+    },
+    "ui.app.furiten-applies-in-all-three-forms-discard-furit": {
+      "value": "振听适用于全部三种情形：舍牌振听、临时振听（放弃可荣和的牌后，直至自己摸牌前不得荣和）、立直振听（立直后放弃可和牌，即永久振听）。",
+      "hash": "47d63c3054bf267ebae5e2b1d9f605b3fdba8f425c46dccaa0a56edf3c6da9e7",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1650
+      },
+      "placeholders": []
+    },
+    "ui.app.if-the-dealer-repeats-on-the-final-hand-the-game": {
+      "value": "若最后一局出现连庄，则游戏继续，直至出现非连庄且有和牌的一局为止（不适用“和了即终局”规则）。",
+      "hash": "3a452ab93bb0022e883d61de122f2f168a8c5772524f4c1a53a5e230b489e910",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1637
+      },
+      "placeholders": []
+    },
+    "ui.app.ippatsu-and-double-riichi-count-after-riichi-you": {
+      "value": "一发与双立直有效。立直后须打出所摸之牌；暗杠仅允许在杠后待牌不变的前提下进行。",
+      "hash": "6361ceaf7e6fe1b79a95f21283ffb009cbe2fd27127166c8e95840862fe3000c",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1649
+      },
+      "placeholders": []
+    },
+    "ui.app.kiriage-mangan-is-off-4-han-30-fu-is-7-700-deale": {
+      "value": "取消切上满贯：4番30符为7,700点（庄家11,600点），3番60符亦为7,700点——不向上进位至满贯。",
+      "hash": "42c0cc3f7e6a4c4369ea865766d6597c54ff7be51ef8273a1949353f11fd2046",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1655
+      },
+      "placeholders": []
+    },
+    "ui.app.one-indicator-at-the-start-each-kan-flips-one-mo": {
+      "value": "开局仅一张宝牌指示牌；每次开杠额外翻出一张（暗杠在岭上牌摸牌前翻出；明杠在岭上牌摸牌后翻出）。立直和牌时，指示牌下方的里宝牌同时公开。",
+      "hash": "2c9cc5175644d0aac06dc43891cc2d1bfcd133814ce536cf7ea45c5be7325cf7",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1654
+      },
+      "placeholders": []
+    },
+    "ui.app.open-mahjong-plays-modern-online-standard-riichi": {
+      "value": "Open Mahjong 采用现代线上标准的立直麻将规则。引擎所作的所有规则判定均在此列出。",
+      "hash": "5718c50cdf16543704d7947cd0cf7020e7e0022e9de704144e469f0f4bde8da5",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1631
+      },
+      "placeholders": []
+    },
+    "ui.app.red-fives-aka-dora-are-in-one-each-of-5m-5p-5s-o": {
+      "value": "赤五（红宝牌）各一张：5m、5p、5s。允许开裸单吊（无役纯全带幺九）。",
+      "hash": "9e33dbeacf1f258ac4dccebdd26d970492cab53a6d0319700ce7082995294cd6",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1641
+      },
+      "placeholders": []
+    },
+    "ui.app.riichi-costs-1-000-points-needs-a-closed-tenpai": {
+      "value": "立直需支付1,000点，且必须满足：手牌为门前清听牌、剩余点数不少于1,000点、牌墙剩余牌数不少于4张。",
+      "hash": "7e0dbecda9240344f0b50f22142802b7630e39b6e286cda2b9290db2e05f8360",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1648
+      },
+      "placeholders": []
+    },
+    "ui.app.riichi-sticks-left-on-the-table-when-the-game-en": {
+      "value": "游戏结束时桌上剩余的立直棒归第一名玩家所有。",
+      "hash": "fc19686bcb859015d9ee706bdf8c366dbab290595ed461687f2fd4bc6680f4d9",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1636
+      },
+      "placeholders": []
+    },
+    "ui.app.start-25-000-points-return-30-000-uma-15-5-5-15": {
+      "value": "初始点数25,000点；返点30,000点。名次点（乌玛）为+15 / +5 / −5 / −15；头名另加20点（oka）。名次并列者平分所占名次对应的乌玛（及oka）点数。",
+      "hash": "01fd49fc30106003306a35be066d273e85bcf07fd2621e1c204e07fc39435917",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1634
+      },
+      "placeholders": []
+    },
+    "ui.app.about-2": {
+      "value": "关于",
+      "hash": "4efca0d10c5feb8e9b35eb1d994f2905bb71714e6a271f511d713b539ea5faa1",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1665
+      },
+      "placeholders": []
+    },
+    "ui.app.privacy": {
+      "value": "隐私政策",
+      "hash": "54a57c3147c49f33de5898b87084ad2b14c4ab308f762454bf92aca907478ad5",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1682
+      },
+      "placeholders": []
+    },
+    "ui.app.review": {
+      "value": "评分",
+      "hash": "aff0766a5290e117b8433c351bae7b7b23bed682b2369bd822d88a647cc58512",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 3994
+      },
+      "placeholders": []
+    },
+    "ui.app.rules": {
+      "value": "规则",
+      "hash": "4228aeb07c410ffc9d15b458bf7c2bf8d9dfa7af632f2c339e69f8cb54654da3",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1627
       },
       "placeholders": []
     }

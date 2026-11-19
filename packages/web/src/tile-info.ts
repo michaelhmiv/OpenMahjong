@@ -26,6 +26,7 @@ import {
   waitsFast,
 } from "@openmahjong/ai";
 import { tileName } from "@openmahjong/coach";
+import { tx } from "./i18n/index.js";
 
 export interface TileInfo {
   /** Primary line: the plain name ("5 of Dots"). */
@@ -43,14 +44,14 @@ const SUIT_DISPLAY = ["Characters", "Dots", "Bamboo"];
  *  Honours keep the coach's form ("East wind", "Red dragon"). */
 export function tileDisplayName(type: TileType): string {
   if (!isSuited(type)) return tileName(type);
-  return `${rankOf(type)} of ${SUIT_DISPLAY[suitOf(type)]!}`;
+  return tx("ui.tiles.v-0-of-1", `${rankOf(type)} of ${SUIT_DISPLAY[suitOf(type)]!}`, rankOf(type), SUIT_DISPLAY[suitOf(type)]!);
 }
 
 /** Strongest true membership of the tile within the closed hand:
  *  a completed set (triplet, then run) over a pair over loose. */
 function membershipLine(counts: readonly number[], type: TileType): string {
   if (counts[type]! >= 3) {
-    return `Part of a triplet — three ${tileDisplayName(type)}s.`;
+    return tx("ui.tiles.part-of-a-triplet-three-0-s", `Part of a triplet — three ${tileDisplayName(type)}s.`, tileDisplayName(type));
   }
   if (isSuited(type)) {
     const base = suitOf(type) * 9;
@@ -62,12 +63,12 @@ function membershipLine(counts: readonly number[], type: TileType): string {
         counts[base + start]! > 0 &&
         counts[base + start + 1]! > 0
       ) {
-        return `Part of a run — ${start}, ${start + 1}, ${start + 2} of ${SUIT_DISPLAY[suitOf(type)]!}.`;
+        return tx("ui.tiles.part-of-a-run-0-1-2-of-3", `Part of a run — ${start}, ${start + 1}, ${start + 2} of ${SUIT_DISPLAY[suitOf(type)]!}.`, start, start + 1, start + 2, SUIT_DISPLAY[suitOf(type)]!);
       }
     }
   }
-  if (counts[type]! === 2) return "One of a pair.";
-  return "Not part of a set yet.";
+  if (counts[type]! === 2) return tx("ui.tiles.one-of-a-pair", "One of a pair.");
+  return tx("ui.tiles.not-part-of-a-set-yet", "Not part of a set yet.");
 }
 
 /** Waits of the hand's tenpai form, or null when there is none. */
@@ -109,7 +110,7 @@ function waitsLineFor(
     }
   }
   if (waits.length === 0) return null;
-  return `Waiting on: ${waits.map((t) => tileDisplayName(t)).join(", ")}.`;
+  return tx("ui.tiles.waiting-on-0", `Waiting on: ${waits.map((t) => tileDisplayName(t)).join(", ")}.`, waits.map((t) => tileDisplayName(t)).join(", "));
 }
 
 /**
@@ -127,9 +128,9 @@ export function tileInfo(
   // Dora status: a red five is always a dora; otherwise the current
   // indicators decide.
   if (selected.red) {
-    lines.push("Red five — counts as a dora.");
+    lines.push(tx("ui.tiles.red-five-counts-as-a-dora", "Red five — counts as a dora."));
   } else if (doraTypesOf(view).has(selected.type)) {
-    lines.push("Dora — this tile is a dora.");
+    lines.push(tx("ui.tiles.dora-this-tile-is-a-dora", "Dora — this tile is a dora."));
   }
 
   lines.push(membershipLine(countsOfTiles(view.hand), selected.type));
@@ -140,7 +141,7 @@ export function tileInfo(
   const visible = visibleCounts(view);
   const indicators = view.doraIndicators.filter((t) => t.type === selected.type).length;
   const onTable = visible[selected.type]! - indicators;
-  lines.push(`${onTable} of the 4 copies are visible on the table.`);
+  lines.push(tx("ui.tiles.v-0-of-the-4-copies-are-visible-on-the-table", `${onTable} of the 4 copies are visible on the table.`, onTable));
 
   return {
     name: tileDisplayName(selected.type),

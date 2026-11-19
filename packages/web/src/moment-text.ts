@@ -11,6 +11,7 @@ import type { CallAdvice, KanAdvice, RiichiGrade, WinAdvice } from "@openmahjong
 import { tileName } from "@openmahjong/coach";
 import type { Decision } from "./runner.js";
 import type { MomentGrade } from "./review.js";
+import { t, tx } from "./i18n/index.js";
 
 /** The minimum a moment text needs: whose view, which window, and
  * the action taken (null while the decision is still live, as in
@@ -61,62 +62,62 @@ function callText(advice: CallAdvice, position: MomentPosition): MomentText {
     if (option.action === "ron") {
       facts.push(
         option.win
-          ? `Ron on the ${tile} scores ${option.win.points} points (${option.win.yaku.join(", ")})${option.win.yakuman ? " — a yakuman, the highest hand rank" : ""}.`
-          : `Ron on the ${tile} completes the shape.`,
+          ? tx("review.moment.ron-on-the-0-scores-1-points-2-3", `Ron on the ${tile} scores ${option.win.points} points (${option.win.yaku.join(", ")})${option.win.yakuman ? " " + tx("review.moment.a-yakuman-the-highest-hand-rank", "— a yakuman, the highest hand rank") : ""}.`, tile, option.win.points, option.win.yaku.join(", "), option.win.yakuman ? " " + tx("review.moment.a-yakuman-the-highest-hand-rank", "— a yakuman, the highest hand rank") : "")
+          : tx("review.moment.ron-on-the-0-completes-the-shape", `Ron on the ${tile} completes the shape.`, tile),
       );
       continue;
     }
     const label =
-      option.action === "pon" ? `Pon the ${tile}` : option.action === "daiminkan" ? `Kan the ${tile}` : option.label;
+      option.action === "pon" ? tx("review.moment.pon-the-0", `Pon the ${tile}`, tile) : option.action === "daiminkan" ? tx("review.moment.kan-the-0", `Kan the ${tile}`, tile) : option.label;
     facts.push(
-      `${label}: leaves the hand ${option.shantenAfter} shanten with ${option.improvingTotal} unseen improving copies${option.opensHand ? ", and opens the hand" : ""}.`,
+      tx("review.moment.v-0-leaves-the-hand-1-shanten-with-2-unseen-improv", `${label}: leaves the hand ${option.shantenAfter} shanten with ${option.improvingTotal} unseen improving copies${option.opensHand ? tx("review.moment.and-opens-the-hand", ", and opens the hand") : ""}.`, label, option.shantenAfter, option.improvingTotal, option.opensHand ? tx("review.moment.and-opens-the-hand", ", and opens the hand") : ""),
     );
     if (option.noYakuPath) {
-      facts.push(`The ${option.action} opens the hand with no yaku path left — the shape can finish and still never win.`);
+      facts.push(tx("review.moment.the-0-opens-the-hand-with-no-yaku-path-left-the", `The ${option.action} opens the hand with no yaku path left — the shape can finish and still never win.`, option.action));
     } else if (option.yakuPaths.length > 0) {
-      facts.push(`Yaku paths after the ${option.action}: ${option.yakuPaths.join("; ")}.`);
+      facts.push(tx("review.moment.yaku-paths-after-the-0-1", `Yaku paths after the ${option.action}: ${option.yakuPaths.join("; ")}.`, option.action, option.yakuPaths.join("; ")));
     }
     if (option.kanDora) {
       facts.push(
-        `The kan flips a new dora indicator: the kan tiles themselves hold ${option.kanDora.doraInKan} dora, and up to ${option.kanDora.potentialNewDora} of your other tiles could become dora — the same flip can also pay an opponent.`,
+        tx("review.moment.the-kan-flips-a-new-dora-indicator-the-kan-tiles", `The kan flips a new dora indicator: the kan tiles themselves hold ${option.kanDora.doraInKan} dora, and up to ${option.kanDora.potentialNewDora} of your other tiles could become dora — the same flip can also pay an opponent.`, option.kanDora.doraInKan, option.kanDora.potentialNewDora),
       );
     }
   }
   if (advice.ronPass) {
     facts.push(
       advice.ronPass.permanentFuriten
-        ? "Passing this ron while in riichi makes you furiten for the rest of the hand — no discard can win for you after this pass."
-        : "Passing this ron makes you furiten until your next draw — no discard can win for you in between.",
+        ? tx("review.moment.passing-this-ron-while-in-riichi-makes-you-furit", "Passing this ron while in riichi makes you furiten for the rest of the hand — no discard can win for you after this pass.")
+        : tx("review.moment.passing-this-ron-makes-you-furiten-until-your-ne", "Passing this ron makes you furiten until your next draw — no discard can win for you in between."),
     );
     for (const wait of advice.ronPass.ownPondWaits) {
       facts.push(
-        `Your own discards already include the ${wait.name}: ron on it was barred by discard furiten before this pass.`,
+        tx("review.moment.your-own-discards-already-include-the-0-ron-on-i", `Your own discards already include the ${wait.name}: ron on it was barred by discard furiten before this pass.`, wait.name),
       );
     }
   }
   if (advice.riichiThreat) {
-    facts.push("An opponent is in riichi: calling opens your hand while a declared hand is waiting.");
+    facts.push(tx("review.moment.an-opponent-is-in-riichi-calling-opens-your-hand", "An opponent is in riichi: calling opens your hand while a declared hand is waiting."));
   }
   const choiceLine =
     action === null
       ? ""
       : action.type === "ron"
-        ? `You took the ron on the ${tile}.`
+        ? tx("review.moment.you-took-the-ron-on-the-0", `You took the ron on the ${tile}.`, tile)
         : action.type === "pon"
-          ? `You called pon on the ${tile}.`
+          ? tx("review.moment.you-called-pon-on-the-0", `You called pon on the ${tile}.`, tile)
           : action.type === "daiminkan"
-            ? `You called kan on the ${tile}.`
+            ? tx("review.moment.you-called-kan-on-the-0", `You called kan on the ${tile}.`, tile)
             : action.type === "chi"
-              ? `You called chi on the ${tile}.`
+              ? tx("review.moment.you-called-chi-on-the-0", `You called chi on the ${tile}.`, tile)
               : advice.ronPass
-                ? `You passed — the ron on the ${tile} included.`
-                : "You passed.";
-  const terms: string[] = [TERMS.shanten, TERMS.yaku];
-  if (advice.ronPass) terms.push(TERMS.furiten);
-  if (advice.options.some((o) => o.action === "daiminkan")) terms.push(TERMS.kan, TERMS.dora);
+                ? tx("review.moment.you-passed-the-ron-on-the-0-included", `You passed — the ron on the ${tile} included.`, tile)
+                : tx("review.moment.you-passed", "You passed.");
+  const terms: string[] = [t("review.terms.shanten"), t("review.terms.yaku")];
+  if (advice.ronPass) terms.push(t("review.terms.furiten"));
+  if (advice.options.some((o) => o.action === "daiminkan")) terms.push(t("review.terms.kan"), t("review.terms.dora"));
   return {
     kind: "call",
-    title: advice.phase === "ron" ? "The ron decision" : "The call window",
+    title: advice.phase === "ron" ? tx("review.moment.the-ron-decision", "The ron decision") : tx("review.moment.the-call-window", "The call window"),
     choiceLine,
     headline: advice.headline,
     facts,
@@ -128,28 +129,28 @@ function kanText(advice: KanAdvice, position: MomentPosition): MomentText {
   const facts: string[] = [];
   for (const option of advice.options) {
     facts.push(
-      `The ${option.kind === "ankan" ? "closed kan (ankan)" : "added kan (shouminkan)"} on the ${option.tileName} holds ${option.doraInKan} dora in its four tiles and leaves the hand ${option.shantenAfter} shanten.`,
+      tx("review.moment.the-0-on-the-1-holds-2-dora-in-its-four-tiles-an", `The ${option.kind === "ankan" ? tx("review.moment.closed-kan-ankan", "closed kan (ankan)") : tx("review.moment.added-kan-shouminkan", "added kan (shouminkan)")} on the ${option.tileName} holds ${option.doraInKan} dora in its four tiles and leaves the hand ${option.shantenAfter} shanten.`, option.kind === "ankan" ? tx("review.moment.closed-kan-ankan", "closed kan (ankan)") : tx("review.moment.added-kan-shouminkan", "added kan (shouminkan)"), option.tileName, option.doraInKan, option.shantenAfter),
     );
     if (option.breaksChiitoi) {
-      facts.push("Declaring it breaks the seven-pairs (chiitoitsu) shape this hand is chasing — a kan commits the hand to the standard shape.");
+      facts.push(tx("review.moment.declaring-it-breaks-the-seven-pairs-chiitoitsu-s", "Declaring it breaks the seven-pairs (chiitoitsu) shape this hand is chasing — a kan commits the hand to the standard shape."));
     }
     if (option.waitsPreserved === true) {
-      facts.push("Your waits are unchanged by this kan — the engine only offers a riichi player's kan when that holds.");
+      facts.push(tx("review.moment.your-waits-are-unchanged-by-this-kan-the-engine", "Your waits are unchanged by this kan — the engine only offers a riichi player's kan when that holds."));
     }
   }
   facts.push(
-    `The new indicator the kan flips could make up to ${advice.potentialNewDora} of your tiles dora — and could just as well feed an opponent. That risk runs both directions.`,
+    tx("review.moment.the-new-indicator-the-kan-flips-could-make-up-to", `The new indicator the kan flips could make up to ${advice.potentialNewDora} of your tiles dora — and could just as well feed an opponent. That risk runs both directions.`, advice.potentialNewDora),
   );
-  facts.push(`You already hold ${advice.handDora} dora across your hand and melds.`);
+  facts.push(tx("review.moment.you-already-hold-0-dora-across-your-hand-and-mel", `You already hold ${advice.handDora} dora across your hand and melds.`, advice.handDora));
   if (advice.riichiThreat) {
     facts.push(
       advice.shantenNow > 0
-        ? "An opponent is in riichi and your hand is not ready: an added kan also gives that player a chance to win on the kan tile itself (a robbed kan, chankan)."
-        : "An opponent is in riichi: the new indicator can raise their hand too.",
+        ? tx("review.moment.an-opponent-is-in-riichi-and-your-hand-is-not-re", "An opponent is in riichi and your hand is not ready: an added kan also gives that player a chance to win on the kan tile itself (a robbed kan, chankan).")
+        : tx("review.moment.an-opponent-is-in-riichi-the-new-indicator-can-r", "An opponent is in riichi: the new indicator can raise their hand too."),
     );
   }
   if (advice.ownIppatsuLoss) {
-    facts.push("Declaring now spends your live ippatsu chance — the bonus for winning within one round of declaring riichi.");
+    facts.push(tx("review.moment.declaring-now-spends-your-live-ippatsu-chance-th", "Declaring now spends your live ippatsu chance — the bonus for winning within one round of declaring riichi."));
   }
   const action = position.kind === "turn" ? position.action : null;
   const chosen = advice.options.find((o) => action && action.type === o.kind);
@@ -157,82 +158,82 @@ function kanText(advice: KanAdvice, position: MomentPosition): MomentText {
     action === null
       ? ""
       : action.type === "ankan" || action.type === "shouminkan"
-        ? `You declared the kan${chosen ? ` on the ${chosen.tileName}` : ""}.`
-        : `You held the kan and discarded the ${discardName(position)}.`;
+        ? tx("review.moment.you-declared-the-kan-0", `You declared the kan${chosen ? " " + tx("review.moment.on-the-0", `on the ${chosen.tileName}`, chosen.tileName) : ""}.`, chosen ? " " + tx("review.moment.on-the-0", `on the ${chosen.tileName}`, chosen.tileName) : "")
+        : tx("review.moment.you-held-the-kan-and-discarded-the-0", `You held the kan and discarded the ${discardName(position)}.`, discardName(position));
   return {
     kind: "kan",
-    title: "The kan decision",
+    title: tx("review.moment.the-kan-decision", "The kan decision"),
     choiceLine,
     headline: advice.headline,
     facts,
-    terms: [TERMS.kan, TERMS.dora, TERMS.shanten],
+    terms: [t("review.terms.kan"), t("review.terms.dora"), t("review.terms.shanten")],
   };
 }
 
 function riichiText(advice: RiichiGrade, position: MomentPosition): MomentText {
   const facts: string[] = [];
-  const waitList = advice.waits.map((w) => `the ${w.name}`).join(" and ");
+  const waitList = advice.waits.map((w) => tx("review.moment.the-0", `the ${w.name}`, w.name)).join(" and ");
   facts.push(
-    `The wait is on ${waitList} — ${advice.liveTotal} unseen copies in total${advice.twoSided ? ", a two-sided wait (it completes a run from either end)" : advice.tanki ? ", a single-tile (tanki) wait on one tile type" : ""}.`,
+    tx("review.moment.the-wait-is-on-0-1-unseen-copies-in-total-2", `The wait is on ${waitList} — ${advice.liveTotal} unseen copies in total${advice.twoSided ? tx("review.moment.a-two-sided-wait-it-completes-a-run-from-either", ", a two-sided wait (it completes a run from either end)") : advice.tanki ? tx("review.moment.a-single-tile-tanki-wait-on-one-tile-type", ", a single-tile (tanki) wait on one tile type") : ""}.`, waitList, advice.liveTotal, advice.twoSided ? tx("review.moment.a-two-sided-wait-it-completes-a-run-from-either", ", a two-sided wait (it completes a run from either end)") : advice.tanki ? tx("review.moment.a-single-tile-tanki-wait-on-one-tile-type", ", a single-tile (tanki) wait on one tile type") : ""),
   );
   if (advice.damaRon) {
     facts.push(
-      `Staying silent, the hand already scores: ron pays ${advice.damaRon.points} points (${advice.damaRon.yaku.join(", ")}), so it can win without riichi.`,
+      tx("review.moment.staying-silent-the-hand-already-scores-ron-pays", `Staying silent, the hand already scores: ron pays ${advice.damaRon.points} points (${advice.damaRon.yaku.join(", ")}), so it can win without riichi.`, advice.damaRon.points, advice.damaRon.yaku.join(", ")),
     );
   } else {
-    facts.push("Staying silent, the hand holds no yaku of its own — silently it can only win on its own draw (tsumo). Riichi is what lets it win on a discard.");
+    facts.push(tx("review.moment.staying-silent-the-hand-holds-no-yaku-of-its-own", "Staying silent, the hand holds no yaku of its own — silently it can only win on its own draw (tsumo). Riichi is what lets it win on a discard."));
   }
   if (advice.reasons.includes("leader-late")) {
-    facts.push(`You lead by ${advice.leadOverSecond} points late in the game: extra points cannot change the placement, and a silent win ends the game the same way.`);
+    facts.push(tx("review.moment.you-lead-by-0-points-late-in-the-game-extra-poin", `You lead by ${advice.leadOverSecond} points late in the game: extra points cannot change the placement, and a silent win ends the game the same way.`, advice.leadOverSecond));
   }
   if (advice.reasons.includes("chaser-late")) {
-    facts.push(`You are ${advice.behindLeader} points behind the leader late in the game: the declaration's extra value is worth chasing.`);
+    facts.push(tx("review.moment.you-are-0-points-behind-the-leader-late-in-the-g", `You are ${advice.behindLeader} points behind the leader late in the game: the declaration's extra value is worth chasing.`, advice.behindLeader));
   }
   if (advice.riichiRon) {
-    facts.push(`With riichi declared, ron pays at least ${advice.riichiRon.points} points — a minimum: the bonus tiles under the indicator (ura dora) only show if you win.`);
+    facts.push(tx("review.moment.with-riichi-declared-ron-pays-at-least-0-points", `With riichi declared, ron pays at least ${advice.riichiRon.points} points — a minimum: the bonus tiles under the indicator (ura dora) only show if you win.`, advice.riichiRon.points));
   }
   const action = position.kind === "turn" ? position.action : null;
   const declared = action?.type === "discard" && action.riichi === true;
   return {
     kind: "riichi",
-    title: "The riichi decision",
+    title: tx("review.moment.the-riichi-decision", "The riichi decision"),
     choiceLine:
       action === null
         ? ""
         : declared
-          ? `You declared riichi, discarding the ${discardName(position)}.`
-          : `You stayed silent, discarding the ${discardName(position)}.`,
+          ? tx("review.moment.you-declared-riichi-discarding-the-0", `You declared riichi, discarding the ${discardName(position)}.`, discardName(position))
+          : tx("review.moment.you-stayed-silent-discarding-the-0", `You stayed silent, discarding the ${discardName(position)}.`, discardName(position)),
     headline: advice.headline,
     facts,
-    terms: [TERMS.riichi, TERMS.dama, TERMS.yaku],
+    terms: [t("review.terms.riichi"), t("review.terms.dama"), t("review.terms.yaku")],
   };
 }
 
 function winText(advice: WinAdvice, position: MomentPosition): MomentText {
   const facts: string[] = [];
   facts.push(
-    `Tsumo pays ${advice.value.points} points now (${advice.value.yaku.join(", ")})${advice.uraUnknown ? " — at least that much: in riichi the bonus tiles under the indicator (ura dora) only show on a win" : ""}.`,
+    tx("review.moment.tsumo-pays-0-points-now-1-2", `Tsumo pays ${advice.value.points} points now (${advice.value.yaku.join(", ")})${advice.uraUnknown ? " " + tx("review.moment.at-least-that-much-in-riichi-the-bonus-tiles-und", "— at least that much: in riichi the bonus tiles under the indicator (ura dora) only show on a win") : ""}.`, advice.value.points, advice.value.yaku.join(", "), advice.uraUnknown ? " " + tx("review.moment.at-least-that-much-in-riichi-the-bonus-tiles-und", "— at least that much: in riichi the bonus tiles under the indicator (ura dora) only show on a win") : ""),
   );
   if (advice.ceiling) {
     facts.push(
-      `Declining — discarding the ${advice.declineTileName} — keeps a wait on ${advice.declineWaits.map((w) => `the ${w.name}`).join(" and ")} worth up to ${advice.ceiling.points} points${advice.ceiling.yakuman ? " (a yakuman, the highest hand rank)" : ""}, with ${advice.declineLive} unseen copies and ${advice.turnsRemaining} tiles left in the wall.`,
+      tx("review.moment.declining-discarding-the-0-keeps-a-wait-on-1-wor", `Declining — discarding the ${advice.declineTileName} — keeps a wait on ${advice.declineWaits.map((w) => tx("review.moment.the-0", `the ${w.name}`, w.name)).join(" and ")} worth up to ${advice.ceiling.points} points${advice.ceiling.yakuman ? " " + tx("review.moment.a-yakuman-the-highest-hand-rank-2", "(a yakuman, the highest hand rank)") : ""}, with ${advice.declineLive} unseen copies and ${advice.turnsRemaining} tiles left in the wall.`, advice.declineTileName, advice.declineWaits.map((w) => tx("review.moment.the-0", `the ${w.name}`, w.name)).join(" and "), advice.ceiling.points, advice.ceiling.yakuman ? " " + tx("review.moment.a-yakuman-the-highest-hand-rank-2", "(a yakuman, the highest hand rank)") : "", advice.declineLive, advice.turnsRemaining),
     );
   } else {
-    facts.push("Declining leaves the hand short of ready — no win stays reachable from the kept shape.");
+    facts.push(tx("review.moment.declining-leaves-the-hand-short-of-ready-no-win", "Declining leaves the hand short of ready — no win stays reachable from the kept shape."));
   }
   const action = position.kind === "turn" ? position.action : null;
   return {
     kind: "win",
-    title: "The win decision",
+    title: tx("review.moment.the-win-decision", "The win decision"),
     choiceLine:
       action === null
         ? ""
         : action.type === "tsumo"
-          ? "You took the tsumo."
-          : `You declined the tsumo and discarded the ${discardName(position)}.`,
+          ? tx("review.moment.you-took-the-tsumo", "You took the tsumo.")
+          : tx("review.moment.you-declined-the-tsumo-and-discarded-the-0", `You declined the tsumo and discarded the ${discardName(position)}.`, discardName(position)),
     headline: advice.headline,
     facts,
-    terms: [TERMS.tsumo, TERMS.yaku],
+    terms: [t("review.terms.tsumo"), t("review.terms.yaku")],
   };
 }
 

@@ -16,6 +16,12 @@ import enData from "../src/i18n/locales/en.json";
  * through t() so far. The other 3,700+ keys are extracted and waiting
  * for Phase 2's component wiring; they are not orphans, they are the
  * inventory.
+ *
+ * REWIRE (brief-i18n-v1, this PR): Phase 2 is done — every render file
+ * is wired through t()/tx(), enforced by scripts/check-i18n-wiring.mjs
+ * (CI layer 3) and by i18n-derived-keys.test.ts (derived keys computed
+ * from ids at render time). The comment above is history: the keys are
+ * no longer waiting, they are the inventory AND the wiring.
  */
 
 const SRC = "packages/web/src";

@@ -42,6 +42,15 @@ jobs:
       # failing gate blocks the PR like any other test failure.
       - run: node scripts/extract-i18n.mjs --check
       - run: node scripts/i18n-coverage.mjs --gate
+      # Wiring gate (brief-i18n-v1 rewire): no user-facing literal in a
+      # render file may be rendered without t()/tx(). The extractor
+      # alone cannot catch that — it mints the key and --check passes
+      # once en.json is regenerated, while the screen still shows
+      # English. This check fails until the literal is wired (or the
+      # record carries the key and resolves it at the site). Proven to
+      # fail on pre-rewire main (1,437 unwired literals); passes on the
+      # rewired tree.
+      - run: node scripts/check-i18n-wiring.mjs
       # Same suite as `npm test`, with worker parallelism capped: the
       # suite contains several minute-long game-simulation files, and
       # with a worker per core the vitest progress RPC starves past its
