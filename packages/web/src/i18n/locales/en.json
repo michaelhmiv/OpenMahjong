@@ -2,7 +2,7 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T13:19:42.813Z",
+    "generatedAt": "2026-11-19T13:20:05.468Z",
     "keyCount": 3727,
     "namespaces": {
       "calc.compact": 14,
@@ -30909,7 +30909,7 @@
       "hash": "dac7b5ebf2b924d2cbfe2e81c2a1c6282f36dc6a15de307f1ad8aa548b1dd497",
       "source": {
         "file": "review-ui.ts",
-        "line": 200
+        "line": 201
       },
       "placeholders": [],
       "status": "approved"
@@ -30919,7 +30919,7 @@
       "hash": "76900f1bfd16c8d4dd3d25e6f46638d7165aee23883ccea6bfe071c514421769",
       "source": {
         "file": "review-ui.ts",
-        "line": 233
+        "line": 234
       },
       "placeholders": [],
       "status": "approved"
@@ -31605,7 +31605,7 @@
       "hash": "bf24cf03c2dcb4391a807d4f737de4b3788c5aee82eef47e713eacf31a8b3605",
       "source": {
         "file": "review-ui.ts",
-        "line": 244
+        "line": 245
       },
       "placeholders": [],
       "status": "approved"
@@ -31615,7 +31615,7 @@
       "hash": "2637c532f047d7f656f116462a44ebea6307500f0ac9a873497d7ffc43199f97",
       "source": {
         "file": "review-ui.ts",
-        "line": 275
+        "line": 276
       },
       "placeholders": [],
       "status": "approved"
@@ -31625,7 +31625,7 @@
       "hash": "3bb8faf30715b01cb7e0fb7cdd033bcbf5912a57f46289bb2090d470b6f3c610",
       "source": {
         "file": "review-ui.ts",
-        "line": 122
+        "line": 123
       },
       "placeholders": [],
       "status": "approved"
@@ -31635,7 +31635,7 @@
       "hash": "4ba4d2556020d41a00b902eecffdaff219feffc2e1f4a3b6059f665c8f27a07f",
       "source": {
         "file": "review-ui.ts",
-        "line": 181
+        "line": 182
       },
       "placeholders": [],
       "status": "approved"
@@ -31645,7 +31645,7 @@
       "hash": "bd35d0a75df7a92816d0fb380e3a29ddd10d7d9d3cfdca2d52c64b05f7c04ca1",
       "source": {
         "file": "review-ui.ts",
-        "line": 201
+        "line": 202
       },
       "placeholders": [],
       "status": "approved"
@@ -31655,7 +31655,7 @@
       "hash": "e04408f8c5868fc0100dac87259fb575e8c98fb5472cb20964045177863879b0",
       "source": {
         "file": "review-ui.ts",
-        "line": 247
+        "line": 248
       },
       "placeholders": [],
       "status": "approved"
@@ -31665,7 +31665,7 @@
       "hash": "dbc014e46fcfe2b6f97be3b18cc0a7c461c95f39dcc7abeceeb0222a3140de61",
       "source": {
         "file": "review-ui.ts",
-        "line": 171
+        "line": 172
       },
       "placeholders": [],
       "status": "approved"
@@ -31675,7 +31675,7 @@
       "hash": "8396e63a22f40bb1263271308ecc2be2841902fff12b7b204f449348a6eac965",
       "source": {
         "file": "review-ui.ts",
-        "line": 117
+        "line": 118
       },
       "placeholders": [],
       "status": "approved"
@@ -31685,7 +31685,7 @@
       "hash": "02b0c0e15c8a872bd0028fee865a034c4d7f57bb31e1f850396ead1665960480",
       "source": {
         "file": "review-ui.ts",
-        "line": 206
+        "line": 207
       },
       "placeholders": [
         "0"
@@ -31698,7 +31698,7 @@
       "hash": "ac27c10edb4780643478bd6d3c465763b237cf6c2ba6f9092d7420b68bfb1ee4",
       "source": {
         "file": "review-ui.ts",
-        "line": 206
+        "line": 207
       },
       "placeholders": [
         "0",
@@ -31712,7 +31712,7 @@
       "hash": "4ef8b7786654332e158c40c3f43e7436f13e902834ae5d25eb04f60b7b3331b5",
       "source": {
         "file": "review-ui.ts",
-        "line": 110
+        "line": 111
       },
       "placeholders": [],
       "status": "approved"
@@ -31722,7 +31722,7 @@
       "hash": "1202a631aff59b810c157519288f3afa63118af8e4be707cf9d69db88f1cfbb4",
       "source": {
         "file": "review-ui.ts",
-        "line": 289
+        "line": 290
       },
       "placeholders": [],
       "status": "approved"
@@ -31732,7 +31732,7 @@
       "hash": "6db878ff91b76dd3e24aa50f690ca05b549d80c035d7286040536a68396f2bcb",
       "source": {
         "file": "review-ui.ts",
-        "line": 200
+        "line": 201
       },
       "placeholders": [],
       "status": "approved"
@@ -31742,7 +31742,7 @@
       "hash": "8bbfbfcc699017cffd841d6460c05a969e6e51fe000081d25fd24433b7a1ca6c",
       "source": {
         "file": "review-ui.ts",
-        "line": 239
+        "line": 240
       },
       "placeholders": [],
       "status": "approved"
@@ -31752,7 +31752,7 @@
       "hash": "f7d3a2055c3e92876975d59dcddf4aa2e4ac8cf03fff664369cae72670158104",
       "source": {
         "file": "review-ui.ts",
-        "line": 218
+        "line": 219
       },
       "placeholders": [
         "0"
@@ -31765,7 +31765,7 @@
       "hash": "d486dfbd5fb578340bccbdd0a662527eab38550648d5f44517e5ac71b8824703",
       "source": {
         "file": "review-ui.ts",
-        "line": 33
+        "line": 34
       },
       "placeholders": [],
       "status": "approved"
@@ -31775,7 +31775,7 @@
       "hash": "fa18c06733fbbf4138ea8591d50949c1ecd653d0fbf13278a3439ee5afa14c49",
       "source": {
         "file": "review-ui.ts",
-        "line": 251
+        "line": 252
       },
       "placeholders": [],
       "status": "approved"
@@ -31785,7 +31785,7 @@
       "hash": "81a1f41757228d01513d593312186f73a4166f3aa5b7a0ad613f87a24f1d764e",
       "source": {
         "file": "review-ui.ts",
-        "line": 289
+        "line": 290
       },
       "placeholders": [],
       "status": "approved"
@@ -31795,7 +31795,7 @@
       "hash": "df576e6be09be703e61d035455711d71316e6ab48ec919cf4e139247a6a0c5f1",
       "source": {
         "file": "review-ui.ts",
-        "line": 259
+        "line": 260
       },
       "placeholders": [],
       "status": "approved"
@@ -31805,7 +31805,7 @@
       "hash": "657a7596476c9c1d988b68c61e788967d51541a684dcecda6a3fa55a983cd9a7",
       "source": {
         "file": "review-ui.ts",
-        "line": 216
+        "line": 217
       },
       "placeholders": [
         "0"
@@ -31818,7 +31818,7 @@
       "hash": "f1dc5bfa120d15a7d8dc41059d973d1fa220dd5200743eba34440d2005fbae24",
       "source": {
         "file": "review-ui.ts",
-        "line": 210
+        "line": 211
       },
       "placeholders": [],
       "status": "approved"
@@ -31828,7 +31828,7 @@
       "hash": "9b8a408c75938c3693c0666f8c58516dff252d57fe4e56b670acf2678cae5e95",
       "source": {
         "file": "review-ui.ts",
-        "line": 138
+        "line": 139
       },
       "placeholders": [],
       "status": "approved"
@@ -31838,7 +31838,7 @@
       "hash": "a708df92c9e46229e8f1cd50d8b7d172bda33fc24c8d96d7e9dabf6eba73baa2",
       "source": {
         "file": "review-ui.ts",
-        "line": 277
+        "line": 278
       },
       "placeholders": [],
       "status": "approved"
@@ -31848,7 +31848,7 @@
       "hash": "0fb1c7fbb6338fa841d6e9305c7f61c720a20e187fd25d66debcd2d3917c3086",
       "source": {
         "file": "review-ui.ts",
-        "line": 276
+        "line": 277
       },
       "placeholders": [],
       "status": "approved"
@@ -31858,7 +31858,7 @@
       "hash": "cb658b887650186b4cf6c1c89eca177b0bf38194227b90c5916587d4ab4891c7",
       "source": {
         "file": "review-ui.ts",
-        "line": 129
+        "line": 130
       },
       "placeholders": [],
       "status": "approved"
@@ -32542,7 +32542,7 @@
       "hash": "05e43f2f7655149f5c7e03a02f1e0358621f196fa3e2a5817f061673400ed9ab",
       "source": {
         "file": "review-ui.ts",
-        "line": 201
+        "line": 202
       },
       "placeholders": [],
       "status": "approved"
@@ -32552,7 +32552,7 @@
       "hash": "9948287605a481d8713f9e3142e8eadf972d95f59f0a33833ed39d09861b87c7",
       "source": {
         "file": "review-ui.ts",
-        "line": 249
+        "line": 250
       },
       "placeholders": [],
       "status": "approved"
@@ -32562,7 +32562,7 @@
       "hash": "9390298f3fb0c5b160498935d79cb139aef28e1c47358b4bbba61862b9c26e59",
       "source": {
         "file": "review-ui.ts",
-        "line": 217
+        "line": 218
       },
       "placeholders": [],
       "status": "approved"
@@ -32572,7 +32572,7 @@
       "hash": "c49f2278efe9d53b8bbaebc576f1a8c6260883c8598cc08e8472b516bf192c72",
       "source": {
         "file": "review-ui.ts",
-        "line": 126
+        "line": 127
       },
       "placeholders": [],
       "status": "approved"
@@ -32582,7 +32582,7 @@
       "hash": "de91a649ef7bd79e7f48fbe9b8c19cda954e45593c752be090b4c3cc19cad492",
       "source": {
         "file": "review-ui.ts",
-        "line": 242
+        "line": 243
       },
       "placeholders": [],
       "status": "approved"
@@ -32592,7 +32592,7 @@
       "hash": "025677904541bb905828e990a61f228bdfce30d72311226d2bff446c8e19553b",
       "source": {
         "file": "review-ui.ts",
-        "line": 262
+        "line": 263
       },
       "placeholders": [],
       "status": "approved"
@@ -32602,7 +32602,7 @@
       "hash": "140bedbf9c3f6d56a9846d2ba7088798683f4da0c248231336e6a05679e4fdfe",
       "source": {
         "file": "review-ui.ts",
-        "line": 215
+        "line": 216
       },
       "placeholders": [],
       "status": "approved"
@@ -32612,7 +32612,7 @@
       "hash": "9aa0564741234e19c499495c9a27140a887dab4b2f61f3e6a604a2c9ce052f08",
       "source": {
         "file": "review-ui.ts",
-        "line": 200
+        "line": 201
       },
       "placeholders": [],
       "status": "approved"
@@ -32622,7 +32622,7 @@
       "hash": "bd0cd6eb4d970ffe3eb6974facbb7ab5fe6fafb138f5bcd0e89e0ae1c4a7cf1f",
       "source": {
         "file": "review-ui.ts",
-        "line": 205
+        "line": 206
       },
       "placeholders": [],
       "status": "approved"
@@ -32632,7 +32632,7 @@
       "hash": "681cd1bce83cc2d72c4d7b0da244d15884725524707773f9ef8413c1dd763003",
       "source": {
         "file": "review-ui.ts",
-        "line": 205
+        "line": 206
       },
       "placeholders": [],
       "status": "approved"
@@ -32642,7 +32642,7 @@
       "hash": "42940db79110d519eafed93b464826979b4d6e8bedd12ab6c70082d045a48ee8",
       "source": {
         "file": "review-ui.ts",
-        "line": 276
+        "line": 277
       },
       "placeholders": [],
       "status": "approved"
@@ -32652,7 +32652,7 @@
       "hash": "49365f077495fa21df3fabc4f5bc2cdbcb083f4eedffd89bfb63de3751c0093d",
       "source": {
         "file": "review-ui.ts",
-        "line": 236
+        "line": 237
       },
       "placeholders": [],
       "status": "approved"
@@ -32662,7 +32662,7 @@
       "hash": "f9e551e18926b4b9a7348e1abd2ad8fec3c63ae7556e3aadc3c10379af8eaf23",
       "source": {
         "file": "review-ui.ts",
-        "line": 289
+        "line": 290
       },
       "placeholders": [
         "0",
@@ -32676,7 +32676,7 @@
       "hash": "3e17bb3ff2e981fb8a3322b8ee624703ee042136a5ff45117f176915d8e29f34",
       "source": {
         "file": "review-ui.ts",
-        "line": 271
+        "line": 272
       },
       "placeholders": [],
       "status": "approved"
@@ -32686,7 +32686,7 @@
       "hash": "78a8017940c3ff36ad46e2ecbe79fa5fcf3aea7be27acd41bcfa263887d1f5a6",
       "source": {
         "file": "review-ui.ts",
-        "line": 258
+        "line": 259
       },
       "placeholders": [],
       "status": "approved"
@@ -32696,7 +32696,7 @@
       "hash": "17782e9a08ee7f6ea8e1b2faab4b84bc314fd6f96ad3fab184b7b4f323711ca0",
       "source": {
         "file": "review-ui.ts",
-        "line": 287
+        "line": 288
       },
       "placeholders": [],
       "status": "approved"
@@ -32706,7 +32706,7 @@
       "hash": "2864be6d22cea7ffe46e33f6ca8dec7bb835cec9a70bf10af88cb08b364ae13f",
       "source": {
         "file": "review-ui.ts",
-        "line": 287
+        "line": 288
       },
       "placeholders": [],
       "status": "approved"
@@ -32716,7 +32716,7 @@
       "hash": "294417928dc0e61bda4639435d1b1bd2ae8738a22fd3327ce8f3765a4754894f",
       "source": {
         "file": "review-ui.ts",
-        "line": 287
+        "line": 288
       },
       "placeholders": [],
       "status": "approved"
@@ -32726,7 +32726,7 @@
       "hash": "133da80b78e67dc739b44fe36a27cb8513a8249d54faeb38144f1dd6c5e5676b",
       "source": {
         "file": "review-ui.ts",
-        "line": 248
+        "line": 249
       },
       "placeholders": [],
       "status": "approved"
@@ -32736,7 +32736,7 @@
       "hash": "1c5794cf735da27fc47262f749b2a18ed761af4ea4cfaac6e0e4581ee5691713",
       "source": {
         "file": "review-ui.ts",
-        "line": 275
+        "line": 276
       },
       "placeholders": [],
       "status": "approved"
@@ -32746,7 +32746,7 @@
       "hash": "fe030a9c7ba3defd03a5c428e915f60e80eabcaa0fa990f6b477d91b3577beb4",
       "source": {
         "file": "review-ui.ts",
-        "line": 276
+        "line": 277
       },
       "placeholders": [],
       "status": "approved"
@@ -32756,7 +32756,7 @@
       "hash": "eb57cb34742a1088f2bda808a91291515888b6a7bc008b51f6732c256497a34a",
       "source": {
         "file": "review-ui.ts",
-        "line": 289
+        "line": 290
       },
       "placeholders": [],
       "status": "approved"
@@ -32766,7 +32766,7 @@
       "hash": "ba19e9c3d5f49882ddaafed4f286a8a81491150426d321179270e27e74a89097",
       "source": {
         "file": "review-ui.ts",
-        "line": 33
+        "line": 34
       },
       "placeholders": [],
       "status": "approved"
@@ -32776,7 +32776,7 @@
       "hash": "3caaffe0f07d5ffa36964929dfb4f500d583eddbf9a18a4475fc211eab8bba47",
       "source": {
         "file": "review-ui.ts",
-        "line": 217
+        "line": 218
       },
       "placeholders": [
         "0",
@@ -32790,7 +32790,7 @@
       "hash": "726f53a9cb84cd6e3a4375b50b97b9c47798bcf1d2b88c81ed6176bfb6373a49",
       "source": {
         "file": "review-ui.ts",
-        "line": 242
+        "line": 243
       },
       "placeholders": [],
       "status": "approved"
@@ -32800,7 +32800,7 @@
       "hash": "3ccafad5287031141d443fbf229d56eede92b9ab45c9600be5ff7088e4ba6eb4",
       "source": {
         "file": "review-ui.ts",
-        "line": 234
+        "line": 235
       },
       "placeholders": [],
       "status": "approved"
@@ -32810,7 +32810,7 @@
       "hash": "e38390c79913e7f465d056e08e07de68a663427d1c539743ddd28763f96e992f",
       "source": {
         "file": "review-ui.ts",
-        "line": 240
+        "line": 241
       },
       "placeholders": [],
       "status": "approved"
@@ -32820,7 +32820,7 @@
       "hash": "3c7b9b5fb54c4b5b931cf0125b8891b44cffa6bf5a0b9873ef87c76d023fe14e",
       "source": {
         "file": "review-ui.ts",
-        "line": 115
+        "line": 116
       },
       "placeholders": [],
       "status": "approved"
@@ -32830,7 +32830,7 @@
       "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
       "source": {
         "file": "review-ui.ts",
-        "line": 123
+        "line": 124
       },
       "placeholders": [],
       "status": "approved"
@@ -32840,7 +32840,7 @@
       "hash": "cd9558acfc386bd3e1fb14da5d4ed7e9338f80fa29fc2447c36c94667c406295",
       "source": {
         "file": "review-ui.ts",
-        "line": 36
+        "line": 37
       },
       "placeholders": [],
       "status": "approved"
@@ -32850,7 +32850,7 @@
       "hash": "51fef447ec2caab35c7631855042983f955a2773f30eaa004455d07ccd4c2f69",
       "source": {
         "file": "review-ui.ts",
-        "line": 114
+        "line": 115
       },
       "placeholders": [
         "0"
@@ -32863,7 +32863,7 @@
       "hash": "fc7ce130809795e46da88e4341b11183b4e0da36690741333eaae1300943c8d7",
       "source": {
         "file": "review-ui.ts",
-        "line": 215
+        "line": 216
       },
       "placeholders": [
         "0"
@@ -32876,7 +32876,7 @@
       "hash": "bf60cb2855190de1112f0071764f4710eeda4245cbe39ecdf648065d8cf829ce",
       "source": {
         "file": "review-ui.ts",
-        "line": 108
+        "line": 109
       },
       "placeholders": [],
       "status": "approved"
@@ -32966,7 +32966,7 @@
       "hash": "fcc5943463fc18c3575c6e7b67fda9c714dc58a39a6bb0215c9cce4a59123036",
       "source": {
         "file": "review-ui.ts",
-        "line": 99
+        "line": 100
       },
       "placeholders": [],
       "status": "approved"
@@ -32976,7 +32976,7 @@
       "hash": "874325593fedafef040d58ac29b9a31089dae10cf57c66f29fd8f3216062aadf",
       "source": {
         "file": "review-ui.ts",
-        "line": 201
+        "line": 202
       },
       "placeholders": [],
       "status": "approved"
@@ -32986,7 +32986,7 @@
       "hash": "008aaa47401960689db080490e02a13673dce8cab7f4e587560b14eb593959e4",
       "source": {
         "file": "review-ui.ts",
-        "line": 279
+        "line": 280
       },
       "placeholders": [],
       "status": "approved"
@@ -32996,7 +32996,7 @@
       "hash": "0013bedd2eed5d5fecc14d31e323e1f5bc4df88be52336d10a8d3fbf050249e2",
       "source": {
         "file": "review-ui.ts",
-        "line": 280
+        "line": 281
       },
       "placeholders": [],
       "status": "approved"
@@ -33006,7 +33006,7 @@
       "hash": "a0c46c3acc18c3c19544b95483024c79b6d63431fdaf2ae672da3404902bc9bc",
       "source": {
         "file": "review-ui.ts",
-        "line": 281
+        "line": 282
       },
       "placeholders": [],
       "status": "approved"
@@ -33016,7 +33016,7 @@
       "hash": "346f2b12acd2304113b8488b3fa3ed7adeefbea99f823eb0233a96012f778a24",
       "source": {
         "file": "review-ui.ts",
-        "line": 179
+        "line": 180
       },
       "placeholders": [],
       "status": "approved"
@@ -33026,7 +33026,7 @@
       "hash": "a0dcd86ca390c0a83a3546b1d437af7cf0e7431046dae931f0db1ece42c28ef6",
       "source": {
         "file": "review-ui.ts",
-        "line": 244
+        "line": 245
       },
       "placeholders": [],
       "status": "approved"
@@ -33036,7 +33036,7 @@
       "hash": "ba691ba042bcedd9a61a36f5969026bc95859dccdc7e47f24e6bce35673baf2f",
       "source": {
         "file": "review-ui.ts",
-        "line": 277
+        "line": 278
       },
       "placeholders": [],
       "status": "approved"
@@ -33046,7 +33046,7 @@
       "hash": "27ed1b77be22bc23dfc6039c492c0e32d9080611e1777f3ab3950922a978eea3",
       "source": {
         "file": "review-ui.ts",
-        "line": 174
+        "line": 175
       },
       "placeholders": [],
       "status": "approved"
@@ -33056,7 +33056,7 @@
       "hash": "5f5aab3bf3e8474dd8ec2a8261d606d6bf3f6222461b504460267109c380a5f9",
       "source": {
         "file": "review-ui.ts",
-        "line": 208
+        "line": 209
       },
       "placeholders": [],
       "status": "approved"
@@ -33066,7 +33066,7 @@
       "hash": "10866a9df5f8be5be75c79314de01412b0b35db060b06fdc333c1d9cd82d73c0",
       "source": {
         "file": "review-ui.ts",
-        "line": 205
+        "line": 37
       },
       "placeholders": [
         "0",
@@ -33080,7 +33080,7 @@
       "hash": "eb91f332fc67a35f84b8c870dd3c4961801dc506d0af24433934a6c434a8751c",
       "source": {
         "file": "review-ui.ts",
-        "line": 250
+        "line": 251
       },
       "placeholders": [
         "0",
@@ -33094,7 +33094,7 @@
       "hash": "c064a67ca93abbeefcf93dfe9d1e85c00d116e151dcc132b233f14c5c1539141",
       "source": {
         "file": "review-ui.ts",
-        "line": 276
+        "line": 277
       },
       "placeholders": [
         "0",
@@ -33108,7 +33108,7 @@
       "hash": "68ddd9b85f4a4c29dcd1365e37fac944ef730647d30e99094782fdae1a03b297",
       "source": {
         "file": "review-ui.ts",
-        "line": 245
+        "line": 246
       },
       "placeholders": [
         "0",
@@ -33122,7 +33122,7 @@
       "hash": "98cf14f12aa1cab701e1c6121c3079cf43b4fa23558086eb9b64fa34f02f37fb",
       "source": {
         "file": "review-ui.ts",
-        "line": 254
+        "line": 255
       },
       "placeholders": [
         "0",
@@ -33137,7 +33137,7 @@
       "hash": "cc1b1253ce680131d835f0ae0976fbb9b3beff22f40cc2e7928efd230d96243d",
       "source": {
         "file": "review-ui.ts",
-        "line": 115
+        "line": 116
       },
       "placeholders": [
         "0",
@@ -33152,7 +33152,7 @@
       "hash": "c30d21a3d430ac645b5f37f987a0c3dbf20ecffbfd02676f5430df66b313989b",
       "source": {
         "file": "review-ui.ts",
-        "line": 215
+        "line": 216
       },
       "placeholders": [
         "0",
@@ -33166,7 +33166,7 @@
       "hash": "dd282d265e06eaade1196f93931b81c1572ccea987b01611bfc1cb88fd370dc8",
       "source": {
         "file": "review-ui.ts",
-        "line": 116
+        "line": 117
       },
       "placeholders": [
         "0"
@@ -33179,7 +33179,7 @@
       "hash": "73741e54e84d408c90cc27adb25106d7e3bd387be8750c8cb493dc2554ba8ad1",
       "source": {
         "file": "review-ui.ts",
-        "line": 185
+        "line": 186
       },
       "placeholders": [
         "0",
@@ -33193,7 +33193,7 @@
       "hash": "0073f4212e87e9d0ce17eb887d2890425a5d43c7e1e78d10d69bd4446f79d38b",
       "source": {
         "file": "review-ui.ts",
-        "line": 206
+        "line": 207
       },
       "placeholders": [
         "0"
@@ -33206,7 +33206,7 @@
       "hash": "bd5125e3aca7529ebeaa3453317565335e63fa27454e8bf368cb311a04d4b3ad",
       "source": {
         "file": "review-ui.ts",
-        "line": 289
+        "line": 290
       },
       "placeholders": [
         "0"
@@ -33219,7 +33219,7 @@
       "hash": "56863fab04a7bd740aeda8bfd4f63ba4d3773bd81e05ae5a360e1506a356eb9f",
       "source": {
         "file": "review-ui.ts",
-        "line": 262
+        "line": 263
       },
       "placeholders": [
         "0",
@@ -33233,7 +33233,7 @@
       "hash": "7cad2d592a7065fa31a10737dcb03fe472afd2aa6ca54d53593db3a9d78fbc91",
       "source": {
         "file": "review-ui.ts",
-        "line": 262
+        "line": 263
       },
       "placeholders": [
         "0",
@@ -33247,7 +33247,7 @@
       "hash": "a1dc7044aa3a3773cd3c12414df4950222fedae69e779ae9d200935ec1df0b10",
       "source": {
         "file": "review-ui.ts",
-        "line": 204
+        "line": 205
       },
       "placeholders": [
         "0",
@@ -33262,7 +33262,7 @@
       "hash": "28639602e0d10e5989887b520304cfbc7cd29412ebe9edd4f775e472c8806096",
       "source": {
         "file": "review-ui.ts",
-        "line": 263
+        "line": 264
       },
       "placeholders": [
         "0"
@@ -33275,7 +33275,7 @@
       "hash": "e60c4d297d83849e2f8f792df381e692f16fc81dc877dec3391791e0d4dd88dc",
       "source": {
         "file": "review-ui.ts",
-        "line": 244
+        "line": 245
       },
       "placeholders": [
         "0",
@@ -33289,7 +33289,7 @@
       "hash": "3495e757855a5c678addcf32516274e2962d0572f065378dba689e22168f28dd",
       "source": {
         "file": "review-ui.ts",
-        "line": 33
+        "line": 34
       },
       "placeholders": [],
       "status": "approved"
@@ -33299,7 +33299,7 @@
       "hash": "891362f00f7022f39cc8e9d826e60a927fe5b394a09cdbdd3a1f56982ca88a03",
       "source": {
         "file": "review-ui.ts",
-        "line": 277
+        "line": 278
       },
       "placeholders": [
         "0"
@@ -33312,7 +33312,7 @@
       "hash": "8a798890fe93817163b10b5f7bd2ca4d25d84c52739a645a889c173eee7d9d3d",
       "source": {
         "file": "review-ui.ts",
-        "line": 217
+        "line": 218
       },
       "placeholders": [],
       "status": "approved"
@@ -33322,7 +33322,7 @@
       "hash": "c7e89fc8f2c435515eae3c5dc2193321bc6874e2cae70c534221b8206d94ca6f",
       "source": {
         "file": "review-ui.ts",
-        "line": 114
+        "line": 115
       },
       "placeholders": [],
       "status": "approved"
@@ -33332,7 +33332,7 @@
       "hash": "58c94b7d0e72160284a50ef6b81b7714e901d359e5e42e41fff75906406eb61e",
       "source": {
         "file": "review-ui.ts",
-        "line": 271
+        "line": 272
       },
       "placeholders": [
         "0"
@@ -33345,7 +33345,7 @@
       "hash": "272e9938ddff65dd1b678d4918bad57cf5bc557ff415329d235509b575be36fa",
       "source": {
         "file": "review-ui.ts",
-        "line": 275
+        "line": 276
       },
       "placeholders": [
         "0"
@@ -33358,7 +33358,7 @@
       "hash": "45d80bdcf00bcf705be5f2a569228d40f3c25f50772a9c456517cdf9f33b9bbb",
       "source": {
         "file": "review-ui.ts",
-        "line": 211
+        "line": 178
       },
       "placeholders": [],
       "status": "approved"
@@ -33368,7 +33368,7 @@
       "hash": "a484196ab128f38c6f3a6225fd2bfb1a9d78b7464ec81b22574a9463a049bc0a",
       "source": {
         "file": "review-ui.ts",
-        "line": 203
+        "line": 204
       },
       "placeholders": [
         "0",
@@ -33382,7 +33382,7 @@
       "hash": "5112d21d18faffd136493b6a2659fd35c254a3f64793d6dc0af970c54fba3000",
       "source": {
         "file": "review-ui.ts",
-        "line": 260
+        "line": 261
       },
       "placeholders": [],
       "status": "approved"
