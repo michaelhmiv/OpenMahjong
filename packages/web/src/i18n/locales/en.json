@@ -2,7 +2,7 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-19T23:16:39.576Z",
+    "generatedAt": "2026-11-19T23:31:24.643Z",
     "keyCount": 3976,
     "namespaces": {
       "calc.compact": 14,
@@ -37884,7 +37884,7 @@
       "hash": "90586767b1187e281e887b1249d2439a6c5a3dbfa4a20ee31e1516d736780ef2",
       "source": {
         "file": "app.ts",
-        "line": 3678
+        "line": 3684
       },
       "placeholders": [],
       "status": "approved"
@@ -37964,7 +37964,7 @@
       "hash": "675224aa49bfceae130e4c0d586976216cd8a429bf71b15c22426ad75c90adcb",
       "source": {
         "file": "app.ts",
-        "line": 3160
+        "line": 3166
       },
       "placeholders": [],
       "status": "approved"
@@ -37984,7 +37984,7 @@
       "hash": "b0027db426c1ce358f1cb52425f1b99576ff751bd2165c2957b2cd5b76162d6a",
       "source": {
         "file": "app.ts",
-        "line": 4590
+        "line": 4596
       },
       "placeholders": [],
       "status": "approved"
@@ -37994,7 +37994,7 @@
       "hash": "e5e84d0ffd19022d8b1b343f8451e6008109adc1aed01ad7f214b47053f158bd",
       "source": {
         "file": "app.ts",
-        "line": 4708
+        "line": 4714
       },
       "placeholders": [],
       "status": "approved"
@@ -38004,7 +38004,7 @@
       "hash": "8e1a0cef46f5b7b6382d9d2b07418873f1ef7f22e6ead974c06ee3f9b14c3463",
       "source": {
         "file": "app.ts",
-        "line": 3739
+        "line": 3745
       },
       "placeholders": [
         "0",
@@ -38029,7 +38029,7 @@
       "hash": "0b42aaa6593b2ccd993db5306c85cb758e6f39ba7e93caa8a792b99979fce466",
       "source": {
         "file": "app.ts",
-        "line": 3623
+        "line": 3629
       },
       "placeholders": [],
       "status": "approved"
@@ -38039,7 +38039,7 @@
       "hash": "9d8fe19dfde65ed41e981a1b5c606bc52ee3285626c6cb5b24dad33004d03c9c",
       "source": {
         "file": "app.ts",
-        "line": 3628
+        "line": 3634
       },
       "placeholders": [],
       "status": "approved"
@@ -38079,7 +38079,7 @@
       "hash": "19766ed6ccb2f4a32778eed80d1928d2c87a18d7c275ccb163ec6709d3eb2e27",
       "source": {
         "file": "app.ts",
-        "line": 3278
+        "line": 3284
       },
       "placeholders": [],
       "status": "approved"
@@ -38119,7 +38119,7 @@
       "hash": "0878b9867b874985a3507b4a8aed0789b23507585ee88388f0b1ecc44aa01fd0",
       "source": {
         "file": "app.ts",
-        "line": 3256
+        "line": 3262
       },
       "placeholders": [],
       "status": "approved"
@@ -38129,7 +38129,7 @@
       "hash": "20e27337d8ab69791f567a6e6fae5b60fb0b221aff563b7f25ad123a875c692d",
       "source": {
         "file": "app.ts",
-        "line": 3868
+        "line": 3874
       },
       "placeholders": [
         "0"
@@ -38142,7 +38142,7 @@
       "hash": "e1d14216648118936ff6453a776d6ecd561ebebee2cd65aaa6eb4a21c2a1574d",
       "source": {
         "file": "app.ts",
-        "line": 3934
+        "line": 3940
       },
       "placeholders": [],
       "status": "approved"
@@ -38212,7 +38212,7 @@
       "hash": "55bd313c1d6877723ca2a1fb811fef28d81ad05f45b2c0dd6550f6247d8ca419",
       "source": {
         "file": "app.ts",
-        "line": 3826
+        "line": 3832
       },
       "placeholders": [],
       "status": "approved"
@@ -38252,7 +38252,7 @@
       "hash": "f766b1a5836b481cf6d36b9f091d2a8743d7af541f5a9f66968bd5db6b13343f",
       "source": {
         "file": "app.ts",
-        "line": 3770
+        "line": 3776
       },
       "placeholders": [
         "0",
@@ -38269,7 +38269,7 @@
       "hash": "1144fcc6a2f5562ba80f009cf55fdaea58cafb04d5b3416578d9cd0c36b0d767",
       "source": {
         "file": "app.ts",
-        "line": 3772
+        "line": 3778
       },
       "placeholders": [
         "0",
@@ -38283,7 +38283,7 @@
       "hash": "fdb1bcf04d8372d373330939c6d6a162d6c38a5a8cfa1489ce6f0e6bc63886ec",
       "source": {
         "file": "app.ts",
-        "line": 3774
+        "line": 3780
       },
       "placeholders": [
         "0",
@@ -38337,7 +38337,7 @@
       "hash": "bed780b1bd7718a63a040a675133f07c1988e9b022187ec4c1c47b0742d0c93a",
       "source": {
         "file": "app.ts",
-        "line": 3286
+        "line": 3292
       },
       "placeholders": [],
       "status": "approved"
@@ -38367,7 +38367,7 @@
       "hash": "1e5c8b3191f7c2bd397cafb35c805472a93b13e724669e52ebbf1dec229eadb7",
       "source": {
         "file": "app.ts",
-        "line": 3393
+        "line": 3399
       },
       "placeholders": [],
       "status": "approved"
@@ -38377,7 +38377,7 @@
       "hash": "677a3bd5e1a5e7800f61d58da3452c0aa7b15927f1bf6452dd00bc27f794d8f7",
       "source": {
         "file": "app.ts",
-        "line": 3826
+        "line": 3832
       },
       "placeholders": [],
       "status": "approved"
@@ -38417,7 +38417,7 @@
       "hash": "eb1a70e39274bb762b5d7c1adb5debeea2b05e12af28207f21a375b596853273",
       "source": {
         "file": "app.ts",
-        "line": 3900
+        "line": 3906
       },
       "placeholders": [],
       "status": "approved"
@@ -38427,7 +38427,7 @@
       "hash": "92359e88435d7b8323013e83bd3df10885269ebda66cc90e29413d88c86c09b5",
       "source": {
         "file": "app.ts",
-        "line": 3617
+        "line": 3623
       },
       "placeholders": [],
       "status": "approved"
@@ -38437,7 +38437,7 @@
       "hash": "14dd591db26b88981071cf67b3374d811b9e4ca78a32733343cd4f0a61fadeff",
       "source": {
         "file": "app.ts",
-        "line": 3615
+        "line": 3621
       },
       "placeholders": [],
       "status": "approved"
@@ -38447,7 +38447,7 @@
       "hash": "8396e63a22f40bb1263271308ecc2be2841902fff12b7b204f449348a6eac965",
       "source": {
         "file": "app.ts",
-        "line": 3398
+        "line": 3404
       },
       "placeholders": [],
       "status": "approved"
@@ -38457,7 +38457,7 @@
       "hash": "11a6767d5674c7e45f7e00dc525762275b3a48491ad6045427d2609cc496c516",
       "source": {
         "file": "app.ts",
-        "line": 4164
+        "line": 4170
       },
       "placeholders": [],
       "status": "approved"
@@ -38477,7 +38477,7 @@
       "hash": "98f44027339bffda465fcae4ee59aa16c90aeeb6dd743c3c41cf16807a4d2444",
       "source": {
         "file": "app.ts",
-        "line": 4769
+        "line": 4775
       },
       "placeholders": [],
       "status": "approved"
@@ -38487,7 +38487,7 @@
       "hash": "ebc61de808367f2d9dee267edf1db43c941f8a50bd73cef36e61b268be0b485b",
       "source": {
         "file": "app.ts",
-        "line": 3461
+        "line": 3467
       },
       "placeholders": [],
       "status": "approved"
@@ -38517,7 +38517,7 @@
       "hash": "d8c585b31dcd6638e617afc9152f09c4d374e8a44ebe3f0789e7732b16669c6c",
       "source": {
         "file": "app.ts",
-        "line": 3784
+        "line": 3790
       },
       "placeholders": [],
       "status": "approved"
@@ -38527,7 +38527,7 @@
       "hash": "9263f7b83d08f9ff27bd6d224d333b6775d3f26694e49560eaf64351cdfabc58",
       "source": {
         "file": "app.ts",
-        "line": 3412
+        "line": 3418
       },
       "placeholders": [],
       "status": "approved"
@@ -38597,7 +38597,7 @@
       "hash": "4359ce81572019b3bb24bc5fc366df9f3f786265035bc288c7a507e44b465636",
       "source": {
         "file": "app.ts",
-        "line": 3330
+        "line": 3336
       },
       "placeholders": [],
       "status": "approved"
@@ -38607,7 +38607,7 @@
       "hash": "e3a054c7832d2bf3c1b00bc97c62594680dba3ba0d384b4829a386c2206f16b1",
       "source": {
         "file": "app.ts",
-        "line": 3673
+        "line": 3679
       },
       "placeholders": [],
       "status": "approved"
@@ -38617,7 +38617,7 @@
       "hash": "76f1052429da30434e3518d533ab20e18ee643ef7827bba3a921b784b5281ddd",
       "source": {
         "file": "app.ts",
-        "line": 4792
+        "line": 4798
       },
       "placeholders": [],
       "status": "approved"
@@ -38637,7 +38637,7 @@
       "hash": "b8a5a9b45cbbfe1e884e6fdb146d87acf0c77b3f4182f95f0151f2340361bb08",
       "source": {
         "file": "app.ts",
-        "line": 4682
+        "line": 4688
       },
       "placeholders": [],
       "status": "approved"
@@ -38747,7 +38747,7 @@
       "hash": "82d004543bc7241c83d8cc9d08e2517a17217e1baeb16ad04a42408c20dcc29e",
       "source": {
         "file": "app.ts",
-        "line": 3508
+        "line": 3514
       },
       "placeholders": [],
       "status": "approved"
@@ -38767,7 +38767,7 @@
       "hash": "5f8d8418f567f51019a0c830c560b7c2a9b6ac9844b634dd98ae6652bcd6f80b",
       "source": {
         "file": "app.ts",
-        "line": 4639
+        "line": 4645
       },
       "placeholders": [],
       "status": "approved"
@@ -38777,7 +38777,7 @@
       "hash": "8a28e9b8a93c132a7871c9824857f730d2ef85962aa1c0533091730dde729278",
       "source": {
         "file": "app.ts",
-        "line": 4639
+        "line": 4645
       },
       "placeholders": [],
       "status": "approved"
@@ -38797,7 +38797,7 @@
       "hash": "fcfd066f0efae0922f297954d3a5dc930be8c1fd3629e25fddc2328a51c84c4d",
       "source": {
         "file": "app.ts",
-        "line": 3414
+        "line": 3420
       },
       "placeholders": [],
       "status": "approved"
@@ -38807,7 +38807,7 @@
       "hash": "bab8f57ec4f7642f99601f03ea00d3bdd64762e82310196a4dc18013ab494504",
       "source": {
         "file": "app.ts",
-        "line": 4786
+        "line": 4792
       },
       "placeholders": [],
       "status": "approved"
@@ -38857,7 +38857,7 @@
       "hash": "e8199a62f65a255cfd092724fd6c2c2fba445f30e99f17ba3a177bb6613e6712",
       "source": {
         "file": "app.ts",
-        "line": 4838
+        "line": 4844
       },
       "placeholders": [],
       "status": "approved"
@@ -38877,7 +38877,7 @@
       "hash": "89246ba303970ec1779353e412e5161a40e0240852e6c44a368543e0fb63500f",
       "source": {
         "file": "app.ts",
-        "line": 4758
+        "line": 4764
       },
       "placeholders": [
         "0"
@@ -39073,7 +39073,7 @@
       "hash": "3026a9e45e2804237995a6cdc782a77f1228e9695edbbe83a51f571473dfe22f",
       "source": {
         "file": "app.ts",
-        "line": 4443
+        "line": 4449
       },
       "placeholders": [
         "0"
@@ -39106,7 +39106,7 @@
       "hash": "9bd93da6e70a406408d4b924e09dce7c682321b8ca7fdbc7be6d132fb0bcc556",
       "source": {
         "file": "app.ts",
-        "line": 3624
+        "line": 3630
       },
       "placeholders": [],
       "status": "approved"
@@ -39116,7 +39116,7 @@
       "hash": "39c7c37a992c800faba567c4e36630a019fbe4f6d31ad2ee43022acf4646dac9",
       "source": {
         "file": "app.ts",
-        "line": 3667
+        "line": 3673
       },
       "placeholders": [],
       "status": "approved"
@@ -39126,7 +39126,7 @@
       "hash": "c1c89ccb89f412bf94e54d64b6b30c8e099416e882d8bd414d1585c96fb85c27",
       "source": {
         "file": "app.ts",
-        "line": 3670
+        "line": 3676
       },
       "placeholders": [],
       "status": "approved"
@@ -39166,7 +39166,7 @@
       "hash": "280e734ad97dc30988848d811fa19ed72666533d7be0d93a613471e54ac26a73",
       "source": {
         "file": "app.ts",
-        "line": 3252
+        "line": 3258
       },
       "placeholders": [],
       "status": "approved"
@@ -39176,7 +39176,7 @@
       "hash": "315e4d3fb66faa2259a47ae10006bd28920949edf767eea325e00247c2d10cb9",
       "source": {
         "file": "app.ts",
-        "line": 3886
+        "line": 3892
       },
       "placeholders": [
         "0"
@@ -39189,7 +39189,7 @@
       "hash": "735b0702ae7995094e4210057ab9a3cf367465ffc79e61c951048e4774e29196",
       "source": {
         "file": "app.ts",
-        "line": 3880
+        "line": 3886
       },
       "placeholders": [
         "0"
@@ -39202,7 +39202,7 @@
       "hash": "015cbd564c25c7618d4efd7a8969ff85d897cac43264741c6c9cfcd9b1a8ffc0",
       "source": {
         "file": "app.ts",
-        "line": 3912
+        "line": 3918
       },
       "placeholders": [],
       "status": "approved"
@@ -39242,7 +39242,7 @@
       "hash": "33876f63c5e1596e173f127b8ff278d7ca1d3ab7a3c21695c4926a83330bdc52",
       "source": {
         "file": "app.ts",
-        "line": 3328
+        "line": 3334
       },
       "placeholders": [],
       "status": "approved"
@@ -39410,7 +39410,7 @@
       "hash": "ce78afd0e6a225ecac96a6812b9d192e7eb35889cd5237beb38b50375b79d8dd",
       "source": {
         "file": "app.ts",
-        "line": 4051
+        "line": 4057
       },
       "placeholders": [],
       "status": "approved"
@@ -39420,7 +39420,7 @@
       "hash": "fc6e4a408d56be9670c14ee7be21e1a39c93c2df82f7c95975485e90ca6371c3",
       "source": {
         "file": "app.ts",
-        "line": 4473
+        "line": 4479
       },
       "placeholders": [],
       "status": "approved"
@@ -39430,7 +39430,7 @@
       "hash": "14ed3728682547a0d667784b2cb5dc87df03f7094a954feb658bc7fa0572d231",
       "source": {
         "file": "app.ts",
-        "line": 4409
+        "line": 4415
       },
       "placeholders": [],
       "status": "approved"
@@ -39440,7 +39440,7 @@
       "hash": "6e2b26d9de4033b952bd242f69b798420ee887151b937f394efc23252c78af74",
       "source": {
         "file": "app.ts",
-        "line": 4403
+        "line": 4409
       },
       "placeholders": [],
       "status": "approved"
@@ -39450,7 +39450,7 @@
       "hash": "dc5aa33e9f6e5a4fea7caed35018500b9e5cf703548b2e1b51536275a6930811",
       "source": {
         "file": "app.ts",
-        "line": 4576
+        "line": 4582
       },
       "placeholders": [],
       "status": "approved"
@@ -39460,7 +39460,7 @@
       "hash": "db75b0d0ccca13eeabb65b5040b019997c0a686373d353ccb31979ad265a80af",
       "source": {
         "file": "app.ts",
-        "line": 4052
+        "line": 4058
       },
       "placeholders": [],
       "status": "approved"
@@ -39500,7 +39500,7 @@
       "hash": "d6b206585b93da356fd144c08eac7446eb126bb4d2adf6970f9b97bb9c149dd5",
       "source": {
         "file": "app.ts",
-        "line": 4199
+        "line": 4205
       },
       "placeholders": [],
       "status": "approved"
@@ -39510,7 +39510,7 @@
       "hash": "cb658b887650186b4cf6c1c89eca177b0bf38194227b90c5916587d4ab4891c7",
       "source": {
         "file": "app.ts",
-        "line": 3418
+        "line": 3424
       },
       "placeholders": [],
       "status": "approved"
@@ -39560,7 +39560,7 @@
       "hash": "c0b5f3134d31447db3ef9a1d1512878db23eb2daf4fbb578f031c481ce6ce8b5",
       "source": {
         "file": "app.ts",
-        "line": 4795
+        "line": 4801
       },
       "placeholders": [
         "0"
@@ -39573,7 +39573,7 @@
       "hash": "88faee862d4181024d77153353891b2733f79fe823c1e387e3449a6b41c665b9",
       "source": {
         "file": "app.ts",
-        "line": 4600
+        "line": 4606
       },
       "placeholders": [
         "0"
@@ -39586,7 +39586,7 @@
       "hash": "169de4c242d46540fcff9bb5787e66e054962fc7538c86225c332528116db856",
       "source": {
         "file": "app.ts",
-        "line": 4682
+        "line": 4688
       },
       "placeholders": [],
       "status": "approved"
@@ -39596,7 +39596,7 @@
       "hash": "c49f2278efe9d53b8bbaebc576f1a8c6260883c8598cc08e8472b516bf192c72",
       "source": {
         "file": "app.ts",
-        "line": 3408
+        "line": 3414
       },
       "placeholders": [],
       "status": "approved"
@@ -39616,7 +39616,7 @@
       "hash": "1818e0fb4716383f3271c6091a06e783433ac947711debf2d6921909835c9a44",
       "source": {
         "file": "app.ts",
-        "line": 3675
+        "line": 3681
       },
       "placeholders": [],
       "status": "approved"
@@ -39626,7 +39626,7 @@
       "hash": "c266c51b7452b78e3881283a0a0412527ea25f46cffa041bd14b73d97cab1aa5",
       "source": {
         "file": "app.ts",
-        "line": 3420
+        "line": 3426
       },
       "placeholders": [],
       "status": "approved"
@@ -39646,7 +39646,7 @@
       "hash": "eaeafebfd7a0266f50db12dca739087a440dc6f0324d8812af8583f6868fbac3",
       "source": {
         "file": "app.ts",
-        "line": 4701
+        "line": 4707
       },
       "placeholders": [
         "0"
@@ -39659,7 +39659,7 @@
       "hash": "7469f156c09e819b501a1b2e71cf79d43f4064c3e99adc7fc8bfcbff442e9319",
       "source": {
         "file": "app.ts",
-        "line": 3681
+        "line": 3687
       },
       "placeholders": [],
       "status": "approved"
@@ -39679,7 +39679,7 @@
       "hash": "832963b9f7071758e78ea2d9e9b886f7af7852353a2c46c6f8916b4577607243",
       "source": {
         "file": "app.ts",
-        "line": 3718
+        "line": 3724
       },
       "placeholders": [
         "0"
@@ -39692,7 +39692,7 @@
       "hash": "107a3cc047d796ce5902c258d40c2e6b0dfdf8616390e8cb638f2c45c3820297",
       "source": {
         "file": "app.ts",
-        "line": 3716
+        "line": 3722
       },
       "placeholders": [
         "0"
@@ -39705,7 +39705,7 @@
       "hash": "e9725fc5422b2e1f6f0b6f3b24797dca063c8c44dd806b73135d2a57f411c8a0",
       "source": {
         "file": "app.ts",
-        "line": 3716
+        "line": 3722
       },
       "placeholders": [
         "0"
@@ -39728,7 +39728,7 @@
       "hash": "c702a2093859ba2f14ea02e58e696f129a11947dc73c1ef969d49857c60763e8",
       "source": {
         "file": "app.ts",
-        "line": 3998
+        "line": 4004
       },
       "placeholders": [],
       "status": "approved"
@@ -39798,7 +39798,7 @@
       "hash": "ae26d4ac08c9577600d3bd5e4216327c63d810d698acc680aa058d91487745bb",
       "source": {
         "file": "app.ts",
-        "line": 4304
+        "line": 4310
       },
       "placeholders": [],
       "status": "approved"
@@ -39808,7 +39808,7 @@
       "hash": "ebdf8cc00bc4d9ceee633c56c63b49955769a92ca060825c9b08e4af61326e2b",
       "source": {
         "file": "app.ts",
-        "line": 3261
+        "line": 3267
       },
       "placeholders": [],
       "status": "approved"
@@ -39818,7 +39818,7 @@
       "hash": "e159b06187d369a0615f66ce577582b5c983d4ea59b3a62b702049f61753f0bf",
       "source": {
         "file": "app.ts",
-        "line": 4630
+        "line": 4636
       },
       "placeholders": [],
       "status": "approved"
@@ -39828,7 +39828,7 @@
       "hash": "f3a3e72e509c8623dbcdbeb95e1b6eb1a91ed6c1205ead1c3d8839b38aac6476",
       "source": {
         "file": "app.ts",
-        "line": 3827
+        "line": 3833
       },
       "placeholders": [],
       "status": "approved"
@@ -39868,7 +39868,7 @@
       "hash": "5ef30d27f8bc261c9af7c5220ebca9e22ad51e60ff89bbdccceeb7102e21a32f",
       "source": {
         "file": "app.ts",
-        "line": 4844
+        "line": 4850
       },
       "placeholders": [],
       "status": "approved"
@@ -39908,7 +39908,7 @@
       "hash": "d212f995bf6e13c9ca3fbae0dccbfcfe066dcc94c2cf243a6a64a8f5ecd11379",
       "source": {
         "file": "app.ts",
-        "line": 3251
+        "line": 3257
       },
       "placeholders": [],
       "status": "approved"
@@ -39918,7 +39918,7 @@
       "hash": "d3857b12b4cea2bc5d8ea0b8c2ce9cc3d5dc426e0bf3ea06394ddb906e6d60a0",
       "source": {
         "file": "app.ts",
-        "line": 4055
+        "line": 4061
       },
       "placeholders": [],
       "status": "approved"
@@ -39928,7 +39928,7 @@
       "hash": "1329738c68f587d54b0e5dfbd0b9665e9aae1e91dd7a7906b05b64f1b176fdde",
       "source": {
         "file": "app.ts",
-        "line": 4221
+        "line": 4227
       },
       "placeholders": [
         "0"
@@ -39941,7 +39941,7 @@
       "hash": "56bdc791b4c543178e3a8bf9548fedb19c31d6a3ac439dc48c0abfd7f266dc95",
       "source": {
         "file": "app.ts",
-        "line": 4143
+        "line": 4149
       },
       "placeholders": [],
       "status": "approved"
@@ -39971,7 +39971,7 @@
       "hash": "5ab1f6dc36caafc1be6b82aeaac8b0a3689e5fb284f4a56c48b70ccdba5be810",
       "source": {
         "file": "app.ts",
-        "line": 4656
+        "line": 4662
       },
       "placeholders": [],
       "status": "approved"
@@ -40021,7 +40021,7 @@
       "hash": "0e066525566708813d3ccc120342d3d97caa9da865c9732c758fc14f213b643a",
       "source": {
         "file": "app.ts",
-        "line": 4652
+        "line": 4658
       },
       "placeholders": [],
       "status": "approved"
@@ -40051,7 +40051,7 @@
       "hash": "93a9558da164cde25d9874c0e1f0725243814c751518334d5addc8dac5458dd6",
       "source": {
         "file": "app.ts",
-        "line": 3977
+        "line": 3983
       },
       "placeholders": [
         "0"
@@ -40064,7 +40064,7 @@
       "hash": "aff0766a5290e117b8433c351bae7b7b23bed682b2369bd822d88a647cc58512",
       "source": {
         "file": "app.ts",
-        "line": 3998
+        "line": 4004
       },
       "placeholders": [],
       "status": "approved"
@@ -40074,7 +40074,7 @@
       "hash": "472e71f04cdf408ee2bc7c9c9d1d766216dd8f58b66d87c2a7caf2503987ce72",
       "source": {
         "file": "app.ts",
-        "line": 4849
+        "line": 4855
       },
       "placeholders": [],
       "status": "approved"
@@ -40104,7 +40104,7 @@
       "hash": "c20ac75ac9f4dd864bd45ca097bbc78fc06cd59299981450342cdd1731055a4b",
       "source": {
         "file": "app.ts",
-        "line": 3702
+        "line": 3708
       },
       "placeholders": [],
       "status": "approved"
@@ -40124,7 +40124,7 @@
       "hash": "de992cecedfac8756c2c3744808b2b076327aaa3d36bc2fdab813fed57cb7203",
       "source": {
         "file": "app.ts",
-        "line": 3894
+        "line": 3900
       },
       "placeholders": [],
       "status": "approved"
@@ -40134,7 +40134,7 @@
       "hash": "f8f60686136587f4d3b08b1fbcf4c43f695b4d11e1c24afffdc46f019c7c1086",
       "source": {
         "file": "app.ts",
-        "line": 4764
+        "line": 4770
       },
       "placeholders": [],
       "status": "approved"
@@ -40164,7 +40164,7 @@
       "hash": "866b3a5cb1cb3d1e83d0ec67609ab8cc88f8d41765b3dc30cc67e3793a7e66a6",
       "source": {
         "file": "app.ts",
-        "line": 3249
+        "line": 3255
       },
       "placeholders": [],
       "status": "approved"
@@ -40174,7 +40174,7 @@
       "hash": "cd9558acfc386bd3e1fb14da5d4ed7e9338f80fa29fc2447c36c94667c406295",
       "source": {
         "file": "app.ts",
-        "line": 3452
+        "line": 3458
       },
       "placeholders": [],
       "status": "approved"
@@ -40255,7 +40255,7 @@
       "hash": "04f6dd470606e59bdb6dd539aebae8aba5fc047a061d96104cd1bc6eb62692a2",
       "source": {
         "file": "app.ts",
-        "line": 3160
+        "line": 3166
       },
       "placeholders": [],
       "status": "approved"
@@ -40305,7 +40305,7 @@
       "hash": "d9e126c30581daf3347aa29db53bd94e5e69c4e84e6da520c927b8297e3c9735",
       "source": {
         "file": "app.ts",
-        "line": 3975
+        "line": 3981
       },
       "placeholders": [
         "0"
@@ -40318,7 +40318,7 @@
       "hash": "48967082ccf2935b9cb27ce3335494191b6a541af65471742285339bad94394a",
       "source": {
         "file": "app.ts",
-        "line": 3474
+        "line": 3480
       },
       "placeholders": [],
       "status": "approved"
@@ -40328,7 +40328,7 @@
       "hash": "1290ae5518328aa7ae0ba6100b91987484aa29a4493fecedb70d748c8fca7c7e",
       "source": {
         "file": "app.ts",
-        "line": 3160
+        "line": 3166
       },
       "placeholders": [],
       "status": "approved"
@@ -40438,7 +40438,7 @@
       "hash": "026e9e725e58d5e3b4a0965bc923ed23e12e89b4e997341c4f26494a0f694c87",
       "source": {
         "file": "app.ts",
-        "line": 4645
+        "line": 4651
       },
       "placeholders": [],
       "status": "approved"
@@ -40448,7 +40448,7 @@
       "hash": "1b0c800b4a34381b57ddf8f8d3dfae546acdc978a5ca42d29eafa2a14d54cbf1",
       "source": {
         "file": "app.ts",
-        "line": 4645
+        "line": 4651
       },
       "placeholders": [],
       "status": "approved"
@@ -40488,7 +40488,7 @@
       "hash": "92f19534d8c5411570e603431055706c77573719bc31c19b6e5219457bc1065e",
       "source": {
         "file": "app.ts",
-        "line": 4478
+        "line": 4484
       },
       "placeholders": [
         "0",
@@ -40582,7 +40582,7 @@
       "hash": "f24ff6226e90ce31a109f9a229d28fec8b2264bd4883206fe9389da4c754182c",
       "source": {
         "file": "app.ts",
-        "line": 3827
+        "line": 3833
       },
       "placeholders": [],
       "status": "approved"
@@ -40612,7 +40612,7 @@
       "hash": "0276ee1751ca22e76715f2d3b6c8a25e56a2b50405650b4636ec9f17a439e1a3",
       "source": {
         "file": "app.ts",
-        "line": 4798
+        "line": 4804
       },
       "placeholders": [
         "0"
@@ -40625,7 +40625,7 @@
       "hash": "ae7ac2f7df9446f0802b4a82861b278a06b1f873e4adebcbb5c3b46d68709cd3",
       "source": {
         "file": "app.ts",
-        "line": 3655
+        "line": 3661
       },
       "placeholders": [
         "0",
@@ -40640,7 +40640,7 @@
       "hash": "5699e889f0a04688ae0c600b9b35fefdbba4dfa1cbaad5aca57ee8ff6330bf91",
       "source": {
         "file": "app.ts",
-        "line": 3656
+        "line": 3662
       },
       "placeholders": [
         "0"
@@ -40653,7 +40653,7 @@
       "hash": "ed7cc25c18b0edfe622868adc39d2557087e4418f917581f66049e68da4e709a",
       "source": {
         "file": "app.ts",
-        "line": 3735
+        "line": 3741
       },
       "placeholders": [
         "0"
@@ -40666,7 +40666,7 @@
       "hash": "f0e905c7b80af714dc939fa7b9badd6e90bc25207c2192e258363c42e0104743",
       "source": {
         "file": "app.ts",
-        "line": 3520
+        "line": 3526
       },
       "placeholders": [],
       "status": "approved"
@@ -40676,7 +40676,7 @@
       "hash": "94fc5041ef35fe0a6797000dc36da78b12ec70f21e8119abd9d28a4fe131a30e",
       "source": {
         "file": "app.ts",
-        "line": 4630
+        "line": 4636
       },
       "placeholders": [],
       "status": "approved"
@@ -40686,7 +40686,7 @@
       "hash": "95ba32af60a0307decf32833b8a99db0241c25f487ac1acc69e87f70ace96f68",
       "source": {
         "file": "app.ts",
-        "line": 3555
+        "line": 3561
       },
       "placeholders": [],
       "status": "approved"
@@ -40696,7 +40696,7 @@
       "hash": "fa5d00a72a3baef5c874d68e858c69c3f0024bdbecd15c0a7178fe4839f380d8",
       "source": {
         "file": "app.ts",
-        "line": 3628
+        "line": 3634
       },
       "placeholders": [],
       "status": "approved"
@@ -40706,7 +40706,7 @@
       "hash": "28d10f3390476d7c57195fa063eada592637c5f685da3ecc982eaaf68a5f3045",
       "source": {
         "file": "app.ts",
-        "line": 4788
+        "line": 4794
       },
       "placeholders": [],
       "status": "approved"
@@ -40716,7 +40716,7 @@
       "hash": "76bab47cd20ff316e2bebde5e10548b2b75710045a75867a1ffd639c9ac0fb49",
       "source": {
         "file": "app.ts",
-        "line": 3516
+        "line": 3522
       },
       "placeholders": [],
       "status": "approved"
@@ -40726,7 +40726,7 @@
       "hash": "60b35e53c03e888c7962625825a95c24d26cdf68db6878268c18dd3af103ce75",
       "source": {
         "file": "app.ts",
-        "line": 3605
+        "line": 3611
       },
       "placeholders": [],
       "status": "approved"
@@ -40736,7 +40736,7 @@
       "hash": "e4e1cffe87c3f5bb082ed8e0a402725b8473ab5d10c3b72f36e9357b420d8e72",
       "source": {
         "file": "app.ts",
-        "line": 3518
+        "line": 3524
       },
       "placeholders": [],
       "status": "approved"
@@ -40756,7 +40756,7 @@
       "hash": "8788f96f112befe6689536407035b90f108f0c082a1a4130ce001d9217aa9f9b",
       "source": {
         "file": "app.ts",
-        "line": 4030
+        "line": 4036
       },
       "placeholders": [],
       "status": "approved"
@@ -40776,7 +40776,7 @@
       "hash": "2b7dd63400f34f3d5352e0e5c2b7b5ef263f87e4f3e3aa8abade13eaffb4d0f3",
       "source": {
         "file": "app.ts",
-        "line": 3749
+        "line": 3755
       },
       "placeholders": [],
       "status": "approved"
@@ -40786,7 +40786,7 @@
       "hash": "88c697daa7aa2b8e154d5758ed51f1b521884dc4376e45397e2ea725409e4e70",
       "source": {
         "file": "app.ts",
-        "line": 3749
+        "line": 3755
       },
       "placeholders": [],
       "status": "approved"
@@ -40806,7 +40806,7 @@
       "hash": "d2d1db2a810fad32df7f50a7b9c9595c7b1417177f807949447b4e0256569d66",
       "source": {
         "file": "app.ts",
-        "line": 4115
+        "line": 4121
       },
       "placeholders": [],
       "status": "approved"
@@ -40816,7 +40816,7 @@
       "hash": "1f7f65877a2fcd323640d73706a5d7f6f2cf51ed8476e8a5246a2627057cd505",
       "source": {
         "file": "app.ts",
-        "line": 3022
+        "line": 3028
       },
       "placeholders": [
         "0"
@@ -40839,7 +40839,7 @@
       "hash": "e43342e391d0d27a9b5091293265d6ac37d78c2a3811250d4cffce6a5567dd34",
       "source": {
         "file": "app.ts",
-        "line": 3292
+        "line": 3298
       },
       "placeholders": [],
       "status": "approved"
@@ -40849,7 +40849,7 @@
       "hash": "5360c49d3eb3e0a0a1018e96df6d5e7ba84519ccd2daaacc890be0a2a042a596",
       "source": {
         "file": "app.ts",
-        "line": 4697
+        "line": 4703
       },
       "placeholders": [
         "0"
@@ -40862,7 +40862,7 @@
       "hash": "aacfe5f35ce545a211feb47763ccbde1a2f2a820b7193b88400f853dfec815ba",
       "source": {
         "file": "app.ts",
-        "line": 4776
+        "line": 4782
       },
       "placeholders": [],
       "status": "approved"
@@ -40928,7 +40928,7 @@
       "hash": "f25b2ceba8a52cadff384afff0abecf443fc5fc2263eb39aa780983f54e8d621",
       "source": {
         "file": "app.ts",
-        "line": 3160
+        "line": 3166
       },
       "placeholders": [
         "0",
@@ -40957,7 +40957,7 @@
       "hash": "fa4816846a52134eaa901ce9be4cdf4f68a2e306e212bbbb9b4588ebf9fca0dc",
       "source": {
         "file": "app.ts",
-        "line": 4491
+        "line": 4497
       },
       "placeholders": [
         "0",
@@ -40985,7 +40985,7 @@
       "hash": "d5105c3f9ebdeaa6715bbb94fb802c58604e3fe1bc9fbea7ec3bb0ccfc058cfd",
       "source": {
         "file": "app.ts",
-        "line": 3776
+        "line": 3782
       },
       "placeholders": [
         "0",
@@ -40999,7 +40999,7 @@
       "hash": "46552f3d3b31177196a0e8653d3db79b5ccb91ce6876b0a6f3f153c28e33d473",
       "source": {
         "file": "app.ts",
-        "line": 4802
+        "line": 4808
       },
       "placeholders": [
         "0",
@@ -41013,7 +41013,7 @@
       "hash": "c0b4d23922216d6d59c56923c65b375ba16b6a7e6bb08272803e6bdfff63bc43",
       "source": {
         "file": "app.ts",
-        "line": 3749
+        "line": 3755
       },
       "placeholders": [
         "0",
@@ -41053,7 +41053,7 @@
       "hash": "506ddfb229995d0add313668d06c84e3e7fcab62a9a53772e5626a977558ad8e",
       "source": {
         "file": "app.ts",
-        "line": 2789
+        "line": 2795
       },
       "placeholders": [
         "0"
@@ -41066,7 +41066,7 @@
       "hash": "76d1d61662176d6873880b23b35694149e8395714d96140854a3be3484ee3803",
       "source": {
         "file": "app.ts",
-        "line": 3739
+        "line": 3745
       },
       "placeholders": [
         "0"
@@ -41079,7 +41079,7 @@
       "hash": "e6f36eec2093006bbf6bbc44f8ec977484c54a5de9d810ebd450fb4a63646468",
       "source": {
         "file": "app.ts",
-        "line": 4764
+        "line": 4770
       },
       "placeholders": [
         "0"
@@ -41120,7 +41120,7 @@
       "hash": "80c28e70fc8a8d1bedf029c94c6a741ac625f68b0a8485aad2e65d886c71b0dc",
       "source": {
         "file": "app.ts",
-        "line": 3718
+        "line": 3724
       },
       "placeholders": [
         "0",
@@ -41134,7 +41134,7 @@
       "hash": "ed4b5f98852e71e4b3122c91201d1b8cddd1902e546e0077fe7884d04918ae8d",
       "source": {
         "file": "app.ts",
-        "line": 3659
+        "line": 3665
       },
       "placeholders": [
         "0"
@@ -41160,7 +41160,7 @@
       "hash": "6fbe857a5827014e3e73396f203e77929afdd60b838ebc56c5136eb47fa62eef",
       "source": {
         "file": "app.ts",
-        "line": 4729
+        "line": 4735
       },
       "placeholders": [
         "0"
@@ -41173,7 +41173,7 @@
       "hash": "f7aaba6c0f6ca69acefcdaa8d020b8751cd7228620b2e7577832b68751f2d627",
       "source": {
         "file": "app.ts",
-        "line": 4742
+        "line": 4748
       },
       "placeholders": [
         "0",
@@ -41187,7 +41187,7 @@
       "hash": "f375d67c93d5164351500b649a0d9c22b3593796c97cd9eea062cf1ffad5727d",
       "source": {
         "file": "app.ts",
-        "line": 4144
+        "line": 4150
       },
       "placeholders": [
         "0"
@@ -41200,7 +41200,7 @@
       "hash": "50e5b6cadbd6abcc9fc395fb900d808d91cb5d02f231f2879acbbe39aefbfe27",
       "source": {
         "file": "app.ts",
-        "line": 2786
+        "line": 2792
       },
       "placeholders": [
         "0",
@@ -41214,7 +41214,7 @@
       "hash": "261594c629c11c19f88b2c357c2ddcedb1aa89c097927d13d84420d5eec33740",
       "source": {
         "file": "app.ts",
-        "line": 3453
+        "line": 3459
       },
       "placeholders": [
         "0",
@@ -41245,7 +41245,7 @@
       "hash": "4a2374224aaecf15cd8261ef9369f9e9afce920a6d1cf0e6b13b842bb24433cd",
       "source": {
         "file": "app.ts",
-        "line": 4116
+        "line": 4122
       },
       "placeholders": [
         "0",
@@ -41259,7 +41259,7 @@
       "hash": "e30be14fc899bd65d7d8c3041a8d92d44fa853c2e47ac2d81b93fd524333cf5b",
       "source": {
         "file": "app.ts",
-        "line": 3652
+        "line": 3658
       },
       "placeholders": [
         "0",
@@ -41273,7 +41273,7 @@
       "hash": "b5164c95d2720465dda8d87b7b6d95afb632d43dd2e0ba1a286870c69f1de0f2",
       "source": {
         "file": "app.ts",
-        "line": 4761
+        "line": 4767
       },
       "placeholders": [
         "0"
@@ -41286,7 +41286,7 @@
       "hash": "3978be75b5754d11fe2e2f2cceb3e18750f3697bf67693fc595a209b18365905",
       "source": {
         "file": "app.ts",
-        "line": 3393
+        "line": 3399
       },
       "placeholders": [
         "0",
@@ -41300,7 +41300,7 @@
       "hash": "a20fd80f5358d78dbbd5347802220954a5a45e34228578393c12808bae262ddc",
       "source": {
         "file": "app.ts",
-        "line": 4838
+        "line": 4844
       },
       "placeholders": [
         "0"
@@ -41330,7 +41330,7 @@
       "hash": "b780533f2496a70cce4144231644a85503f8507e893fd66ede162cb1ec9433f2",
       "source": {
         "file": "app.ts",
-        "line": 3585
+        "line": 3591
       },
       "placeholders": [
         "0",
@@ -41357,7 +41357,7 @@
       "hash": "0a1251232da50ae5064c58e577fefb56ce968d6b490ed4b2ccd1ffcb1db5164d",
       "source": {
         "file": "app.ts",
-        "line": 3584
+        "line": 3590
       },
       "placeholders": [
         "0",
@@ -41371,7 +41371,7 @@
       "hash": "e8ac9616a7340b94165c5acc33fb015b45c400174b60a62fcc5e4806d582890f",
       "source": {
         "file": "app.ts",
-        "line": 3664
+        "line": 3670
       },
       "placeholders": [
         "0"
@@ -41427,7 +41427,7 @@
       "hash": "94653f6b86e83bdf847f9891f8b16a361f27860f6602fd9240481f4356c99ac6",
       "source": {
         "file": "app.ts",
-        "line": 3746
+        "line": 3752
       },
       "placeholders": [],
       "status": "approved"
@@ -41447,7 +41447,7 @@
       "hash": "9a143d5d2b3c10595e67724f07ac4ab048b04db9b4c645ba55c1c214ec95c38d",
       "source": {
         "file": "app.ts",
-        "line": 3639
+        "line": 3645
       },
       "placeholders": [],
       "status": "approved"
@@ -41527,7 +41527,7 @@
       "hash": "0c74a2a1e29b10a82e105d6beb3e4df568427dfb23b3de3d2bcef58eaa436d78",
       "source": {
         "file": "app.ts",
-        "line": 4729
+        "line": 4735
       },
       "placeholders": [],
       "status": "approved"
@@ -41537,7 +41537,7 @@
       "hash": "9a340fb83bc141faa7d62b30ed43cd83d647f01091a831f7cc17f82a354ff747",
       "source": {
         "file": "app.ts",
-        "line": 4750
+        "line": 4756
       },
       "placeholders": [
         "0"
@@ -41550,7 +41550,7 @@
       "hash": "c7e89fc8f2c435515eae3c5dc2193321bc6874e2cae70c534221b8206d94ca6f",
       "source": {
         "file": "app.ts",
-        "line": 3390
+        "line": 3396
       },
       "placeholders": [],
       "status": "approved"
@@ -41560,7 +41560,7 @@
       "hash": "d65fd9e27abaf422686efbda4daedc250d628d6dd56720a7b62c47eb830d7991",
       "source": {
         "file": "app.ts",
-        "line": 4802
+        "line": 4808
       },
       "placeholders": [],
       "status": "approved"
@@ -41580,7 +41580,7 @@
       "hash": "97a6e2e1df188a407bba6bbedb655460d18dc0b609437aa1f1989eca6ebfcf99",
       "source": {
         "file": "app.ts",
-        "line": 3596
+        "line": 3602
       },
       "placeholders": [],
       "status": "approved"
@@ -41590,7 +41590,7 @@
       "hash": "74812988384397f0ab0991639df52336a6000c57d265231204a936560414ba86",
       "source": {
         "file": "app.ts",
-        "line": 3600
+        "line": 3606
       },
       "placeholders": [
         "0"
@@ -41603,7 +41603,7 @@
       "hash": "566debb40d345000aca7a604f200583f66e6cc348167c7d11be57082d6ee360f",
       "source": {
         "file": "app.ts",
-        "line": 3557
+        "line": 3563
       },
       "placeholders": [],
       "status": "approved"
@@ -41613,7 +41613,7 @@
       "hash": "f25dde8b727119f8f5d00d1f22eed2a854f9c89a53001fc2ca6268956a717551",
       "source": {
         "file": "app.ts",
-        "line": 3592
+        "line": 3598
       },
       "placeholders": [
         "0"
@@ -41636,7 +41636,7 @@
       "hash": "2eccb7b954fee807718e2baa86f8c4a780998d67936b9b5f64ecfe92385b25ca",
       "source": {
         "file": "app.ts",
-        "line": 3589
+        "line": 3595
       },
       "placeholders": [
         "0"
@@ -41649,7 +41649,7 @@
       "hash": "d0452a7b1057334560ead1a4a9c3fc21c7ddd20219691d8000f19c9d04ab4f58",
       "source": {
         "file": "app.ts",
-        "line": 3619
+        "line": 3625
       },
       "placeholders": [],
       "status": "approved"
@@ -41659,7 +41659,7 @@
       "hash": "943d2ae01757368f3a4c4981d46c919fb1a73d972ee76ae9ceed7aeacc2b2df8",
       "source": {
         "file": "app.ts",
-        "line": 3437
+        "line": 3443
       },
       "placeholders": [],
       "status": "approved"
@@ -41679,7 +41679,7 @@
       "hash": "5ea6ad2505364da8eb13244f3bbdea41a7f4c4b9d5815f61131b359a4f32434e",
       "source": {
         "file": "app.ts",
-        "line": 4404
+        "line": 4410
       },
       "placeholders": [],
       "status": "approved"
@@ -41689,7 +41689,7 @@
       "hash": "15b1328456f5234134070d57b18d8c6315ae545a825644e1bb033729b4a8f277",
       "source": {
         "file": "app.ts",
-        "line": 3444
+        "line": 3450
       },
       "placeholders": [],
       "status": "approved"
