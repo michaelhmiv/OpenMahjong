@@ -64,8 +64,13 @@ file, commit, open a pull request.
 ## Locked terms
 
 Mahjong terms have one fixed form per language, in `glossary.json`: Ron,
-Riichi, Tsumo, Dora, Kan, Pon, Chi, Han, Fu, Yakuman, Honba, Furiten, the
-four winds, the three dragons, and Bot. A correction must use the locked
+Riichi, Tsumo, Dora, Kan, Pon, Pung, Chi, Han, Fu, Yakuman, Honba, Furiten,
+the seven MCR pattern names, the four winds, the three dragons, and Bot.
+Pon and Pung are separate locked terms: Pon is the call that claims a
+discard, Pung is the triplet itself — most languages use different words
+for the two, so a correction must use the form for the meaning in the
+string. The MCR pattern names are proper names with their own locked
+entries, not spellings built from the word Pung. A correction must use the locked
 form for its language. A correction that renders a locked term differently
 is rejected by the automated checks — it is a defect, not a style
 preference.

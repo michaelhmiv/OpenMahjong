@@ -7,7 +7,7 @@
       "ja",
       "ko"
     ],
-    "note": "Locked mahjong terms. One form per language, decided once with a native speaker. A translation that renders a locked term differently is a CI failure, not a style preference. English forms are filled; all other core locales are explicitly null (untranslated) in Phase 1 — do NOT invent or machine-translate them.",
+    "note": "Locked mahjong terms. One form per language per term, decided once with a native speaker. A translation that renders a locked term differently is a CI failure, not a style preference. English forms are filled; all other core locales are explicitly null (untranslated) in Phase 1 — do NOT invent or machine-translate them. The call/noun family is split into separate locked terms (pon = the call, pung = the triplet noun) and the MCR pattern names are locked as their own entries, because no single form can express them — see the research annotations and ~/workspace/mahjong-prep/pung-pon-research.md.",
     "sourceLocale": "en"
   },
   "terms": {
@@ -152,6 +152,139 @@
         "note": "Unlike pon/pung, the English source does not distinguish the kan call from the kan noun, and the drafts use the call form as the noun far more often (ja カン 56x vs 槓子 8x in the 96 pung keys). Kan noun forms were NOT rewritten in this track; native reviewer to rule — see research file."
       }
     },
+    "pattern-all-pungs": {
+      "en": "All Pungs",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "MCR pattern name — a proper name, not a composition of the call word or the pung noun; locked as its own entry (research file, Structural finding). Source key: learn.mcr.guide.pattern.all-pungs.name.",
+      "research": {
+        "status": "Sourced research for Michael's approval — NOT native-speaker approval. Locked forms stay null until a native speaker decides. See ~/workspace/mahjong-prep/pung-pon-research.md.",
+        "names": {
+          "zh-Hans": "碰碰和",
+          "zh-Hant": "對對胡",
+          "ja": "対々和"
+        },
+        "note": "Hans/Hant genuinely differ here (mainland 碰碰和 vs Taiwan 對對胡) — both are regionally correct; do not unify. Korean has no established proper name in the sources; the shipped Korean draft renders it descriptively (모든 커쯔) — a native reviewer decides whether a proper name is locked (research file, UNVERIFIED 1)."
+      }
+    },
+    "pattern-double-pung": {
+      "en": "Double Pung",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "MCR pattern name — a proper name, not a composition of the call word or the pung noun; locked as its own entry (research file, Structural finding). Source key: learn.mcr.guide.pattern.double-pung.name.",
+      "research": {
+        "status": "Sourced research for Michael's approval — NOT native-speaker approval. Locked forms stay null until a native speaker decides. See ~/workspace/mahjong-prep/pung-pon-research.md.",
+        "names": {
+          "zh-Hans": "双同刻",
+          "zh-Hant": "雙同刻",
+          "ja": "双同刻"
+        },
+        "note": "The Japanese form follows the Chinese–Japanese comparison table's transliteration convention and is not directly cited in a Japanese MCR source — native confirmation needed (research file, UNVERIFIED 2). Korean has no established proper name in the sources; the shipped Korean draft renders it descriptively (더블 커쯔) — a native reviewer decides whether a proper name is locked (research file, UNVERIFIED 1)."
+      }
+    },
+    "pattern-four-pure-shifted-pungs": {
+      "en": "Four Pure Shifted Pungs",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "MCR pattern name — a proper name, not a composition of the call word or the pung noun; locked as its own entry (research file, Structural finding). Source key: learn.mcr.guide.pattern.four-pure-shifted-pungs.name.",
+      "research": {
+        "status": "Sourced research for Michael's approval — NOT native-speaker approval. Locked forms stay null until a native speaker decides. See ~/workspace/mahjong-prep/pung-pon-research.md.",
+        "names": {
+          "zh-Hans": "一色四节高",
+          "zh-Hant": "一色四節高",
+          "ja": "四連刻"
+        },
+        "note": "Korean has no established proper name in the sources; the shipped Korean draft renders it descriptively (4개의 순수 연속 커쯔) — a native reviewer decides whether a proper name is locked (research file, UNVERIFIED 1)."
+      }
+    },
+    "pattern-mixed-shifted-pungs": {
+      "en": "Mixed Shifted Pungs",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "MCR pattern name — a proper name, not a composition of the call word or the pung noun; locked as its own entry (research file, Structural finding). Source key: learn.mcr.guide.pattern.mixed-shifted-pungs.name.",
+      "research": {
+        "status": "Sourced research for Michael's approval — NOT native-speaker approval. Locked forms stay null until a native speaker decides. See ~/workspace/mahjong-prep/pung-pon-research.md.",
+        "names": {
+          "zh-Hans": "三色三节高",
+          "zh-Hant": "三色三節高",
+          "ja": "三色連刻"
+        },
+        "note": "Korean has no established proper name in the sources; the shipped Korean draft renders it descriptively (복합 연속 커쯔) — a native reviewer decides whether a proper name is locked (research file, UNVERIFIED 1)."
+      }
+    },
+    "pattern-pure-shifted-pungs": {
+      "en": "Pure Shifted Pungs",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "MCR pattern name — a proper name, not a composition of the call word or the pung noun; locked as its own entry (research file, Structural finding). Source key: learn.mcr.guide.pattern.pure-shifted-pungs.name.",
+      "research": {
+        "status": "Sourced research for Michael's approval — NOT native-speaker approval. Locked forms stay null until a native speaker decides. See ~/workspace/mahjong-prep/pung-pon-research.md.",
+        "names": {
+          "zh-Hans": "一色三节高",
+          "zh-Hant": "一色三節高",
+          "ja": "三連刻"
+        },
+        "note": "Korean has no established proper name in the sources; the shipped Korean draft renders it descriptively (순수 연속 커쯔) — a native reviewer decides whether a proper name is locked (research file, UNVERIFIED 1)."
+      }
+    },
+    "pattern-triple-pung": {
+      "en": "Triple Pung",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "MCR pattern name — a proper name, not a composition of the call word or the pung noun; locked as its own entry (research file, Structural finding). Source key: learn.mcr.guide.pattern.triple-pung.name.",
+      "research": {
+        "status": "Sourced research for Michael's approval — NOT native-speaker approval. Locked forms stay null until a native speaker decides. See ~/workspace/mahjong-prep/pung-pon-research.md.",
+        "names": {
+          "zh-Hans": "三同刻",
+          "zh-Hant": "三同刻",
+          "ja": "三色同刻"
+        },
+        "note": "Korean has no established proper name in the sources; the shipped Korean draft renders it descriptively (삼중 커쯔) — a native reviewer decides whether a proper name is locked (research file, UNVERIFIED 1)."
+      }
+    },
+    "pattern-two-dragons-pungs": {
+      "en": "Two Dragons Pungs",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "MCR pattern name — a proper name, not a composition of the call word or the pung noun; locked as its own entry (research file, Structural finding). Source key: learn.mcr.guide.pattern.two-dragons-pungs.name.",
+      "research": {
+        "status": "Sourced research for Michael's approval — NOT native-speaker approval. Locked forms stay null until a native speaker decides. See ~/workspace/mahjong-prep/pung-pon-research.md.",
+        "names": {
+          "zh-Hans": "双箭刻",
+          "zh-Hant": "雙箭刻",
+          "ja": "双箭刻"
+        },
+        "note": "The Japanese form follows the Chinese–Japanese comparison table's transliteration convention and is not directly cited in a Japanese MCR source — native confirmation needed (research file, UNVERIFIED 2). Korean has no established proper name in the sources; the shipped Korean draft renders it descriptively (두 개의 용 커쯔) — a native reviewer decides whether a proper name is locked (research file, UNVERIFIED 1)."
+      }
+    },
     "pon": {
       "en": "Pon",
       "locales": {
@@ -160,7 +293,7 @@
         "zh-Hans": null,
         "zh-Hant": null
       },
-      "note": "A three-of-a-kind meld (pung). English split: Pon is the riichi call; Pung is the noun used by American / MCR / Hong Kong / Taiwanese copy — see the research annotation on this entry.",
+      "note": "The call: the word shouted to claim a discard for a triplet (riichi). The triplet itself is the separate locked term pung. In American / MCR / Hong Kong / Taiwanese English the spoken claim is also 'Pung' — that word is locked under pung; this entry locks the riichi call.",
       "research": {
         "status": "Sourced research for Michael's approval — NOT native-speaker approval. Locked forms stay null until a native speaker decides. See ~/workspace/mahjong-prep/pung-pon-research.md.",
         "call": {
@@ -169,13 +302,27 @@
           "ja": "ポン",
           "ko": "퐁"
         },
+        "note": "Call/noun split applied Nov 20, 2026 (Michael approved the research proposal's structure; the forms themselves still await a native speaker): the noun forms that used to be annotated on this entry live on the pung entry. English uses Pon for the riichi call and Pung for the triplet noun in American / MCR / Hong Kong / Taiwanese copy — one locked English form cannot cover both; see research file, Structural finding."
+      }
+    },
+    "pung": {
+      "en": "Pung",
+      "locales": {
+        "ja": null,
+        "ko": null,
+        "zh-Hans": null,
+        "zh-Hant": null
+      },
+      "note": "A three-of-a-kind meld (triplet) — the noun, in American / MCR / Hong Kong / Taiwanese copy. The call that claims a discard is the separate locked term pon (the riichi call; in the Pung variants the spoken claim is this same word).",
+      "research": {
+        "status": "Sourced research for Michael's approval — NOT native-speaker approval. Locked forms stay null until a native speaker decides. See ~/workspace/mahjong-prep/pung-pon-research.md.",
         "noun": {
           "zh-Hans": "刻子",
           "zh-Hant": "刻子",
           "ja": "刻子",
           "ko": "커쯔"
         },
-        "englishSplit": "English uses Pon for the riichi call and Pung for the triplet noun in American / MCR / Hong Kong / Taiwanese copy — one locked English form cannot cover both; see research file, Structural finding."
+        "note": "Split from pon Nov 20, 2026 (Michael approved the research proposal's structure; the forms themselves still await a native speaker): every shipped locale splits the call (碰 / ポン / 퐁) from the meld noun (刻子 / 刻子 / 커쯔). See research file, Structural finding."
       }
     },
     "riichi": {
