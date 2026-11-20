@@ -1139,8 +1139,11 @@ export function mountAnalyze(container: HTMLElement, options: AnalyzeUIOptions):
     const frac = total > 1 ? cursor / (total - 1) : 0;
     if (fillEl) fillEl.style.width = `${(frac * 100).toFixed(2)}%`;
     if (knobEl) knobEl.style.left = `${(frac * 100).toFixed(2)}%`;
-    if (labEl) labEl.textContent = tx("analyze.v-event-0-of-1", `Event ${cursor + 1} of ${total}`, cursor + 1, total);
-    if (handEl) handEl.textContent = handLabel(handIndexAt(cursor));
+    if (labEl) labEl.textContent = tx("analyze.v-event-0-of-1", `Event ${fmt(cursor + 1)} of ${fmt(total)}`, fmt(cursor + 1), fmt(total));
+    if (handEl) {
+      const hi = handIndexAt(cursor);
+      handEl.textContent = tx("analyze.v-0-hand-1", `${handLabel(hi)} · Hand ${hi}`, handLabel(hi), hi);
+    }
     if (navButtons) {
       navButtons.prev.disabled = selected === null || selected <= 0;
       navButtons.next.disabled = selected === null || selected >= data.decisions.length - 1;

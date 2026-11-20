@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-20T13:34:48.748Z",
+    "generatedAt": "2026-11-20T20:54:23.151Z",
     "generatedBy": "scripts/i18n-coverage.mjs --write-baseline",
     "note": "Snapshot (owner ruling Nov 19, 2026: SHIP NOW, community reviews later). Every shipped key is the baseline, so the release gate measures only keys that change AFTER this snapshot. A key missing from a locale is snapshotted at its English hash — its shipped rendering is the English fallback (e.g. the 'Improve this translation' link, design §1.1). A stale entry is NOT snapshotted and counts as new/changed immediately. This is the one-time waiver for the initial machine-translation ship; it does not exempt later changes."
   },
@@ -194,6 +194,7 @@
       "analyze.v-0-fewer-1-from-ready": "ba52fb0ffdead493fccb18fe411879ad42917b51c0b81889847d5649f862804e",
       "analyze.v-0-fewer-unseen-improving-copies": "7f04c9337fb3e5d24010476c4b80d79485afdce81154e18675f906a66a6c4698",
       "analyze.v-0-han-1-fu": "ab9e6707df45ced00c7bd8e3c5b0192eb11feaac4f4960d5d3a99f23973a0568",
+      "analyze.v-0-hand-1": "2fc05255fd97b35316a46bd46397e1100196e7031aed1c9c5bf58878f4e6bdbd",
       "analyze.v-0-honba-1": "fb853c424a442e85e9dc9b00c56643ebc4734abeeaf9d1f844ef760d0962cf3f",
       "analyze.v-0-is-where-the-misses-live-1": "5f61c48c10ca0cc124031ffb131d70eb03a03487cbb734ccc093c52e9d7f21bd",
       "analyze.v-0-more-1-from-ready": "08b55af3b665d26e2ad15921526333d10cebddd056478011ed9327cf4d7c9c9c",
@@ -4440,6 +4441,7 @@
       "analyze.v-0-fewer-1-from-ready": "ba52fb0ffdead493fccb18fe411879ad42917b51c0b81889847d5649f862804e",
       "analyze.v-0-fewer-unseen-improving-copies": "7f04c9337fb3e5d24010476c4b80d79485afdce81154e18675f906a66a6c4698",
       "analyze.v-0-han-1-fu": "ab9e6707df45ced00c7bd8e3c5b0192eb11feaac4f4960d5d3a99f23973a0568",
+      "analyze.v-0-hand-1": "2fc05255fd97b35316a46bd46397e1100196e7031aed1c9c5bf58878f4e6bdbd",
       "analyze.v-0-honba-1": "fb853c424a442e85e9dc9b00c56643ebc4734abeeaf9d1f844ef760d0962cf3f",
       "analyze.v-0-is-where-the-misses-live-1": "5f61c48c10ca0cc124031ffb131d70eb03a03487cbb734ccc093c52e9d7f21bd",
       "analyze.v-0-more-1-from-ready": "08b55af3b665d26e2ad15921526333d10cebddd056478011ed9327cf4d7c9c9c",
@@ -8686,6 +8688,7 @@
       "analyze.v-0-fewer-1-from-ready": "ba52fb0ffdead493fccb18fe411879ad42917b51c0b81889847d5649f862804e",
       "analyze.v-0-fewer-unseen-improving-copies": "7f04c9337fb3e5d24010476c4b80d79485afdce81154e18675f906a66a6c4698",
       "analyze.v-0-han-1-fu": "ab9e6707df45ced00c7bd8e3c5b0192eb11feaac4f4960d5d3a99f23973a0568",
+      "analyze.v-0-hand-1": "2fc05255fd97b35316a46bd46397e1100196e7031aed1c9c5bf58878f4e6bdbd",
       "analyze.v-0-honba-1": "fb853c424a442e85e9dc9b00c56643ebc4734abeeaf9d1f844ef760d0962cf3f",
       "analyze.v-0-is-where-the-misses-live-1": "5f61c48c10ca0cc124031ffb131d70eb03a03487cbb734ccc093c52e9d7f21bd",
       "analyze.v-0-more-1-from-ready": "08b55af3b665d26e2ad15921526333d10cebddd056478011ed9327cf4d7c9c9c",
@@ -12932,6 +12935,7 @@
       "analyze.v-0-fewer-1-from-ready": "ba52fb0ffdead493fccb18fe411879ad42917b51c0b81889847d5649f862804e",
       "analyze.v-0-fewer-unseen-improving-copies": "7f04c9337fb3e5d24010476c4b80d79485afdce81154e18675f906a66a6c4698",
       "analyze.v-0-han-1-fu": "ab9e6707df45ced00c7bd8e3c5b0192eb11feaac4f4960d5d3a99f23973a0568",
+      "analyze.v-0-hand-1": "2fc05255fd97b35316a46bd46397e1100196e7031aed1c9c5bf58878f4e6bdbd",
       "analyze.v-0-honba-1": "fb853c424a442e85e9dc9b00c56643ebc4734abeeaf9d1f844ef760d0962cf3f",
       "analyze.v-0-is-where-the-misses-live-1": "5f61c48c10ca0cc124031ffb131d70eb03a03487cbb734ccc093c52e9d7f21bd",
       "analyze.v-0-more-1-from-ready": "08b55af3b665d26e2ad15921526333d10cebddd056478011ed9327cf4d7c9c9c",
@@ -17178,6 +17182,7 @@
       "analyze.v-0-fewer-1-from-ready": "ba52fb0ffdead493fccb18fe411879ad42917b51c0b81889847d5649f862804e",
       "analyze.v-0-fewer-unseen-improving-copies": "7f04c9337fb3e5d24010476c4b80d79485afdce81154e18675f906a66a6c4698",
       "analyze.v-0-han-1-fu": "ab9e6707df45ced00c7bd8e3c5b0192eb11feaac4f4960d5d3a99f23973a0568",
+      "analyze.v-0-hand-1": "2fc05255fd97b35316a46bd46397e1100196e7031aed1c9c5bf58878f4e6bdbd",
       "analyze.v-0-honba-1": "fb853c424a442e85e9dc9b00c56643ebc4734abeeaf9d1f844ef760d0962cf3f",
       "analyze.v-0-is-where-the-misses-live-1": "5f61c48c10ca0cc124031ffb131d70eb03a03487cbb734ccc093c52e9d7f21bd",
       "analyze.v-0-more-1-from-ready": "08b55af3b665d26e2ad15921526333d10cebddd056478011ed9327cf4d7c9c9c",

@@ -17,7 +17,9 @@
  *   its furniture (clock row in the center panel, the riichi point
  *   stick on a chip, bot cover as a strip + cover bar).
  * - Results ride the solo results grammar plus a rating block.
- * - Analyze stays the existing Board review, untouched.
+ * - Board review stays the existing replay, untouched. Analyze
+ *   (issue #106) adds the two-scope grader beside it on finished
+ *   riichi tables, fed by the server's complete-record endpoint.
  */
 import {
   tileName,
@@ -34,6 +36,8 @@ import { tileIndexEl } from "./tile-index.js";
 import type { ReconstructedReview } from "./review.js";
 import { BoardTimeline } from "./board-review.js";
 import { mountBoardReview } from "./board-review-ui.js";
+import { buildAnalyze, type AnalyzeData } from "./analyze.js";
+import { mountAnalyze } from "./analyze-ui.js";
 import { pluralS, t, tx } from "./i18n/index.js";
 import "./online.css";
 
@@ -273,6 +277,9 @@ export async function onlineApp(root: HTMLElement) {
   let selected: Format = { variant: "riichi", length: "east", pace: "live" },
     filter = "all";
   let reviewing = false;
+  /** Complete-record fetches for two-scope Analyze (issue #106),
+   *  one per finished table, shared across results re-renders. */
+  const analyzeFetch = new Map<string, Promise<unknown | null>>();
   let acceptCustom = false;
   let lastLobby: Lobby | null = null;
   let pendingJoin: string | null = null;
@@ -1615,10 +1622,37 @@ export async function onlineApp(root: HTMLElement) {
         }, "pillbtn primary"),
       );
     }
+    const boardReview = button(
+      tx("online.results.board-review", "Board review"),
+      () => analyze(s.id),
+      "pillbtn",
+    );
     actions.append(
-      button(tx("online.results.analyze", "Analyze"), () => analyze(s.id), "pillbtn"),
+      boardReview,
       button(tx("online.waiting.leave", "Leave"), () => toLobby(), "pillbtn ghost"),
     );
+    // Two-scope Analyze (issue #106): offered only when the server
+    // hands this participant the finished game's complete record.
+    // The fetch decides — a refusal or a failure simply leaves the
+    // entry out, the solo unavailable path's silent degrade. The
+    // record is graded on tap, not on render.
+    if (s.variant === "riichi") {
+      let pending = analyzeFetch.get(s.id);
+      if (!pending) {
+        pending = api<unknown>("matches/" + s.id + "/analyze").catch(() => null);
+        analyzeFetch.set(s.id, pending);
+      }
+      void pending.then((record) => {
+        if (!record || !actions.isConnected) return;
+        actions.insertBefore(
+          button(tx("online.results.analyze", "Analyze"), () => {
+            const built = buildAnalyze(record);
+            if (built.available) openGradedAnalyze(built);
+          }, "pillbtn"),
+          boardReview,
+        );
+      });
+    }
     scroll.append(actions);
     screen.append(scroll);
     return screen;
@@ -1648,6 +1682,22 @@ export async function onlineApp(root: HTMLElement) {
     mountBoardReview(container, {
       timeline,
       allowReveal: true,
+      renderTile: reviewTile,
+      onBack: () => {
+        void route();
+      },
+    });
+  }
+
+  /** Two-scope Analyze over the server's complete record (issue
+   *  #106): the shipped analyze-ui mounted as its own screen, the
+   *  same way the solo app mounts it; back returns to this table. */
+  function openGradedAnalyze(data: AnalyzeData) {
+    reviewing = true;
+    const screen = el("section");
+    showScreen(screen);
+    mountAnalyze(screen, {
+      data,
       renderTile: reviewTile,
       onBack: () => {
         void route();

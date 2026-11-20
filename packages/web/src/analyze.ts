@@ -22,11 +22,11 @@
  * evaluators return no grade for legacy (v1) or variant (v3) games,
  * and an incomplete archive is reported, never fabricated over. */
 import {
-  Game,
+  Game, buildTileSet, LIVE_WALL_SIZE,
   type CallAction, type CallContext, type GameEvent, type GameResult,
   type PlayerView, type Policy, type Seat, type SettlementEntry,
   type TileType,
-  type TurnAction, type TurnContext,
+  type TurnAction, type TurnContext, type Wall,
 } from "@openmahjong/engine";
 import { countsOfTiles, shantenFast } from "@openmahjong/ai";
 import {
@@ -269,7 +269,18 @@ function reconstructAllSeats(input: unknown): AnalyzeReconstruction | { reason: 
       return action as CallAction;
     },
   };
-  holder.game = new Game({ seed: saved.seed, length: saved.length, policies: [policy, policy, policy, policy] });
+  // Committed walls (online records, issue #106) deal exactly as the
+  //  server dealt them: the engine's createWall split — live wall
+  //  first, dead wall last — over the canonical tile set.
+  const committedWalls: readonly Wall[] | undefined = saved.walls?.map((ids) => {
+    const byId = new Map(buildTileSet().map((t) => [t.id, t]));
+    const tiles = ids.map((id) => byId.get(id)!);
+    return { liveWall: tiles.slice(0, LIVE_WALL_SIZE), deadWall: tiles.slice(LIVE_WALL_SIZE) };
+  });
+  holder.game = new Game({
+    seed: saved.seed, length: saved.length, policies: [policy, policy, policy, policy],
+    ...(committedWalls ? { walls: committedWalls } : {}),
+  });
   let result: GameResult;
   try {
     result = holder.game.run();

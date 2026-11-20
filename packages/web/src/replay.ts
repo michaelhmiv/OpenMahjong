@@ -20,6 +20,12 @@ export interface CurrentSavedGame extends ReplayBase {
   readonly engineVersion: typeof REPLAY_ENGINE_VERSION;
   readonly ruleset: { readonly id: string; readonly version: number };
   readonly aiVersion: typeof AI_POLICY_VERSION;
+  /** Explicit per-hand walls (tile ids, 136 per hand) for games whose
+   *  walls were committed rather than seed-derived — online matches
+   *  (issue #106). When present, reconstruction deals these walls in
+   *  order instead of the seeded ones; the seed stays in the record
+   *  as the game's identifier of origin. Absent on every solo game. */
+  readonly walls?: readonly (readonly number[])[];
   /** Coaching-moment records (coaching remainder brief, log-first
    * dependency): the offers at selected human decisions and the
    * choice made, so Review can grade call/kan/riichi/win moments
@@ -142,6 +148,19 @@ function validateMoment(value: unknown, decisions: readonly Decision[]): MomentR
   };
 }
 
+function validateWalls(value: unknown): readonly (readonly number[])[] {
+  requireValid(Array.isArray(value) && value.length > 0 && value.length <= 64, "Invalid replay walls");
+  return value.map((wall) => {
+    requireValid(Array.isArray(wall) && wall.length === 136, "Invalid replay wall");
+    const seen = new Set<number>();
+    for (const id of wall as unknown[]) {
+      requireValid(integer(id, 135) && !seen.has(id as number), "Invalid replay wall tile");
+      seen.add(id as number);
+    }
+    return [...(wall as number[])];
+  });
+}
+
 /** Structural validation precedes any reconstruction of untrusted data.
  * Legality and complete log consumption are checked by GameRunner. */
 export function validateSavedGame(value: unknown): SavedGame {
@@ -175,7 +194,8 @@ export function validateSavedGame(value: unknown): SavedGame {
       }
       moments = parsed;
     }
-    return { v: 2, engineVersion: REPLAY_ENGINE_VERSION, ruleset: { id: DEFAULT_RULESET.id, version: DEFAULT_RULESET.version }, aiVersion: AI_POLICY_VERSION, ...base, ...(moments && moments.length > 0 ? { moments } : {}) };
+    const walls = value["walls"] === undefined ? undefined : validateWalls(value["walls"]);
+    return { v: 2, engineVersion: REPLAY_ENGINE_VERSION, ruleset: { id: DEFAULT_RULESET.id, version: DEFAULT_RULESET.version }, aiVersion: AI_POLICY_VERSION, ...base, ...(moments && moments.length > 0 ? { moments } : {}), ...(walls ? { walls } : {}) };
   })();
   requireValid(new TextEncoder().encode(JSON.stringify(canonical)).length <= MAX_REPLAY_BYTES, "Replay exceeds size limit");
   return canonical;

@@ -152,3 +152,10 @@ chosen/advised labels + condensed win-sheet strings) drafted in all 4
 locales — zh-Hans $0.0002, zh-Hant $0.0002, ja $0.0005, ko $0.0005;
 total $0.0015. The driver-drafted "Improve this translation" entry was
 removed again per the PR #87 trap.
+
+Issue #106 (Analyze for online games), 2026-11-20: 1 new key
+(analyze.v-0-hand-1, the move-by-move slider's round-and-hand label)
+drafted in all 4 locales — zh-Hans $0.0002, zh-Hant $0.0002, ja
+$0.0003, ko $0.0002; total $0.0008 (provider-reported). The
+driver-drafted "Improve this translation" entry was removed again
+per the PR #87 trap (design §1.1: intentionally English-only).
