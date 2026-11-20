@@ -133,14 +133,43 @@
    sheet loads only for the online table) — and the chips run at the
    11px floor with tight padding so a 15-character name fits whole:
    measured demand for wind + 15-char name + score is ~128px of the
-   ~130px third. The name ellipsises only past that (very long or
-   very wide names, or a name sharing its chip with the riichi stick
-   or a Bot tag). The name span carries 2px of right padding as ink
+   ~130px third. The name span carries 2px of right padding as ink
    room: at this tracking the final glyph's ink overhangs its measured
    advance by ~1px, and without the room the overflow clip shaves the
    last letter (a round letter reads as its open half). */
+/* B6 (fix round 3, QC residual): round 2's "ellipsis as last resort"
+   still truncated realistic names at 390px — QC measured a 16-char
+   name at scrollWidth 69 vs clientWidth 58 in the side chips, and a
+   26-char name 119 vs 103. Three cap-length (32-char) names cannot
+   fit one line at the 11px floor in a 390px band alongside winds and
+   scores, so the name now WRAPS inside its chip instead of
+   ellipsising: every name renders whole (scrollWidth == clientWidth)
+   at any length the server accepts. The band grows vertically to
+   fit the tallest chip — .band is the table's flex slack, so the
+   stage absorbs it — and the growth is scoped by :has(.nm): the
+   name span exists only in online chips, so the solo and variant
+   bands (whose chips carry no .nm) keep the shipped 24px geometry
+   byte-for-byte. Short names never wrap, so the common case renders
+   exactly as before. The name also carries a 40px min-width:
+   band-level flex shrink is proportional to each chip's basis, so
+   a short name seated between two cap-length names was squeezed
+   below its own min-content (measured: "Host" at clientWidth 8 vs
+   scrollWidth 9, wrapped a letter at a time). The floor keeps every
+   name a usable column — short names stay on one line, long names
+   wrap in at least a 40px measure — while the three chips' combined
+   minimums (40 + wind + score + padding ≈ 99px each) stay well
+   inside the band. Round 2's `min-width: 0` on the chips is gone:
+   with the name wrappable its min-content is small, so the chip's
+   automatic minimum (wind + name floor + score + padding) is the
+   right floor — a chip can no longer be squeezed below the sum of
+   its parts, which is what let a squeezed chip's score spill past
+   its edge onto the next seat. The wind glyph never shrinks. In
+   uncrowded states nothing changes and the band renders exactly
+   as before. */
 .bandtop { margin: 0 -10px; }
-.bandtop .chip { min-width: 0; display: flex; align-items: center; gap: 1px; padding: 5px 3px; font-size: 11px; }
+.bandtop:has(.nm) { height: auto; min-height: 24px; align-items: stretch; }
+.bandtop .chip { display: flex; align-items: center; gap: 1px; padding: 5px 3px; font-size: 11px; }
+.bandtop .chip .kj { flex: 0 0 auto; }
 .bandtop .chip:first-child { flex: 0 1 auto; margin-right: auto; }
 .bandtop .chip:last-child { flex: 0 1 auto; margin-left: auto; }
 /* The shared sheet centres the middle chip absolutely (.chip.west);
@@ -148,7 +177,7 @@
    it sits in the flex row like the others and shrinks with them. */
 .bandtop .chip.west { position: static; transform: none; flex: 0 1 auto; }
 .chip .nm { display: inline-block; min-width: 0; max-width: 86px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
-.bandtop .chip .nm { flex: 0 1 auto; font-size: 11px; letter-spacing: -0.09em; max-width: 150px; padding-right: 2px; }
+.bandtop .chip .nm { flex: 0 1 auto; font-size: 11px; letter-spacing: -0.09em; max-width: 150px; min-width: 40px; padding-right: 2px; white-space: normal; overflow-wrap: anywhere; text-overflow: clip; }
 .bandtop .chip b { flex: 0 0 auto; }
 /* A riichi player's chip carries the point stick itself (the shipped
    .stick object at chip scale) instead of the word, so wind + name +

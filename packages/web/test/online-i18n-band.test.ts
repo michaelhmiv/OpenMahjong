@@ -17,8 +17,9 @@ import jaData from "../src/i18n/locales/ja.json" with { type: "json" };
  * B6 regression (CSS contract): the online table's chip band clipped
  * opponents' names at the screen edges because the centre chip was
  * absolutely centred over its neighbours. The band now lays the
- * three chips out as shrinking flex items and ellipsises the name
- * inside its chip. Layout itself is covered by the browser captures;
+ * three chips out as flex items in a row; since fix round 3 the
+ * name wraps whole inside its chip instead of ellipsising (the
+ * layout itself is asserted by scripts/browser-chip-names.mjs);
  * this pins the rules that produce it.
  */
 
@@ -83,9 +84,12 @@ describe("online chip band layout contract (B6)", () => {
   );
   it("lays the centre chip in the flex row instead of absolutely centred", () => {
     expect(css).toMatch(/\.bandtop \.chip\.west \{[^}]*position: static/);
-    expect(css).toMatch(/\.bandtop \.chip \{[^}]*min-width: 0/);
+    // Round 3: chips keep their automatic minimum (wind + name floor
+    // + score + padding) so a squeezed chip's score cannot spill past
+    // its edge; round 2's min-width: 0 override is gone.
+    expect(css).not.toMatch(/\.bandtop \.chip \{[^}]*min-width: 0/);
   });
-  it("ellipsises the display name inside its chip", () => {
-    expect(css).toMatch(/\.chip \.nm \{[^}]*text-overflow: ellipsis/);
+  it("wraps the display name whole inside its chip (round 3: no ellipsis in the band)", () => {
+    expect(css).toMatch(/\.bandtop \.chip \.nm \{[^}]*white-space: normal; overflow-wrap: anywhere/);
   });
 });

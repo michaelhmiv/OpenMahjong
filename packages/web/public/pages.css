@@ -80,9 +80,15 @@ a:focus-visible { outline: 2px solid var(--state); outline-offset: 2px; border-r
 @media (max-width: 560px) {
   /* F12: at phone widths the nav takes its own full row and spreads
      across it — no orphaned second row. N12: the reading column
-     matches the app's 334px control column (390 - 2x28). */
+     matches the app's 334px control column (390 - 2x28).
+     F12 (fix round 3, QC residual): the row still wrapped — seven
+     13.5px links plus 16px gaps measure ~446px against the 334px
+     column, so Calculator/Privacy dropped to a second row (y=87 vs
+     y=39). The phone nav now never wraps: one row, tighter gaps and
+     12px type (above the 11px floor), spread across the column. */
   .sitebar .col { flex-direction: column; align-items: stretch; gap: 2px 22px; }
-  .sitenav { margin-left: 0; justify-content: space-between; }
+  .sitenav { margin-left: 0; justify-content: space-between; flex-wrap: nowrap; gap: 4px 8px; }
+  .sitenav a { font-size: 12px; }
   .col { padding: 0 28px; }
 }
 .sitenav a:hover { color: var(--ink); }

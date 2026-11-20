@@ -346,3 +346,17 @@ describe("content pages: gold discipline (design rules sections 2 and 18)", () =
     expect(index.toLowerCase()).not.toContain("#d9b45c");
   });
 });
+
+describe("content pages: F12 phone nav contract (fix round 3)", () => {
+  it("at phone widths the sitenav never wraps and stays above the 11px floor", () => {
+    // QC refuted round 2's "no orphan wrap" claim: the links met the
+    // 44px floor but still wrapped to two rows at 390px. The layout
+    // itself is asserted in scripts/browser-static-nav.mjs; this pins
+    // the CSS inputs it depends on.
+    const css = pubFile("pages.css");
+    const phone = css.slice(css.indexOf("@media (max-width: 560px)"));
+    expect(phone).toMatch(/\.sitenav \{[^}]*flex-wrap: nowrap/);
+    expect(phone).toMatch(/\.sitenav a \{ font-size: 12px; \}/);
+    expect(css).toMatch(/\.sitenav a \{[^}]*min-height: 44px/);
+  });
+});
