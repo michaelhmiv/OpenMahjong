@@ -98,7 +98,9 @@ try {
       .getByRole("radio", { name: lengthLabels[length], exact: true })
       .click();
     await host.getByRole("button", { name: "Create custom room" }).click();
-    const invite = await host.getByLabel("Invite link").inputValue();
+    // The invite link is a wrapping text block, not an input (C16: an
+    // input cannot wrap, so the URL truncated against the Copy button).
+    const invite = (await host.getByLabel("Invite link").textContent()).trim();
     const id = new URL(host.url()).hash.split("/").at(-1);
     for (const p of pages.slice(1)) {
       await p.goto(invite);
