@@ -76,10 +76,13 @@ const SOURCE_LOCALE = "en";
  *  "West" / "North" are common words in the English copy ("East only",
  *  "East + South"), so requiring the locked wind form in every value that
  *  mentions them would false-positive. Wrong wind renderings are a
- *  human-review matter. */
+ *  human-review matter. The MCR pattern-* terms are likewise excluded:
+ *  they are multi-word proper names whose renderings are reviewed as
+ *  names, and two of them ("Triple Pung", "Double Pung") contain the
+ *  bare noun — see the pattern-precedence rule in checkLockedForms. */
 export const CHECKED_TERMS = [
   "bot", "chi", "dora", "dragon-green", "dragon-red", "dragon-white",
-  "fu", "furiten", "han", "honba", "kan", "pon", "riichi", "ron",
+  "fu", "furiten", "han", "honba", "kan", "pon", "pung", "riichi", "ron",
   "tsumo", "yakuman",
 ];
 
@@ -99,18 +102,33 @@ export function englishRendersTerm(enValue, termEn) {
  *  parsed glossary.json. Returns failure strings (empty = pass). */
 export function checkLockedForms(changed, glossary) {
   const failures = [];
+  // MCR pattern names are proper names (pattern-* glossary terms). When
+  // the English source renders one, the bare "pung" noun check must not
+  // also fire: a pattern name's translation is the name itself (e.g.
+  // "Triple Pung" → 三色同刻), which need not contain the noun form.
+  const patternForms = Object.entries(glossary.terms ?? {})
+    .filter(([termId]) => termId.startsWith("pattern-"))
+    .map(([, term]) => term.en)
+    .filter(Boolean);
   for (const { locale, key, enValue, newValue } of changed) {
     if (locale === "en") continue;
+    const rendersPattern = patternForms.some((form) =>
+      englishRendersTerm(enValue, form),
+    );
     for (const termId of CHECKED_TERMS) {
       const term = glossary.terms?.[termId];
       if (!term) continue;
       const locked = term.locales?.[locale];
       if (locked == null || locked === "") continue; // form not decided yet
       if (!englishRendersTerm(enValue, term.en)) continue;
-      // Open pung question: the English source says "pung" while the
-      // locked term is "Pon" — do not demand the Pon form there until
-      // the ruling lands (community-review-design.md §1.4).
-      if (termId === "pon" && /\bpung\b/i.test(enValue)) continue;
+      // Call/noun split (ruling landed Nov 20, 2026 — glossary now locks
+      // pon the call and pung the noun as separate terms): word match
+      // keeps them apart on its own ("pung" never renders "Pon"), so
+      // each value is checked against the term it actually renders and
+      // no exemption is needed. The one precedence rule: a value that
+      // renders an MCR pattern name is governed by the name, not the
+      // bare noun (see patternForms above).
+      if (termId === "pung" && rendersPattern) continue;
       if (!newValue.includes(locked)) {
         failures.push(
           `${locale} ${key}: English renders locked term "${term.en}" but ` +

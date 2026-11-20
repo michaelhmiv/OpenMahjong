@@ -187,6 +187,8 @@ describe("approval gate (no self-approval)", () => {
   const glossary = {
     terms: {
       pon: { en: "Pon", locales: { ja: "ポン" } },
+      pung: { en: "Pung", locales: { ja: "刻子" } },
+      "pattern-triple-pung": { en: "Triple Pung", locales: { ja: "三色同刻" } },
       kan: { en: "Kan", locales: { ja: "カン" } },
     },
   };
@@ -299,18 +301,33 @@ describe("approval gate (no self-approval)", () => {
     ).toEqual([]);
   });
 
-  it("R4: the pung exception skips the Pon-form requirement", () => {
-    expect(
-      checkLockedForms(
-        [{ locale: "ja", key: "a.two", enValue: "A pung is an open triplet.", newValue: "ポンはオープンな刻子です。" }],
-        glossary,
-      ),
-    ).toEqual([]);
-    // Without the exception, a value that drops the form would fail;
-    // with "pung" in the English source it must not.
+  it("R4: the call/noun split — a pung value is checked against the Pung form, not Pon", () => {
+    // Keeps the noun form, drops the call form: passes — "pung" in the
+    // English source renders the pung term, never the pon term, so no
+    // exemption is needed now that the two are separate locked terms.
     expect(
       checkLockedForms(
         [{ locale: "ja", key: "a.two", enValue: "A pung is an open triplet.", newValue: "刻子はオープンな組み合わせです。" }],
+        glossary,
+      ),
+    ).toEqual([]);
+    // Drops the noun form: fails against the locked pung form. (Before
+    // the split this case was exempted, because the single pon term
+    // conflated the call and the noun.)
+    const failures = checkLockedForms(
+      [{ locale: "ja", key: "a.two", enValue: "A pung is an open triplet.", newValue: "三つ組みはオープンな組み合わせです。" }],
+      glossary,
+    );
+    expect(failures.length).toBe(1);
+    expect(failures[0]).toMatch(/locked.*刻子/);
+  });
+
+  it("R4: an MCR pattern name is governed by the name, not the bare noun", () => {
+    // "Triple Pung" renders the word "Pung", but the value's translation
+    // is the pattern's proper name, which does not contain the noun form.
+    expect(
+      checkLockedForms(
+        [{ locale: "ja", key: "a.three", enValue: "Triple Pung", newValue: "三色同刻" }],
         glossary,
       ),
     ).toEqual([]);

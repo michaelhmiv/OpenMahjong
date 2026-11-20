@@ -9,16 +9,17 @@ import enData from "../src/i18n/locales/en.json";
  * and no English string renders the CPU opponent as "AI" (the glossary
  * locks "Bot" in every locale).
  *
- * Known open question (flagged, not reworded — extraction only):
- * English lesson prose also uses "pung" (96 strings, measured — the
- * Phase 1 count of 61 was wrong) alongside the locked "Pon". Phase 2
- * research (~/workspace/mahjong-prep/pung-pon-research.md) rules they are
+ * Call/noun split (resolved Nov 20, 2026, Michael's approval):
+ * English lesson prose uses "pung" (96 strings, measured — the
+ * Phase 1 count of 61 was wrong) alongside "Pon". Phase 2 research
+ * (~/workspace/mahjong-prep/pung-pon-research.md) rules they are
  * NOT the same term: Pon is the riichi call, Pung is the triplet noun
  * used by American / MCR / Hong Kong / Taiwanese copy, and every locale
- * splits call vs noun the same way. The locked glossary still holds one
- * form per language, so it cannot express that split — see the research
- * file's structural finding and the `research` annotations on the
- * pon/chi/kan entries in glossary.json.
+ * splits call vs noun the same way. The glossary therefore locks them
+ * as separate terms (pon / pung), and the MCR pattern names — proper
+ * names, not compositions — are locked as their own pattern-* entries.
+ * Researched per-locale forms ride as non-locking `research`
+ * annotations; locked forms stay null until a native speaker decides.
  */
 
 const GLOSSARY = glossaryData as {
@@ -34,14 +35,44 @@ describe("glossary file", () => {
     expect(GLOSSARY.meta.locales).toEqual(["en", "zh-Hans", "zh-Hant", "ja", "ko"]);
   });
 
-  it("has exactly the 20 locked terms (12 terms + 4 winds + 3 dragons + Bot)", () => {
+  it("has exactly the 28 locked terms (12 terms + pung split + 7 MCR pattern names + 4 winds + 3 dragons + Bot)", () => {
     const ids = Object.keys(GLOSSARY.terms).sort();
     expect(ids).toEqual([
       "bot", "chi", "dora", "dragon-green", "dragon-red", "dragon-white",
-      "fu", "furiten", "han", "honba", "kan", "pon", "riichi", "ron",
+      "fu", "furiten", "han", "honba", "kan",
+      "pattern-all-pungs", "pattern-double-pung",
+      "pattern-four-pure-shifted-pungs", "pattern-mixed-shifted-pungs",
+      "pattern-pure-shifted-pungs", "pattern-triple-pung",
+      "pattern-two-dragons-pungs",
+      "pon", "pung", "riichi", "ron",
       "tsumo", "wind-east", "wind-north", "wind-south", "wind-west",
       "yakuman",
     ]);
+  });
+
+  it("locks the call and the noun as separate terms (pon / pung split)", () => {
+    // The research finding: Pon is the riichi call, Pung is the triplet
+    // noun — one locked term cannot express both (see header comment).
+    expect(GLOSSARY.terms["pon"].en).toBe("Pon");
+    expect(GLOSSARY.terms["pung"].en).toBe("Pung");
+  });
+
+  it("locks the MCR pattern names as their own terms", () => {
+    // Proper names, not compositions of the pung noun — each pattern-*
+    // term's English form is the pattern name used by the MCR guide
+    // keys (learn.mcr.guide.pattern.<slug>.name).
+    const patterns: Record<string, string> = {
+      "pattern-all-pungs": "All Pungs",
+      "pattern-double-pung": "Double Pung",
+      "pattern-four-pure-shifted-pungs": "Four Pure Shifted Pungs",
+      "pattern-mixed-shifted-pungs": "Mixed Shifted Pungs",
+      "pattern-pure-shifted-pungs": "Pure Shifted Pungs",
+      "pattern-triple-pung": "Triple Pung",
+      "pattern-two-dragons-pungs": "Two Dragons Pungs",
+    };
+    for (const [id, en] of Object.entries(patterns)) {
+      expect(GLOSSARY.terms[id]?.en, id).toBe(en);
+    }
   });
 
   it("fills every English form and leaves every other locale explicitly null", () => {
