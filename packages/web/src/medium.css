@@ -357,20 +357,14 @@
   background: var(--sheet);
   color: var(--on-tint);
 }
-/* The calculator's final confirm keeps its gold exactly as
-   shipped (design rules section 2 flag: a calculator confirm is
-   not an enumerated gold role; it is Michael's separate,
-   still-open call — do not restyle it). */
-.learning-shell.table-tools .calculator-output button.primary:last-of-type {
-  background: var(--gold);
-  color: #1c2a20;
-}
-/* Disabled still reads as dimmed, but the shipped --dim on gold
-   measured 1.01:1 (calc-v7 QC E1); a muted dark olive keeps the
-   disabled read and clears 4.5:1 on the gold fill (4.76:1). */
-.learning-shell.table-tools .calculator-output button.primary:last-of-type:disabled {
-  color: #4d4630;
-}
+/* The calculator's recording Confirm wears the standard commit
+   treatment — the sheet tint, like every other primary in this
+   system (R7). Its gold fill from the compact set is retired:
+   a calculator Confirm is not an enumerated gold role (design
+   rules section 2; owner ruling 2026-11-20). No override rule
+   remains here on purpose: the Confirm now takes the exact same
+   cascade as every other primary button in the system, enabled
+   and disabled alike. */
 /* Ledger correction is a quiet outlined action, never a fill (R7). */
 .learning-shell.table-tools .ledger-row button.primary {
   background: transparent;
