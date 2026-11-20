@@ -2,7 +2,7 @@
   "meta": {
     "generatedBy": "scripts/extract-i18n.mjs",
     "sourceLocale": "en",
-    "generatedAt": "2026-11-20T12:26:47.921Z",
+    "generatedAt": "2026-11-20T13:26:51.164Z",
     "keyCount": 4244,
     "namespaces": {
       "analyze.a-blunder-the-coachs-verdict-is-dama-with-the-le": 1,
@@ -60,11 +60,9 @@
       "analyze.deal-ins": 1,
       "analyze.decision": 1,
       "analyze.decisions-by-kind-best-total": 1,
-      "analyze.declare-riichi": 1,
       "analyze.declared-ankan": 1,
       "analyze.declared-daiminkan": 1,
       "analyze.declared-kan": 1,
-      "analyze.declared-riichi": 1,
       "analyze.declared-riichi-coach-stay-silent": 1,
       "analyze.declared-shouminkan": 1,
       "analyze.declined-the-win": 1,
@@ -155,8 +153,6 @@
       "analyze.shousangen": 1,
       "analyze.shousuushi": 1,
       "analyze.start": 1,
-      "analyze.stay-silent": 1,
-      "analyze.stayed-silent": 1,
       "analyze.stayed-silent-coach-declare": 1,
       "analyze.step": 1,
       "analyze.steps": 1,
@@ -227,12 +223,13 @@
       "analyze.v-better-than-the-coachs-pick-fewer-steps-from-re": 1,
       "analyze.v-dama-ron-0-riichi-ron-1": 1,
       "analyze.v-dama-ron-0-riichi-ron-1-2": 1,
-      "analyze.v-dama-ron-0-riichi-ron-1-3": 1,
       "analyze.v-declare-kan-0": 1,
+      "analyze.v-declare-riichi-discard-0": 1,
       "analyze.v-declared-kan-coach-hold": 1,
+      "analyze.v-declared-riichi-discard-0": 1,
       "analyze.v-discard-0": 1,
-      "analyze.v-discard-0-1-the-discard-itself-graded-2": 1,
       "analyze.v-discard-0-2": 1,
+      "analyze.v-discard-0-no-riichi": 1,
       "analyze.v-discard-misses-0-blunders-1-unseen-copies-may": 1,
       "analyze.v-discarded-0-coach-1": 1,
       "analyze.v-equivalent-same-speed-equal-or-wider": 1,
@@ -254,13 +251,16 @@
       "analyze.v-tenpai-wait-0": 1,
       "analyze.v-the-0-exhaustive-draw-1-are-not-listed-as-jump": 1,
       "analyze.v-the-coach-grades-its-own-policy-the-same-polic": 1,
+      "analyze.v-the-discard-itself-graded-0": 1,
       "analyze.v-the-ron-was-worth-0-points": 1,
       "analyze.v-the-swing-is-the-0-hand-1-2": 1,
       "analyze.v-tsumo-worth-0-points": 1,
       "analyze.v-tsumo-worth-0-points-2": 1,
       "analyze.v-unseen-copies-may-be-in-opponents-hands-or-the": 1,
       "analyze.v-wait-0": 1,
-      "analyze.v-wait-0-2": 1,
+      "analyze.v-wait-0-1-unseen-2": 1,
+      "analyze.v-wait-0-1-unseen-two-sided": 1,
+      "analyze.v-wait-0-3": 1,
       "analyze.white-dragon": 1,
       "analyze.win": 1,
       "analyze.win-2": 1,
@@ -547,7 +547,7 @@
       "hash": "cad5bf29c702403e939ce6efa70573eb03e7233456c21c478b0444bb69f3c939",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1156
+        "line": 1197
       },
       "placeholders": [],
       "status": "approved"
@@ -607,7 +607,7 @@
       "hash": "9b50f21a5bada7bdd60b416f0933b904f412d5bcc1e73d6dd1ab16b7f47095ad",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1154
+        "line": 1195
       },
       "placeholders": [],
       "status": "approved"
@@ -707,7 +707,7 @@
       "hash": "78baa6d96bcef8d0a74d2c715d151d839664910b198e4e8e65a1bbbf588da69e",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 856
+        "line": 869
       },
       "placeholders": [],
       "status": "approved"
@@ -727,7 +727,7 @@
       "hash": "3458850d24fb83e4903ab812c45833a71b7b4fb812f0b3bb39ba74836f86a5c1",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 857
+        "line": 870
       },
       "placeholders": [],
       "status": "approved"
@@ -747,7 +747,7 @@
       "hash": "6e57cc6e58b00919779db4291c2c44b838a39239ce702fce9ec04fd62b5785db",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 856
+        "line": 869
       },
       "placeholders": [],
       "status": "approved"
@@ -777,7 +777,7 @@
       "hash": "0e1a3bda889abffb41611471f24909b7416fa7296ed3d30de236549e9ecce05e",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 851
+        "line": 864
       },
       "placeholders": [],
       "status": "approved"
@@ -807,7 +807,7 @@
       "hash": "704d17e70b786021eb6432ebf6ec51e536bea4ca9d2abb527ac5669a8bcb61bd",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 852
+        "line": 865
       },
       "placeholders": [],
       "status": "approved"
@@ -837,7 +837,7 @@
       "hash": "eab672a977bf3266faa902bd8e954a9a267434a5672ab19fd0b6da9265be2cdb",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 851
+        "line": 864
       },
       "placeholders": [],
       "status": "approved"
@@ -917,7 +917,7 @@
       "hash": "e6b7456c0995a1c64a21d9ad743167cdfad6950814236049a5805b5637e1e723",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 841
+        "line": 854
       },
       "placeholders": [],
       "status": "approved"
@@ -982,16 +982,6 @@
       "placeholders": [],
       "status": "approved"
     },
-    "analyze.declare-riichi": {
-      "value": "Declare riichi",
-      "hash": "c32eca91c6aa8cbd00276864d2f1f0e90de3ae30b31e329ded224a8b4587990c",
-      "source": {
-        "file": "analyze-ui.ts",
-        "line": 893
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
     "analyze.declared-ankan": {
       "value": "declared ankan",
       "hash": "3367320a1a11395f2edb57e345e97d0121e347ca309eb20f32dc0ba7f78c00d1",
@@ -1017,17 +1007,7 @@
       "hash": "5a68baec9ea07e1e66a7afe7d829a79d397da354bc69cb9230ea96ac0fd2c679",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 875
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "analyze.declared-riichi": {
-      "value": "Declared riichi",
-      "hash": "0d8d05a7f141884f1e5288e6d47fc8010277485eb0a82ef5f4a1ae892393fcb3",
-      "source": {
-        "file": "analyze-ui.ts",
-        "line": 889
+        "line": 888
       },
       "placeholders": [],
       "status": "approved"
@@ -1057,7 +1037,7 @@
       "hash": "79019c7f1542e6849badd10db92bc1029e3b7bf817a797d8e9fe063c5cba784e",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 901
+        "line": 939
       },
       "placeholders": [],
       "status": "approved"
@@ -1147,7 +1127,7 @@
       "hash": "7db6537b65475ba157e25a3c67629d26027e868f26c7da4f09f70910e8431c1c",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 998
+        "line": 1039
       },
       "placeholders": [],
       "status": "approved"
@@ -1247,7 +1227,7 @@
       "hash": "8e685d5409b3a543b1cadcc35b095d64847867539c12b21a36d55991ca0cdce1",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 879
+        "line": 892
       },
       "placeholders": [],
       "status": "approved"
@@ -1317,7 +1297,7 @@
       "hash": "3a829c15df43a44eb01466d0d89bc3c8acb7cdc975aa8929b4ac73a48c78c677",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 917
+        "line": 955
       },
       "placeholders": [],
       "status": "approved"
@@ -1481,7 +1461,7 @@
       "hash": "e19d4a263f0360af3623ab10bddbb24ade1f781d2523eb865d1bb1f9978fe239",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1160
+        "line": 1201
       },
       "placeholders": [],
       "status": "approved"
@@ -1491,7 +1471,7 @@
       "hash": "f23f31265197232ce6b00bd3fb3e79170c50c9a5cc512c760b41c870d2f29063",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1019
+        "line": 1060
       },
       "placeholders": [],
       "status": "approved"
@@ -1501,7 +1481,7 @@
       "hash": "82338b62d219d0a8f09eaf2ce3038f829dd0fe84389ca2ff9bd437c45da4977a",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1023
+        "line": 1064
       },
       "placeholders": [],
       "status": "approved"
@@ -1561,7 +1541,7 @@
       "hash": "715b1458abbee52eb88658bb578f99719f544104718a34de7d9bcea1383c4b34",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1158
+        "line": 1199
       },
       "placeholders": [],
       "status": "approved"
@@ -1591,7 +1571,7 @@
       "hash": "ebdf8cc00bc4d9ceee633c56c63b49955769a92ca060825c9b08e4af61326e2b",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 855
+        "line": 868
       },
       "placeholders": [],
       "status": "approved"
@@ -1621,7 +1601,7 @@
       "hash": "436fe71bb9561f0596161c4d50c7b23327b4189acaf63dc89f4f9205b67a7528",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 850
+        "line": 863
       },
       "placeholders": [],
       "status": "approved"
@@ -1641,7 +1621,7 @@
       "hash": "900b1e4c46b4edab74897019997447324dd8c0b529bb7a61eb5b4d90907340f0",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 837
+        "line": 850
       },
       "placeholders": [],
       "status": "approved"
@@ -1671,7 +1651,7 @@
       "hash": "206096184dbe2bcb4eeb13882fcf09840ed4d95a7659d46f26bfe68efcd379cd",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1019
+        "line": 1060
       },
       "placeholders": [],
       "status": "approved"
@@ -1681,7 +1661,7 @@
       "hash": "2c9281bd57f551388e296312d274ec95ef98add3a28f96c1d858b4a8c1f52f3e",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1023
+        "line": 1064
       },
       "placeholders": [],
       "status": "approved"
@@ -1946,26 +1926,6 @@
       "placeholders": [],
       "status": "approved"
     },
-    "analyze.stay-silent": {
-      "value": "Stay silent",
-      "hash": "e62aa5770ec51c9ee910581f12f2bb348d7cae127c256794407806710214988b",
-      "source": {
-        "file": "analyze-ui.ts",
-        "line": 893
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
-    "analyze.stayed-silent": {
-      "value": "Stayed silent",
-      "hash": "807ed089da34e172853e3952a72cd377d0b18684b51bafb541fafc03eca00075",
-      "source": {
-        "file": "analyze-ui.ts",
-        "line": 889
-      },
-      "placeholders": [],
-      "status": "approved"
-    },
     "analyze.stayed-silent-coach-declare": {
       "value": "Stayed silent · Coach: declare",
       "hash": "0acdde33730c211a87f5a5db65a3397448e4b0c8fb80dbd781ba67c3b5f74c8e",
@@ -2031,7 +1991,7 @@
       "hash": "8b862ba45dceddf7e186fa48c1bb76f09730a23fc67f870c015d9649dab27a27",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 902
+        "line": 940
       },
       "placeholders": [],
       "status": "approved"
@@ -2051,7 +2011,7 @@
       "hash": "1bb642b0c820503e09dd08e2a9c93e48bb407498c431d1581ab8b9032496f1c3",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 855
+        "line": 868
       },
       "placeholders": [],
       "status": "approved"
@@ -2101,7 +2061,7 @@
       "hash": "9fcb95761c3eb65cd4a9915944c30fadae7adcc213e915a9cb4d3636733726f0",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1056
+        "line": 1097
       },
       "placeholders": [],
       "status": "approved"
@@ -2161,7 +2121,7 @@
       "hash": "950a21feb22019c3097df942a00fd018ceedaebb1665fb6ef2c3d14d78af40f5",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 850
+        "line": 863
       },
       "placeholders": [],
       "status": "approved"
@@ -2171,7 +2131,7 @@
       "hash": "08156cec47641de10cfa727d7883fb2b5c6b6f8f583ffdd7721362b92b7b28e2",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 901
+        "line": 939
       },
       "placeholders": [],
       "status": "approved"
@@ -2248,7 +2208,7 @@
       "hash": "4426a2b32f5ea51613248a8b9a8670242e5c01f789f6ae6e1e2d61f979b460e7",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1077
+        "line": 1118
       },
       "placeholders": [
         "0",
@@ -2266,7 +2226,7 @@
       "hash": "b3a180e342cba43a6f01e1dcb97f795c74acea684b2a928ed3e912e05cb91e71",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 971
+        "line": 1012
       },
       "placeholders": [
         "0",
@@ -2296,7 +2256,7 @@
       "hash": "ec1b0de6d4c2348195a069a214df087bb9c5b105cbda2dae68206875ffff5a6d",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 913
+        "line": 951
       },
       "placeholders": [
         "0"
@@ -2529,7 +2489,7 @@
       "hash": "d35cc801d754bbb38975c05c763d09b379e017bf56b90c5ad8f324d2719f780c",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1091
+        "line": 1132
       },
       "placeholders": [
         "0"
@@ -2573,7 +2533,7 @@
       "hash": "7299fc0d6bb5bdf4d86c86780af5e217ab26b7054f3113e31dc97c9cb4cf04df",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 833
+        "line": 840
       },
       "placeholders": [
         "0",
@@ -2857,26 +2817,25 @@
       "status": "approved",
       "dynamic": true
     },
-    "analyze.v-dama-ron-0-riichi-ron-1-3": {
-      "value": "Dama ron {0} · Riichi ron {1}",
-      "hash": "bd6ee4c30f2b7129b90e72822aedfcd214267ae7295d7fb65c371307ed38b14d",
-      "source": {
-        "file": "analyze-ui.ts",
-        "line": 895
-      },
-      "placeholders": [
-        "0",
-        "1"
-      ],
-      "status": "approved",
-      "dynamic": true
-    },
     "analyze.v-declare-kan-0": {
       "value": "Declare kan · {0}",
       "hash": "76f4143140341c3c950241a68bdeb62c806a87f3e9acf90a4a34d60739d7b244",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 878
+        "line": 891
+      },
+      "placeholders": [
+        "0"
+      ],
+      "status": "approved",
+      "dynamic": true
+    },
+    "analyze.v-declare-riichi-discard-0": {
+      "value": "declare riichi, discard {0}.",
+      "hash": "e1dcdfcd04062640bc37d4f7041f4f3b385be6d7afa88a00ae85fb16f757a158",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 926
       },
       "placeholders": [
         "0"
@@ -2894,12 +2853,12 @@
       "placeholders": [],
       "status": "approved"
     },
-    "analyze.v-discard-0": {
-      "value": "Discard {0}",
-      "hash": "80042063926d2de54c4b9883995ad70611f8b77bdee73a07ce7fb44d31e8e73f",
+    "analyze.v-declared-riichi-discard-0": {
+      "value": "declared riichi, discard {0}.",
+      "hash": "e016704f68c294e1b1e1d148a60935c79723f6265e9c19f8d0d555adc2d8d31d",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 838
+        "line": 906
       },
       "placeholders": [
         "0"
@@ -2907,17 +2866,15 @@
       "status": "approved",
       "dynamic": true
     },
-    "analyze.v-discard-0-1-the-discard-itself-graded-2": {
-      "value": "Discard {0} · {1}. The discard itself graded {2}.",
-      "hash": "f63f5a0ab251ed055fb484ec84fd4a681c8ad8fe0b47cd93df6b8533e8feaed9",
+    "analyze.v-discard-0": {
+      "value": "Discard {0}",
+      "hash": "80042063926d2de54c4b9883995ad70611f8b77bdee73a07ce7fb44d31e8e73f",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 886
+        "line": 851
       },
       "placeholders": [
-        "0",
-        "1",
-        "2"
+        "0"
       ],
       "status": "approved",
       "dynamic": true
@@ -2927,7 +2884,20 @@
       "hash": "80042063926d2de54c4b9883995ad70611f8b77bdee73a07ce7fb44d31e8e73f",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 842
+        "line": 855
+      },
+      "placeholders": [
+        "0"
+      ],
+      "status": "approved",
+      "dynamic": true
+    },
+    "analyze.v-discard-0-no-riichi": {
+      "value": "discard {0}, no riichi.",
+      "hash": "d0528c743df16f418b6c6b192d09a2b1f17dd93dc86c202dce584aba5cf5fc65",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 907
       },
       "placeholders": [
         "0"
@@ -2978,7 +2948,7 @@
       "hash": "05b72c0ba9ee07dc5e63a175165e97e9a3f2cdbcf4372deb967c082bbdf67365",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1101
+        "line": 1142
       },
       "placeholders": [
         "0",
@@ -3086,7 +3056,7 @@
       "hash": "2f00a91973c153f066b3694febe93f9e7e7436d020f82b06d2b5e532d5b6c492",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 864
+        "line": 877
       },
       "placeholders": [
         "0"
@@ -3099,7 +3069,7 @@
       "hash": "2f00a91973c153f066b3694febe93f9e7e7436d020f82b06d2b5e532d5b6c492",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 869
+        "line": 882
       },
       "placeholders": [
         "0"
@@ -3152,7 +3122,7 @@
       "hash": "cec520fb1ba4e043f981be233e3bf97f7bb7dc774820025ad84dbb1a3771779a",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 861
+        "line": 842
       },
       "placeholders": [
         "0",
@@ -3177,11 +3147,11 @@
       "dynamic": true
     },
     "analyze.v-tenpai-wait-0": {
-      "value": "Tenpai · wait {0}",
-      "hash": "9fc6110476c2dbc3c5d630b625a53e8f0e13064a398d3e1ecb4457e6e2083b68",
+      "value": "Tenpai · Wait {0}",
+      "hash": "56fcac45f2958ea2942a2548d4e19689e83ed19344521b9f39b077dcbba2e872",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 832
+        "line": 839
       },
       "placeholders": [
         "0"
@@ -3209,6 +3179,19 @@
       "source": {
         "file": "analyze-ui.ts",
         "line": 391
+      },
+      "placeholders": [
+        "0"
+      ],
+      "status": "approved",
+      "dynamic": true
+    },
+    "analyze.v-the-discard-itself-graded-0": {
+      "value": "The discard itself graded {0}.",
+      "hash": "ae504bc543ff70c3caf83508b929396754d9e48b6a8216f7bcc83c65aba04d17",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 910
       },
       "placeholders": [
         "0"
@@ -3262,7 +3245,7 @@
       "hash": "4bedac5f49a860e462ac223b5903ee8aa92b86bd80fd251f8d313226056bf9b2",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 903
+        "line": 941
       },
       "placeholders": [
         "0"
@@ -3275,7 +3258,7 @@
       "hash": "ebd3d7db46a20994ce47cba1de4d2fd2395dbb9cd46dc9afd5ff22cb4fac3d7a",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1110
+        "line": 1151
       },
       "placeholders": [
         "0"
@@ -3296,12 +3279,40 @@
       "status": "approved",
       "dynamic": true
     },
-    "analyze.v-wait-0-2": {
-      "value": "Wait {0}",
-      "hash": "a0d71ff9f9510fbc24aa6cc923ada73d3708ecd9bf5e2962eb4a79d303ed6258",
+    "analyze.v-wait-0-1-unseen-2": {
+      "value": "Wait {0} — {1} unseen.",
+      "hash": "57fae38b59473f221ad0ee4f6a5163e67876fb3ab74cadf2ba033c8639be0e70",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 884
+        "line": 924
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "status": "approved",
+      "dynamic": true
+    },
+    "analyze.v-wait-0-1-unseen-two-sided": {
+      "value": "Wait {0} — {1} unseen, two-sided.",
+      "hash": "7ea190498d2e1524790558e677b621779d85d17daaf7984cafeba1a4cd9f1a09",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 923
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "status": "approved",
+      "dynamic": true
+    },
+    "analyze.v-wait-0-3": {
+      "value": "Wait {0}.",
+      "hash": "2d9317adc05153ba5a6732d1305164decd955c66d59432d4e286fd16f2e03e78",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 921
       },
       "placeholders": [
         "0"
@@ -3364,7 +3375,7 @@
       "hash": "a00644508de97e85263c9d0cd67e63d3c3b5d733bcaddc65b110e501ad5a7b73",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 912
+        "line": 950
       },
       "placeholders": [
         "0"
@@ -3397,7 +3408,7 @@
       "hash": "bb0347a468d97e98a9c00e37cebec1ab930f6f1221cae0f1fbb92b07e1900ba2",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 1060
+        "line": 1101
       },
       "placeholders": [],
       "status": "approved"

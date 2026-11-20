@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-20T12:22:41.648Z",
-    "keyCount": 4246,
+    "generatedAt": "2026-11-20T13:31:59.037Z",
+    "keyCount": 4251,
     "model": "qwen/qwen-plus",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -43595,11 +43595,11 @@
     },
     "analyze.v-tenpai-wait-0": {
       "value": "听牌 · 听{0}",
-      "hash": "9fc6110476c2dbc3c5d630b625a53e8f0e13064a398d3e1ecb4457e6e2083b68",
+      "hash": "56fcac45f2958ea2942a2548d4e19689e83ed19344521b9f39b077dcbba2e872",
       "status": "draft",
       "source": {
         "file": "analyze-ui.ts",
-        "line": 831
+        "line": 839
       },
       "placeholders": [
         "0"
@@ -43832,6 +43832,99 @@
         "1",
         "2",
         "3"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-declare-riichi-discard-0": {
+      "value": "立直，打出{0}。",
+      "hash": "e1dcdfcd04062640bc37d4f7041f4f3b385be6d7afa88a00ae85fb16f757a158",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 926
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-declared-riichi-discard-0": {
+      "value": "已立直，打出{0}。",
+      "hash": "e016704f68c294e1b1e1d148a60935c79723f6265e9c19f8d0d555adc2d8d31d",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 906
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-discard-0-no-riichi": {
+      "value": "打出{0}，未立直。",
+      "hash": "d0528c743df16f418b6c6b192d09a2b1f17dd93dc86c202dce584aba5cf5fc65",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 907
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-the-discard-itself-graded-0": {
+      "value": "该弃牌本身评分为{0}。",
+      "hash": "ae504bc543ff70c3caf83508b929396754d9e48b6a8216f7bcc83c65aba04d17",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 910
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-wait-0-1-unseen-2": {
+      "value": "听{0} — {1}张未见。",
+      "hash": "57fae38b59473f221ad0ee4f6a5163e67876fb3ab74cadf2ba033c8639be0e70",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 924
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-wait-0-1-unseen-two-sided": {
+      "value": "听{0} — {1}张未见，两面听。",
+      "hash": "7ea190498d2e1524790558e677b621779d85d17daaf7984cafeba1a4cd9f1a09",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 923
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-wait-0-3": {
+      "value": "听{0}。",
+      "hash": "2d9317adc05153ba5a6732d1305164decd955c66d59432d4e286fd16f2e03e78",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 921
+      },
+      "placeholders": [
+        "0"
       ],
       "dynamic": true
     }

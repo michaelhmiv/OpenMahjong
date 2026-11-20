@@ -814,7 +814,7 @@ export function mountAnalyze(container: HTMLElement, options: AnalyzeUIOptions):
 
   function playedCoachRows(grade: GradeFact, decision: GradedDecision, panelNode: HTMLElement): void {
     const discardGrade = decision.grades.find((g): g is Extract<GradeFact, { kind: "discard" }> => g.kind === "discard");
-    const cmpRow = (label: string, mainText: string, sub: string, tiles: readonly number[]): void => {
+    const cmpRow = (label: string, mainText: string, sub: string, tiles: readonly number[], trailingTiles: readonly number[] = []): void => {
       const node = el("div", "an-cmp");
       if (tiles.length) {
         const faces = el("span", "faces");
@@ -825,22 +825,35 @@ export function mountAnalyze(container: HTMLElement, options: AnalyzeUIOptions):
       text.append(el("b", "", tx("analyze.label-dash-text", `${label} — ${mainText}`, label, mainText)));
       if (sub) text.append(el("span", "s", sub));
       node.append(text);
+      // Wait-tile faces at the right, as the approved frame shows them
+      // on the coach's riichi row.
+      if (trailingTiles.length) {
+        const faces = el("span", "faces");
+        for (const type of trailingTiles) faces.append(faceByType(type, "t-pond"));
+        node.append(faces);
+      }
       panelNode.append(node);
     };
     const tenpaiFacts = (shanten: number, waits: readonly WaitFact[], improvingTotal: number): string =>
       shanten === 0
-        ? tx("analyze.v-tenpai-wait-0", `Tenpai · wait ${waitsText(waits)}`, waitsText(waits))
+        ? tx("analyze.v-tenpai-wait-0", `Tenpai · Wait ${waitsText(waits)}`, waitsText(waits))
         : tx("analyze.v-0-shanten-1-unseen-improving-copies", `${shanten} shanten · ${improvingTotal} unseen improving copies`, shanten, improvingTotal);
+    const shantenPair = (before: number | null, after: number): string =>
+      before === null ? "" : tx("analyze.v-shanten-0-1", `Shanten ${before} → ${after}`, before, after);
+    // One line's own facts: its tenpai/wait position plus its shanten
+    // pair (before → after this action).
+    const lineFacts = (shantenBefore: number | null, shantenAfter: number, waits: readonly WaitFact[], improvingTotal: number): string =>
+      [tenpaiFacts(shantenAfter, waits, improvingTotal), shantenPair(shantenBefore, shantenAfter)].filter(Boolean).join(" · ");
     switch (grade.kind) {
       case "discard": {
         if (discardGrade) {
           cmpRow(tx("analyze.played", "Played"),
             tx("analyze.v-discard-0", `Discard ${discardGrade.tileName}`, discardGrade.tileName),
-            tenpaiFacts(discardGrade.shantenAfter, discardGrade.waits, discardGrade.improvingTotal),
+            lineFacts(discardGrade.shantenBefore, discardGrade.shantenAfter, discardGrade.waits, discardGrade.improvingTotal),
             [discardGrade.tileType]);
           cmpRow(tx("analyze.coach", "Coach"),
             tx("analyze.v-discard-0-2", `Discard ${discardGrade.bestTileName}`, discardGrade.bestTileName),
-            tenpaiFacts(discardGrade.bestShantenAfter, discardGrade.bestWaits, discardGrade.bestImprovingTotal),
+            lineFacts(discardGrade.shantenBefore, discardGrade.bestShantenAfter, discardGrade.bestWaits, discardGrade.bestImprovingTotal),
             [discardGrade.bestTileType]);
         }
         break;
@@ -881,20 +894,45 @@ export function mountAnalyze(container: HTMLElement, options: AnalyzeUIOptions):
         break;
       }
       case "riichi": {
-        const waitsClause = grade.waits.length ? tx("analyze.v-wait-0-2", `Wait ${waitsText(grade.waits)}`, waitsText(grade.waits)) : "";
-        const discardFacts = discardGrade
-          ? tx("analyze.v-discard-0-1-the-discard-itself-graded-2", `Discard ${discardGrade.tileName} · ${tenpaiFacts(discardGrade.shantenAfter, discardGrade.waits, discardGrade.improvingTotal)}. The discard itself graded ${classWord(discardGrade.grade).toLowerCase()}.`, discardGrade.tileName, tenpaiFacts(discardGrade.shantenAfter, discardGrade.waits, discardGrade.improvingTotal), classWord(discardGrade.grade).toLowerCase())
-          : "";
-        cmpRow(tx("analyze.played", "Played"),
-          grade.declared ? tx("analyze.declared-riichi", "Declared riichi") : tx("analyze.stayed-silent", "Stayed silent"),
-          [waitsClause, discardFacts].filter(Boolean).join(" · "),
-          [grade.tileType]);
-        cmpRow(tx("analyze.coach", "Coach"),
-          grade.declared ? tx("analyze.stay-silent", "Stay silent") : tx("analyze.declare-riichi", "Declare riichi"),
-          grade.damaRon !== null && grade.riichiRon !== null
-            ? tx("analyze.v-dama-ron-0-riichi-ron-1-3", `Dama ron ${fmt(grade.damaRon)} · Riichi ron ${fmt(grade.riichiRon)}`, fmt(grade.damaRon), fmt(grade.riichiRon))
-            : "",
-          [grade.tileType]);
+        // Each row renders its OWN line's facts (approved frame P2).
+        // The played line is the discard actually made — the paired
+        // discard grade. The coach's riichi line is the riichi grade's
+        // own discard and wait; the coach's dama line is the discard
+        // grade's best line. The riichi grade's wait belongs to the
+        // coach's riichi line only: it never leads the Played row, and
+        // the ron values live in the eval-gap note, not in a row.
+        if (discardGrade) {
+          const playedMain = grade.declared
+            ? tx("analyze.v-declared-riichi-discard-0", `declared riichi, discard ${discardGrade.tileName}.`, discardGrade.tileName)
+            : tx("analyze.v-discard-0-no-riichi", `discard ${discardGrade.tileName}, no riichi.`, discardGrade.tileName);
+          const playedSub = [
+            lineFacts(discardGrade.shantenBefore, discardGrade.shantenAfter, discardGrade.waits, discardGrade.improvingTotal),
+            tx("analyze.v-the-discard-itself-graded-0", `The discard itself graded ${classWord(discardGrade.grade).toLowerCase()}.`, classWord(discardGrade.grade).toLowerCase()),
+          ].filter(Boolean).join(" · ");
+          cmpRow(tx("analyze.played", "Played"), playedMain, playedSub, [discardGrade.tileType]);
+        }
+        // The coach's row shows the line the coach prefers — or, when
+        // the verdict is "either", the line the player did not take.
+        const coachRiichi = grade.verdict === "declare" || (grade.verdict === "either" && !grade.declared);
+        if (coachRiichi) {
+          const waitSub = !grade.waits.length
+            ? ""
+            : grade.waits.length === 1
+              ? tx("analyze.v-wait-0-3", `Wait ${waitsText(grade.waits)}.`, waitsText(grade.waits))
+              : grade.twoSided
+                ? tx("analyze.v-wait-0-1-unseen-two-sided", `Wait ${waitsText(grade.waits)} — ${grade.liveTotal} unseen, two-sided.`, waitsText(grade.waits), grade.liveTotal)
+                : tx("analyze.v-wait-0-1-unseen-2", `Wait ${waitsText(grade.waits)} — ${grade.liveTotal} unseen.`, waitsText(grade.waits), grade.liveTotal);
+          cmpRow(tx("analyze.coach", "Coach"),
+            tx("analyze.v-declare-riichi-discard-0", `declare riichi, discard ${grade.tileName}.`, grade.tileName),
+            waitSub,
+            [grade.tileType],
+            grade.waits.map((w) => w.type));
+        } else if (discardGrade) {
+          cmpRow(tx("analyze.coach", "Coach"),
+            tx("analyze.v-discard-0-no-riichi", `discard ${discardGrade.bestTileName}, no riichi.`, discardGrade.bestTileName),
+            lineFacts(discardGrade.shantenBefore, discardGrade.bestShantenAfter, discardGrade.bestWaits, discardGrade.bestImprovingTotal),
+            [discardGrade.bestTileType]);
+        }
         break;
       }
       case "win": {
@@ -966,10 +1004,13 @@ export function mountAnalyze(container: HTMLElement, options: AnalyzeUIOptions):
     board.append(middle);
     const center = el("div", "an-eventline");
     const hand = data.hands[handIndexAt(cursor)];
+    const centreLabel = hand && hand.honba > 0
+      ? tx("analyze.v-0-repeat-1", `${handLabel(hand.index)} · Repeat ${hand.honba}`, handLabel(hand.index), hand.honba)
+      : hand ? handLabel(hand.index) : "";
     center.append(document.createTextNode(tx(
       "analyze.v-0-1-tiles-left-2-deposit-3-dora",
-      `${hand ? handLabel(hand.index) : ""} · ${model.wallRemaining} tiles left · ${model.sticks} deposit${pluralS(model.sticks)} · Dora`,
-      hand ? handLabel(hand.index) : "", model.wallRemaining, model.sticks, pluralS(model.sticks),
+      `${centreLabel} · ${model.wallRemaining} tiles left · ${model.sticks} deposit${pluralS(model.sticks)} · Dora`,
+      centreLabel, model.wallRemaining, model.sticks, pluralS(model.sticks),
     )));
     for (const tile of model.doraIndicators) {
       const holder = el("span", "an-dora");
