@@ -238,6 +238,7 @@ jobs:
           done
           npm run test:browser -- http://127.0.0.1:4173 work/browser-smoke
           node scripts/browser-play-cleanup.mjs http://127.0.0.1:4173 work/play-cleanup
+          node scripts/browser-static-nav.mjs http://127.0.0.1:4173 work/static-nav
           node scripts/browser-lesson-layout.mjs http://127.0.0.1:4173 work/program-evidence/lesson-layout
           node scripts/browser-in-person.mjs http://127.0.0.1:4173 work/program-evidence/riichi-tools
           for variant in hong-kong mcr taiwanese; do
@@ -257,6 +258,7 @@ jobs:
           path: |
             work/browser-smoke/
             work/play-cleanup/
+            work/static-nav/
             work/program-evidence/
             /tmp/openmahjong-web.log
 
@@ -303,6 +305,7 @@ jobs:
             ONLINE_BROWSER_LENGTH="$length" ONLINE_BROWSER_PACE=correspondence node scripts/browser-multiplayer.mjs
           done
           ONLINE_BROWSER_PACE=live node scripts/browser-multiplayer.mjs
+          node scripts/browser-chip-names.mjs
       - name: Rating calibration and PostgreSQL backup rehearsal
         env:
           OPENMAHJONG_TEST_DB: postgresql://postgres@127.0.0.1:5432/openmahjong_test

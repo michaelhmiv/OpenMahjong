@@ -34,7 +34,7 @@ describe("B6: opponent names fit their chips at the 11px floor", () => {
       /\.bandtop \.chip \{[^}]*gap: 1px; padding: 5px 3px; font-size: 11px/,
     );
     expect(onlineCss).toMatch(
-      /\.bandtop \.chip \.nm \{[^}]*font-size: 11px; letter-spacing: -0\.09em; max-width: 150px; padding-right: 2px/,
+      /\.bandtop \.chip \.nm \{[^}]*font-size: 11px; letter-spacing: -0\.09em; max-width: 150px;/,
     );
   });
 
@@ -52,7 +52,29 @@ describe("B6: opponent names fit their chips at the 11px floor", () => {
     // The one surviving text node is real content: the Bot separator.
     expect(chipFn).toContain('createTextNode(" · ")');
   });
+});
 
+describe("B6 round 3: names wrap whole instead of ellipsising (QC residual)", () => {
+  it("the name wraps inside its chip — no ellipsis path remains in the band", () => {
+    expect(onlineCss).toMatch(
+      /\.bandtop \.chip \.nm \{[^}]*white-space: normal; overflow-wrap: anywhere; text-overflow: clip/,
+    );
+    expect(onlineCss).toMatch(/\.bandtop \.chip \.nm \{[^}]*min-width: 40px/);
+  });
+
+  it("the band grows only where a name span exists, so solo/variant geometry is untouched", () => {
+    expect(onlineCss).toMatch(
+      /\.bandtop:has\(\.nm\) \{ height: auto; min-height: 24px; align-items: stretch; \}/,
+    );
+  });
+
+  it("chips keep their automatic minimum and the wind glyph never shrinks", () => {
+    expect(onlineCss).not.toMatch(/\.bandtop \.chip \{[^}]*min-width: 0/);
+    expect(onlineCss).toMatch(/\.bandtop \.chip \.kj \{ flex: 0 0 auto; \}/);
+  });
+});
+
+describe("B6 (round 2 budget, still in force)", () => {
   it("a 15-character audit name is the pinned case: it fits the measured chip budget", () => {
     // The measured budget (capture rig, Figtree loaded): at 11px a
     // 15-char name measures ~82px, ~75px with the shipped tracking;
