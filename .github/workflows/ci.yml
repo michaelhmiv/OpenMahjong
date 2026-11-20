@@ -240,6 +240,7 @@ jobs:
           node scripts/browser-play-cleanup.mjs http://127.0.0.1:4173 work/play-cleanup
           node scripts/browser-static-nav.mjs http://127.0.0.1:4173 work/static-nav
           node scripts/browser-lesson-layout.mjs http://127.0.0.1:4173 work/program-evidence/lesson-layout
+          node scripts/browser-analyze.mjs http://127.0.0.1:4173 work/program-evidence/analyze
           node scripts/browser-in-person.mjs http://127.0.0.1:4173 work/program-evidence/riichi-tools
           node scripts/browser-gold-confirm.mjs http://127.0.0.1:4173 work/gold-confirm
           for variant in hong-kong mcr taiwanese; do

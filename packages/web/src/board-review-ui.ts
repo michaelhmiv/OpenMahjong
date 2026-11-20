@@ -30,6 +30,7 @@ export function mountGameDetail(
   timeline: BoardTimeline,
   onBack: () => void,
   onHand: (index: number) => void,
+  onAnalyze?: () => void,
 ): void {
   const shell = el("div", "", "learning-shell game-detail");
   const header = el("header", "", "learning-header");
@@ -71,8 +72,11 @@ export function mountGameDetail(
         : tx("review.board.settlement-includes-rank-bonuses-15-5-5-15-and-t", "Settlement includes rank bonuses (+15/+5/−5/−15) and the 20-point first-place bonus."),
       "dim",
     ),
-    el("h2", tx("review.board.hands", "Hands")),
   );
+  // Analyze entry (brief-analyze-v1): offered only when the caller
+  // knows this game's archive can be graded (current riichi engine).
+  if (onAnalyze) main.append(button(tx("analyze.analyze", "Analyze"), onAnalyze));
+  main.append(el("h2", tx("review.board.hands", "Hands")));
   for (const hand of timeline.hands) {
     const row = button(tx("review.board.v-0-1-2", `${hand.label} · ${hand.result}`, hand.label, hand.result), () =>
       onHand(hand.index),
