@@ -125,11 +125,10 @@ describe("content pages: /learn/ cannot drift from the lesson data", () => {
     });
   }
 
-  const expected: { name: string; titles: string[]; minutes?: number[] }[] = [
+  const expected: { name: string; titles: string[] }[] = [
     {
       name: "Riichi",
       titles: MODULES.map((m) => m.title),
-      minutes: MODULES.map((m) => m.minutes),
     },
     { name: "Hong Kong Old Style", titles: variantLessons("hong-kong").map((l) => l.title) },
     { name: "MCR", titles: variantLessons("mcr").map((l) => l.title) },
@@ -157,9 +156,17 @@ describe("content pages: /learn/ cannot drift from the lesson data", () => {
     expect(html).toContain("52 interactive lessons");
   });
 
-  it("keeps the riichi minutes from the curriculum", () => {
-    const riichi = parseTracks()[0]!;
-    expect(riichi.minutes).toEqual(expected[0]!.minutes!);
+  it("carries no duration meta on any track (C4: identical field set)", () => {
+    // C4 (fix round 2): the Riichi rows alone carried "N min" meta —
+    // the real render path PR #98 missed (it fixed the in-app rows;
+    // this page still showed durations for one variant only). Variant
+    // lessons carry no minutes metadata, so no track shows a duration
+    // here, exactly as the in-app Learn rows now agree.
+    for (const track of parseTracks()) {
+      expect(track.minutes, `${track.name} rows must not carry durations`).toEqual(
+        track.titles.map(() => null),
+      );
+    }
   });
 
   it("carries the American training line verbatim from american.ts", () => {

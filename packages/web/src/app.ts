@@ -1661,6 +1661,7 @@ export class App {
     });
 
     this.textScreen("about", tx("ui.app.about-2", "About"), (page) => {
+      page.classList.add("aboutpage");
       page.append(
         h("p", {}, tx("ui.app.open-mahjong-is-a-free-open-source-mahjong-platf", "Open Mahjong is a free, open-source mahjong platform. Play Riichi, Hong Kong Old Style, MCR or Taiwanese against CPU opponents, study games, and keep an in-person score ledger.")),
         h("p", {}, tx("ui.app.free-forever-as-a-guest-your-settings-and-game-h", "Free forever. As a guest, your settings and game history live only in this browser. Signed in, they are saved to your account.")),
@@ -1888,16 +1889,18 @@ export class App {
       });
       const names = h("div", {});
       names.append(h("div", { class: "nm" }, meta.native));
-      if (meta.id !== "en") {
-        // Machine-translation marking (owner ruling Nov 19, 2026):
-        // the English-name line carries " · Machine translated" on
-        // every shipped locale that is a machine translation. Same
-        // two-line row, same 13px dim line — no layout change.
-        const enLine = isMachineTranslated(meta.id)
-          ? tx("ui.app.v-0-1-2", `${meta.english} · ${tx("ui.app.language.machine-translated", "Machine translated")}`, meta.english, tx("ui.app.language.machine-translated", "Machine translated"))
-          : meta.english;
-        names.append(h("div", { class: "en" }, enLine));
-      }
+      // N7 (fix round 2): EVERY row carries the same two lines —
+      // native name over English name (§13) — including English
+      // itself, whose English name is "English". The previous
+      // English-only exemption left that row one line tall inside a
+      // two-line list, so the rows rendered at two heights.
+      // Machine-translation marking (owner ruling Nov 19, 2026):
+      // the English-name line carries " · Machine translated" on
+      // every shipped locale that is a machine translation.
+      const enLine = isMachineTranslated(meta.id)
+        ? tx("ui.app.v-0-1-2", `${meta.english} · ${tx("ui.app.language.machine-translated", "Machine translated")}`, meta.english, tx("ui.app.language.machine-translated", "Machine translated"))
+        : meta.english;
+      names.append(h("div", { class: "en" }, enLine));
       row.append(names);
       if (isCurrent) {
         const check = h("span", { class: "i18n-check", "aria-hidden": "true" });
