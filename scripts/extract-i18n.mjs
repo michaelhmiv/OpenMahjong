@@ -88,6 +88,9 @@ const LABEL_HELPERS = new Map([
 const FILE_HELPERS = {
   "practice-ui.ts": new Map([["el", [2]], ["hand", [1]]]),
   "review-ui.ts": new Map([["node", [2]]]),
+  // analyze-ui.ts el(tag, className, text) — text is arg 2, not 1
+  // (same shape as practice-ui's el).
+  "analyze-ui.ts": new Map([["el", [2]]]),
   // Same-named helpers with a different signature elsewhere: in-person-ui
   // start(titleText) sets the screen title; the two calculators' local
   // show(title) sets the screen title; variant-table-ui toggle(label, get,
@@ -128,6 +131,7 @@ const FILE_NAMESPACES = {
   "moment-text.ts": "review.moment",
   "review.ts": "review",
   "review-ui.ts": "review",
+  "analyze-ui.ts": "analyze",
   "board-review.ts": "review.board",
   "board-review-ui.ts": "review.board",
   "riichi-calculator-ui.ts": "calc.riichi",

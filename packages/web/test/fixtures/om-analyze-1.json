@@ -1,0 +1,2594 @@
+{
+ "saved": {
+  "v": 2,
+  "engineVersion": 2,
+  "ruleset": {
+   "id": "openmahjong-riichi",
+   "version": 1
+  },
+  "aiVersion": 2,
+  "seed": "om-analyze-1",
+  "length": "east",
+  "humanSeat": 0,
+  "decisions": [
+   {
+    "type": "discard",
+    "tileId": 76
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 39
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 108
+   },
+   {
+    "type": "discard",
+    "tileId": 113
+   },
+   {
+    "type": "discard",
+    "tileId": 68
+   },
+   {
+    "type": "discard",
+    "tileId": 104
+   },
+   {
+    "type": "discard",
+    "tileId": 124
+   },
+   {
+    "type": "discard",
+    "tileId": 116
+   },
+   {
+    "type": "discard",
+    "tileId": 111
+   },
+   {
+    "type": "discard",
+    "tileId": 119
+   },
+   {
+    "type": "discard",
+    "tileId": 32
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 8
+   },
+   {
+    "type": "discard",
+    "tileId": 126
+   },
+   {
+    "type": "discard",
+    "tileId": 13
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 135
+   },
+   {
+    "type": "discard",
+    "tileId": 134
+   },
+   {
+    "type": "discard",
+    "tileId": 133
+   },
+   {
+    "type": "discard",
+    "tileId": 70
+   },
+   {
+    "type": "discard",
+    "tileId": 118
+   },
+   {
+    "type": "discard",
+    "tileId": 129
+   },
+   {
+    "type": "discard",
+    "tileId": 107
+   },
+   {
+    "type": "discard",
+    "tileId": 115
+   },
+   {
+    "type": "discard",
+    "tileId": 99
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     100,
+     106
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 101
+   },
+   {
+    "type": "discard",
+    "tileId": 98
+   },
+   {
+    "type": "discard",
+    "tileId": 110
+   },
+   {
+    "type": "discard",
+    "tileId": 26
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 80
+   },
+   {
+    "type": "discard",
+    "tileId": 91
+   },
+   {
+    "type": "discard",
+    "tileId": 102
+   },
+   {
+    "type": "discard",
+    "tileId": 69
+   },
+   {
+    "type": "discard",
+    "tileId": 109
+   },
+   {
+    "type": "discard",
+    "tileId": 130
+   },
+   {
+    "type": "discard",
+    "tileId": 1
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 34
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 14
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 105
+   },
+   {
+    "type": "discard",
+    "tileId": 117
+   },
+   {
+    "type": "discard",
+    "tileId": 97
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     89,
+     92
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 43
+   },
+   {
+    "type": "discard",
+    "tileId": 82
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     72,
+     77
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 58
+   },
+   {
+    "type": "discard",
+    "tileId": 30
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 103
+   },
+   {
+    "type": "discard",
+    "tileId": 127
+   },
+   {
+    "type": "discard",
+    "tileId": 62
+   },
+   {
+    "type": "discard",
+    "tileId": 31
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 132
+   },
+   {
+    "type": "discard",
+    "tileId": 29
+   },
+   {
+    "type": "discard",
+    "tileId": 41
+   },
+   {
+    "type": "discard",
+    "tileId": 20
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 84
+   },
+   {
+    "type": "discard",
+    "tileId": 40
+   },
+   {
+    "type": "discard",
+    "tileId": 81
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     87,
+     88
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 42
+   },
+   {
+    "type": "discard",
+    "tileId": 94
+   },
+   {
+    "type": "discard",
+    "tileId": 50
+   },
+   {
+    "type": "discard",
+    "tileId": 66
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     59,
+     61
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 4
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 128
+   },
+   {
+    "type": "discard",
+    "tileId": 7
+   },
+   {
+    "type": "discard",
+    "tileId": 112
+   },
+   {
+    "type": "discard",
+    "tileId": 122
+   },
+   {
+    "type": "pon"
+   },
+   {
+    "type": "discard",
+    "tileId": 86
+   },
+   {
+    "type": "discard",
+    "tileId": 75
+   },
+   {
+    "type": "discard",
+    "tileId": 23
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 74
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     78,
+     83
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 53
+   },
+   {
+    "type": "discard",
+    "tileId": 9
+   },
+   {
+    "type": "discard",
+    "tileId": 93
+   },
+   {
+    "type": "discard",
+    "tileId": 79
+   },
+   {
+    "type": "discard",
+    "tileId": 85
+   },
+   {
+    "type": "discard",
+    "tileId": 125
+   },
+   {
+    "type": "discard",
+    "tileId": 18
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 96
+   },
+   {
+    "type": "discard",
+    "tileId": 114
+   },
+   {
+    "type": "discard",
+    "tileId": 90
+   },
+   {
+    "type": "discard",
+    "tileId": 116
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 111
+   },
+   {
+    "type": "discard",
+    "tileId": 37
+   },
+   {
+    "type": "discard",
+    "tileId": 118
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 9
+   },
+   {
+    "type": "discard",
+    "tileId": 113
+   },
+   {
+    "type": "discard",
+    "tileId": 112
+   },
+   {
+    "type": "discard",
+    "tileId": 105
+   },
+   {
+    "type": "discard",
+    "tileId": 22
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 1
+   },
+   {
+    "type": "discard",
+    "tileId": 68
+   },
+   {
+    "type": "discard",
+    "tileId": 120
+   },
+   {
+    "type": "discard",
+    "tileId": 124
+   },
+   {
+    "type": "pon"
+   },
+   {
+    "type": "discard",
+    "tileId": 130
+   },
+   {
+    "type": "discard",
+    "tileId": 131
+   },
+   {
+    "type": "discard",
+    "tileId": 99
+   },
+   {
+    "type": "discard",
+    "tileId": 126
+   },
+   {
+    "type": "discard",
+    "tileId": 132
+   },
+   {
+    "type": "discard",
+    "tileId": 133
+   },
+   {
+    "type": "discard",
+    "tileId": 70
+   },
+   {
+    "type": "discard",
+    "tileId": 135
+   },
+   {
+    "type": "discard",
+    "tileId": 14
+   },
+   {
+    "type": "discard",
+    "tileId": 13
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 62
+   },
+   {
+    "type": "discard",
+    "tileId": 108
+   },
+   {
+    "type": "discard",
+    "tileId": 4
+   },
+   {
+    "type": "discard",
+    "tileId": 24
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 21
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 110
+   },
+   {
+    "type": "discard",
+    "tileId": 27
+   },
+   {
+    "type": "discard",
+    "tileId": 12
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 89
+   },
+   {
+    "type": "discard",
+    "tileId": 25
+   },
+   {
+    "type": "discard",
+    "tileId": 134
+   },
+   {
+    "type": "discard",
+    "tileId": 67
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 7
+   },
+   {
+    "type": "discard",
+    "tileId": 15
+   },
+   {
+    "type": "discard",
+    "tileId": 28
+   },
+   {
+    "type": "discard",
+    "tileId": 72
+   },
+   {
+    "type": "discard",
+    "tileId": 0
+   },
+   {
+    "type": "discard",
+    "tileId": 6
+   },
+   {
+    "type": "discard",
+    "tileId": 101
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 92,
+    "riichi": true
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     87,
+     91
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 47
+   },
+   {
+    "type": "discard",
+    "tileId": 129
+   },
+   {
+    "type": "discard",
+    "tileId": 94
+   },
+   {
+    "type": "discard",
+    "tileId": 82
+   },
+   {
+    "type": "discard",
+    "tileId": 40
+   },
+   {
+    "type": "discard",
+    "tileId": 74
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 95
+   },
+   {
+    "type": "discard",
+    "tileId": 96
+   },
+   {
+    "type": "discard",
+    "tileId": 8
+   },
+   {
+    "type": "discard",
+    "tileId": 98
+   },
+   {
+    "type": "discard",
+    "tileId": 73
+   },
+   {
+    "type": "discard",
+    "tileId": 128
+   },
+   {
+    "type": "discard",
+    "tileId": 44
+   },
+   {
+    "type": "discard",
+    "tileId": 81
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 65
+   },
+   {
+    "type": "discard",
+    "tileId": 86
+   },
+   {
+    "type": "discard",
+    "tileId": 42
+   },
+   {
+    "type": "discard",
+    "tileId": 97
+   },
+   {
+    "type": "discard",
+    "tileId": 90
+   },
+   {
+    "type": "discard",
+    "tileId": 123
+   },
+   {
+    "type": "discard",
+    "tileId": 31
+   },
+   {
+    "type": "discard",
+    "tileId": 117
+   },
+   {
+    "type": "discard",
+    "tileId": 11
+   },
+   {
+    "type": "discard",
+    "tileId": 69
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 93
+   },
+   {
+    "type": "discard",
+    "tileId": 119
+   },
+   {
+    "type": "discard",
+    "tileId": 88
+   },
+   {
+    "type": "discard",
+    "tileId": 29
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 107
+   },
+   {
+    "type": "discard",
+    "tileId": 123
+   },
+   {
+    "type": "discard",
+    "tileId": 120
+   },
+   {
+    "type": "discard",
+    "tileId": 121
+   },
+   {
+    "type": "discard",
+    "tileId": 35
+   },
+   {
+    "type": "discard",
+    "tileId": 12
+   },
+   {
+    "type": "discard",
+    "tileId": 73
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 108
+   },
+   {
+    "type": "discard",
+    "tileId": 37
+   },
+   {
+    "type": "discard",
+    "tileId": 117
+   },
+   {
+    "type": "discard",
+    "tileId": 119
+   },
+   {
+    "type": "discard",
+    "tileId": 131
+   },
+   {
+    "type": "discard",
+    "tileId": 115
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 59
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 112
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 110
+   },
+   {
+    "type": "discard",
+    "tileId": 126
+   },
+   {
+    "type": "discard",
+    "tileId": 63
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 109
+   },
+   {
+    "type": "discard",
+    "tileId": 33
+   },
+   {
+    "type": "discard",
+    "tileId": 81
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 88
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 124
+   },
+   {
+    "type": "discard",
+    "tileId": 54
+   },
+   {
+    "type": "discard",
+    "tileId": 32
+   },
+   {
+    "type": "discard",
+    "tileId": 34
+   },
+   {
+    "type": "discard",
+    "tileId": 130
+   },
+   {
+    "type": "discard",
+    "tileId": 69
+   },
+   {
+    "type": "discard",
+    "tileId": 91
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 55
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 133
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 67
+   },
+   {
+    "type": "discard",
+    "tileId": 15
+   },
+   {
+    "type": "discard",
+    "tileId": 75
+   },
+   {
+    "type": "discard",
+    "tileId": 104
+   },
+   {
+    "type": "discard",
+    "tileId": 101
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 40
+   },
+   {
+    "type": "discard",
+    "tileId": 68
+   },
+   {
+    "type": "discard",
+    "tileId": 6
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     11,
+     14
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 43
+   },
+   {
+    "type": "discard",
+    "tileId": 125
+   },
+   {
+    "type": "discard",
+    "tileId": 78
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 116
+   },
+   {
+    "type": "discard",
+    "tileId": 118
+   },
+   {
+    "type": "discard",
+    "tileId": 128
+   },
+   {
+    "type": "discard",
+    "tileId": 122
+   },
+   {
+    "type": "discard",
+    "tileId": 49
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 76
+   },
+   {
+    "type": "discard",
+    "tileId": 10,
+    "riichi": true
+   },
+   {
+    "type": "discard",
+    "tileId": 113
+   },
+   {
+    "type": "discard",
+    "tileId": 89
+   },
+   {
+    "type": "discard",
+    "tileId": 24
+   },
+   {
+    "type": "ron"
+   },
+   {
+    "type": "discard",
+    "tileId": 61
+   },
+   {
+    "type": "discard",
+    "tileId": 118
+   },
+   {
+    "type": "discard",
+    "tileId": 134
+   },
+   {
+    "type": "discard",
+    "tileId": 116
+   },
+   {
+    "type": "discard",
+    "tileId": 50
+   },
+   {
+    "type": "discard",
+    "tileId": 132
+   },
+   {
+    "type": "discard",
+    "tileId": 126
+   },
+   {
+    "type": "discard",
+    "tileId": 115
+   },
+   {
+    "type": "discard",
+    "tileId": 25
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 113
+   },
+   {
+    "type": "discard",
+    "tileId": 124
+   },
+   {
+    "type": "discard",
+    "tileId": 68
+   },
+   {
+    "type": "discard",
+    "tileId": 93
+   },
+   {
+    "type": "discard",
+    "tileId": 106
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 51
+   },
+   {
+    "type": "discard",
+    "tileId": 42
+   },
+   {
+    "type": "discard",
+    "tileId": 7
+   },
+   {
+    "type": "discard",
+    "tileId": 29
+   },
+   {
+    "type": "discard",
+    "tileId": 15
+   },
+   {
+    "type": "discard",
+    "tileId": 133
+   },
+   {
+    "type": "discard",
+    "tileId": 10
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     3,
+     5
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 44
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 98
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 64
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 62
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     55,
+     56
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 91
+   },
+   {
+    "type": "discard",
+    "tileId": 38
+   },
+   {
+    "type": "discard",
+    "tileId": 110
+   },
+   {
+    "type": "discard",
+    "tileId": 135
+   },
+   {
+    "type": "discard",
+    "tileId": 58
+   },
+   {
+    "type": "discard",
+    "tileId": 2
+   },
+   {
+    "type": "discard",
+    "tileId": 24
+   },
+   {
+    "type": "discard",
+    "tileId": 114
+   },
+   {
+    "type": "discard",
+    "tileId": 99
+   },
+   {
+    "type": "discard",
+    "tileId": 28
+   },
+   {
+    "type": "discard",
+    "tileId": 4
+   },
+   {
+    "type": "discard",
+    "tileId": 117
+   },
+   {
+    "type": "discard",
+    "tileId": 31
+   },
+   {
+    "type": "discard",
+    "tileId": 13
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 32
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 121
+   },
+   {
+    "type": "pon"
+   },
+   {
+    "type": "discard",
+    "tileId": 79
+   },
+   {
+    "type": "discard",
+    "tileId": 89
+   },
+   {
+    "type": "discard",
+    "tileId": 0
+   },
+   {
+    "type": "discard",
+    "tileId": 96
+   },
+   {
+    "type": "discard",
+    "tileId": 103
+   },
+   {
+    "type": "discard",
+    "tileId": 94
+   },
+   {
+    "type": "discard",
+    "tileId": 35
+   },
+   {
+    "type": "discard",
+    "tileId": 97
+   },
+   {
+    "type": "discard",
+    "tileId": 75
+   },
+   {
+    "type": "discard",
+    "tileId": 33
+   },
+   {
+    "type": "discard",
+    "tileId": 34
+   },
+   {
+    "type": "discard",
+    "tileId": 125
+   },
+   {
+    "type": "discard",
+    "tileId": 86
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 100
+   },
+   {
+    "type": "discard",
+    "tileId": 30
+   },
+   {
+    "type": "discard",
+    "tileId": 20
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 1
+   },
+   {
+    "type": "discard",
+    "tileId": 23,
+    "riichi": true
+   },
+   {
+    "type": "discard",
+    "tileId": 71
+   },
+   {
+    "type": "discard",
+    "tileId": 101
+   },
+   {
+    "type": "discard",
+    "tileId": 112
+   },
+   {
+    "type": "discard",
+    "tileId": 27
+   },
+   {
+    "type": "discard",
+    "tileId": 14
+   },
+   {
+    "type": "discard",
+    "tileId": 22
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 48
+   },
+   {
+    "type": "discard",
+    "tileId": 102
+   },
+   {
+    "type": "discard",
+    "tileId": 41
+   },
+   {
+    "type": "discard",
+    "tileId": 66
+   },
+   {
+    "type": "discard",
+    "tileId": 6
+   },
+   {
+    "type": "discard",
+    "tileId": 47
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     37,
+     40
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 77
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 65
+   },
+   {
+    "type": "discard",
+    "tileId": 72
+   },
+   {
+    "type": "discard",
+    "tileId": 108
+   },
+   {
+    "type": "discard",
+    "tileId": 109
+   },
+   {
+    "type": "discard",
+    "tileId": 120
+   },
+   {
+    "type": "discard",
+    "tileId": 123
+   },
+   {
+    "type": "discard",
+    "tileId": 42
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 130
+   },
+   {
+    "type": "discard",
+    "tileId": 29
+   },
+   {
+    "type": "discard",
+    "tileId": 116
+   },
+   {
+    "type": "discard",
+    "tileId": 25
+   },
+   {
+    "type": "discard",
+    "tileId": 118
+   },
+   {
+    "type": "discard",
+    "tileId": 35
+   },
+   {
+    "type": "discard",
+    "tileId": 115
+   },
+   {
+    "type": "discard",
+    "tileId": 67,
+    "riichi": true
+   },
+   {
+    "type": "discard",
+    "tileId": 66
+   },
+   {
+    "type": "discard",
+    "tileId": 40
+   },
+   {
+    "type": "discard",
+    "tileId": 54
+   },
+   {
+    "type": "discard",
+    "tileId": 85
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 30
+   },
+   {
+    "type": "discard",
+    "tileId": 41
+   },
+   {
+    "type": "discard",
+    "tileId": 114
+   },
+   {
+    "type": "discard",
+    "tileId": 80
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 27
+   },
+   {
+    "type": "discard",
+    "tileId": 86
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 125
+   },
+   {
+    "type": "discard",
+    "tileId": 37
+   },
+   {
+    "type": "discard",
+    "tileId": 61
+   },
+   {
+    "type": "discard",
+    "tileId": 43
+   },
+   {
+    "type": "discard",
+    "tileId": 126
+   },
+   {
+    "type": "discard",
+    "tileId": 104
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 65
+   },
+   {
+    "type": "discard",
+    "tileId": 124
+   },
+   {
+    "type": "discard",
+    "tileId": 127
+   },
+   {
+    "type": "discard",
+    "tileId": 60
+   },
+   {
+    "type": "discard",
+    "tileId": 132
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 110
+   },
+   {
+    "type": "discard",
+    "tileId": 55
+   },
+   {
+    "type": "discard",
+    "tileId": 36
+   },
+   {
+    "type": "discard",
+    "tileId": 38
+   },
+   {
+    "type": "discard",
+    "tileId": 133
+   },
+   {
+    "type": "discard",
+    "tileId": 119
+   },
+   {
+    "type": "discard",
+    "tileId": 28
+   },
+   {
+    "type": "discard",
+    "tileId": 47
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 134
+   },
+   {
+    "type": "discard",
+    "tileId": 82
+   },
+   {
+    "type": "discard",
+    "tileId": 117
+   },
+   {
+    "type": "discard",
+    "tileId": 111
+   },
+   {
+    "type": "discard",
+    "tileId": 50
+   },
+   {
+    "type": "discard",
+    "tileId": 83
+   },
+   {
+    "type": "discard",
+    "tileId": 122
+   },
+   {
+    "type": "discard",
+    "tileId": 105
+   },
+   {
+    "type": "discard",
+    "tileId": 32
+   },
+   {
+    "type": "discard",
+    "tileId": 135
+   },
+   {
+    "type": "discard",
+    "tileId": 46
+   },
+   {
+    "type": "discard",
+    "tileId": 70
+   },
+   {
+    "type": "discard",
+    "tileId": 45
+   },
+   {
+    "type": "discard",
+    "tileId": 18
+   },
+   {
+    "type": "discard",
+    "tileId": 49
+   },
+   {
+    "type": "discard",
+    "tileId": 87
+   },
+   {
+    "type": "discard",
+    "tileId": 26
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 15
+   },
+   {
+    "type": "discard",
+    "tileId": 74
+   },
+   {
+    "type": "discard",
+    "tileId": 106
+   },
+   {
+    "type": "discard",
+    "tileId": 71
+   },
+   {
+    "type": "discard",
+    "tileId": 129
+   },
+   {
+    "type": "discard",
+    "tileId": 64
+   },
+   {
+    "type": "discard",
+    "tileId": 97
+   },
+   {
+    "type": "discard",
+    "tileId": 51
+   },
+   {
+    "type": "discard",
+    "tileId": 68
+   },
+   {
+    "type": "discard",
+    "tileId": 95
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 10
+   },
+   {
+    "type": "discard",
+    "tileId": 117
+   },
+   {
+    "type": "discard",
+    "tileId": 116
+   },
+   {
+    "type": "discard",
+    "tileId": 72
+   },
+   {
+    "type": "discard",
+    "tileId": 74
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     78,
+     82
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 131
+   },
+   {
+    "type": "discard",
+    "tileId": 73
+   },
+   {
+    "type": "discard",
+    "tileId": 122
+   },
+   {
+    "type": "discard",
+    "tileId": 130
+   },
+   {
+    "type": "discard",
+    "tileId": 56
+   },
+   {
+    "type": "discard",
+    "tileId": 128
+   },
+   {
+    "type": "discard",
+    "tileId": 1
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 2
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 99
+   },
+   {
+    "type": "discard",
+    "tileId": 23
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     26,
+     28
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 87
+   },
+   {
+    "type": "discard",
+    "tileId": 108
+   },
+   {
+    "type": "pon"
+   },
+   {
+    "type": "discard",
+    "tileId": 132
+   },
+   {
+    "type": "discard",
+    "tileId": 126
+   },
+   {
+    "type": "ron"
+   },
+   {
+    "type": "discard",
+    "tileId": 35
+   },
+   {
+    "type": "discard",
+    "tileId": 68
+   },
+   {
+    "type": "discard",
+    "tileId": 112
+   },
+   {
+    "type": "ankan",
+    "tileType": 33
+   },
+   {
+    "type": "discard",
+    "tileId": 130
+   },
+   {
+    "type": "discard",
+    "tileId": 34
+   },
+   {
+    "type": "discard",
+    "tileId": 115
+   },
+   {
+    "type": "discard",
+    "tileId": 31
+   },
+   {
+    "type": "discard",
+    "tileId": 105
+   },
+   {
+    "type": "discard",
+    "tileId": 69
+   },
+   {
+    "type": "discard",
+    "tileId": 120
+   },
+   {
+    "type": "discard",
+    "tileId": 76
+   },
+   {
+    "type": "discard",
+    "tileId": 28
+   },
+   {
+    "type": "discard",
+    "tileId": 108
+   },
+   {
+    "type": "discard",
+    "tileId": 33
+   },
+   {
+    "type": "discard",
+    "tileId": 58,
+    "riichi": true
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 29
+   },
+   {
+    "type": "discard",
+    "tileId": 79
+   },
+   {
+    "type": "discard",
+    "tileId": 59
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 38
+   },
+   {
+    "type": "discard",
+    "tileId": 56
+   },
+   {
+    "type": "discard",
+    "tileId": 51
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 36
+   },
+   {
+    "type": "discard",
+    "tileId": 100
+   },
+   {
+    "type": "discard",
+    "tileId": 88,
+    "riichi": true
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 119
+   },
+   {
+    "type": "discard",
+    "tileId": 89
+   },
+   {
+    "type": "discard",
+    "tileId": 98
+   },
+   {
+    "type": "discard",
+    "tileId": 80
+   },
+   {
+    "type": "discard",
+    "tileId": 110
+   },
+   {
+    "type": "discard",
+    "tileId": 109
+   },
+   {
+    "type": "discard",
+    "tileId": 94
+   },
+   {
+    "type": "discard",
+    "tileId": 4
+   },
+   {
+    "type": "discard",
+    "tileId": 1
+   },
+   {
+    "type": "discard",
+    "tileId": 111
+   },
+   {
+    "type": "discard",
+    "tileId": 122
+   },
+   {
+    "type": "discard",
+    "tileId": 65
+   },
+   {
+    "type": "discard",
+    "tileId": 75
+   },
+   {
+    "type": "discard",
+    "tileId": 104
+   },
+   {
+    "type": "discard",
+    "tileId": 10
+   },
+   {
+    "type": "ron"
+   },
+   {
+    "type": "discard",
+    "tileId": 117
+   },
+   {
+    "type": "discard",
+    "tileId": 71
+   },
+   {
+    "type": "discard",
+    "tileId": 119
+   },
+   {
+    "type": "discard",
+    "tileId": 113
+   },
+   {
+    "type": "discard",
+    "tileId": 83
+   },
+   {
+    "type": "discard",
+    "tileId": 109
+   },
+   {
+    "type": "discard",
+    "tileId": 14
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 50
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 110
+   },
+   {
+    "type": "discard",
+    "tileId": 114
+   },
+   {
+    "type": "discard",
+    "tileId": 131
+   },
+   {
+    "type": "discard",
+    "tileId": 102
+   },
+   {
+    "type": "discard",
+    "tileId": 38
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 42
+   },
+   {
+    "type": "discard",
+    "tileId": 127
+   },
+   {
+    "type": "discard",
+    "tileId": 91
+   },
+   {
+    "type": "discard",
+    "tileId": 120
+   },
+   {
+    "type": "discard",
+    "tileId": 12
+   },
+   {
+    "type": "discard",
+    "tileId": 1
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 62
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     52,
+     56
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 134
+   },
+   {
+    "type": "pon"
+   },
+   {
+    "type": "discard",
+    "tileId": 87
+   },
+   {
+    "type": "discard",
+    "tileId": 72
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     79,
+     81
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 19
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     8,
+     15
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 67
+   },
+   {
+    "type": "discard",
+    "tileId": 94
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     97,
+     103
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 45
+   },
+   {
+    "type": "discard",
+    "tileId": 25
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 47
+   },
+   {
+    "type": "discard",
+    "tileId": 75
+   },
+   {
+    "type": "discard",
+    "tileId": 28
+   },
+   {
+    "type": "discard",
+    "tileId": 30
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 93
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 126
+   },
+   {
+    "type": "discard",
+    "tileId": 46
+   },
+   {
+    "type": "discard",
+    "tileId": 49
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     53,
+     58
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 17
+   },
+   {
+    "type": "discard",
+    "tileId": 2
+   },
+   {
+    "type": "discard",
+    "tileId": 133
+   },
+   {
+    "type": "discard",
+    "tileId": 20
+   },
+   {
+    "type": "discard",
+    "tileId": 64
+   },
+   {
+    "type": "discard",
+    "tileId": 121
+   },
+   {
+    "type": "discard",
+    "tileId": 111
+   },
+   {
+    "type": "discard",
+    "tileId": 118
+   },
+   {
+    "type": "discard",
+    "tileId": 7
+   },
+   {
+    "type": "pon"
+   },
+   {
+    "type": "discard",
+    "tileId": 101
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     95,
+     98
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 68
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 77
+   },
+   {
+    "type": "discard",
+    "tileId": 128
+   },
+   {
+    "type": "discard",
+    "tileId": 123
+   },
+   {
+    "type": "discard",
+    "tileId": 66
+   },
+   {
+    "type": "discard",
+    "tileId": 73
+   },
+   {
+    "type": "discard",
+    "tileId": 129
+   },
+   {
+    "type": "discard",
+    "tileId": 44
+   },
+   {
+    "type": "discard",
+    "tileId": 65
+   },
+   {
+    "type": "discard",
+    "tileId": 10
+   },
+   {
+    "type": "discard",
+    "tileId": 51
+   },
+   {
+    "type": "ron"
+   }
+  ]
+ },
+ "expected": {
+  "scores": [
+   7400,
+   41000,
+   16400,
+   35200
+  ],
+  "settlement": [
+   {
+    "seat": 0,
+    "score": 7400,
+    "rank": 4,
+    "points": -37.6
+   },
+   {
+    "seat": 1,
+    "score": 41000,
+    "rank": 1,
+    "points": 46
+   },
+   {
+    "seat": 2,
+    "score": 16400,
+    "rank": 3,
+    "points": -18.6
+   },
+   {
+    "seat": 3,
+    "score": 35200,
+    "rank": 2,
+    "points": 10.2
+   }
+  ],
+  "handsPlayed": 8,
+  "eventCount": 1013,
+  "decisionCount": 576,
+  "perPlayer": [
+   {
+    "seat": 0,
+    "decisions": 133,
+    "gradedDecisions": 138,
+    "accuracy": 100,
+    "best": 138,
+    "misses": 0,
+    "blunders": 0,
+    "byKind": {
+     "discard": {
+      "total": 115,
+      "best": 115,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "call": {
+      "total": 18,
+      "best": 18,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "kan": {
+      "total": 0,
+      "best": 0,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "riichi": {
+      "total": 5,
+      "best": 5,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "win": {
+      "total": 0,
+      "best": 0,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     }
+    },
+    "avgShantenAfter": 1.89,
+    "avgImprovingTotal": 21.9
+   },
+   {
+    "seat": 1,
+    "decisions": 148,
+    "gradedDecisions": 150,
+    "accuracy": 99.3,
+    "best": 149,
+    "misses": 1,
+    "blunders": 0,
+    "byKind": {
+     "discard": {
+      "total": 115,
+      "best": 115,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "call": {
+      "total": 32,
+      "best": 32,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "kan": {
+      "total": 1,
+      "best": 1,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "riichi": {
+      "total": 2,
+      "best": 1,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 1,
+      "blunder": 0
+     },
+     "win": {
+      "total": 0,
+      "best": 0,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     }
+    },
+    "avgShantenAfter": 1.23,
+    "avgImprovingTotal": 18.1
+   },
+   {
+    "seat": 2,
+    "decisions": 148,
+    "gradedDecisions": 152,
+    "accuracy": 98.7,
+    "best": 150,
+    "misses": 2,
+    "blunders": 0,
+    "byKind": {
+     "discard": {
+      "total": 114,
+      "best": 114,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "call": {
+      "total": 34,
+      "best": 34,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "kan": {
+      "total": 0,
+      "best": 0,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "riichi": {
+      "total": 4,
+      "best": 2,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 2,
+      "blunder": 0
+     },
+     "win": {
+      "total": 0,
+      "best": 0,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     }
+    },
+    "avgShantenAfter": 1.28,
+    "avgImprovingTotal": 15.8
+   },
+   {
+    "seat": 3,
+    "decisions": 147,
+    "gradedDecisions": 148,
+    "accuracy": 100,
+    "best": 148,
+    "misses": 0,
+    "blunders": 0,
+    "byKind": {
+     "discard": {
+      "total": 114,
+      "best": 114,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "call": {
+      "total": 33,
+      "best": 33,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "kan": {
+      "total": 0,
+      "best": 0,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "riichi": {
+      "total": 1,
+      "best": 1,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     },
+     "win": {
+      "total": 0,
+      "best": 0,
+      "equivalent": 0,
+      "betterShanten": 0,
+      "minorMiss": 0,
+      "miss": 0,
+      "blunder": 0
+     }
+    },
+    "avgShantenAfter": 1.51,
+    "avgImprovingTotal": 21.7
+   }
+  ],
+  "handStats": [
+   {
+    "hands": 8,
+    "riichi": 3,
+    "dealIns": 2,
+    "handsWon": 0,
+    "winPoints": 0,
+    "tenpaiDraws": 3,
+    "exhaustiveDraws": 4
+   },
+   {
+    "hands": 8,
+    "riichi": 2,
+    "dealIns": 0,
+    "handsWon": 2,
+    "winPoints": 15000,
+    "tenpaiDraws": 4,
+    "exhaustiveDraws": 4
+   },
+   {
+    "hands": 8,
+    "riichi": 0,
+    "dealIns": 1,
+    "handsWon": 0,
+    "winPoints": 0,
+    "tenpaiDraws": 3,
+    "exhaustiveDraws": 4
+   },
+   {
+    "hands": 8,
+    "riichi": 1,
+    "dealIns": 1,
+    "handsWon": 2,
+    "winPoints": 15200,
+    "tenpaiDraws": 2,
+    "exhaustiveDraws": 4
+   }
+  ]
+ }
+}

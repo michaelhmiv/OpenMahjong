@@ -80,6 +80,8 @@ import { momentTexts, type MomentText } from "./moment-text.js";
 import { type ReviewUIController } from "./review-ui.js";
 import { buildBoardReview, type BoardTimeline } from "./board-review.js";
 import { mountBoardReview, mountGameDetail } from "./board-review-ui.js";
+import { buildAnalyze, type AnalyzeData } from "./analyze.js";
+import { mountAnalyze, type AnalyzeUIController } from "./analyze-ui.js";
 import { mountInPerson } from "./in-person-ui.js";
 import { readTables, deleteTableAccountCache, rememberTableAccount, offlineTableAccount } from "./in-person-store.js";
 import { VariantRunner } from "./variant-runner.js";
@@ -540,6 +542,7 @@ type ScreenName =
   | "learn"
   | "practice"
   | "review"
+  | "analyze"
   | "more";
 
 /** The four tab roots of the app shell (approved 2026-11-16). The
@@ -741,6 +744,11 @@ export class App {
   private reviewRecordId: string | null = null;
   private reviewResumeDecision: number | undefined;
   private reviewUI: ReviewUIController | null = null;
+  private analyzeUI: AnalyzeUIController | null = null;
+  /** The saved-game archive Analyze grades (set alongside the review
+   * timeline in openRecord / openReview). */
+  private analyzeInput: unknown = null;
+  private analyzeCache: { input: unknown; data: AnalyzeData } | null = null;
   private reviewCollection = loadReviewCollection();
   private accountLoaded = false;
   private accountSyncRunning = false;
@@ -843,7 +851,7 @@ export class App {
     this.root.append(this.stage);
     const screensWrap = h("div", { class: "screens" });
     this.stage.append(screensWrap);
-    for (const name of ["home", "table", "rules", "about", "privacy", "language", "variant-table", "variant-learn", "american-card", "american-lesson", "tables", "details", "results", "games", "learn", "practice", "review", "more"] as ScreenName[]) {
+    for (const name of ["home", "table", "rules", "about", "privacy", "language", "variant-table", "variant-learn", "american-card", "american-lesson", "tables", "details", "results", "games", "learn", "practice", "review", "analyze", "more"] as ScreenName[]) {
       const s = h("section", { class: "screen", id: `screen-${name}` });
       this.screens.set(name, s);
       screensWrap.append(s);
@@ -868,7 +876,7 @@ export class App {
   }
 
   private fit(): void {
-    if (this.currentScreen === "practice" || this.currentScreen === "review" || this.currentScreen === "details" || this.currentScreen === "tables" || this.currentScreen === "variant-table" || this.currentScreen === "variant-learn" || this.currentScreen === "american-card" || this.currentScreen === "american-lesson") {
+    if (this.currentScreen === "practice" || this.currentScreen === "review" || this.currentScreen === "analyze" || this.currentScreen === "details" || this.currentScreen === "tables" || this.currentScreen === "variant-table" || this.currentScreen === "variant-learn" || this.currentScreen === "american-card" || this.currentScreen === "american-lesson") {
       // Approved learning layouts use physical pixels, so a 44px
       // control remains 44px even on a 360px-wide phone.
       this.scale = 1;
@@ -930,6 +938,7 @@ export class App {
     if (name === "learn") this.renderLearn();
     if (name === "practice") this.renderPractice();
     if (name === "review") this.renderReview();
+    if (name === "analyze") this.renderAnalyze();
     if (name === "details") this.renderGameDetail();
     if (name === "tables") this.renderInPerson();
     if (name === "variant-table") this.renderVariantTable();
@@ -941,6 +950,7 @@ export class App {
     if (previous === "american-card" && name !== "american-card") { this.americanCardUI?.destroy(); this.americanCardUI = null; }
     if (previous === "american-lesson" && name !== "american-lesson") { this.americanLessonUI?.destroy(); this.americanLessonUI = null; }
     if (previous === "tables" && name !== "tables") { this.tableUI?.destroy(); this.tableUI = null; }
+    if (previous === "analyze" && name !== "analyze") { this.analyzeUI?.destroy(); this.analyzeUI = null; }
     if (previous !== name) this.screens.get(name)?.querySelector<HTMLElement>("button, input, [tabindex='0']")?.focus();
   }
 
@@ -1571,6 +1581,11 @@ export class App {
     this.reviewUI?.destroy();
     this.reviewUI = null;
     this.screens.get("review")?.replaceChildren();
+    this.analyzeUI?.destroy();
+    this.analyzeUI = null;
+    this.analyzeInput = null;
+    this.analyzeCache = null;
+    this.screens.get("analyze")?.replaceChildren();
     this.screens.get("practice")?.replaceChildren();
     this.user = null;
     this.csrfToken = null;
@@ -2128,6 +2143,8 @@ export class App {
       if (!timeline.data.review.complete) return;
       this.reviewTimeline = timeline;
       this.reviewData = timeline.data.review;
+      this.analyzeInput = { ...record.log, id: record.id };
+      this.analyzeCache = null;
       this.reviewRecordId = record.id;
       this.reviewResumeDecision = undefined;
       this.showScreen("details");
@@ -2190,12 +2207,47 @@ export class App {
 
   private renderGameDetail(): void {
     if (!this.reviewTimeline) return;
+    const review = this.reviewTimeline.data.review;
+    const analyzable = review.engineVersion === 2 && !review.variant;
     mountGameDetail(this.screens.get("details")!, this.reviewTimeline,
       () => this.showScreen("games"), (index) => {
         this.reviewHandIndex = index;
         this.reviewResumeDecision = undefined;
         this.showScreen("review");
-      });
+      },
+      analyzable ? () => this.showScreen("analyze") : undefined);
+  }
+
+  private renderAnalyze(): void {
+    this.analyzeUI?.destroy();
+    this.analyzeUI = null;
+    const screen = this.screens.get("analyze")!;
+    if (this.analyzeInput === null) {
+      this.textScreen("analyze", tx("analyze.analyze", "Analyze"), (page) => page.append(h("p", {}, tx("analyze.open-a-finished-game-in-games-then-open-its-det", "Open a finished game in Games, then open its details to analyze it."))));
+      return;
+    }
+    if (!this.analyzeCache || this.analyzeCache.input !== this.analyzeInput) {
+      const built = buildAnalyze(this.analyzeInput);
+      this.analyzeCache = built.available ? { input: this.analyzeInput, data: built } : null;
+      if (!built.available) {
+        const message = built.reason === "legacy-rules"
+          ? tx("analyze.analyze-needs-the-current-rules-engine-this-gam", "Analyze needs the current rules engine. This game was recorded under the historical engine, so it can be viewed but not graded.")
+          : built.reason === "variant-evaluator"
+            ? tx("analyze.analyze-grades-riichi-games-the-coach-evaluator", "Analyze grades riichi games. The coach evaluator does not cover this variant yet.")
+            : built.reason === "incomplete"
+              ? tx("analyze.this-games-archive-is-incomplete-so-there-is-not", "This game's archive is incomplete, so there is nothing sound to grade.")
+              : tx("analyze.this-game-record-could-not-be-read-so-it-cannot", "This game record could not be read, so it cannot be graded.");
+        this.textScreen("analyze", tx("analyze.analyze", "Analyze"), (page) => page.append(h("p", {}, message)));
+        return;
+      }
+    }
+    const cache = this.analyzeCache;
+    if (!cache) return;
+    this.analyzeUI = mountAnalyze(screen, {
+      data: cache.data,
+      renderTile: (tile) => this.learningTile(tile),
+      onBack: () => this.showScreen("details"),
+    });
   }
 
   // -- game lifecycle --------------------------------------------------------
@@ -3994,6 +4046,8 @@ export class App {
     if (!this.runner) return;
     try { this.reviewTimeline = buildBoardReview(this.runner.serialize()); this.reviewData = this.reviewTimeline.data.review; }
     catch { return; }
+    this.analyzeInput = this.runner.serialize();
+    this.analyzeCache = null;
     this.reviewRecordId = this.runner.id;
     this.reviewResumeDecision = undefined;
     this.reviewHandIndex = 0;

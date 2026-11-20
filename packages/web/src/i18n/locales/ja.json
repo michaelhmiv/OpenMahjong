@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-19T23:17:51.886Z",
-    "keyCount": 3978,
+    "generatedAt": "2026-11-20T12:22:47.229Z",
+    "keyCount": 4246,
     "model": "google/gemini-2.5-flash",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -40854,6 +40854,2983 @@
       },
       "placeholders": [
         "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.a-blunder-the-coachs-verdict-is-dama-with-the-le": {
+      "value": "失策：コーチの評価は、終盤の親番でダマ。",
+      "hash": "dcc8740513795476e053cab19eb192b847c48ed8dc867f5ab927a4c09f54cf74",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 801
+      },
+      "placeholders": []
+    },
+    "analyze.a-miss-not-a-blunder-the-policy-heuristic-differs": {
+      "value": "ミス、ただし失策ではない — 方針のヒューリスティックが、コーチの加重評価と異なる。",
+      "hash": "291b28e2d305f9631c8b1a91fb7cd27bb67c466ddb88fdcdd5895bf130470377",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 799
+      },
+      "placeholders": []
+    },
+    "analyze.abortive-draw": {
+      "value": "流局",
+      "hash": "148db81748ba6ed2209fc5e53e18464015f25de4b2e36618a6a096365d04991f",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 346
+      },
+      "placeholders": []
+    },
+    "analyze.accuracy": {
+      "value": "正確性",
+      "hash": "ac991dd3c2d928da95b77afb954db61a3246be27b683f30d1232dcee625ae376",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 215
+      },
+      "placeholders": []
+    },
+    "analyze.accuracy-all-seats": {
+      "value": "正確性 — 全ての席",
+      "hash": "8d31d7960a71a134d662bdfa4cc4fb00a5229b282c1b152f02ee8886d7794d22",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 233
+      },
+      "placeholders": []
+    },
+    "analyze.accuracy-correct-graded-one-turn-can-carry-two-g": {
+      "value": "正確性 = 正解数 ÷ 評価数。1ターンで2つの評価（打牌 + リーチ）がつく場合があるため、{1}の判断に対して{0}の評価があります。",
+      "hash": "95aa92635af3378a60a1d89c1312ad8a06087a20423a9f9f0cd4a35598287356",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 236
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.accuracy-value": {
+      "value": "{0}%",
+      "hash": "6c04e61698da54fccef7126481d0c9b207a9332d79cdced5ed99a639530ca1a2",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 124
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.added-kan-new-dora-indicator": {
+      "value": "加カン · 新ドラ表示牌",
+      "hash": "aba8f9ecba69c95bf6d24b019cdddfa8eaae03a54086a9deef6356fc17376d11",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 507
+      },
+      "placeholders": []
+    },
+    "analyze.all-seats": {
+      "value": "全ての席",
+      "hash": "5f29060309dad4cda33faac7c110738f797b5d206590147d1a4f47decc7b1ae4",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 231
+      },
+      "placeholders": []
+    },
+    "analyze.all-simples": {
+      "value": "タンヤオ",
+      "hash": "91465095ee865c14e4b8e04753ee8a99151d42149741811a6dce26b64614ae6b",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 27
+      },
+      "placeholders": []
+    },
+    "analyze.an-exhaustive-draw": {
+      "value": "流局",
+      "hash": "f1e7a54d4f458b92894df244fa923199897e8a91ea925b09e40f237654cc49f4",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 463
+      },
+      "placeholders": []
+    },
+    "analyze.analyze": {
+      "value": "分析",
+      "hash": "cad5bf29c702403e939ce6efa70573eb03e7233456c21c478b0444bb69f3c939",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1156
+      },
+      "placeholders": []
+    },
+    "analyze.analyze-grades-riichi-games-the-coach-evaluator": {
+      "value": "分析はリーチ麻雀のゲームを評価します。コーチ評価はまだこのバリアントに対応していません。",
+      "hash": "263247c6071b84b0d88a1a6be6b2424c2b0ff7877dd8231fb91ccfebff899767",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 2236
+      },
+      "placeholders": []
+    },
+    "analyze.analyze-needs-the-current-rules-engine-this-gam": {
+      "value": "分析には現在のルールエンジンが必要です。このゲームは過去のエンジンで記録されたため、閲覧はできますが評価はできません。",
+      "hash": "316994df30dd23f2da14a434c7387e08466263554de4d5a6327a44ef3d77d935",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 2234
+      },
+      "placeholders": []
+    },
+    "analyze.average": {
+      "value": "平均",
+      "hash": "b38ae2c5b84529e8027b43a69c8ce9426a3cb081dae97b77bdcd2fdc5a9df742",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 638
+      },
+      "placeholders": []
+    },
+    "analyze.avg-improving-copies": {
+      "value": "平均改善枚数",
+      "hash": "8dff551d06397e443cf31cdd5d1b2a763effe3e530681673b92cfe20ef007788",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 641
+      },
+      "placeholders": []
+    },
+    "analyze.avg-shanten-after-discard": {
+      "value": "打牌後の平均シャンテン数",
+      "hash": "6bf134b765d98227f4f8439fc89ff38875c31b12a6db91f960b47b279385e074",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 640
+      },
+      "placeholders": []
+    },
+    "analyze.back-to-review": {
+      "value": "レビューに戻る",
+      "hash": "9b50f21a5bada7bdd60b416f0933b904f412d5bcc1e73d6dd1ab16b7f47095ad",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1154
+      },
+      "placeholders": []
+    },
+    "analyze.best": {
+      "value": "最善",
+      "hash": "c47d21c643c02c57d23e4f5cbd62860c067125b2392d02deda78036315fb21dd",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 699
+      },
+      "placeholders": []
+    },
+    "analyze.best-discard": {
+      "value": "最善 — コーチの選択",
+      "hash": "bb4b6a519e6eeee8906f74bf09fa68f0790dbab9c650bf92d2cdd1cfc137759b",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 727
+      },
+      "placeholders": []
+    },
+    "analyze.best-took-the-win": {
+      "value": "最善 — 和了",
+      "hash": "4aa9dab8bfba0e7ff72596f55ef099532a5cf555519c2690575f8748532a6353",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 755
+      },
+      "placeholders": []
+    },
+    "analyze.better-than-the-coachs-pick": {
+      "value": "コーチの選択より良い",
+      "hash": "d50cafc9bf4c9974e081138da913a8dbe022fe4d833102dd48ce735544d87905",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 701
+      },
+      "placeholders": []
+    },
+    "analyze.biggest-swings": {
+      "value": "最大の変動",
+      "hash": "9d106b248af56369ab1531065c6a7a4fb750ffb6545e7311d27c4a9a3e66bb65",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 362
+      },
+      "placeholders": []
+    },
+    "analyze.blunder": {
+      "value": "失策",
+      "hash": "f9e1138a8b8b50ff16e4b419203130c3de8455718b5ad8ab39038ff1420c8e32",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 216
+      },
+      "placeholders": []
+    },
+    "analyze.call": {
+      "value": "鳴き",
+      "hash": "d6e645b7d2b2da646d44130464143171935ffa47558b4e36c05df175de7197ba",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 554
+      },
+      "placeholders": []
+    },
+    "analyze.call-2": {
+      "value": "鳴き",
+      "hash": "7edb360f06acaef2cc80dba16cf563f199d347db4443da04da0c8173e3f9e4ed",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 554
+      },
+      "placeholders": []
+    },
+    "analyze.call-chi": {
+      "value": "チー",
+      "hash": "87797ab8dba344cd05c0eaa1aae61a7d42ca4067d5313c0faf73a1c7b783a485",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 739
+      },
+      "placeholders": []
+    },
+    "analyze.call-chi-2": {
+      "value": "チー",
+      "hash": "78baa6d96bcef8d0a74d2c715d151d839664910b198e4e8e65a1bbbf588da69e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 855
+      },
+      "placeholders": []
+    },
+    "analyze.call-kan": {
+      "value": "カン",
+      "hash": "f528b8e9c5ef04a90e33f8651afc86a720adb9bcd574f270f9c8c117bf71bbe8",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 740
+      },
+      "placeholders": []
+    },
+    "analyze.call-kan-2": {
+      "value": "カン",
+      "hash": "3458850d24fb83e4903ab812c45833a71b7b4fb812f0b3bb39ba74836f86a5c1",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 856
+      },
+      "placeholders": []
+    },
+    "analyze.call-pon": {
+      "value": "ポン",
+      "hash": "f9b164fc289e2d6bbf9e1acd45edad809a48abccf5f8f24f8569d6f1e2b078d3",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 739
+      },
+      "placeholders": []
+    },
+    "analyze.call-pon-2": {
+      "value": "ポン",
+      "hash": "6e57cc6e58b00919779db4291c2c44b838a39239ce702fce9ec04fd62b5785db",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 855
+      },
+      "placeholders": []
+    },
+    "analyze.called-chi": {
+      "value": "チーしました",
+      "hash": "0e1a3bda889abffb41611471f24909b7416fa7296ed3d30de236549e9ecce05e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 256
+      },
+      "placeholders": []
+    },
+    "analyze.called-chi-2": {
+      "value": "チーしました",
+      "hash": "71ef9548d9e9cd2eeab088146310351144a8405285fc4f44e5992409e78784a8",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 734
+      },
+      "placeholders": []
+    },
+    "analyze.called-chi-3": {
+      "value": "チーしました",
+      "hash": "0e1a3bda889abffb41611471f24909b7416fa7296ed3d30de236549e9ecce05e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 850
+      },
+      "placeholders": []
+    },
+    "analyze.called-kan": {
+      "value": "カンしました",
+      "hash": "704d17e70b786021eb6432ebf6ec51e536bea4ca9d2abb527ac5669a8bcb61bd",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 257
+      },
+      "placeholders": []
+    },
+    "analyze.called-kan-2": {
+      "value": "カンしました",
+      "hash": "34e756ddab78719b22644f1b8ea4127d232283f3cc3f276c9e3e873d9ab8f260",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 735
+      },
+      "placeholders": []
+    },
+    "analyze.called-kan-3": {
+      "value": "カンしました",
+      "hash": "704d17e70b786021eb6432ebf6ec51e536bea4ca9d2abb527ac5669a8bcb61bd",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 851
+      },
+      "placeholders": []
+    },
+    "analyze.called-pon": {
+      "value": "ポンしました",
+      "hash": "eab672a977bf3266faa902bd8e954a9a267434a5672ab19fd0b6da9265be2cdb",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 256
+      },
+      "placeholders": []
+    },
+    "analyze.called-pon-2": {
+      "value": "ポンしました",
+      "hash": "102760b90af71733591b3efee7e3cdcc3f4384d0c37e0c13b98469f82394df65",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 734
+      },
+      "placeholders": []
+    },
+    "analyze.called-pon-3": {
+      "value": "ポンしました",
+      "hash": "eab672a977bf3266faa902bd8e954a9a267434a5672ab19fd0b6da9265be2cdb",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 850
+      },
+      "placeholders": []
+    },
+    "analyze.chankan": {
+      "value": "槍カン",
+      "hash": "5c32de0407fd671e7a5d9d1eb71c250fa88ec62c679592b6060769d03a576f4b",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 30
+      },
+      "placeholders": []
+    },
+    "analyze.chi": {
+      "value": "チー",
+      "hash": "dffe602cd1e0bfa9b4d85498cabb044e40b9340e06a2e4df9b9374a0eade257e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 261
+      },
+      "placeholders": []
+    },
+    "analyze.chiihou": {
+      "value": "地和",
+      "hash": "0ecf6890d7ecb66b3b7a1e87eccf534921627cfcba25a6f02440a786ef2c44a0",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 37
+      },
+      "placeholders": []
+    },
+    "analyze.chinitsu": {
+      "value": "清一色",
+      "hash": "aff9fed7934d718fb4d4e0419c56a6cb55a976c32e7b8bd38ee75a1a5ff4917b",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 36
+      },
+      "placeholders": []
+    },
+    "analyze.chinroutou": {
+      "value": "清老頭",
+      "hash": "7fa1d8a9b7a57d7399d37919ba12d1102713a4c188b23858619768bdfd47949d",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 35
+      },
+      "placeholders": []
+    },
+    "analyze.chuuren-poutou": {
+      "value": "九蓮宝燈",
+      "hash": "0e9879f65939cbc918ecf16be547a7838abe971159af885db5fe339ee504459e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 39
+      },
+      "placeholders": []
+    },
+    "analyze.closed-kan-new-dora-indicator": {
+      "value": "暗カン · 新ドラ表示牌",
+      "hash": "1486bb31a4ee9080885ea97fd437b93fa696cf788fe7cc917a4112e1a67d4566",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 505
+      },
+      "placeholders": []
+    },
+    "analyze.coach": {
+      "value": "コーチ",
+      "hash": "e6b7456c0995a1c64a21d9ad743167cdfad6950814236049a5805b5637e1e723",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 840
+      },
+      "placeholders": []
+    },
+    "analyze.concealed-tile": {
+      "value": "暗牌",
+      "hash": "afa2d79673c42c29d1d3f46fc28cc0c6ad4391f093ec8e0d1c7939d6d4806e08",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 145
+      },
+      "placeholders": []
+    },
+    "analyze.daisangen": {
+      "value": "大三元",
+      "hash": "00e7381acf3d0c7f50ce6e5fa10e12a25335078896a34264b91c24d0be41f97b",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 35
+      },
+      "placeholders": []
+    },
+    "analyze.daisuushi": {
+      "value": "大四喜",
+      "hash": "8a7aee309cecc75e9cf0a24472121c4a3cc1579c179bba60f58d9ec4087e29b5",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 40
+      },
+      "placeholders": []
+    },
+    "analyze.deal-ins": {
+      "value": "放銃",
+      "hash": "b59f2fa1b07118f2a6477ecf73e97340a33ec0b65772f9c2540874e1959781a5",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 628
+      },
+      "placeholders": []
+    },
+    "analyze.decision": {
+      "value": "判断",
+      "hash": "640ae4baf96061fee1798e9181e2b7a5145585233df2c27a501623afb0096ec1",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 614
+      },
+      "placeholders": []
+    },
+    "analyze.decisions-by-kind-best-total": {
+      "value": "種類別判断 — 最善 / 合計",
+      "hash": "bab52f344aed813bb693739eefc9bec65ea50a39c20127efbc56341a0d898627",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 647
+      },
+      "placeholders": []
+    },
+    "analyze.declare-riichi": {
+      "value": "リーチ宣言",
+      "hash": "c32eca91c6aa8cbd00276864d2f1f0e90de3ae30b31e329ded224a8b4587990c",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 892
+      },
+      "placeholders": []
+    },
+    "analyze.declared-ankan": {
+      "value": "暗カンしました",
+      "hash": "3367320a1a11395f2edb57e345e97d0121e347ca309eb20f32dc0ba7f78c00d1",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 505
+      },
+      "placeholders": []
+    },
+    "analyze.declared-daiminkan": {
+      "value": "大明カンしました",
+      "hash": "10d1d8a81badaeb1cad5b962faf6c8d090576e947cb2481f645bc29b513cd70e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 508
+      },
+      "placeholders": []
+    },
+    "analyze.declared-kan": {
+      "value": "カンしました",
+      "hash": "5a68baec9ea07e1e66a7afe7d829a79d397da354bc69cb9230ea96ac0fd2c679",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 874
+      },
+      "placeholders": []
+    },
+    "analyze.declared-riichi": {
+      "value": "リーチしました",
+      "hash": "0d8d05a7f141884f1e5288e6d47fc8010277485eb0a82ef5f4a1ae892393fcb3",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 888
+      },
+      "placeholders": []
+    },
+    "analyze.declared-riichi-coach-stay-silent": {
+      "value": "リーチ宣言 · コーチ: 静観",
+      "hash": "1ac2cf0bf55e13603ff47efb4758f1233794b3f34a4b953af0fd7f684e17f04e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 289
+      },
+      "placeholders": []
+    },
+    "analyze.declared-shouminkan": {
+      "value": "小明槓を宣言",
+      "hash": "aa2b2c75eda71a46881242a9d16642a914ec483d78c25efab348c5956b7a28db",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 507
+      },
+      "placeholders": []
+    },
+    "analyze.declined-the-win": {
+      "value": "和了を拒否",
+      "hash": "79019c7f1542e6849badd10db92bc1029e3b7bf817a797d8e9fe063c5cba784e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 900
+      },
+      "placeholders": []
+    },
+    "analyze.declined-the-win-coach-take": {
+      "value": "和了を拒否 · コーチ: 和了",
+      "hash": "062dd9c5a97a4fd6e6647457c6c3c2b88daeab190876136e8e6e8a931109b1fc",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 296
+      },
+      "placeholders": []
+    },
+    "analyze.discard": {
+      "value": "捨てる",
+      "hash": "eb1a70e39274bb762b5d7c1adb5debeea2b05e12af28207f21a375b596853273",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 553
+      },
+      "placeholders": []
+    },
+    "analyze.discard-2": {
+      "value": "捨てる",
+      "hash": "109fa9f54c849bb7c2e983911b0d3d75bd7e947c157dee7c012ea29648058191",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 553
+      },
+      "placeholders": []
+    },
+    "analyze.double-riichi": {
+      "value": "ダブルリーチ",
+      "hash": "30598ece7dec57dcb1f25e72fe46cf188252d143c025497b940a080d6f1dbd79",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 25
+      },
+      "placeholders": []
+    },
+    "analyze.east": {
+      "value": "東",
+      "hash": "4e2cd851cfdab8b554b71408d984989127f1db0430f647c711863c42d20f39e7",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 199
+      },
+      "placeholders": []
+    },
+    "analyze.east-south": {
+      "value": "東 + 南",
+      "hash": "1af3cc8d899d63838b81370f325985d87d03b61e981c8ba1fe04d326f020d2cc",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 199
+      },
+      "placeholders": []
+    },
+    "analyze.equivalent": {
+      "value": "同等",
+      "hash": "35a60efd66fe0859d8fa13e1186ed389bb8e9382dfb53e8fc3154e394cfb3291",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 700
+      },
+      "placeholders": []
+    },
+    "analyze.eval-change-no-combined-score-yet": {
+      "value": "評価の変化 (まだ合計スコアなし)。",
+      "hash": "4144220fcb50526429cba569945d057e1c2d0e2ca8b5eb8f9720f11bd714ea7e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 764
+      },
+      "placeholders": []
+    },
+    "analyze.event-position": {
+      "value": "イベント位置",
+      "hash": "7db6537b65475ba157e25a3c67629d26027e868f26c7da4f09f70910e8431c1c",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 998
+      },
+      "placeholders": []
+    },
+    "analyze.every-graded-decision-in-this-game-matched-the-c": {
+      "value": "このゲームのすべての評価された決定はコーチと一致しました。",
+      "hash": "fa8b6b2e9ab4d322d5bb4072f9f517bc2b4fbad628eb89e24e3e83639daa583f",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 588
+      },
+      "placeholders": []
+    },
+    "analyze.exhaustive-draw": {
+      "value": "流局",
+      "hash": "76f1052429da30434e3518d533ab20e18ee643ef7827bba3a921b784b5281ddd",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 345
+      },
+      "placeholders": []
+    },
+    "analyze.graded": {
+      "value": "評価済み",
+      "hash": "54bd179e950cef8159670722deb788cab935d82cc5b2fe5b19676437f881a33e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 216
+      },
+      "placeholders": []
+    },
+    "analyze.green-dragon": {
+      "value": "發",
+      "hash": "99381358976ad85d152e52cbbab05726315a01c262ab5d73c00c4b94f8546cf6",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 28
+      },
+      "placeholders": []
+    },
+    "analyze.haitei-raoyue": {
+      "value": "海底撈月",
+      "hash": "be192487c8a7728ceda31990aad6b12f41aed5a89603ffe469515b777690601a",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 30
+      },
+      "placeholders": []
+    },
+    "analyze.hand-stat": {
+      "value": "手牌統計",
+      "hash": "2f567359a1118395eb1be3e230cf43bd08e40f10ee530bf92b86c20159571bf0",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 624
+      },
+      "placeholders": []
+    },
+    "analyze.hand-stats-averages": {
+      "value": "手牌統計と平均",
+      "hash": "de0b9bc91ba543f25101cace11bc4e1c2633b539bde5fd8cb8df8fb0828ea96c",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 649
+      },
+      "placeholders": []
+    },
+    "analyze.hands": {
+      "value": "手",
+      "hash": "6b7204778686145fbdd0951b9815c72adce7e8e6bd67adfd299e23088622fe54",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 626
+      },
+      "placeholders": []
+    },
+    "analyze.hands-won": {
+      "value": "和了数",
+      "hash": "56c0501ac1b75dc1b96070aa25da659b4ce8cb612622ba26e841c41c97c1679d",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 629
+      },
+      "placeholders": []
+    },
+    "analyze.hold": {
+      "value": "保持",
+      "hash": "8e685d5409b3a543b1cadcc35b095d64847867539c12b21a36d55991ca0cdce1",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 878
+      },
+      "placeholders": []
+    },
+    "analyze.honchantai": {
+      "value": "混全帯么九",
+      "hash": "a057abaf5d18b855a103da0675778ef1d3f2cb83151cd31accae46e5f829afbc",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "analyze.honitsu": {
+      "value": "混一色",
+      "hash": "d3c5a3e2b284d625140b3b230b560fe736c5c438493b23aa6653eb2d4106c4f0",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 35
+      },
+      "placeholders": []
+    },
+    "analyze.honroutou": {
+      "value": "混老頭",
+      "hash": "a3e921e47c5166b03daefa5482ba1558006a952b87679e7b0e466f16d1e0ba7a",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 36
+      },
+      "placeholders": []
+    },
+    "analyze.houtei-raoyui": {
+      "value": "河底撈魚",
+      "hash": "594c217889553249a0323eb8456ffada6e6d21b06d07f7a7cb91119a0d979b91",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 31
+      },
+      "placeholders": []
+    },
+    "analyze.iipeikou": {
+      "value": "一盃口",
+      "hash": "2d0bd1a9bdfd53df71ab2368325857e718efde0ac03ef08bbb959d55355de950",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 26
+      },
+      "placeholders": []
+    },
+    "analyze.improving-copies-are-unseen-copies-they-may-sit": {
+      "value": "改善牌は、見えない牌です。対戦相手の手牌や王牌にある可能性があり、必ずしも山牌にあるとは限りません。",
+      "hash": "030450d966db6bccb5b25d02bd1511d1e81d36774d21358db08eaef73d05ed06",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 652
+      },
+      "placeholders": []
+    },
+    "analyze.in-riichi": {
+      "value": "リーチ中",
+      "hash": "3a829c15df43a44eb01466d0d89bc3c8acb7cdc975aa8929b4ac73a48c78c677",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 916
+      },
+      "placeholders": []
+    },
+    "analyze.ippatsu": {
+      "value": "一発",
+      "hash": "63cd2b1c51d21d6d2bb59f01a221a78e20e82eced171fdd49f23bf5281fa9408",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 25
+      },
+      "placeholders": []
+    },
+    "analyze.ittsu": {
+      "value": "一気通貫",
+      "hash": "85760bd5864b9bee78f1ce15e7bc380c8877d91a298db57505c02fed59072407",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 31
+      },
+      "placeholders": []
+    },
+    "analyze.junchan": {
+      "value": "純全帯么九",
+      "hash": "33c91e86b55bfd2c3d7c8986d5bd21c3273fda32ed259eebf714fb8005ee94f4",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 36
+      },
+      "placeholders": []
+    },
+    "analyze.junsei-chuuren-poutou": {
+      "value": "純正九蓮宝燈",
+      "hash": "d3d15eca03e87b1e06c1ca60c445507a7ffa6c396116ccedd3379847be99f6ec",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 40
+      },
+      "placeholders": []
+    },
+    "analyze.kan": {
+      "value": "カン",
+      "hash": "a2f45baa601696ccfe19d187175e3cf6e89917319d50fdb573f6afa4f08ca483",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 262
+      },
+      "placeholders": []
+    },
+    "analyze.kan-2": {
+      "value": "カン",
+      "hash": "280e734ad97dc30988848d811fa19ed72666533d7be0d93a613471e54ac26a73",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 512
+      },
+      "placeholders": []
+    },
+    "analyze.kan-3": {
+      "value": "カン",
+      "hash": "a2f45baa601696ccfe19d187175e3cf6e89917319d50fdb573f6afa4f08ca483",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 555
+      },
+      "placeholders": []
+    },
+    "analyze.key-moments-tap-to-jump": {
+      "value": "キーモーメント — タップしてジャンプ",
+      "hash": "9171cb279741f65ff4266cf90ab0a1ec62c2a7b158c14b522e324fd30caef9a2",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 522
+      },
+      "placeholders": []
+    },
+    "analyze.kokushi-musou": {
+      "value": "国士無双",
+      "hash": "81af0d7bfe1e70912d563e6101b68f46ad177cde6bb9db4ba126f2461edbf7bb",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 37
+      },
+      "placeholders": []
+    },
+    "analyze.kokushi-musou-13-wait": {
+      "value": "国士無双 (13面待ち)",
+      "hash": "58e56e1ade9da251b3a2a813f273e4bbde48df86aaa12b91ba7343ee99c9c111",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 38
+      },
+      "placeholders": []
+    },
+    "analyze.label-dash-text": {
+      "value": "{0} — {1}",
+      "hash": "fa4816846a52134eaa901ce9be4cdf4f68a2e306e212bbbb9b4588ebf9fca0dc",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 824
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.match-summary": {
+      "value": "対局サマリー",
+      "hash": "744e7e42ae889f307e144286f558a915a968d8c9a84b71926314f51bd312f5ef",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 190
+      },
+      "placeholders": []
+    },
+    "analyze.menzen-tsumo": {
+      "value": "門前ツモ",
+      "hash": "2d39a672784d0379162eeed542723f8cb5e87c6e035d5d31033d357494042966",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 26
+      },
+      "placeholders": []
+    },
+    "analyze.minor-miss": {
+      "value": "軽微なミス",
+      "hash": "cc3982b89fc014a020de9de77cca828f74d143d8995cdec2da523cdd714c17c0",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 702
+      },
+      "placeholders": []
+    },
+    "analyze.miss": {
+      "value": "ミス",
+      "hash": "0317c92ad78c13c7887310bac1e747e6c5b6da7f619ab9e7b66481c7cbab86cb",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 216
+      },
+      "placeholders": []
+    },
+    "analyze.move-by-move": {
+      "value": "手番ごと",
+      "hash": "e19d4a263f0360af3623ab10bddbb24ade1f781d2523eb865d1bb1f9978fe239",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1160
+      },
+      "placeholders": []
+    },
+    "analyze.next-decision": {
+      "value": "次の決定 ›",
+      "hash": "f23f31265197232ce6b00bd3fb3e79170c50c9a5cc512c760b41c870d2f29063",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1019
+      },
+      "placeholders": []
+    },
+    "analyze.next-event": {
+      "value": "次のイベント ›",
+      "hash": "82338b62d219d0a8f09eaf2ce3038f829dd0fe84389ca2ff9bd437c45da4977a",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1023
+      },
+      "placeholders": []
+    },
+    "analyze.no-gap-the-played-discard-is-the-coachs-pick": {
+      "value": "差なし — 捨てられた牌はコーチの選択です。",
+      "hash": "b84ed5111464798fa91ead4f5b2fa8bc6a8905c131b6ecf1e705adede1655111",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 767
+      },
+      "placeholders": []
+    },
+    "analyze.no-misses-or-blunders-in-this-game": {
+      "value": "このゲームにミスや大失敗はありません。",
+      "hash": "2521590730e8136772f6ed6baa5b42336ed2b854957dff607545aa291c285670",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 307
+      },
+      "placeholders": []
+    },
+    "analyze.no-win-decision-could-be-graded-in-this-game": {
+      "value": "このゲームでは、和了の決定を評価できませんでした。",
+      "hash": "bcfac20ec849ace3bd82c5d5bdf9f298230d567ede4fabfed1918c9bc55239de",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 665
+      },
+      "placeholders": []
+    },
+    "analyze.open-a-finished-game-in-games-then-open-its-det": {
+      "value": "「ゲーム」で終了したゲームを開き、その詳細を開いて分析します。",
+      "hash": "2a2c1094eff76099902b8a643cdd68a5ac33a5c5dde6f4c7487c59172dc043ba",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 2226
+      },
+      "placeholders": []
+    },
+    "analyze.open-kan-new-dora-indicator": {
+      "value": "オープンカン · 新ドラ表示牌",
+      "hash": "b4781eb232da847f913f8bfd543e9c5247b8f64e18a5f1b59af6bfe4c4e4cf89",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 508
+      },
+      "placeholders": []
+    },
+    "analyze.overall": {
+      "value": "全体",
+      "hash": "715b1458abbee52eb88658bb578f99719f544104718a34de7d9bcea1383c4b34",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1158
+      },
+      "placeholders": []
+    },
+    "analyze.pass": {
+      "value": "パス",
+      "hash": "d74ff0ee8da3b9806b18c877dbf29bbde50b5bd8e4dad7a3a725000feb82e8f1",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 260
+      },
+      "placeholders": []
+    },
+    "analyze.pass-2": {
+      "value": "パス",
+      "hash": "d74ff0ee8da3b9806b18c877dbf29bbde50b5bd8e4dad7a3a725000feb82e8f1",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 738
+      },
+      "placeholders": []
+    },
+    "analyze.pass-3": {
+      "value": "パス",
+      "hash": "ebdf8cc00bc4d9ceee633c56c63b49955769a92ca060825c9b08e4af61326e2b",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 854
+      },
+      "placeholders": []
+    },
+    "analyze.passed": {
+      "value": "パスした",
+      "hash": "436fe71bb9561f0596161c4d50c7b23327b4189acaf63dc89f4f9205b67a7528",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 255
+      },
+      "placeholders": []
+    },
+    "analyze.passed-2": {
+      "value": "パスした",
+      "hash": "284d1e8c4918248233df17642bbb940c001e1fa856c18aab86ba6dbe7813eb13",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 733
+      },
+      "placeholders": []
+    },
+    "analyze.passed-3": {
+      "value": "パスした",
+      "hash": "436fe71bb9561f0596161c4d50c7b23327b4189acaf63dc89f4f9205b67a7528",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 849
+      },
+      "placeholders": []
+    },
+    "analyze.pinfu": {
+      "value": "平和",
+      "hash": "b703db52fa9d35a96273dfec6e792b48f4888012fc9e5658031058529afc04e2",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 26
+      },
+      "placeholders": []
+    },
+    "analyze.played": {
+      "value": "プレイ済み",
+      "hash": "900b1e4c46b4edab74897019997447324dd8c0b529bb7a61eb5b4d90907340f0",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 836
+      },
+      "placeholders": []
+    },
+    "analyze.player": {
+      "value": "プレイヤー",
+      "hash": "64aee8c6cbd026d9ea9221661f7632351d9a741198cd01ca017450b56f78a206",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 215
+      },
+      "placeholders": []
+    },
+    "analyze.pon": {
+      "value": "ポン",
+      "hash": "7857afe20170f373cee227e461a46a5d9df448d196c8dd32bdf7fc61afa3155c",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 261
+      },
+      "placeholders": []
+    },
+    "analyze.previous-decision": {
+      "value": "‹ 前の決定",
+      "hash": "206096184dbe2bcb4eeb13882fcf09840ed4d95a7659d46f26bfe68efcd379cd",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1019
+      },
+      "placeholders": []
+    },
+    "analyze.previous-event": {
+      "value": "‹ 前のイベント",
+      "hash": "2c9281bd57f551388e296312d274ec95ef98add3a28f96c1d858b4a8c1f52f3e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1023
+      },
+      "placeholders": []
+    },
+    "analyze.read-this-first": {
+      "value": "まずはこちらをお読みください。",
+      "hash": "ad08a95cb755bc97cac30dc420ba1150f006e7ff7e0ee6bb84808801ac9f50fc",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 387
+      },
+      "placeholders": []
+    },
+    "analyze.red-dragon": {
+      "value": "中",
+      "hash": "4823595f2ab4c100d330671138b3ad09f4d25dd434c8dc88b9f0c343ce63b09f",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "analyze.riichi": {
+      "value": "リーチ",
+      "hash": "4b4623e3c2dbea4c1bee0a0ffa9dbb3686577dd725a59066b5032e286d93a235",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 25
+      },
+      "placeholders": []
+    },
+    "analyze.riichi-2": {
+      "value": "リーチ",
+      "hash": "d8ab5bdbc7fe118413e00526f5a9162f91848287a45ce7713b65592cd85eb1b7",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 556
+      },
+      "placeholders": []
+    },
+    "analyze.riichi-declared": {
+      "value": "リーチ宣言",
+      "hash": "9d33304c502837883960751845f62f7649d86baa52654b596fbeb804148baf0c",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 627
+      },
+      "placeholders": []
+    },
+    "analyze.riichi-stick-1000": {
+      "value": "リーチ棒 1,000",
+      "hash": "4af978862efcd49708edb2d7457e6075573d64b8fa307a74e7ce29ef2d574f25",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 500
+      },
+      "placeholders": []
+    },
+    "analyze.rinshan-kaihou": {
+      "value": "嶺上開花",
+      "hash": "6b6beee594c0456bfa0effb34273e4cada53bc6c38a45a538918d76c219ede7a",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 30
+      },
+      "placeholders": []
+    },
+    "analyze.ron": {
+      "value": "ロン",
+      "hash": "32801f5c6ca59882d004c3b927de38fa22fa1ed71e0f63d66707f000f2587eac",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 260
+      },
+      "placeholders": []
+    },
+    "analyze.round-wind": {
+      "value": "場風",
+      "hash": "2a0728ac7fdfd9d98e84b32303b0711cf5b6939eb648740bc7dc8e8d866ebd3a",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "analyze.ryanpeikou": {
+      "value": "二盃口",
+      "hash": "add797d6339f76680315f0c88aa7e0d2e0fcf8cc458937a5c1862e71968af0b0",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 27
+      },
+      "placeholders": []
+    },
+    "analyze.ryuuiisou": {
+      "value": "緑一色",
+      "hash": "7be49c1b026e7fa27fc3d7e0fde6f119c49c44306f1f9f7ccb8831eb1b860600",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 41
+      },
+      "placeholders": []
+    },
+    "analyze.s-0": {
+      "value": "S{0}",
+      "hash": "01f3b8786c7f06fdfcd57350c6e212c60ee3adae1bd8e1cddc4a77d84fb24703",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 108
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.same-shanten-same-unseen-improving-copies": {
+      "value": "同じシャンテン数、同じ見えない有効牌の枚数。",
+      "hash": "aa3ce79b681b7fc37715ac8d4a94ad2b1d0954860f784aebbec49d4e2510859c",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 779
+      },
+      "placeholders": []
+    },
+    "analyze.sanankou": {
+      "value": "三暗刻",
+      "hash": "d1ffde79ea2c6f05d88183a1df4b1c6167f992e2f94c7795f9a1958bfc8bb4a2",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 33
+      },
+      "placeholders": []
+    },
+    "analyze.sankantsu": {
+      "value": "三槓子",
+      "hash": "33df60ca9b36f04cdf17ac2191c561ec03fe000eeb2723347a08b43c19f55613",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 33
+      },
+      "placeholders": []
+    },
+    "analyze.sanshoku-doujun": {
+      "value": "三色同順",
+      "hash": "3ebf096485152d465a0d6b041d4a4516f98b446db601f62b7f622478b6e8718b",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 32
+      },
+      "placeholders": []
+    },
+    "analyze.sanshoku-doukou": {
+      "value": "三色同刻",
+      "hash": "c6b9eb2bcb19dd69342d54855ff8f5152cdd7d275561b425786f527d4e0356f1",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 32
+      },
+      "placeholders": []
+    },
+    "analyze.score-after-each-hand": {
+      "value": "各局後の点数",
+      "hash": "6916a62ae90846708d9461695f944c7a06169ff8a42703a1d4d1bd84a45779d3",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 402
+      },
+      "placeholders": []
+    },
+    "analyze.seat-0": {
+      "value": "席 {0}",
+      "hash": "51fef447ec2caab35c7631855042983f955a2773f30eaa004455d07ccd4c2f69",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 106
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.seat-action": {
+      "value": "{0} {1}",
+      "hash": "10866a9df5f8be5be75c79314de01412b0b35db060b06fdc333c1d9cd82d73c0",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 510
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.seat-wind": {
+      "value": "自風",
+      "hash": "80091c0a469a4830ac8accb3265ebd9a251f234a6447dae92f21e90bc57daa09",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 29
+      },
+      "placeholders": []
+    },
+    "analyze.seven-pairs": {
+      "value": "七対子",
+      "hash": "3cf7349dded9a84f90c1ae885ce15375fc2246fe4eea00d001c233673a104850",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 31
+      },
+      "placeholders": []
+    },
+    "analyze.shousangen": {
+      "value": "小三元",
+      "hash": "121a4489e0ea25e9e13c1620d31f3daa9b8019665b14b5441ec4158e56cbdebe",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "analyze.start": {
+      "value": "開始",
+      "hash": "e4bb9f1ece9af9264a3b9e3913bbdb2cf497457167b14ced5f85688bfde74644",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 447
+      },
+      "placeholders": []
+    },
+    "analyze.stay-silent": {
+      "value": "見送る",
+      "hash": "e62aa5770ec51c9ee910581f12f2bb348d7cae127c256794407806710214988b",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 892
+      },
+      "placeholders": []
+    },
+    "analyze.stayed-silent": {
+      "value": "見送った",
+      "hash": "807ed089da34e172853e3952a72cd377d0b18684b51bafb541fafc03eca00075",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 888
+      },
+      "placeholders": []
+    },
+    "analyze.stayed-silent-coach-declare": {
+      "value": "見送った · コーチ: 宣言",
+      "hash": "0acdde33730c211a87f5a5db65a3397448e4b0c8fb80dbd781ba67c3b5f74c8e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 290
+      },
+      "placeholders": []
+    },
+    "analyze.step": {
+      "value": "ステップ",
+      "hash": "3e64cc41cf8e07b43936d7bc4eaf8bdb8e2abcec1f44c7b915ac0a0c27ebc41a",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 770
+      },
+      "placeholders": []
+    },
+    "analyze.steps": {
+      "value": "ステップ",
+      "hash": "b7595e2a863957fc6c225ed540d335dd1e859dd3032451c2e11bceb0329defa6",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 770
+      },
+      "placeholders": []
+    },
+    "analyze.suuankou": {
+      "value": "四暗刻",
+      "hash": "4b70d770760c563467cb8a1ef576f1ddc852a2403fe816fe8c5440ea02b832b8",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 38
+      },
+      "placeholders": []
+    },
+    "analyze.suuankou-tanki": {
+      "value": "四暗刻単騎",
+      "hash": "62b23d2d55f9b148631e1c6923e94e3b253e2236878e7107e5c2704b914a9bf3",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 39
+      },
+      "placeholders": []
+    },
+    "analyze.suukantsu": {
+      "value": "四槓子",
+      "hash": "003fe78225418d2aa62afa85b029154674a3a78e531c82c799933aa4c240c322",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 41
+      },
+      "placeholders": []
+    },
+    "analyze.take": {
+      "value": "取る",
+      "hash": "8b862ba45dceddf7e186fa48c1bb76f09730a23fc67f870c015d9649dab27a27",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 901
+      },
+      "placeholders": []
+    },
+    "analyze.take-ron": {
+      "value": "ロンを取る",
+      "hash": "dc2f2b6eecde5848bc5e3e10ef94c1ce5a4cf746bac4b25e73ad09e72d0055fe",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 738
+      },
+      "placeholders": []
+    },
+    "analyze.tenhou": {
+      "value": "天和",
+      "hash": "0b85d3d8af7ed19a155c3a872015268da041510bb04c0ebcbd7472ca5b0ffeb8",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 37
+      },
+      "placeholders": []
+    },
+    "analyze.tenpai-at-draws": {
+      "value": "流局時聴牌",
+      "hash": "7858e85a740806f4fabbf3c23c6e751c8446903d1f1ba5a48149ea1beae7e462",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 631
+      },
+      "placeholders": []
+    },
+    "analyze.the-call-leaves-no-yaku-path": {
+      "value": "この鳴きでは役の道が残りません。",
+      "hash": "170df1eaff6dddb41b479c405dfa2f0c6701305fa57119e452382fcd8d9fb2f7",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 267
+      },
+      "placeholders": []
+    },
+    "analyze.the-kan-breaks-a-seven-pairs-shape": {
+      "value": "このカンは七対子の形を崩します。",
+      "hash": "49ee87b93681e4659e1f91a137ead70fc8b922269ccec625b1cdf4019c179af7",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 275
+      },
+      "placeholders": []
+    },
+    "analyze.the-player": {
+      "value": "プレイヤー",
+      "hash": "9fcb95761c3eb65cd4a9915944c30fadae7adcc213e915a9cb4d3636733726f0",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1056
+      },
+      "placeholders": []
+    },
+    "analyze.this-game-record-could-not-be-read-so-it-cannot": {
+      "value": "この牌譜は読み込めなかったため、評価できません。",
+      "hash": "da93bbb1a1cecc82bb534b5c347680bc35fa6fef3cbad3bfe464e91a1d93bcc3",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 2239
+      },
+      "placeholders": []
+    },
+    "analyze.this-games-archive-is-incomplete-so-there-is-not": {
+      "value": "このゲームのアーカイブは不完全なため、評価できるものがありません。",
+      "hash": "b5275acd7bc690c3602ea5905260c4dc40baa2987af109f87e9cf7ca6a90e3a7",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 2238
+      },
+      "placeholders": []
+    },
+    "analyze.toitoi": {
+      "value": "対々和",
+      "hash": "a410593826e0a8790f17531e8ac97accc7053d3d51bac62c609401b0660327be",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 33
+      },
+      "placeholders": []
+    },
+    "analyze.took-ron": {
+      "value": "ロンを取った",
+      "hash": "950a21feb22019c3097df942a00fd018ceedaebb1665fb6ef2c3d14d78af40f5",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 255
+      },
+      "placeholders": []
+    },
+    "analyze.took-ron-2": {
+      "value": "ロンを取った",
+      "hash": "b323df7ec262e78f91477ed7d9c8d688c7722450bc838c09090ec43ebedcd03b",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 733
+      },
+      "placeholders": []
+    },
+    "analyze.took-ron-3": {
+      "value": "ロンを取った",
+      "hash": "950a21feb22019c3097df942a00fd018ceedaebb1665fb6ef2c3d14d78af40f5",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 849
+      },
+      "placeholders": []
+    },
+    "analyze.took-the-win": {
+      "value": "和了した",
+      "hash": "08156cec47641de10cfa727d7883fb2b5c6b6f8f583ffdd7721362b92b7b28e2",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 900
+      },
+      "placeholders": []
+    },
+    "analyze.tsuiisou": {
+      "value": "字一色",
+      "hash": "a8e5233e4dfc76df3dcba0daeaf27c04b2f5de4030f92149858bbbb699b51613",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 41
+      },
+      "placeholders": []
+    },
+    "analyze.v-0": {
+      "value": "— {0}",
+      "hash": "dde222568b085498b866b9524c573d5c7a78cf2ef2fe068aa8f7daa4bd3b4663",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 317
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-1": {
+      "value": "{0} {1}",
+      "hash": "10866a9df5f8be5be75c79314de01412b0b35db060b06fdc333c1d9cd82d73c0",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 111
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-1-2": {
+      "value": "{0} · {1} · {2}",
+      "hash": "21ca73aa725638b8e9e359e1cf712f748b68d6ed9e42c7de1ff2ee6f45cd65d2",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 195
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-1-hand-2": {
+      "value": "{0} · {1} · 局 {2}",
+      "hash": "f39425de8fa01d547cc2594661e09ebbf05087da39b294ecc56e4cd908c6d1cb",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 316
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-1-hand-2-decision-3-of-4-dealer-5": {
+      "value": "{0} · {1} · 局 {2} · 決定 {3} / {4} · 親 {5}",
+      "hash": "4426a2b32f5ea51613248a8b9a8670242e5c01f789f6ae6e1e2d61f979b460e7",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1077
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-1-unseen": {
+      "value": "{0} ({1}枚見えず)",
+      "hash": "c30d21a3d430ac645b5f37f987a0c3dbf20ecffbfd02676f5430df66b313989b",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 122
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-2": {
+      "value": "· {0}",
+      "hash": "ec1b0de6d4c2348195a069a214df087bb9c5b105cbda2dae68206875ffff5a6d",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 912
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-coach-1": {
+      "value": "{0} · コーチ: {1}",
+      "hash": "ce9b8b4b3d0b748c5ce1582e8d899e1fe0d19d3d74b1f136dee56b13c6a63cd9",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 269
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-declared-double-riichi": {
+      "value": "{0}がダブルリーチを宣言",
+      "hash": "064e2e7f0f3718cbc01d953c3cf90cf9e2c701e26bacaabdc1b9f8bc8f57f2ab",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 498
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-declared-kan-coach-says-hold": {
+      "value": "{0} — カンを宣言、コーチは保留を推奨",
+      "hash": "4fc81824b879069eb219674a0715632dc819d0a4db8df242e64f2fc948bf789d",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 748
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-declared-riichi": {
+      "value": "{0}がリーチを宣言",
+      "hash": "cfb7bf7c281866d6be07981ea7e991faa0367f59b6fce8130bb22484d770d8c9",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 499
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-declared-riichi-coach-says-stay-silent": {
+      "value": "{0} — リーチを宣言、コーチは黙っていることを推奨",
+      "hash": "53ccbecf23fdcdc042ceec09c98832e44e3b884c18af211f682b3d4a3666410d",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 751
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-declined-the-win-coach-says-take": {
+      "value": "{0} — 和了を拒否、コーチは和了を推奨",
+      "hash": "87971b7918e0570a972de755c1b10797a1e508e4b3eb0564c5b4b4ca3c23e6b1",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 756
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-discard-1-coach-2": {
+      "value": "{0} — {1}を捨てる · コーチ: {2}",
+      "hash": "9c99cb30f350833ab446a69d987d0dd0c7351918bd198269836289a3600c1b9d",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 730
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-fewer-1-from-ready": {
+      "value": "聴牌まで{0}、{1}少ない",
+      "hash": "ba52fb0ffdead493fccb18fe411879ad42917b51c0b81889847d5649f862804e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 772
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-fewer-unseen-improving-copies": {
+      "value": "見えない改善牌が{0}枚少ない",
+      "hash": "7f04c9337fb3e5d24010476c4b80d79485afdce81154e18675f906a66a6c4698",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 775
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-han-1-fu": {
+      "value": "{0}翻{1}符",
+      "hash": "ab9e6707df45ced00c7bd8e3c5b0192eb11feaac4f4960d5d3a99f23973a0568",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 352
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-honba-1": {
+      "value": "{0} · {1}本場",
+      "hash": "fb853c424a442e85e9dc9b00c56643ebc4734abeeaf9d1f844ef760d0962cf3f",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 373
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-is-where-the-misses-live-1": {
+      "value": "{0}はミスがあった場所です: {1}。",
+      "hash": "5f61c48c10ca0cc124031ffb131d70eb03a03487cbb734ccc093c52e9d7f21bd",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 574
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-more-1-from-ready": {
+      "value": "聴牌まで{0}、{1}多い",
+      "hash": "08b55af3b665d26e2ad15921526333d10cebddd056478011ed9327cf4d7c9c9c",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 770
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-more-unseen-improving-copies": {
+      "value": "見えない改善牌が{0}枚多い",
+      "hash": "8f151357894c2068c5c8362f66fdeca897e1793cebf92d8091196e0ac71df748",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 777
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-played-1-coach-says-2-3": {
+      "value": "{0} — {1}を打牌、コーチは{2}{3}を推奨",
+      "hash": "ae2c673768e63faf8920b4126b329d1ee73993788efd295edb511aa0cc82a818",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 745
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-repeat-1": {
+      "value": "{0} · リピート {1}",
+      "hash": "82ae12e229166738a11fad91a4c15fc21c2d550281c1fc8011954cfbc00fa655",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 530
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-riichi": {
+      "value": "{0} · リーチ",
+      "hash": "d35cc801d754bbb38975c05c763d09b379e017bf56b90c5ad8f324d2719f780c",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1091
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-ron-from-1-2": {
+      "value": "{0}が{1}からロン · {2}",
+      "hash": "0e2bc9ae20e33bdaee547ee08df2764e72ddc7e1e08a9535a3f7bc18845b7605",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 489
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-ron-from-1-2-3": {
+      "value": "{0}が{1}からロン — {2} · {3}",
+      "hash": "1d116553937614bb62362dba9e9eb35292600733aa6b8d84ab3df590c1bf5ee5",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 354
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-shanten-1-unseen-improving-copies": {
+      "value": "{0}シャンテン · 見えない改善牌{1}枚",
+      "hash": "7299fc0d6bb5bdf4d86c86780af5e217ab26b7054f3113e31dc97c9cb4cf04df",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 832
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-stayed-silent-coach-says-declare": {
+      "value": "{0} — 黙っていた、コーチは宣言を推奨",
+      "hash": "79fec153a7902c67608bdc9b305474124286970a700bc08271175404612be9d3",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 752
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-the-gap-is-the-call-itself-the-coach-weights": {
+      "value": "{0} 差は鳴きそのものです: コーチはシャンテン数、改善牌、役の経路を考慮します。鳴き後の状態とコーチの選択後の状態は、その選択によって異なり、単一の数値では表せません。",
+      "hash": "acda8cf53318f4ad052bf3117416353fb01c0ffb32324740492a48e875031d71",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 785
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-the-gap-is-the-kan-itself-the-coach-holds-it": {
+      "value": "{0} 差はカンそのものです: コーチはこの手牌の形ではカンを保留します。差は単一の数値ではありません。",
+      "hash": "9cce400ba0fa6afadfdcc511a9ef7cf7d5b52bc4ad600f40ab7966a910c43671",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 791
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-the-gap-is-the-riichi-call-itself": {
+      "value": "{0} 差はリーチ宣言そのものです。",
+      "hash": "fd16112b179558ead33df395373b3ebcbf62d5ce6f5f7bba4b6283519023ae0a",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 797
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-the-gap-is-the-riichi-call-itself-dama-ron-1": {
+      "value": "{0} 差はリーチ宣言そのものです: ダマロン{1} · リーチロン{2} — 裏ドラは含まない最低点。",
+      "hash": "98d8450ff11bfcb502622ec43f2f0eb6a19bde9bad91dcc1711e33d8d4fa49cd",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 796
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-the-gap-is-the-win-itself-taking-it-was-worth": {
+      "value": "{0} 差は和了そのものです: 和了したことで{1}点獲得しました。",
+      "hash": "b2a033421447b4802ac526c081ee86feba87870b60335a82a11558ea98dd803c",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 808
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-the-played-discard-leaves-1-than-the-coachs": {
+      "value": "{0} 打牌された牌はコーチの選択よりも{1}を残します。",
+      "hash": "f7485f4ed6d0964f1dc5d3d450d761e4898511a026170802d9ea3b6a6fcaecf0",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 780
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-tsumo-1": {
+      "value": "{0}がツモ · {1}",
+      "hash": "db1f626cdae4abbc1b97c6930c084c389a8e40df0680d027136e018c5b5814fb",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 490
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-tsumo-1-2": {
+      "value": "{0}がツモ — {1} · {2}",
+      "hash": "facf7f25b6121bea26b829151a0f44bb28286f8f5db5d070127d2706dfc7b235",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 355
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-went-1-2": {
+      "value": "{0}は{1}/{2}でした",
+      "hash": "8f16ce96da8debb0b56ce84abf9ef242cced3b323c5a0b58383e7559dae0e75d",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 569
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-win-1-2-riichi-declaration-3-4-kan-5": {
+      "value": "{0}和了{1}、{2}リーチ宣言{3}、{4}カン。",
+      "hash": "97bed0881ccdf912f4ca7f92790a66941bede6cccd296ad26f113ef909afec43",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 537
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-yakuman": {
+      "value": "{0}倍役満",
+      "hash": "c0b91db22503090b07da6e4d8d1680433afdbdc523e8ccca53a1077b41289bb1",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 350
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0k": {
+      "value": "{0}k",
+      "hash": "61b2f87cef041e7faa531b530481d833b90c0f3132a262355f228fb65a38529e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 422
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0s-1-point-ron-from-2": {
+      "value": "{0}の{1}点ロン、{2}から",
+      "hash": "52490dc8212bcec1eca2ebc060edb26a3b73e0c7abd82ad4601bd9ab5a45ee46",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 461
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0s-1-point-tsumo": {
+      "value": "{0}の{1}点ツモ",
+      "hash": "8dff524008e27c5103ddd432fe6e208a4c2525d219f4fb87078f89fe4d8298b7",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 462
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-all-0-are-riichi-calls-the-policys-riichi-heuri": {
+      "value": "すべての{0}はリーチ宣言です — ポリシーのリーチヒューリスティックがコーチの加重評価と一致しません。",
+      "hash": "d7a354d03ae2810ef915ed70d17ee152d0520c6e2a71dc376bb64760e9da4c69",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 325
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-all-0-wins-were-ron": {
+      "value": "(すべての{0}の和了はロンでした)",
+      "hash": "8d50ea5e11a8b30ad315fd45f04456e15001b3432e63a5b2b2e7d6c56816014e",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 657
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-better-than-the-coachs-pick-fewer-steps-from-re": {
+      "value": "コーチの選択よりも良い — 聴牌までのステップが少ない",
+      "hash": "3ab7b4bf3d6bae58053ff673e8a0cd35a1eda59a5a27fdb06035a80eeb937dc6",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 728
+      },
+      "placeholders": []
+    },
+    "analyze.v-dama-ron-0-riichi-ron-1": {
+      "value": "ダマロン{0} = リーチロン{1}",
+      "hash": "01e95302608ad48ce588359abee3d847aef5d2a0ed4864eadda9e0b8193cd797",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 284
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-dama-ron-0-riichi-ron-1-2": {
+      "value": "ダマロン{0} · リーチロン{1}",
+      "hash": "bd6ee4c30f2b7129b90e72822aedfcd214267ae7295d7fb65c371307ed38b14d",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 285
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-dama-ron-0-riichi-ron-1-3": {
+      "value": "ダマロン{0} · リーチロン{1}",
+      "hash": "bd6ee4c30f2b7129b90e72822aedfcd214267ae7295d7fb65c371307ed38b14d",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 894
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-declare-kan-0": {
+      "value": "カンを宣言 · {0}",
+      "hash": "76f4143140341c3c950241a68bdeb62c806a87f3e9acf90a4a34d60739d7b244",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 877
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-declared-kan-coach-hold": {
+      "value": "カンを宣言 · コーチ: 保留",
+      "hash": "94e487ae9cdcf7118544e830fd16d0e487d83a9b3e1a960f4f5a090b534d6c1a",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 273
+      },
+      "placeholders": []
+    },
+    "analyze.v-discard-0": {
+      "value": "{0}を捨てる",
+      "hash": "80042063926d2de54c4b9883995ad70611f8b77bdee73a07ce7fb44d31e8e73f",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 837
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-discard-0-1-the-discard-itself-graded-2": {
+      "value": "{0}を捨てる · {1}。打牌自体は{2}と評価されました。",
+      "hash": "f63f5a0ab251ed055fb484ec84fd4a681c8ad8fe0b47cd93df6b8533e8feaed9",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 885
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-discard-0-2": {
+      "value": "{0}を捨てる",
+      "hash": "80042063926d2de54c4b9883995ad70611f8b77bdee73a07ce7fb44d31e8e73f",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 841
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-discard-misses-0-blunders-1-unseen-copies-may": {
+      "value": "打牌ミス: {0}。大失敗: {1}。見えない牌は対戦相手の手牌または王牌にある可能性があります。",
+      "hash": "6f811f4c90369bc2c18070f96cc1e2a8369835bd61b9f1e15f104766044f6343",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 331
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-discarded-0-coach-1": {
+      "value": "{0}を打牌 · コーチ: {1}",
+      "hash": "b3f10c3e6c707a664f175eb56801a50e30ca2c98771f67a12d6225f7507842c3",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 249
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-equivalent-same-speed-equal-or-wider": {
+      "value": "同等 — 同じ速度、同等またはより広い",
+      "hash": "18849581676598e73ab4cc2efe6c2917cde79e4d78da29202f2d11972bdf40b6",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 729
+      },
+      "placeholders": []
+    },
+    "analyze.v-event-0-of-1": {
+      "value": "{1}中のイベント{0}",
+      "hash": "05b72c0ba9ee07dc5e63a175165e97e9a3f2cdbcf4372deb967c082bbdf67365",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1101
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-every-0-decision-in-this-game-matched-the-coach": {
+      "value": "このゲームでの{0}の決定すべてがコーチと一致しました。",
+      "hash": "f22d04d6810caca163da02c028955309ce0c3dac912ad6d835aa7f942092831b",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 584
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-kan-of-0": {
+      "value": "{0}のカン",
+      "hash": "6c2806f4bb1d0c5c8be29ddc870452b7735de5a6437e9d4ce97a0de1fcb764ad",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 276
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-leaves-0-shanten-coach-leaves-1-shanten": {
+      "value": "{0}シャンテンを残す · コーチは{1}シャンテンを残す",
+      "hash": "a1f72f2c16ee2a5a249abd7bdc60b9c9d58cdc4c776cac8f7cadd10e4a6438ef",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 247
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-misses-0": {
+      "value": "ミス — {0}",
+      "hash": "22e7b3b60dec8d2a9b2f574902cd871a805ed871760625d7d9d66f177695c303",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 304
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-no-tsumo-was-ever-offered-in-this-game-0-so-ta": {
+      "value": "このゲームではツモが一度も提示されなかったため{0}、取るか拒否するかを評価するものはありません。",
+      "hash": "d08e533de887aef12c2ecc28c22c2e74d9cfb39ff26fa834ed224112ed052f7b",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 662
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-on-the-0": {
+      "value": "{0}で",
+      "hash": "a56631709d42e612beb3f7f46fa6145e4a45919bfa4f72a308259036eef22345",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 743
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-riichi-0-length-1-hands-seed-2-points-include": {
+      "value": "リーチ · {0}局 · {1}半荘 · シード{2}。点数にはウマ+15/+5/−5/−15と、1位へのオカ20点が含まれます。",
+      "hash": "e65681ea630bea6e2bf23c7f595d271d89a0865576e54fd37849666206003de6",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 202
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-ron-worth-0-points": {
+      "value": "ロン {0}点",
+      "hash": "2f00a91973c153f066b3694febe93f9e7e7436d020f82b06d2b5e532d5b6c492",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 863
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-ron-worth-0-points-2": {
+      "value": "ロン {0}点",
+      "hash": "2f00a91973c153f066b3694febe93f9e7e7436d020f82b06d2b5e532d5b6c492",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 868
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-same-shanten-0-fewer-unseen-improving-copies": {
+      "value": "同シャンテン · 見えない有効牌 {0}枚減",
+      "hash": "39252dbbe01b1171998fe1926f660ab686f70f397f2ee2db48ff2cef1ce681be",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 246
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-score-change-0": {
+      "value": "点数変化 {0}",
+      "hash": "64ee5a6be5d4fd61206d56e06687cf0959b7380ba5cdcc1d497036e7b2c7ef21",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 376
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-scores-after-each-of-the-0-hands-from-the-scor": {
+      "value": "スコアイベントからの{0}局それぞれの後の点数です。{1}",
+      "hash": "29186f238d05f878fc6fe49f8a32341aa83e72b09bb13739f8cbf083088301a8",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 474
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-shanten-0-1": {
+      "value": "シャンテン {0} → {1}",
+      "hash": "cec520fb1ba4e043f981be233e3bf97f7bb7dc774820025ad84dbb1a3771779a",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 860
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-shanten-0-1-coach-2": {
+      "value": "シャンテン {0} → {1} · コーチ {2}",
+      "hash": "66597479209d55f6a1dd7f5b6bedb27fd82e9aa31f5f3672e5fd91b6b5039598",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 268
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-tenpai-wait-0": {
+      "value": "テンパイ · 待ち {0}",
+      "hash": "9fc6110476c2dbc3c5d630b625a53e8f0e13064a398d3e1ecb4457e6e2083b68",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 831
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-the-0-exhaustive-draw-1-are-not-listed-as-jump": {
+      "value": "{0}回の流局{1}はジャンプターゲットとして表示されていません。",
+      "hash": "126b1558d070921e40d86532bb8f16e28d5ffbc34b776840ace6bb55e0edce0d",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 543
+      },
+      "placeholders": [
+        "0",
+        "1"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-the-coach-grades-its-own-policy-the-same-polic": {
+      "value": "コーチは自身のポリシー（ボットの席をプレイするのと同じポリシー）を評価するため、{0}はプレイがそのポリシーと一致したことを意味します。これは誰かのスキルを測るものではありません。",
+      "hash": "22add7874d2e9f86218abe2e05e48b5b3a5e7cfb8f3d62ab926a7949bc89e2ea",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 390
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-the-ron-was-worth-0-points": {
+      "value": "ロンは{0}点でした",
+      "hash": "c8bc0812872b9f42e2b84796b7a608d4c6634077775a6f1287d4063a01af01d7",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 265
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-the-swing-is-the-0-hand-1-2": {
+      "value": "スイングは{0}局（{1}）です: {2}。",
+      "hash": "cc62b1fd330baf76f58f376a5b3d22f9b26ad5dbdd9d14643e08a348e2f13abf",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 466
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-tsumo-worth-0-points": {
+      "value": "ツモ {0}点",
+      "hash": "4bedac5f49a860e462ac223b5903ee8aa92b86bd80fd251f8d313226056bf9b2",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 297
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-tsumo-worth-0-points-2": {
+      "value": "ツモ {0}点",
+      "hash": "4bedac5f49a860e462ac223b5903ee8aa92b86bd80fd251f8d313226056bf9b2",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 902
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-unseen-copies-may-be-in-opponents-hands-or-the": {
+      "value": "見えない牌は対戦相手の手牌または王牌にある可能性があります。コーチのアドバイスは、この決定時に{0}が知っていたことのみを使用します。",
+      "hash": "ebd3d7db46a20994ce47cba1de4d2fd2395dbb9cd46dc9afd5ff22cb4fac3d7a",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1110
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-wait-0": {
+      "value": "待ち {0}",
+      "hash": "a0d71ff9f9510fbc24aa6cc923ada73d3708ecd9bf5e2962eb4a79d303ed6258",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 280
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-wait-0-2": {
+      "value": "待ち {0}",
+      "hash": "a0d71ff9f9510fbc24aa6cc923ada73d3708ecd9bf5e2962eb4a79d303ed6258",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 883
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.white-dragon": {
+      "value": "白",
+      "hash": "eb7081c7c48070f287b9318311c2cb80a6df2a8f065aaedad204a7dcde9bfec5",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 28
+      },
+      "placeholders": []
+    },
+    "analyze.win": {
+      "value": "和了",
+      "hash": "b980a145c5e8c9e233a0643366ba520a67e98700dd5c552d1bf44eea555a7dcd",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 492
+      },
+      "placeholders": []
+    },
+    "analyze.win-2": {
+      "value": "和了",
+      "hash": "823a3180dad3c9c3c4dea43ab2baf9f04bac9c3a7711745ff5f702551496d735",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 557
+      },
+      "placeholders": []
+    },
+    "analyze.win-grade-no-samples": {
+      "value": "和了評価: サンプルなし。",
+      "hash": "324b9395291d7e6d7e13fd9c9f5a791d0bafe5247dc8088bb4d78955083d1ec9",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 667
+      },
+      "placeholders": []
+    },
+    "analyze.win-points": {
+      "value": "和了点",
+      "hash": "05824a29075ea58736d478ef5047e91cb7efeeb12cabcc596b247caf2d0edfb0",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 630
+      },
+      "placeholders": []
+    },
+    "analyze.wind-name": {
+      "value": "{0}",
+      "hash": "a00644508de97e85263c9d0cd67e63d3c3b5d733bcaddc65b110e501ad5a7b73",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 911
+      },
+      "placeholders": [
+        "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.yakuman": {
+      "value": "役満",
+      "hash": "0c74a2a1e29b10a82e105d6beb3e4df568427dfb23b3de3d2bcef58eaa436d78",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 351
+      },
+      "placeholders": []
+    },
+    "analyze.you": {
+      "value": "あなた",
+      "hash": "08b041935798fbf6fd6ff51099ffedb140a475889986d14f5559ff8e7fc571dd",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 106
+      },
+      "placeholders": []
+    },
+    "analyze.you-knew": {
+      "value": "あなた",
+      "hash": "bb0347a468d97e98a9c00e37cebec1ab930f6f1221cae0f1fbb92b07e1900ba2",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1060
+      },
+      "placeholders": []
+    },
+    "analyze.shousuushi": {
+      "value": "小四喜",
+      "hash": "bc17561c6b60dbd04467c966982f5dd8d297bfb3768f0234f0e79aebfa4072ef",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 34
+      },
+      "placeholders": []
+    },
+    "analyze.take-ron-2": {
+      "value": "ロンする",
+      "hash": "1bb642b0c820503e09dd08e2a9c93e48bb407498c431d1581ab8b9032496f1c3",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 854
+      },
+      "placeholders": []
+    },
+    "analyze.v-0-1-tiles-left-2-deposit-3-dora": {
+      "value": "{0} · {1}枚残り · {2}供託{3} · ドラ",
+      "hash": "b3a180e342cba43a6f01e1dcb97f795c74acea684b2a928ed3e912e05cb91e71",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 970
+      },
+      "placeholders": [
+        "0",
+        "1",
+        "2",
+        "3"
       ],
       "dynamic": true
     }

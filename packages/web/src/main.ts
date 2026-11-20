@@ -11,6 +11,9 @@ import "./medium.css";
 /* The compact calculator layer (design rules section 16) builds
    on the medium system and loads after it. */
 import "./compact.css";
+/* Analyze (brief-analyze-v1) loads last: its board panels reuse the
+   shipped board-review grammar on the medium tokens. */
+import "./analyze.css";
 
 const root = document.getElementById("app");
 if (!root) throw new Error("Missing #app root element");
