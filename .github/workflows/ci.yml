@@ -285,7 +285,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npx vitest run packages/server/test/postgres-integration.test.ts packages/server/test/online-postgres.test.ts
+      - run: npx vitest run packages/server/test/postgres-integration.test.ts packages/server/test/online-postgres.test.ts packages/web/test/analyze-online-postgres.test.ts
         env:
           OPENMAHJONG_TEST_DB: postgresql://postgres@127.0.0.1:5432/openmahjong_test
       - run: npm run build

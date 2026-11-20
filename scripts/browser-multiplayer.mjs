@@ -188,7 +188,16 @@ try {
       );
     }
     assert.ok(positions < 15000);
-    await host.getByRole("button", { name: "Analyze", exact: true }).click();
+    if (variant === "riichi") {
+      // Two-scope Analyze (issue #106): the entry appears once the
+      // complete-record fetch lands; the Overall scope renders the
+      // graded match and back returns to Results.
+      await host.getByRole("button", { name: "Analyze", exact: true }).click();
+      await host.getByText("Match summary").first().waitFor();
+      await host.getByRole("button", { name: "Back to review" }).click();
+      await host.getByRole("heading", { name: "Results" }).waitFor();
+    }
+    await host.getByRole("button", { name: "Board review", exact: true }).click();
     // Start on a dealt board so the privacy assertion also detects an empty renderer.
     const step = host.getByRole("button", { name: "Next event" });
     for (

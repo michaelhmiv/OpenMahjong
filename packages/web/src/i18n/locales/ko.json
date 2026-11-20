@@ -4,8 +4,8 @@
     "status": "draft",
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
-    "generatedAt": "2026-11-20T13:32:28.751Z",
-    "keyCount": 4251,
+    "generatedAt": "2026-11-20T20:09:51.801Z",
+    "keyCount": 4252,
     "model": "google/gemini-2.5-flash",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -43925,6 +43925,20 @@
       },
       "placeholders": [
         "0"
+      ],
+      "dynamic": true
+    },
+    "analyze.v-0-hand-1": {
+      "value": "{0} · 패 {1}",
+      "hash": "2fc05255fd97b35316a46bd46397e1100196e7031aed1c9c5bf58878f4e6bdbd",
+      "status": "draft",
+      "source": {
+        "file": "analyze-ui.ts",
+        "line": 1145
+      },
+      "placeholders": [
+        "0",
+        "1"
       ],
       "dynamic": true
     }

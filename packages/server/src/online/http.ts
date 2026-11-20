@@ -295,7 +295,7 @@ export class OnlineHttp {
       return;
     }
     const match =
-      /^matches\/([\da-f-]{36})(?:\/(actions|room|review|presence|stream))?$/.exec(
+      /^matches\/([\da-f-]{36})(?:\/(actions|room|review|analyze|presence|stream))?$/.exec(
         route,
       );
     if (!match) return fail("Unknown online route", 404);
@@ -315,6 +315,14 @@ export class OnlineHttp {
       json(
         res,
         await this.tables.transaction((db) => this.tables.review(db, p.id, id)),
+      );
+    } else if (method === "GET" && endpoint === "analyze") {
+      this.limit("analyze/" + p.id, 30);
+      json(
+        res,
+        await this.tables.transaction((db) =>
+          this.tables.analyzeRecord(db, p.id, id),
+        ),
       );
     } else if (method === "POST" && endpoint === "actions") {
       const start = performance.now();

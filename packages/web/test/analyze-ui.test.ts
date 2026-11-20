@@ -103,6 +103,13 @@ describe("Analyze UI — Move by move scope (staged game)", () => {
     expect(useHrefs(coachRow)).toEqual(["#t-s2", "#t-s5", "#t-s8"]);
     // The board centre line carries the honba (Repeat 1).
     expect(host.querySelector(".an-eventline")?.textContent).toContain("East 2 · Repeat 1 · 8 tiles left · 2 deposits");
+    // Slider labels (approved frame P2): the position line carries
+    // the thousands comma, and the right label names the round AND
+    // the hand — "East 2 · Hand 4", not the bare "East 2" the first
+    // build shipped.
+    const labs = host.querySelectorAll(".an-slider .labs span");
+    expect(labs[0]?.textContent).toBe("Event 724 of 1,013");
+    expect(labs[1]?.textContent).toBe("East 2 · Hand 4");
     // The board shows four seats: the reviewed seat face-up, the
     // other three as tile backs.
     expect(host.querySelectorAll(".an-seat")).toHaveLength(4);
@@ -175,7 +182,7 @@ describe("Analyze UI — Move by move scope (staged game)", () => {
     const buttons = host.querySelectorAll<HTMLButtonElement>(".an-seg button");
     expect(buttons).toHaveLength(2);
     buttons[1]!.click();
-    expect(host.textContent).toContain("Event 1 of 1013");
+    expect(host.textContent).toContain("Event 1 of 1,013");
     buttons[0]!.click();
     expect(host.textContent).toContain("Match summary");
     ui.destroy();

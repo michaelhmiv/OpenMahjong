@@ -1,0 +1,1879 @@
+{
+ "record": {
+  "v": 2,
+  "engineVersion": 2,
+  "ruleset": {
+   "id": "openmahjong-riichi",
+   "version": 1
+  },
+  "aiVersion": 2,
+  "seed": "online-fixture",
+  "length": "east",
+  "humanSeat": 0,
+  "decisions": [
+   {
+    "type": "discard",
+    "tileId": 129
+   },
+   {
+    "type": "discard",
+    "tileId": 120
+   },
+   {
+    "type": "discard",
+    "tileId": 123
+   },
+   {
+    "type": "discard",
+    "tileId": 114
+   },
+   {
+    "type": "discard",
+    "tileId": 119
+   },
+   {
+    "type": "discard",
+    "tileId": 48
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     42,
+     44
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 28
+   },
+   {
+    "type": "discard",
+    "tileId": 43
+   },
+   {
+    "type": "discard",
+    "tileId": 36
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 58
+   },
+   {
+    "type": "discard",
+    "tileId": 113
+   },
+   {
+    "type": "pon"
+   },
+   {
+    "type": "discard",
+    "tileId": 124
+   },
+   {
+    "type": "pon"
+   },
+   {
+    "type": "discard",
+    "tileId": 74
+   },
+   {
+    "type": "discard",
+    "tileId": 35
+   },
+   {
+    "type": "discard",
+    "tileId": 122
+   },
+   {
+    "type": "discard",
+    "tileId": 53
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 68
+   },
+   {
+    "type": "discard",
+    "tileId": 25
+   },
+   {
+    "type": "discard",
+    "tileId": 92
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     91,
+     99
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 100
+   },
+   {
+    "type": "discard",
+    "tileId": 72
+   },
+   {
+    "type": "discard",
+    "tileId": 104
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 116
+   },
+   {
+    "type": "discard",
+    "tileId": 108
+   },
+   {
+    "type": "discard",
+    "tileId": 62
+   },
+   {
+    "type": "discard",
+    "tileId": 133
+   },
+   {
+    "type": "discard",
+    "tileId": 30
+   },
+   {
+    "type": "discard",
+    "tileId": 33
+   },
+   {
+    "type": "discard",
+    "tileId": 135
+   },
+   {
+    "type": "discard",
+    "tileId": 47
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 61
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     65,
+     70
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 11
+   },
+   {
+    "type": "discard",
+    "tileId": 17
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     15,
+     21
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 5
+   },
+   {
+    "type": "discard",
+    "tileId": 19
+   },
+   {
+    "type": "discard",
+    "tileId": 49
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 93
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     88,
+     98
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 80
+   },
+   {
+    "type": "discard",
+    "tileId": 9
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 118
+   },
+   {
+    "type": "discard",
+    "tileId": 34
+   },
+   {
+    "type": "discard",
+    "tileId": 41
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 117
+   },
+   {
+    "type": "discard",
+    "tileId": 52
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 45
+   },
+   {
+    "type": "discard",
+    "tileId": 121
+   },
+   {
+    "type": "discard",
+    "tileId": 2
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 32
+   },
+   {
+    "type": "discard",
+    "tileId": 87
+   },
+   {
+    "type": "discard",
+    "tileId": 69
+   },
+   {
+    "type": "discard",
+    "tileId": 128
+   },
+   {
+    "type": "discard",
+    "tileId": 1
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "tsumo"
+   },
+   {
+    "type": "discard",
+    "tileId": 132
+   },
+   {
+    "type": "discard",
+    "tileId": 69
+   },
+   {
+    "type": "discard",
+    "tileId": 134
+   },
+   {
+    "type": "discard",
+    "tileId": 2
+   },
+   {
+    "type": "discard",
+    "tileId": 73
+   },
+   {
+    "type": "discard",
+    "tileId": 75
+   },
+   {
+    "type": "discard",
+    "tileId": 130
+   },
+   {
+    "type": "discard",
+    "tileId": 39
+   },
+   {
+    "type": "discard",
+    "tileId": 131
+   },
+   {
+    "type": "discard",
+    "tileId": 120
+   },
+   {
+    "type": "pon"
+   },
+   {
+    "type": "discard",
+    "tileId": 12
+   },
+   {
+    "type": "discard",
+    "tileId": 25
+   },
+   {
+    "type": "discard",
+    "tileId": 38
+   },
+   {
+    "type": "discard",
+    "tileId": 126
+   },
+   {
+    "type": "discard",
+    "tileId": 79
+   },
+   {
+    "type": "discard",
+    "tileId": 78
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 8
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 41
+   },
+   {
+    "type": "discard",
+    "tileId": 51
+   },
+   {
+    "type": "discard",
+    "tileId": 125
+   },
+   {
+    "type": "discard",
+    "tileId": 81
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 54
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 17
+   },
+   {
+    "type": "discard",
+    "tileId": 82
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 57
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 116
+   },
+   {
+    "type": "discard",
+    "tileId": 97
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     94,
+     103
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 62
+   },
+   {
+    "type": "discard",
+    "tileId": 124
+   },
+   {
+    "type": "discard",
+    "tileId": 3
+   },
+   {
+    "type": "discard",
+    "tileId": 61
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 20
+   },
+   {
+    "type": "ron"
+   },
+   {
+    "type": "discard",
+    "tileId": 113
+   },
+   {
+    "type": "discard",
+    "tileId": 117
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 115
+   },
+   {
+    "type": "discard",
+    "tileId": 36
+   },
+   {
+    "type": "discard",
+    "tileId": 135
+   },
+   {
+    "type": "discard",
+    "tileId": 109
+   },
+   {
+    "type": "discard",
+    "tileId": 126
+   },
+   {
+    "type": "discard",
+    "tileId": 124
+   },
+   {
+    "type": "discard",
+    "tileId": 129
+   },
+   {
+    "type": "pon"
+   },
+   {
+    "type": "discard",
+    "tileId": 69
+   },
+   {
+    "type": "discard",
+    "tileId": 132
+   },
+   {
+    "type": "discard",
+    "tileId": 34
+   },
+   {
+    "type": "discard",
+    "tileId": 4
+   },
+   {
+    "type": "discard",
+    "tileId": 101
+   },
+   {
+    "type": "discard",
+    "tileId": 32
+   },
+   {
+    "type": "discard",
+    "tileId": 76
+   },
+   {
+    "type": "discard",
+    "tileId": 19
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 31
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 50
+   },
+   {
+    "type": "discard",
+    "tileId": 79
+   },
+   {
+    "type": "discard",
+    "tileId": 110
+   },
+   {
+    "type": "discard",
+    "tileId": 7
+   },
+   {
+    "type": "discard",
+    "tileId": 1
+   },
+   {
+    "type": "discard",
+    "tileId": 71
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 29
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "tsumo"
+   },
+   {
+    "type": "discard",
+    "tileId": 71
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 1
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 114
+   },
+   {
+    "type": "discard",
+    "tileId": 72
+   },
+   {
+    "type": "discard",
+    "tileId": 2
+   },
+   {
+    "type": "discard",
+    "tileId": 75
+   },
+   {
+    "type": "discard",
+    "tileId": 120
+   },
+   {
+    "type": "pon"
+   },
+   {
+    "type": "discard",
+    "tileId": 132
+   },
+   {
+    "type": "discard",
+    "tileId": 36
+   },
+   {
+    "type": "discard",
+    "tileId": 19
+   },
+   {
+    "type": "discard",
+    "tileId": 109
+   },
+   {
+    "type": "discard",
+    "tileId": 44
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 134
+   },
+   {
+    "type": "discard",
+    "tileId": 133
+   },
+   {
+    "type": "discard",
+    "tileId": 73
+   },
+   {
+    "type": "discard",
+    "tileId": 98
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     100,
+     107
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 35
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 119
+   },
+   {
+    "type": "discard",
+    "tileId": 115
+   },
+   {
+    "type": "discard",
+    "tileId": 47
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 23
+   },
+   {
+    "type": "discard",
+    "tileId": 77
+   },
+   {
+    "type": "discard",
+    "tileId": 124
+   },
+   {
+    "type": "discard",
+    "tileId": 62
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     57,
+     67
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 50
+   },
+   {
+    "type": "discard",
+    "tileId": 6
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     3,
+     9
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 8
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 53
+   },
+   {
+    "type": "discard",
+    "tileId": 131
+   },
+   {
+    "type": "discard",
+    "tileId": 93,
+    "riichi": true
+   },
+   {
+    "type": "discard",
+    "tileId": 88
+   },
+   {
+    "type": "chi",
+    "tileIds": [
+     80,
+     85
+    ]
+   },
+   {
+    "type": "discard",
+    "tileId": 92
+   },
+   {
+    "type": "discard",
+    "tileId": 13
+   },
+   {
+    "type": "discard",
+    "tileId": 113
+   },
+   {
+    "type": "discard",
+    "tileId": 4
+   },
+   {
+    "type": "discard",
+    "tileId": 97
+   },
+   {
+    "type": "discard",
+    "tileId": 83
+   },
+   {
+    "type": "discard",
+    "tileId": 65
+   },
+   {
+    "type": "discard",
+    "tileId": 7
+   },
+   {
+    "type": "discard",
+    "tileId": 116
+   },
+   {
+    "type": "discard",
+    "tileId": 129
+   },
+   {
+    "type": "discard",
+    "tileId": 26
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 64
+   },
+   {
+    "type": "discard",
+    "tileId": 79
+   },
+   {
+    "type": "discard",
+    "tileId": 135
+   },
+   {
+    "type": "discard",
+    "tileId": 42
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 41
+   },
+   {
+    "type": "discard",
+    "tileId": 24
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 25
+   },
+   {
+    "type": "discard",
+    "tileId": 0
+   },
+   {
+    "type": "discard",
+    "tileId": 111
+   },
+   {
+    "type": "discard",
+    "tileId": 12
+   },
+   {
+    "type": "discard",
+    "tileId": 110
+   },
+   {
+    "type": "discard",
+    "tileId": 99
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 96
+   },
+   {
+    "type": "discard",
+    "tileId": 112
+   },
+   {
+    "type": "discard",
+    "tileId": 106
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 56
+   },
+   {
+    "type": "discard",
+    "tileId": 108
+   },
+   {
+    "type": "discard",
+    "tileId": 30
+   },
+   {
+    "type": "discard",
+    "tileId": 28
+   },
+   {
+    "type": "discard",
+    "tileId": 103
+   },
+   {
+    "type": "discard",
+    "tileId": 5
+   },
+   {
+    "type": "discard",
+    "tileId": 43
+   },
+   {
+    "type": "discard",
+    "tileId": 15
+   },
+   {
+    "type": "discard",
+    "tileId": 39
+   },
+   {
+    "type": "discard",
+    "tileId": 101
+   },
+   {
+    "type": "tsumo"
+   },
+   {
+    "type": "discard",
+    "tileId": 112
+   },
+   {
+    "type": "discard",
+    "tileId": 106
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 117
+   },
+   {
+    "type": "discard",
+    "tileId": 19
+   },
+   {
+    "type": "discard",
+    "tileId": 58
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 111
+   },
+   {
+    "type": "discard",
+    "tileId": 108
+   },
+   {
+    "type": "discard",
+    "tileId": 109
+   },
+   {
+    "type": "discard",
+    "tileId": 57
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 130
+   },
+   {
+    "type": "discard",
+    "tileId": 128
+   },
+   {
+    "type": "discard",
+    "tileId": 30
+   },
+   {
+    "type": "discard",
+    "tileId": 132
+   },
+   {
+    "type": "discard",
+    "tileId": 120
+   },
+   {
+    "type": "discard",
+    "tileId": 122
+   },
+   {
+    "type": "discard",
+    "tileId": 124
+   },
+   {
+    "type": "discard",
+    "tileId": 123
+   },
+   {
+    "type": "discard",
+    "tileId": 110
+   },
+   {
+    "type": "discard",
+    "tileId": 34
+   },
+   {
+    "type": "discard",
+    "tileId": 29
+   },
+   {
+    "type": "discard",
+    "tileId": 127
+   },
+   {
+    "type": "discard",
+    "tileId": 31
+   },
+   {
+    "type": "discard",
+    "tileId": 125
+   },
+   {
+    "type": "discard",
+    "tileId": 134
+   },
+   {
+    "type": "discard",
+    "tileId": 116
+   },
+   {
+    "type": "discard",
+    "tileId": 7
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 39
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 72
+   },
+   {
+    "type": "discard",
+    "tileId": 74
+   },
+   {
+    "type": "discard",
+    "tileId": 91,
+    "riichi": true
+   },
+   {
+    "type": "discard",
+    "tileId": 104
+   },
+   {
+    "type": "discard",
+    "tileId": 105
+   },
+   {
+    "type": "discard",
+    "tileId": 0
+   },
+   {
+    "type": "discard",
+    "tileId": 64
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 107
+   },
+   {
+    "type": "discard",
+    "tileId": 66
+   },
+   {
+    "type": "discard",
+    "tileId": 36
+   },
+   {
+    "type": "discard",
+    "tileId": 43
+   },
+   {
+    "type": "discard",
+    "tileId": 53
+   },
+   {
+    "type": "discard",
+    "tileId": 40
+   },
+   {
+    "type": "discard",
+    "tileId": 41
+   },
+   {
+    "type": "discard",
+    "tileId": 103
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 42
+   },
+   {
+    "type": "discard",
+    "tileId": 67
+   },
+   {
+    "type": "discard",
+    "tileId": 100
+   },
+   {
+    "type": "discard",
+    "tileId": 65
+   },
+   {
+    "type": "discard",
+    "tileId": 5
+   },
+   {
+    "type": "discard",
+    "tileId": 102
+   },
+   {
+    "type": "discard",
+    "tileId": 135
+   },
+   {
+    "type": "discard",
+    "tileId": 12
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 99
+   },
+   {
+    "type": "discard",
+    "tileId": 28
+   },
+   {
+    "type": "pass"
+   },
+   {
+    "type": "discard",
+    "tileId": 13
+   },
+   {
+    "type": "discard",
+    "tileId": 84
+   },
+   {
+    "type": "discard",
+    "tileId": 62
+   },
+   {
+    "type": "ron"
+   }
+  ],
+  "walls": [
+   [
+    119,
+    68,
+    105,
+    74,
+    104,
+    0,
+    120,
+    35,
+    12,
+    92,
+    75,
+    123,
+    108,
+    65,
+    37,
+    43,
+    127,
+    87,
+    55,
+    107,
+    48,
+    88,
+    80,
+    124,
+    51,
+    28,
+    67,
+    44,
+    91,
+    100,
+    82,
+    6,
+    59,
+    93,
+    36,
+    129,
+    98,
+    21,
+    25,
+    3,
+    83,
+    42,
+    66,
+    46,
+    11,
+    70,
+    1,
+    53,
+    17,
+    115,
+    14,
+    39,
+    27,
+    20,
+    40,
+    114,
+    62,
+    112,
+    77,
+    125,
+    58,
+    113,
+    15,
+    122,
+    99,
+    22,
+    5,
+    64,
+    72,
+    29,
+    116,
+    10,
+    63,
+    133,
+    30,
+    33,
+    135,
+    47,
+    61,
+    16,
+    19,
+    49,
+    84,
+    9,
+    118,
+    34,
+    41,
+    117,
+    52,
+    45,
+    121,
+    2,
+    32,
+    81,
+    69,
+    128,
+    86,
+    76,
+    57,
+    56,
+    85,
+    73,
+    79,
+    94,
+    8,
+    131,
+    60,
+    78,
+    95,
+    102,
+    109,
+    97,
+    126,
+    90,
+    103,
+    23,
+    101,
+    31,
+    89,
+    106,
+    18,
+    24,
+    96,
+    71,
+    54,
+    134,
+    130,
+    110,
+    38,
+    26,
+    111,
+    13,
+    4,
+    7,
+    132,
+    50
+   ],
+   [
+    131,
+    47,
+    48,
+    103,
+    57,
+    44,
+    90,
+    18,
+    28,
+    89,
+    3,
+    130,
+    61,
+    2,
+    30,
+    68,
+    62,
+    4,
+    132,
+    67,
+    91,
+    13,
+    75,
+    38,
+    5,
+    110,
+    134,
+    111,
+    79,
+    17,
+    58,
+    123,
+    106,
+    25,
+    104,
+    7,
+    102,
+    69,
+    120,
+    45,
+    85,
+    41,
+    32,
+    92,
+    26,
+    15,
+    122,
+    12,
+    63,
+    99,
+    84,
+    11,
+    73,
+    53,
+    6,
+    39,
+    94,
+    8,
+    126,
+    64,
+    78,
+    87,
+    46,
+    81,
+    54,
+    51,
+    71,
+    21,
+    95,
+    56,
+    125,
+    83,
+    116,
+    19,
+    82,
+    77,
+    80,
+    97,
+    124,
+    108,
+    60,
+    20,
+    76,
+    50,
+    23,
+    119,
+    98,
+    22,
+    9,
+    37,
+    34,
+    29,
+    128,
+    27,
+    101,
+    31,
+    40,
+    59,
+    1,
+    114,
+    109,
+    105,
+    66,
+    49,
+    33,
+    118,
+    55,
+    74,
+    14,
+    129,
+    65,
+    127,
+    117,
+    88,
+    121,
+    115,
+    42,
+    96,
+    107,
+    70,
+    36,
+    24,
+    112,
+    86,
+    10,
+    135,
+    133,
+    100,
+    35,
+    16,
+    72,
+    113,
+    43,
+    0,
+    93,
+    52
+   ],
+   [
+    88,
+    135,
+    57,
+    61,
+    14,
+    101,
+    45,
+    31,
+    126,
+    118,
+    85,
+    25,
+    79,
+    5,
+    15,
+    36,
+    122,
+    113,
+    19,
+    123,
+    131,
+    60,
+    0,
+    62,
+    32,
+    72,
+    116,
+    50,
+    20,
+    102,
+    34,
+    76,
+    52,
+    4,
+    129,
+    80,
+    16,
+    7,
+    117,
+    128,
+    94,
+    17,
+    26,
+    115,
+    98,
+    65,
+    30,
+    124,
+    67,
+    109,
+    83,
+    89,
+    53,
+    23,
+    132,
+    56,
+    58,
+    69,
+    84,
+    95,
+    51,
+    24,
+    28,
+    66,
+    9,
+    119,
+    91,
+    110,
+    37,
+    73,
+    59,
+    93,
+    6,
+    1,
+    71,
+    29,
+    43,
+    55,
+    120,
+    103,
+    35,
+    112,
+    77,
+    13,
+    105,
+    100,
+    106,
+    86,
+    44,
+    49,
+    75,
+    11,
+    38,
+    111,
+    41,
+    40,
+    33,
+    3,
+    48,
+    97,
+    63,
+    104,
+    134,
+    46,
+    21,
+    68,
+    107,
+    70,
+    133,
+    8,
+    22,
+    96,
+    108,
+    10,
+    18,
+    47,
+    92,
+    90,
+    114,
+    74,
+    127,
+    27,
+    78,
+    121,
+    42,
+    54,
+    125,
+    12,
+    64,
+    2,
+    39,
+    99,
+    82,
+    81,
+    87,
+    130
+   ],
+   [
+    11,
+    2,
+    57,
+    35,
+    77,
+    75,
+    93,
+    81,
+    41,
+    51,
+    73,
+    101,
+    85,
+    132,
+    123,
+    72,
+    25,
+    10,
+    23,
+    54,
+    33,
+    94,
+    32,
+    87,
+    9,
+    109,
+    46,
+    124,
+    121,
+    68,
+    98,
+    24,
+    28,
+    100,
+    71,
+    107,
+    119,
+    1,
+    40,
+    86,
+    114,
+    88,
+    120,
+    7,
+    80,
+    34,
+    44,
+    30,
+    50,
+    59,
+    4,
+    69,
+    58,
+    78,
+    3,
+    29,
+    67,
+    133,
+    61,
+    36,
+    19,
+    64,
+    27,
+    134,
+    6,
+    104,
+    62,
+    89,
+    115,
+    47,
+    22,
+    37,
+    8,
+    92,
+    49,
+    53,
+    131,
+    52,
+    20,
+    13,
+    113,
+    105,
+    97,
+    83,
+    65,
+    111,
+    116,
+    129,
+    26,
+    126,
+    79,
+    135,
+    42,
+    108,
+    70,
+    48,
+    0,
+    127,
+    12,
+    110,
+    99,
+    96,
+    112,
+    106,
+    56,
+    128,
+    60,
+    15,
+    103,
+    5,
+    43,
+    14,
+    39,
+    45,
+    63,
+    17,
+    84,
+    117,
+    130,
+    102,
+    38,
+    16,
+    125,
+    66,
+    122,
+    90,
+    18,
+    118,
+    95,
+    82,
+    74,
+    21,
+    76,
+    91,
+    55,
+    31
+   ],
+   [
+    36,
+    132,
+    81,
+    87,
+    91,
+    11,
+    120,
+    106,
+    107,
+    117,
+    22,
+    5,
+    67,
+    72,
+    86,
+    55,
+    93,
+    74,
+    58,
+    0,
+    7,
+    111,
+    52,
+    16,
+    104,
+    2,
+    108,
+    128,
+    66,
+    109,
+    134,
+    90,
+    1,
+    112,
+    13,
+    15,
+    14,
+    59,
+    31,
+    80,
+    53,
+    99,
+    79,
+    9,
+    61,
+    45,
+    78,
+    105,
+    38,
+    20,
+    34,
+    96,
+    3,
+    63,
+    73,
+    19,
+    21,
+    130,
+    68,
+    124,
+    57,
+    88,
+    122,
+    30,
+    123,
+    85,
+    10,
+    44,
+    83,
+    110,
+    101,
+    29,
+    127,
+    8,
+    125,
+    76,
+    116,
+    54,
+    39,
+    40,
+    25,
+    56,
+    70,
+    35,
+    69,
+    64,
+    94,
+    114,
+    41,
+    43,
+    26,
+    118,
+    100,
+    103,
+    42,
+    102,
+    135,
+    65,
+    4,
+    49,
+    133,
+    12,
+    98,
+    28,
+    33,
+    84,
+    62,
+    46,
+    71,
+    129,
+    17,
+    92,
+    77,
+    121,
+    6,
+    50,
+    75,
+    60,
+    27,
+    24,
+    115,
+    89,
+    32,
+    51,
+    95,
+    82,
+    119,
+    113,
+    97,
+    18,
+    37,
+    126,
+    47,
+    131,
+    48,
+    23
+   ]
+  ]
+ },
+ "expected": {
+  "finals": [
+   36000,
+   11700,
+   30700,
+   21600
+  ],
+  "decisions": 296,
+  "hands": 5
+ }
+}

@@ -706,7 +706,13 @@ structure and its light shell are retired.
   for rated games, a rating block (before → after per player); a
   rating voided by the server shows the unrated line with the
   server-supplied reason instead. Friendly results offer a rematch.
-  Analyze is the existing Board review, unchanged.
+  Board review is the existing replay, unchanged. Analyze (owner
+  ruling 2026-11-20, issue #106) adds the two-scope grader beside
+  Board review on finished riichi tables: the server hands a
+  participant the finished game's complete record (committed walls
+  + the full decision log) at `GET /api/online/matches/:id/analyze`,
+  participants of finished games only, and the entry renders only
+  when that record is fetchable.
 - **Copy.** Factual only (§7 applies in full): no copy states the
   ranked abandonment settlement (unruled) and nothing says Ranked
   is closed or opening later. "Bot" never "AI".

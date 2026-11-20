@@ -622,6 +622,38 @@ export class OnlineTables {
     };
   }
 
+  /** The complete record Analyze grades (issue #106): the SavedGame
+   *  the client grader consumes, rebuilt from the match journal —
+   *  the committed walls plus every seat's decision in the engine's
+   *  own request order (TableEngine's review-mode positions).
+   *  Finished riichi tables only, participants only: an unfinished
+   *  table or a variant hands out nothing, and a non-participant
+   *  gets the same 404 as a missing table. The record carries no
+   *  field beyond the finished-game archive (journal walls, journal
+   *  steps, pinned versions) plus the requester's own seat. */
+  async analyzeRecord(db: Db, actor: string, id: string) {
+    const room = await lockRoom(db, id);
+    const me = member(await seatsOf(db, id), actor);
+    if (room.state !== "finished")
+      return fail("Analysis opens after final settlement", 409);
+    if (room.variant !== "riichi")
+      return fail("Analysis grades riichi games only", 409);
+    const engine = new TableEngine(room, room.journal!, true);
+    const versions = room.journal!.versions!;
+    return {
+      v: 2,
+      engineVersion: versions.engine,
+      ruleset: { id: versions.rules, version: versions.rulesVersion },
+      aiVersion: versions.bot,
+      seed: "online-" + room.id,
+      length: room.length as "east" | "south",
+      humanSeat: me.seat,
+      decisions: engine.positions.map((p) => p.action),
+      walls: room.journal!.walls,
+      id: room.id,
+    };
+  }
+
   async action(
     db: Db,
     actor: string,
