@@ -1,9 +1,11 @@
 import { browserLaunchOptions } from "./browser-harness.mjs";
 /** Analyze captures (brief-analyze-v1 acceptance): the staged game
  * om-analyze-1 opened from Games → details → Analyze; Overall at the
- * top and scrolled, Move by move at decision 420 (the staged riichi
- * miss, event 723 of 1013), at 390 and 412. Asserts the staged
- * numbers render before shooting. */
+ * top, scrolled, at the key-moments band, and at the end; Move by
+ * move at decision 420 (the staged riichi miss, event 723 of 1013)
+ * plus its below-the-fold bottom (score strip, slider, nav buttons,
+ * footer note), at 390 and 412. Asserts the staged numbers render
+ * before shooting. */
 import assert from "node:assert/strict";
 import { readFileSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
@@ -83,6 +85,18 @@ try {
     });
     await page.waitForTimeout(250);
     await page.screenshot({ path: resolve(out, `overall-${width}-mid.png`) });
+    // Key moments band: it sits between the score chart and the
+    // per-player detail, a band the fixed scrolls step over — scroll
+    // its section label into view and photograph the band itself.
+    const momentsLabel = screen.locator(".an-seclab", { hasText: "Key moments" });
+    await momentsLabel.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(250);
+    const momentsBox = await momentsLabel.boundingBox();
+    assert.ok(
+      momentsBox && momentsBox.y >= 0 && momentsBox.y < 844,
+      "key moments band scrolled into view",
+    );
+    await page.screenshot({ path: resolve(out, `overall-${width}-moments.png`) });
     await screen.evaluate((node) => {
       const scroller = node.querySelector(".an-screen") ?? node;
       scroller.scrollTop = 100000;
@@ -117,11 +131,44 @@ try {
     );
     assert.ok(movesText.includes("1,300"), "staged dama value renders");
     assert.ok(movesText.includes("2,300"), "staged riichi value renders");
+    // Compare-row attribution (approved frame P2): the Played row
+    // names the played discard with its own wait; the Coach row
+    // names the coach's discard and carries the riichi line's wait;
+    // the board centre line carries the honba.
     assert.ok(
-      movesText.includes("Discard 9 of bamboo"),
-      "coach long tile name renders (not engine notation)",
+      movesText.includes("discard 9 of bamboo, no riichi."),
+      "played row names the played discard (long tile name, not engine notation)",
     );
+    assert.ok(
+      movesText.includes("Wait 3 of bamboo (1 unseen)"),
+      "played row carries the played line's own wait",
+    );
+    assert.ok(
+      movesText.includes("declare riichi, discard 2 of bamboo."),
+      "coach row names the coach's discard",
+    );
+    assert.ok(
+      movesText.includes("Wait 5 of bamboo (3 unseen) + 8 of bamboo (3 unseen) — 6 unseen, two-sided."),
+      "coach row carries the riichi line's wait",
+    );
+    assert.ok(movesText.includes("Repeat 1"), "board centre line carries the honba");
     await page.screenshot({ path: resolve(out, `moves-${width}-419.png`) });
+    // Moves bottom: the score strip, slider, nav buttons and footer
+    // note sit below the fold at this decision — scroll the screen
+    // to its end and photograph them too.
+    assert.ok(movesText.includes("Previous decision"), "decision nav renders");
+    assert.ok(movesText.includes("Next event"), "event nav renders");
+    assert.ok(
+      movesText.includes("Unseen copies may be in opponents' hands"),
+      "moves footer note renders",
+    );
+    await screen.evaluate((node) => {
+      const scroller = node.querySelector(".an-screen") ?? node;
+      scroller.scrollTop = 100000;
+      node.scrollTop = 100000;
+    });
+    await page.waitForTimeout(250);
+    await page.screenshot({ path: resolve(out, `moves-${width}-419-bottom.png`) });
     assert.deepEqual(errors, [], `page errors at ${width}: ${errors.join("; ")}`);
     await ctx.close();
     console.log(`analyze captures at ${width}: ok`);
