@@ -934,9 +934,13 @@ export async function onlineApp(root: HTMLElement) {
     action: (kind: string, seat?: number) => Promise<void>) {
     const occupant = s.seats.find((p) => p.seat === seatIdx);
     const row = el("div", "", "mp-seat");
+    // C16 (fix round 2): a seat is a compact tile object (§15) — the
+    // wind chip and identity ride a top row inside the tile, and the
+    // status/action sits under it, instead of one full-width strip.
+    const top = el("div", "", "mp-seat-top");
     const wch = el("span", "", "wch" + (seatIdx === 0 ? " dealer" : ""));
     wch.append(el("span", windKanji[seatIdx]!, "kj"));
-    row.append(wch);
+    top.append(wch);
     const who = el("span", "", "who");
     const isMe = occupant?.seat === s.seat;
     const name = occupant
@@ -956,7 +960,8 @@ export async function onlineApp(root: HTMLElement) {
     const sub = el("span", subParts.join(" · "), "s");
     sub.style.display = "block";
     who.append(sub);
-    row.append(who);
+    top.append(who);
+    row.append(top);
     if (!occupant) {
       if (kind === "custom" && s.host)
         row.append(button(tx("online.seat.add-bot", "Add bot"), () => action("bot"), "mini"));
@@ -1000,16 +1005,20 @@ export async function onlineApp(root: HTMLElement) {
     err.setAttribute("role", "alert");
     content.append(err);
     currentError = err;
-    for (let i = 0; i < 4; i++) content.append(seatRow(s, i, kind, action));
+    const seats = el("div", "", "mp-seats");
+    for (let i = 0; i < 4; i++) seats.append(seatRow(s, i, kind, action));
+    content.append(seats);
     if (s.origin === "custom" && s.host && s.invite) {
       const inv = el("div", "", "mp-invite");
-      const link = el("input", "", "lnk");
-      link.readOnly = true;
-      link.value = location.origin + location.pathname + "#/join/" + s.invite;
+      // C16 (fix round 2): the link is text, not an input — an input
+      // cannot wrap, so the URL truncated where it met the button.
+      // As wrapped text it shows in full above the Copy button.
+      const inviteUrl = location.origin + location.pathname + "#/join/" + s.invite;
+      const link = el("div", inviteUrl, "lnk");
       link.setAttribute("aria-label", tx("online.waiting.invite-link", "Invite link"));
       const copy = el("button", tx("online.waiting.copy-invite", "Copy invite"), "mini");
       copy.type = "button";
-      copy.onclick = () => void navigator.clipboard.writeText(link.value);
+      copy.onclick = () => void navigator.clipboard.writeText(inviteUrl);
       inv.append(link, copy);
       content.append(inv);
       const toggle = el("div", "", "mp-toggle");
@@ -1201,21 +1210,18 @@ export async function onlineApp(root: HTMLElement) {
           document.createTextNode("  "),
         );
       } else {
-        chipEl.append(
-          el("span", windKanji[p.seatWind - 27]!, "kj"),
-          document.createTextNode(" "),
-        );
+        // B6 (fix round 2): no whitespace text nodes in the chip —
+        // as flex items they each consumed a gap slot plus their own
+        // width, starving the name. The chip's flex gap alone spaces
+        // wind, name, stick/bot and score.
+        chipEl.append(el("span", windKanji[p.seatWind - 27]!, "kj"));
         const nm = el("span", seatName(seat), "nm");
         chipEl.append(nm);
-        if (p.riichi) {
-          chipEl.append(document.createTextNode(" "));
-          chipEl.append(el("span", "", "mp-stick"));
-        }
+        if (p.riichi) chipEl.append(el("span", "", "mp-stick"));
         if (meta?.covered) {
           const bot = el("span", tx("online.seat.bot", "Bot"), "bot");
           chipEl.append(document.createTextNode(" · "), bot);
         }
-        chipEl.append(document.createTextNode("  "));
       }
       chipEl.append(el("b", fmt(p.score)));
       return chipEl;

@@ -67,21 +67,34 @@
 .mp-facts .row { display: flex; justify-content: space-between; font-size: 14px; padding: 7px 0; border-top: 1px solid var(--line); }
 .mp-facts .row .k { color: var(--dim); }
 .mp-facts .row .v { font-weight: 600; }
-/* Waiting seats: medium tile objects (design rules section 15). */
-.mp-seat { display: flex; align-items: center; gap: 12px; background: var(--tint); color: var(--on-tint); border-radius: 6px; box-shadow: var(--tint-lit), var(--tint-shadow); padding: 7px 12px; margin-top: 8px; }
+/* Waiting seats: medium tile objects (design rules section 15).
+   C16 (fix round 2): the seats sit in a 2x2 grid of compact tiles —
+   the scorekeeper's seat grammar (section 16) — instead of four
+   full-width strips that read as a list. Each tile stacks its
+   identity row over its status/action, which anchors to the tile's
+   foot so a grid row's tiles line up. */
+.mp-seats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.mp-seat { display: flex; flex-direction: column; align-items: stretch; gap: 6px; background: var(--tint); color: var(--on-tint); border-radius: 6px; box-shadow: var(--tint-lit), var(--tint-shadow); padding: 8px 10px; margin-top: 0; }
+.mp-seat-top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.mp-seat > .mini, .mp-seat > .st, .mp-seat > .pillbtn { margin-top: auto; }
+.mp-seat .mini { width: 100%; }
+.mp-seat .pillbtn.mp-ready { width: 100%; }
 .mp-seat .wch { width: 34px; height: 46px; flex: 0 0 34px; background: var(--face); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #22252b; box-shadow: 0 1px 2px rgba(0,0,0,0.35); }
 .mp-seat .wch.dealer { box-shadow: inset 0 0 0 2px var(--chun), 0 1px 2px rgba(0,0,0,0.35); }
 .mp-seat .wch.dealer .kj { color: var(--chun); }
 .mp-seat .who { flex: 1; min-width: 0; }
-.mp-seat .who .n { font-size: 15px; font-weight: 600; }
+.mp-seat .who .n { font-size: 15px; font-weight: 600; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mp-seat .who .s { font-size: 12px; color: var(--tint-sub); margin-top: 1px; }
 .mp-seat .st { font-size: 13px; font-weight: 700; }
 .mp-seat .st.wait { color: var(--tint-sub); font-weight: 600; }
 .mp-seat .mini { height: 44px; border: none; border-radius: 6px; background: var(--panel); color: var(--ink); font-size: 13px; font-weight: 600; padding: 0 12px; position: relative; font-family: inherit; cursor: pointer; }
 .mp-seat .pillbtn.mp-ready { height: 44px; padding: 0 16px; flex: 0 0 auto; }
-.mp-invite { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
-.mp-invite .lnk { flex: 1; min-width: 0; min-height: 44px; font-size: 12.5px; color: var(--dim); white-space: normal; overflow-wrap: anywhere; line-height: 1.4; background: none; border: none; font-family: inherit; padding: 0; }
-.mp-invite .mini { height: 44px; border: none; border-radius: 6px; background: var(--bg); color: var(--ink); font-size: 13px; font-weight: 600; padding: 0 12px; font-family: inherit; cursor: pointer; flex: 0 0 auto; }
+/* C16 (fix round 2): the invite stacks — the full link as wrapped
+   text at a 44px reading height, the Copy button on its own line
+   under it — so the URL never truncates against the button. */
+.mp-invite { display: flex; flex-direction: column; align-items: stretch; gap: 8px; margin-top: 14px; }
+.mp-invite .lnk { min-height: 44px; display: flex; align-items: center; font-size: 12.5px; color: var(--dim); white-space: normal; overflow-wrap: anywhere; line-height: 1.4; }
+.mp-invite .mini { height: 44px; border: none; border-radius: 6px; background: var(--bg); color: var(--ink); font-size: 13px; font-weight: 600; padding: 0 12px; font-family: inherit; cursor: pointer; }
 .mp-sheet-actions { display: flex; gap: 10px; margin-top: 16px; }
 .mp-sheet-actions .pillbtn { flex: 1 1 0; height: 48px; }
 .mp-sheet-actions .pillbtn.ghost { height: 48px; }
@@ -92,9 +105,14 @@
 .mp-clockrow .t { font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
 /* C20: the correspondence row is one phrase ("Correspondence · No
    time limit", design rules section 20) on one line — never a narrow
-   two-line column stretching the centre panel. */
+   two-line column stretching the centre panel.
+   C20 residual (fix round 2): at 12.5px the one line measured
+   ~183px against the 168px centre panel and spilled past its rounded
+   edges onto the felt. At the 11px floor the phrase measures ~161px
+   and fits inside the panel; the row is capped at the panel width. */
+.mp-clockrow { max-width: 100%; }
 .mp-clockrow.corr { justify-content: center; }
-.mp-clockrow.corr .who { font-size: 12.5px; white-space: nowrap; }
+.mp-clockrow.corr .who { font-size: 11px; white-space: nowrap; }
 .mp-netstrip { background: var(--panel-hi); color: var(--ink); font-size: 12.5px; font-weight: 600; text-align: center; padding: 6px 10px; border-radius: 10px; margin: 2px 2px 0; }
 .mp-lastline { font-size: 12.5px; color: var(--dim); text-align: center; padding: 4px 10px 0; }
 .mp-coverbar { display: flex; align-items: center; gap: 12px; background: var(--panel-hi); border-radius: 14px; padding: 10px 12px 10px 14px; margin: 0 2px 10px; }
@@ -110,7 +128,19 @@
    them. The side chips now share the row as flex items that can
    shrink (min-width: 0), the centre chip is capped to the middle
    third, and the name ellipsises INSIDE its chip as a last resort. */
-.bandtop .chip { min-width: 0; display: flex; align-items: center; gap: 4px; }
+/* B6 (fix round 2): the band uses the table's full width — the
+   online bandtop bleeds into the table's 10px side padding (this
+   sheet loads only for the online table) — and the chips run at the
+   11px floor with tight padding so a 15-character name fits whole:
+   measured demand for wind + 15-char name + score is ~128px of the
+   ~130px third. The name ellipsises only past that (very long or
+   very wide names, or a name sharing its chip with the riichi stick
+   or a Bot tag). The name span carries 2px of right padding as ink
+   room: at this tracking the final glyph's ink overhangs its measured
+   advance by ~1px, and without the room the overflow clip shaves the
+   last letter (a round letter reads as its open half). */
+.bandtop { margin: 0 -10px; }
+.bandtop .chip { min-width: 0; display: flex; align-items: center; gap: 1px; padding: 5px 3px; font-size: 11px; }
 .bandtop .chip:first-child { flex: 0 1 auto; margin-right: auto; }
 .bandtop .chip:last-child { flex: 0 1 auto; margin-left: auto; }
 /* The shared sheet centres the middle chip absolutely (.chip.west);
@@ -118,7 +148,7 @@
    it sits in the flex row like the others and shrinks with them. */
 .bandtop .chip.west { position: static; transform: none; flex: 0 1 auto; }
 .chip .nm { display: inline-block; min-width: 0; max-width: 86px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
-.bandtop .chip .nm { flex: 0 1 auto; }
+.bandtop .chip .nm { flex: 0 1 auto; font-size: 11px; letter-spacing: -0.09em; max-width: 150px; padding-right: 2px; }
 .bandtop .chip b { flex: 0 0 auto; }
 /* A riichi player's chip carries the point stick itself (the shipped
    .stick object at chip scale) instead of the word, so wind + name +

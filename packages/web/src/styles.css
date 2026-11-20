@@ -504,6 +504,14 @@ html.large .pond.ownpond { width: calc(6 * 22px + 5 * 1.5px + 6px); }
 .page li { margin-bottom: 4px; }
 .page a { color: var(--ink); }
 .page p:has(> a:only-child) a { display: inline-flex; align-items: center; min-height: 44px; }
+/* C8 (fix round 2): the About page distributes its three groups over
+   the full screen height instead of ending ~65% down with empty felt
+   below: the page is a flex column and each section head takes an
+   equal share of the free space above it (padding keeps the shipped
+   18px gap when the content is taller than the screen and the auto
+   margins collapse). */
+.page.aboutpage { display: flex; flex-direction: column; }
+.page.aboutpage > h3 { margin-top: auto; padding-top: 18px; }
 
 .setrow {
   display: flex; align-items: center; justify-content: space-between; gap: 14px;
@@ -675,7 +683,15 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 .dgrid .cell.sel { transform: translateY(-4px); }
 .dgrid .cell.sel .tile { box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--state); border-radius: 6px; }
 .dnote { font-size: 13px; color: var(--dim); text-align: center; margin-top: 12px; }
-.tspacer { flex: 1 1 auto; }
+/* B9 (fix round 2): the spacer no longer absorbs the stage. PR #98
+   centred .lstage, but this flex-grow spacer (plus .revctl's
+   margin-top:auto) consumed all free space, so the step card stayed
+   pinned to the top with the controls at the bottom and ~60% empty
+   felt between. The spacer is now a fixed gap and the stage's
+   justify-content:center centres the whole column — card, dots and
+   controls — as one group. */
+.tspacer { flex: 0 0 10px; }
+.lstage .revctl { margin-top: 0; }
 .dots { display: flex; gap: 8px; justify-content: center; padding: 14px 0 4px; }
 .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
 .dots i.done { background: var(--state); }
@@ -925,14 +941,18 @@ html.large #table.armed .handrow .drawn { transform: translateY(-12px); }
 .i18n-head { height: 52px; flex: 0 0 52px; display: flex; align-items: center; gap: 6px; padding: 0 14px 0 8px; }
 .i18n-back { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: none; border: none; color: var(--ink); font-size: 30px; font-weight: 600; line-height: 1; font-family: "Figtree", sans-serif; }
 .i18n-head h1 { font-family: "Fraunces", Georgia, serif; font-size: 20px; font-weight: 600; line-height: 1.2; }
-.i18n-page { flex: 1; overflow-y: auto; padding: 2px 22px 26px; }
+.i18n-page { flex: 1; overflow-y: auto; padding: 2px 22px 26px; display: flex; flex-direction: column; }
+/* C7 (fix round 2): the footnotes anchor to the foot of the screen
+   instead of floating directly under the list with ~40% empty felt
+   below them — the first note takes the page's free space above it. */
+.i18n-list + .i18n-note { margin-top: auto; }
 /* The current-language value on the More row (shipped .hrow grammar). */
 .i18n-val { margin-left: auto; font-size: 15px; color: var(--dim); font-weight: 600; white-space: nowrap; }
 /* Language list: the medium de-boxed list (design rules §15) — one
    container, hairline dividers, type hierarchy, no boxes. Rows are
    56px tall, clearing the 44px floor. */
 .i18n-list { margin-top: 6px; }
-.i18n-row { display: flex; align-items: center; gap: 12px; width: 100%; background: none; border: none; border-top: 1px solid var(--line); color: inherit; font: inherit; text-align: left; padding: 12px 2px; height: 63px; min-height: 63px; box-sizing: border-box; cursor: pointer; }
+.i18n-row { display: flex; align-items: center; gap: 12px; width: 100%; background: none; border: none; border-top: 1px solid var(--line); color: inherit; font: inherit; text-align: left; padding: 12px 2px; height: 63px; min-height: 63px; max-height: 63px; box-sizing: border-box; cursor: pointer; }
 .i18n-row .nm { font-size: 15px; font-weight: 600; }
 .i18n-row .en { font-size: 13px; color: var(--dim); margin-top: 2px; }
 .i18n-row.cur .nm { font-weight: 700; }

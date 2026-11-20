@@ -300,7 +300,10 @@ try {
     // Core 5 shipped as machine translations (owner ruling Nov 19, 2026):
     // every non-English row carries the machine-translation mark.
     assert.deepEqual(rows, [
-      "English",
+      // N7 (fix round 2): every row is two lines — native name over
+      // English name — including English itself, so all rows render
+      // at one height.
+      "English\nEnglish",
       "日本語\nJapanese · Machine translated",
       "한국어\nKorean · Machine translated",
       "简体中文\nSimplified Chinese · Machine translated",
