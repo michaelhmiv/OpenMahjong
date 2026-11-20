@@ -11,10 +11,11 @@ import { mountBoardReview } from "../src/board-review-ui.js";
  * 2026-11-17; approved set: mahjong-prep/renderings/calc-v7-carryacross).
  * These pin the structural claims the approval rested on: the layer's
  * cascade position, the tint tokens, the bare back control, the
- * Fraunces title role, the three calc-v7 QC fixes (F1 distlab spans,
- * Check 6 ghost height, E1 disabled Confirm), gold discipline inside
- * the new sheet, the in-game-table carve-out, and the board-review
- * dealer mark that the CSS keys off.
+ * Fraunces title role, the calc-v7 QC fixes (F1 distlab spans,
+ * Check 6 ghost height; E1's gold-disabled fix superseded by the
+ * 2026-11-20 ruling that took gold off the calculator Confirm),
+ * gold discipline inside the new sheet, the in-game-table
+ * carve-out, and the board-review dealer mark that the CSS keys off.
  */
 
 const WEB = "packages/web";
@@ -67,7 +68,6 @@ describe("medium surface system: cascade and tokens", () => {
       [
         "#1c2a20",
         "#33503f",
-        "#4d4630", // E1 disabled-on-gold olive (measured 4.76:1)
         "#9e2b25",
         "#a7c0a9",
         "#bf3b34",
@@ -122,19 +122,35 @@ describe("medium surface system: locked structure", () => {
     expect(rule!.body).toContain("border-radius: 6px");
   });
 
-  it("keeps the E1 fix: the disabled calculator Confirm clears 4.5:1 on gold", () => {
-    const rule = bySelector(
-      ".learning-shell.table-tools .calculator-output button.primary:last-of-type:disabled",
+  it("the calculator Confirm wears the standard commit treatment (owner ruling 2026-11-20)", () => {
+    // The E1 gold-disabled fix is superseded: gold came off the
+    // Confirm entirely (design rules section 2 — a calculator
+    // Confirm is not a gold role). No override rule may remain for
+    // the old selector in either state, and the single-use olive
+    // is retired with it. The Confirm falls under the shared
+    // button.primary rule (the sheet tint) like every other commit.
+    expect(
+      bySelector(
+        ".learning-shell.table-tools .calculator-output button.primary:last-of-type",
+      ),
+    ).toBeUndefined();
+    expect(
+      bySelector(
+        ".learning-shell.table-tools .calculator-output button.primary:last-of-type:disabled",
+      ),
+    ).toBeUndefined();
+    expect(css.toLowerCase()).not.toContain("#4d4630");
+    const primary = bySelector(
+      ".learning-shell.table-tools .tools-content button.primary",
     );
-    expect(rule).toBeDefined();
-    expect(rule!.body).toContain("color: #4d4630");
+    expect(primary).toBeDefined();
+    expect(primary!.body).toContain("background: var(--sheet)");
+    expect(primary!.body).toContain("color: var(--on-tint)");
   });
 
-  it("gold appears in medium.css only on the calculator Confirm, exactly as shipped", () => {
+  it("gold appears nowhere in medium.css (owner ruling 2026-11-20)", () => {
     const goldRules = mediumRules.filter((r) => r.body.includes("var(--gold)"));
-    expect(goldRules.map((r) => r.selector)).toEqual([
-      ".learning-shell.table-tools .calculator-output button.primary:last-of-type",
-    ]);
+    expect(goldRules).toEqual([]);
     expect(css.toLowerCase()).not.toContain("#d9b45c");
   });
 

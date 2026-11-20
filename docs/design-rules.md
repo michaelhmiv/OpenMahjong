@@ -31,14 +31,16 @@ an unrecorded token, font, or layout value in code is a defect.
 | Dim | `#a9bda9` | Secondary text (sage-cream) |
 | Gold | `#d9b45c` | See §2 — quarantined |
 | On-gold text | `#1c2a20` | Text on gold fills (e.g. Play label) |
-| Calculator Confirm disabled text | `#4d4630` | SINGLE USE ONLY: disabled text on the gold calculator Confirm in `medium.css` (§16). The shipped `--dim` measured 1.01:1 on gold; this muted dark olive measures 4.76:1 (calc-v7 QC fix). Not a general text colour; no other surface may use it |
 | Decisive | `#d63c2e` | Ron / Riichi / Tsumo, riichi markers, latest-discard ring. Flat 2px ring, never a glow |
 | Tile face | `#f6f1e4` | Unchanged since v5 |
 | Tile back | `#33503f` | Edge `#223528` |
 
 Retired: plum ground `#231f2e`, plum panel `#2f2a3d`, plum tile backs
 `#554a6b`, and the sky-blue accent `#46a5e0` must not appear anywhere
-in the web package. There is no light theme.
+in the web package. There is no light theme. Also retired (owner
+ruling, 2026-11-20): the calculator Confirm's gold fill and its
+single-use disabled-text olive `#4d4630` — the Confirm wears the
+§15 sheet tint now (§2, §16); neither may reappear.
 
 ## 2. Gold discipline
 
@@ -59,6 +61,12 @@ Gold may appear ONLY on:
   extended to document pages; §18 — two per page since the
   full-audit fix round (F14): one in the site header, one in the
   closing panel, label in on-gold `#1c2a20`)
+
+The calculator's recording Confirm is not on this list and must
+not be added to it (owner ruling, 2026-11-20): it wears the §15
+sheet tint like every other commit verb. The gold fill it shipped
+with in the compact calculator set was inherited from those
+frames, never licensed, and is retired (§16).
 
 Gold must NEVER appear on: body text, stats, scores, labels, pills,
 history rows, settings rows, or state styles. State styles — selection
@@ -512,8 +520,10 @@ then the score-changes panel (sheet; deltas at 22px in ink —
 the sign carries direction, state green is not used for text
 on the sheet), then the payment block in the deep tint with
 its explanation lines (hand value, repeat-counter and deposit
-accounting). Edit returns to value entry; Confirm records.
-Corrections live behind "Correct the breakdown" on this
+accounting). Edit returns to value entry; Confirm records —
+Confirm wears the sheet tint, the §15 commit treatment (owner
+ruling, 2026-11-20: gold came off this button; it is not a §2
+gold role). Corrections live behind "Correct the breakdown" on this
 screen; editing them without applying disables Confirm, as
 before. Simultaneous winners are staged from this screen and
 recorded as one entry.
