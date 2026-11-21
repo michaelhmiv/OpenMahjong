@@ -24,6 +24,7 @@ import {
 export class MemoryStore implements Store {
   readonly users = new Map<string, User>();
   readonly usersByGoogleSub = new Map<string, string>();
+  readonly usersByAppleSub = new Map<string, string>();
   readonly sessions = new Map<string, Session>();
   readonly games = new Map<string, GameRecord>();
   readonly settings = new Map<string, unknown>();
@@ -65,12 +66,44 @@ export class MemoryStore implements Store {
     const user: User = {
       id: randomUUID(),
       googleSub: input.googleSub,
+      appleSub: null,
+      email: null,
       name: input.name,
       avatarUrl: input.avatarUrl,
       createdAt: new Date(),
     };
     this.users.set(user.id, user);
     this.usersByGoogleSub.set(input.googleSub, user.id);
+    return user;
+  }
+
+  async upsertAppleUser(input: {
+    appleSub: string;
+    name: string | null;
+    email: string | null;
+  }): Promise<User> {
+    const existingId = this.usersByAppleSub.get(input.appleSub);
+    if (existingId !== undefined) {
+      const existing = this.users.get(existingId)!;
+      const updated: User = {
+        ...existing,
+        name: input.name ?? existing.name,
+        email: input.email ?? existing.email,
+      };
+      this.users.set(existingId, updated);
+      return updated;
+    }
+    const user: User = {
+      id: randomUUID(),
+      googleSub: null,
+      appleSub: input.appleSub,
+      email: input.email,
+      name: input.name ?? "Player",
+      avatarUrl: null,
+      createdAt: new Date(),
+    };
+    this.users.set(user.id, user);
+    this.usersByAppleSub.set(input.appleSub, user.id);
     return user;
   }
 
@@ -82,7 +115,8 @@ export class MemoryStore implements Store {
     const user = this.users.get(id);
     if (!user) return;
     this.users.delete(id);
-    this.usersByGoogleSub.delete(user.googleSub);
+    if (user.googleSub) this.usersByGoogleSub.delete(user.googleSub);
+    if (user.appleSub) this.usersByAppleSub.delete(user.appleSub);
     for (const [hash, session] of this.sessions) {
       if (session.userId === id) this.sessions.delete(hash);
     }
