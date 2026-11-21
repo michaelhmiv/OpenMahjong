@@ -22,11 +22,27 @@ import {
 
 interface UserRow {
   id: string;
-  google_sub: string;
+  google_sub: string | null;
+  apple_sub: string | null;
+  email: string | null;
   name: string;
   avatar_url: string | null;
   created_at: Date;
 }
+
+function rowToUser(row: UserRow): User {
+  return {
+    id: row.id,
+    googleSub: row.google_sub,
+    appleSub: row.apple_sub,
+    email: row.email,
+    name: row.name,
+    avatarUrl: row.avatar_url,
+    createdAt: row.created_at,
+  };
+}
+
+const USER_COLUMNS = "id, google_sub, apple_sub, email, name, avatar_url, created_at";
 
 interface SessionRow {
   token_hash: string;
@@ -92,34 +108,37 @@ export class PgStore implements Store {
        VALUES ($1, $2, $3, $4)
        ON CONFLICT (google_sub) DO UPDATE
          SET name = EXCLUDED.name, avatar_url = EXCLUDED.avatar_url
-       RETURNING id, google_sub, name, avatar_url, created_at`,
+       RETURNING ${USER_COLUMNS}`,
       [randomUUID(), input.googleSub, input.name, input.avatarUrl],
     );
-    const row = rows[0]!;
-    return {
-      id: row.id,
-      googleSub: row.google_sub,
-      name: row.name,
-      avatarUrl: row.avatar_url,
-      createdAt: row.created_at,
-    };
+    return rowToUser(rows[0]!);
+  }
+
+  async upsertAppleUser(input: {
+    appleSub: string;
+    name: string | null;
+    email: string | null;
+  }): Promise<User> {
+    const { rows } = await this.pool.query<UserRow>(
+      `INSERT INTO users (id, apple_sub, email, name, avatar_url)
+       VALUES ($1, $2, $3, COALESCE($4, 'Player'), NULL)
+       ON CONFLICT (apple_sub) DO UPDATE
+         SET name = CASE WHEN $4::text IS NULL THEN users.name ELSE $4 END,
+             email = COALESCE(EXCLUDED.email, users.email)
+       RETURNING ${USER_COLUMNS}`,
+      [randomUUID(), input.appleSub, input.email, input.name],
+    );
+    return rowToUser(rows[0]!);
   }
 
   async getUserById(id: string): Promise<User | null> {
     const { rows } = await this.pool.query<UserRow>(
-      `SELECT id, google_sub, name, avatar_url, created_at
-         FROM users WHERE id = $1`,
+      `SELECT ${USER_COLUMNS} FROM users WHERE id = $1`,
       [id],
     );
     const row = rows[0];
     if (!row) return null;
-    return {
-      id: row.id,
-      googleSub: row.google_sub,
-      name: row.name,
-      avatarUrl: row.avatar_url,
-      createdAt: row.created_at,
-    };
+    return rowToUser(row);
   }
 
   async deleteUser(id: string): Promise<void> {

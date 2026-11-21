@@ -10,7 +10,12 @@
 
 export interface User {
   id: string;
-  googleSub: string;
+  /** Google subject id; null for Apple-only accounts. */
+  googleSub: string | null;
+  /** Apple subject id; null for Google-only accounts. */
+  appleSub: string | null;
+  /** Email claim from Apple sign-in when provided; Google stores none. */
+  email: string | null;
   name: string;
   avatarUrl: string | null;
   createdAt: Date;
@@ -90,6 +95,17 @@ export interface Store {
     googleSub: string;
     name: string;
     avatarUrl: string | null;
+  }): Promise<User>;
+  /**
+   * Insert or refresh the user for an Apple subject id. Apple and
+   * Google identities are separate accounts — never merged by email.
+   * `name` is only supplied on a first authorization; when null an
+   * existing name is kept, and a new user falls back to "Player".
+   */
+  upsertAppleUser(input: {
+    appleSub: string;
+    name: string | null;
+    email: string | null;
   }): Promise<User>;
   getUserById(id: string): Promise<User | null>;
   /** Hard delete; games, settings, resume, and sessions cascade (brief A3/B6). */

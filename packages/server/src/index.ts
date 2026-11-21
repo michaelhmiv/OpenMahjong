@@ -10,8 +10,17 @@ import { Pool } from "pg";
 import { OnlineHttp } from "./online/http.js";
 import { OnlineTables } from "./online/service.js";
 import { createApp } from "./app.js";
-import { googleRedirectUri, loadConfig } from "./config.js";
+import {
+  appleAudience,
+  googleAudienceClientIds,
+  googleRedirectUri,
+  loadConfig,
+} from "./config.js";
 import { createGoogleClient } from "./google.js";
+import {
+  createAppleIdTokenVerifier,
+  createGoogleIdTokenVerifier,
+} from "./native-auth.js";
 import { MemoryStore } from "./memory-store.js";
 import { runMigrations } from "./migrations.js";
 import { PgStore } from "./pg-store.js";
@@ -89,7 +98,28 @@ async function main(): Promise<void> {
     );
   }
 
-  const server = createServer(createApp({ store, google, config, online }));
+  // Native sign-in verifiers (iOS brief, Open decision 3). Google's
+  // needs at least one configured client ID to check audiences
+  // against; Apple's needs nothing beyond the bundle-ID audience.
+  const googleAudiences = googleAudienceClientIds(config);
+  const googleTokenVerifier =
+    googleAudiences.length > 0
+      ? createGoogleIdTokenVerifier({ audienceClientIds: googleAudiences })
+      : null;
+  const appleTokenVerifier = createAppleIdTokenVerifier({
+    audience: appleAudience(config),
+  });
+
+  const server = createServer(
+    createApp({
+      store,
+      google,
+      googleTokenVerifier,
+      appleTokenVerifier,
+      config,
+      online,
+    }),
+  );
   server.listen(config.port, () => {
     console.log(`[server] listening on port ${config.port}`);
   });

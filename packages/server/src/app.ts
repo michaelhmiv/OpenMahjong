@@ -29,6 +29,10 @@ import {
 import type { Config } from "./config.js";
 import type { GoogleClient } from "./google.js";
 import type {
+  AppleIdTokenVerifier,
+  GoogleIdTokenVerifier,
+} from "./native-auth.js";
+import type {
   GameRecord,
   GameSummary,
   Session,
@@ -44,6 +48,10 @@ export interface AppDeps {
   online?: OnlineHttp | undefined;
   store: Store;
   google: GoogleClient | null;
+  /** Native Google ID-token verifier; null/absent disables the endpoint (503). */
+  googleTokenVerifier?: GoogleIdTokenVerifier | null;
+  /** Native Apple ID-token verifier; null/absent disables the endpoint (503). */
+  appleTokenVerifier?: AppleIdTokenVerifier | null;
   config: Config;
 }
 
@@ -58,6 +66,8 @@ const MAX_RESUME_BYTES = 2 * 1024 * 1024 + 64 * 1024;
 /** Bound unauthenticated, process-local state even under a sign-in flood. */
 const MAX_PENDING_STATES = 1000;
 const GAME_LIST_LIMIT = 200;
+/** Native sign-in bodies are a token plus small metadata. */
+const MAX_NATIVE_AUTH_BYTES = 16 * 1024;
 
 interface Authed {
   user: User;
@@ -137,7 +147,15 @@ export function createApp(deps: AppDeps): (
   }
 
   async function authenticate(req: IncomingMessage): Promise<Authed | null> {
-    const token = parseCookies(req.headers.cookie).get(SESSION_COOKIE);
+    // Cookie first (web), then the bearer token the native app stores
+    // in its keychain. Both resolve through the same hash lookup.
+    let token = parseCookies(req.headers.cookie).get(SESSION_COOKIE);
+    if (!token) {
+      const header = req.headers.authorization;
+      const match =
+        typeof header === "string" ? /^Bearer\s+(.+)$/i.exec(header) : null;
+      token = match?.[1]?.trim();
+    }
     if (!token) return null;
     const session = await store.getSessionByTokenHash(hashToken(token));
     if (!session) return null;
@@ -180,6 +198,25 @@ export function createApp(deps: AppDeps): (
   }
 
   // -- auth routes --------------------------------------------------------
+
+  function userJson(user: User): Record<string, unknown> {
+    return { id: user.id, name: user.name, avatarUrl: user.avatarUrl };
+  }
+
+  /** The one session-issuance path, shared by web and native sign-in. */
+  async function issueSession(
+    user: User,
+  ): Promise<{ token: string; csrfToken: string }> {
+    const token = newToken();
+    const csrfToken = newToken();
+    await store.createSession({
+      userId: user.id,
+      tokenHash: hashToken(token),
+      csrfToken,
+      expiresAt: new Date(Date.now() + SESSION_TTL_MS),
+    });
+    return { token, csrfToken };
+  }
 
   function handleGoogleStart(res: ServerResponse): void {
     if (!deps.google) {
@@ -244,18 +281,120 @@ export function createApp(deps: AppDeps): (
       name: profile.name,
       avatarUrl: profile.avatarUrl,
     });
-    const token = newToken();
-    await store.createSession({
-      userId: user.id,
-      tokenHash: hashToken(token),
-      csrfToken: newToken(),
-      expiresAt: new Date(Date.now() + SESSION_TTL_MS),
-    });
+    const { token } = await issueSession(user);
     res.writeHead(302, {
       location: `${config.appOrigin}/`,
       "set-cookie": [sessionCookie(token, config.cookieDomain), oauthStateCookie("", true)],
     });
     res.end();
+  }
+
+  function nativeBodyRecord(body: unknown): Record<string, unknown> {
+    if (typeof body !== "object" || body === null || Array.isArray(body)) {
+      throw new ValidationError("request body must be a JSON object");
+    }
+    return body as Record<string, unknown>;
+  }
+
+  function nativeIdToken(body: Record<string, unknown>): string {
+    if (typeof body["idToken"] !== "string" || !body["idToken"]) {
+      throw new ValidationError("idToken is required");
+    }
+    return body["idToken"];
+  }
+
+  async function sendNativeSession(
+    res: ServerResponse,
+    user: User,
+  ): Promise<void> {
+    const { token, csrfToken } = await issueSession(user);
+    res.setHeader("set-cookie", sessionCookie(token, config.cookieDomain));
+    sendJson(res, 200, { token, csrfToken, user: userJson(user) });
+  }
+
+  async function handleGoogleNative(
+    req: IncomingMessage,
+    res: ServerResponse,
+  ): Promise<void> {
+    if (!deps.googleTokenVerifier) {
+      sendError(res, 503, "google native sign-in is not configured");
+      return;
+    }
+    const body = nativeBodyRecord(
+      await readJsonBody(req, MAX_NATIVE_AUTH_BYTES),
+    );
+    const idToken = nativeIdToken(body);
+    let profile;
+    try {
+      profile = await deps.googleTokenVerifier.verifyIdToken(idToken);
+    } catch (err) {
+      console.error("[server] google native verification failed:", err);
+      sendError(res, 401, "google sign-in failed");
+      return;
+    }
+    const user = await store.upsertUser({
+      googleSub: profile.sub,
+      name: profile.name,
+      avatarUrl: profile.avatarUrl,
+    });
+    await sendNativeSession(res, user);
+  }
+
+  async function handleAppleNative(
+    req: IncomingMessage,
+    res: ServerResponse,
+  ): Promise<void> {
+    if (!deps.appleTokenVerifier) {
+      sendError(res, 503, "apple native sign-in is not configured");
+      return;
+    }
+    const body = nativeBodyRecord(
+      await readJsonBody(req, MAX_NATIVE_AUTH_BYTES),
+    );
+    const idToken = nativeIdToken(body);
+    if (typeof body["nonce"] !== "string" || !body["nonce"]) {
+      throw new ValidationError("nonce is required");
+    }
+    // fullName is present only on a first authorization; both parts
+    // are optional strings when the object is present at all.
+    let displayName: string | null = null;
+    if (body["fullName"] !== undefined && body["fullName"] !== null) {
+      const fullName = nativeBodyRecord(body["fullName"]);
+      const parts: string[] = [];
+      for (const key of ["givenName", "familyName"] as const) {
+        const value = fullName[key];
+        if (value === undefined || value === null) continue;
+        if (typeof value !== "string") {
+          throw new ValidationError("fullName fields must be strings");
+        }
+        if (value.trim()) parts.push(value.trim());
+      }
+      displayName = parts.length > 0 ? parts.join(" ") : null;
+    }
+    let profile;
+    try {
+      profile = await deps.appleTokenVerifier.verifyIdToken(
+        idToken,
+        body["nonce"],
+      );
+    } catch (err) {
+      console.error("[server] apple native verification failed:", err);
+      sendError(res, 401, "apple sign-in failed");
+      return;
+    }
+    const user = await store.upsertAppleUser({
+      appleSub: profile.sub,
+      name: displayName,
+      email: profile.email,
+    });
+    await sendNativeSession(res, user);
+  }
+
+  function handleGoogleConfig(res: ServerResponse): void {
+    sendJson(res, 200, {
+      iosClientId: config.googleIosClientId ?? null,
+      serverClientId: config.googleClientId ?? "",
+    });
   }
 
   async function handleSignout(
@@ -288,11 +427,7 @@ export function createApp(deps: AppDeps): (
         return;
       }
       sendJson(res, 200, {
-        user: {
-          id: authed.user.id,
-          name: authed.user.name,
-          avatarUrl: authed.user.avatarUrl,
-        },
+        user: userJson(authed.user),
         csrfToken: authed.session.csrfToken,
       });
       return;
@@ -480,7 +615,9 @@ export function createApp(deps: AppDeps): (
         // Responses include private history, OAuth transactions or CSRF tokens.
         res.setHeader("cache-control", "no-store");
         const apiPath = path === "/api" || path.startsWith("/api/");
-        if (apiPath || path === "/auth/signout") {
+        const nativePath =
+          path.startsWith("/auth/") || path.startsWith("/mobile/");
+        if (apiPath || nativePath) {
           res.setHeader("vary", "Origin");
           const corsOk = req.headers.origin === config.appOrigin;
           if (corsOk) {
@@ -490,7 +627,7 @@ export function createApp(deps: AppDeps): (
           if (method === "OPTIONS") {
             if (corsOk) {
               res.setHeader("access-control-allow-methods", "GET, POST, PUT, DELETE, OPTIONS");
-              res.setHeader("access-control-allow-headers", "content-type, x-csrf-token");
+              res.setHeader("access-control-allow-headers", "content-type, x-csrf-token, authorization");
               res.setHeader("access-control-max-age", "86400");
             }
             res.writeHead(204);
@@ -514,6 +651,18 @@ export function createApp(deps: AppDeps): (
         }
         if (path === "/auth/signout" && method === "POST") {
           await handleSignout(req, res);
+          return;
+        }
+        if (path === "/auth/google/native" && method === "POST") {
+          await handleGoogleNative(req, res);
+          return;
+        }
+        if (path === "/auth/apple/native" && method === "POST") {
+          await handleAppleNative(req, res);
+          return;
+        }
+        if (path === "/mobile/auth/google-config" && method === "GET") {
+          handleGoogleConfig(res);
           return;
         }
         if (path.startsWith("/api/online/")) {
