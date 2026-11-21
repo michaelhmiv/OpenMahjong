@@ -103,15 +103,22 @@ export class PgStore implements Store {
     name: string;
     avatarUrl: string | null;
   }): Promise<User> {
-    const { rows } = await this.pool.query<UserRow>(
+    const { rows } = await this.pool.query<{
+      id: string;
+      google_sub: string;
+      name: string;
+      avatar_url: string | null;
+      created_at: Date;
+    }>(
       `INSERT INTO users (id, google_sub, name, avatar_url)
        VALUES ($1, $2, $3, $4)
        ON CONFLICT (google_sub) DO UPDATE
          SET name = EXCLUDED.name, avatar_url = EXCLUDED.avatar_url
-       RETURNING ${USER_COLUMNS}`,
+       RETURNING id, google_sub, name, avatar_url, created_at`,
       [randomUUID(), input.googleSub, input.name, input.avatarUrl],
     );
-    return rowToUser(rows[0]!);
+    const row = rows[0]!;
+    return { ...rowToUser({ ...row, apple_sub: null, email: null }) };
   }
 
   async upsertAppleUser(input: {

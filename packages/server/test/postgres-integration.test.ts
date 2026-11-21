@@ -40,7 +40,7 @@ describe.skipIf(!connectionString)(
     it("migrates a clean schema and separates historical Riichi and new variant statistics", async () => {
       const { pool, store } = await isolated();
       const applied = await runMigrations(pool);
-      expect(applied).toHaveLength(9);
+      expect(applied).toHaveLength(10);
       expect(await runMigrations(pool)).toEqual([]);
       const user = await store.upsertUser({
         googleSub: "synthetic-pg",
@@ -95,6 +95,38 @@ describe.skipIf(!connectionString)(
       }
       expect((await store.getStats(user.id)).games).toBe(1);
     });
+    it("stores Apple identities separately from Google identities (010)", async () => {
+      const { pool, store } = await isolated();
+      await runMigrations(pool);
+      const first = await store.upsertAppleUser({
+        appleSub: "apple-pg",
+        name: "Apple Player",
+        email: "player@privaterelay.appleid.com",
+      });
+      expect(first.googleSub).toBeNull();
+      expect(first.appleSub).toBe("apple-pg");
+      expect(first.name).toBe("Apple Player");
+      expect(first.email).toBe("player@privaterelay.appleid.com");
+      // Repeat sign-in without a name keeps the captured name and row.
+      const again = await store.upsertAppleUser({
+        appleSub: "apple-pg",
+        name: null,
+        email: null,
+      });
+      expect(again.id).toBe(first.id);
+      expect(again.name).toBe("Apple Player");
+      expect(again.email).toBe("player@privaterelay.appleid.com");
+      const fetched = await store.getUserById(first.id);
+      expect(fetched?.appleSub).toBe("apple-pg");
+      // A Google identity with the same display name is a different row.
+      const google = await store.upsertUser({
+        googleSub: "google-pg",
+        name: "Apple Player",
+        avatarUrl: null,
+      });
+      expect(google.id).not.toBe(first.id);
+      expect(google.appleSub).toBeNull();
+    });
     it("upgrades the prior five migrations without rewriting a historical record and serializes two boots", async () => {
       const { pool, store } = await isolated(),
         dir = await mkdtemp(join(tmpdir(), "om-prior-migrations-"));
@@ -118,7 +150,7 @@ describe.skipIf(!connectionString)(
         runMigrations(pool),
         runMigrations(pool),
       ]);
-      expect(results.map((r) => r.length).sort()).toEqual([0, 4]);
+      expect(results.map((r) => r.length).sort()).toEqual([0, 5]);
       const record = await store.getGame(user.id, id);
       expect(record!.score).toBe(30000);
       expect(record!.stats.winPoints).toBe(5200);
