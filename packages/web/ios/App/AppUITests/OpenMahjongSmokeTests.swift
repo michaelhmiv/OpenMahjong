@@ -68,9 +68,29 @@ final class OpenMahjongSmokeTests: XCTestCase {
         )
         attachScreenshot("02-table")
 
+        // Settle gate — do not touch the table until playback drains.
+        // startGame plays the deal back event by event; every event
+        // re-renders the table (renderTable clears the table element),
+        // and the pause overlay is mounted INTO that same element
+        // (mountOverlay in app.ts), so a Menu tap that lands during
+        // playback opens a pause menu the next render immediately
+        // wipes — the failure mode of this smoke's first CI run (the
+        // table screenshot showed Wall 70; the failure hierarchy
+        // showed Wall 69 with no overlay). The human is always the
+        // East 1 dealer, so the dealer's first draw (Wall 70 → 69) is
+        // the last playback event: after it the runner blocks on the
+        // human's discard and no render can occur without human input.
+        // The 2 s cushion lets onSettled's final render land before
+        // the tap (per-event playback delays are ≤ 260 ms).
+        XCTAssertTrue(
+            waitForText("Wall 69", timeout: 60),
+            "Game never settled on the human's first decision (Wall 69)"
+        )
+        Thread.sleep(forTimeInterval: 2.0)
+
         // Step 3 — leave the game through its own pause menu: Menu →
         // "Quit to home" returns to the Play root.
-        tapHittable(buttons(withExactLabel: "Menu"), "table Menu button")
+        tapMenuButton()
         XCTAssertTrue(
             waitForText("Paused", timeout: 30),
             "Pause overlay never opened from the table Menu"
@@ -173,6 +193,32 @@ final class OpenMahjongSmokeTests: XCTestCase {
             Thread.sleep(forTimeInterval: 0.5)
         }
         XCTFail("Play button never became hittable")
+    }
+
+    /// Tap the table's Menu button low in its frame. The button's AX
+    /// frame is {{12, 0}, {46, 46}} — the table header renders under
+    /// the status bar (viewport-fit=cover), so the frame's center
+    /// (35, 23) sits in the status-bar band where a synthesized tap
+    /// can be swallowed by the system (the first CI run's synthesized
+    /// event record shows the center tap at exactly (35, 23)). The
+    /// bottom of the frame is the point furthest from that band that
+    /// is still on the button.
+    private func tapMenuButton() {
+        let query = buttons(withExactLabel: "Menu")
+        let deadline = Date().addingTimeInterval(30)
+        while Date() < deadline {
+            for index in 0..<query.count {
+                let candidate = query.element(boundBy: index)
+                if candidate.exists && candidate.isHittable {
+                    candidate
+                        .coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.9))
+                        .tap()
+                    return
+                }
+            }
+            Thread.sleep(forTimeInterval: 0.5)
+        }
+        XCTFail("table Menu button never became hittable")
     }
 
     // MARK: - Element helpers
