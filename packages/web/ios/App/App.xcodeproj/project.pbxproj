@@ -17,6 +17,11 @@
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9582B6822FE993A50072D4E8 /* SceneDelegate.swift */; };
 		51DE00000000000000000005 /* OpenMahjongSmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DE00000000000000000004 /* OpenMahjongSmokeTests.swift */; };
+		51DF000000000000000000A2 /* OpenMahjongSecureSessionPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DF000000000000000000A1 /* OpenMahjongSecureSessionPlugin.swift */; };
+		51DF000000000000000000A4 /* OpenMahjongAppleSignInPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DF000000000000000000A3 /* OpenMahjongAppleSignInPlugin.swift */; };
+		51DF000000000000000000A6 /* OpenMahjongGoogleSignInPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DF000000000000000000A5 /* OpenMahjongGoogleSignInPlugin.swift */; };
+		51DF000000000000000000A8 /* OpenMahjongBridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DF000000000000000000A7 /* OpenMahjongBridgeViewController.swift */; };
+		51DF000000000000000000B3 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 51DF000000000000000000B2 /* GoogleSignIn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +37,11 @@
 		9582B6822FE993A50072D4E8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		51DE00000000000000000002 /* AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		51DE00000000000000000004 /* OpenMahjongSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMahjongSmokeTests.swift; sourceTree = "<group>"; };
+		51DF000000000000000000A1 /* OpenMahjongSecureSessionPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMahjongSecureSessionPlugin.swift; sourceTree = "<group>"; };
+		51DF000000000000000000A3 /* OpenMahjongAppleSignInPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMahjongAppleSignInPlugin.swift; sourceTree = "<group>"; };
+		51DF000000000000000000A5 /* OpenMahjongGoogleSignInPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMahjongGoogleSignInPlugin.swift; sourceTree = "<group>"; };
+		51DF000000000000000000A7 /* OpenMahjongBridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMahjongBridgeViewController.swift; sourceTree = "<group>"; };
+		51DF000000000000000000A9 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		958DCC722DB07C7200EA8C5F /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = debug.xcconfig; path = ../debug.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -41,6 +51,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D22ABE92AF431CB00220026 /* CapApp-SPM in Frameworks */,
+				51DF000000000000000000B3 /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +94,11 @@
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
 				504EC3131FED79650016851F /* Info.plist */,
+				51DF000000000000000000A1 /* OpenMahjongSecureSessionPlugin.swift */,
+				51DF000000000000000000A3 /* OpenMahjongAppleSignInPlugin.swift */,
+				51DF000000000000000000A5 /* OpenMahjongGoogleSignInPlugin.swift */,
+				51DF000000000000000000A7 /* OpenMahjongBridgeViewController.swift */,
+				51DF000000000000000000A9 /* App.entitlements */,
 				2FAD9762203C412B000D30F8 /* config.xml */,
 				50B271D01FEDC1A000F3C39B /* public */,
 			);
@@ -115,6 +131,7 @@
 			name = App;
 			packageProductDependencies = (
 				4D22ABE82AF431CB00220026 /* CapApp-SPM */,
+				51DF000000000000000000B2 /* GoogleSignIn */,
 			);
 			productName = App;
 			productReference = 504EC3041FED79650016851F /* App.app */;
@@ -169,6 +186,7 @@
 			mainGroup = 504EC2FB1FED79650016851F;
 			packageReferences = (
 				D4C12C0A2AAA248700AAC8A2 /* XCLocalSwiftPackageReference "CapApp-SPM" */,
+				51DF000000000000000000B1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = 504EC3051FED79650016851F /* Products */;
 			projectDirPath = "";
@@ -210,6 +228,10 @@
 			files = (
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
 				9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */,
+				51DF000000000000000000A2 /* OpenMahjongSecureSessionPlugin.swift in Sources */,
+				51DF000000000000000000A4 /* OpenMahjongAppleSignInPlugin.swift in Sources */,
+				51DF000000000000000000A6 /* OpenMahjongGoogleSignInPlugin.swift in Sources */,
+				51DF000000000000000000A8 /* OpenMahjongBridgeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +397,7 @@
 			baseConfigurationReference = 958DCC722DB07C7200EA8C5F /* debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = App/Info.plist;
@@ -397,6 +420,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -491,6 +515,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		51DF000000000000000000B1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCLocalSwiftPackageReference section */
 		D4C12C0A2AAA248700AAC8A2 /* XCLocalSwiftPackageReference "CapApp-SPM" */ = {
 			isa = XCLocalSwiftPackageReference;
@@ -503,6 +538,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D4C12C0A2AAA248700AAC8A2 /* XCLocalSwiftPackageReference "CapApp-SPM" */;
 			productName = "CapApp-SPM";
+		};
+		51DF000000000000000000B2 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 51DF000000000000000000B1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

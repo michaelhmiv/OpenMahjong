@@ -5,7 +5,7 @@
     "sourceLocale": "en",
     "generatedBy": "scripts/i18n-translate.mjs",
     "generatedAt": "2026-11-20T20:09:50.235Z",
-    "keyCount": 4252,
+    "keyCount": 4254,
     "model": "google/gemini-2.5-flash",
     "note": "Machine drafts, status draft throughout. No string here is approved and none ships: the release gate blocks any locale that is not 100% approved. Native-speaker review queue: ~/workspace/mahjong-prep/i18n-review-queue/."
   },
@@ -37670,6 +37670,16 @@
       },
       "placeholders": []
     },
+    "ui.app.google-sign-in-is-not-available-in-the-app-yet": {
+      "value": "Googleサインインはまだアプリで利用できません。",
+      "hash": "d88152e6e4f8a01f1f63bd9fad3aa26cb16b7f85f9b16b6055948ee9cb6ae570",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1856
+      },
+      "placeholders": []
+    },
     "ui.app.guided-hint": {
       "value": "ガイド付きヒント",
       "hash": "82d004543bc7241c83d8cc9d08e2517a17217e1baeb16ad04a42408c20dcc29e",
@@ -39287,6 +39297,16 @@
       "source": {
         "file": "app.ts",
         "line": 187
+      },
+      "placeholders": []
+    },
+    "ui.app.sign-in-with-apple": {
+      "value": "Appleでサインイン",
+      "hash": "396d40caca74206aee484fdcffd4fff758c6f9772a17724388e815b72fe31fd1",
+      "status": "draft",
+      "source": {
+        "file": "app.ts",
+        "line": 1860
       },
       "placeholders": []
     },

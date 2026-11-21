@@ -133,6 +133,31 @@ final class OpenMahjongSmokeTests: XCTestCase {
         attachScreenshot("05-play-returned")
     }
 
+    /// Native sign-in surface (iOS step 3b): in the packaged app the
+    /// More tab's account block offers BOTH native providers —
+    /// "Sign in with Google" and "Sign in with Apple" (App Store
+    /// guideline 4.8). This asserts the buttons RENDER only; no
+    /// provider interaction happens here (the native flows need real
+    /// accounts and are device-verified, not simulator-verified).
+    /// The Google button renders whether or not a Google iOS client
+    /// ID is configured yet — while the server reports none, the web
+    /// layer presents it disabled with a plain note, and a disabled
+    /// button still exists in the accessibility tree this checks.
+    func test03_SignInSurfaceOffersGoogleAndApple() throws {
+        assertPlayRendered(step: "sign-in surface, cold launch")
+        tapHittable(buttons(withExactLabel: "More"), "bottom-nav More tab")
+        XCTAssertTrue(
+            buttons(withExactLabel: "Sign in with Google").firstMatch
+                .waitForExistence(timeout: 30),
+            "More tab is missing the native Google sign-in button"
+        )
+        XCTAssertTrue(
+            buttons(withExactLabel: "Sign in with Apple").firstMatch.exists,
+            "More tab is missing the native Apple sign-in button"
+        )
+        attachScreenshot("07-sign-in-surface")
+    }
+
     /// A second cold launch must land on the same guest Play root:
     /// no sign-in wall, no network dependency, no persisted state
     /// required for the shell to render.
