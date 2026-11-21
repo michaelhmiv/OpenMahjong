@@ -109,6 +109,76 @@ if (!iconFiles.includes(marketing[0].filename)) {
     );
 }
 
+// --- Smoke target (AppUITests) -----------------------------------------
+// The XCUITest smoke target is committed project state (step 2 of the
+// iOS program, modeled on Munch's AppUITests/MunchSmokeTests.swift
+// wiring). `cap sync ios` does not own it, so — verify, never rewrite —
+// a missing target, source file, scheme entry, or bundle suffix fails
+// the lane instead of being silently patched.
+for (const required of [
+    "AppUITests",
+    "OpenMahjongSmokeTests.swift",
+    "com.apple.product-type.bundle.ui-testing",
+    "app.openmahjong.uitests",
+    "TEST_TARGET_NAME = App",
+]) {
+    if (!project.includes(required)) {
+        throw new Error(
+            `project.pbxproj is missing smoke-target wiring: ${required}`,
+        );
+    }
+}
+const smokeSources = await readdir(
+    join(webDir, "ios", "App", "AppUITests"),
+).catch(() => []);
+if (!smokeSources.includes("OpenMahjongSmokeTests.swift")) {
+    throw new Error(
+        "ios/App/AppUITests/OpenMahjongSmokeTests.swift is missing",
+    );
+}
+const scheme = await readFile(
+    join(
+        webDir,
+        "ios",
+        "App",
+        "App.xcodeproj",
+        "xcshareddata",
+        "xcschemes",
+        "App.xcscheme",
+    ),
+    "utf8",
+).catch(() => "");
+if (
+    !scheme.includes('BlueprintName = "App"') ||
+    !scheme.includes('BlueprintName = "AppUITests"') ||
+    !scheme.includes("<Testables>")
+) {
+    throw new Error(
+        "App.xcscheme must be a shared scheme building App and testing AppUITests",
+    );
+}
+
+// --- Distribute signing (committed Release settings) -------------------
+// The distribute leg archives with NO command-line signing overrides
+// (xcodebuild applies those to every target, and the SPM package
+// targets reject a manual profile — the Munch/PitTech lesson), so the
+// App target's Release configuration carries the manual signing
+// settings as committed project state: shared-cert team, Apple
+// Distribution identity, and the per-app CI profile the workflow
+// creates fresh on every distribute run.
+for (const required of [
+    "CODE_SIGN_STYLE = Manual",
+    "DEVELOPMENT_TEAM = R42LWFBXBH",
+    '"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution"',
+    'PROVISIONING_PROFILE_SPECIFIER = "Open Mahjong App Store CI"',
+]) {
+    if (!project.includes(required)) {
+        throw new Error(
+            `project.pbxproj is missing Release signing setting: ${required}`,
+        );
+    }
+}
+
 console.log(
-    "Verified iOS shell wiring: export-compliance key (false), bundle ID app.openmahjong, 1024 app icon; no first-party plugins to copy yet",
+    "Verified iOS shell wiring: export-compliance key (false), bundle ID app.openmahjong, 1024 app icon, AppUITests smoke target + shared scheme, Release manual signing (team R42LWFBXBH, Open Mahjong App Store CI profile); no first-party plugins to copy yet",
 );
