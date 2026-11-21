@@ -1,11 +1,14 @@
 {
   "dependencies": {
+    "@capacitor/core": "8.6.2",
+    "@capacitor/ios": "8.6.2",
     "@openmahjong/ai": "*",
     "@openmahjong/engine": "*",
     "@openmahjong/coach": "*"
   },
   "description": "Open Mahjong web client (brief sections 7-10): land-and-play home, flat table, Focus Frames, PWA offline play vs AI.",
   "devDependencies": {
+    "@capacitor/cli": "8.6.2",
     "@types/node": "^22.0.0",
     "jsdom": "^31.0.1",
     "vite": "^7.0.0"
@@ -17,7 +20,10 @@
     "build": "vite build",
     "dev": "vite",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "mobile:web": "node scripts/build-mobile-web.mjs",
+    "mobile:sync": "npm run mobile:web && npx cap sync ios",
+    "mobile:configure": "node scripts/configure-mobile-ios.mjs"
   },
   "type": "module",
   "version": "0.1.0"
