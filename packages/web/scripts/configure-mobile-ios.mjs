@@ -2,12 +2,12 @@
 // Verify the native-shell wiring that `cap sync ios` does not own.
 //
 // Pattern: Munch's scripts/configure-mobile-ios.ts. Canonical
-// first-party plugin sources will live outside the Xcode project and
-// be copied into the App target by this script in later steps of the
-// iOS program (native sign-in plugins, then the ads plugin — the same
-// order Munch's script grew). At this step there are no first-party
-// plugins yet, so the copy step below is a deliberate no-op placeholder
-// marking exactly where those copies land.
+// first-party plugin sources live outside the Xcode project
+// (mobile/ios/) and are copied into the App target by this script,
+// where the copies are committed and the Xcode project references
+// them. Capacitor's `cap sync ios` only manages the CapApp-SPM
+// package — App-target Swift files survive it — so this copy step is
+// the whole drift surface for plugin sources.
 //
 // Everything else here is VERIFY, NEVER REWRITE: project/plist wiring
 // that `cap sync` does not own is committed project state. A missing
@@ -15,23 +15,45 @@
 // workflow runs this right after `cap sync ios` so the reproducibility
 // check (`git status --porcelain -- packages/web/ios …`) covers both.
 
-import { readFile, readdir } from "node:fs/promises";
+import { cp, readFile, readdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const webDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const appDir = join(webDir, "ios", "App", "App");
+const mobileDir = join(webDir, "mobile");
 
-// --- First-party plugin copy step (no-op placeholder) ---------------
-// Later steps extend THIS list, one entry per plugin source file, e.g.:
-//   ["OpenMahjongGoogleSignInPlugin.swift", "OpenMahjongAppleSignInPlugin.swift", "OpenMahjongAdsPlugin.swift"]
-// copied from the canonical location into `${appDir}/`, followed by
-// bridge-name / policy greps on the copied file (Munch pattern).
-const firstPartyPluginFiles = [];
+// --- First-party plugin copy step ------------------------------------
+// Step 3b (native sign-in): the three sign-in plugins plus the bridge
+// view controller that registers them. Later steps extend THIS list
+// (the ads plugin follows the same pattern).
+const firstPartyPluginFiles = [
+    "OpenMahjongGoogleSignInPlugin.swift",
+    "OpenMahjongAppleSignInPlugin.swift",
+    "OpenMahjongSecureSessionPlugin.swift",
+    "OpenMahjongBridgeViewController.swift",
+];
 for (const file of firstPartyPluginFiles) {
-    // cp(canonicalSource(file), join(appDir, file)) — wired when the
-    // first plugin lands; nothing to copy at the shell step.
-    throw new Error(`Plugin copy not wired yet: ${file}`);
+    await cp(join(mobileDir, "ios", file), join(appDir, file));
+}
+
+// Bridge-contract greps on the copied files (Munch pattern): a plugin
+// that loses its JS bridge name or a load-bearing constant fails the
+// lane here instead of silently breaking sign-in in the packaged app.
+const bridgeContracts = [
+    ["OpenMahjongGoogleSignInPlugin.swift", 'public let jsName = "OpenMahjongGoogleSignIn"'],
+    ["OpenMahjongAppleSignInPlugin.swift", 'public let jsName = "OpenMahjongAppleSignIn"'],
+    ["OpenMahjongSecureSessionPlugin.swift", 'public let jsName = "OpenMahjongSecureSession"'],
+    ["OpenMahjongSecureSessionPlugin.swift", '"app.openmahjong.secure-session"'],
+    ["OpenMahjongBridgeViewController.swift", "registerPluginInstance(OpenMahjongSecureSessionPlugin())"],
+    ["OpenMahjongBridgeViewController.swift", "registerPluginInstance(OpenMahjongAppleSignInPlugin())"],
+    ["OpenMahjongBridgeViewController.swift", "registerPluginInstance(OpenMahjongGoogleSignInPlugin())"],
+];
+for (const [file, needle] of bridgeContracts) {
+    const source = await readFile(join(appDir, file), "utf8");
+    if (!source.includes(needle)) {
+        throw new Error(`${file} lost its bridge contract: ${needle}`);
+    }
 }
 
 // --- Export compliance (CyberCache pattern) --------------------------
@@ -179,6 +201,81 @@ for (const required of [
     }
 }
 
+// --- Native sign-in wiring (step 3b) ----------------------------------
+// Verify, never rewrite (Munch pattern): the plugin files' App-target
+// membership, the GoogleSignIn Swift package dependency + product,
+// and the Sign in with Apple entitlements wiring are committed
+// project state; a missing piece fails the lane.
+for (const required of [
+    ...firstPartyPluginFiles,
+    "google/GoogleSignIn-iOS.git",
+    "productName = GoogleSignIn;",
+    "CODE_SIGN_ENTITLEMENTS = App/App.entitlements",
+]) {
+    if (!project.includes(required)) {
+        throw new Error(
+            `project.pbxproj is missing native sign-in wiring: ${required}`,
+        );
+    }
+}
+const entitlements = await readFile(join(appDir, "App.entitlements"), "utf8");
+if (
+    !entitlements.includes("<key>com.apple.developer.applesignin</key>") ||
+    !entitlements.includes("<string>Default</string>")
+) {
+    throw new Error(
+        "App.entitlements must declare com.apple.developer.applesignin = [Default]",
+    );
+}
+
+// The bridge view controller is only wired if SceneDelegate actually
+// instantiates it, and the Google redirect only returns if both
+// delegates give GIDSignIn first claim on incoming URLs (Munch's
+// AppDelegate/SceneDelegate shape).
+const sceneDelegate = await readFile(join(appDir, "SceneDelegate.swift"), "utf8");
+if (!sceneDelegate.includes("OpenMahjongBridgeViewController()")) {
+    throw new Error(
+        "SceneDelegate does not instantiate OpenMahjongBridgeViewController",
+    );
+}
+if (!sceneDelegate.includes("GIDSignIn.sharedInstance.handle")) {
+    throw new Error("SceneDelegate does not give GIDSignIn first claim on URLs");
+}
+const appDelegate = await readFile(join(appDir, "AppDelegate.swift"), "utf8");
+if (!appDelegate.includes("GIDSignIn.sharedInstance.handle")) {
+    throw new Error("AppDelegate does not give GIDSignIn first claim on URLs");
+}
+
+// --- Google redirect URL scheme (config-gated) -------------------------
+// ONE source of truth: mobile/google-signin-config.json carries the
+// iOS OAuth client ID. It is empty until the client is created in the
+// Google Cloud console; while empty there is no redirect scheme to
+// declare and this single check is skipped. Once an ID is set, the
+// reversed-client-ID scheme MUST be in Info.plist or the Google
+// OAuth redirect cannot return to the app.
+const googleConfig = JSON.parse(
+    await readFile(join(mobileDir, "google-signin-config.json"), "utf8"),
+);
+const iosClientId = typeof googleConfig.iosClientId === "string"
+    ? googleConfig.iosClientId.trim()
+    : "";
+let urlSchemeNote = "Google URL scheme check skipped (no iOS client ID configured)";
+if (iosClientId) {
+    const suffix = ".apps.googleusercontent.com";
+    if (!iosClientId.endsWith(suffix)) {
+        throw new Error(
+            `google-signin-config.json iosClientId is not a Google iOS client ID: ${iosClientId}`,
+        );
+    }
+    const reversed = `com.googleusercontent.apps.${iosClientId.slice(0, -suffix.length)}`;
+    if (!infoPlist.includes(`<string>${reversed}</string>`)) {
+        throw new Error(
+            `Info.plist is missing the Google sign-in redirect URL scheme: ${reversed}`,
+        );
+    }
+    urlSchemeNote = `Google URL scheme verified (${reversed})`;
+}
+
 console.log(
-    "Verified iOS shell wiring: export-compliance key (false), bundle ID app.openmahjong, 1024 app icon, AppUITests smoke target + shared scheme, Release manual signing (team R42LWFBXBH, Open Mahjong App Store CI profile); no first-party plugins to copy yet",
+    `Verified iOS shell wiring: export-compliance key (false), bundle ID app.openmahjong, 1024 app icon, AppUITests smoke target + shared scheme, Release manual signing (team R42LWFBXBH, Open Mahjong App Store CI profile); native sign-in: ${firstPartyPluginFiles.length} first-party plugin sources copied + bridge contracts, GoogleSignIn SPM package + product, Sign in with Apple entitlements; ${urlSchemeNote}`,
 );

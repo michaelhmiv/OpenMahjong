@@ -74,16 +74,53 @@ export interface MeResult {
 
 type FetchFn = typeof fetch;
 
+/**
+ * Native session provider (iOS step 3b): inside the packaged shell
+ * there is no cookie jar the web layer can rely on, so the native
+ * bridge (native-auth.ts) installs the session it restored from the
+ * keychain here. While a session is installed, every request carries
+ * `Authorization: Bearer <token>` (the server resolves bearer exactly
+ * like the om_session cookie) and mutations carry the session's
+ * `x-csrf-token` unless the caller already supplied one. While
+ * nothing is installed — every web user, and guests in the shell —
+ * requests behave exactly as they always have (cookie flow only).
+ */
+export interface NativeSession {
+  readonly token: string;
+  readonly csrfToken: string;
+}
+
+let nativeSession: NativeSession | null = null;
+
+export function installNativeSession(session: NativeSession | null): void {
+  nativeSession = session && session.token ? session : null;
+}
+
+export function getNativeSession(): NativeSession | null {
+  return nativeSession;
+}
+
 async function request(
   path: string,
   init: RequestInit,
   fetchFn: FetchFn,
 ): Promise<unknown | null> {
   try {
+    const headers: Record<string, string> = {
+      "content-type": "application/json",
+      ...((init.headers ?? {}) as Record<string, string>),
+    };
+    if (nativeSession) {
+      headers["authorization"] = `Bearer ${nativeSession.token}`;
+      const method = (init.method ?? "GET").toUpperCase();
+      if (method !== "GET" && !("x-csrf-token" in headers)) {
+        headers["x-csrf-token"] = nativeSession.csrfToken;
+      }
+    }
     const res = await fetchFn(`${API_BASE}${path}`, {
       ...init,
       credentials: "include",
-      headers: { "content-type": "application/json", ...(init.headers ?? {}) },
+      headers,
     });
     if (!res.ok) return null;
     // A successful DELETE/sign-out has no JSON body. Treating its 204

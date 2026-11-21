@@ -60,6 +60,15 @@ import {
   tForLocale,
   tx,
 } from "./i18n/index.js";
+import {
+  isGoogleUnavailable,
+  isNativeShell,
+  loadGoogleConfig,
+  restoreNativeSession,
+  signInWithAppleNative,
+  signInWithGoogleNative,
+  signOutNative,
+} from "./native-auth.js";
 import { AiDriver } from "./drivers.js";
 import { TableModel, foldEvents, tileById, type WinInfo } from "./model.js";
 import {
@@ -764,6 +773,10 @@ export class App {
    *  play never depends on it. */
   private user: ApiUser | null = null;
   private csrfToken: string | null = null;
+  /** Last native sign-in failure message, shown on the More tab's
+   *  account block in the packaged shell (the plugins' shared
+   *  failure shape, printed verbatim). Null when there is none. */
+  private nativeSignInError: string | null = null;
   /** In-progress game carry-over (ruling, 2026-11-16): mirrors the
    *  local resume save to the account when signed in. */
   private readonly resumeSync = new ResumeSync({
@@ -1382,6 +1395,12 @@ export class App {
   // -- account (slice 2) -----------------------------------------------------
 
   private async bootAuth(): Promise<void> {
+    // Packaged shell only (inert on the web): restore the keychain
+    // session into the API layer before the /api/me probe so it
+    // resolves with the bearer token, and warm the Google config the
+    // More tab's sign-in block reads.
+    await restoreNativeSession();
+    void loadGoogleConfig();
     const me = await initAuth();
     if (!me.user) return; // signed out or API down: guest landing stands
     this.user = me.user;
@@ -1596,10 +1615,35 @@ export class App {
   }
 
   private async signOutFlow(): Promise<void> {
-    if (!(await signOut(this.csrfToken))) return;
+    if (isNativeShell()) {
+      // The native bridge calls the server sign-out with the stored
+      // bearer session and clears the keychain either way.
+      await signOutNative();
+    } else if (!(await signOut(this.csrfToken))) return;
     this.clearAccountState();
     this.renderPlay();
     if (this.screens.get("more")!.classList.contains("active")) this.renderMore();
+  }
+
+  /**
+   * Native sign-in (packaged shell only): run the bridge flow, then
+   * refresh the signed-in state through the same /api/me path boot
+   * uses, so the account block, settings sync, and resume reconcile
+   * all follow the one route. Failures land in nativeSignInError and
+   * the More tab re-renders to show the message.
+   */
+  private async nativeSignInFlow(provider: "google" | "apple"): Promise<void> {
+    this.nativeSignInError = null;
+    const result = provider === "google"
+      ? await signInWithGoogleNative()
+      : await signInWithAppleNative();
+    if (!result.ok) {
+      this.nativeSignInError = result.message;
+      if (this.screens.get("more")!.classList.contains("active")) this.renderMore();
+      return;
+    }
+    trackSignInCompleted();
+    await this.bootAuth();
   }
 
   private async deleteAccountFlow(): Promise<void> {
@@ -1792,6 +1836,37 @@ export class App {
       });
       delRow.append(delLab, delBtn);
       page.append(delRow);
+    } else if (isNativeShell()) {
+      // Packaged shell (iOS step 3b): native sign-in only — the web
+      // redirect flow never runs inside the webview. Both providers
+      // are offered (App Store guideline 4.8). While the server has
+      // no iOS Google client ID configured, the Google option stays
+      // visible but disabled, with a plain note; Apple and guest
+      // play are unaffected.
+      const googleBtn = h("button", { class: "pillbtn ghost acctbtn" }, tx("ui.app.sign-in-with-google", "Sign in with Google"));
+      const googleUnavailable = isGoogleUnavailable();
+      if (googleUnavailable) {
+        googleBtn.disabled = true;
+      } else {
+        googleBtn.addEventListener("click", () => void this.nativeSignInFlow("google"));
+      }
+      page.append(row(
+        tx("ui.app.account-2", "Account"),
+        googleUnavailable
+          ? tx("ui.app.google-sign-in-is-not-available-in-the-app-yet", "Google sign-in is not available in the app yet.")
+          : tx("ui.app.not-signed-in", "Not signed in."),
+        googleBtn,
+      ));
+      const appleBtn = h("button", { class: "pillbtn ghost acctbtn" }, tx("ui.app.sign-in-with-apple", "Sign in with Apple"));
+      appleBtn.addEventListener("click", () => void this.nativeSignInFlow("apple"));
+      page.append(row(
+        tx("ui.app.account-2", "Account"),
+        tx("ui.app.not-signed-in", "Not signed in."),
+        appleBtn,
+      ));
+      if (this.nativeSignInError) {
+        page.append(h("p", { class: "note" }, this.nativeSignInError));
+      }
     } else {
       const signInBtn = h("button", { class: "pillbtn ghost acctbtn" }, tx("ui.app.sign-in-with-google", "Sign in with Google"));
       signInBtn.addEventListener("click", () => {
